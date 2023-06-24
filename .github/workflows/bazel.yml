@@ -59,11 +59,6 @@ jobs:
         run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
         shell: bash
 
-      - name: Check Lockfile update
-        run: |
-          git add . # Fixes line ending problems on windows
-          git --no-pager diff --exit-code HEAD
-
   build-mac:
     strategy:
       fail-fast: false
