@@ -1,0 +1,109 @@
+
+COMMON_BACKEND_SRCS = [
+    "backends/imgui_impl_glfw.cpp",
+    "backends/imgui_impl_opengl3.cpp"
+]
+
+COMMON_BACKEND_HDRS = [
+    "backends/imgui_impl_glfw.h",
+    "backends/imgui_impl_opengl3.h",
+    "backends/imgui_impl_opengl3_loader.h",
+]
+
+COMMON_MISC_SRCS = [
+    "misc/cpp/imgui_stdlib.cpp",
+]
+
+COMMON_MISC_HDRS = [
+    "misc/cpp/imgui_stdlib.h",
+]
+
+######################
+# Linux
+######################
+LINUX_BACKEND_HDRS = [
+]
+
+LINUX_BACKEND_SRCS = [
+]
+
+######################
+# Windows
+######################
+WIN_BACKEND_HDRS = [
+
+]
+
+WIN_BACKEND_SRCS = [
+    "backends/imgui_impl_dx11.cpp",
+]
+
+
+######################
+# Mac
+######################
+MAC_BACKEND_HDRS = [
+    "backends/imgui_impl_metal.h",
+
+]
+
+MAC_BACKEND_SRCS = [
+    "backends/imgui_impl_metal.mm",
+]
+
+######################
+# Bundle
+######################
+
+COMMON_SRCS = glob(["*.cpp"]) + COMMON_BACKEND_SRCS + COMMON_MISC_SRCS
+COMMON_HDRS = glob(["*.h"]) + COMMON_BACKEND_HDRS + COMMON_MISC_HDRS
+
+objc_library(
+    name = "imgui_mac",
+    srcs = COMMON_SRCS + MAC_BACKEND_SRCS,
+    hdrs = COMMON_HDRS + MAC_BACKEND_HDRS,
+    copts = select({
+		"@bazel_tools//src/conditions:darwin": ["-fobjc-arc", "-Wno-unused-command-line-argument"],
+        "@bazel_tools//src/conditions:windows": [],
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": [],
+    }),
+    tags = ["manual"],  # This makes it so the other platforms will still build OK
+    includes = ["./backends"],
+    deps = [
+        "@glfw"
+    ],
+)
+
+cc_library(
+    name = "imgui",
+    srcs = select({
+		"@bazel_tools//src/conditions:darwin": [],
+            "@bazel_tools//src/conditions:windows": COMMON_SRCS + WIN_BACKEND_SRCS,
+            "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": COMMON_SRCS + LINUX_BACKEND_SRCS,
+        }),
+    hdrs = select({
+		    "@bazel_tools//src/conditions:darwin": COMMON_HDRS,
+            "@bazel_tools//src/conditions:windows": COMMON_HDRS + WIN_BACKEND_HDRS,
+            "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": COMMON_HDRS + LINUX_BACKEND_HDRS,
+        }),
+    deps = [
+        "@glfw"
+    ] + select({
+        "@bazel_tools//src/conditions:darwin": [":imgui_mac"],
+        "//conditions:default": [],
+    }),
+    strip_include_prefix = ".",
+    includes = ["./backends", "./misc/cpp"],
+    visibility = ["//visibility:public"],
+)
+
+cc_binary(
+    name = "binary_to_compressed",
+    srcs = ["misc/fonts/binary_to_compressed_c.cpp"],
+    visibility = ["//visibility:public"],
+    copts = select({
+		"@bazel_tools//src/conditions:darwin": ["-Wno-unused-but-set-variable"],
+        "@bazel_tools//src/conditions:windows": [],
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": [],
+    }),
+)

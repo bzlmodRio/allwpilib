@@ -1,0 +1,67 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//imgui/bazel:generate_fonts.bzl", "generate_font")
+
+generate_font(
+    font_file = "ProggyDotted",
+    font_filegroup = "files",
+    font_name = "proggy_font",
+    font_repo = "proggy_fonts",
+)
+
+generate_font(
+    font_file = "FontAwesomeRegular",
+    font_filegroup = "regular",
+    font_name = "font_awesome_regular",
+    font_repo = "font_awesome",
+)
+
+generate_font(
+    font_file = "FontAwesomeSolid",
+    font_filegroup = "solid",
+    font_name = "font_awesome_solid",
+    font_repo = "font_awesome",
+)
+
+generate_font(
+    font_file = "DroidSans",
+    font_filegroup = "files",
+    font_name = "droid_fonts",
+    font_repo = "droid_fonts",
+)
+
+generate_font(
+    font_file = "FiraCodeRetina",
+    font_filegroup = "files",
+    font_name = "fira_code_fonts",
+    font_repo = "fira_code_fonts",
+)
+
+genrule(
+    name = "copy_icons",
+    outs = ["include/IconsFontAwesome6.h"],
+    cmd = "cp $(location @font_awesome_icons//:files) $(@)",
+    tools = ["@font_awesome_icons//:files"],
+)
+
+FONTS = [
+    "proggy_font",
+    "font_awesome_regular",
+    "font_awesome_solid",
+    "droid_fonts",
+    "fira_code_fonts",
+]
+
+cc_library(
+    name = "fonts",
+    srcs = ["generate_{}_source".format(f) for f in FONTS] + ["generate_{}".format(f) for f in FONTS],
+    hdrs = ["generate_{}_header".format(f) for f in FONTS] + [":copy_icons"],
+    strip_include_prefix = "include",
+    target_compatible_with = select({
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@imgui",
+    ],
+)

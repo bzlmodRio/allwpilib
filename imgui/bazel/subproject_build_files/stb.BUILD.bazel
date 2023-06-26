@@ -1,0 +1,28 @@
+
+
+genrule(
+    name = "generate_image",
+    outs = ["src/stb_image.cpp"],
+    cmd = """
+cat > $(@) <<END
+#define STBI_WINDOWS_UTF8
+#define STB_IMAGE_IMPLEMENTATION
+
+#include "stb_image.h"
+END
+"""
+)
+
+
+cc_library(
+    name = "stb",
+    srcs = [":generate_image"],
+    hdrs = glob(["stb_image.h"]),
+    strip_include_prefix = ".",
+    visibility = ["//visibility:public"],
+    copts = select({
+		"@bazel_tools//src/conditions:darwin": ["-Wno-unused-but-set-variable", "-Wno-sign-compare"],
+        "@bazel_tools//src/conditions:windows": [],
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["-Wno-unused-but-set-variable", "-Wno-sign-compare"],
+    }),
+)

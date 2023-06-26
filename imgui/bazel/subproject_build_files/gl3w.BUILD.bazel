@@ -1,0 +1,31 @@
+py_binary(
+    name = "gl3w_gen",
+    srcs = ["@gl3w//:gl3w_gen.py"],
+)
+
+genrule(
+    name = "gen_sources",
+    tools = [":gl3w_gen"],
+    outs = [
+        "include/GL/glcorearb.h", 
+        "include/KHR/khrplatform.h",
+        "include/GL/gl3w.h", 
+        "src/gl3w.c"
+    ],
+    
+    cmd = "$(location :gl3w_gen) --root=$(RULEDIR)",
+)
+
+cc_library(
+    name = "gl3w",
+    srcs = ["src/gl3w.c"],
+    hdrs = [
+        "include/GL/glcorearb.h", 
+        "include/KHR/khrplatform.h",
+        "include/GL/gl3w.h", 
+    ],
+    deps = [":gen_sources"],
+    includes = ["include"],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"]
+)

@@ -77,3 +77,7 @@ install_deps()
 load("@maven//:defs.bzl", "pinned_maven_install")
 
 pinned_maven_install()
+
+load("//imgui/bazel:imgui_source_deps.bzl", "load_imgui_deps")
+
+load_imgui_deps()
