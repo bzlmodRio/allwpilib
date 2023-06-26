@@ -12,19 +12,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: "Windows (native)",             os: windows-2019, action: "test", config: "--config=windows",                        }
+          - { name: "Windows (native)",             build_imgui_from_source: True, os: windows-2019, action: "test", config: "--config=windows",                        }
           # - { name: "Windows (bzlmod)",             os: windows-2019, action: "test", config: "--config=windows --enable_bzlmod",        }
 
-          - {  name: "Windows (roborio)",           os: windows-2019, action: "build", config: "--config=roborio",                     }
+          - {  name: "Windows (roborio)",           build_imgui_from_source: True, os: windows-2019, action: "build", config: "--config=roborio",                     }
           # - {  name: "Windows (roborio bzlmod)",    os: windows-2019, action: "build", config: "--config=roborio --enable_bzlmod",     }
 
-          - {  name: "Windows (bullseye32)",        os: windows-2019, action: "build", config: "--config=bullseye32",                  }
+          - {  name: "Windows (bullseye32)",        build_imgui_from_source: True, os: windows-2019, action: "build", config: "--config=bullseye32",                  }
           # - {  name: "Windows (bullseye32 bzlmod)", os: windows-2019, action: "build", config: "--config=bullseye32 --enable_bzlmod",  }
 
-          - {  name: "Windows (bullseye64)",        os: windows-2019, action: "build", config: "--config=bullseye64",                  }
+          - {  name: "Windows (bullseye64)",        build_imgui_from_source: True, os: windows-2019, action: "build", config: "--config=bullseye64",                  }
           # - {  name: "Windows (bullseye64 bzlmod)", os: windows-2019, action: "build", config: "--config=bullseye64 --enable_bzlmod",  }
 
-          - {  name: "Windows (raspi32)",           os: windows-2019, action: "build", config: "--config=raspi32",                     }
+          - {  name: "Windows (raspi32)",           build_imgui_from_source: True, os: windows-2019, action: "build", config: "--config=raspi32",                     }
           # - {  name: "Windows (raspi32 bzlmod)",    os: windows-2019, action: "build", config: "--config=raspi32 --enable_bzlmod",     }
 
     name: "Build ${{ matrix.name }}"
@@ -59,24 +59,29 @@ jobs:
         run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
         shell: bash
 
+      - name: Build With imgui source
+        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ... --define build_imgui_from_source=true  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        shell: bash
+        if: ${{ matrix.build_imgui_from_source }}
+
   build-mac:
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { name: "Mac (native)",            os: macos-latest,   action: "test",  config: "--config=osx -c opt" }
+          - { name: "Mac (native)",            build_imgui_from_source: True, os: macos-latest,   action: "test",  config: "--config=osx -c opt" }
           # - { name: "Mac (bzlmod)",            os: macos-latest,   action: "test",  config: "--config=osx -c opt --enable_bzlmod" }
 
-          # - { name: "Mac (roborio)",           os: macos-latest,   action: "build", config: "--config=roborio -c opt" }
+          # - { name: "Mac (roborio)",           build_imgui_from_source: True, os: macos-latest,   action: "build", config: "--config=roborio -c opt" }
           # - { name: "Mac (roborio bzlmod)",    os: macos-latest,   action: "build", config: "--config=roborio -c opt --enable_bzlmod" }
 
-          # - { name: "Mac (bullseye32)",        os: macos-latest,   action: "build", config: "--config=bullseye32 -c opt" }
+          # - { name: "Mac (bullseye32)",        build_imgui_from_source: True,os: macos-latest,   action: "build", config: "--config=bullseye32 -c opt" }
           # - { name: "Mac (bullseye32 bzlmod)", os: macos-latest,   action: "build", config: "--config=bullseye32 -c opt --enable_bzlmod" }
 
-          # - { name: "Mac (bullseye64)",        os: macos-latest,   action: "build", config: "--config=bullseye64 -c opt" }
+          # - { name: "Mac (bullseye64)",        build_imgui_from_source: True, os: macos-latest,   action: "build", config: "--config=bullseye64 -c opt" }
           # - { name: "Mac (bullseye64 bzlmod)", os: macos-latest,   action: "build", config: "--config=bullseye64 -c opt --enable_bzlmod" }
 
-          # - { name: "Mac (raspi32)",           os: macos-latest,   action: "build", config: "--config=raspi32 -c opt" }
+          # - { name: "Mac (raspi32)",           build_imgui_from_source: True, os: macos-latest,   action: "build", config: "--config=raspi32 -c opt" }
           # - { name: "Mac (raspi32 bzlmod)",    os: macos-latest,   action: "build", config: "--config=raspi32 -c opt --enable_bzlmod" }
 
     name: "${{ matrix.name }}"
@@ -98,6 +103,11 @@ jobs:
         run: bazel ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
         shell: bash
 
+      - name: Build with imgui source
+        run: bazel ${{ matrix.action }} -k ... --define build_imgui_from_source=true  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        shell: bash
+        if: ${{ matrix.build_imgui_from_source }}
+
       - name: Check Lockfile update
         run: git --no-pager diff --exit-code HEAD
 
@@ -106,19 +116,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { container: "wpilib/ubuntu-base:22.04", action: "test", artifact-name: "Linux (native)",             config: "--config=linux " }
+          - { container: "wpilib/ubuntu-base:22.04", build_imgui_from_source: True, action: "test", artifact-name: "Linux (native)",             config: "--config=linux " }
           # - { container: "wpilib/ubuntu-base:22.04", action: "test", artifact-name: "Linux (bzlmod)",             config: "--config=linux  --enable_bzlmod" }
 
-          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (roborio)",           config: "--config=roborio " }
+          - { container: "wpilib/ubuntu-base:22.04", build_imgui_from_source: True, action: "build", artifact-name: "Linux (roborio)",           config: "--config=roborio " }
           # - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (roborio bzlmod)",    config: "--config=roborio --enable_bzlmod" }
 
-          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye32)",        config: "--config=bullseye32" }
+          - { container: "wpilib/ubuntu-base:22.04", build_imgui_from_source: True, action: "build", artifact-name: "Linux (bullseye32)",        config: "--config=bullseye32" }
           # - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye32 bzlmod)", config: "--config=bullseye32 --enable_bzlmod" }
 
-          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye64)",        config: "--config=bullseye64" }
+          - { container: "wpilib/ubuntu-base:22.04", build_imgui_from_source: True, action: "build", artifact-name: "Linux (bullseye64)",        config: "--config=bullseye64" }
           # - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye64 bzlmod)", config: "--config=bullseye64 --enable_bzlmod" }
 
-          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (raspi32)",           config: "--config=raspi32" }
+          - { container: "wpilib/ubuntu-base:22.04", build_imgui_from_source: True, action: "build", artifact-name: "Linux (raspi32)",           config: "--config=raspi32" }
           # - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (raspi32 bzlmod)",    config: "--config=raspi32 --enable_bzlmod" }
     runs-on: ubuntu-latest
     name: "Build - ${{ matrix.artifact-name }}"
@@ -134,6 +144,9 @@ jobs:
       - name: Build and Test
         run: bazel ${{ matrix.action }} ... --config=ci ${{ matrix.config }} -k --verbose_failures
 
+      - name: Build with imgui source
+        run: bazel ${{ matrix.action }} ... --define build_imgui_from_source=true --config=ci ${{ matrix.config }} -k --verbose_failures
+        if: ${{ matrix.build_imgui_from_source }}
 
   repin-maven:
     strategy:

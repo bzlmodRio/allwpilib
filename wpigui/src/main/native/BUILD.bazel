@@ -19,7 +19,10 @@ wpilib_objc_library(
     deps = [
         ":headers",
         "//imgui",
-    ],
+    ] + select({
+        "//:build_imgui_from_source": ["//imgui"],
+        "//conditions:default": ["@bzlmodrio-imgui//libraries/cpp/imgui"],
+    }),
 )
 
 wpilib_cc_library(
@@ -38,9 +41,11 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//imgui",
     ] + select({
         "@bazel_tools//src/conditions:darwin": [":wpigui-mac"],
         "//conditions:default": [],
+    }) + select({
+        "//:build_imgui_from_source": ["//imgui"],
+        "//conditions:default": ["@bzlmodrio-imgui//libraries/cpp/imgui"],
     }),
 )

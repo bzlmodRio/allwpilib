@@ -12,3 +12,10 @@ compile_pip_requirements(
         "no-roborio",
     ],
 )
+
+config_setting(
+  name = "build_imgui_from_source",
+  values = {
+    "define": "build_imgui_from_source=true"
+  }
+)
