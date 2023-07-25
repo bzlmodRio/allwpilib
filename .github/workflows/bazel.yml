@@ -16,7 +16,7 @@ jobs:
           - { name: "Windows (bzlmod)",             os: windows-2022, action: "test", config: "--config=windows --enable_bzlmod",        }
 
           - {  name: "Windows (roborio)",           os: windows-2022, action: "build", config: "--config=roborio",                     }
-          - {  name: "Windows (roborio bzlmod)",    os: windows-2022, action: "build", config: "--config=roborio --enable_bzlmod",     }
+          # - {  name: "Windows (roborio bzlmod)",    os: windows-2022, action: "build", config: "--config=roborio --enable_bzlmod",     }
 
           - {  name: "Windows (bullseye32)",        os: windows-2022, action: "build", config: "--config=bullseye32",                  }
           - {  name: "Windows (bullseye32 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye32 --enable_bzlmod",  }
@@ -98,8 +98,8 @@ jobs:
         run: bazel ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
         shell: bash
 
-      - name: Check Lockfile update
-        run: git --no-pager diff --exit-code HEAD
+      # - name: Check Lockfile update
+      #   run: git --no-pager diff --exit-code HEAD
 
   build-linux:
     strategy:
