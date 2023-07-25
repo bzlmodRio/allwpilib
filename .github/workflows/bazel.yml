@@ -12,20 +12,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: "Windows (native)",             os: windows-2019, action: "test", config: "--config=windows",                        }
-          - { name: "Windows (bzlmod)",             os: windows-2019, action: "test", config: "--config=windows --enable_bzlmod",        }
+          - { name: "Windows (native)",             os: windows-2022, action: "test", config: "--config=windows",                        }
+          - { name: "Windows (bzlmod)",             os: windows-2022, action: "test", config: "--config=windows --enable_bzlmod",        }
 
-          - {  name: "Windows (roborio)",           os: windows-2019, action: "build", config: "--config=roborio",                     }
-          # - {  name: "Windows (roborio bzlmod)",    os: windows-2019, action: "build", config: "--config=roborio --enable_bzlmod",     }
+          - {  name: "Windows (roborio)",           os: windows-2022, action: "build", config: "--config=roborio",                     }
+          - {  name: "Windows (roborio bzlmod)",    os: windows-2022, action: "build", config: "--config=roborio --enable_bzlmod",     }
 
-          - {  name: "Windows (bullseye32)",        os: windows-2019, action: "build", config: "--config=bullseye32",                  }
-          - {  name: "Windows (bullseye32 bzlmod)", os: windows-2019, action: "build", config: "--config=bullseye32 --enable_bzlmod",  }
+          - {  name: "Windows (bullseye32)",        os: windows-2022, action: "build", config: "--config=bullseye32",                  }
+          - {  name: "Windows (bullseye32 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye32 --enable_bzlmod",  }
 
-          - {  name: "Windows (bullseye64)",        os: windows-2019, action: "build", config: "--config=bullseye64",                  }
-          - {  name: "Windows (bullseye64 bzlmod)", os: windows-2019, action: "build", config: "--config=bullseye64 --enable_bzlmod",  }
+          - {  name: "Windows (bullseye64)",        os: windows-2022, action: "build", config: "--config=bullseye64",                  }
+          - {  name: "Windows (bullseye64 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye64 --enable_bzlmod",  }
 
-          - {  name: "Windows (raspi32)",           os: windows-2019, action: "build", config: "--config=raspi32",                     }
-          - {  name: "Windows (raspi32 bzlmod)",    os: windows-2019, action: "build", config: "--config=raspi32 --enable_bzlmod",     }
+          - {  name: "Windows (raspi32)",           os: windows-2022, action: "build", config: "--config=raspi32",                     }
+          - {  name: "Windows (raspi32 bzlmod)",    os: windows-2022, action: "build", config: "--config=raspi32 --enable_bzlmod",     }
 
     name: "Build ${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
