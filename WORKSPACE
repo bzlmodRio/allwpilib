@@ -34,25 +34,25 @@ http_archive(
 # )
 http_archive(
     name = "bzlmodRio",
-    sha256 = "90928c94a79a715276b2cb9e70c9cabb5e4e9778d782ec381d03a0bba481620b",
-    strip_prefix = "bzlmodRio-7e05a206c4e123075e1b7b88e03a63e7627fec23",
-    url = "https://github.com/bzlmodRio/bzlmodRio/archive/7e05a206c4e123075e1b7b88e03a63e7627fec23.tar.gz",
+    sha256 = "1a384d5fb7980f13fb2c6fdaa3fc152808bb6ac550ab8cd26f7465e62d0009cc",
+    strip_prefix = "bzlmodRio-b8242aa2995c9022b4706f4541eb1a024cff3021",
+    url = "https://github.com/bzlmodRio/bzlmodRio/archive/b8242aa2995c9022b4706f4541eb1a024cff3021.tar.gz",
 )
 
 load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_dependencies")
 
 download_dependencies(
     allwpilib_version = None,
-    apriltaglib_version = "3.2.0-3",
-    imgui_version = "1.89.1-1",
-    libssh_version = "0.95-6",
+    apriltaglib_version = "3.2.0-8",
+    imgui_version = "1.89.1-2",
+    libssh_version = "0.95-8",
     local_monorepo_base = "../bzlmodRio/monorepo",
     navx_version = None,
     ni_version = "2023.3.0",
     opencv_version = "4.6.0-4",
     phoenix_version = None,
     revlib_version = None,
-    rules_bazelrio_version = "0.0.10",
+    rules_bazelrio_version = "0.0.12",
     rules_checkstyle_version = None,
     rules_pmd_version = None,
     rules_spotless_version = None,

@@ -41,7 +41,10 @@ wpilib_cc_static_and_shared_library(
         "//wpiutil/src/main/native/thirdparty/llvm:llvm-headers",
         "//wpiutil/src/main/native/thirdparty/mpack:mpack-headers",
         "//wpiutil/src/main/native/thirdparty/sigslot:sigslot-headers",
-    ],
+    ] + select({
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bzlmodrio-ni//libraries/cpp/ni:shared"],
+        "//conditions:default": [],
+    }),
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
 )

@@ -3,6 +3,7 @@ build:bullseye64 --platforms=@rules_bzlmodrio_toolchains//platforms/bullseye64
 build:bullseye64 --build_tag_filters=-no-bullseye
 build:bullseye64 --features=compiler_param_file
 build:bullseye64 --platform_suffix=bullseye64
+build:bullseye64 --incompatible_enable_cc_toolchain_resolution
 
 
 build:bullseye64 --cxxopt=-std=c++20

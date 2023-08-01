@@ -3,6 +3,7 @@ build:roborio --platforms=@rules_bzlmodrio_toolchains//platforms/roborio
 build:roborio --build_tag_filters=-no-roborio
 build:roborio --features=compiler_param_file
 build:roborio --platform_suffix=roborio
+build:roborio --incompatible_enable_cc_toolchain_resolution
 
 # C++ only
 build:roborio --cxxopt=-std=c++20

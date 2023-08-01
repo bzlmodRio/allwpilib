@@ -15,6 +15,9 @@ jobs:
           - { name: "Windows (native)",             os: windows-2022, action: "test", config: "--config=windows",                        }
           - { name: "Windows (bzlmod)",             os: windows-2022, action: "test", config: "--config=windows --enable_bzlmod",        }
 
+          - {  name: "Windows (arm)",               os: windows-2022, action: "build", config: "--config=windows_arm",                   }
+          - {  name: "Windows (arm bzlmod)",        os: windows-2022, action: "build", config: "--config=windows_arm --enable_bzlmod",   }
+
           - {  name: "Windows (roborio)",           os: windows-2022, action: "build", config: "--config=roborio",                     }
           # - {  name: "Windows (roborio bzlmod)",    os: windows-2022, action: "build", config: "--config=roborio --enable_bzlmod",     }
 
