@@ -49,7 +49,7 @@ download_dependencies(
     local_monorepo_base = "../bzlmodRio/monorepo",
     navx_version = None,
     ni_version = "2023.3.0",
-    opencv_version = "4.6.0-4",
+    opencv_version = "4.6.0-5",
     phoenix_version = None,
     revlib_version = None,
     rules_bazelrio_version = "0.0.12",
