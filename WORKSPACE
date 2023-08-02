@@ -34,9 +34,9 @@ http_archive(
 # )
 http_archive(
     name = "bzlmodRio",
-    sha256 = "1a384d5fb7980f13fb2c6fdaa3fc152808bb6ac550ab8cd26f7465e62d0009cc",
-    strip_prefix = "bzlmodRio-b8242aa2995c9022b4706f4541eb1a024cff3021",
-    url = "https://github.com/bzlmodRio/bzlmodRio/archive/b8242aa2995c9022b4706f4541eb1a024cff3021.tar.gz",
+    sha256 = "777ff4dc2f6dfa2d6625f8eabe9d4ee262458762f49764c639e9643bd847260b",
+    strip_prefix = "bzlmodRio-9a3961038a39825ab3961a7072e11bc5aedbae78",
+    url = "https://github.com/bzlmodRio/bzlmodRio/archive/9a3961038a39825ab3961a7072e11bc5aedbae78.tar.gz",
 )
 
 load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_dependencies")
