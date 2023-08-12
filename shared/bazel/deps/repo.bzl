@@ -8,7 +8,7 @@ def load_third_party():
 
     # Last compared to gradle on 10/15/22
     maven_artifacts = [
-        "org.ejml:ejml-simple:0.41",
+        "org.ejml:ejml-simple:0.42",
         "com.fasterxml.jackson.core:jackson-annotations:2.12.4",
         "com.fasterxml.jackson.core:jackson-core:2.12.4",
         "com.fasterxml.jackson.core:jackson-databind:2.12.4",
