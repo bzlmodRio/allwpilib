@@ -6,8 +6,8 @@ module(
 
 bazel_dep(name = "googletest", version = "1.12.1", repo_name = "gtest")
 bazel_dep(name = "rules_cc", version = "0.0.6")
-bazel_dep(name = "rules_java", version = "6.1.0")
-bazel_dep(name = "rules_jvm_external", version = "5.2")
+bazel_dep(name = "rules_java", version = "6.4.0")
+bazel_dep(name = "rules_jvm_external", version = "5.3")
 bazel_dep(name = "rules_python", version = "0.21.0")
 bazel_dep(name = "bzlmodrio-apriltaglib", version = "3.2.0-8")
 bazel_dep(name = "bzlmodrio-imgui", version = "1.89.1-2")
