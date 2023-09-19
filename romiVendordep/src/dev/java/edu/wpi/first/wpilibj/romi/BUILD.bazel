@@ -5,7 +5,7 @@ wpilib_java_binary(
     srcs = ["DevMain.java"],
     deps = [
         "//hal/src/main/java/edu/wpi/first/hal",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "//ntcore/src/main/java/edu/wpi/first/networktables",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
     ],
 )

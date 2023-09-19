@@ -90,7 +90,7 @@ TEMPLATES_FOLDERS = [
     "timed",
     "timedskeleton",
     "timeslice",
-    "timesliceskeleton"
+    "timesliceskeleton",
 ]
 
 TESTS_FOLDERS = [

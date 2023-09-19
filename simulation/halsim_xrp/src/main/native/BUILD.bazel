@@ -1,4 +1,3 @@
-load("//shared/bazel/rules:cc_flags.bzl", "get_wpigui_linker_flags")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_shared_library")
 
 wpilib_cc_shared_library(
@@ -7,14 +6,14 @@ wpilib_cc_shared_library(
         "cpp/*",
         "include/*.h",
     ]),
-    deps = [
-        "//xrpVendordep/src/main/native:xrp.shared",
-        "//simulation/halsim_ws_core/src/main/native:halsim_ws_core",
-    ],
     features = ["windows_export_all_symbols"],
     includes = ["include"],
     tags = [
         "no-roborio",
     ],
     visibility = ["//visibility:public"],
+    deps = [
+        "//simulation/halsim_ws_core/src/main/native:halsim_ws_core",
+        "//xrpVendordep/src/main/native:xrp.shared",
+    ],
 )
