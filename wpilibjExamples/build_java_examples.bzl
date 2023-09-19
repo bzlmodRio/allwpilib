@@ -91,6 +91,8 @@ TEMPLATES_FOLDERS = [
     "romitimed",
     "timed",
     "timedskeleton",
+    "timeslice",
+    "timesliceskeleton"
 ]
 
 TEST_FOLDERS = [
@@ -114,6 +116,7 @@ def build_examples(halsim_deps):
                 "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
                 "//wpilibNewCommands/src/main/java/edu/wpi/first/wpilibj2/command:wpilibNewCommands",
                 "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+                "//romiVendordep/src/main/java/edu/wpi/first/wpilibj/romi",
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
             tags = ["wpi-example"],

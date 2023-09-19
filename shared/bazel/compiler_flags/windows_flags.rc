@@ -4,6 +4,7 @@ build:windows --copt=/W3
 build:windows --copt=/WX
 
 # C++ options
+build:windows --cxxopt=/utf-8
 build:windows --cxxopt=/EHsc
 build:windows --cxxopt=/FS
 build:windows --cxxopt=/Zc:inline

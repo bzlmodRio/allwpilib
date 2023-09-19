@@ -89,6 +89,8 @@ TEMPLATES_FOLDERS = [
     "robotbaseskeleton",
     "timed",
     "timedskeleton",
+    "timeslice",
+    "timesliceskeleton"
 ]
 
 TESTS_FOLDERS = [
@@ -111,6 +113,8 @@ def build_examples(halsim_deps = []):
             deps = [
                 "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
                 "//apriltag/src/main/native:apriltag.shared",
+                "//romiVendordep/src/main/native:romi.shared",
+                "//xrpVendordep/src/main/native:xrp.shared",
                 ":{}-examples-headers".format(folder),
             ],
             tags = ["wpi-example"],

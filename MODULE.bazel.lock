@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 1,
-  "moduleFileHash": "683736366dfb9c6e0ab48cb7f991c08f0c2c4a41eacef3dc672786a3d2c7b5b8",
+  "moduleFileHash": "4f9937f8a67759a09d01ac38c044eb1890f957bcbe542f6fa8fa471982c7c444",
   "flags": {
     "cmdRegistries": [
       "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/"
@@ -115,17 +115,17 @@
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
         "gtest": "googletest@1.12.1",
-        "rules_cc": "rules_cc@0.0.6",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_java": "rules_java@6.4.0",
         "rules_jvm_external": "rules_jvm_external@5.3",
         "rules_python": "rules_python@0.21.0",
-        "bzlmodrio-apriltaglib": "bzlmodrio-apriltaglib@3.2.0-8",
+        "bzlmodrio-apriltaglib": "bzlmodrio-apriltaglib@3.3.0-1",
         "bzlmodrio-imgui": "bzlmodrio-imgui@1.89.1-2",
         "bzlmodrio-libssh": "bzlmodrio-libssh@0.95-8",
-        "bzlmodrio-ni": "bzlmodrio-ni@2023.3.0",
+        "bzlmodrio-ni": "bzlmodrio-ni@2024.1.0",
         "bzlmodrio-opencv": "bzlmodrio-opencv@4.6.0-5",
         "rules_bzlmodrio_toolchains": "rules_bzlmodrio_toolchains@_",
-        "rules_bazelrio": "rules_bazelrio@0.0.12"
+        "rules_bazelrio": "rules_bazelrio@0.0.13"
       }
     },
     "bazel_tools@_": {
@@ -251,12 +251,12 @@
       ],
       "deps": {
         "local_config_platform": "local_config_platform@_",
-        "rules_cc": "rules_cc@0.0.6",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_java": "rules_java@6.4.0",
-        "rules_license": "rules_license@0.0.3",
+        "rules_license": "rules_license@0.0.7",
         "rules_proto": "rules_proto@5.3.0-21.7",
         "rules_python": "rules_python@0.21.0",
-        "platforms": "platforms@0.0.6",
+        "platforms": "platforms@0.0.7",
         "com_google_protobuf": "protobuf@21.7",
         "zlib": "zlib@1.2.13"
       }
@@ -271,7 +271,7 @@
       "extensionUsages": [],
       "deps": {
         "bazel_tools": "bazel_tools@_",
-        "platforms": "platforms@0.0.6"
+        "platforms": "platforms@0.0.7"
       }
     },
     "googletest@1.12.1": {
@@ -286,8 +286,8 @@
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
         "com_google_absl": "abseil-cpp@20211102.0",
-        "platforms": "platforms@0.0.6",
-        "rules_cc": "rules_cc@0.0.6"
+        "platforms": "platforms@0.0.7",
+        "rules_cc": "rules_cc@0.0.8"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
@@ -295,10 +295,10 @@
         "attributes": {"name":"--googletest~1.12.1","urls":["--https://github.com/google/googletest/archive/refs/tags/release-1.12.1.tar.gz"],"integrity":"--sha256-gZZP5XjpvXyU39sJyOTW5nWeGZZ+OX2+pI0cEORdDfI=","strip_prefix":"--googletest-release-1.12.1","remote_patches":{"--https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/googletest/1.12.1/patches/module_dot_bazel.patch":"--sha256-8/a2a7y0JeRh9gsDCSsFhJjXqsauwyFRK8ccm2wvVaE="},"remote_patch_strip":0}
       }
     },
-    "rules_cc@0.0.6": {
+    "rules_cc@0.0.8": {
       "name": "rules_cc",
-      "version": "0.0.6",
-      "key": "rules_cc@0.0.6",
+      "version": "0.0.8",
+      "key": "rules_cc@0.0.8",
       "repoName": "rules_cc",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [
@@ -308,9 +308,9 @@
         {
           "extensionBzlFile": "@rules_cc//cc:extensions.bzl",
           "extensionName": "cc_configure",
-          "usingModule": "rules_cc@0.0.6",
+          "usingModule": "rules_cc@0.0.8",
           "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.6/MODULE.bazel",
+            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.8/MODULE.bazel",
             "line": 9,
             "column": 29
           },
@@ -326,12 +326,12 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6"
+        "platforms": "platforms@0.0.7"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
         "ruleClassName": "http_archive",
-        "attributes": {"name":"--rules_cc~0.0.6","urls":["--https://github.com/bazelbuild/rules_cc/releases/download/0.0.6/rules_cc-0.0.6.tar.gz"],"integrity":"--sha256-PZ4nHih2ukLhFMm5vFFFTjecvw7J751A4q5M7GGjG0A=","strip_prefix":"--rules_cc-0.0.6","remote_patches":{"--https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.6/patches/module_dot_bazel.patch":"--sha256-aYtJVwlC1sQA+C+afK5ySZMSPhIheLqTDq84TQAAxb0="},"remote_patch_strip":0}
+        "attributes": {"name":"--rules_cc~0.0.8","urls":["--https://github.com/bazelbuild/rules_cc/releases/download/0.0.8/rules_cc-0.0.8.tar.gz"],"integrity":"--sha256-rka3Iqi46bYhcPg7+wQMvxKttzIUTmiZhaZrJkEKfW8=","strip_prefix":"--rules_cc-0.0.8","remote_patches":{"--https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_cc/0.0.8/patches/module_dot_bazel.patch":"--sha256-HPCau/Oi4m6Zk2BzaYpe69cJFQUwFWFrt2mURUq4D+k="},"remote_patch_strip":0}
       }
     },
     "rules_java@6.4.0": {
@@ -413,11 +413,11 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
-        "rules_cc": "rules_cc@0.0.6",
+        "platforms": "platforms@0.0.7",
+        "rules_cc": "rules_cc@0.0.8",
         "bazel_skylib": "bazel_skylib@1.4.2",
         "rules_proto": "rules_proto@5.3.0-21.7",
-        "rules_license": "rules_license@0.0.3"
+        "rules_license": "rules_license@0.0.7"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
@@ -559,7 +559,7 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
+        "platforms": "platforms@0.0.7",
         "bazel_skylib": "bazel_skylib@1.4.2",
         "rules_proto": "rules_proto@5.3.0-21.7",
         "com_google_protobuf": "protobuf@21.7"
@@ -570,10 +570,10 @@
         "attributes": {"name":"--rules_python~0.21.0","urls":["--https://github.com/bazelbuild/rules_python/releases/download/0.21.0/rules_python-0.21.0.tar.gz"],"integrity":"--sha256-lHUIKLGARFM+mKEpADtqaAASBAONxHSfQLGVskw49J8=","strip_prefix":"--rules_python-0.21.0","remote_patches":{"--https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_python/0.21.0/patches/module_dot_bazel_version.patch":"--sha256-U/qMVqTtr7u1EEcnrjzYng2Qk4xlqLvxITkBsUjjmGE="},"remote_patch_strip":0}
       }
     },
-    "bzlmodrio-apriltaglib@3.2.0-8": {
+    "bzlmodrio-apriltaglib@3.3.0-1": {
       "name": "bzlmodrio-apriltaglib",
-      "version": "3.2.0-8",
-      "key": "bzlmodrio-apriltaglib@3.2.0-8",
+      "version": "3.3.0-1",
+      "key": "bzlmodrio-apriltaglib@3.3.0-1",
       "repoName": "bzlmodrio-apriltaglib",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
@@ -581,9 +581,9 @@
         {
           "extensionBzlFile": "@bzlmodrio-apriltaglib//:maven_cpp_deps.bzl",
           "extensionName": "setup_bzlmodrio_apriltaglib_cpp_dependencies",
-          "usingModule": "bzlmodrio-apriltaglib@3.2.0-8",
+          "usingModule": "bzlmodrio-apriltaglib@3.3.0-1",
           "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-apriltaglib/3.2.0-8/MODULE.bazel",
+            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-apriltaglib/3.3.0-1/MODULE.bazel",
             "line": 13,
             "column": 61
           },
@@ -615,9 +615,9 @@
         {
           "extensionBzlFile": "@bzlmodrio-apriltaglib//:maven_java_deps.bzl",
           "extensionName": "setup_bzlmodrio_apriltaglib_java_dependencies",
-          "usingModule": "bzlmodrio-apriltaglib@3.2.0-8",
+          "usingModule": "bzlmodrio-apriltaglib@3.3.0-1",
           "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-apriltaglib/3.2.0-8/MODULE.bazel",
+            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-apriltaglib/3.3.0-1/MODULE.bazel",
             "line": 36,
             "column": 62
           },
@@ -631,16 +631,16 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
-        "rules_cc": "rules_cc@0.0.6",
+        "platforms": "platforms@0.0.7",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_java": "rules_java@6.4.0",
-        "rules_bazelrio": "rules_bazelrio@0.0.12",
+        "rules_bazelrio": "rules_bazelrio@0.0.13",
         "rules_bzlmodrio_toolchains": "rules_bzlmodrio_toolchains@_"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
         "ruleClassName": "http_archive",
-        "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8","urls":["--https://github.com/bzlmodRio/bzlmodrio-apriltaglib/releases/download/3.2.0-8/bzlmodrio-apriltaglib-3.2.0-8.tar.gz"],"integrity":"--sha256-WO9+ukvYiz62i0GvDIzPtgrkMfDP+3vxgn1zbSORUWo=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
+        "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1","urls":["--https://github.com/bzlmodRio/bzlmodrio-apriltaglib/releases/download/3.3.0-1/bzlmodrio-apriltaglib-3.3.0-1.tar.gz"],"integrity":"--sha256-NnnwMKLl+5vas2A3Ffppe2MGB7Rq2jl26IO0Sj0bHjk=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
       }
     },
     "bzlmodrio-imgui@1.89.1-2": {
@@ -701,10 +701,10 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
-        "rules_cc": "rules_cc@0.0.6",
+        "platforms": "platforms@0.0.7",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_java": "rules_java@6.4.0",
-        "rules_bazelrio": "rules_bazelrio@0.0.12",
+        "rules_bazelrio": "rules_bazelrio@0.0.13",
         "rules_bzlmodrio_toolchains": "rules_bzlmodrio_toolchains@_"
       },
       "repoSpec": {
@@ -772,10 +772,10 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
-        "rules_cc": "rules_cc@0.0.6",
+        "platforms": "platforms@0.0.7",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_java": "rules_java@6.4.0",
-        "rules_bazelrio": "rules_bazelrio@0.0.12",
+        "rules_bazelrio": "rules_bazelrio@0.0.13",
         "rules_bzlmodrio_toolchains": "rules_bzlmodrio_toolchains@_"
       },
       "repoSpec": {
@@ -784,10 +784,10 @@
         "attributes": {"name":"--bzlmodrio-libssh~0.95-8","urls":["--https://github.com/bzlmodRio/bzlmodrio-libssh/releases/download/0.95-8/bzlmodrio-libssh-0.95-8.tar.gz"],"integrity":"--sha256-38/5KD/pQ0aAz6ruHBhDfHN7QbssAJer/6+gamCLA3U=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
       }
     },
-    "bzlmodrio-ni@2023.3.0": {
+    "bzlmodrio-ni@2024.1.0": {
       "name": "bzlmodrio-ni",
-      "version": "2023.3.0",
-      "key": "bzlmodrio-ni@2023.3.0",
+      "version": "2024.1.0",
+      "key": "bzlmodrio-ni@2024.1.0",
       "repoName": "bzlmodrio-ni",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
@@ -795,9 +795,9 @@
         {
           "extensionBzlFile": "@bzlmodrio-ni//:maven_cpp_deps.bzl",
           "extensionName": "setup_bzlmodrio_ni_cpp_dependencies",
-          "usingModule": "bzlmodrio-ni@2023.3.0",
+          "usingModule": "bzlmodrio-ni@2024.1.0",
           "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2023.3.0/MODULE.bazel",
+            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2024.1.0/MODULE.bazel",
             "line": 13,
             "column": 52
           },
@@ -818,9 +818,9 @@
         {
           "extensionBzlFile": "@bzlmodrio-ni//:maven_java_deps.bzl",
           "extensionName": "setup_bzlmodrio_ni_java_dependencies",
-          "usingModule": "bzlmodrio-ni@2023.3.0",
+          "usingModule": "bzlmodrio-ni@2024.1.0",
           "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2023.3.0/MODULE.bazel",
+            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2024.1.0/MODULE.bazel",
             "line": 25,
             "column": 53
           },
@@ -834,16 +834,16 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
-        "rules_cc": "rules_cc@0.0.6",
+        "platforms": "platforms@0.0.7",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_java": "rules_java@6.4.0",
-        "rules_bazelrio": "rules_bazelrio@0.0.12",
+        "rules_bazelrio": "rules_bazelrio@0.0.13",
         "rules_bzlmodrio_toolchains": "rules_bzlmodrio_toolchains@_"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
         "ruleClassName": "http_archive",
-        "attributes": {"name":"--bzlmodrio-ni~2023.3.0","urls":["--https://github.com/bzlmodRio/bzlmodrio-ni/releases/download/2023.3.0/bzlmodrio-ni-2023.3.0.tar.gz"],"integrity":"--sha256-zxUyyJa7lfTrc8jPW6yWj3T2mGwS3hQdjE9dj/lc1SA=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
+        "attributes": {"name":"--bzlmodrio-ni~2024.1.0","urls":["--https://github.com/bzlmodRio/bzlmodrio-ni/releases/download/2024.1.0/bzlmodrio-ni-2024.1.0.tar.gz"],"integrity":"--sha256-Gg11URgpQOG1n2o2nH9f4hetL6KYarfw/cVkqDz9rNk=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
       }
     },
     "bzlmodrio-opencv@4.6.0-5": {
@@ -929,10 +929,10 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
-        "rules_cc": "rules_cc@0.0.6",
+        "platforms": "platforms@0.0.7",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_java": "rules_java@6.4.0",
-        "rules_bazelrio": "rules_bazelrio@0.0.12",
+        "rules_bazelrio": "rules_bazelrio@0.0.13",
         "rules_bzlmodrio_toolchains": "rules_bzlmodrio_toolchains@_"
       },
       "repoSpec": {
@@ -1014,15 +1014,15 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
-        "rules_cc": "rules_cc@0.0.6",
+        "platforms": "platforms@0.0.7",
+        "rules_cc": "rules_cc@0.0.8",
         "bazel_skylib": "bazel_skylib@1.4.2"
       }
     },
-    "rules_bazelrio@0.0.12": {
+    "rules_bazelrio@0.0.13": {
       "name": "rules_bazelrio",
-      "version": "0.0.12",
-      "key": "rules_bazelrio@0.0.12",
+      "version": "0.0.13",
+      "key": "rules_bazelrio@0.0.13",
       "repoName": "rules_bazelrio",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
@@ -1030,9 +1030,9 @@
         {
           "extensionBzlFile": "@rules_jvm_external//:extensions.bzl",
           "extensionName": "maven",
-          "usingModule": "rules_bazelrio@0.0.12",
+          "usingModule": "rules_bazelrio@0.0.13",
           "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bazelrio/0.0.12/MODULE.bazel",
+            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bazelrio/0.0.13/MODULE.bazel",
             "line": 12,
             "column": 22
           },
@@ -1046,7 +1046,7 @@
               "attributeValues": {"name":"--rules_bazelrio_maven","artifacts":["--com.hierynomus:sshj:0.32.0","--me.tongfei:progressbar:0.9.2","--net.sourceforge.argparse4j:argparse4j:0.9.0","--org.slf4j:slf4j-nop:1.7.32"],"repositories":["--https://repo1.maven.org/maven2"]},
               "devDependency": false,
               "location": {
-                "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bazelrio/0.0.12/MODULE.bazel",
+                "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_bazelrio/0.0.13/MODULE.bazel",
                 "line": 13,
                 "column": 14
               }
@@ -1059,21 +1059,21 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6",
+        "platforms": "platforms@0.0.7",
         "rules_java": "rules_java@6.4.0",
-        "rules_cc": "rules_cc@0.0.6",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_jvm_external": "rules_jvm_external@5.3"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
         "ruleClassName": "http_archive",
-        "attributes": {"name":"--rules_bazelrio~0.0.12","urls":["--https://github.com/bzlmodRio/rules_bazelrio/releases/download/0.0.12/rules_bazelrio-0.0.12.tar.gz"],"integrity":"--sha256-DK9sTaZ7CKu7jMYZcpko+gUWoNXOAa30FB0d03hGa8Y=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
+        "attributes": {"name":"--rules_bazelrio~0.0.13","urls":["--https://github.com/bzlmodRio/rules_bazelrio/releases/download/0.0.13/rules_bazelrio-0.0.13.tar.gz"],"integrity":"--sha256-tDmx+j6tAV2Psg+ATmX8h30o050ze5Y9sBERnGx6I6U=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
       }
     },
-    "rules_license@0.0.3": {
+    "rules_license@0.0.7": {
       "name": "rules_license",
-      "version": "0.0.3",
-      "key": "rules_license@0.0.3",
+      "version": "0.0.7",
+      "key": "rules_license@0.0.7",
       "repoName": "rules_license",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
@@ -1085,7 +1085,7 @@
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
         "ruleClassName": "http_archive",
-        "attributes": {"name":"--rules_license~0.0.3","urls":["--https://github.com/bazelbuild/rules_license/releases/download/0.0.3/rules_license-0.0.3.tar.gz"],"integrity":"--sha256-AMzA3yExLBJ6xLEogKsPmibBz/mUQtxsWjMXUDYN48M=","strip_prefix":"--","remote_patches":{"--https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/rules_license/0.0.3/patches/module_dot_bazel.patch":"--sha256-yim5cwFqlS1F1UomygmIEM/UQhrkQZyYrwo48WFt4gE="},"remote_patch_strip":0}
+        "attributes": {"name":"--rules_license~0.0.7","urls":["--https://github.com/bazelbuild/rules_license/releases/download/0.0.7/rules_license-0.0.7.tar.gz"],"integrity":"--sha256-RTHezLkTY5ww5cdRKgVNXYdWmNrrddjPkPKEN1/nw2A=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
       }
     },
     "rules_proto@5.3.0-21.7": {
@@ -1101,7 +1101,7 @@
         "local_config_platform": "local_config_platform@_",
         "bazel_skylib": "bazel_skylib@1.4.2",
         "com_google_protobuf": "protobuf@21.7",
-        "rules_cc": "rules_cc@0.0.6"
+        "rules_cc": "rules_cc@0.0.8"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
@@ -1109,22 +1109,23 @@
         "attributes": {"name":"--rules_proto~5.3.0-21.7","urls":["--https://github.com/bazelbuild/rules_proto/archive/refs/tags/5.3.0-21.7.tar.gz"],"integrity":"--sha256-3D+yBqLLNEG0heseQjFlsjEjWh6psDG0Qzz3vB+kYN0=","strip_prefix":"--rules_proto-5.3.0-21.7","remote_patches":{},"remote_patch_strip":0}
       }
     },
-    "platforms@0.0.6": {
+    "platforms@0.0.7": {
       "name": "platforms",
-      "version": "0.0.6",
-      "key": "platforms@0.0.6",
+      "version": "0.0.7",
+      "key": "platforms@0.0.7",
       "repoName": "platforms",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
       "extensionUsages": [],
       "deps": {
         "bazel_tools": "bazel_tools@_",
-        "local_config_platform": "local_config_platform@_"
+        "local_config_platform": "local_config_platform@_",
+        "rules_license": "rules_license@0.0.7"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
         "ruleClassName": "http_archive",
-        "attributes": {"name":"--platforms","urls":["--https://github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz"],"integrity":"--sha256-Uwj8HYhlQGpJQnuiSpq1MIfxf1Jmp6q7/CiCPzkW4co=","strip_prefix":"--","remote_patches":{"--https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/platforms/0.0.6/patches/module_dot_bazel.patch":"--sha256-/ITFV+xsibQyr8dnuvUILvdoOigF6XuiyZHN+Gf7UM8="},"remote_patch_strip":0}
+        "attributes": {"name":"--platforms","urls":["--https://github.com/bazelbuild/platforms/releases/download/0.0.7/platforms-0.0.7.tar.gz"],"integrity":"--sha256-OlYcmee9vpFzqmU/1Xn+hJ8djWc5V4CrR3Cx84FDHVE=","strip_prefix":"--","remote_patches":{},"remote_patch_strip":0}
       }
     },
     "protobuf@21.7": {
@@ -1169,7 +1170,7 @@
         "local_config_platform": "local_config_platform@_",
         "bazel_skylib": "bazel_skylib@1.4.2",
         "rules_python": "rules_python@0.21.0",
-        "rules_cc": "rules_cc@0.0.6",
+        "rules_cc": "rules_cc@0.0.8",
         "rules_proto": "rules_proto@5.3.0-21.7",
         "rules_java": "rules_java@6.4.0",
         "rules_pkg": "rules_pkg@0.7.0",
@@ -1214,8 +1215,8 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "rules_cc": "rules_cc@0.0.6",
-        "platforms": "platforms@0.0.6"
+        "rules_cc": "rules_cc@0.0.8",
+        "platforms": "platforms@0.0.7"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
@@ -1237,7 +1238,7 @@
       "deps": {
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_",
-        "platforms": "platforms@0.0.6"
+        "platforms": "platforms@0.0.7"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
@@ -1278,7 +1279,7 @@
         "local_config_platform": "local_config_platform@_",
         "rules_python": "rules_python@0.21.0",
         "bazel_skylib": "bazel_skylib@1.4.2",
-        "rules_license": "rules_license@0.0.3"
+        "rules_license": "rules_license@0.0.7"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
@@ -1301,7 +1302,7 @@
         "rules_proto": "rules_proto@5.3.0-21.7",
         "com_google_protobuf": "protobuf@21.7",
         "com_google_absl": "abseil-cpp@20211102.0",
-        "platforms": "platforms@0.0.6"
+        "platforms": "platforms@0.0.7"
       },
       "repoSpec": {
         "bzlFile": "@bazel_tools//tools/build_defs/repo:http.bzl",
@@ -1413,28 +1414,6 @@
           "bzlFile": "@@rules_bzlmodrio_toolchains~override//toolchains:configure_cross_compiler.bzl",
           "ruleClassName": "configure_cross_compiler",
           "attributes": {"name":"--rules_bzlmodrio_toolchains~override~sh_configure~local_raspi_32","compiler":"--raspi-32","bin_subfolder":"--raspi-bullseye/bin","bin_prefix":"--armv6-bullseye-linux-gnueabihf-","sysroot_subfolder":"--raspi-bullseye/arm-linux-gnueabihf/sysroot","cxx_version":"--10","sysroot_include_folder":"--arm-linux-gnueabihf","repo_shortname":"--raspi_32"}
-        }
-      }
-    },
-    "@rules_cc~0.0.6//cc:extensions.bzl%cc_configure": {
-      "bzlTransitiveDigest": "VKMuk3c8UzzPCfNMffIZahPRypRs3RxaBtETOTI5fJg=",
-      "accumulatedFileDigests": {},
-      "envVariables": {},
-      "generatedRepoSpecs": {
-        "local_config_cc": {
-          "bzlFile": "@@rules_cc~0.0.6//cc/private/toolchain:cc_configure.bzl",
-          "ruleClassName": "cc_autoconf",
-          "attributes": {"name":"--rules_cc~0.0.6~cc_configure~local_config_cc"}
-        },
-        "local_config_cc_toolchains": {
-          "bzlFile": "@@rules_cc~0.0.6//cc/private/toolchain:cc_configure.bzl",
-          "ruleClassName": "cc_autoconf_toolchains",
-          "attributes": {"name":"--rules_cc~0.0.6~cc_configure~local_config_cc_toolchains"}
-        },
-        "local_config_xcode": {
-          "bzlFile": "@@bazel_tools//tools/osx:xcode_configure.bzl",
-          "ruleClassName": "xcode_autoconf",
-          "attributes": {"name":"--rules_cc~0.0.6~cc_configure~local_config_xcode","xcode_locator":"--@bazel_tools//tools/osx:xcode_locator.m","remote_xcode":"--"}
         }
       }
     },
@@ -2679,103 +2658,6 @@
         }
       }
     },
-    "@bzlmodrio-apriltaglib~3.2.0-8//:maven_cpp_deps.bzl%setup_bzlmodrio_apriltaglib_cpp_dependencies": {
-      "bzlTransitiveDigest": "SAjTX7RWxob2HiA/M03UuYa+D+hhVCnvm/zFFf4P1ZQ=",
-      "accumulatedFileDigests": {},
-      "envVariables": {},
-      "generatedRepoSpecs": {
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_osxuniversalstatic": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_osxuniversalstatic","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-osxuniversalstatic.zip","sha256":"--0c336595917390287e83bec407d76e1d0eadcb2219fe47428fd6e9bc35c38b96","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsarm64static": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsarm64static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-windowsarm64static.zip","sha256":"--be4cb0806ed0db9877db861131b9738c4e2a17d2016be562487791e91f344f1a","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_osxuniversalstaticdebug": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_osxuniversalstaticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-osxuniversalstaticdebug.zip","sha256":"--84ba61bf8eee7fa22cb3492f4eda04baad58c5fc0ffa8e675d4eb39551a12277","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86staticdebug": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-windowsx86staticdebug.zip","sha256":"--244e10dbad1070737222dcc925299aa441d5bc3870a673f24d3bd5c882957fcc","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm64static": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm64static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-linuxarm64static.zip","sha256":"--ec1c7818a74a559ea066e1bf34c5fd58fdbfa88370f929dfa080a3c958e76a70","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxathenastatic": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxathenastatic","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-linuxathenastatic.zip","sha256":"--1d1be86bf79a002dcaf17d682b3865f2b2099979568a1d8389f1113810906428","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxx86-64staticdebug": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxx86-64staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-linuxx86-64staticdebug.zip","sha256":"--8924b4d43389eafa7e5dd9aadcb8e05680c55a5c01a254c004c25420042b3862","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxathenastaticdebug": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxathenastaticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-linuxathenastaticdebug.zip","sha256":"--fceb0a4998164b11deeba2cae1afcead2eca21f66e8c72e076d128b8444c4b30","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsarm64staticdebug": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsarm64staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-windowsarm64staticdebug.zip","sha256":"--9d9f2b68a4766ec08184c3d66797ecd213de02911288b5c0e74ea0334fa1ab14","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86static": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-windowsx86static.zip","sha256":"--2532b690df25fc053fce73eca612be45c4357c8039b5b01eca75a45383d0e316","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm64staticdebug": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm64staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-linuxarm64staticdebug.zip","sha256":"--5bfc2c7a4d8e5dc5e9653d7d97155bfa976de99899002578b3151393560531ce","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm32staticdebug": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm32staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-linuxarm32staticdebug.zip","sha256":"--9752e1f818622ed7424a77ea5854d1155cd62b096e95d5a0640c34cb2d06ede4","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm32static": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm32static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-linuxarm32static.zip","sha256":"--fb79473aaf2fef4cb8a915d4d0ec16768612f4b1b6cc6b7edc7a1035d6bb874f","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxx86-64static": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxx86-64static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-linuxx86-64static.zip","sha256":"--ff093c7b601917a7921dca0110e955f8218d321b19d2600e7b30fcfd923bc68a","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86-64staticdebug": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86-64staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-windowsx86-64staticdebug.zip","sha256":"--c3e20813bc3de13e2f3ef625a6949b55dcedac72633c4898c0090d39a19e27dc","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_headers": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_headers","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-headers.zip","sha256":"--e1d1a779a82aad41c422cd218021eaab8d7d6bbd55414a0a0137c2529c03a1fb","build_file_content":"--cc_library(\n    name = \"headers\",\n    hdrs = glob([\"**\"]),\n    includes = [\".\"],\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86-64static": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86-64static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-windowsx86-64static.zip","sha256":"--39ae25f280d7d2927aed1a2c33eada6ef6a8e36bec02e446facf8a823f56a4de","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
-        },
-        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_sources": {
-          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-          "ruleClassName": "http_archive",
-          "attributes": {"name":"--bzlmodrio-apriltaglib~3.2.0-8~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_sources","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.2.0-8/apriltaglib-3.2.0-8-sources.zip","sha256":"--d2ebc0c20ddb121fa795f49e57c5f58c6bbdae40068cd117960c7f091bbe073a","build_file_content":"--filegroup(\n     name = \"sources\",\n     srcs = glob([\"**\"]),\n     visibility = [\"//visibility:public\"],\n )\n "}
-        }
-      }
-    },
     "@bzlmodrio-imgui~1.89.1-2//:maven_cpp_deps.bzl%setup_bzlmodrio_imgui_cpp_dependencies": {
       "bzlTransitiveDigest": "HUn4UfPbXMWD3H6c9Cw8uWXFArrubFYKbsTKRofzRQQ=",
       "accumulatedFileDigests": {},
@@ -2855,6 +2737,125 @@
           "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
           "ruleClassName": "http_archive",
           "attributes": {"name":"--bzlmodrio-imgui~1.89.1-2~setup_bzlmodrio_imgui_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_imgui_windowsx86static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/imgui/1.89.1-2/imgui-1.89.1-2-windowsx86static.zip","sha256":"--693945ead0d310cdc13b53c548d1eae3ffbbb1c74b7848eaafeaaa946c7626fb","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        }
+      }
+    },
+    "@rules_cc~0.0.8//cc:extensions.bzl%cc_configure": {
+      "bzlTransitiveDigest": "VKMuk3c8UzzPCfNMffIZahPRypRs3RxaBtETOTI5fJg=",
+      "accumulatedFileDigests": {},
+      "envVariables": {},
+      "generatedRepoSpecs": {
+        "local_config_cc": {
+          "bzlFile": "@@rules_cc~0.0.8//cc/private/toolchain:cc_configure.bzl",
+          "ruleClassName": "cc_autoconf",
+          "attributes": {"name":"--rules_cc~0.0.8~cc_configure~local_config_cc"}
+        },
+        "local_config_cc_toolchains": {
+          "bzlFile": "@@rules_cc~0.0.8//cc/private/toolchain:cc_configure.bzl",
+          "ruleClassName": "cc_autoconf_toolchains",
+          "attributes": {"name":"--rules_cc~0.0.8~cc_configure~local_config_cc_toolchains"}
+        },
+        "local_config_xcode": {
+          "bzlFile": "@@bazel_tools//tools/osx:xcode_configure.bzl",
+          "ruleClassName": "xcode_autoconf",
+          "attributes": {"name":"--rules_cc~0.0.8~cc_configure~local_config_xcode","xcode_locator":"--@bazel_tools//tools/osx:xcode_locator.m","remote_xcode":"--"}
+        }
+      }
+    },
+    "@bzlmodrio-apriltaglib~3.3.0-1//:maven_cpp_deps.bzl%setup_bzlmodrio_apriltaglib_cpp_dependencies": {
+      "bzlTransitiveDigest": "Do5fy0waX6WvNpOUxIWIwculn7aBBiCrKAkn7DKEEow=",
+      "accumulatedFileDigests": {},
+      "envVariables": {},
+      "generatedRepoSpecs": {
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_osxuniversalstatic": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_osxuniversalstatic","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-osxuniversalstatic.zip","sha256":"--9a891fbe2f2304da98845653c60808026ee31dcbf8e7b345bda586948eb69719","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsarm64static": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsarm64static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-windowsarm64static.zip","sha256":"--ffed4aa53295b300020a4ce1360bd8f68f461386fb11cca5840126f81950c585","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_osxuniversalstaticdebug": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_osxuniversalstaticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-osxuniversalstaticdebug.zip","sha256":"--8f288e81ff04656f12a8e6a2f3b29d19950e17e944e892e517c050f2f2b4c656","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86staticdebug": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-windowsx86staticdebug.zip","sha256":"--f7593c6a41db95f42a0b43495c1c9c1b9bf77bbef98bf0e57d46fdffe01fda16","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm64static": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm64static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-linuxarm64static.zip","sha256":"--27c4892f2fdaf86c74a6f12f7444ba47d58b44f0499093c5e6a4f4a891416289","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxathenastatic": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxathenastatic","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-linuxathenastatic.zip","sha256":"--9cbe44ae054d6a05a1527299958848d05340bde5f1c0e55bd494c30429deab73","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxx86-64staticdebug": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxx86-64staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-linuxx86-64staticdebug.zip","sha256":"--af15d382160fefd9cb988b8e642c13f8f9a29032d2500dd885574c9725d33f96","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxathenastaticdebug": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxathenastaticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-linuxathenastaticdebug.zip","sha256":"--3c56a57cd5ba991757cd71fddca3f2c927a5350d592e5a639a00c9e933def474","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsarm64staticdebug": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsarm64staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-windowsarm64staticdebug.zip","sha256":"--381bc146a0881960f6a5a1db95d22fe8ac0be1dcf47bcf9cec6059a35337ae5c","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86static": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-windowsx86static.zip","sha256":"--7e7d086c8f0d017755ff5a3b5240e492bf08afcc40ff7d833d4277c1af1761bc","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm64staticdebug": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm64staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-linuxarm64staticdebug.zip","sha256":"--e9d54be91c4c05fe02e5333864bd7654c951e26c7e9422b2a5413e5e0297774d","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm32staticdebug": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm32staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-linuxarm32staticdebug.zip","sha256":"--7c90d26cb259f99b0cbf3b34eb7633b78e46f33f0d986bbe56b5157c4ae390e2","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm32static": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxarm32static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-linuxarm32static.zip","sha256":"--57da65ca503c67b334843f1be2e2eb872742b842710588737a1dd2243ad7f4df","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxx86-64static": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_linuxx86-64static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-linuxx86-64static.zip","sha256":"--b90e1a5c67240327a6d5116c023096af5964af3592204e53b5ce35f04b959466","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86-64staticdebug": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86-64staticdebug","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-windowsx86-64staticdebug.zip","sha256":"--f79a8e0dfe685cbcb1eb5cb4a98b048f71abf9efca59900ffe1d1fa2bc13c1c8","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_headers": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_headers","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-headers.zip","sha256":"--b62f857f96c523d2cb8e1d7868df470d3b31890e3579ab3299efe37bc931c21e","build_file_content":"--cc_library(\n    name = \"headers\",\n    hdrs = glob([\"**\"]),\n    includes = [\".\"],\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86-64static": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_windowsx86-64static","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-windowsx86-64static.zip","sha256":"--28d46cb07d00b4c9317cc7922f401a8d45bdf9883847a5436c10841326e772c4","build_file_content":"--\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"}
+        },
+        "bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_sources": {
+          "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+          "ruleClassName": "http_archive",
+          "attributes": {"name":"--bzlmodrio-apriltaglib~3.3.0-1~setup_bzlmodrio_apriltaglib_cpp_dependencies~bazelrio_edu_wpi_first_thirdparty_frc_apriltaglib_sources","url":"--https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2023/apriltaglib/3.3.0-1/apriltaglib-3.3.0-1-sources.zip","sha256":"--d0fa2eab79189a7810252ac2d17a9136ac6dfccbccbf6f5e65a69bbcc6d5b7d9","build_file_content":"--filegroup(\n     name = \"sources\",\n     srcs = glob([\"**\"]),\n     visibility = [\"//visibility:public\"],\n )\n "}
         }
       }
     }

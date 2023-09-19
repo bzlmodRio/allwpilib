@@ -6,6 +6,7 @@ build:windows_arm --copt=/W3
 build:windows_arm --copt=/WX
 
 # C++ options
+build:windows_arm --cxxopt=/utf-8
 build:windows_arm --cxxopt=/EHsc
 build:windows_arm --cxxopt=/FS
 build:windows_arm --cxxopt=/Zc:inline
