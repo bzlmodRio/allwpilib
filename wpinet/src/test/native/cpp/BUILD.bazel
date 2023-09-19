@@ -10,6 +10,7 @@ wpilib_cc_test(
     tags = ["no-asan"],
     deps = [
         "//wpinet/src/main/native:wpinet.static",
+        "//wpiutil/src/test/native:wpiutil-testlib",
         "@gtest",
     ],
 )

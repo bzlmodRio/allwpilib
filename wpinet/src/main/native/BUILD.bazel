@@ -1,4 +1,4 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_and_shared_library")
 load("//shared/bazel/rules/gen:gen-resources.bzl", "generate_resources")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 
@@ -18,6 +18,14 @@ filegroup(
     }),
 )
 
+wpilib_cc_library(
+    name = "private_includes",
+    hdrs = glob([
+        "cpp/*.h",
+    ]),
+    strip_include_prefix = "cpp",
+)
+
 wpilib_cc_static_and_shared_library(
     name = "wpinet",
     srcs = glob(
@@ -30,6 +38,7 @@ wpilib_cc_static_and_shared_library(
     hdrs = glob(["include/**/*"]),
     includes = ["include"],
     standard_deps = [
+        ":private_includes",
         "//wpinet/src/main/native/thirdparty/libuv:libuv-headers",
         "//wpinet/src/main/native/thirdparty/tcpsockets:tcpsockets-headers",
     ],
