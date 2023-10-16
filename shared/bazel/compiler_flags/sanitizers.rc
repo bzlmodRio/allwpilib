@@ -1,9 +1,5 @@
 # ASAN (address sanitizer) config
-build:asan --strip=never
 build:asan --copt -fsanitize=address
-build:asan --copt -DADDRESS_SANITIZER
-build:asan --copt -O1
-build:asan --copt -g
 build:asan --copt -fno-omit-frame-pointer
 build:asan --linkopt -fsanitize=address
 build:asan --build_tests_only
@@ -22,11 +18,10 @@ build:tsan --build_tests_only
 build:tsan --test_tag_filters=-no-tsan
 
 # USAN (Undefined Behavior Sanitizer)
-build:ubsan --strip=never
 build:ubsan --copt -fsanitize=undefined
-build:ubsan --copt -O1
+build:ubsan --copt -fno-sanitize-recover=all
 build:ubsan --copt -fno-omit-frame-pointer
 build:ubsan --linkopt -fsanitize=undefined
-build:ubsan --linkopt -lubsan
+build:ubsan --linkopt -fno-sanitize-recover=all
 build:ubsan --build_tests_only
 build:ubsan --test_tag_filters=-no-ubsan
