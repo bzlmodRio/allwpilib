@@ -30,6 +30,7 @@ def main():
         "0008-Use-C-atomics.patch",
         "0009-Remove-static-from-array-indices.patch",
         "0010-Add-pragmas-for-missing-libraries-and-set-_WIN32_WIN.patch",
+        "0011-Fix-bazel.patch",
     ]:
         git_am(os.path.join(wpilib_root, "upstream_utils/libuv_patches", f))
 
