@@ -8,11 +8,9 @@ wpilib_cc_library(
     ]),
     includes = ["include"],
     strip_include_prefix = "include",
-    visibility = ["//wpiutil:__subpackages__"],
 )
 
 filegroup(
     name = "protobuf-srcs",
     srcs = glob(["src/**"]),
-    visibility = ["//wpiutil:__subpackages__"],
 )

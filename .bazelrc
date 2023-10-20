@@ -25,3 +25,5 @@ build --lockfile_mode=update
 build --registry=https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/
 
 build:ci --config=remote
+
+build --proto_toolchain_for_java=//:quickbuf_toolchain

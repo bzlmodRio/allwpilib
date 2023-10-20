@@ -1,6 +1,7 @@
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
 load("@rules_python//python:pip.bzl", "pip_parse")
+load("//shared/bazel/deps:quickbuf_protoc.bzl", "setup_non_bzlmod_quickbuf_protoc")
 load("//shared/bazel/deps/gtest:repo.bzl", "third_party_gtest")
 
 def load_third_party():
@@ -12,6 +13,7 @@ def load_third_party():
         "com.fasterxml.jackson.core:jackson-annotations:2.15.2",
         "com.fasterxml.jackson.core:jackson-core:2.15.2",
         "com.fasterxml.jackson.core:jackson-databind:2.15.2",
+        "us.hebi.quickbuf:quickbuf-runtime:1.3.2",
         maven.artifact("org.junit.jupiter", "junit-jupiter-api", "5.10.0", testonly = True),
         maven.artifact("org.junit.jupiter", "junit-jupiter-params", "5.10.0", testonly = True),
         maven.artifact("org.junit.jupiter", "junit-jupiter-engine", "5.10.0", testonly = True),
@@ -43,3 +45,5 @@ def load_third_party():
         name = "allwpilib_pip_deps",
         requirements_lock = "//shared/bazel/deps:requirements_lock.txt",
     )
+
+    setup_non_bzlmod_quickbuf_protoc()

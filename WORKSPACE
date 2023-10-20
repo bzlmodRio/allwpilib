@@ -1,5 +1,20 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+http_archive(
+    name = "rules_proto",
+    sha256 = "dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
+    strip_prefix = "rules_proto-5.3.0-21.7",
+    urls = [
+        "https://github.com/bazelbuild/rules_proto/archive/refs/tags/5.3.0-21.7.tar.gz",
+    ],
+)
+
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+
+rules_proto_dependencies()
+
+rules_proto_toolchains()
+
 # Rules Python
 http_archive(
     name = "rules_python",
@@ -20,23 +35,15 @@ load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
 
 rules_jvm_external_deps()
 
-# TODO temporary
-http_archive(
-    name = "rules_bzlmodrio_toolchains",
-    sha256 = "5cc49c34a56cef8560446146d4ad124b61b3af6e3068a5cdba0df09861eaba97",
-    strip_prefix = "rules_bzlmodrio_toolchains-8ed5bdadbca20c0f6e7c3c1e8d0f8089fe449706",
-    url = "https://github.com/bzlmodRio/rules_bzlmodrio_toolchains/archive/8ed5bdadbca20c0f6e7c3c1e8d0f8089fe449706.zip",
-)
-
 # local_repository(
 #     name = "bzlmodRio",
 #     path = "../bzlmodRio/monorepo/bzlmodRio",
 # )
 http_archive(
     name = "bzlmodRio",
-    sha256 = "3e39c594f7d3dfb6ae0433a78632106667352067b3aba99ca5a311ceff4d7b3d",
-    strip_prefix = "bzlmodRio-61f4f427b31cd6703691ee35d91359d38277eace",
-    url = "https://github.com/bzlmodRio/bzlmodRio/archive/61f4f427b31cd6703691ee35d91359d38277eace.tar.gz",
+    sha256 = "ebcf55589f36f2297450b887f1194eb66f96563d3d40d5b7e99b2fa0bea2fd5a",
+    strip_prefix = "bzlmodRio-00cf3776fe594aa245f88acdcb22918f6f938144",
+    url = "https://github.com/bzlmodRio/bzlmodRio/archive/00cf3776fe594aa245f88acdcb22918f6f938144.tar.gz",
 )
 
 load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_dependencies")
@@ -44,19 +51,19 @@ load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_depen
 download_dependencies(
     allwpilib_version = None,
     apriltaglib_version = "3.3.0-1",
-    imgui_version = "1.89.9-1",
-    libssh_version = "0.105-1",
+    imgui_version = "2024.1.89.9-1",
+    libssh_version = "2024.0.105-1",
     local_monorepo_base = "../bzlmodRio/monorepo",
     navx_version = None,
     ni_version = "2024.1.1",
-    opencv_version = "4.8.0-1",
+    opencv_version = "2024.4.8.0-1",
     phoenix_version = None,
     revlib_version = None,
-    rules_bazelrio_version = "0.0.12",
+    rules_bazelrio_version = "0.0.13",
     rules_checkstyle_version = None,
     rules_pmd_version = None,
     rules_spotless_version = None,
-    rules_toolchains_version = None,
+    rules_toolchains_version = "2024-1",
     rules_wpi_styleguide_version = None,
     rules_wpiformat_version = None,
 )

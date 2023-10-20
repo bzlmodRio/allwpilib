@@ -6,6 +6,7 @@ wpilib_java_jni_library(
     native_libs = ["//wpimath/src/main/native:wpimathjni"],
     visibility = ["//visibility:public"],
     deps = [
+        "//wpimath/src/main/proto:java_proto",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",
         "@maven//:com_fasterxml_jackson_core_jackson_core",
@@ -13,5 +14,6 @@ wpilib_java_jni_library(
         "@maven//:org_ejml_ejml_core",
         "@maven//:org_ejml_ejml_ddense",
         "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
