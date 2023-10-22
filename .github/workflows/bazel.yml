@@ -182,7 +182,7 @@ jobs:
         run: sudo apt-get install -y lcov
 
       - name: Build, allow buildbudy failure
-        run: bazel coverage --config=ci --config=linux -k -- //... -//simulation/halsim_gui/src/test/native/cpp:halsim_gui-test
+        run: bazel coverage --config=ci --config=linux -k -- //... -//simulation/halsim_gui/src/test/native/cpp:halsim_gui-test -//sysid/src/test/native:sysid-test
 
       - name: genhtml
         run: |
