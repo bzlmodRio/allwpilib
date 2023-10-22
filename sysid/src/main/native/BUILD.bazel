@@ -30,6 +30,6 @@ wpilib_cc_library(
 wpilib_cc_binary(
     name = "sysid",
     srcs = ["cpp/Main.cpp"],
-    linkopts = get_wpigui_linker_flags(console = True),
+    linkopts = get_wpigui_linker_flags(console = False),
     deps = ["sysid-lib"],
 )
