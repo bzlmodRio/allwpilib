@@ -20,10 +20,9 @@ bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 
 git_override(
-    module_name = "com_google_protobuf", 
-    remote = "https://github.com/protocolbuffers/protobuf", 
-    commit='v3.21.12', 
-    patches=[
+    module_name = "com_google_protobuf",
+    commit = "v3.21.12",
+    patches = [
         "//upstream_utils/protobuf_patches:0001-Fix-sign-compare-warnings.patch",
         "//upstream_utils/protobuf_patches:0002-Remove-redundant-move.patch",
         "//upstream_utils/protobuf_patches:0003-Fix-maybe-uninitialized-warnings.patch",
@@ -35,7 +34,9 @@ git_override(
         "//upstream_utils/protobuf_patches:0009-Disable-unused-function-warning.patch",
         "//upstream_utils/protobuf_patches:0010-Disable-pedantic-warning.patch",
         "//upstream_utils/protobuf_patches:0011-Avoid-use-of-sprintf.patch",
-])
+    ],
+    remote = "https://github.com/protocolbuffers/protobuf",
+)
 
 # local_path_override(
 #     module_name = "rules_bzlmodrio_toolchains",

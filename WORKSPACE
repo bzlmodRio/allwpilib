@@ -2,11 +2,6 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "f7042d540c969b00db92e8e1066a9b8099c8379c33f40f360eb9e1d98a36ca26",
-    strip_prefix = "protobuf-3.21.12",
-    urls = [
-        "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.21.12.zip",
-    ],
     patch_args = ["-p1"],
     patches = [
         "//upstream_utils/protobuf_patches:0001-Fix-sign-compare-warnings.patch",
@@ -20,6 +15,11 @@ http_archive(
         "//upstream_utils/protobuf_patches:0009-Disable-unused-function-warning.patch",
         "//upstream_utils/protobuf_patches:0010-Disable-pedantic-warning.patch",
         "//upstream_utils/protobuf_patches:0011-Avoid-use-of-sprintf.patch",
+    ],
+    sha256 = "f7042d540c969b00db92e8e1066a9b8099c8379c33f40f360eb9e1d98a36ca26",
+    strip_prefix = "protobuf-3.21.12",
+    urls = [
+        "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.21.12.zip",
     ],
 )
 
