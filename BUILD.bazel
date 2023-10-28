@@ -32,3 +32,10 @@ proto_lang_toolchain(
     runtime = "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     visibility = ["//visibility:public"],
 )
+
+proto_lang_toolchain(
+  name = "proto_cc_toolchain",
+  command_line = "--cpp_out=$(OUT)",
+  runtime = "//wpiutil/src/main/native:wpiutil.static",
+  visibility = ["//visibility:public"],
+)
