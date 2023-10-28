@@ -1,6 +1,29 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
+    name = "com_google_protobuf",
+    sha256 = "f7042d540c969b00db92e8e1066a9b8099c8379c33f40f360eb9e1d98a36ca26",
+    strip_prefix = "protobuf-3.21.12",
+    urls = [
+        "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.21.12.zip",
+    ],
+    patch_args = ["-p1"],
+    patches = [
+        "//upstream_utils/protobuf_patches:0001-Fix-sign-compare-warnings.patch",
+        "//upstream_utils/protobuf_patches:0002-Remove-redundant-move.patch",
+        "//upstream_utils/protobuf_patches:0003-Fix-maybe-uninitialized-warnings.patch",
+        "//upstream_utils/protobuf_patches:0004-Fix-coded_stream-WriteRaw.patch",
+        "//upstream_utils/protobuf_patches:0005-Suppress-enum-enum-conversion-warning.patch",
+        "//upstream_utils/protobuf_patches:0006-Fix-noreturn-function-returning.patch",
+        "//upstream_utils/protobuf_patches:0007-Work-around-GCC-12-restrict-warning-compiler-bug.patch",
+        "//upstream_utils/protobuf_patches:0008-Disable-MSVC-switch-warning.patch",
+        "//upstream_utils/protobuf_patches:0009-Disable-unused-function-warning.patch",
+        "//upstream_utils/protobuf_patches:0010-Disable-pedantic-warning.patch",
+        "//upstream_utils/protobuf_patches:0011-Avoid-use-of-sprintf.patch",
+    ],
+)
+
+http_archive(
     name = "rules_proto",
     sha256 = "dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
     strip_prefix = "rules_proto-5.3.0-21.7",

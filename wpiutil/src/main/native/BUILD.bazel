@@ -32,7 +32,6 @@ wpilib_cc_static_and_shared_library(
         "//wpiutil/src/main/native/thirdparty/json:json-srcs",
         "//wpiutil/src/main/native/thirdparty/llvm:llvm-srcs",
         "//wpiutil/src/main/native/thirdparty/mpack:mpack-srcs",
-        "//wpiutil/src/main/native/thirdparty/protobuf:protobuf-srcs",
     ],
     hdrs = glob(["include/**/*"]),
     includes = ["include"],
@@ -41,8 +40,8 @@ wpilib_cc_static_and_shared_library(
         "//wpiutil/src/main/native/thirdparty/json:json-headers",
         "//wpiutil/src/main/native/thirdparty/llvm:llvm-headers",
         "//wpiutil/src/main/native/thirdparty/mpack:mpack-headers",
-        "//wpiutil/src/main/native/thirdparty/protobuf:protobuf-headers",
         "//wpiutil/src/main/native/thirdparty/sigslot:sigslot-headers",
+        "@com_google_protobuf//:protobuf",
     ] + select({
         "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bzlmodrio-ni//libraries/cpp/ni:shared"],
         "//conditions:default": [],
