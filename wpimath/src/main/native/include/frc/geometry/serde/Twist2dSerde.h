@@ -15,7 +15,7 @@ struct wpi::Struct<frc::Twist2d> {
   static constexpr std::string_view kTypeString = "struct:Twist2d";
   static constexpr size_t kSize = 24;
   static constexpr std::string_view kSchema =
-      "double dx;double dy;double dtheta";
+      "double dx_meters;double dy_meters;double dtheta_radians";
 
   static frc::Twist2d Unpack(std::span<const uint8_t, kSize> data);
   static void Pack(std::span<uint8_t, kSize> data, const frc::Twist2d& value);
