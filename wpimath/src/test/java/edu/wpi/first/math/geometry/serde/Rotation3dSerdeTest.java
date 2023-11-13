@@ -46,13 +46,13 @@ class Rotation3dSerdeTest {
     ProtobufRotation3d proto = Rotation3d.proto.createMessage();
     Rotation3d.proto.pack(proto, DATA);
 
-    assertEquals(DATA.getQuaternion(), Quaternion.proto.unpack(proto.getQ()));
+    assertEquals(DATA.getQuaternion(), Quaternion.proto.unpack(proto.getQuaternion()));
   }
 
   @Test
   void testProtoUnpack() {
     ProtobufRotation3d proto = Rotation3d.proto.createMessage();
-    Quaternion.proto.pack(proto.getMutableQ(), DATA.getQuaternion());
+    Quaternion.proto.pack(proto.getMutableQuaternion(), DATA.getQuaternion());
 
     Rotation3d data = Rotation3d.proto.unpack(proto);
     assertEquals(DATA.getQuaternion(), data.getQuaternion());

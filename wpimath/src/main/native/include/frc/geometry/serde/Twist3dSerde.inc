@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <wpi/SymbolExports.h>
 #include <wpi/protobuf/Protobuf.h>
 #include <wpi/struct/Struct.h>
 
@@ -22,7 +23,6 @@ struct wpi::Struct<frc::Twist3d> {
 
 template <>
 struct WPILIB_DLLEXPORT wpi::Protobuf<frc::Twist3d> {
-  static constexpr std::string_view kTypeString = "proto:Twist3d";
   static google::protobuf::Message* New(google::protobuf::Arena* arena);
   static frc::Twist3d Unpack(const google::protobuf::Message& msg);
   static void Pack(google::protobuf::Message* msg, const frc::Twist3d& value);

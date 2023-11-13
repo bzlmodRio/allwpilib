@@ -5,19 +5,27 @@
 #include "frc/geometry/Pose3d.h"
 #include "geometry3d.pb.h"
 
-using StructType = wpi::Struct<frc::Pose3d>;
-static constexpr size_t kRotationOff = wpi::Struct<frc::Translation3d>::kSize;
+namespace {
+constexpr size_t kTranslationOff = 0;
+constexpr size_t kRotationOff =
+    kTranslationOff + wpi::Struct<frc::Translation3d>::kSize;
+}  // namespace
 
-frc::Pose3d StructType::Unpack(
-    std::span<const uint8_t, StructType::kSize> data) {
-  return {wpi::UnpackStruct<frc::Translation3d, 0>(data),
-          wpi::UnpackStruct<frc::Rotation3d, kRotationOff>(data)};
+using StructType = wpi::Struct<frc::Pose3d>;
+
+frc::Pose3d StructType::Unpack(std::span<const uint8_t, kSize> data) {
+  return frc::Pose3d{
+      wpi::UnpackStruct<frc::Translation3d, kTranslationOff>(data),
+      wpi::UnpackStruct<frc::Rotation3d, kRotationOff>(data),
+  };
 }
-void StructType::Pack(std::span<uint8_t, StructType::kSize> data,
+
+void StructType::Pack(std::span<uint8_t, kSize> data,
                       const frc::Pose3d& value) {
-  wpi::PackStruct<0>(data, value.Translation());
+  wpi::PackStruct<kTranslationOff>(data, value.Translation());
   wpi::PackStruct<kRotationOff>(data, value.Rotation());
 }
+
 void StructType::ForEachNested(
     std::invocable<std::string_view, std::string_view> auto fn) {
   wpi::ForEachStructSchema<frc::Translation3d>(fn);
@@ -33,8 +41,10 @@ google::protobuf::Message* wpi::Protobuf<frc::Pose3d>::New(
 frc::Pose3d wpi::Protobuf<frc::Pose3d>::Unpack(
     const google::protobuf::Message& msg) {
   auto m = static_cast<const wpi::proto::ProtobufPose3d*>(&msg);
-  return frc::Pose3d{wpi::UnpackProtobuf<frc::Translation3d>(m->translation()),
-                     wpi::UnpackProtobuf<frc::Rotation3d>(m->rotation())};
+  return frc::Pose3d{
+      wpi::UnpackProtobuf<frc::Translation3d>(m->translation()),
+      wpi::UnpackProtobuf<frc::Rotation3d>(m->rotation()),
+  };
 }
 
 void wpi::Protobuf<frc::Pose3d>::Pack(google::protobuf::Message* msg,
