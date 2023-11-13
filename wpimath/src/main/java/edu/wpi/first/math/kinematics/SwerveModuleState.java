@@ -5,6 +5,8 @@
 package edu.wpi.first.math.kinematics;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.serde.SwerveModuleStateProtoSerde;
+import edu.wpi.first.math.kinematics.serde.SwerveModuleStateStructSerde;
 import java.util.Objects;
 
 /** Represents the state of one swerve module. */
@@ -14,6 +16,9 @@ public class SwerveModuleState implements Comparable<SwerveModuleState> {
 
   /** Angle of the module. */
   public Rotation2d angle = Rotation2d.fromDegrees(0);
+
+  public static final SwerveModuleStateStructSerde struct = new SwerveModuleStateStructSerde();
+  public static final SwerveModuleStateProtoSerde proto = new SwerveModuleStateProtoSerde();
 
   /** Constructs a SwerveModuleState with zeros for speed and angle. */
   public SwerveModuleState() {}

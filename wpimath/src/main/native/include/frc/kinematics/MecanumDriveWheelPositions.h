@@ -60,3 +60,5 @@ struct WPILIB_DLLEXPORT MecanumDriveWheelPositions {
   }
 };
 }  // namespace frc
+
+#include "frc/kinematics/serde/MecanumDriveWheelPositionsSerde.h"

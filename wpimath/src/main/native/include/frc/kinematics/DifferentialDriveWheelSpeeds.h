@@ -112,3 +112,5 @@ struct WPILIB_DLLEXPORT DifferentialDriveWheelSpeeds {
   }
 };
 }  // namespace frc
+
+#include "frc/kinematics/serde/DifferentialDriveWheelSpeedsSerde.h"

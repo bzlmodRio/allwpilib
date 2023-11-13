@@ -17,3 +17,5 @@ struct DifferentialDriveWheelVoltages {
 };
 
 }  // namespace frc
+
+#include "frc/controller/serde/DifferentialDriveWheelVoltagesSerde.h"

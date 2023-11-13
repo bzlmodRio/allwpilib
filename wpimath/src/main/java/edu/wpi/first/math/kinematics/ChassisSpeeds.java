@@ -7,6 +7,8 @@ package edu.wpi.first.math.kinematics;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.serde.ChassisSpeedsProtoSerde;
+import edu.wpi.first.math.kinematics.serde.ChassisSpeedsStructSerde;
 
 /**
  * Represents the speed of a robot chassis. Although this class contains similar members compared to
@@ -26,6 +28,9 @@ public class ChassisSpeeds {
 
   /** Represents the angular velocity of the robot frame. (CCW is +) */
   public double omegaRadiansPerSecond;
+
+  public static final ChassisSpeedsProtoSerde proto = new ChassisSpeedsProtoSerde();
+  public static final ChassisSpeedsStructSerde struct = new ChassisSpeedsStructSerde();
 
   /** Constructs a ChassisSpeeds with zeros for dx, dy, and theta. */
   public ChassisSpeeds() {}

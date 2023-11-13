@@ -42,3 +42,5 @@ struct WPILIB_DLLEXPORT SwerveModulePosition {
   }
 };
 }  // namespace frc
+
+#include "frc/kinematics/serde/SwerveModulePositionSerde.h"

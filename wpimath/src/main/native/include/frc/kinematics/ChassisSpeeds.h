@@ -251,3 +251,5 @@ struct WPILIB_DLLEXPORT ChassisSpeeds {
   }
 };
 }  // namespace frc
+
+#include "frc/kinematics/serde/ChassisSpeedsSerde.h"

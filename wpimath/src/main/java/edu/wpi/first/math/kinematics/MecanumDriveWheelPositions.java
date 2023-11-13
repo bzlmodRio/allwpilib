@@ -5,6 +5,8 @@
 package edu.wpi.first.math.kinematics;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.kinematics.serde.MecanumDriveWheelPositionsProtoSerde;
+import edu.wpi.first.math.kinematics.serde.MecanumDriveWheelPositionsStructSerde;
 import java.util.Objects;
 
 public class MecanumDriveWheelPositions implements WheelPositions<MecanumDriveWheelPositions> {
@@ -19,6 +21,11 @@ public class MecanumDriveWheelPositions implements WheelPositions<MecanumDriveWh
 
   /** Distance measured by the rear right wheel. */
   public double rearRightMeters;
+
+  public static final MecanumDriveWheelPositionsStructSerde struct =
+      new MecanumDriveWheelPositionsStructSerde();
+  public static final MecanumDriveWheelPositionsProtoSerde proto =
+      new MecanumDriveWheelPositionsProtoSerde();
 
   /** Constructs a MecanumDriveWheelPositions with zeros for all member fields. */
   public MecanumDriveWheelPositions() {}

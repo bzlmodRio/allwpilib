@@ -169,3 +169,5 @@ class WPILIB_DLLEXPORT ArmFeedforward {
   units::unit_t<ka_unit> kA{0};
 };
 }  // namespace frc
+
+#include "frc/controller/serde/ArmFeedforwardSerde.h"

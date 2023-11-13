@@ -6,6 +6,8 @@ package edu.wpi.first.math.controller;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Nat;
+import edu.wpi.first.math.controller.serde.ElevatorFeedforwardProtoSerde;
+import edu.wpi.first.math.controller.serde.ElevatorFeedforwardStructSerde;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 
 /**
@@ -17,6 +19,9 @@ public class ElevatorFeedforward {
   public final double kg;
   public final double kv;
   public final double ka;
+
+  public static final ElevatorFeedforwardProtoSerde proto = new ElevatorFeedforwardProtoSerde();
+  public static final ElevatorFeedforwardStructSerde struct = new ElevatorFeedforwardStructSerde();
 
   /**
    * Creates a new ElevatorFeedforward with the specified gains. Units of the gain values will

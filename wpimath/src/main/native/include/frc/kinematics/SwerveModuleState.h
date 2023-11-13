@@ -47,3 +47,5 @@ struct WPILIB_DLLEXPORT SwerveModuleState {
                                     const Rotation2d& currentAngle);
 };
 }  // namespace frc
+
+#include "frc/kinematics/serde/SwerveModuleStateSerde.h"
