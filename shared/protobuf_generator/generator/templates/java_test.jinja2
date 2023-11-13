@@ -1,0 +1,63 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package edu.wpi.first.math.{{module.subfolder}}.serde;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import edu.wpi.first.math.{{module.subfolder}}.{{message.local_type}};
+import edu.wpi.first.math.proto.{{module.java_proto_subpath}}.Protobuf{{message.local_type}};
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import org.junit.jupiter.api.Test;
+import java.util.Arrays;
+
+public class {{message.local_type}}SerdeTest {
+  private static final {{message.local_type}} DATA = new {{message.local_type}}( TODO );
+  private static final byte[] STRUCT_BUFFER = new byte[]{ TODO };
+
+  @Test
+  void testStructPack() {
+    ByteBuffer buffer = ByteBuffer.allocate({{message.local_type}}.struct.getSize());
+    buffer.order(ByteOrder.LITTLE_ENDIAN);
+    {{message.local_type}}.struct.pack(buffer, DATA);
+
+    byte[] actual = buffer.array();
+    assertArrayEquals(actual, STRUCT_BUFFER);
+  }
+
+  @Test
+  void testStructUnpack() {
+    ByteBuffer buffer = ByteBuffer.wrap(STRUCT_BUFFER);
+    buffer.order(ByteOrder.LITTLE_ENDIAN);
+
+    {{message.local_type}} data = {{message.local_type}}.struct.unpack(buffer);
+{%- for field in message.fields %}
+    {{assert_local_equals(field)}}
+{%- endfor %}
+  }
+
+  @Test
+  void testProtoPack() {
+    Protobuf{{message.local_type}} proto = {{message.local_type}}.proto.createMessage();
+    {{message.local_type}}.proto.pack(proto, DATA);
+{% for field in message.fields %}
+    {{assert_local_vs_proto_equals(field)}}
+{%- endfor %}
+  }
+
+  @Test
+  void testProtoUnpack() {
+    Protobuf{{message.local_type}} proto = {{message.local_type}}.proto.createMessage();
+{%- for field in message.fields %}
+    {{test_proto_setter(field)}}
+{%- endfor %}
+
+    {{message.local_type}} data = {{message.local_type}}.proto.unpack(proto);
+{%- for field in message.fields %}
+    {{assert_local_equals(field)}}
+{%- endfor %}
+  }
+}

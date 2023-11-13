@@ -1,0 +1,56 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package edu.wpi.first.math.{{module.subfolder}}.serde;
+
+import edu.wpi.first.math.{{module.subfolder}}.{{message.local_type}};
+{%- for field in message.fields %}
+{%- if field.is_message %}
+import edu.wpi.first.math.geometry.{{field.message_type}};
+{%- endif %}
+{%- endfor %}
+import edu.wpi.first.util.struct.Struct;
+import java.nio.ByteBuffer;
+
+public class {{message.local_type}}StructSerde implements Struct<{{message.local_type}}> {
+  @Override
+  public Class<{{message.local_type}}> getTypeClass() {
+    return {{message.local_type}}.class;
+  }
+
+  @Override
+  public String getTypeString() {
+    return "struct:{{message.local_type}}";
+  }
+
+  @Override
+  public int getSize() {
+    return {{get_size(message)}};
+  }
+
+  @Override
+  public String getSchema() {
+    return "{{get_schema(message)}}";
+  }
+{% if message.has_nested_types %}
+  @Override
+  public Struct<?>[] getNested() {
+    return new Struct<?>[] { {%- for field in message.fields %}{% if field.is_message %}{{field.message_type}}.struct{% if not loop.last %}, {% endif%}{% endif %}{%endfor-%} };
+  }
+{% endif %}
+  @Override
+  public {{message.local_type}} unpack(ByteBuffer bb) {
+{%- for field in message.fields %}
+    {{ field | local_type }} {{ field.name_without_units }} = {{ struct_unpack(field) }};
+{%- endfor %}
+    return new {{message.local_type}}({% for field in message.fields %}{{field.name_without_units}}{% if not loop.last %}, {%endif%}{%endfor%});
+  }
+
+  @Override
+  public void pack(ByteBuffer bb, {{message.local_type}} value) {
+{%- for field in message.fields %}
+    {{ struct_pack(field) }};
+{%- endfor %}
+  }
+}

@@ -1,3 +1,4 @@
+load("@com_google_protobuf//:protobuf.bzl", "py_proto_library")
 load("@rules_cc//cc:defs.bzl", "cc_proto_library")
 load("@rules_java//java:defs.bzl", "java_proto_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
@@ -12,6 +13,13 @@ cc_proto_library(
     name = "cc_proto",
     visibility = ["//visibility:public"],
     deps = [":proto_files"],
+)
+
+py_proto_library(
+    name = "py_proto",
+    srcs = glob(["*.proto"]),
+    include = ".",
+    visibility = ["//visibility:public"],
 )
 
 java_proto_library(

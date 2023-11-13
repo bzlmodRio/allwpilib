@@ -1,0 +1,8 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+
+py_binary(
+    name = "generate_serde",
+    srcs = ["generate_serde.py"],
+    tags = ["manual"],
+    deps = ["//shared/protobuf_generator/generator:helpers"],
+)
