@@ -6,6 +6,7 @@ wpilib_java_junit5_test(
     srcs = glob(["**/*.java"]),
     deps = [
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:org_ejml_ejml_core",
         "@maven//:org_ejml_ejml_ddense",
