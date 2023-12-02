@@ -5,7 +5,7 @@ load("//wpimath:generate.bzl", "generate_wpimath")
 
 filegroup(
     name = "templates",
-    srcs = glob(["src/generate/*.jinja"]),
+    srcs = glob(["src/generate/main/java/*.jinja"]),
 )
 
 py_binary(

@@ -10,16 +10,11 @@ import argparse
 from jinja2 import Environment, FileSystemLoader
 
 
-def output(outPath, outfn, contents, always_generate):
+def output(outPath, outfn, contents):
     if not os.path.exists(outPath):
         os.makedirs(outPath)
 
     outpathname = f"{outPath}/{outfn}"
-
-    if os.path.exists(outpathname) and not always_generate:
-        with open(outpathname, "r") as f:
-            if f.read() == contents:
-                return
 
     # File either doesn't exist or has different contents
     with open(outpathname, "w", newline="\n") as f:
@@ -29,25 +24,38 @@ def output(outPath, outfn, contents, always_generate):
 def main():
     MAX_NUM = 20
 
-    dirname, _ = os.path.split(os.path.abspath(__file__))
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--output_directory",
+        help="Optional. If set, will output the generated files to this directory, otherwise it will use a path relative to the script",
+    )
+    args = parser.parse_args()
+
+    if args.output_directory:
+        dirname = args.output_directory
+        template_root = "wpimath"
+    else:
+        script_dir, _ = os.path.split(os.path.abspath(__file__))
+        dirname = os.path.join(script_dir, "src", "generated")
+        template_root = script_dir
 
     env = Environment(
-        loader=FileSystemLoader(f"{dirname}/src/generate/main/java"),
+        loader=FileSystemLoader(f"{template_root}/src/generate/main/java"),
         autoescape=False,
         keep_trailing_newline=True,
     )
 
     template = env.get_template("GenericNumber.java.jinja")
-    rootPath = f"{dirname}/src/generated/main/java/edu/wpi/first/math/numbers"
+    rootPath = f"{dirname}/main/java/edu/wpi/first/math/numbers"
 
     for i in range(MAX_NUM + 1):
         contents = template.render(num=i)
-        output(rootPath, f"N{i}.java", contents, args.always_generate)
+        output(rootPath, f"N{i}.java", contents)
 
     template = env.get_template("Nat.java.jinja")
-    rootPath = f"{dirname}/src/generated/main/java/edu/wpi/first/math"
+    rootPath = f"{dirname}/main/java/edu/wpi/first/math"
     contents = template.render(nums=range(MAX_NUM + 1))
-    output(rootPath, "Nat.java", contents, args.always_generate)
+    output(rootPath, "Nat.java", contents)
 
 
 if __name__ == "__main__":
