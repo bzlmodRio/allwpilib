@@ -1,0 +1,139 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library", "pybind_python_library")
+
+create_pybind_library(
+    "wpilib_core",
+    entry_point = ["wpilib/src/main.cpp"],
+    extra_hdrs = glob([
+        "wpilib/src/rpy/*.h",
+        "wpilib/src/rpy/*.inc",
+    ]),
+    extra_srcs = glob(
+        ["wpilib/src/rpy/*.cpp"],
+    ),
+    includes = [
+        ".",
+        "src",
+        "wpilib/src",
+    ],
+    rpy_include_dir = "generated/rpy-include/wpilib/rpy-include",
+    strip_include_prefix = "wpilib",
+    deps = [
+        ":interfaces_pybind_library",
+        "//ntcore/src/main/python:ntcore_pybind_library",
+    ],
+)
+
+create_pybind_library(
+    "counter",
+    entry_point = ["wpilib/counter/counter.cpp"],
+    generation_dir_prefix = "wpilibc_",
+    rpy_include_dir = "generated/rpy-include/wpilib/counter/rpy-include",
+    deps = [
+        ":wpilib_core_pybind_library",
+    ],
+)
+
+create_pybind_library(
+    "drive",
+    entry_point = ["wpilib/drive/drive.cpp"],
+    generation_dir_prefix = "wpilibc_",
+    rpy_include_dir = "generated/rpy-include/wpilib/drive/rpy-include",
+    deps = [
+        ":wpilib_core_pybind_library",
+    ],
+)
+
+create_pybind_library(
+    "event",
+    entry_point = ["wpilib/event/event.cpp"],
+    generation_dir_prefix = "wpilibc_",
+    deps = [
+        "//wpilibc/src/main/native:wpilibc.shared",
+        "//wpimath/src/main/python:wpimath_pybind_library",
+    ],
+)
+
+create_pybind_library(
+    "interfaces",
+    entry_point = ["wpilib/interfaces/interfaces.cpp"],
+    generation_dir_prefix = "wpilibc_",
+    rpy_include_dir = "generated/rpy-include/wpilib/interfaces/rpy-include",
+    deps = [
+        "//wpilibc/src/main/native:wpilibc.shared",
+        "//wpimath/src/main/python:wpimath_pybind_library",
+    ],
+)
+
+create_pybind_library(
+    "shuffleboard",
+    entry_point = ["wpilib/shuffleboard/shuffleboard.cpp"],
+    extra_hdrs = glob(["wpilib/shuffleboard/*.h"]),
+    extra_srcs = glob(
+        ["wpilib/shuffleboard/*.cpp"],
+        exclude = ["wpilib/shuffleboard/shuffleboard.cpp"],
+    ),
+    generation_dir_prefix = "wpilibc_",
+    rpy_include_dir = "generated/rpy-include/wpilib/shuffleboard/rpy-include",
+    strip_include_prefix = "wpilib/shuffleboard",
+    deps = [
+        "//wpilibc/src/main/native:wpilibc.shared",
+        "//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
+)
+
+create_pybind_library(
+    "simulation",
+    entry_point = ["wpilib/simulation/simulation.cpp"],
+    generation_dir_prefix = "wpilibc_",
+    rpy_include_dir = "generated/rpy-include/wpilib/simulation/rpy-include",
+    deps = [
+        "//wpilibc/src/main/native:wpilibc.shared",
+        "//wpimath/src/main/python:wpimath_pybind_library",
+        "//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
+)
+
+generate_robopy_files(
+    name = "wpilib",
+    config_file = ":pyproject.toml",
+    headers = ["//wpilibc/src/main/native:headers"],
+    projects = [
+        "wpilib",
+        "_impl",
+        "counter",
+        "drive",
+        "event",
+        "interfaces",
+        "shuffleboard",
+        "simulation",
+    ],
+    python_deps = [
+        "//hal/src/main/python:pkgcfg",
+        "//ntcore/src/main/python:pkgcfg",
+        "//wpinet/src/main/python:pkgcfg",
+        "//wpimath/src/main/python:pkgcfg",
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+)
+
+pybind_python_library(
+    name = "wpilib",
+    srcs = glob(["wpilib/**/*.py"]),
+    data = [
+        ":_counter.so",
+        ":_drive.so",
+        ":_event.so",
+        ":_interfaces.so",
+        ":_shuffleboard.so",
+        ":_simulation.so",
+        ":_wpilib_core.so",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//hal/src/main/python:hal",
+        "//ntcore/src/main/python:ntcore",
+        "//wpimath/src/main/python:wpimath",
+    ],
+)

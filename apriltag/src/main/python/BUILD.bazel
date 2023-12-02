@@ -1,0 +1,36 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library", "pybind_python_library")
+
+create_pybind_library(
+    "apriltag",
+    entry_point = ["robotpy_apriltag/src/main.cpp"],
+    deps = [
+        "//apriltag/src/main/native:apriltag.shared",
+        "//wpimath/src/main/python:wpimath_pybind_library",
+        "//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
+)
+
+generate_robopy_files(
+    name = "apriltag",
+    config_file = ":pyproject.toml",
+    headers = ["//apriltag/src/main/native:headers"],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+        "//wpimath/src/main/python:pkgcfg",
+    ],
+)
+
+pybind_python_library(
+    name = "apriltag",
+    srcs = glob(["robotpy_apriltag/**/*.py"]),
+    data = [
+        ":_apriltag.so",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpimath/src/main/python:wpimath",
+        "//wpiutil/src/main/python:wpiutil",
+    ],
+)

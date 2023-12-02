@@ -1,0 +1,10 @@
+load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
+
+wpilib_py_test(
+    "wpilib_tests",
+    tests = glob(["**/*.py"], exclude = ["conftest.py"]),
+    conftest = ["conftest.py"],
+    deps = [
+        "//wpilib/src/main/python:wpilib",
+    ]
+)
