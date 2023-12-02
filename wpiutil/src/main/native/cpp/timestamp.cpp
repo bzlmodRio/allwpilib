@@ -72,6 +72,7 @@ struct HMBHolder {
     hmb.reset(fpga::tHMB::create(&status));
     niFpga = dlopen("libNiFpga.so", RTLD_LAZY);
     if (!niFpga) {
+      fmt::print(stderr, "Could not open libNiFpga.so\n");
       hmb = nullptr;
       return;
     }
@@ -80,6 +81,7 @@ struct HMBHolder {
     closeHmb = reinterpret_cast<NiFpga_CloseHmbFunc>(
         dlsym(niFpga, "NiFpgaDll_CloseHmb"));
     if (openHmb == nullptr || closeHmb == nullptr) {
+      fmt::print(stderr, "Could not find HMB symbols in libNiFpga.so\n");
       closeHmb = nullptr;
       dlclose(niFpga);
       hmb = nullptr;
@@ -90,6 +92,7 @@ struct HMBHolder {
         openHmb(hmb->getSystemInterface()->getHandle(), hmbName, &hmbBufferSize,
                 reinterpret_cast<void**>(const_cast<uint32_t**>(&hmbBuffer)));
     if (status != 0) {
+      fmt::print(stderr, "Failed to open HMB, status code {}\n", status);
       closeHmb = nullptr;
       dlclose(niFpga);
       hmb = nullptr;
@@ -217,9 +220,9 @@ uint64_t wpi::Now() {
 #ifdef __FRC_ROBORIO__
   // Same code as HAL_GetFPGATime()
   if (!hmbInitialized.test()) {
-    std::fputs(
-        "FPGA not yet configured in wpi::Now(). Time will not be correct",
-        stderr);
+    fmt::print(
+        stderr,
+        "FPGA not yet configured in wpi::Now(). Time will not be correct.\n");
     std::fflush(stderr);
     return 1;
   }
