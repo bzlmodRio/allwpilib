@@ -17,12 +17,12 @@ wpilib_cc_static_and_shared_library(
     srcs = glob(
         ["cpp/**"],
         exclude = ["cpp/jni/**"],
-    ) + ["//ntcore:gen-cpp-srcs"],
+    ) + ["//ntcore:generated_cc_source"],
     hdrs = glob(["include/**/*"]),
     includes = ["include"],
     standard_deps = [
         ":private_includes",
-        "//ntcore:generated_includes",
+        "//ntcore:generated_cc_headers",
     ],
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
@@ -34,7 +34,7 @@ wpilib_cc_static_and_shared_library(
 
 wpilib_jni_cc_library(
     name = "ntcorejni",
-    srcs = glob(["cpp/jni/**"]) + ["//ntcore:gen-jni-topics"],
+    srcs = glob(["cpp/jni/**"]) + ["//ntcore:generated_jni"],
     java_dep = "//ntcore/src/main/java/edu/wpi/first/networktables:networktables",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [

@@ -3,22 +3,18 @@
 import glob
 import os
 import sys
+import argparse
 from jinja2 import Environment, FileSystemLoader
 import json
-import argparse
 
 
-GENERATED_FILES = []
-
-
-def Output(outPath, outfn, contents):
+def Output(outPath, outfn, contents, always_generate):
     if not os.path.exists(outPath):
         os.makedirs(outPath)
 
     outpathname = f"{outPath}/{outfn}"
-    GENERATED_FILES.append(outpathname)
 
-    if os.path.exists(outpathname):
+    if os.path.exists(outpathname) and not always_generate:
         with open(outpathname, "r") as f:
             if f.read() == contents:
                 return
@@ -31,32 +27,10 @@ def Output(outPath, outfn, contents):
 def main():
     dirname, _ = os.path.split(os.path.abspath(__file__))
 
-    with open(f"{dirname}/src/generate/types.json") as f:
+    with open(f"{template_root}/types.json") as f:
         types = json.load(f)
 
     # Java files
-    if args.generate_java:
-        generate_java_files(dirname, generation_root, types)
-
-    if args.generate_cpp_includes:
-        generate_cpp_includes(dirname, generation_root, types)
-
-    if args.generate_cpp_srcs:
-        generate_cpp_srcs(dirname, generation_root, types)
-
-    if args.generate_jni:
-        generate_jni_files(dirname, generation_root, types)
-
-    if is_bazel:
-        diff = set(GENERATED_FILES).difference(files_to_generate)
-        if len(diff) != 0:
-            raise Exception(
-                "File generated that was not listed in bazel:\n  "
-                + "\n  ".join(x for x in diff)
-            )
-
-
-def generate_java_files(dirname, generation_root, types):
     env = Environment(
         loader=FileSystemLoader(f"{dirname}/src/generate/main/java"), autoescape=False
     )
@@ -68,7 +42,7 @@ def generate_java_files(dirname, generation_root, types):
             fn
         ).startswith("Generic"):
             output = template.render(types=types)
-            Output(rootPath, outfn, output)
+            Output(rootPath, outfn, output, args.always_generate)
         else:
             for replacements in types:
                 output = template.render(replacements)
@@ -76,10 +50,8 @@ def generate_java_files(dirname, generation_root, types):
                     outfn2 = f"Timestamped{replacements['TypeName']}.java"
                 else:
                     outfn2 = f"{replacements['TypeName']}{outfn}"
-                Output(rootPath, outfn2, output)
+                Output(rootPath, outfn2, output, args.always_generate)
 
-
-def generate_cpp_includes(dirname, generation_root, types):
     # C++ classes
     env = Environment(
         loader=FileSystemLoader(
@@ -96,7 +68,7 @@ def generate_cpp_includes(dirname, generation_root, types):
         for replacements in types:
             output = template.render(replacements)
             outfn2 = f"{replacements['TypeName']}{outfn}"
-            Output(rootPath, outfn2, output)
+            Output(rootPath, outfn2, output, args.always_generate)
 
     # C++ handle API (header)
     env = Environment(
@@ -108,7 +80,17 @@ def generate_cpp_includes(dirname, generation_root, types):
     Output(
         f"{dirname}/src/generated/main/native/include",
         "ntcore_cpp_types.h",
-        output,
+        output, args.always_generate,
+    )
+
+    # C++ handle API (source)
+    env = Environment(
+        loader=FileSystemLoader(f"{template_root}/cpp"), autoescape=False
+    )
+    template = env.get_template("ntcore_cpp_types.cpp.jinja")
+    output = template.render(types=types)
+    Output(
+        f"{generation_root}/main/native/cpp", "ntcore_cpp_types.cpp", output, args.always_generate
     )
 
     # C++ handle API (source)
@@ -130,18 +112,8 @@ def generate_cpp_includes(dirname, generation_root, types):
     Output(
         f"{dirname}/src/generated/main/native/include",
         "ntcore_c_types.h",
-        output,
+        output, args.always_generate,
     )
-
-
-def generate_cpp_srcs(dirname, generation_root, types):
-    # C++ handle API (source)
-    env = Environment(
-        loader=FileSystemLoader(f"{dirname}/src/generate/cpp"), autoescape=False
-    )
-    template = env.get_template("ntcore_cpp_types.cpp.jinja")
-    output = template.render(types=types)
-    Output(f"{generation_root}/native/cpp", "ntcore_cpp_types.cpp", output)
 
     # C handle API (source)
     env = Environment(
@@ -152,8 +124,6 @@ def generate_cpp_srcs(dirname, generation_root, types):
     output = template.render(types=types)
     Output(f"{dirname}/src/generated/main/native/cpp", "ntcore_c_types.cpp", output)
 
-
-def generate_jni_files(dirname, generation_root, types):
     # JNI
     env = Environment(
         loader=FileSystemLoader(f"{dirname}/src/generate/main/native/cpp/jni"),

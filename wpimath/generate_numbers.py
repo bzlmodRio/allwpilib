@@ -10,13 +10,13 @@ import argparse
 from jinja2 import Environment, FileSystemLoader
 
 
-def output(outPath, outfn, contents):
+def output(outPath, outfn, contents, always_generate):
     if not os.path.exists(outPath):
         os.makedirs(outPath)
 
     outpathname = f"{outPath}/{outfn}"
 
-    if os.path.exists(outpathname):
+    if os.path.exists(outpathname) and not always_generate:
         with open(outpathname, "r") as f:
             if f.read() == contents:
                 return
@@ -42,12 +42,12 @@ def main():
 
     for i in range(MAX_NUM + 1):
         contents = template.render(num=i)
-        output(rootPath, f"N{i}.java", contents)
+        output(rootPath, f"N{i}.java", contents, args.always_generate)
 
     template = env.get_template("Nat.java.jinja")
     rootPath = f"{dirname}/src/generated/main/java/edu/wpi/first/math"
     contents = template.render(nums=range(MAX_NUM + 1))
-    output(rootPath, "Nat.java", contents)
+    output(rootPath, "Nat.java", contents, args.always_generate)
 
 
 if __name__ == "__main__":
