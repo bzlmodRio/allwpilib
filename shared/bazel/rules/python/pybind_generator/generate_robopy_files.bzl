@@ -1,11 +1,9 @@
-
-load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_python//python:defs.bzl", "py_binary")
 
 def generate_robopy_files(
-    name,
-    config_file,
-):
+        name,
+        config_file):
     __run_on_dl(
         name = name,
         config_file = config_file,
@@ -15,7 +13,7 @@ def generate_robopy_files(
         name = name,
         config_file = config_file,
     )
-    
+
     # write_source_files(
     #     name = "write_all",
     #     additional_update_targets = [
@@ -27,9 +25,7 @@ def generate_robopy_files(
 
 def __run_on_dl(
         name,
-        config_file
-    ):
-
+        config_file):
     py_binary(
         name = name + ".pybind_on_build_dl_exe",
         main = "pybind_on_build_dl.py",
@@ -38,7 +34,7 @@ def __run_on_dl(
             "//shared/bazel/rules/python/pybind_generator:pybind_gen_utils",
             "//shared/bazel/rules/python/pybind_generator:load_project_config",
         ],
-        data = native.glob(["gen/**"])
+        data = native.glob(["gen/**"]),
     )
 
     __generate_on_build_dl_files(
@@ -60,8 +56,7 @@ def __run_on_dl(
 
 def __run_on_build_gen(
         name,
-        config_file,
-    ):
+        config_file):
     py_binary(
         name = name + ".generate_pybind_exe",
         main = "pybind_on_build_gen.py",
@@ -73,7 +68,6 @@ def __run_on_build_gen(
         ],
         # data = [headers] + native.glob(["gen/**"]),
     )
-    
 
     __generate_on_build_gen_files(
         name = "generate_on_build_gen",
@@ -92,7 +86,6 @@ def __run_on_build_gen(
         visibility = ["//visibility:public"],
         diff_test = True,
     )
-
 
 def __generate_on_build_dl_files_impl(ctx):
     output_dir = ctx.actions.declare_directory(ctx.attr.gen_dir)
@@ -113,13 +106,8 @@ def __generate_on_build_dl_files_impl(ctx):
 __generate_on_build_dl_files = rule(
     implementation = __generate_on_build_dl_files_impl,
     attrs = {
-        "tool": attr.label(
-            cfg = "exec",
-            executable = True,
-            mandatory=True,
-        ),
         "config_file": attr.label(
-            mandatory=True,
+            mandatory = True,
             allow_single_file = True,
         ),
         "gen_dir": attr.string(
@@ -127,10 +115,14 @@ __generate_on_build_dl_files = rule(
         ),
         "gen_files": attr.label(
             allow_files = True,
-        )
+        ),
+        "tool": attr.label(
+            cfg = "exec",
+            executable = True,
+            mandatory = True,
+        ),
     },
 )
-
 
 def __generate_on_build_gen_files_impl(ctx):
     output_dir = ctx.actions.declare_directory(ctx.attr.gen_dir)
@@ -152,13 +144,8 @@ def __generate_on_build_gen_files_impl(ctx):
 __generate_on_build_gen_files = rule(
     implementation = __generate_on_build_gen_files_impl,
     attrs = {
-        "tool": attr.label(
-            cfg = "exec",
-            executable = True,
-            mandatory=True,
-        ),
         "config_file": attr.label(
-            mandatory=True,
+            mandatory = True,
             allow_single_file = True,
         ),
         "gen_dir": attr.string(
@@ -169,6 +156,11 @@ __generate_on_build_gen_files = rule(
         ),
         "project_name": attr.string(
             mandatory = True,
-        )
+        ),
+        "tool": attr.label(
+            cfg = "exec",
+            executable = True,
+            mandatory = True,
+        ),
     },
 )

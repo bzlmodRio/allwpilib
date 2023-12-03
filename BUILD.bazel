@@ -1,6 +1,8 @@
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_proto//proto:defs.bzl", "proto_lang_toolchain")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
-load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+
+exports_files(["requirements_lock.txt"])
 
 # bazel build //:requirements.lock
 compile_pip_requirements(
@@ -40,7 +42,6 @@ proto_lang_toolchain(
     runtime = "//wpiutil/src/main/native:wpiutil.static",
     visibility = ["//visibility:public"],
 )
-
 
 write_source_files(
     name = "write_on_build_gen",

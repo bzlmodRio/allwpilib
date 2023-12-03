@@ -1,20 +1,24 @@
-load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("@rules_python//python:defs.bzl", "py_library")
 load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 
 create_pybind_library(
     "wpiutil",
+    entry_point = ["wpiutil/src/main.cpp"],
+    extra_hdrs = glob(["wpiutil/src/type_casters/*.h"]),
+    extra_srcs = glob(
+        ["wpiutil/src/**/*.cpp"],
+        exclude = ["wpiutil/src/main.cpp"],
+    ),
+    strip_include_prefix = "wpiutil/src/type_casters",
     deps = [
         "//wpiutil/src/main/native:wpiutil.shared",
     ],
-    extra_srcs = glob(["wpiutil/src/**/*.cpp"], exclude=["wpiutil/src/main.cpp"]),
-    extra_hdrs = glob(["wpiutil/src/type_casters/*.h"]),
-    strip_include_prefix = "wpiutil/src/type_casters",
-    entry_point = ["wpiutil/src/main.cpp"],
 )
 
 generate_robopy_files(
     name = "wpiutil",
-    config_file = ":pyproject.toml"
+    config_file = ":pyproject.toml",
 )
 
 py_library(
@@ -23,6 +27,6 @@ py_library(
     data = [
         ":_wpiutil.so",
     ],
-    visibility = ["//visibility:public"],
     imports = ["."],
+    visibility = ["//visibility:public"],
 )

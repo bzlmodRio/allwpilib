@@ -140,7 +140,6 @@ python_configure(
     python_interpreter_target = interpreter,
 )
 
-
 http_archive(
     name = "aspect_bazel_lib",
     sha256 = "4d6010ca5e3bb4d7045b071205afa8db06ec11eb24de3f023d74d77cca765f66",

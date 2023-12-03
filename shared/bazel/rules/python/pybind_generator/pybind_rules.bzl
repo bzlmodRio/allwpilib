@@ -1,19 +1,16 @@
-
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
 
 def create_pybind_library(
-    name,
-    strip_include_prefix = None,
-    includes = [],
-    extra_srcs = [],
-    extra_hdrs = [],
-    deps = [],
-    entry_point = [],
-    rpy_include_dir = None,
-
-    xxxx = ""
-):
+        name,
+        strip_include_prefix = None,
+        includes = [],
+        extra_srcs = [],
+        extra_hdrs = [],
+        deps = [],
+        entry_point = [],
+        rpy_include_dir = None,
+        xxxx = ""):
     print("Making pybind library", name)
 
     generation_subdir = xxxx + name
@@ -24,15 +21,16 @@ def create_pybind_library(
     rpy_hdr_deps = []
     if rpy_includes:
         print("Has rpy_includes: ", rpy_includes)
-    
+
         wpilib_cc_library(
             name = "{}_rpy_includes".format(name),
             hdrs = rpy_includes,
-            strip_include_prefix = rpy_include_dir
+            strip_include_prefix = rpy_include_dir,
         )
         rpy_hdr_deps.append("{}_rpy_includes".format(name))
 
     generated_srcs = native.glob(["generated/gensrc/{}/**/*.cpp".format(generation_subdir)])
+
     # print(generated_srcs)
     pybind_library(
         name = "{}_pybind_library".format(name),
@@ -44,12 +42,12 @@ def create_pybind_library(
         copts = select({
             "@bazel_tools//src/conditions:darwin": [],
             "@bazel_tools//src/conditions:windows": [],
-            "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["-Wno-attributes", "-Wno-redundant-move", "-Wno-sign-compare", "-Wno-deprecated", "-Wno-unused-value"]
+            "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["-Wno-attributes", "-Wno-redundant-move", "-Wno-sign-compare", "-Wno-deprecated", "-Wno-unused-value"],
         }),
         local_defines = ["RPYBUILD_MODULE_NAME=_{}".format(name), "PYBIND11_DETAILED_ERROR_MESSAGES=1"],
         defines = ["PYBIND11_USE_SMART_HOLDER_AS_DEFAULT=1"],
         strip_include_prefix = strip_include_prefix,
-        includes=includes,
+        includes = includes,
         visibility = ["//visibility:public"],
     )
 

@@ -1,100 +1,96 @@
-
-load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("@rules_python//python:defs.bzl", "py_library")
 load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 
 create_pybind_library(
     "wpimath",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        "//wpiutil/src/main/python:wpiutil_pybind_library"
-    ],
     entry_point = ["wpimath/src/wpimath.cpp"],
     extra_hdrs = glob(["wpimath/_impl/src/**/*.h"]),
+    includes = [
+        ".",
+        "type_casters",
+        "wpimath/_impl/src/type_casters",
+    ],
     strip_include_prefix = "wpimath/_impl/src",
-    includes = [".", "type_casters", "wpimath/_impl/src/type_casters"],
+    deps = [
+        "//wpimath/src/main/native:wpimath.shared",
+        "//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
 )
 
 create_pybind_library(
     "controls",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-        ":geometry_pybind_library",
-    ],
-
+    rpy_include_dir = "generated/rpy-include/wpimath/_controls/rpy-include",
     xxxx = "wpimath_",
-    rpy_include_dir = "generated/rpy-include/wpimath/_controls/rpy-include"
+    deps = [
+        ":geometry_pybind_library",
+        ":wpimath_pybind_library",
+        "//wpimath/src/main/native:wpimath.shared",
+    ],
     #extra_hdrs = glob(["wpimath/geometry/include/**/*.h"]),
     #strip_include_prefix = "wpimath/geometry/include",
 )
 
-
 create_pybind_library(
     "filter",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-    ],
     entry_point = ["wpimath/filter/filter.cpp"],
     rpy_include_dir = "generated/rpy-include/wpimath/filter/rpy-include",
-
     xxxx = "wpimath_",
+    deps = [
+        ":wpimath_pybind_library",
+        "//wpimath/src/main/native:wpimath.shared",
+    ],
 )
 
 create_pybind_library(
     "geometry",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-        "//wpiutil/src/main/python:wpiutil_pybind_library"
-    ],
     entry_point = ["wpimath/geometry/geometry.cpp"],
-
-    xxxx = "wpimath_",
     extra_hdrs = glob(["wpimath/geometry/include/**/*.h"]),
     strip_include_prefix = "wpimath/geometry/include",
+    xxxx = "wpimath_",
+    deps = [
+        ":wpimath_pybind_library",
+        "//wpimath/src/main/native:wpimath.shared",
+        "//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
 )
 
 create_pybind_library(
     "interpolation",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-    ],
     entry_point = ["wpimath/interpolation/interpolation.cpp"],
     rpy_include_dir = "generated/rpy-include/wpimath/interpolation/rpy-include",
-
     xxxx = "wpimath_",
+    deps = [
+        ":wpimath_pybind_library",
+        "//wpimath/src/main/native:wpimath.shared",
+    ],
 )
 
 create_pybind_library(
     "kinematics",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-    ],
     entry_point = ["wpimath/kinematics/kinematics.cpp"],
     rpy_include_dir = "generated/rpy-include/wpimath/kinematics/rpy-include",
-
     xxxx = "wpimath_",
+    deps = [
+        ":wpimath_pybind_library",
+        "//wpimath/src/main/native:wpimath.shared",
+    ],
 )
 
 create_pybind_library(
     "spline",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-    ],
     entry_point = ["wpimath/spline/spline.cpp"],
     rpy_include_dir = "generated/rpy-include/wpimath/spline/rpy-include",
-
     xxxx = "wpimath_",
+    deps = [
+        ":wpimath_pybind_library",
+        "//wpimath/src/main/native:wpimath.shared",
+    ],
 )
-
 
 generate_robopy_files(
     name = "wpimath",
-    config_file = ":pyproject.toml"
+    config_file = ":pyproject.toml",
 )
 
 name = "wpimath"
@@ -103,13 +99,13 @@ py_library(
     name = name,
     srcs = glob(["wpimath/**/*.py"]),
     data = [
-        ":_wpimath.so",
+        ":_filter.so",
         ":_geometry.so",
+        ":_interpolation.so",
         ":_kinematics.so",
         ":_spline.so",
-        ":_filter.so",
-        ":_interpolation.so",
+        ":_wpimath.so",
     ],
-    visibility = ["//visibility:public"],
     imports = ["."],
+    visibility = ["//visibility:public"],
 )

@@ -1,18 +1,16 @@
-
-load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 
 create_pybind_library(
     "apriltag",
     deps = [
         "//apriltag/src/main/native:apriltag.shared",
-        "//wpiutil/src/main/python:wpiutil_pybind_library",
         "//wpimath/src/main/python:wpimath_pybind_library",
-    ])
+        "//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
+)
 
 generate_robopy_files(
     name = "apriltag",
-    config_file = ":pyproject.toml"
+    config_file = ":pyproject.toml",
 )
-
-    
