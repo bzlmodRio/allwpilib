@@ -11,7 +11,9 @@ def main():
     parser.add_argument("--config", required=True)
     parser.add_argument("--output_directory", required=True)
     parser.add_argument("--project_name", required=True)
+    parser.add_argument("--keep_json_files", action="store_true")
     args = parser.parse_args()
+    args.keep_json_files = True
 
     intermediate_directory = args.output_directory + ".intermediate"
 
@@ -31,16 +33,25 @@ def main():
         os.path.join(args.output_directory, "gensrc"),
     )
 
+    rpy_include_output_dir = os.path.join(args.output_directory, f"rpy-include/{project_name}")
 
     shutil.copytree(
         os.path.join(intermediate_directory, f"{project_name}"),
-        os.path.join(args.output_directory, f"rpy-include/{project_name}"),
+        rpy_include_output_dir,
     )
 
-    # for root, _, files in os.walk(os.path.join(args.output_directory, "gensrc")):
-    #     for f in files:
-    #         if f.endswith(".json"):
-    #             os.remove(os.path.join(root, f))
+    for root, _, files in os.walk(rpy_include_output_dir):
+        for f in files:
+            if f.endswith(".cpp"):
+                shutil.move(os.path.join(root, f), os.path.join(args.output_directory, "gensrc", project_name))
+                print(root, f)
+
+    if not args.keep_json_files:
+        for root, _, files in os.walk(os.path.join(args.output_directory, "gensrc")):
+            for f in files:
+                if f.endswith(".json"):
+                    os.remove(os.path.join(root, f))
+
 
 
         

@@ -88,10 +88,10 @@ create_pybind_library(
 )
 
 
-# generate_robopy_files(
-#     name = "wpimath",
-#     config_file = ":pyproject.toml"
-# )
+generate_robopy_files(
+    name = "wpimath",
+    config_file = ":pyproject.toml"
+)
 
 name = "wpimath"
 
