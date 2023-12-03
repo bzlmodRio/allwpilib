@@ -18,6 +18,12 @@ bazel_dep(name = "bzlmodrio-ni", version = "2024.1.1")
 bazel_dep(name = "bzlmodrio-opencv", version = "2024.4.8.0-1")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
+bazel_dep(name = "aspect_bazel_lib", version = "1.39.0")
+bazel_dep(name = "pybind11_bazel", version = "2.11.1")
+
+python_configure = use_extension("@pybind11_bazel//:python_configure.bzl", "extension")
+python_configure.toolchain(python_version = "3")
+use_repo(python_configure, "local_config_python", "pybind11")
 
 git_override(
     module_name = "com_google_protobuf",

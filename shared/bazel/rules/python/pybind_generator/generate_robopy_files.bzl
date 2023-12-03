@@ -14,15 +14,6 @@ def generate_robopy_files(
         config_file = config_file,
     )
 
-    # write_source_files(
-    #     name = "write_all",
-    #     additional_update_targets = [
-    #         ":write_on_build_dl_files",
-    #         ":write_on_build_gen",
-    #     ],
-    #     visibility = ["//visibility:public"]
-    # )
-
 def __run_on_dl(
         name,
         config_file):
@@ -44,15 +35,15 @@ def __run_on_dl(
         gen_dir = "_gen_on_build_dl",
     )
 
-    write_source_files(
-        name = "write_on_build_dl_files",
-        files = {
-            "generated/on_build_dl_files": ":generate_on_build_dl_files",
-        },
-        suggested_update_target = "//:write_python_on_build_dl_files",
-        visibility = ["//visibility:public"],
-        diff_test = False,
-    )
+    # write_source_files(
+    #     name = "write_on_build_dl_files",
+    #     files = {
+    #         "generated/on_build_dl_files": ":generate_on_build_dl_files",
+    #     },
+    #     suggested_update_target = "//:write_python_on_build_dl_files",
+    #     visibility = ["//visibility:public"],
+    #     diff_test = False,
+    # )
 
 def __run_on_build_gen(
         name,
@@ -77,15 +68,15 @@ def __run_on_build_gen(
         project_name = name,
     )
 
-    write_source_files(
-        name = "write_on_build_gen",
-        files = {
-            "generated": ":generate_on_build_gen",
-        },
-        suggested_update_target = "//:write_python_on_build_gen",
-        visibility = ["//visibility:public"],
-        diff_test = True,
-    )
+    # write_source_files(
+    #     name = "write_on_build_gen",
+    #     files = {
+    #         "generated": ":generate_on_build_gen",
+    #     },
+    #     suggested_update_target = "//:write_python_on_build_gen",
+    #     visibility = ["//visibility:public"],
+    #     diff_test = True,
+    # )
 
 def __generate_on_build_dl_files_impl(ctx):
     output_dir = ctx.actions.declare_directory(ctx.attr.gen_dir)
