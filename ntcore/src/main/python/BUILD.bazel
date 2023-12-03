@@ -1,0 +1,29 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+
+create_pybind_library(
+    "ntcore",
+    deps = [
+        "//ntcore/src/main/native:ntcore.shared",
+        "//wpiutil/src/main/python:wpiutil_pybind_library"
+    ],
+    extra_srcs = glob(["ntcore/src/*.cpp"], exclude=["ntcore/src/ntcore.cpp"]),
+    extra_hdrs = glob(["ntcore/src/*.h", "ntcore/src/*.inl"]),
+    strip_include_prefix = "ntcore",
+    entry_point = ["ntcore/src/ntcore.cpp"],
+)
+
+generate_robopy_files(
+    name = "ntcore",
+    config_file = ":pyproject.toml"
+)
+
+py_library(
+    name = "ntcore",
+    srcs = glob(["ntcore/**/*.py"]),
+    data = [
+        ":_ntcore.so",
+    ],
+    visibility = ["//visibility:public"],
+    imports = ["."],
+)

@@ -1,0 +1,29 @@
+
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+
+create_pybind_library(
+    "wpiHal",
+    deps = [
+        "//hal/src/main/native:wpiHal.shared",
+        "//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
+    entry_point = [],
+)
+    
+    
+generate_robopy_files(
+    name = "hal",
+    config_file = ":pyproject.toml"
+)
+
+
+    
+create_pybind_library(
+    "hal_simulation",
+    deps = [
+        "//hal/src/main/native:wpiHal.shared",
+        "//wpiutil/src/main/python:wpiutil_pybind_library"
+    ],
+    entry_point = [],
+)

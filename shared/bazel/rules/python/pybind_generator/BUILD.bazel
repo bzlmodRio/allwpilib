@@ -1,0 +1,41 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+
+exports_files([
+    # "generate_tests.py",
+    # "generate_stubs.py",
+    # "generate_build_file.py",
+    "pybind_on_build_gen.py",
+    "pybind_on_build_dl.py",
+])
+
+cc_library(
+    name = "robotpy_includes",
+    hdrs = [
+        "pybind11_typing.h",
+        "robotpy_build.h",
+    ],
+    strip_include_prefix = ".",
+    visibility = ["//visibility:public"],
+)
+
+
+py_library(
+    name = "load_project_config",
+    srcs = ["load_project_config.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        # requirement("header2whatever"),
+        requirement("robotpy-build"),
+        # requirement("tomli"),
+    ],
+)
+
+py_library(
+    name = "pybind_gen_utils",
+    srcs = ["pybind_gen_utils.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        # requirement("header2whatever"),
+        # requirement("robotpy-build"),
+    ],
+)

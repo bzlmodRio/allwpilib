@@ -1,1 +1,14 @@
 jinja2==3.0.0a1
+
+robotpy-build==2024.0.0b5
+tomli
+
+#header2whatever @ git+https://github.com/pjreiniger/header2whatever@0.4.8rc999
+#robotpy-cppheaderparser >= 5.1
+# # pybind11-stubgen==0.13.0
+# robotpy-build @ git+https://github.com/robotpy/robotpy-build@2024.0.0b5
+# pytest
+
+# robotpy
+# robotpy[commands2,apriltag,cscore]
+# wpilib

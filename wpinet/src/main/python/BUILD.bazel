@@ -1,0 +1,27 @@
+
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+
+create_pybind_library(
+    "wpinet",
+    deps = [
+        "//wpinet/src/main/native:wpinet.shared",
+        "//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
+    entry_point = ["wpinet/src/main.cpp"],
+)
+
+generate_robopy_files(
+    name = "wpinet",
+    config_file = ":pyproject.toml"
+)
+
+py_library(
+    name = "wpinet",
+    srcs = glob(["wpinet/**/*.py"]),
+    data = [
+        ":_wpinet.so",
+    ],
+    visibility = ["//visibility:public"],
+    imports = ["."],
+)
