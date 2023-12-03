@@ -1,0 +1,1 @@
+{"hal::SimValue": [], "hal::SimInt": ["hal::SimValue"], "hal::SimLong": ["hal::SimValue"], "hal::SimDouble": ["hal::SimValue"], "hal::SimEnum": ["hal::SimValue"], "hal::SimBoolean": ["hal::SimValue"], "hal::SimDevice": []}
