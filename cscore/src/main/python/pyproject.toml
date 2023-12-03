@@ -56,7 +56,7 @@ sources = [
   "cscore/cvnp/cvnp_synonyms.cpp",
 ]
 
-depends = ["wpiutil", "wpinet", "ntcore", "opencv_cpp", "cscore_cpp", "cameraserver_cpp", ]
+depends = ["wpiutil", "wpinet", "ntcore" ]
 generation_data = "gen"
 
 [tool.robotpy-build.wrappers."cscore".autogen_headers]

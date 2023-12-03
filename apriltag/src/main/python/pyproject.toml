@@ -1,5 +1,5 @@
 [tool.robotpy-build.metadata]
-name = "robotpy-apriltag"
+name = "apriltag"
 description = "RobotPy bindings for WPILib's AprilTag library"
 author = "RobotPy Development Team"
 author_email = "robotpy@googlegroups.com"
@@ -18,9 +18,9 @@ requires = [
 ]
 
 [tool.robotpy-build]
-base_package = "robotpy_apriltag"
+base_package = "apriltag"
 
-[tool.robotpy-build.wrappers."robotpy_apriltag".maven_lib_download]
+[tool.robotpy-build.wrappers."apriltag".maven_lib_download]
 artifact_id = "apriltag-cpp"
 group_id = "edu.wpi.first.apriltag"
 repo_url = "https://frcmaven.wpi.edu/artifactory/release"
@@ -28,17 +28,17 @@ version = "2024.1.1-beta-3"
 
 libs = ["apriltag"]
 
-[tool.robotpy-build.wrappers."robotpy_apriltag"]
+[tool.robotpy-build.wrappers."apriltag"]
 name = "apriltag"
 
 sources = [
-  "robotpy_apriltag/src/main.cpp",
+  "apriltag/src/main.cpp",
 ]
 
 depends = ["wpiutil", "wpimath_cpp"]
 generation_data = "gen"
 
-[tool.robotpy-build.wrappers."robotpy_apriltag".autogen_headers]
+[tool.robotpy-build.wrappers."apriltag".autogen_headers]
 # frc/apriltag
 AprilTag = "frc/apriltag/AprilTag.h"
 AprilTagDetection = "frc/apriltag/AprilTagDetection.h"
