@@ -67,6 +67,12 @@ struct rpybuild_DriverStationTypes_initializer {
 
 
 
+  
+  py::enum_<::HAL_AllianceStationID> enum1;
+
+  
+  py::enum_<::HAL_MatchType> enum2;
+
 
 
 
@@ -123,6 +129,14 @@ struct rpybuild_DriverStationTypes_initializer {
   
 
   
+    enum1
+  (m, "AllianceStationID"
+  ),
+  
+    enum2
+  (m, "MatchType"
+  ),
+  
 
   
 
@@ -173,6 +187,36 @@ struct rpybuild_DriverStationTypes_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("kUnknown", ::HAL_AllianceStationID::HAL_AllianceStationID_kUnknown)
+  
+    .value("kRed1", ::HAL_AllianceStationID::HAL_AllianceStationID_kRed1)
+  
+    .value("kRed2", ::HAL_AllianceStationID::HAL_AllianceStationID_kRed2)
+  
+    .value("kRed3", ::HAL_AllianceStationID::HAL_AllianceStationID_kRed3)
+  
+    .value("kBlue1", ::HAL_AllianceStationID::HAL_AllianceStationID_kBlue1)
+  
+    .value("kBlue2", ::HAL_AllianceStationID::HAL_AllianceStationID_kBlue2)
+  
+    .value("kBlue3", ::HAL_AllianceStationID::HAL_AllianceStationID_kBlue3)
+  ;
+
+    
+      enum2
+  
+    .value("none", ::HAL_MatchType::HAL_kMatchType_none)
+  
+    .value("practice", ::HAL_MatchType::HAL_kMatchType_practice)
+  
+    .value("qualification", ::HAL_MatchType::HAL_kMatchType_qualification)
+  
+    .value("elimination", ::HAL_MatchType::HAL_kMatchType_elimination)
+  ;
+
     
 
     

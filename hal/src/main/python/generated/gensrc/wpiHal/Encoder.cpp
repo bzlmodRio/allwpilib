@@ -37,6 +37,12 @@ struct rpybuild_Encoder_initializer {
 
 
 
+  
+  py::enum_<::HAL_EncoderIndexingType> enum1;
+
+  
+  py::enum_<::HAL_EncoderEncodingType> enum2;
+
 
 
 
@@ -51,6 +57,16 @@ struct rpybuild_Encoder_initializer {
   
 
   
+    enum1
+  (m, "EncoderIndexingType"
+  ,
+    "The type of index pulse for the encoder."),
+  
+    enum2
+  (m, "EncoderEncodingType"
+  ,
+    "The encoding scaling of the encoder."),
+  
 
   
 
@@ -59,6 +75,28 @@ struct rpybuild_Encoder_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("kResetWhileHigh", ::HAL_EncoderIndexingType::HAL_kResetWhileHigh)
+  
+    .value("kResetWhileLow", ::HAL_EncoderIndexingType::HAL_kResetWhileLow)
+  
+    .value("kResetOnFallingEdge", ::HAL_EncoderIndexingType::HAL_kResetOnFallingEdge)
+  
+    .value("kResetOnRisingEdge", ::HAL_EncoderIndexingType::HAL_kResetOnRisingEdge)
+  ;
+
+    
+      enum2
+  
+    .value("Encoder_k1X", ::HAL_EncoderEncodingType::HAL_Encoder_k1X)
+  
+    .value("Encoder_k2X", ::HAL_EncoderEncodingType::HAL_Encoder_k2X)
+  
+    .value("Encoder_k4X", ::HAL_EncoderEncodingType::HAL_Encoder_k4X)
+  ;
+
     
 
     

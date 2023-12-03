@@ -17,7 +17,7 @@ def create_pybind_library(
     print("Making pybind library", name)
 
     generation_subdir = xxxx + name
-    rpy_include_dir = rpy_include_dir or "generated/rpy-include/wpimath/{}/rpy-include".format(name)
+    rpy_include_dir = rpy_include_dir or "generated/rpy-include/{}/rpy-include".format(name)
     print(rpy_include_dir)
     rpy_includes = native.glob([rpy_include_dir + "/rpygen/*.hpp".format(name)])
     print(rpy_includes)

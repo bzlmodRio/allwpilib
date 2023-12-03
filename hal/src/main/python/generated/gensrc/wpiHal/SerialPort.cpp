@@ -37,6 +37,9 @@ struct rpybuild_SerialPort_initializer {
 
 
 
+  
+  py::enum_<::HAL_SerialPort> enum1;
+
 
 
 
@@ -51,6 +54,10 @@ struct rpybuild_SerialPort_initializer {
   
 
   
+    enum1
+  (m, "SerialPort"
+  ),
+  
 
   
 
@@ -59,6 +66,18 @@ struct rpybuild_SerialPort_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("Onboard", ::HAL_SerialPort::HAL_SerialPort_Onboard)
+  
+    .value("MXP", ::HAL_SerialPort::HAL_SerialPort_MXP)
+  
+    .value("USB1", ::HAL_SerialPort::HAL_SerialPort_USB1)
+  
+    .value("USB2", ::HAL_SerialPort::HAL_SerialPort_USB2)
+  ;
+
     
 
     

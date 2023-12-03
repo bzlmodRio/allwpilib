@@ -37,6 +37,9 @@ struct rpybuild_Counter_initializer {
 
 
 
+  
+  py::enum_<::HAL_Counter_Mode> enum1;
+
 
 
 
@@ -51,6 +54,11 @@ struct rpybuild_Counter_initializer {
   
 
   
+    enum1
+  (m, "CounterMode"
+  ,
+    "The counter mode."),
+  
 
   
 
@@ -59,6 +67,18 @@ struct rpybuild_Counter_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("kTwoPulse", ::HAL_Counter_Mode::HAL_Counter_kTwoPulse)
+  
+    .value("kSemiperiod", ::HAL_Counter_Mode::HAL_Counter_kSemiperiod)
+  
+    .value("kPulseLength", ::HAL_Counter_Mode::HAL_Counter_kPulseLength)
+  
+    .value("kExternalDirection", ::HAL_Counter_Mode::HAL_Counter_kExternalDirection)
+  ;
+
     
 
     

@@ -37,6 +37,9 @@ struct rpybuild_AnalogTrigger_initializer {
 
 
 
+  
+  py::enum_<::HAL_AnalogTriggerType> enum1;
+
 
 
 
@@ -51,6 +54,11 @@ struct rpybuild_AnalogTrigger_initializer {
   
 
   
+    enum1
+  (m, "AnalogTriggerType"
+  ,
+    "The type of analog trigger to trigger on."),
+  
 
   
 
@@ -59,6 +67,18 @@ struct rpybuild_AnalogTrigger_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("kInWindow", ::HAL_AnalogTriggerType::HAL_Trigger_kInWindow)
+  
+    .value("kState", ::HAL_AnalogTriggerType::HAL_Trigger_kState)
+  
+    .value("kRisingPulse", ::HAL_AnalogTriggerType::HAL_Trigger_kRisingPulse)
+  
+    .value("kFallingPulse", ::HAL_AnalogTriggerType::HAL_Trigger_kFallingPulse)
+  ;
+
     
 
     

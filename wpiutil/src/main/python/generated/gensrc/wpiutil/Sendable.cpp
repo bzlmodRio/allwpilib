@@ -14,6 +14,9 @@
 
 
 
+#define RPYGEN_ENABLE_wpi__Sendable_PROTECTED_CONSTRUCTORS
+#include <rpygen/wpi__Sendable.hpp>
+
 
 
 
@@ -36,6 +39,9 @@
 struct rpybuild_Sendable_initializer {
 
 
+  
+
+  
 
 
 
@@ -45,6 +51,18 @@ struct rpybuild_Sendable_initializer {
 
 
 
+
+
+
+  
+  using Sendable_Trampoline = rpygen::PyTrampoline_wpi__Sendable<typename wpi::Sendable, typename rpygen::PyTrampolineCfg_wpi__Sendable<>>;
+    static_assert(std::is_abstract<Sendable_Trampoline>::value == false, "wpi::Sendable " RPYBUILD_BAD_TRAMPOLINE);
+  py::class_<typename wpi::Sendable, Sendable_Trampoline> cls_Sendable;
+
+    
+
+    
+    
 
 
   py::module &m;
@@ -59,12 +77,24 @@ struct rpybuild_Sendable_initializer {
   
 
   
+    cls_Sendable(m, "Sendable"),
+
+  
+
+  
+  
+  
 
     m(m)
   {
     
     
 
+    
+    
+  
+
+    
     
   }
 
@@ -73,6 +103,39 @@ void finish() {
 
 
 
+
+  {
+  
+  
+  
+
+
+  
+
+  cls_Sendable.doc() =
+    "Interface for Sendable objects.";
+
+  cls_Sendable
+  
+    .def(py::init<>(), release_gil())
+  
+    
+  .
+def
+("initSendable", &wpi::Sendable::InitSendable,
+      py::arg("builder"), release_gil(), py::doc(
+    "Initializes this Sendable object.\n"
+"\n"
+":param builder: sendable builder")
+  )
+  
+  
+  ;
+
+  
+
+
+  }
 
 
 

@@ -52,6 +52,9 @@ struct rpybuild_PowerDistribution_initializer {
 
 
 
+  
+  py::enum_<::HAL_PowerDistributionType> enum1;
+
 
 
 
@@ -87,6 +90,11 @@ struct rpybuild_PowerDistribution_initializer {
   
 
   
+    enum1
+  (m, "PowerDistributionType"
+  ,
+    "The types of power distribution devices."),
+  
 
   
 
@@ -116,6 +124,16 @@ struct rpybuild_PowerDistribution_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("kAutomatic", ::HAL_PowerDistributionType::HAL_PowerDistributionType_kAutomatic)
+  
+    .value("kCTRE", ::HAL_PowerDistributionType::HAL_PowerDistributionType_kCTRE)
+  
+    .value("kRev", ::HAL_PowerDistributionType::HAL_PowerDistributionType_kRev)
+  ;
+
     
 
     

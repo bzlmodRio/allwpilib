@@ -37,6 +37,9 @@ struct rpybuild_HALBase_initializer {
 
 
 
+  
+  py::enum_<::HAL_RuntimeType> enum1;
+
 
 
 
@@ -51,6 +54,10 @@ struct rpybuild_HALBase_initializer {
   
 
   
+    enum1
+  (m, "RuntimeType"
+  ),
+  
 
   
 
@@ -59,6 +66,16 @@ struct rpybuild_HALBase_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("HAL_Runtime_RoboRIO", ::HAL_RuntimeType::HAL_Runtime_RoboRIO)
+  
+    .value("HAL_Runtime_RoboRIO2", ::HAL_RuntimeType::HAL_Runtime_RoboRIO2)
+  
+    .value("HAL_Runtime_Simulation", ::HAL_RuntimeType::HAL_Runtime_Simulation)
+  ;
+
     
 
     

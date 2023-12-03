@@ -39,6 +39,9 @@ struct rpybuild_I2CTypes_initializer {
 
 
 
+  
+  py::enum_<::HAL_I2CPort> enum1;
+
 
 
 
@@ -53,6 +56,10 @@ struct rpybuild_I2CTypes_initializer {
   
 
   
+    enum1
+  (m, "I2CPort"
+  ),
+  
 
   
 
@@ -61,6 +68,16 @@ struct rpybuild_I2CTypes_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("kInvalid", ::HAL_I2CPort::HAL_I2C_kInvalid)
+  
+    .value("kOnboard", ::HAL_I2CPort::HAL_I2C_kOnboard)
+  
+    .value("kMXP", ::HAL_I2CPort::HAL_I2C_kMXP)
+  ;
+
     
 
     

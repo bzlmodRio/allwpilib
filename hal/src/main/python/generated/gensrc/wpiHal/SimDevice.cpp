@@ -80,6 +80,9 @@ struct rpybuild_SimDevice_initializer {
 
 
 
+  
+  py::enum_<::HAL_SimValueDirection> enum1;
+
 
 
 
@@ -146,6 +149,11 @@ struct rpybuild_SimDevice_initializer {
   
 
   
+    enum1
+  (m, "SimValueDirection"
+  ,
+    "Direction of a simulated value (from the perspective of user code)."),
+  
 
   
 
@@ -208,6 +216,19 @@ struct rpybuild_SimDevice_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("HAL_SimValueInput", ::HAL_SimValueDirection::HAL_SimValueInput,
+      "input to user code from the simulator")
+  
+    .value("HAL_SimValueOutput", ::HAL_SimValueDirection::HAL_SimValueOutput,
+      "output from user code to the simulator")
+  
+    .value("HAL_SimValueBidir", ::HAL_SimValueDirection::HAL_SimValueBidir,
+      "bidirectional between user code and simulator")
+  ;
+
     
 
     

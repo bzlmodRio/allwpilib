@@ -37,6 +37,9 @@ struct rpybuild_Accelerometer_initializer {
 
 
 
+  
+  py::enum_<::HAL_AccelerometerRange> enum1;
+
 
 
 
@@ -51,6 +54,11 @@ struct rpybuild_Accelerometer_initializer {
   
 
   
+    enum1
+  (m, "AccelerometerRange"
+  ,
+    "The acceptable accelerometer ranges."),
+  
 
   
 
@@ -59,6 +67,16 @@ struct rpybuild_Accelerometer_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("k2G", ::HAL_AccelerometerRange::HAL_AccelerometerRange_k2G)
+  
+    .value("k4G", ::HAL_AccelerometerRange::HAL_AccelerometerRange_k4G)
+  
+    .value("k8G", ::HAL_AccelerometerRange::HAL_AccelerometerRange_k8G)
+  ;
+
     
 
     

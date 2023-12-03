@@ -39,6 +39,12 @@ struct rpybuild_SPITypes_initializer {
 
 
 
+  
+  py::enum_<::HAL_SPIPort> enum1;
+
+  
+  py::enum_<::HAL_SPIMode> enum2;
+
 
 
 
@@ -53,6 +59,14 @@ struct rpybuild_SPITypes_initializer {
   
 
   
+    enum1
+  (m, "SPIPort"
+  ),
+  
+    enum2
+  (m, "SPIMode"
+  ),
+  
 
   
 
@@ -61,6 +75,34 @@ struct rpybuild_SPITypes_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("kInvalid", ::HAL_SPIPort::HAL_SPI_kInvalid)
+  
+    .value("kOnboardCS0", ::HAL_SPIPort::HAL_SPI_kOnboardCS0)
+  
+    .value("kOnboardCS1", ::HAL_SPIPort::HAL_SPI_kOnboardCS1)
+  
+    .value("kOnboardCS2", ::HAL_SPIPort::HAL_SPI_kOnboardCS2)
+  
+    .value("kOnboardCS3", ::HAL_SPIPort::HAL_SPI_kOnboardCS3)
+  
+    .value("kMXP", ::HAL_SPIPort::HAL_SPI_kMXP)
+  ;
+
+    
+      enum2
+  
+    .value("kMode0", ::HAL_SPIMode::HAL_SPI_kMode0)
+  
+    .value("kMode1", ::HAL_SPIMode::HAL_SPI_kMode1)
+  
+    .value("kMode2", ::HAL_SPIMode::HAL_SPI_kMode2)
+  
+    .value("kMode3", ::HAL_SPIMode::HAL_SPI_kMode3)
+  ;
+
     
 
     

@@ -57,6 +57,9 @@ struct rpybuild_REVPH_initializer {
 
 
 
+  
+  py::enum_<::HAL_REVPHCompressorConfigType> enum1;
+
 
 
 
@@ -99,6 +102,11 @@ struct rpybuild_REVPH_initializer {
   
 
   
+    enum1
+  (m, "REVPHCompressorConfigType"
+  ,
+    "The compressor configuration type"),
+  
 
   
 
@@ -135,6 +143,18 @@ struct rpybuild_REVPH_initializer {
     m(m)
   {
     
+    
+      enum1
+  
+    .value("kDisabled", ::HAL_REVPHCompressorConfigType::HAL_REVPHCompressorConfigType_kDisabled)
+  
+    .value("kDigital", ::HAL_REVPHCompressorConfigType::HAL_REVPHCompressorConfigType_kDigital)
+  
+    .value("kAnalog", ::HAL_REVPHCompressorConfigType::HAL_REVPHCompressorConfigType_kAnalog)
+  
+    .value("kHybrid", ::HAL_REVPHCompressorConfigType::HAL_REVPHCompressorConfigType_kHybrid)
+  ;
+
     
 
     
