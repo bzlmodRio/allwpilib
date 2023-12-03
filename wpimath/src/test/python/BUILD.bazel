@@ -1,0 +1,13 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@rules_python//python:defs.bzl", "py_test")
+
+SOURCES = glob(["test_*.py"])
+
+[py_test(
+    name = test_file[:-3],
+    srcs = [test_file],
+    deps = [
+        "//wpimath/src/main/python:wpimath",
+        requirement("pytest"),
+    ],
+) for test_file in SOURCES]
