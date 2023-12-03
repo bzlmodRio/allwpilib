@@ -22,15 +22,18 @@ def main():
 
     print("Done gen")
 
+    project_name = args.project_name
+    print("COPYING FROM", os.path.join(intermediate_directory, f"{project_name}/rpy-include"))
+    # raise
+
     shutil.copytree(
         os.path.join(intermediate_directory, "pybind_gen"),
         os.path.join(args.output_directory, "gensrc"),
     )
 
-    project_name = args.project_name
 
     shutil.copytree(
-        os.path.join(intermediate_directory, f"{project_name}/rpy-include"),
+        os.path.join(intermediate_directory, f"{project_name}"),
         os.path.join(args.output_directory, f"rpy-include/{project_name}"),
     )
 

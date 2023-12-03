@@ -28,42 +28,42 @@ create_pybind_library(
 # )
 # 
 # 
-create_pybind_library(
-    "filter",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-    ],
-    entry_point = ["wpimath/filter/filter.cpp"],
-
-    xxxx = "wpimath_",
-)
-
-create_pybind_library(
-    "geometry",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-        "//wpiutil/src/main/python:wpiutil_pybind_library"
-    ],
-    entry_point = ["wpimath/geometry/geometry.cpp"],
-
-    xxxx = "wpimath_",
-    extra_hdrs = glob(["wpimath/geometry/include/**/*.h"]),
-    strip_include_prefix = "wpimath/geometry/include",
-)
-
-create_pybind_library(
-    "interpolation",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-    ],
-    entry_point = ["wpimath/interpolation/interpolation.cpp"],
-
-    xxxx = "wpimath_",
-)
-
+# create_pybind_library(
+#     "filter",
+#     deps = [
+#         "//wpimath/src/main/native:wpimath.shared",
+#         ":wpimath_pybind_library",
+#     ],
+#     entry_point = ["wpimath/filter/filter.cpp"],
+# 
+#     xxxx = "wpimath_",
+# )
+# 
+# create_pybind_library(
+#     "geometry",
+#     deps = [
+#         "//wpimath/src/main/native:wpimath.shared",
+#         ":wpimath_pybind_library",
+#         "//wpiutil/src/main/python:wpiutil_pybind_library"
+#     ],
+#     entry_point = ["wpimath/geometry/geometry.cpp"],
+# 
+#     xxxx = "wpimath_",
+#     extra_hdrs = glob(["wpimath/geometry/include/**/*.h"]),
+#     strip_include_prefix = "wpimath/geometry/include",
+# )
+# 
+# create_pybind_library(
+#     "interpolation",
+#     deps = [
+#         "//wpimath/src/main/native:wpimath.shared",
+#         ":wpimath_pybind_library",
+#     ],
+#     entry_point = ["wpimath/interpolation/interpolation.cpp"],
+# 
+#     xxxx = "wpimath_",
+# )
+# 
 create_pybind_library(
     "kinematics",
     deps = [
@@ -74,37 +74,37 @@ create_pybind_library(
 
     xxxx = "wpimath_",
 )
-
-create_pybind_library(
-    "spline",
-    deps = [
-        "//wpimath/src/main/native:wpimath.shared",
-        ":wpimath_pybind_library",
-    ],
-    entry_point = ["wpimath/spline/spline.cpp"],
-
-    xxxx = "wpimath_",
-)
-
-
-generate_robopy_files(
-    name = "wpimath",
-    config_file = ":pyproject.toml"
-)
-
-name = "wpimath"
-
-py_library(
-    name = name,
-    srcs = glob(["wpimath/**/*.py"]),
-    data = [
-        ":_wpimath.so",
-        ":_geometry.so",
-        ":_kinematics.so",
-        ":_spline.so",
-        ":_filter.so",
-        ":_interpolation.so",
-    ],
-    visibility = ["//visibility:public"],
-    imports = ["."],
-)
+# 
+# create_pybind_library(
+#     "spline",
+#     deps = [
+#         "//wpimath/src/main/native:wpimath.shared",
+#         ":wpimath_pybind_library",
+#     ],
+#     entry_point = ["wpimath/spline/spline.cpp"],
+# 
+#     xxxx = "wpimath_",
+# )
+# 
+# 
+# generate_robopy_files(
+#     name = "wpimath",
+#     config_file = ":pyproject.toml"
+# )
+# 
+# name = "wpimath"
+# 
+# py_library(
+#     name = name,
+#     srcs = glob(["wpimath/**/*.py"]),
+#     data = [
+#         ":_wpimath.so",
+#         ":_geometry.so",
+#         ":_kinematics.so",
+#         ":_spline.so",
+#         ":_filter.so",
+#         ":_interpolation.so",
+#     ],
+#     visibility = ["//visibility:public"],
+#     imports = ["."],
+# )

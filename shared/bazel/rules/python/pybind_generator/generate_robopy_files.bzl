@@ -90,7 +90,7 @@ def __run_on_build_gen(
         },
         suggested_update_target = "//:write_python_on_build_gen",
         visibility = ["//visibility:public"],
-        diff_test = False,
+        diff_test = True,
     )
 
 

@@ -16,8 +16,10 @@ def create_pybind_library(
 
     generation_subdir = xxxx + name
 
-    rpy_include_dir = "generated/rpy-include/{}".format(name)
+    rpy_include_dir = "generated/rpy-include/wpimath/{}/rpy-include".format(name)
+    print(rpy_include_dir)
     rpy_includes = native.glob([rpy_include_dir + "/rpygen/*.hpp".format(name)])
+    print(rpy_includes)
     rpy_hdr_deps = []
     if rpy_includes:
         print("Has rpy_includes: ", rpy_includes)
@@ -33,7 +35,7 @@ def create_pybind_library(
     # print(generated_srcs)
     pybind_library(
         name = "{}_pybind_library".format(name),
-        srcs = generated_srcs + extra_srcs + native.glob([rpy_include_dir + "/rpygen/*.cpp"]) + native.glob(["generated/gensrc/" + generation_subdir + "/*.hpp"]),
+        srcs = generated_srcs + extra_srcs + native.glob(["generated/gensrc/" + generation_subdir + "/*.hpp"]),
         hdrs = extra_hdrs,
         deps = [
             "//shared/bazel/rules/python/pybind_generator:robotpy_includes",
