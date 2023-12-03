@@ -1,9 +1,11 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
+load("//wpimath:generate.bzl", "generate_wpimath")
 
 filegroup(
     name = "templates",
-    srcs = glob(["src/generate/*.jinja"]),
+    srcs = glob(["src/generate/main/java/*.jinja"]),
 )
 
 py_binary(
@@ -15,11 +17,21 @@ py_binary(
     deps = [requirement("jinja2")],
 )
 
-genrule(
-    name = "gen-nat",
-    srcs = [":templates"],
-    outs = ["generated/java/edu/wpi/first/math/Nat.java"] + ["generated/java/edu/wpi/first/math/numbers/N{}.java".format(i) for i in range(21)],
-    cmd = "$(locations :generate_numbers) --output_files $(OUTS)",
-    tools = [":generate_numbers"],
+generate_wpimath(
+    name = "generate_wpimath",
+)
+
+write_source_files(
+    name = "write_wpimath",
+    files = {
+        "src/generated": ":generate_wpimath",
+    },
+    suggested_update_target = "//:write_all",
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "generated_java",
+    srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//wpimath:__subpackages__"],
 )

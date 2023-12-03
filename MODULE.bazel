@@ -5,6 +5,7 @@ module(
 )
 
 bazel_dep(name = "googletest", version = "1.14.0", repo_name = "gtest")
+bazel_dep(name = "aspect_bazel_lib", version = "1.39.0")
 bazel_dep(name = "rules_cc", version = "0.0.8")
 bazel_dep(name = "rules_java", version = "6.4.0")
 bazel_dep(name = "rules_jvm_external", version = "5.3")
