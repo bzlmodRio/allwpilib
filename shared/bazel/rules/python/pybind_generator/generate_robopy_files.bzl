@@ -55,6 +55,7 @@ def __run_on_dl(
         },
         suggested_update_target = "//:write_python_on_build_dl_files",
         visibility = ["//visibility:public"],
+        diff_test = False,
     )
 
 def __run_on_build_gen(
@@ -89,6 +90,7 @@ def __run_on_build_gen(
         },
         suggested_update_target = "//:write_python_on_build_gen",
         visibility = ["//visibility:public"],
+        diff_test = False,
     )
 
 

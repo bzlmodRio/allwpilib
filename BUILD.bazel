@@ -49,7 +49,7 @@ write_source_files(
         # "//cscore/src/main/python:write_on_build_gen",
         "//hal/src/main/python:write_on_build_gen",
         "//ntcore/src/main/python:write_on_build_gen",
-        # # "//wpimath/src/main/python:write_on_build_gen",
+        "//wpimath/src/main/python:write_on_build_gen",
         "//wpinet/src/main/python:write_on_build_gen",
         "//wpiutil/src/main/python:write_on_build_gen",
     ],
