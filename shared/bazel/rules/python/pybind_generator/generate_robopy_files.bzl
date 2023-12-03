@@ -28,12 +28,12 @@ def __run_on_dl(
         data = native.glob(["gen/**"]),
     )
 
-    __generate_on_build_dl_files(
-        name = "generate_on_build_dl_files",
-        tool = name + ".pybind_on_build_dl_exe",
-        config_file = config_file,
-        gen_dir = "_gen_on_build_dl",
-    )
+    # __generate_on_build_dl_files(
+    #     name = "generate_on_build_dl_files",
+    #     tool = name + ".pybind_on_build_dl_exe",
+    #     config_file = config_file,
+    #     gen_dir = "_gen_on_build_dl",
+    # )
 
     # write_source_files(
     #     name = "write_on_build_dl_files",
@@ -60,13 +60,13 @@ def __run_on_build_gen(
         # data = [headers] + native.glob(["gen/**"]),
     )
 
-    __generate_on_build_gen_files(
-        name = "generate_on_build_gen",
-        tool = name + ".generate_pybind_exe",
-        config_file = config_file,
-        gen_dir = "_gen_on_build",
-        project_name = name,
-    )
+    # __generate_on_build_gen_files(
+    #     name = "generate_on_build_gen",
+    #     tool = name + ".generate_pybind_exe",
+    #     config_file = config_file,
+    #     gen_dir = "_gen_on_build",
+    #     project_name = name,
+    # )
 
     # write_source_files(
     #     name = "write_on_build_gen",
