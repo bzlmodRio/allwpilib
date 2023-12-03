@@ -36,6 +36,7 @@ create_pybind_library(
         ":wpimath_pybind_library",
     ],
     entry_point = ["wpimath/filter/filter.cpp"],
+    rpy_include_dir = "generated/rpy-include/wpimath/filter/rpy-include",
 
     xxxx = "wpimath_",
 )
@@ -61,6 +62,7 @@ create_pybind_library(
         ":wpimath_pybind_library",
     ],
     entry_point = ["wpimath/interpolation/interpolation.cpp"],
+    rpy_include_dir = "generated/rpy-include/wpimath/interpolation/rpy-include",
 
     xxxx = "wpimath_",
 )
@@ -72,6 +74,7 @@ create_pybind_library(
         ":wpimath_pybind_library",
     ],
     entry_point = ["wpimath/kinematics/kinematics.cpp"],
+    rpy_include_dir = "generated/rpy-include/wpimath/kinematics/rpy-include",
 
     xxxx = "wpimath_",
 )
@@ -83,6 +86,7 @@ create_pybind_library(
         ":wpimath_pybind_library",
     ],
     entry_point = ["wpimath/spline/spline.cpp"],
+    rpy_include_dir = "generated/rpy-include/wpimath/spline/rpy-include",
 
     xxxx = "wpimath_",
 )
