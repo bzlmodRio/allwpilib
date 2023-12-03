@@ -19,6 +19,9 @@ generate_robopy_files(
 py_library(
     name = "wpinet",
     srcs = glob(["wpinet/**/*.py"]),
+    deps = [
+        "//wpiutil/src/main/python:wpiutil",
+    ],
     data = [
         ":_wpinet.so",
     ],

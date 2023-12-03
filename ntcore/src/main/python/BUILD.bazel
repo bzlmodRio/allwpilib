@@ -28,6 +28,10 @@ generate_robopy_files(
 py_library(
     name = "ntcore",
     srcs = glob(["ntcore/**/*.py"]),
+    deps = [
+        "//wpinet/src/main/python:wpinet",
+        "//wpiutil/src/main/python:wpiutil",
+    ],
     data = [
         ":_ntcore.so",
     ],
