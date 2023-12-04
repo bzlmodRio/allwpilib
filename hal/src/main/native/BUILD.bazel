@@ -45,7 +45,7 @@ wpilib_cc_static_and_shared_library(
     ),
     hdrs = glob(["include/**/*"]),
     includes = ["include"],
-    standard_deps = ["//hal/src/generate:gen-cpp"] + HAL_DEPS,
+    standard_deps = ["//hal:generated_cc_headers"] + HAL_DEPS,
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [

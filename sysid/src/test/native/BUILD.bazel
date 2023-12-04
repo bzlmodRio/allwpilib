@@ -4,11 +4,11 @@ wpilib_cc_test(
     name = "sysid-test",
     size = "small",
     srcs = glob(["cpp/**"]),
+    tags = [
+        "no-asan",
+    ],
     deps = [
         "//sysid/src/main/native:sysid-lib",
         "@gtest",
-    ],
-    tags = [
-        "no-asan",
     ],
 )
