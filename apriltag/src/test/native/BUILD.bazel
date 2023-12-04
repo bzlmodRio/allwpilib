@@ -4,6 +4,9 @@ wpilib_cc_test(
     name = "apriltag-test",
     size = "small",
     srcs = glob(["cpp/**"]),
+    tags = [
+        "no-asan",
+    ],
     deps = [
         "//apriltag/src/main/native:apriltag.shared",
         "@gtest",

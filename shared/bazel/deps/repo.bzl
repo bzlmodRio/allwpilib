@@ -43,7 +43,7 @@ def load_third_party():
 
     pip_parse(
         name = "allwpilib_pip_deps",
-        requirements_lock = "//shared/bazel/deps:requirements_lock.txt",
+        requirements_lock = "//:requirements_lock.txt",
     )
 
     setup_non_bzlmod_quickbuf_protoc()
