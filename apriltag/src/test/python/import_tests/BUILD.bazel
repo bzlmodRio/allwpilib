@@ -1,8 +1,8 @@
-load("@rules_python//python:defs.bzl", "py_test")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_test")
 
 SOURCES = glob(["**/*Test.py"])
 
-[py_test(
+[pybind_python_test(
     name = test_file[:-3],
     srcs = [test_file],
     deps = [

@@ -1,6 +1,6 @@
 load("@rules_python//python:defs.bzl", "py_library")
 load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
-load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library", "pybind_python_library")
 
 create_pybind_library(
     "ntcore",
@@ -25,7 +25,7 @@ generate_robopy_files(
     config_file = ":pyproject.toml",
 )
 
-py_library(
+pybind_python_library(
     name = "ntcore",
     srcs = glob(["ntcore/**/*.py"]),
     deps = [

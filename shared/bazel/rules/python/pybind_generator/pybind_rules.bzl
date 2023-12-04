@@ -40,7 +40,7 @@ def create_pybind_library(
             "//shared/bazel/rules/python/pybind_generator:robotpy_includes",
         ] + deps + rpy_hdr_deps,
         copts = select({
-            "@bazel_tools//src/conditions:darwin": ["-Wno-delete-abstract-non-virtual-dtor"],
+            "@bazel_tools//src/conditions:darwin": ["-Wno-sign-compare", "-Wno-unused-value", "-Wno-pessimizing-move", "-Wno-delete-abstract-non-virtual-dtor", "-Wno-delete-non-abstract-non-virtual-dtor"],
             "@bazel_tools//src/conditions:windows": [],
             "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["-Wno-attributes", "-Wno-redundant-move", "-Wno-sign-compare", "-Wno-deprecated", "-Wno-unused-value"],
         }),
@@ -49,6 +49,11 @@ def create_pybind_library(
         strip_include_prefix = strip_include_prefix,
         includes = includes,
         visibility = ["//visibility:public"],
+        tags = [
+            "no-bullseye",
+            "no-raspi",
+            "no-roborio",
+        ],
     )
 
     pybind_extension(
@@ -58,4 +63,33 @@ def create_pybind_library(
         defines = ["RPYBUILD_MODULE_NAME=_{}".format(name)],
         visibility = ["//visibility:private"],
         includes = ["generated/gensrc/" + generation_subdir],
+        tags = [
+            "no-bullseye",
+            "no-raspi",
+            "no-roborio",
+        ],
+    )
+
+
+def pybind_python_library(name, tags = [], **kwargs):
+    native.py_library(
+        name = name,
+        tags = tags + [
+            "no-bullseye",
+            "no-raspi",
+            "no-roborio",
+        ],
+        **kwargs
+    )
+    
+
+def pybind_python_test(name, tags = [], **kwargs):
+    native.py_test(
+        name = name,
+        tags = tags + [
+            "no-bullseye",
+            "no-raspi",
+            "no-roborio",
+        ],
+        **kwargs
     )
