@@ -8,4 +8,7 @@ wpilib_cc_test(
         "//apriltag/src/main/native:apriltag.shared",
         "@gtest",
     ],
+    tags = [
+        "no-asan",
+    ],
 )

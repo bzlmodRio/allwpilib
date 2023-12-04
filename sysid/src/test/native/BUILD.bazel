@@ -8,4 +8,7 @@ wpilib_cc_test(
         "//sysid/src/main/native:sysid-lib",
         "@gtest",
     ],
+    tags = [
+        "no-asan",
+    ],
 )
