@@ -1,1 +1,1 @@
-from wpimath.spline import Spline3
+from wpimath.spline import Spline3, Spline5

@@ -1,1 +1,1 @@
-from wpimath.plant import DCMotor
+from wpimath._controls.plant import DCMotor

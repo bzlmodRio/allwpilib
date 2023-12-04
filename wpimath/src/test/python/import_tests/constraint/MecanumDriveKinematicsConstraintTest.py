@@ -1,1 +1,1 @@
-from wpimath.constraint import MecanumDriveKinematicsConstraint
+from wpimath._controls.constraint import MecanumDriveKinematicsConstraint

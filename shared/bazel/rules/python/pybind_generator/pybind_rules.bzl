@@ -40,7 +40,7 @@ def create_pybind_library(
             "//shared/bazel/rules/python/pybind_generator:robotpy_includes",
         ] + deps + rpy_hdr_deps,
         copts = select({
-            "@bazel_tools//src/conditions:darwin": [],
+            "@bazel_tools//src/conditions:darwin": ["-Wno-delete-abstract-non-virtual-dtor"],
             "@bazel_tools//src/conditions:windows": [],
             "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["-Wno-attributes", "-Wno-redundant-move", "-Wno-sign-compare", "-Wno-deprecated", "-Wno-unused-value"],
         }),

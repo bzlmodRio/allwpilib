@@ -9,7 +9,7 @@ import wpiutil._init_wpiutil
 from ctypes import cdll
 
 try:
-    _lib = cdll.LoadLibrary(join(_root, "lib", "libwpiHal.so"))
+    _lib = cdll.LoadLibrary(join(_root, "..", "_wpiHal.so"))
 except FileNotFoundError:
     if not exists(join(_root, "lib", "libwpiHal.so")):
         raise FileNotFoundError("libwpiHal.so was not found on your system. Is this package correctly installed?")

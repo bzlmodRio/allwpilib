@@ -1,1 +1,1 @@
-from wpimath.controller import DifferentialDriveAccelerationLimiter
+from wpimath._controls.controller import DifferentialDriveAccelerationLimiter

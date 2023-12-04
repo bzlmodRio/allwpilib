@@ -1,1 +1,1 @@
-# from wpimath_controls import TrapezoidProfile
+from wpimath.trajectory import TrapezoidProfile

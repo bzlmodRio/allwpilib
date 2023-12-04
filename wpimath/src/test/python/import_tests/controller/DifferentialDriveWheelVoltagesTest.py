@@ -1,1 +1,1 @@
-from wpimath.controller import DifferentialDriveWheelVoltages
+from wpimath._controls.controller import DifferentialDriveWheelVoltages

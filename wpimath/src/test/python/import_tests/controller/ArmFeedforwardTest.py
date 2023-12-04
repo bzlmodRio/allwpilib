@@ -1,1 +1,1 @@
-from wpimath.controller import ArmFeedforward
+from wpimath._controls.controller import ArmFeedforward

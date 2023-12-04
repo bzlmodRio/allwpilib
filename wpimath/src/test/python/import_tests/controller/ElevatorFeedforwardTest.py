@@ -1,1 +1,1 @@
-from wpimath.controller import ElevatorFeedforward
+from wpimath._controls.controller import ElevatorFeedforward

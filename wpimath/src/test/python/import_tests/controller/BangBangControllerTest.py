@@ -1,1 +1,1 @@
-from wpimath.controller import BangBangController
+from wpimath._controls.controller import BangBangController

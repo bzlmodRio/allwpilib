@@ -3,6 +3,7 @@ load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_py
 
 create_pybind_library(
     "cscore",
+    extra_srcs = glob(["cscore/cvnp/*.cpp"]),
     extra_hdrs = glob(["cscore/cvnp/*.h"]),
     strip_include_prefix = "cscore",
     deps = [
@@ -10,9 +11,25 @@ create_pybind_library(
         "//cscore/src/main/native:cscore.shared",
         "//wpiutil/src/main/python:wpiutil_pybind_library",
     ],
+    entry_point = ["cscore/src/main.cpp"]
 )
 
 generate_robopy_files(
     name = "cscore",
     config_file = ":pyproject.toml",
+)
+
+py_library(
+    name = "cscore",
+    srcs = glob(["cscore/**/*.py"]),
+    deps = [
+        "//ntcore/src/main/python:ntcore",
+        "//wpinet/src/main/python:wpinet",
+        "//wpiutil/src/main/python:wpiutil",
+    ],
+    data = [
+        ":_cscore.so",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
 )

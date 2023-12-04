@@ -1,1 +1,1 @@
-from wpimath.constraint import DifferentialDriveKinematicsConstraint
+from wpimath._controls.constraint import DifferentialDriveKinematicsConstraint

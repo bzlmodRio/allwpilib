@@ -1,1 +1,1 @@
-from wpimath.constraint import TrajectoryConstraint
+from wpimath._controls.constraint import TrajectoryConstraint

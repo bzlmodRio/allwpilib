@@ -8,9 +8,24 @@ create_pybind_library(
         "//wpimath/src/main/python:wpimath_pybind_library",
         "//wpiutil/src/main/python:wpiutil_pybind_library",
     ],
+    entry_point = ["robotpy_apriltag/src/main.cpp"]
 )
 
 generate_robopy_files(
     name = "apriltag",
     config_file = ":pyproject.toml",
+)
+
+py_library(
+    name = "apriltag",
+    srcs = glob(["robotpy_apriltag/**/*.py"]),
+    deps = [
+        "//wpimath/src/main/python:wpimath",
+        "//wpiutil/src/main/python:wpiutil",
+    ],
+    data = [
+        ":_apriltag.so",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
 )

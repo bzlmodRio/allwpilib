@@ -98,7 +98,7 @@ jobs:
         shell: bash
 
       - name: Build
-        run: bazel ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        run: bazel ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation
         shell: bash
 
       # - name: Check Lockfile update

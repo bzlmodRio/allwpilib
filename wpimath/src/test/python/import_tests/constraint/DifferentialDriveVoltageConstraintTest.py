@@ -1,1 +1,1 @@
-from wpimath.constraint import DifferentialDriveVoltageConstraint
+from wpimath._controls.constraint import DifferentialDriveVoltageConstraint

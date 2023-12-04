@@ -1,1 +1,1 @@
-from wpimath.plant import LinearSystemId
+from wpimath._controls.plant import LinearSystemId

@@ -1,1 +1,1 @@
-from wpimath.controller import RamseteController
+from wpimath._controls.controller import RamseteController

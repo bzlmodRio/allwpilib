@@ -1,1 +1,1 @@
-from wpimath.controller import PIDController
+from wpimath._controls.controller import PIDController

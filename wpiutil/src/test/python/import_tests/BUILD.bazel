@@ -9,3 +9,4 @@ SOURCES = glob(["**/*Test.py"])
         "//wpiutil/src/main/python:wpiutil",
     ],
 ) for test_file in SOURCES]
+

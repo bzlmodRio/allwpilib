@@ -1,1 +1,1 @@
-from wpimath.constraint import MaxVelocityConstraint
+from wpimath._controls.constraint import MaxVelocityConstraint

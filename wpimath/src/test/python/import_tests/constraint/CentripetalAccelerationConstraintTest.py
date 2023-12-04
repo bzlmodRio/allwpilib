@@ -1,1 +1,1 @@
-from wpimath.constraint import CentripetalAccelerationConstraint
+from wpimath._controls.constraint import CentripetalAccelerationConstraint

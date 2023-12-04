@@ -27,6 +27,7 @@ create_pybind_library(
         ":wpimath_pybind_library",
         "//wpimath/src/main/native:wpimath.shared",
     ],
+    entry_point = ["wpimath/_controls/controls.cpp"],
     #extra_hdrs = glob(["wpimath/geometry/include/**/*.h"]),
     #strip_include_prefix = "wpimath/geometry/include",
 )
@@ -98,7 +99,11 @@ name = "wpimath"
 py_library(
     name = name,
     srcs = glob(["wpimath/**/*.py"]),
+    deps = [
+        "//wpiutil/src/main/python:wpiutil",
+    ],
     data = [
+        ":_controls.so",
         ":_filter.so",
         ":_geometry.so",
         ":_interpolation.so",
