@@ -2,6 +2,8 @@ import argparse
 from shared.bazel.rules.python.pybind_generator.pybind_gen_utils import Setup
 from robotpy_build.wrapper import Wrapper
 import os
+import importlib
+from robotpy_build.pkgcfg_provider import PkgCfgProvider, PkgCfg
 
 
 def main():
@@ -21,6 +23,10 @@ def main():
     print(output_directory)
 
     setup = Setup(args.config, output_directory)
+
+    
+    # for dependency in dependencies:
+
     print(setup)
     print(setup.wrappers)
     for wrapper in setup.wrappers:

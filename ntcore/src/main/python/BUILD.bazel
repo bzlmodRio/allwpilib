@@ -23,6 +23,10 @@ create_pybind_library(
 generate_robopy_files(
     name = "ntcore",
     config_file = ":pyproject.toml",
+    python_deps = [
+        "//wpinet/src/main/python:pkgcfg",
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
 )
 
 pybind_python_library(

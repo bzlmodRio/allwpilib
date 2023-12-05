@@ -1,14 +1,16 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 
 def generate_robopy_files(
         name,
-        config_file):
+        config_file,
+        python_deps = []):
     projects = [name]
     __run_on_dl(
         name = name,
         config_file = config_file,
         projects=projects,
+        python_deps=python_deps,
     )
 
     __run_on_build_gen(
@@ -19,12 +21,14 @@ def generate_robopy_files(
 def __run_on_dl(
         name,
         config_file,
+        python_deps,
         projects):
+    print(python_deps)
     py_binary(
         name = name + ".pybind_on_build_dl_exe",
         main = "pybind_on_build_dl.py",
         srcs = ["//shared/bazel/rules/python/pybind_generator:pybind_on_build_dl.py"],
-        deps = [
+        deps = python_deps + [
             "//shared/bazel/rules/python/pybind_generator:pybind_gen_utils",
             "//shared/bazel/rules/python/pybind_generator:load_project_config",
         ],
@@ -33,6 +37,7 @@ def __run_on_dl(
 
     generated_files = []
     file_mapping = {}
+    pkgcfg_files = []
     for project in projects:
         init_file = "{name}/_init_{name}.py".format(name=name)
         generated_files.append("on_build_dl/" + init_file)
@@ -52,6 +57,15 @@ def __run_on_dl(
             filter = pkg_file,
         )
         file_mapping[pkg_file] = "__filtered_gen_" + project + "_pkg"
+        pkgcfg_files.append(pkg_file)
+        
+
+    py_library(
+        name = "pkgcfg",
+        srcs = pkgcfg_files,
+        visibility = ["//visibility:public"],
+        imports = ["."],
+    )
         
     write_source_files(
         name = "write_on_build_dl_files",

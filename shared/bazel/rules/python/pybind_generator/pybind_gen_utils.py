@@ -70,6 +70,11 @@ class Setup:
         self.wwriter = WrapperWriter()
 
         self.prepare(output_directory)
+        
+        for wrapper in self.wrappers:
+            for dep in wrapper.cfg.depends:
+                mod = importlib.import_module(dep + '.pkgcfg')
+                self.pkgcfg.add_pkg(PkgCfg(mod))
 
     def prepare(self, output_directory):
         self.pkgcfg = PkgCfgProvider()
