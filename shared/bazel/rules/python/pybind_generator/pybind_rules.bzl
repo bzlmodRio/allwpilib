@@ -10,18 +10,13 @@ def create_pybind_library(
         deps = [],
         entry_point = [],
         rpy_include_dir = None,
-        xxxx = ""):
-    print("Making pybind library", name)
-
-    generation_subdir = xxxx + name
-    rpy_include_dir = rpy_include_dir or "generated/rpy-include/{}/rpy-include".format(name)
-    print(rpy_include_dir)
-    rpy_includes = native.glob([rpy_include_dir + "/rpygen/*.hpp".format(name)])
-    print(rpy_includes)
+        generation_dir_prefix = ""):
+    generation_subdir = generation_dir_prefix + name
+    
     rpy_hdr_deps = []
+    rpy_include_dir = rpy_include_dir or "generated/rpy-include/{}/rpy-include".format(name)
+    rpy_includes = native.glob([rpy_include_dir + "/rpygen/*.hpp".format(name)])
     if rpy_includes:
-        print("Has rpy_includes: ", rpy_includes)
-
         wpilib_cc_library(
             name = "{}_rpy_includes".format(name),
             hdrs = rpy_includes,
@@ -30,8 +25,6 @@ def create_pybind_library(
         rpy_hdr_deps.append("{}_rpy_includes".format(name))
 
     generated_srcs = native.glob(["generated/gensrc/{}/**/*.cpp".format(generation_subdir)])
-
-    # print(generated_srcs)
     pybind_library(
         name = "{}_pybind_library".format(name),
         srcs = generated_srcs + extra_srcs + native.glob(["generated/gensrc/" + generation_subdir + "/*.hpp"]),

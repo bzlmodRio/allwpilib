@@ -4,19 +4,22 @@ load("@rules_python//python:defs.bzl", "py_binary")
 def generate_robopy_files(
         name,
         config_file):
+    projects = [name]
     __run_on_dl(
         name = name,
         config_file = config_file,
+        projects=projects,
     )
 
     __run_on_build_gen(
         name = name,
-        config_file = config_file,
+        config_file = config_file
     )
 
 def __run_on_dl(
         name,
-        config_file):
+        config_file,
+        projects):
     py_binary(
         name = name + ".pybind_on_build_dl_exe",
         main = "pybind_on_build_dl.py",
@@ -28,22 +31,57 @@ def __run_on_dl(
         data = native.glob(["gen/**"]),
     )
 
-    # __generate_on_build_dl_files(
-    #     name = "generate_on_build_dl_files",
-    #     tool = name + ".pybind_on_build_dl_exe",
-    #     config_file = config_file,
-    #     gen_dir = "_gen_on_build_dl",
-    # )
+    generated_files = []
+    file_mapping = {}
+    for project in projects:
+        init_file = "{name}/_init_{name}.py".format(name=name)
+        generated_files.append("on_build_dl/" + init_file)
+        filter_srcs(
+            name = "__filtered_gen_" + project + "_init",
+            srcs = ":generate_on_build_dl_files",
+            filter = init_file,
+        )
+        file_mapping[init_file] = "__filtered_gen_" + project + "_init"
 
-    # write_source_files(
-    #     name = "write_on_build_dl_files",
-    #     files = {
-    #         "generated/on_build_dl_files": ":generate_on_build_dl_files",
-    #     },
-    #     suggested_update_target = "//:write_python_on_build_dl_files",
-    #     visibility = ["//visibility:public"],
-    #     diff_test = False,
-    # )
+
+        pkg_file = "{name}/pkgcfg.py".format(name=name)
+        generated_files.append("on_build_dl/" + pkg_file)
+        filter_srcs(
+            name = "__filtered_gen_" + project + "_pkg",
+            srcs = ":generate_on_build_dl_files",
+            filter = pkg_file,
+        )
+        file_mapping[pkg_file] = "__filtered_gen_" + project + "_pkg"
+        
+    write_source_files(
+        name = "write_on_build_dl_files",
+        files = file_mapping,
+        suggested_update_target = "//:write_python_on_build_dl_files",
+        visibility = ["//visibility:public"],
+    )
+    
+    
+    native.genrule(
+        name = "generate_on_build_dl_files",
+        srcs = [config_file],
+        outs = generated_files,
+        cmd = "$(locations " + name + ".pybind_on_build_dl_exe" + ") --config=$(location " + config_file + ") --output_files $(OUTS)",
+        tools = [name + ".pybind_on_build_dl_exe"],
+        visibility = ["//wpimath:__subpackages__"],
+    )
+
+def _filter_srcs_impl(ctx):
+    print(ctx.files.srcs)
+    print(ctx.attr.filter)
+    return DefaultInfo(files=depset([f for f in ctx.files.srcs if f.path.endswith(ctx.attr.filter)]))
+
+filter_srcs = rule(
+    implementation = _filter_srcs_impl,
+    attrs = {
+        "srcs": attr.label(allow_files=True, mandatory=True),
+        "filter": attr.string(mandatory = True)
+    },
+)
 
 def __run_on_build_gen(
         name,
@@ -53,30 +91,28 @@ def __run_on_build_gen(
         main = "pybind_on_build_gen.py",
         srcs = ["//shared/bazel/rules/python/pybind_generator:pybind_on_build_gen.py"],
         deps = [
-            # name + ".pkginfo",
             "//shared/bazel/rules/python/pybind_generator:pybind_gen_utils",
             "//shared/bazel/rules/python/pybind_generator:load_project_config",
         ],
-        # data = [headers] + native.glob(["gen/**"]),
     )
 
-    # __generate_on_build_gen_files(
-    #     name = "generate_on_build_gen",
-    #     tool = name + ".generate_pybind_exe",
-    #     config_file = config_file,
-    #     gen_dir = "_gen_on_build",
-    #     project_name = name,
-    # )
+    __generate_on_build_gen_files(
+        name = "generate_on_build_gen",
+        tool = name + ".generate_pybind_exe",
+        config_file = config_file,
+        gen_dir = "_gen_on_build",
+        project_name = name,
+    )
 
-    # write_source_files(
-    #     name = "write_on_build_gen",
-    #     files = {
-    #         "generated": ":generate_on_build_gen",
-    #     },
-    #     suggested_update_target = "//:write_python_on_build_gen",
-    #     visibility = ["//visibility:public"],
-    #     diff_test = True,
-    # )
+    write_source_files(
+        name = "write_on_build_gen",
+        files = {
+            "generated": ":generate_on_build_gen",
+        },
+        suggested_update_target = "//:write_python_on_build_gen",
+        visibility = ["//visibility:public"],
+        diff_test = True,
+    )
 
 def __generate_on_build_dl_files_impl(ctx):
     output_dir = ctx.actions.declare_directory(ctx.attr.gen_dir)

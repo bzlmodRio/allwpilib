@@ -21,7 +21,7 @@ create_pybind_library(
 create_pybind_library(
     "controls",
     rpy_include_dir = "generated/rpy-include/wpimath/_controls/rpy-include",
-    xxxx = "wpimath_",
+    generation_dir_prefix = "wpimath_",
     deps = [
         ":geometry_pybind_library",
         ":wpimath_pybind_library",
@@ -36,7 +36,7 @@ create_pybind_library(
     "filter",
     entry_point = ["wpimath/filter/filter.cpp"],
     rpy_include_dir = "generated/rpy-include/wpimath/filter/rpy-include",
-    xxxx = "wpimath_",
+    generation_dir_prefix = "wpimath_",
     deps = [
         ":wpimath_pybind_library",
         "//wpimath/src/main/native:wpimath.shared",
@@ -48,7 +48,7 @@ create_pybind_library(
     entry_point = ["wpimath/geometry/geometry.cpp"],
     extra_hdrs = glob(["wpimath/geometry/include/**/*.h"]),
     strip_include_prefix = "wpimath/geometry/include",
-    xxxx = "wpimath_",
+    generation_dir_prefix = "wpimath_",
     deps = [
         ":wpimath_pybind_library",
         "//wpimath/src/main/native:wpimath.shared",
@@ -60,7 +60,7 @@ create_pybind_library(
     "interpolation",
     entry_point = ["wpimath/interpolation/interpolation.cpp"],
     rpy_include_dir = "generated/rpy-include/wpimath/interpolation/rpy-include",
-    xxxx = "wpimath_",
+    generation_dir_prefix = "wpimath_",
     deps = [
         ":wpimath_pybind_library",
         "//wpimath/src/main/native:wpimath.shared",
@@ -71,7 +71,7 @@ create_pybind_library(
     "kinematics",
     entry_point = ["wpimath/kinematics/kinematics.cpp"],
     rpy_include_dir = "generated/rpy-include/wpimath/kinematics/rpy-include",
-    xxxx = "wpimath_",
+    generation_dir_prefix = "wpimath_",
     deps = [
         ":wpimath_pybind_library",
         "//wpimath/src/main/native:wpimath.shared",
@@ -82,7 +82,7 @@ create_pybind_library(
     "spline",
     entry_point = ["wpimath/spline/spline.cpp"],
     rpy_include_dir = "generated/rpy-include/wpimath/spline/rpy-include",
-    xxxx = "wpimath_",
+    generation_dir_prefix = "wpimath_",
     deps = [
         ":wpimath_pybind_library",
         "//wpimath/src/main/native:wpimath.shared",
@@ -94,10 +94,8 @@ generate_robopy_files(
     config_file = ":pyproject.toml",
 )
 
-name = "wpimath"
-
 pybind_python_library(
-    name = name,
+    name = "wpimath",
     srcs = glob(["wpimath/**/*.py"]),
     deps = [
         "//wpiutil/src/main/python:wpiutil",
