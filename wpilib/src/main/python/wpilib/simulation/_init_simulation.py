@@ -10,7 +10,7 @@ import wpilib._impl._init_wpilibc
 import hal._init_wpiHal
 import wpiutil._init_wpiutil
 import wpimath._impl._init_wpimath_cpp
-# import wpimath._controls._init_controls
+import wpimath._controls._init_controls
 import wpimath.geometry._init_geometry
 import wpimath.kinematics._init_kinematics
 import ntcore._init_ntcore

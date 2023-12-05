@@ -51,6 +51,8 @@ def __run_on_dl(
             init_file = "{name}/{project}/_init_{project2}.py".format(name = name, project = project, project2 = project.replace("_", ""))
         if name == "wpimath" and project == "_impl":
             init_file = "wpimath/_impl/_init_wpimath_cpp.py"
+        if name == "wpilib" and project == "_impl":
+            init_file = "wpilib/_impl/_init_wpilibc.py"
         if name == "hal":
             init_file = "{name}/_init_{project}.py".format(name = name, project = project)
         generated_files.append("on_build_dl/" + init_file)

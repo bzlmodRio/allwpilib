@@ -1,5 +1,11 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
 
+filegroup(
+    name = "headers",
+    srcs = glob(["include/**/*"]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
 wpilib_cc_static_and_shared_library(
     name = "wpilibc",
     srcs = [

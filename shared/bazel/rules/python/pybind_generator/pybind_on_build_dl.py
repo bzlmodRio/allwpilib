@@ -35,6 +35,9 @@ def main():
 
     # print(os.listdir(output_directory))
     # print("___")
+    # for root, _, files in os.walk(output_directory):
+    #     for f in files:
+    #         print(os.path.join(root, f))
         
 
 if __name__ == "__main__":

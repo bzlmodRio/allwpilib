@@ -70,16 +70,39 @@ class Setup:
 
         self.prepare(output_directory)
         
+        unique_deps = set()
         for wrapper in self.wrappers:
             for dep in wrapper.cfg.depends:
-                if dep == "wpimath_cpp":
-                    dep = "wpimath._impl"
-                try:
-                    mod = importlib.import_module(dep + '.pkgcfg')
-                    self.pkgcfg.add_pkg(PkgCfg(mod))
-                except:
-                    print(f"Could not load {dep}, might be ok if it is an internal package")
-                    # raise
+                self.__load_dep(dep, unique_deps)
+
+    def __load_dep(self, dep, unique_deps):
+        if dep in unique_deps:
+            # print(f"Skipping {dep}")
+            return
+        unique_deps.add(dep)
+
+        print("Trying to load dep ", dep)
+        if dep == "wpimath_cpp":
+            dep = "wpimath._impl"
+        elif dep == "wpimath_controls":
+            dep = "wpimath._controls"
+        elif "wpimath_" in dep:
+            dep = ".".join(dep.split("_"))
+        elif dep == "wpiHal":
+            dep = "hal"
+
+        importlib.import_module("wpimath.geometry")
+
+        try:
+            mod = importlib.import_module(dep + '.pkgcfg')
+            self.pkgcfg.add_pkg(PkgCfg(mod))
+
+            
+            module_deps = getattr(mod, "depends", [])
+            for d in module_deps:
+                self.__load_dep(d, unique_deps)
+        except ModuleNotFoundError as e:
+            print(f"  Could not load {dep}, might be ok if it is an internal package {e}, {type(e)}")
 
     def prepare(self, output_directory):
         self.pkgcfg = PkgCfgProvider()

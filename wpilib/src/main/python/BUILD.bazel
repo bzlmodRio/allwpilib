@@ -1,3 +1,4 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library", "pybind_python_library")
 
 create_pybind_library(
@@ -92,11 +93,28 @@ create_pybind_library(
     ],
 )
 
-# generate_robopy_files(
-#     name = "wpiutil",
-#     config_file = ":pyproject.toml",
-#     headers = ["//wpiutil/src/main/native:headers"],
-# )
+generate_robopy_files(
+    name = "wpilib",
+    config_file = ":pyproject.toml",
+    headers = ["//wpilibc/src/main/native:headers"],
+    projects = [
+        "wpilib",
+        "_impl",
+        "counter",
+        "drive",
+        "event",
+        "interfaces",
+        "shuffleboard",
+        "simulation",
+    ],
+    python_deps = [
+        "//hal/src/main/python:pkgcfg",
+        "//ntcore/src/main/python:pkgcfg",
+        "//wpinet/src/main/python:pkgcfg",
+        "//wpimath/src/main/python:pkgcfg",
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+)
 
 pybind_python_library(
     name = "wpilib",
