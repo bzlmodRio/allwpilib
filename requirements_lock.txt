@@ -12,6 +12,14 @@ distro==1.8.0 \
     --hash=sha256:02e111d1dc6a50abb8eed6bf31c3e48ed8b0830d1ea2a1b78c61765c2513fdd8 \
     --hash=sha256:99522ca3e365cac527b44bde033f64c6945d90eb9f769703caaec52b09bbd3ff
     # via robotpy-build
+exceptiongroup==1.2.0 \
+    --hash=sha256:4bfd3996ac73b41e9b9628b04e079f193850720ea5945fc96a08633c66912f14 \
+    --hash=sha256:91f5c769735f051a4290d52edd0858999b57e5876e9f85937691bd4c9fa3ed68
+    # via pytest
+iniconfig==2.0.0 \
+    --hash=sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3 \
+    --hash=sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374
+    # via pytest
 jinja2==3.0.0a1 \
     --hash=sha256:c10142f819c2d22bdcd17548c46fa9b77cf4fda45097854c689666bf425e7484 \
     --hash=sha256:c922560ac46888d47384de1dbdc3daaa2ea993af4b26a436dec31fa2c19ec668
@@ -73,7 +81,9 @@ markupsafe==2.1.2 \
 packaging==23.2 \
     --hash=sha256:048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5 \
     --hash=sha256:8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7
-    # via setuptools-scm
+    # via
+    #   pytest
+    #   setuptools-scm
 patch==1.16 \
     --hash=sha256:c62073f356cff054c8ac24496f1a3d7cfa137835c31e9af39a9f5292fd75bd9f
     # via robotpy-build
@@ -81,6 +91,10 @@ pcpp==1.30 \
     --hash=sha256:05fe08292b6da57f385001c891a87f40d6aa7f46787b03e8ba326d20a3297c6e \
     --hash=sha256:5af9fbce55f136d7931ae915fae03c34030a3b36c496e72d9636cedc8e2543a1
     # via cxxheaderparser
+pluggy==1.3.0 \
+    --hash=sha256:cf61ae8f126ac6f7c451172cf30e3e43d3ca77615509771b3a984a0730651e12 \
+    --hash=sha256:d89c696a773f8bd377d18e5ecda92b7a3793cbe66c87060a6fb58c7b6e1061f7
+    # via pytest
 pybind11-stubgen==2.3.7 \
     --hash=sha256:7a4b37c794c8787f43466b6fd8c627581ba8079896daca0e53b9e485a308189d \
     --hash=sha256:c578b5dc0e6370e60d6d2861bc32a0a530140211d9aa1ea4cd2ad4f55e724445
@@ -123,6 +137,10 @@ pydantic==1.10.13 \
     --hash=sha256:f59ef915cac80275245824e9d771ee939133be38215555e9dc90c6cb148aaeb5 \
     --hash=sha256:f8e81fc5fb17dae698f52bdd1c4f18b6ca674d7068242b2aff075f588301bbb0
     # via robotpy-build
+pytest==7.4.3 \
+    --hash=sha256:0d009c083ea859a71b76adf7c1d502e4bc170b80a8ef002da5806527b9591fac \
+    --hash=sha256:d989d136982de4e3b29dabcc838ad581c64e8ed52c11fbe86ddebd9da0818cd5
+    # via -r ./requirements.txt
 pyyaml==6.0.1 \
     --hash=sha256:04ac92ad1925b2cff1db0cfebffb6ffc43457495c9b3c39d3fcae417d7125dc5 \
     --hash=sha256:062582fca9fabdd2c8b54a3ef1c978d786e0f6b3a1510e0ac93ef59e0ddae2bc \
@@ -198,6 +216,7 @@ tomli==2.0.1 \
     --hash=sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f
     # via
     #   -r ./requirements.txt
+    #   pytest
     #   robotpy-build
     #   setuptools-scm
 tomli-w==1.0.0 \
