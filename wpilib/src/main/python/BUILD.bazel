@@ -7,10 +7,9 @@ create_pybind_library(
         "wpilib/src/rpy/*.h",
         "wpilib/src/rpy/*.inc",
     ]),
-    # extra_srcs = glob(
-    #     ["wpiutil/src/**/*.cpp"],
-    #     exclude = ["wpiutil/src/main.cpp"],
-    # ),
+    extra_srcs = glob(
+        ["wpilib/src/rpy/*.cpp"],
+    ),
     includes = [
         ".",
         "src",
@@ -70,11 +69,10 @@ create_pybind_library(
     extra_hdrs = glob(["wpilib/shuffleboard/*.h"]),
     generation_dir_prefix = "wpilibc_",
     rpy_include_dir = "generated/rpy-include/shuffleboard/rpy-include",
-    # extra_srcs = glob(
-    #     ["wpiutil/src/**/*.cpp"],
-    #     exclude = ["wpiutil/src/main.cpp"],
-    # ),
-    # includes = [".", "src", "wpilib/src"],
+    extra_srcs = glob(
+        ["wpilib/shuffleboard/*.cpp"],
+        exclude = ["wpilib/shuffleboard/shuffleboard.cpp"],
+    ),
     strip_include_prefix = "wpilib/shuffleboard",
     deps = [
         "//wpilibc/src/main/native:wpilibc.shared",
@@ -104,8 +102,13 @@ pybind_python_library(
     name = "wpilib",
     srcs = glob(["wpilib/**/*.py"]),
     data = [
+        ":_wpilib_core.so",
+        ":_counter.so",
+        ":_drive.so",
         ":_event.so",
         ":_interfaces.so",
+        ":_shuffleboard.so",
+        ":_simulation.so",
     ],
     imports = ["."],
     visibility = ["//visibility:public"],
