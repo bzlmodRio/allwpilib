@@ -37,6 +37,12 @@ filegroup(
     }),
 )
 
+filegroup(
+    name = "headers",
+    srcs = glob(["include/**/*"]),
+    visibility = ["//hal/src/main/python:__subpackages__"],
+)
+
 wpilib_cc_static_and_shared_library(
     name = "wpiHal",
     srcs = ["platform-srcs"] + glob(

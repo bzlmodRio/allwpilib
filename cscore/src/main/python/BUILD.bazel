@@ -22,6 +22,7 @@ generate_robopy_files(
         "//wpinet/src/main/python:pkgcfg",
         "//ntcore/src/main/python:pkgcfg",
     ],
+    headers = ["//cscore/src/main/native:headers"]
 )
 
 pybind_python_library(

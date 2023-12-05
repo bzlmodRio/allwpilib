@@ -1,6 +1,16 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 
+
+filegroup(
+    name = "headers",
+    srcs = glob(["include/**/*"]) + [
+        "//wpimath/src/main/native/thirdparty/eigen:eigen-headers",
+        "//wpimath/src/main/native/thirdparty/gcem",
+    ],
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
 wpilib_cc_static_and_shared_library(
     name = "wpimath",
     srcs = glob(

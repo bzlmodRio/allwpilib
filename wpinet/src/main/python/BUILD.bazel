@@ -17,6 +17,7 @@ generate_robopy_files(
     python_deps = [
         "//wpiutil/src/main/python:pkgcfg",
     ],
+    headers = ["//wpinet/src/main/native:headers"]
 )
 
 pybind_python_library(

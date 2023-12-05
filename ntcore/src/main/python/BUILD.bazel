@@ -27,6 +27,7 @@ generate_robopy_files(
         "//wpinet/src/main/python:pkgcfg",
         "//wpiutil/src/main/python:pkgcfg",
     ],
+    headers = ["//ntcore/src/main/native:headers"]
 )
 
 pybind_python_library(

@@ -17,6 +17,7 @@ generate_robopy_files(
         "//wpiutil/src/main/python:pkgcfg",
     ],
     projects = ["wpiHal"],
+    headers = ["//hal/src/main/native:headers"]
 )
 
 create_pybind_library(

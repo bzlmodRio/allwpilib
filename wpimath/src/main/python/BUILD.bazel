@@ -104,7 +104,8 @@ generate_robopy_files(
         "kinematics",
         "interpolation",
         "spline",
-    ]
+    ],
+    headers = ["//wpimath/src/main/native:headers"]
 )
 
 pybind_python_library(

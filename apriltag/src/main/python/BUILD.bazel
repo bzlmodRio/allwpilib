@@ -18,6 +18,7 @@ generate_robopy_files(
         "//wpiutil/src/main/python:pkgcfg",
         "//wpimath/src/main/python:pkgcfg",
     ],
+    headers = ["//apriltag/src/main/native:headers"]
 )
 
 pybind_python_library(

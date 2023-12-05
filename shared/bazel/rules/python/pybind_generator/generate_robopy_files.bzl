@@ -5,7 +5,8 @@ def generate_robopy_files(
         name,
         config_file,
         python_deps = [],
-        projects = None):
+        projects = None,
+        headers = []):
     projects = [name] if projects == None else projects
     __run_on_dl(
         name = name,
@@ -18,7 +19,11 @@ def generate_robopy_files(
         name = name,
         config_file = config_file,
         python_deps=python_deps,
+        headers=headers,
     )
+
+    if not headers:
+        fail("")
 
 def __run_on_dl(
         name,
@@ -112,7 +117,8 @@ filter_srcs = rule(
 def __run_on_build_gen(
         name,
         config_file,
-        python_deps):
+        python_deps,
+        headers):
     py_binary(
         name = name + ".generate_pybind_exe",
         main = "pybind_on_build_gen.py",
@@ -121,6 +127,7 @@ def __run_on_build_gen(
             "//shared/bazel/rules/python/pybind_generator:pybind_gen_utils",
             "//shared/bazel/rules/python/pybind_generator:load_project_config",
         ],
+        data = headers
     )
 
     __generate_on_build_gen_files(

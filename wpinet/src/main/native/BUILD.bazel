@@ -26,6 +26,15 @@ wpilib_cc_library(
     strip_include_prefix = "cpp",
 )
 
+filegroup(
+    name = "headers",
+    srcs = glob(["include/**/*"]) + [
+        "//wpinet/src/main/native/thirdparty/libuv:libuv-headers",
+        "//wpinet/src/main/native/thirdparty/tcpsockets:tcpsockets-headers",
+    ],
+    visibility = ["//wpinet/src/main/python:__subpackages__"],
+)
+
 wpilib_cc_static_and_shared_library(
     name = "wpinet",
     srcs = glob(

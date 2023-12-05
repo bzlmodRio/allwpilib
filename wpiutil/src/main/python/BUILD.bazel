@@ -19,6 +19,7 @@ create_pybind_library(
 generate_robopy_files(
     name = "wpiutil",
     config_file = ":pyproject.toml",
+    headers = ["//wpiutil/src/main/native:headers"],
 )
 
 pybind_python_library(
