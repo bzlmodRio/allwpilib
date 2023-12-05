@@ -11,4 +11,3 @@ SOURCES = glob(["*Test.py"])
         "//wpimath/src/main/python:wpimath",
     ],
 ) for test_file in SOURCES]
-

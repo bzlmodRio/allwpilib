@@ -9,4 +9,3 @@ SOURCES = glob(["**/*Test.py"])
         "//apriltag/src/main/python:apriltag",
     ],
 ) for test_file in SOURCES]
-

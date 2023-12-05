@@ -13,11 +13,11 @@ create_pybind_library(
 generate_robopy_files(
     name = "hal",
     config_file = ":pyproject.toml",
+    headers = ["//hal/src/main/native:headers"],
+    projects = ["wpiHal"],
     python_deps = [
         "//wpiutil/src/main/python:pkgcfg",
     ],
-    projects = ["wpiHal"],
-    headers = ["//hal/src/main/native:headers"]
 )
 
 create_pybind_library(
@@ -32,13 +32,13 @@ create_pybind_library(
 pybind_python_library(
     name = "hal",
     srcs = glob(["hal/**/*.py"]),
-    deps = [
-        "//wpiutil/src/main/python:wpiutil",
-    ],
     data = [
-        ":_wpiHal.so",
         ":_hal_simulation.so",
+        ":_wpiHal.so",
     ],
     imports = ["."],
     visibility = ["//visibility:public"],
+    deps = [
+        "//wpiutil/src/main/python:wpiutil",
+    ],
 )

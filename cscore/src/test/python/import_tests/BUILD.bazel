@@ -9,4 +9,3 @@ SOURCES = glob(["**/*Test.py"])
         "//cscore/src/main/python:cscore",
     ],
 ) for test_file in SOURCES]
-

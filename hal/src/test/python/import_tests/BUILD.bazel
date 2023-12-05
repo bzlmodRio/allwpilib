@@ -9,4 +9,3 @@ SOURCES = glob(["**/*Test.py"])
         "//hal/src/main/python:hal",
     ],
 ) for test_file in SOURCES]
-

@@ -1,4 +1,5 @@
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
 
 def create_pybind_library(
@@ -12,7 +13,7 @@ def create_pybind_library(
         rpy_include_dir = None,
         generation_dir_prefix = ""):
     generation_subdir = generation_dir_prefix + name
-    
+
     rpy_hdr_deps = []
     rpy_include_dir = rpy_include_dir or "generated/rpy-include/{}/rpy-include".format(name)
     rpy_includes = native.glob([rpy_include_dir + "/rpygen/*.hpp".format(name)])
@@ -66,9 +67,8 @@ def create_pybind_library(
         ],
     )
 
-
 def pybind_python_library(name, tags = [], **kwargs):
-    native.py_library(
+    py_library(
         name = name,
         tags = tags + [
             "no-bullseye",
@@ -77,10 +77,9 @@ def pybind_python_library(name, tags = [], **kwargs):
         ],
         **kwargs
     )
-    
 
 def pybind_python_test(name, tags = [], **kwargs):
-    native.py_test(
+    py_test(
         name = name,
         tags = tags + [
             "no-bullseye",

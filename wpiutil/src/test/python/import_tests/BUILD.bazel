@@ -1,4 +1,3 @@
-
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_test")
 
 SOURCES = glob(["**/*Test.py"])
@@ -10,4 +9,3 @@ SOURCES = glob(["**/*Test.py"])
         "//wpiutil/src/main/python:wpiutil",
     ],
 ) for test_file in SOURCES]
-

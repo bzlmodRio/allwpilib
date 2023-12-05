@@ -11,15 +11,15 @@ def generate_robopy_files(
     __run_on_dl(
         name = name,
         config_file = config_file,
-        projects=projects,
-        python_deps=python_deps,
+        projects = projects,
+        python_deps = python_deps,
     )
 
     __run_on_build_gen(
         name = name,
         config_file = config_file,
-        python_deps=python_deps,
-        headers=headers,
+        python_deps = python_deps,
+        headers = headers,
     )
 
     if not headers:
@@ -46,13 +46,13 @@ def __run_on_dl(
     file_mapping = {}
     pkgcfg_files = []
     for project in projects:
-        init_file = "{name}/_init_{project}.py".format(name=name, project=project)
+        init_file = "{name}/_init_{project}.py".format(name = name, project = project)
         if name != project:
-            init_file = "{name}/{project}/_init_{project2}.py".format(name = name, project=project, project2=project.replace("_", ""))
+            init_file = "{name}/{project}/_init_{project2}.py".format(name = name, project = project, project2 = project.replace("_", ""))
         if name == "wpimath" and project == "_impl":
             init_file = "wpimath/_impl/_init_wpimath_cpp.py"
         if name == "hal":
-            init_file = "{name}/_init_{project}.py".format(name=name, project=project)
+            init_file = "{name}/_init_{project}.py".format(name = name, project = project)
         generated_files.append("on_build_dl/" + init_file)
         filter_srcs(
             name = "__filtered_gen_" + project + "_init",
@@ -61,12 +61,11 @@ def __run_on_dl(
         )
         file_mapping[init_file] = "__filtered_gen_" + project + "_init"
 
-
-        pkg_file = "{project}/pkgcfg.py".format(project=project)
+        pkg_file = "{project}/pkgcfg.py".format(project = project)
         if name != project:
-            pkg_file = "{name}/{project}/pkgcfg.py".format(name = name, project=project)
+            pkg_file = "{name}/{project}/pkgcfg.py".format(name = name, project = project)
         if name == "hal":
-            pkg_file = "hal/pkgcfg.py".format(project=project)
+            pkg_file = "hal/pkgcfg.py".format(project = project)
         generated_files.append("on_build_dl/" + pkg_file)
         filter_srcs(
             name = "__filtered_gen_" + project + "_pkg",
@@ -75,7 +74,6 @@ def __run_on_dl(
         )
         file_mapping[pkg_file] = "__filtered_gen_" + project + "_pkg"
         pkgcfg_files.append(pkg_file)
-        
 
     py_library(
         name = "pkgcfg",
@@ -83,15 +81,14 @@ def __run_on_dl(
         visibility = ["//visibility:public"],
         imports = ["."],
     )
-        
+
     write_source_files(
         name = "write_on_build_dl_files",
         files = file_mapping,
         suggested_update_target = "//:write_on_build_dl_files",
         visibility = ["//visibility:public"],
     )
-    
-    
+
     native.genrule(
         name = "generate_on_build_dl_files",
         srcs = [config_file],
@@ -104,13 +101,13 @@ def __run_on_dl(
 def _filter_srcs_impl(ctx):
     print(ctx.files.srcs)
     print(ctx.attr.filter)
-    return DefaultInfo(files=depset([f for f in ctx.files.srcs if f.path.endswith(ctx.attr.filter)]))
+    return DefaultInfo(files = depset([f for f in ctx.files.srcs if f.path.endswith(ctx.attr.filter)]))
 
 filter_srcs = rule(
     implementation = _filter_srcs_impl,
     attrs = {
-        "srcs": attr.label(allow_files=True, mandatory=True),
-        "filter": attr.string(mandatory = True)
+        "filter": attr.string(mandatory = True),
+        "srcs": attr.label(allow_files = True, mandatory = True),
     },
 )
 
@@ -127,7 +124,7 @@ def __run_on_build_gen(
             "//shared/bazel/rules/python/pybind_generator:pybind_gen_utils",
             "//shared/bazel/rules/python/pybind_generator:load_project_config",
         ],
-        data = headers
+        data = headers,
     )
 
     __generate_on_build_gen_files(
