@@ -1,1 +1,1 @@
-from wpilib.interfaces import DSControlWord
+from wpilib import DSControlWord

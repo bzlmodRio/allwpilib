@@ -1,1 +1,1 @@
-from wpilib.interfaces import DMA
+from wpilib import DMA

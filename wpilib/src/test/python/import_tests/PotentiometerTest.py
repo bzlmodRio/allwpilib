@@ -1,1 +1,1 @@
-from wpilib.interfaces import Potentiometer
+from wpilib import Potentiometer

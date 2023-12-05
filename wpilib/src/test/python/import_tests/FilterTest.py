@@ -1,1 +1,1 @@
-from wpilib.interfaces import Filter
+from wpilib import Filter

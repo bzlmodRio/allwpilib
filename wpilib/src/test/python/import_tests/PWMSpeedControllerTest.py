@@ -1,1 +1,1 @@
-from wpilib.interfaces import PWMSpeedController
+from wpilib import PWMSpeedController

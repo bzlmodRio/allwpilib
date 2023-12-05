@@ -1,1 +1,1 @@
-from wpilib.interfaces import Relay
+from wpilib import Relay

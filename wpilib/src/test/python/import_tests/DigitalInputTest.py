@@ -1,1 +1,1 @@
-from wpilib.interfaces import DigitalInput
+from wpilib import DigitalInput

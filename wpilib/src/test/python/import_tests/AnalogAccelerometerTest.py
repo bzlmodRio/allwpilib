@@ -1,1 +1,1 @@
-from wpilib.interfaces import AnalogAccelerometer
+from wpilib import AnalogAccelerometer

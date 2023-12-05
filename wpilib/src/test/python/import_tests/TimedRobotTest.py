@@ -1,1 +1,1 @@
-from wpilib.interfaces import TimedRobot
+from wpilib import TimedRobot

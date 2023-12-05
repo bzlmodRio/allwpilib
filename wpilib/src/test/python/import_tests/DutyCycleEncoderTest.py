@@ -1,1 +1,1 @@
-from wpilib.interfaces import DutyCycleEncoder
+from wpilib import DutyCycleEncoder

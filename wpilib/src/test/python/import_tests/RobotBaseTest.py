@@ -1,1 +1,1 @@
-from wpilib.interfaces import RobotBase
+from wpilib import RobotBase

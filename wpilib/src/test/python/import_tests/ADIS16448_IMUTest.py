@@ -1,1 +1,1 @@
-from wpilib.interfaces import ADIS16448_IMU
+from wpilib import ADIS16448_IMU

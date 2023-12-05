@@ -1,1 +1,1 @@
-from wpilib.interfaces import TimesliceRobot
+from wpilib import TimesliceRobot

@@ -1,1 +1,1 @@
-from wpilib.interfaces import SPI
+from wpilib import SPI

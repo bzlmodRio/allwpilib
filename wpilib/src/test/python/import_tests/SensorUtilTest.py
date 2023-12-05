@@ -1,1 +1,1 @@
-from wpilib.interfaces import SensorUtil
+from wpilib import SensorUtil

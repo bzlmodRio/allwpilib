@@ -1,1 +1,1 @@
-from wpilib.interfaces import AnalogTriggerOutput
+from wpilib import AnalogTriggerOutput

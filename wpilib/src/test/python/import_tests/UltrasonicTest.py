@@ -1,1 +1,1 @@
-from wpilib.interfaces import Ultrasonic
+from wpilib import Ultrasonic

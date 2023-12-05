@@ -1,1 +1,1 @@
-from wpilib.interfaces import SendableCameraWrapper
+from wpilib import SendableCameraWrapper

@@ -1,1 +1,1 @@
-from wpilib.interfaces import PWMMotorController
+from wpilib import PWMMotorController

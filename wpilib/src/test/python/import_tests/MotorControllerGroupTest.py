@@ -1,1 +1,1 @@
-from wpilib.interfaces import PyMotorControllerGroup
+from wpilib import MotorControllerGroup

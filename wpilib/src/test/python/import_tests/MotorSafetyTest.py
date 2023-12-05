@@ -1,1 +1,1 @@
-from wpilib.interfaces import MotorSafety
+from wpilib import MotorSafety

@@ -1,1 +1,1 @@
-from wpilib.interfaces import AnalogGyro
+from wpilib import AnalogGyro

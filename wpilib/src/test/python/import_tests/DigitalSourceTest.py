@@ -1,1 +1,1 @@
-from wpilib.interfaces import DigitalSource
+from wpilib import DigitalSource

@@ -1,1 +1,1 @@
-from wpilib.interfaces import DifferentialDriveVoltageConstraint
+from wpilib import DifferentialDriveVoltageConstraint

@@ -1,1 +1,1 @@
-from wpilib.interfaces import AddressableLED
+from wpilib import AddressableLED

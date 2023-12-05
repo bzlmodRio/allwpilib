@@ -1,1 +1,1 @@
-from wpilib.interfaces import PWMTalonSRX
+from wpilib import PWMTalonSRX

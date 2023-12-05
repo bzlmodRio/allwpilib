@@ -1,1 +1,1 @@
-from wpilib.interfaces import Color
+from wpilib import Color

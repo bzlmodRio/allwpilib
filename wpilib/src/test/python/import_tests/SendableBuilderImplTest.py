@@ -1,1 +1,1 @@
-from wpilib.interfaces import SendableBuilderImpl
+from wpilib import SendableBuilderImpl

@@ -1,1 +1,1 @@
-from wpilib.interfaces import PWM
+from wpilib import PWM

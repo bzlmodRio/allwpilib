@@ -1,1 +1,1 @@
-from wpilib.interfaces import PWMTalonFX
+from wpilib import PWMTalonFX

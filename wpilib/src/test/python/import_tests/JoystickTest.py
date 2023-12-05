@@ -1,1 +1,1 @@
-from wpilib.interfaces import Joystick
+from wpilib import Joystick

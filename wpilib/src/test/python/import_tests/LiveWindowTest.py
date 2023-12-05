@@ -1,1 +1,1 @@
-from wpilib.interfaces import LiveWindow
+from wpilib import LiveWindow

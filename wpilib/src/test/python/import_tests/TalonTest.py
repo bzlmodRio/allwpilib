@@ -1,1 +1,1 @@
-from wpilib.interfaces import Talon
+from wpilib import Talon

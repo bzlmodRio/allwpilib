@@ -1,1 +1,1 @@
-from wpilib.interfaces import Color8Bit
+from wpilib import Color8Bit

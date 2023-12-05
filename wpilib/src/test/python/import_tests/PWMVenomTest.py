@@ -1,1 +1,1 @@
-from wpilib.interfaces import PWMVenom
+from wpilib import PWMVenom

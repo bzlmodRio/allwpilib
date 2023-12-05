@@ -1,1 +1,1 @@
-from wpilib.interfaces import Controller
+from wpilib import Controller

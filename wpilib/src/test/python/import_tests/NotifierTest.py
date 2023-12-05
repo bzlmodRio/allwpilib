@@ -1,1 +1,1 @@
-from wpilib.interfaces import PyNotifier
+from wpilib import Notifier

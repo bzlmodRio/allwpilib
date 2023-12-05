@@ -1,1 +1,1 @@
-from wpilib.interfaces import SolenoidBase
+from wpilib import SolenoidBase

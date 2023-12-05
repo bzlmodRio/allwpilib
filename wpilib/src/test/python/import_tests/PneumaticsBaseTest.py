@@ -1,1 +1,1 @@
-from wpilib.interfaces import PneumaticsBase
+from wpilib import PneumaticsBase

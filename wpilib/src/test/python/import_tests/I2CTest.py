@@ -1,1 +1,1 @@
-from wpilib.interfaces import I2C
+from wpilib import I2C

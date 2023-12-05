@@ -1,1 +1,1 @@
-from wpilib.interfaces import Preferences
+from wpilib import Preferences

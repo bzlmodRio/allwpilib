@@ -1,1 +1,1 @@
-from wpilib.interfaces import SynchronousInterrupt
+from wpilib import SynchronousInterrupt

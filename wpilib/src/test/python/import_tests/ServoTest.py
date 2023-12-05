@@ -1,1 +1,1 @@
-from wpilib.interfaces import Servo
+from wpilib import Servo

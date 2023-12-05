@@ -1,1 +1,1 @@
-from wpilib.interfaces import PS4Controller
+from wpilib import PS4Controller

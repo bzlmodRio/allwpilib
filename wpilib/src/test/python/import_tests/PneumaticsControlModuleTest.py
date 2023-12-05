@@ -1,1 +1,1 @@
-from wpilib.interfaces import PneumaticsControlModule
+from wpilib import PneumaticsControlModule

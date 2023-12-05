@@ -1,1 +1,1 @@
-from wpilib.interfaces import RuntimeError
+from wpilib import RuntimeError

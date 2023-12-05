@@ -1,1 +1,1 @@
-from wpilib.interfaces import SmartDashboard
+from wpilib import SmartDashboard

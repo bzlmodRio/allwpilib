@@ -1,1 +1,1 @@
-from wpilib.interfaces import BuiltInAccelerometer
+from wpilib import BuiltInAccelerometer

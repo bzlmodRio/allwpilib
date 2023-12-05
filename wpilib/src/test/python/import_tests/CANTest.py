@@ -1,1 +1,1 @@
-from wpilib.interfaces import CANData
+from wpilib import CANData

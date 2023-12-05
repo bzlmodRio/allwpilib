@@ -1,1 +1,1 @@
-from wpilib.interfaces import DriverStation
+from wpilib import DriverStation

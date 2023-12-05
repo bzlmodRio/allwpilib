@@ -1,1 +1,1 @@
-from wpilib.interfaces import XboxController
+from wpilib import XboxController

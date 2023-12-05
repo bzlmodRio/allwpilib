@@ -1,1 +1,1 @@
-from wpilib.interfaces import AnalogEncoder
+from wpilib import AnalogEncoder

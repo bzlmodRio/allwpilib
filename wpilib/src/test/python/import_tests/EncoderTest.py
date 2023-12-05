@@ -1,1 +1,1 @@
-from wpilib.interfaces import Encoder
+from wpilib import Encoder

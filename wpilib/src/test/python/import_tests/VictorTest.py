@@ -1,1 +1,1 @@
-from wpilib.interfaces import Victor
+from wpilib import Victor

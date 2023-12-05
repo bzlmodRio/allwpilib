@@ -1,1 +1,1 @@
-from wpilib.interfaces import VictorSP
+from wpilib import VictorSP

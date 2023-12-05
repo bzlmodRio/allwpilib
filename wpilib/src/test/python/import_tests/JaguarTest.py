@@ -1,1 +1,1 @@
-from wpilib.interfaces import Jaguar
+from wpilib import Jaguar

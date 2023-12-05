@@ -1,1 +1,1 @@
-from wpilib.interfaces import PneumaticHub
+from wpilib import PneumaticHub

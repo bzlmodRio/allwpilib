@@ -1,1 +1,1 @@
-from wpilib.interfaces import PowerDistribution
+from wpilib import PowerDistribution

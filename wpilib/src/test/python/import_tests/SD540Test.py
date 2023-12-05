@@ -1,1 +1,1 @@
-from wpilib.interfaces import SD540
+from wpilib import SD540

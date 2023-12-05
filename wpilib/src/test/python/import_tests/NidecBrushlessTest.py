@@ -1,1 +1,1 @@
-from wpilib.interfaces import NidecBrushless
+from wpilib import NidecBrushless

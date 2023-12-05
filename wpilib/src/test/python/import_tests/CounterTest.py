@@ -1,1 +1,1 @@
-from wpilib.interfaces import Counter
+from wpilib import Counter

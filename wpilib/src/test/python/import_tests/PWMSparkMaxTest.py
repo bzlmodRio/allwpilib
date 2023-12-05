@@ -1,1 +1,1 @@
-from wpilib.interfaces import PWMSparkMax
+from wpilib import PWMSparkMax

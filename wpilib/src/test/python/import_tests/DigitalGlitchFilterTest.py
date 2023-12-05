@@ -1,1 +1,1 @@
-from wpilib.interfaces import DigitalGlitchFilter
+from wpilib import DigitalGlitchFilter

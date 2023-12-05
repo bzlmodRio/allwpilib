@@ -1,1 +1,1 @@
-from wpilib.interfaces import DigitalOutput
+from wpilib import DigitalOutput

@@ -1,1 +1,1 @@
-from wpilib.interfaces import SerialPort
+from wpilib import SerialPort

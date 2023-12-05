@@ -1,1 +1,1 @@
-from wpilib.interfaces import ADXRS450_Gyro
+from wpilib import ADXRS450_Gyro

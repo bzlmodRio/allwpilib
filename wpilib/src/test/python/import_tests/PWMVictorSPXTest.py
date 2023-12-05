@@ -1,1 +1,1 @@
-from wpilib.interfaces import PWMVictorSPX
+from wpilib import PWMVictorSPX

@@ -1,1 +1,1 @@
-from wpilib.interfaces import Field2d
+from wpilib import Field2d

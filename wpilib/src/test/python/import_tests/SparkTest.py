@@ -1,1 +1,1 @@
-from wpilib.interfaces import Spark
+from wpilib import Spark

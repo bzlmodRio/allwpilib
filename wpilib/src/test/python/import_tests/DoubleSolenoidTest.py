@@ -1,1 +1,1 @@
-from wpilib.interfaces import DoubleSolenoid
+from wpilib import DoubleSolenoid

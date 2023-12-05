@@ -1,1 +1,1 @@
-from wpilib.interfaces import AnalogOutput
+from wpilib import AnalogOutput

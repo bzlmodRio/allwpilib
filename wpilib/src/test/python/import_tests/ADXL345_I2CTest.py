@@ -1,1 +1,1 @@
-from wpilib.interfaces import ADXL345_I2C
+from wpilib import ADXL345_I2C

@@ -1,1 +1,1 @@
-from wpilib.interfaces import Resource
+from wpilib import Resource

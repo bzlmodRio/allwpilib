@@ -1,1 +1,1 @@
-from wpilib.interfaces import Tracer
+from wpilib import Tracer

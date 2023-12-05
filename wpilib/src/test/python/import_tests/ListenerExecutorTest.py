@@ -1,1 +1,1 @@
-from wpilib.interfaces import ListenerExecutor
+from wpilib import ListenerExecutor

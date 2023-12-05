@@ -1,1 +1,1 @@
-from wpilib.interfaces import DataLogManager
+from wpilib import DataLogManager

@@ -1,1 +1,1 @@
-from wpilib.interfaces import SlewRateLimiter
+from wpilib import SlewRateLimiter

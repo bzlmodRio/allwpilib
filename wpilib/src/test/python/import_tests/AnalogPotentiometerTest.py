@@ -1,1 +1,1 @@
-from wpilib.interfaces import AnalogPotentiometer
+from wpilib import AnalogPotentiometer

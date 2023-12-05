@@ -1,1 +1,1 @@
-from wpilib.interfaces import Compressor
+from wpilib import Compressor

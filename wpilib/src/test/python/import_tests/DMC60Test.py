@@ -1,1 +1,1 @@
-from wpilib.interfaces import DMC60
+from wpilib import DMC60

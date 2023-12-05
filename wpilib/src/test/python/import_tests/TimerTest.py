@@ -1,1 +1,1 @@
-from wpilib.interfaces import Timer
+from wpilib import Timer

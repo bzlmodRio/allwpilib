@@ -1,1 +1,1 @@
-from wpilib.interfaces import CANStatus
+from wpilib import CANStatus

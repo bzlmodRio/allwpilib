@@ -1,1 +1,1 @@
-from wpilib.interfaces import DMASample
+from wpilib import DMASample

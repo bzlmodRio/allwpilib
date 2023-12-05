@@ -1,1 +1,1 @@
-from wpilib.interfaces import Watchdog
+from wpilib import Watchdog

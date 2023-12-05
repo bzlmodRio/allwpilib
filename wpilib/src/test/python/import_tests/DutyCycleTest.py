@@ -1,1 +1,1 @@
-from wpilib.interfaces import DutyCycle
+from wpilib import DutyCycle

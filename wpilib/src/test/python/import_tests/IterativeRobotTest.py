@@ -1,1 +1,1 @@
-from wpilib.interfaces import IterativeRobot
+from wpilib import IterativeRobot

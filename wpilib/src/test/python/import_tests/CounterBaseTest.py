@@ -1,1 +1,1 @@
-from wpilib.interfaces import CounterBase
+from wpilib.counter import CounterBase

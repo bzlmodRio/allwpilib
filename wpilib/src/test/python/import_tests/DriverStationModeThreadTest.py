@@ -1,1 +1,1 @@
-from wpilib.interfaces import DriverStationModeThread
+from wpilib import DriverStationModeThread

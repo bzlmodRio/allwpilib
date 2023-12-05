@@ -1,1 +1,1 @@
-from wpilib.interfaces import SendableChooser
+from wpilib import SendableChooser

@@ -1,1 +1,1 @@
-from wpilib.interfaces import ADXL362
+from wpilib import ADXL362

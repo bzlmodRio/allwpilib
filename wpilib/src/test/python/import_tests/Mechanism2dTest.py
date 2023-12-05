@@ -1,1 +1,1 @@
-from wpilib.interfaces import Mechanism2d
+from wpilib import Mechanism2d
