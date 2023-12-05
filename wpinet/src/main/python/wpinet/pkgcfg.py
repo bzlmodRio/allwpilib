@@ -12,13 +12,13 @@ def get_include_dirs():
     return [join(_root, "include"), join(_root, "rpy-include")]
 
 def get_library_dirs():
-    return [join(_root, "lib")]
+    return []
 
 def get_library_dirs_rel():
-    return ['lib']
+    return []
 
 def get_library_names():
-    return ['wpinet']
+    return []
 
 def get_library_full_names():
-    return ['libwpinet.so']
+    return []

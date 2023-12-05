@@ -18,6 +18,7 @@ class Setup:
         print(output_directory)
 
         self.root = output_directory
+        self.output_directory = "/home/pjreiniger/git/allwpilib"
         self.wrappers = []
         self.static_libs = []
 
