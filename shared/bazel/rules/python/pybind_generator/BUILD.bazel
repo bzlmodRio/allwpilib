@@ -10,16 +10,6 @@ exports_files([
     "pybind_on_build_dl.py",
 ])
 
-cc_library(
-    name = "robotpy_includes",
-    hdrs = [
-        "pybind11_typing.h",
-        "robotpy_build.h",
-    ],
-    strip_include_prefix = ".",
-    visibility = ["//visibility:public"],
-)
-
 py_library(
     name = "load_project_config",
     srcs = ["load_project_config.py"],

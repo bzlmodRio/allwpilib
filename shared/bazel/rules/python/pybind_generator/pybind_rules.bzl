@@ -16,6 +16,9 @@ def create_pybind_library(
     rpy_hdr_deps = []
     rpy_include_dir = rpy_include_dir or "generated/rpy-include/{}/rpy-include".format(name)
     rpy_includes = native.glob([rpy_include_dir + "/rpygen/*.hpp".format(name)])
+    print(name)
+    print(rpy_include_dir)
+    print(rpy_includes)
     if rpy_includes:
         wpilib_cc_library(
             name = "{}_rpy_includes".format(name),
@@ -30,12 +33,12 @@ def create_pybind_library(
         srcs = generated_srcs + extra_srcs + native.glob(["generated/gensrc/" + generation_subdir + "/*.hpp"]),
         hdrs = extra_hdrs,
         deps = [
-            "//shared/bazel/rules/python/pybind_generator:robotpy_includes",
+            "//shared/bazel/rules/python/pybind_generator/include:robotpy_includes",
         ] + deps + rpy_hdr_deps,
         copts = select({
             "@bazel_tools//src/conditions:darwin": ["-Wno-sign-compare", "-Wno-unused-value", "-Wno-pessimizing-move", "-Wno-delete-abstract-non-virtual-dtor", "-Wno-delete-non-abstract-non-virtual-dtor"],
             "@bazel_tools//src/conditions:windows": ["/wd4407"],
-            "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["-Wno-attributes", "-Wno-redundant-move", "-Wno-sign-compare", "-Wno-deprecated", "-Wno-unused-value"],
+            "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["-Wno-attributes", "-Wno-redundant-move", "-Wno-sign-compare", "-Wno-deprecated", "-Wno-deprecated-declarations", "-Wno-unused-value"],
         }),
         local_defines = ["RPYBUILD_MODULE_NAME=_{}".format(name), "PYBIND11_DETAILED_ERROR_MESSAGES=1"],
         defines = ["PYBIND11_USE_SMART_HOLDER_AS_DEFAULT=1"],
