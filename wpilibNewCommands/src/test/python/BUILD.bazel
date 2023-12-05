@@ -1,0 +1,8 @@
+
+py_test(
+    name = "import_test",
+    srcs = glob(["*.py"]),
+    deps = [
+        "//wpilibNewCommands/src/main/python:commands2",
+    ]
+)

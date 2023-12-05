@@ -1,0 +1,11 @@
+
+
+py_library(
+    name = "commands2",
+    srcs = glob(["commands2/**/*.py"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpilib/src/main/python:wpilib",
+    ],
+    imports = ["."]
+)
