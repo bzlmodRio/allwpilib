@@ -91,8 +91,6 @@ class Setup:
         elif dep == "wpiHal":
             dep = "hal"
 
-        importlib.import_module("wpimath.geometry")
-
         try:
             mod = importlib.import_module(dep + '.pkgcfg')
             self.pkgcfg.add_pkg(PkgCfg(mod))

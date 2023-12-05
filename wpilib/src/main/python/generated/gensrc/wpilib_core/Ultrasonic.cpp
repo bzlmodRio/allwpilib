@@ -267,6 +267,17 @@ def
 
 
 
+
+  cls_Ultrasonic
+  .def("getRangeMM", [](const frc::Ultrasonic &self) -> units::millimeter_t {
+    return self.GetRange();
+  })
+  .def("getRangeInches", [](const frc::Ultrasonic &self) -> units::inch_t {
+    return self.GetRange();
+  })
+;
+
+
 }
 
 }; // struct rpybuild_Ultrasonic_initializer

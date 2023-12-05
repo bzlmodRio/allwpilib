@@ -28,7 +28,7 @@ create_pybind_library(
     "counter",
     entry_point = ["wpilib/counter/counter.cpp"],
     generation_dir_prefix = "wpilibc_",
-    rpy_include_dir = "generated/rpy-include/counter/rpy-include",
+    rpy_include_dir = "generated/rpy-include/wpilib/counter/rpy-include",
     deps = [
         ":wpilib_core_pybind_library",
     ],
@@ -38,6 +38,7 @@ create_pybind_library(
     "drive",
     entry_point = ["wpilib/drive/drive.cpp"],
     generation_dir_prefix = "wpilibc_",
+    rpy_include_dir = "generated/rpy-include/wpilib/drive/rpy-include",
     deps = [
         ":wpilib_core_pybind_library",
     ],
@@ -57,7 +58,7 @@ create_pybind_library(
     "interfaces",
     entry_point = ["wpilib/interfaces/interfaces.cpp"],
     generation_dir_prefix = "wpilibc_",
-    rpy_include_dir = "generated/rpy-include/interfaces/rpy-include",
+    rpy_include_dir = "generated/rpy-include/wpilib/interfaces/rpy-include",
     deps = [
         "//wpilibc/src/main/native:wpilibc.shared",
         "//wpimath/src/main/python:wpimath_pybind_library",
@@ -69,7 +70,7 @@ create_pybind_library(
     entry_point = ["wpilib/shuffleboard/shuffleboard.cpp"],
     extra_hdrs = glob(["wpilib/shuffleboard/*.h"]),
     generation_dir_prefix = "wpilibc_",
-    rpy_include_dir = "generated/rpy-include/shuffleboard/rpy-include",
+    rpy_include_dir = "generated/rpy-include/wpilib/shuffleboard/rpy-include",
     extra_srcs = glob(
         ["wpilib/shuffleboard/*.cpp"],
         exclude = ["wpilib/shuffleboard/shuffleboard.cpp"],
@@ -85,7 +86,7 @@ create_pybind_library(
     "simulation",
     entry_point = ["wpilib/simulation/simulation.cpp"],
     generation_dir_prefix = "wpilibc_",
-    rpy_include_dir = "generated/rpy-include/simulation/rpy-include",
+    rpy_include_dir = "generated/rpy-include/wpilib/simulation/rpy-include",
     deps = [
         "//wpilibc/src/main/native:wpilibc.shared",
         "//wpimath/src/main/python:wpimath_pybind_library",

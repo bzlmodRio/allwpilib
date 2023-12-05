@@ -58,6 +58,7 @@ write_source_files(
         "//wpimath/src/main/python:write_on_build_dl_files",
         "//wpinet/src/main/python:write_on_build_dl_files",
         "//wpiutil/src/main/python:write_on_build_dl_files",
+        "//wpilib/src/main/python:write_on_build_dl_files",
     ],
 )
 
@@ -71,5 +72,6 @@ write_source_files(
         "//wpimath/src/main/python:write_on_build_gen",
         "//wpinet/src/main/python:write_on_build_gen",
         "//wpiutil/src/main/python:write_on_build_gen",
+        "//wpilib/src/main/python:write_on_build_gen",
     ],
 )
