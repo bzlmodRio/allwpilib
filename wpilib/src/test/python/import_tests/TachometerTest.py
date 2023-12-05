@@ -1,0 +1,1 @@
+from wpilib.counter import Tachometer
