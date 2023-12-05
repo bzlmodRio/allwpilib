@@ -23,10 +23,10 @@ def main():
     for wrapper in setup.wrappers:
         wrapper.on_build_gen(os.path.join(intermediate_directory, "pybind_gen"))
 
-    print("Done gen\n\n\n")
+    # print("Done gen\n\n\n")
 
     project_name = args.project_name
-    print("COPYING FROM", os.path.join(intermediate_directory, f"{project_name}/rpy-include"))
+    # print("COPYING FROM", os.path.join(intermediate_directory, f"{project_name}/rpy-include"))
     # raise
 
     shutil.copytree(
@@ -54,7 +54,7 @@ def main():
                     if not os.path.exists(actual_directory):
                         os.makedirs(actual_directory)
                     # print("Got a match...", subfolder)
-                    print("Putting in ", actual_directory)
+                    # print("Putting in ", actual_directory)
                     shutil.move(os.path.join(root, f),  actual_directory)
                 else:
                     shutil.move(os.path.join(root, f), os.path.join(args.output_directory, "gensrc", project_name))

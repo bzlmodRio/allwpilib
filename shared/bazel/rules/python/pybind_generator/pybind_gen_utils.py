@@ -15,8 +15,6 @@ import importlib
 
 class Setup:
     def __init__(self, config_path: str, output_directory: str):
-        print(output_directory)
-
         self.root = output_directory
         self.output_directory = "/home/pjreiniger/git/allwpilib"
         self.wrappers = []
@@ -102,19 +100,19 @@ class Setup:
 
             package_dir = os.path.join(output_directory, package_name)
             if not os.path.exists(package_dir):
-                print("Making package ", package_dir)
+                # print("Making package ", package_dir)
                 os.makedirs(package_dir)
 
             if cfg.ignore:
-                print("Ignoring ", cfg)
+                # print("Ignoring ", cfg)
                 continue
             
             if cfg.generation_data:
-                print("Has gen data", cfg.generation_data)
+                # print("Has gen data", cfg.generation_data)
                 cfg.generation_data=f"{package_name}/src/main/python/" + cfg.generation_data
 
 
-            print(package_name, cfg)
+            # print(package_name, cfg)
             # self._fix_downloads(cfg, False)
             w = Wrapper(package_name, cfg, self, self.wwriter)
             self.wrappers.append(w)
