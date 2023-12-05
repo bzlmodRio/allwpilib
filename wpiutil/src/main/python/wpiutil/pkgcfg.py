@@ -9,7 +9,14 @@ depends = []
 pypi_package = 'robotpy-wpiutil'
 
 def get_include_dirs():
-    return [join(_root, "include"), join(_root, "rpy-include"), join(_root, "src", "type_casters")]
+    root = "/home/pjreiniger/git/allwpilib/wpiutil"
+    output = [join(root, "src/main/native/include"), join(root, "src/main/python/generated/rpy-include/wpiutil/rpy-include"), join(_root, "src", "type_casters")]
+    import os
+    for d in output:
+        if not os.path.exists(d):
+            print("----------------------------------------" + d + " does not exist!")
+    return output
+    # return [join(_root, "include"), join(_root, "rpy-include"), join(_root, "src", "type_casters")]
 
 def get_library_dirs():
     return []

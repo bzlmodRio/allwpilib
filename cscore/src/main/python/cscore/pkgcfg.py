@@ -9,7 +9,14 @@ depends = ['wpiutil', 'wpinet', 'ntcore']
 pypi_package = 'robotpy-cscore'
 
 def get_include_dirs():
-    return [join(_root, "include"), join(_root, "rpy-include")]
+    root = "/home/pjreiniger/git/allwpilib/cscore"
+    output = [join(root, "src/main/native/include"), join(root, "src/main/python/generated/rpy-include/cscore/rpy-include")]
+    import os
+    for d in output:
+        if not os.path.exists(d):
+            print("----------------------------------------" + d + " does not exist!")
+    return output
+    # return [join(_root, "include"), join(_root, "rpy-include")]
 
 def get_library_dirs():
     return []

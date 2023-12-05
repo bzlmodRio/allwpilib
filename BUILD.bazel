@@ -46,7 +46,7 @@ proto_lang_toolchain(
 )
 
 write_source_files(
-    name = "write_on_dl_gen",
+    name = "write_on_build_dl_files",
     additional_update_targets = [
         "//apriltag/src/main/python:write_on_build_dl_files",
         "//cscore/src/main/python:write_on_build_dl_files",

@@ -82,7 +82,7 @@ def __run_on_dl(
     write_source_files(
         name = "write_on_build_dl_files",
         files = file_mapping,
-        suggested_update_target = "//:write_python_on_build_dl_files",
+        suggested_update_target = "//:write_on_build_dl_files",
         visibility = ["//visibility:public"],
     )
     
