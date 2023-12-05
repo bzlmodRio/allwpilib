@@ -92,6 +92,19 @@ create_pybind_library(
 generate_robopy_files(
     name = "wpimath",
     config_file = ":pyproject.toml",
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    projects = [
+        "wpimath",
+        "_impl",
+        "_controls",
+        "filter",
+        "geometry",
+        "kinematics",
+        "interpolation",
+        "spline",
+    ]
 )
 
 pybind_python_library(

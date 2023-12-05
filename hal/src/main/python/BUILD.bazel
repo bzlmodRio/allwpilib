@@ -13,6 +13,10 @@ create_pybind_library(
 generate_robopy_files(
     name = "hal",
     config_file = ":pyproject.toml",
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    projects = ["wpiHal"],
 )
 
 create_pybind_library(

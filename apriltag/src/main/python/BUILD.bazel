@@ -14,6 +14,10 @@ create_pybind_library(
 generate_robopy_files(
     name = "apriltag",
     config_file = ":pyproject.toml",
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+        "//wpimath/src/main/python:pkgcfg",
+    ],
 )
 
 pybind_python_library(

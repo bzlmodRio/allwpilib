@@ -73,8 +73,14 @@ class Setup:
         
         for wrapper in self.wrappers:
             for dep in wrapper.cfg.depends:
-                mod = importlib.import_module(dep + '.pkgcfg')
-                self.pkgcfg.add_pkg(PkgCfg(mod))
+                if dep == "wpimath_cpp":
+                    dep = "wpimath._impl"
+                try:
+                    mod = importlib.import_module(dep + '.pkgcfg')
+                    self.pkgcfg.add_pkg(PkgCfg(mod))
+                except:
+                    print(f"Could not load {dep}, might be ok if it is an internal package")
+                    # raise
 
     def prepare(self, output_directory):
         self.pkgcfg = PkgCfgProvider()

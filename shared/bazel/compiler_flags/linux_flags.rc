@@ -28,3 +28,6 @@ build:linux --linkopt=-rdynamic
 build:linux --linkopt=-pthread
 build:linux --linkopt=-ldl
 build:linux --linkopt=-latomic
+
+
+build:linux --host_copt=-std=c++20

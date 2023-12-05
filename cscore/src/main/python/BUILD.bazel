@@ -17,6 +17,11 @@ create_pybind_library(
 generate_robopy_files(
     name = "cscore",
     config_file = ":pyproject.toml",
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+        "//wpinet/src/main/python:pkgcfg",
+        "//ntcore/src/main/python:pkgcfg",
+    ],
 )
 
 pybind_python_library(

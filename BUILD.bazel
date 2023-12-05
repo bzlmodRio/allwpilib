@@ -46,6 +46,19 @@ proto_lang_toolchain(
 )
 
 write_source_files(
+    name = "write_on_dl_gen",
+    additional_update_targets = [
+        "//apriltag/src/main/python:write_on_build_dl_files",
+        "//cscore/src/main/python:write_on_build_dl_files",
+        "//hal/src/main/python:write_on_build_dl_files",
+        "//ntcore/src/main/python:write_on_build_dl_files",
+        "//wpimath/src/main/python:write_on_build_dl_files",
+        "//wpinet/src/main/python:write_on_build_dl_files",
+        "//wpiutil/src/main/python:write_on_build_dl_files",
+    ],
+)
+
+write_source_files(
     name = "write_on_build_gen",
     additional_update_targets = [
         "//apriltag/src/main/python:write_on_build_gen",

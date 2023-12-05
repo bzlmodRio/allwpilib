@@ -4,8 +4,9 @@ load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 def generate_robopy_files(
         name,
         config_file,
-        python_deps = []):
-    projects = [name]
+        python_deps = [],
+        projects = None):
+    projects = [name] if projects == None else projects
     __run_on_dl(
         name = name,
         config_file = config_file,
@@ -15,7 +16,8 @@ def generate_robopy_files(
 
     __run_on_build_gen(
         name = name,
-        config_file = config_file
+        config_file = config_file,
+        python_deps=python_deps,
     )
 
 def __run_on_dl(
@@ -39,7 +41,13 @@ def __run_on_dl(
     file_mapping = {}
     pkgcfg_files = []
     for project in projects:
-        init_file = "{name}/_init_{name}.py".format(name=name)
+        init_file = "{name}/_init_{project}.py".format(name=name, project=project)
+        if name != project:
+            init_file = "{name}/{project}/_init_{project2}.py".format(name = name, project=project, project2=project.replace("_", ""))
+        if name == "wpimath" and project == "_impl":
+            init_file = "wpimath/_impl/_init_wpimath_cpp.py"
+        if name == "hal":
+            init_file = "{name}/_init_{project}.py".format(name=name, project=project)
         generated_files.append("on_build_dl/" + init_file)
         filter_srcs(
             name = "__filtered_gen_" + project + "_init",
@@ -49,7 +57,11 @@ def __run_on_dl(
         file_mapping[init_file] = "__filtered_gen_" + project + "_init"
 
 
-        pkg_file = "{name}/pkgcfg.py".format(name=name)
+        pkg_file = "{project}/pkgcfg.py".format(project=project)
+        if name != project:
+            pkg_file = "{name}/{project}/pkgcfg.py".format(name = name, project=project)
+        if name == "hal":
+            pkg_file = "hal/pkgcfg.py".format(project=project)
         generated_files.append("on_build_dl/" + pkg_file)
         filter_srcs(
             name = "__filtered_gen_" + project + "_pkg",
@@ -99,12 +111,13 @@ filter_srcs = rule(
 
 def __run_on_build_gen(
         name,
-        config_file):
+        config_file,
+        python_deps):
     py_binary(
         name = name + ".generate_pybind_exe",
         main = "pybind_on_build_gen.py",
         srcs = ["//shared/bazel/rules/python/pybind_generator:pybind_on_build_gen.py"],
-        deps = [
+        deps = python_deps + [
             "//shared/bazel/rules/python/pybind_generator:pybind_gen_utils",
             "//shared/bazel/rules/python/pybind_generator:load_project_config",
         ],
