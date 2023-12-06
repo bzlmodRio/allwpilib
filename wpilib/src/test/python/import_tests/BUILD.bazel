@@ -2,7 +2,6 @@ load("@rules_python//python:defs.bzl", "py_test")
 
 SOURCES = glob(["**/*Test.py"])
 
-
 [py_test(
     name = test_file[:-3],
     srcs = [test_file],

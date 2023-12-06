@@ -1,11 +1,11 @@
-
+load("@rules_python//python:defs.bzl", "py_library")
 
 py_library(
     name = "commands2",
     srcs = glob(["commands2/**/*.py"]),
+    imports = ["."],
     visibility = ["//visibility:public"],
     deps = [
         "//wpilib/src/main/python:wpilib",
     ],
-    imports = ["."]
 )

@@ -1,11 +1,12 @@
+load("@rules_python//python:defs.bzl", "py_binary")
 
 print(glob(["src/main/python/examples/addressableled/*.py"]))
 
 py_binary(
     name = "addressableled",
-    main = "src/main/python/examples/addressableled/robot.py",
     srcs = glob(["src/main/python/examples/addressableled/*.py"]),
+    main = "src/main/python/examples/addressableled/robot.py",
     deps = [
         "//wpilibNewCommands/src/main/python:commands2",
-    ]
+    ],
 )
