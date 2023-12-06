@@ -1,6 +1,6 @@
-load("@rules_python//python:defs.bzl", "py_library")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library", "pybind_python_library")
 
-py_library(
+pybind_python_library(
     name = "commands2",
     srcs = glob(["commands2/**/*.py"]),
     imports = ["."],
