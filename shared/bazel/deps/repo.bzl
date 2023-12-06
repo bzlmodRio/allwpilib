@@ -44,8 +44,6 @@ def load_third_party():
     pip_parse(
         name = "allwpilib_pip_deps",
         requirements_lock = "//:requirements_lock.txt",
-        requirements_windows = "//:requirements_windows.txt",
-        requirements_darwin = "//:requirements_darwin.txt",
     )
 
     setup_non_bzlmod_quickbuf_protoc()

@@ -109,23 +109,44 @@ load("@maven//:defs.bzl", "pinned_maven_install")
 pinned_maven_install()
 
 http_archive(
-    name = "pybind11_bazel",
-    sha256 = "b72c5b44135b90d1ffaba51e08240be0b91707ac60bea08bb4d84b47316211bb",
-    strip_prefix = "pybind11_bazel-b162c7c88a253e3f6b673df0c621aca27596ce6b",
-    urls = ["https://github.com/pybind/pybind11_bazel/archive/b162c7c88a253e3f6b673df0c621aca27596ce6b.zip"],
+    name = "aspect_bazel_lib",
+    sha256 = "4d6010ca5e3bb4d7045b071205afa8db06ec11eb24de3f023d74d77cca765f66",
+    strip_prefix = "bazel-lib-1.39.0",
+    url = "https://github.com/aspect-build/bazel-lib/releases/download/v1.39.0/bazel-lib-v1.39.0.tar.gz",
 )
 
-# We still require the pybind library.
+load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
+
+aspect_bazel_lib_dependencies()
+
+
 http_archive(
-    name = "pybind11",
-    build_file = "@pybind11_bazel//:pybind11.BUILD",
-    sha256 = "b4bb373102b8a7f8ffd2fc4560938b635d91ef276d724a9d57a1f6237c566791",
-    strip_prefix = "pybind11-7953d19a7c17ff1bfe0b7c4cdfde216d400d5f28",
-    urls = ["https://github.com/pybind/pybind11/archive/7953d19a7c17ff1bfe0b7c4cdfde216d400d5f28.tar.gz"],
+    name = "rules_robotpy_utils",
+    sha256 = "b4364eaa7ca6257cfd68ab66eefb70baeba30546f3e73cac1aacb11b3ddc1184",
+    strip_prefix = "rules_robotpy_utils-456b65f9d5209ff3d9e6c13b6b04eb3ec96a1388",
+    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/456b65f9d5209ff3d9e6c13b6b04eb3ec96a1388.tar.gz",
 )
+
+# local_repository(
+#     name = "rules_robotpy_utils",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils"
+# )
+
+load("@rules_robotpy_utils//:download_dependencies.bzl", "download_rules_robotpy_utils_dependencies")
+
+download_rules_robotpy_utils_dependencies()
+
+load("@rules_robotpy_utils//:setup_dependencies.bzl", "setup_rules_robotpy_utils_dependencies")
+
+setup_rules_robotpy_utils_dependencies()
+
+load("@rules_robotpy_utils_pip_deps//:requirements.bzl", install_rules_robotpy_utils_pip_deps = "install_deps")
+
+install_rules_robotpy_utils_pip_deps()
+
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
 
 load("@pybind11_bazel//:python_configure.bzl", "python_configure")
-load("@rules_python//python:repositories.bzl", "python_register_toolchains")
 
 python_register_toolchains(
     name = "python3_10",
@@ -139,14 +160,3 @@ python_configure(
     name = "local_config_python",
     python_interpreter_target = interpreter,
 )
-
-http_archive(
-    name = "aspect_bazel_lib",
-    sha256 = "4d6010ca5e3bb4d7045b071205afa8db06ec11eb24de3f023d74d77cca765f66",
-    strip_prefix = "bazel-lib-1.39.0",
-    url = "https://github.com/aspect-build/bazel-lib/releases/download/v1.39.0/bazel-lib-v1.39.0.tar.gz",
-)
-
-load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
-
-aspect_bazel_lib_dependencies()
