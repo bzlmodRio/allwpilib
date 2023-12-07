@@ -1,1 +1,0 @@
-from cscore import CvSource

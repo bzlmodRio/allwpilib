@@ -1,1 +1,0 @@
-from robotpy_apriltag import AprilTagDetection
