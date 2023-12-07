@@ -2,7 +2,7 @@ import atexit
 import logging
 import threading
 
-from . import _ntcore
+import _ntcore
 
 import wpiutil.sync
 

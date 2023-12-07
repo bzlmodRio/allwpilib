@@ -1,4 +1,5 @@
-from . import exceptions, _init_wpiHal, _wpiHal
+from . import exceptions, _init_wpiHal
+import _wpiHal
 
 # Always initialize HAL here, disable extension notice because we'll handle
 # that for users
