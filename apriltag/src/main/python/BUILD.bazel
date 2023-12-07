@@ -23,7 +23,7 @@ generate_robopy_files(
 
 pybind_python_library(
     name = "apriltag",
-    srcs = glob(["robotpy_apriltag/**/*.py"]),
+    srcs = glob(["robotpy_apriltag/**/*.py", "apriltag/**/*.py"]),
     data = [
         ":_apriltag.so",
     ],
