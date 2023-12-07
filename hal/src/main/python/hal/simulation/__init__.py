@@ -1,4 +1,4 @@
 from . import _init_simulation
-from _simulation import *
+from _hal_simulation import *
 
 del _init_simulation

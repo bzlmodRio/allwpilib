@@ -2,9 +2,9 @@ import atexit
 import logging
 import threading
 
-from . import _ntcore
-
 import wpiutil.sync
+
+import _ntcore
 
 
 class InstanceAlreadyStartedError(Exception):

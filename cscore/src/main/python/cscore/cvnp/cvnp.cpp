@@ -136,7 +136,7 @@ namespace cvnp
     {
         int depth = detail::determine_cv_depth(a.dtype());
         int type = detail::determine_cv_type(a, depth);
-        // cv::Size size = detail::determine_cv_size(a);
+        cv::Size size = detail::determine_cv_size(a);
 
         auto buffer_info = a.request();
 
@@ -146,7 +146,7 @@ namespace cvnp
             strides.push_back(static_cast<size_t>(v));
 
         // Get the number of dimensions
-        // int ndims = static_cast<int>(buffer_info.ndim);
+        int ndims = static_cast<int>(buffer_info.ndim);
         //if ((ndims != 2) && (ndims != 3))
         //    throw std::invalid_argument("nparray_to_mat needs support only 2 or 3 dimension matrices");
 

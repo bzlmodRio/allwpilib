@@ -119,18 +119,17 @@ load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
 
 aspect_bazel_lib_dependencies()
 
-
-http_archive(
-    name = "rules_robotpy_utils",
-    sha256 = "637fc6cd4fa6594ccfdff44f37206e09ce4630a08f3b40616c5e6f277ffa779f",
-    strip_prefix = "rules_robotpy_utils-c0179ad5a6b76bd1a4b6892f54ec8f5e68b37eda",
-    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/c0179ad5a6b76bd1a4b6892f54ec8f5e68b37eda.tar.gz",
-)
-
-# local_repository(
+# http_archive(
 #     name = "rules_robotpy_utils",
-#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils"
+#     sha256 = "637fc6cd4fa6594ccfdff44f37206e09ce4630a08f3b40616c5e6f277ffa779f",
+#     strip_prefix = "rules_robotpy_utils-c0179ad5a6b76bd1a4b6892f54ec8f5e68b37eda",
+#     url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/c0179ad5a6b76bd1a4b6892f54ec8f5e68b37eda.tar.gz",
 # )
+
+local_repository(
+    name = "rules_robotpy_utils",
+    path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+)
 
 load("@rules_robotpy_utils//:download_dependencies.bzl", "download_rules_robotpy_utils_dependencies")
 
@@ -144,9 +143,8 @@ load("@rules_robotpy_utils_pip_deps//:requirements.bzl", install_rules_robotpy_u
 
 install_rules_robotpy_utils_pip_deps()
 
-load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
-
 load("@pybind11_bazel//:python_configure.bzl", "python_configure")
+load("@rules_python//python:repositories.bzl", "python_register_toolchains")
 
 python_register_toolchains(
     name = "python3_10",
@@ -160,3 +158,16 @@ python_configure(
     name = "local_config_python",
     python_interpreter_target = interpreter,
 )
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "rules_python_pytest",
+    sha256 = "8b82935e16f7b28e3711a68ae5f88f44d8685ccd906b869f7721fdd4c32f2369",
+    strip_prefix = "rules_python_pytest-1.1.0",
+    url = "https://github.com/caseyduquettesc/rules_python_pytest/releases/download/v1.1.0/rules_python_pytest-v1.1.0.tar.gz",
+)
+
+load("@rules_python_pytest//python_pytest:repositories.bzl", "rules_python_pytest_dependencies")
+
+rules_python_pytest_dependencies()
+

@@ -23,6 +23,7 @@ generate_robopy_files(
 create_pybind_library(
     "hal_simulation",
     entry_point = ["hal/simulation/main.cpp"],
+    extra_srcs = ["hal/simulation/resethandles.cpp"],
     deps = [
         "//hal/src/main/native:wpiHal.shared",
         "//wpiutil/src/main/python:wpiutil_pybind_library",

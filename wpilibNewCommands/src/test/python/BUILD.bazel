@@ -1,0 +1,13 @@
+load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
+
+
+wpilib_py_test(
+    "wpilib_new_commands_tests",
+    tests = glob(["**/*.py"], exclude = ["conftest.py", "util.py", "compositiontestbase.py"]),
+    conftest = ["conftest.py"],
+    extra_sources = ["util.py", "compositiontestbase.py"],
+    deps = [
+        "//wpilibNewCommands/src/main/python:commands2",
+    ],
+    tags = ["manual"] # Causes lock up
+)

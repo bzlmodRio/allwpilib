@@ -1,0 +1,14 @@
+load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+
+
+
+wpilib_py_test(
+    "cscore_tests",
+    tests = glob(["**/*.py"], exclude = ["conftest.py"]),
+    deps = [
+        requirement("numpy"),
+        "//cscore/src/main/python:cscore",
+    ],
+    conftest = ["conftest.py"]
+)

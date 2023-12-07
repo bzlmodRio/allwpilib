@@ -1,5 +1,4 @@
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_test")
-load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library", "pybind_python_library")
 
 SOURCES = glob(["**/*Test.py"])
 
