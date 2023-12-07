@@ -14,7 +14,10 @@ generate_robopy_files(
     name = "hal",
     config_file = ":pyproject.toml",
     headers = ["//hal/src/main/native:headers"],
-    projects = ["wpiHal"],
+    projects = [
+        "wpiHal",
+        "simulation"
+    ],
     python_deps = [
         "//wpiutil/src/main/python:pkgcfg",
     ],
