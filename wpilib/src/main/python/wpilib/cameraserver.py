@@ -54,7 +54,7 @@ class CameraServer:
             return
 
         cls._launched = True
-        from _wpilib import RobotBase
+        from _wpilib_core import RobotBase
 
         if RobotBase.isSimulation():
             logger.info("Would launch CameraServer with vision_py=%s", vision_py)

@@ -3,6 +3,7 @@
 # networktables and tests the 'real' user API to ensure that it
 # works correctly
 #
+
 from __future__ import print_function
 
 import pytest
