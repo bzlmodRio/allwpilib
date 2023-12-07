@@ -1,12 +1,12 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@rules_python_pytest//python_pytest:defs.bzl", "py_pytest_test")
 
-def wpilib_py_test(name, tests, conftest = None, deps = [], extra_sources = [], **kwargs):
+def wpilib_py_test(name, tests, deps = [], extra_sources = [], **kwargs):
     for test_file in tests:
         py_pytest_test(
             name = test_file[:-3],
             size = "small",
-            srcs = [test_file] + extra_sources + conftest,
+            srcs = [test_file] + extra_sources,
             deps = deps + [
                 requirement("pytest"),
             ],

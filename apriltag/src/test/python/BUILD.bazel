@@ -3,11 +3,11 @@ load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
 
 wpilib_py_test(
     "apriltag_tests",
-    conftest = ["conftest.py"],
     data = glob([
         "*.png",
         "*.jpg",
     ]),
+    extra_sources = ["conftest.py"],
     tests = glob(
         ["**/*.py"],
         exclude = ["conftest.py"],

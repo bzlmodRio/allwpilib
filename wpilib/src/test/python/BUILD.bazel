@@ -2,7 +2,7 @@ load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
 
 wpilib_py_test(
     "wpilib_tests",
-    conftest = ["conftest.py"],
+    extra_sources = ["conftest.py"],
     tests = glob(
         ["**/*.py"],
         exclude = ["conftest.py"],
