@@ -1,0 +1,1 @@
+{"nt::BooleanArraySubscriber": ["nt::Subscriber"], "nt::BooleanArrayPublisher": ["nt::Publisher"], "nt::BooleanArrayEntry": ["nt::BooleanArraySubscriber", "nt::BooleanArrayPublisher"], "nt::BooleanArrayTopic": ["nt::Topic"]}
