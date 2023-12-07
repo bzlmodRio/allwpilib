@@ -1,8 +1,5 @@
-load("@rules_python//python:defs.bzl", "py_binary", "py_library", "py_test")
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
-
 load("@rules_python_pytest//python_pytest:defs.bzl", "py_pytest_test")
-
 
 def wpilib_py_test(name, tests, conftest = None, deps = [], extra_sources = [], **kwargs):
     for test_file in tests:

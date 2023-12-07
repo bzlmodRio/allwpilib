@@ -16,7 +16,7 @@ generate_robopy_files(
     headers = ["//hal/src/main/native:headers"],
     projects = [
         "wpiHal",
-        "simulation"
+        "simulation",
     ],
     python_deps = [
         "//wpiutil/src/main/python:pkgcfg",

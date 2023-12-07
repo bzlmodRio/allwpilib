@@ -1,12 +1,13 @@
 load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
 
-
-
 wpilib_py_test(
     "ntcore_tests",
-    tests = glob(["**/*.py"], exclude = ["conftest.py"]),
     conftest = ["conftest.py"],
+    tests = glob(
+        ["**/*.py"],
+        exclude = ["conftest.py"],
+    ),
     deps = [
         "//ntcore/src/main/python:ntcore",
-    ]
+    ],
 )

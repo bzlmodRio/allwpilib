@@ -1,6 +1,5 @@
 load("@rules_proto//proto:defs.bzl", "proto_lang_toolchain")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
-load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 
 exports_files([
     "requirements_lock.txt",
@@ -58,7 +57,7 @@ proto_lang_toolchain(
 #         "//wpilib/src/main/python:write_on_build_dl_files",
 #     ],
 # )
-# 
+#
 # write_source_files(
 #     name = "write_on_build_gen",
 #     additional_update_targets = [

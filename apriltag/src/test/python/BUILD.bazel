@@ -1,13 +1,19 @@
-load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
 
 wpilib_py_test(
     "apriltag_tests",
-    tests = glob(["**/*.py"], exclude = ["conftest.py"]),
     conftest = ["conftest.py"],
+    data = glob([
+        "*.png",
+        "*.jpg",
+    ]),
+    tests = glob(
+        ["**/*.py"],
+        exclude = ["conftest.py"],
+    ),
     deps = [
         requirement("opencv-python"),
         "//apriltag/src/main/python:apriltag",
     ],
-    data = glob(["*.png", "*.jpg"])
 )

@@ -159,7 +159,6 @@ python_configure(
     python_interpreter_target = interpreter,
 )
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "rules_python_pytest",
     sha256 = "8b82935e16f7b28e3711a68ae5f88f44d8685ccd906b869f7721fdd4c32f2369",
@@ -170,4 +169,3 @@ http_archive(
 load("@rules_python_pytest//python_pytest:repositories.bzl", "rules_python_pytest_dependencies")
 
 rules_python_pytest_dependencies()
-
