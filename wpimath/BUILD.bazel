@@ -28,6 +28,7 @@ write_source_files(
     },
     suggested_update_target = "//:write_all",
     visibility = ["//visibility:public"],
+    diff_test = False,
 )
 
 filegroup(
