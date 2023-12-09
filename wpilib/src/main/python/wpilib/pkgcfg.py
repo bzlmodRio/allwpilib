@@ -10,13 +10,13 @@ pypi_package = 'wpilib'
 
 def get_include_dirs():
     root = "/home/pjreiniger/git/allwpilib/wpilib"
-    output = [join(root, "src/main/native/include"), join(root, "src/main/python/generated/rpy-include/wpilib/rpy-include"), join(_root, "src")]
+    output = [join(root, "src/main/native/include"), join(root, "src/main/python/generated/rpy-include/wpilib/rpy-include"), join(_root, "src"), join(_root, "..", "wpilibc", "src", "main", "native", "include"), join(_root, "..", "..", "..", "..", "..", "..", "..", "..", "..", "..", "git", "allwpilib", "wpilib", "src", "main", "python", "wpilib", "src")]
     import os
     for d in output:
         if not os.path.exists(d):
             print("----------------------------------------" + d + " does not exist!")
     return output
-    # return [join(_root, "include"), join(_root, "rpy-include"), join(_root, "src")]
+    # return [join(_root, "include"), join(_root, "rpy-include"), join(_root, "src"), join(_root, "..", "wpilibc", "src", "main", "native", "include"), join(_root, "..", "..", "..", "..", "..", "..", "..", "..", "..", "..", "git", "allwpilib", "wpilib", "src", "main", "python", "wpilib", "src")]
 
 def get_library_dirs():
     return []
