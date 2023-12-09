@@ -103,6 +103,7 @@ genrule(
     outs = GENERATED_CPP_INCLUDE_FILES,
     cmd = "$(locations :generate_topics) --generate_cpp_includes --output_files $(OUTS)",
     tools = [":generate_topics"],
+    visibility = ["//ntcore:__subpackages__"],
 )
 
 genrule(

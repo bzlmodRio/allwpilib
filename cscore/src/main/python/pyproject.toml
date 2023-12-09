@@ -50,6 +50,8 @@ libs = ["opencv480"]
 [tool.robotpy-build.wrappers."cscore"]
 name = "cscore"
 
+extra_includes = ["cameraserver/src/main/native/include"]
+
 sources = [
   "cscore/src/main.cpp",
   "cscore/cvnp/cvnp.cpp",

@@ -15,7 +15,7 @@ wpilib_cc_library(
 filegroup(
     name = "headers",
     srcs = glob(["include/**/*"]) + [
-        "//ntcore:generated_includes",
+        "//ntcore:gen-cpp-includes",
     ],
     visibility = ["//ntcore/src/main/python:__subpackages__"],
 )

@@ -30,6 +30,8 @@ libs = ["wpiHal"]
 
 [tool.robotpy-build.wrappers."hal"]
 
+extra_includes = ["bazel-out/k8-fastbuild/bin/hal/src/generate/"]
+
 name = "wpiHal"
 sources = [
     "hal/src/hal.cpp"

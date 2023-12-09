@@ -39,7 +39,7 @@ filegroup(
 
 filegroup(
     name = "headers",
-    srcs = glob(["include/**/*"]),
+    srcs = glob(["include/**/*"]) + ["//hal/src/generate:cpp-usage-gen"],
     visibility = ["//hal/src/main/python:__subpackages__"],
 )
 

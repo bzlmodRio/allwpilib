@@ -17,7 +17,7 @@ create_pybind_library(
 generate_robopy_files(
     name = "cscore",
     config_file = ":pyproject.toml",
-    headers = ["//cscore/src/main/native:headers"],
+    headers = ["//cscore/src/main/native:headers"] + ["//cameraserver/src/main/native:headers"],
     python_deps = [
         "//wpiutil/src/main/python:pkgcfg",
         "//wpinet/src/main/python:pkgcfg",
