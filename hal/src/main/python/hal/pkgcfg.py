@@ -10,13 +10,13 @@ pypi_package = 'robotpy-hal'
 
 def get_include_dirs():
     root = "/home/pjreiniger/git/allwpilib/hal"
-    output = [join(root, "src/main/native/include"), join(root, "src/main/python/generated/rpy-include/hal/rpy-include")]
+    output = [join(root, "src/main/native/include"), join(root, "src/main/python/generated/rpy-include/hal/rpy-include"), join(_root, "..", "bazel-out", "k8-fastbuild", "bin", "hal", "src", "generate")]
     import os
     for d in output:
         if not os.path.exists(d):
             print("----------------------------------------" + d + " does not exist!")
     return output
-    # return [join(_root, "include"), join(_root, "rpy-include")]
+    # return [join(_root, "include"), join(_root, "rpy-include"), join(_root, "..", "bazel-out", "k8-fastbuild", "bin", "hal", "src", "generate")]
 
 def get_library_dirs():
     return []

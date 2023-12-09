@@ -119,17 +119,17 @@ load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
 
 aspect_bazel_lib_dependencies()
 
-# http_archive(
-#     name = "rules_robotpy_utils",
-#     sha256 = "676e49bba4fb959f5af12f2db1ae85a5e0b9a8b1a867f3285341371a0b68e8bf",
-#     strip_prefix = "rules_robotpy_utils-749dfbe321cb2909d3b3645c966d9029c7ac283c",
-#     url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/749dfbe321cb2909d3b3645c966d9029c7ac283c.tar.gz",
-# )
-
-local_repository(
+http_archive(
     name = "rules_robotpy_utils",
-    path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+    sha256 = "c242d75d634dca012e06e26eea0ef4cb66c602c00b5bd5a3a6108a72394f4b63",
+    strip_prefix = "rules_robotpy_utils-2c3d5506e95091e714b4045bba38dc54a7d5a088",
+    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/2c3d5506e95091e714b4045bba38dc54a7d5a088.tar.gz",
 )
+
+# local_repository(
+#     name = "rules_robotpy_utils",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+# )
 
 load("@rules_robotpy_utils//:download_dependencies.bzl", "download_rules_robotpy_utils_dependencies")
 

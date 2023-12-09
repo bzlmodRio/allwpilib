@@ -9,14 +9,18 @@ depends = ['wpiutil', 'wpinet']
 pypi_package = 'pyntcore'
 
 def get_include_dirs():
+    print(root)
+    print(__file__)
+    print(os.path.realpath(__file__))
+    raise
     root = "/home/pjreiniger/git/allwpilib/ntcore"
-    output = [join(root, "src/main/native/include"), join(root, "src/main/python/generated/rpy-include/ntcore/rpy-include")]
+    output = [join(root, "src/main/native/include"), join(root, "src/main/python/generated/rpy-include/ntcore/rpy-include"), join(_root, "..", "bazel-out", "k8-fastbuild", "bin", "ntcore", "generated", "native", "include")]
     import os
     for d in output:
         if not os.path.exists(d):
             print("----------------------------------------" + d + " does not exist!")
     return output
-    # return [join(_root, "include"), join(_root, "rpy-include")]
+    # return [join(_root, "include"), join(_root, "rpy-include"), join(_root, "..", "bazel-out", "k8-fastbuild", "bin", "ntcore", "generated", "native", "include")]
 
 def get_library_dirs():
     return []
