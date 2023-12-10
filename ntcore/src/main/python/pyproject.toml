@@ -30,7 +30,11 @@ libs = ["ntcore"]
 
 [tool.robotpy-build.wrappers."ntcore"]
 
-extra_includes = ["bazel-out/k8-fastbuild/bin/ntcore/generated/native/include"]
+extra_includes = [
+    "bazel-out/k8-fastbuild/bin/ntcore/generated/native/include",
+    "bazel-out/x64_windows-fastbuild/bin/ntcore/generated/native/include",
+    "bazel-out/darwin-opt/bin/ntcore/generated/native/include"
+]
 
 name = "ntcore"
 sources = [

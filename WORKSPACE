@@ -121,14 +121,15 @@ aspect_bazel_lib_dependencies()
 
 http_archive(
     name = "rules_robotpy_utils",
-    sha256 = "689701ed192ca7d776eeed94c52cbb53e879fe4ddb53e0aebe1e7c7f2bb74a71",
-    strip_prefix = "rules_robotpy_utils-801d12d356bca66b6c409733637e416302d2df33",
-    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/801d12d356bca66b6c409733637e416302d2df33.tar.gz",
+    sha256 = "9d70cd1b601fbe691e515262e603d3246aca380f3ff3d47b5ab7c8a53322d94b",
+    strip_prefix = "rules_robotpy_utils-c8c0d9f465e31223f6f75533d2b205c59c039be6",
+    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/c8c0d9f465e31223f6f75533d2b205c59c039be6.tar.gz",
 )
 
 # local_repository(
 #     name = "rules_robotpy_utils",
-#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+#     # path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+#     path = "C:/Users/PJ/git/bzlmodrio/monorepo/rules/rules_robotpy_utils",
 # )
 
 load("@rules_robotpy_utils//:download_dependencies.bzl", "download_rules_robotpy_utils_dependencies")
