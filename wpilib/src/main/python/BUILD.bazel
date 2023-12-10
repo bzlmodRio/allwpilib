@@ -1,23 +1,33 @@
 load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library", "pybind_python_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+
+
+filegroup(
+    name = "rpy_headers",
+    srcs = glob([
+        "wpilib/src/rpy/*.h",
+        "wpilib/src/rpy/*.inc",
+    ])
+)
+
+wpilib_cc_library(
+    name = "rpy_includes",
+    hdrs = [":rpy_headers"],
+    includes = ["wpilib/src"],
+    strip_include_prefix = "wpilib",
+)
+
+
 
 create_pybind_library(
     "wpilib_core",
     entry_point = ["wpilib/src/main.cpp"],
-    extra_hdrs = glob([
-        "wpilib/src/rpy/*.h",
-        "wpilib/src/rpy/*.inc",
-    ]),
+    #extra_hdrs = ,
     extra_srcs = glob(
         ["wpilib/src/rpy/*.cpp"],
     ),
-    includes = [
-        ".",
-        "src",
-        "wpilib/src",
-    ],
     rpy_include_dir = "generated/rpy-include/wpilib/rpy-include",
-    strip_include_prefix = "wpilib",
     deps = [
         ":interfaces_pybind_library",
         "//ntcore/src/main/python:ntcore_pybind_library",
@@ -97,7 +107,7 @@ create_pybind_library(
 generate_robopy_files(
     name = "wpilib",
     config_file = ":pyproject.toml",
-    headers = ["//wpilibc/src/main/native:headers"],
+    headers = ["//wpilibc/src/main/native:headers", ":rpy_headers"],
     projects = [
         "wpilib",
         "_impl",

@@ -9,7 +9,7 @@ depends = ['wpiutil', 'wpinet']
 pypi_package = 'pyntcore'
 
 def get_include_dirs():
-    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/ntcore/rpy-include"), join(_root, "..", "bazel-out", "k8-fastbuild", "bin", "ntcore", "generated", "native", "include")]
+    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/ntcore/rpy-include"), join(_root, "..", "bazel-out", "k8-fastbuild", "bin", "ntcore", "generated", "native", "include"), join(_root, "..", "bazel-out", "x64_windows-fastbuild", "bin", "ntcore", "generated", "native", "include"), join(_root, "..", "bazel-out", "darwin-opt", "bin", "ntcore", "generated", "native", "include")]
     import os
     for d in output:
         if not os.path.exists(d):

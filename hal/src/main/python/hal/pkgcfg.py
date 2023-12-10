@@ -9,7 +9,7 @@ depends = ['wpiutil']
 pypi_package = 'robotpy-hal'
 
 def get_include_dirs():
-    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/hal/rpy-include"), join(_root, "..", "bazel-out", "k8-fastbuild", "bin", "hal", "src", "generate")]
+    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/hal/rpy-include"), join(_root, "..", "bazel-out", "k8-fastbuild", "bin", "hal", "src", "generate"), join(_root, "..", "bazel-out", "x64_windows-fastbuild", "bin", "hal", "src", "generate"), join(_root, "..", "bazel-out", "darwin-opt", "bin", "hal", "src", "generate")]
     import os
     for d in output:
         if not os.path.exists(d):
