@@ -15,8 +15,8 @@ bazel_dep(name = "protobuf", version = "21.7", repo_name = "com_google_protobuf"
 bazel_dep(name = "bzlmodrio-apriltaglib", version = "2024.3.3.0-1")
 bazel_dep(name = "bzlmodrio-imgui", version = "2024.1.89.9-1")
 bazel_dep(name = "bzlmodrio-libssh", version = "2024.0.105-1")
-bazel_dep(name = "bzlmodrio-ni", version = "2024.1.1")
-bazel_dep(name = "bzlmodrio-opencv", version = "2024.4.8.0-1")
+bazel_dep(name = "bzlmodrio-ni", version = "2024.2.0")
+bazel_dep(name = "bzlmodrio-opencv", version = "2024.4.8.0-2")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 
