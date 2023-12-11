@@ -1,0 +1,18 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "kinematics",
+    entry_point = ["kinematics.cpp"],
+    extension_visibility = ["//wpimath/src/main/python:__subpackages__"],
+    generation_helper_prefix = "//wpimath/src/main/python:wpimath_kinematics",
+    deps = [
+        "//wpimath/src/main/native:wpimath.shared",
+        "//wpimath/src/main/python/wpimath:wpimath_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)

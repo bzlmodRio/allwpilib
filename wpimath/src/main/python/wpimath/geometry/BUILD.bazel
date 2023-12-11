@@ -1,0 +1,22 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "geometry",
+    entry_point = ["geometry.cpp"],
+    extension_visibility = ["//wpimath/src/main/python:__subpackages__"],
+    extra_hdrs = glob(["include/**/*.h"]),
+    generation_helper_prefix = "//wpimath/src/main/python:wpimath_geometry",
+    #generation_dir_prefix = "wpimath_",
+    strip_include_prefix = "include",
+    deps = [
+        "//wpimath/src/main/python/wpimath:wpimath_pybind_library",
+        "//wpimath/src/main/native:wpimath.shared",
+        #"//wpiutil/src/main/python:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)

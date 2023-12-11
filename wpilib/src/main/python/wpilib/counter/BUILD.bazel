@@ -1,0 +1,17 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "counter",
+    entry_point = ["counter.cpp"],
+    extension_visibility = ["//wpilib/src/main/python:__subpackages__"],
+    generation_helper_prefix = "//wpilib/src/main/python:wpilibc_counter",
+    deps = [
+        "//wpilib/src/main/python/wpilib:wpilib_core_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)

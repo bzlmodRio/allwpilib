@@ -1,4 +1,4 @@
-from _wpilib_core import RobotBase
+from ._wpilib_core import RobotBase
 import json
 import typing
 

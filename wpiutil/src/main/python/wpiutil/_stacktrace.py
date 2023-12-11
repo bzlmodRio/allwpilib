@@ -1,5 +1,5 @@
 from traceback import extract_stack, format_list
-from _wpiutil import getStackTraceDefault, _setup_stack_trace_hook
+from ._wpiutil import getStackTraceDefault, _setup_stack_trace_hook
 from os.path import join
 
 _start_py = join("wpilib", "_impl", "start.py")

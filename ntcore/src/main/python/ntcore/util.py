@@ -3,7 +3,7 @@ import weakref
 
 from typing import Callable, Dict, Optional, Sequence
 
-from _ntcore import NetworkTableInstance, NetworkTableEntry, NetworkTableType, Value
+from ._ntcore import NetworkTableInstance, NetworkTableEntry, NetworkTableType, Value
 
 __all__ = ["ntproperty", "ChooserControl"]
 

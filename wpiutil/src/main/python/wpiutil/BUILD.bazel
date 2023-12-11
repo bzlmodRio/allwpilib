@@ -1,0 +1,23 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "wpiutil",
+    entry_point = ["src/main.cpp"],
+    extension_visibility = ["//wpiutil/src/main/python:__subpackages__"],
+    extra_hdrs = glob(["src/type_casters/*.h"]),
+    extra_srcs = glob(
+        ["src/**/*.cpp"],
+        exclude = ["src/main.cpp"],
+    ),
+    generation_helper_prefix = "//wpiutil/src/main/python:wpiutil",
+    strip_include_prefix = "src/type_casters",
+    deps = [
+        "//wpiutil/src/main/native:wpiutil.shared",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpiutil/src/main/python:__subpackages__"],
+)

@@ -1,0 +1,27 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "ntcore",
+    entry_point = ["src/ntcore.cpp"],
+    extension_visibility = ["//ntcore/src/main/python:__subpackages__"],
+    extra_hdrs = glob([
+        "src/*.h",
+        "src/*.inl",
+    ]),
+    extra_srcs = glob(
+        ["src/*.cpp"],
+        exclude = ["src/ntcore.cpp"],
+    ),
+    generation_helper_prefix = "//ntcore/src/main/python:ntcore",
+    strip_include_prefix = ".",
+    deps = [
+        "//ntcore/src/main/native:ntcore.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//ntcore/src/main/python:__subpackages__"],
+)

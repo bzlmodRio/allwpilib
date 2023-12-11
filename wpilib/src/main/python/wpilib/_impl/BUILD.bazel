@@ -1,0 +1,5 @@
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)

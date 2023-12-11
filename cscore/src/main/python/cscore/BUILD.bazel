@@ -1,0 +1,22 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "cscore",
+    entry_point = ["src/main.cpp"],
+    extension_visibility = ["//cscore/src/main/python:__subpackages__"],
+    extra_hdrs = glob(["cvnp/*.h"]),
+    extra_srcs = glob(["cvnp/*.cpp"]),
+    generation_helper_prefix = "//cscore/src/main/python:cscore",
+    strip_include_prefix = ".",
+    deps = [
+        "//cameraserver/src/main/native:cameraserver.shared",
+        "//cscore/src/main/native:cscore.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//cscore/src/main/python:__subpackages__"],
+)

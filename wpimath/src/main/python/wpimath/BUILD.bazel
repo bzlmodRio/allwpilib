@@ -1,0 +1,28 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "wpimath",
+    entry_point = ["src/wpimath.cpp"],
+    extension_visibility = ["//wpimath/src/main/python:__subpackages__"],
+    extra_hdrs = glob(["_impl/src/**/*.h"]),
+    generation_helper_prefix = "//wpimath/src/main/python:wpimath",
+    includes = [
+        ".",
+        "_impl/src/type_casters",
+        "type_casters",
+    ],
+    strip_include_prefix = "_impl/src",
+    deps = [
+        "//wpimath/src/main/native:wpimath.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob([
+        "*.py",
+        "_impl/*.py",
+    ]),  # TODO bad
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)

@@ -1,7 +1,7 @@
 import logging
 import typing
 
-from _cscore import _setLogger
+from ._cscore import _setLogger
 
 
 def enableLogging(level: typing.Optional[int] = None):

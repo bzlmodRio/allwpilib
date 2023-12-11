@@ -1,0 +1,19 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "simulation",
+    entry_point = ["main.cpp"],
+    extension_visibility = ["//hal/src/main/python:__subpackages__"],
+    extra_srcs = ["resethandles.cpp"],
+    generation_helper_prefix = "//hal/src/main/python:hal_simulation",
+    deps = [
+        "//hal/src/main/native:wpiHal.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpiutil/src/main/python:__subpackages__"],
+)

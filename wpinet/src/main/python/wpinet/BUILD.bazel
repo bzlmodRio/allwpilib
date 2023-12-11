@@ -1,0 +1,18 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "wpinet",
+    entry_point = ["src/main.cpp"],
+    extension_visibility = ["//wpinet/src/main/python:__subpackages__"],
+    generation_helper_prefix = "//wpinet/src/main/python:wpinet",
+    deps = [
+        "//wpinet/src/main/native:wpinet.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpinet/src/main/python:__subpackages__"],
+)

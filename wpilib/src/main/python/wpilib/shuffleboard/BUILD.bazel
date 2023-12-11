@@ -1,0 +1,24 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "shuffleboard",
+    entry_point = ["shuffleboard.cpp"],
+    extension_visibility = ["//wpilib/src/main/python:__subpackages__"],
+    extra_hdrs = glob(["*.h"]),
+    extra_srcs = glob(
+        ["*.cpp"],
+        exclude = ["shuffleboard.cpp"],
+    ),
+    generation_helper_prefix = "//wpilib/src/main/python:wpilibc_shuffleboard",
+    strip_include_prefix = ".",
+    deps = [
+        "//wpilib/src/main/python/wpilib:wpilib_core_pybind_library",
+        "//wpilibc/src/main/native:wpilibc.shared",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)

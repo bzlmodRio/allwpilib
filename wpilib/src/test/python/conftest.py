@@ -3,7 +3,7 @@ import logging
 import pytest
 import ntcore
 import wpilib
-import _wpilib_core
+import wpilib
 
 
 @pytest.fixture
