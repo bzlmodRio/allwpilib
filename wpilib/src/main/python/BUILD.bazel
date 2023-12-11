@@ -29,6 +29,7 @@ create_pybind_library(
     ),
     rpy_include_dir = "generated/rpy-include/wpilib/rpy-include",
     deps = [
+        ":rpy_includes",
         ":interfaces_pybind_library",
         "//ntcore/src/main/python:ntcore_pybind_library",
     ],

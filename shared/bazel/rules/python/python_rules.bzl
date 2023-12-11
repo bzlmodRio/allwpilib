@@ -17,6 +17,10 @@ def wpilib_py_test(name, tests, deps = [], extra_sources = [], **kwargs):
                 "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
                 "//conditions:default": [],
             }),
+            tags = [
+                "no-asan",
+                "no-tsan",
+            ],
             legacy_create_init = 0,
             **kwargs
         )
