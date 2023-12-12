@@ -20,4 +20,4 @@ def nt(cfg_logging):
     finally:
         instance.stopLocal()
         instance._reset()
-        wpilib._wpilib_core._clearSmartDashboardData()
+        wpilib._wpilib._clearSmartDashboardData()

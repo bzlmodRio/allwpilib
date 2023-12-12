@@ -1,7 +1,7 @@
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 
 create_pybind_library(
-    "_controls",
+    "controls",
     entry_point = ["controls.cpp"],
     extension_visibility = ["//wpimath/src/main/python:__subpackages__"],
     generation_helper_prefix = "//wpimath/src/main/python:wpimath_controls",

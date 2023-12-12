@@ -6,7 +6,7 @@ create_pybind_library(
     extension_visibility = ["//wpilib/src/main/python:__subpackages__"],
     generation_helper_prefix = "//wpilib/src/main/python:wpilibc_drive",
     deps = [
-        "//wpilib/src/main/python/wpilib:wpilib_core_pybind_library",
+        "//wpilib/src/main/python/wpilib:wpilib_pybind_library",
     ],
 )
 

@@ -78,7 +78,7 @@ pybind_python_library(
     ],
     data = [
         "//wpimath/src/main/python/wpimath:_wpimath.so",
-        "//wpimath/src/main/python/wpimath/_controls:__controls.so",
+        "//wpimath/src/main/python/wpimath/_controls:_controls.so",
         "//wpimath/src/main/python/wpimath/filter:_filter.so",
         "//wpimath/src/main/python/wpimath/geometry:_geometry.so",
         "//wpimath/src/main/python/wpimath/interpolation:_interpolation.so",

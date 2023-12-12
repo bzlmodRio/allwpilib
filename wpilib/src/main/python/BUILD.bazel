@@ -79,7 +79,7 @@ pybind_python_library(
         "//wpilib/src/main/python/wpilib/simulation:python_files",
     ],
     data = [
-        "//wpilib/src/main/python/wpilib:_wpilib_core.so",
+        "//wpilib/src/main/python/wpilib:_wpilib.so",
         "//wpilib/src/main/python/wpilib/counter:_counter.so",
         "//wpilib/src/main/python/wpilib/drive:_drive.so",
         "//wpilib/src/main/python/wpilib/event:_event.so",

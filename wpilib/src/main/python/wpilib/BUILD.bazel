@@ -17,7 +17,7 @@ wpilib_cc_library(
 )
 
 create_pybind_library(
-    "wpilib_core",
+    "wpilib",
     entry_point = ["src/main.cpp"],
     extension_visibility = ["//wpilib/src/main/python:__subpackages__"],
     #extra_hdrs = ,

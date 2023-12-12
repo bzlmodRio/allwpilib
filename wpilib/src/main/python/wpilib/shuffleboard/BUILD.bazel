@@ -12,7 +12,7 @@ create_pybind_library(
     generation_helper_prefix = "//wpilib/src/main/python:wpilibc_shuffleboard",
     strip_include_prefix = ".",
     deps = [
-        "//wpilib/src/main/python/wpilib:wpilib_core_pybind_library",
+        "//wpilib/src/main/python/wpilib:wpilib_pybind_library",
         "//wpilibc/src/main/native:wpilibc.shared",
     ],
 )
