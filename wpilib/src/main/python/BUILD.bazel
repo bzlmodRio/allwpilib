@@ -1,4 +1,4 @@
-load("//shared/bazel/rules/python/pybind_generator:generate_robopy_files.bzl", "generate_robopy_files")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
 load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
 
@@ -43,7 +43,7 @@ generated_files_helper(
     visibility = ["//wpilib/src/main/python:__subpackages__"],
 )
 
-generate_robopy_files(
+generate_robotpy_source_files(
     name = "wpilib",
     config_file = ":pyproject.toml",
     headers = ["//wpilibc/src/main/native:headers", ":rpy_headers"],

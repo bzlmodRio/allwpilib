@@ -1,5 +1,6 @@
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 
+
 create_pybind_library(
     "wpiHal",
     entry_point = ["src/hal.cpp"],
@@ -15,4 +16,16 @@ filegroup(
     name = "python_files",
     srcs = glob(["*.py"]),
     visibility = ["//hal/src/main/python:__subpackages__"],
+)
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+
+generate_robotpy_project_files(
+    name = "hal",
+    config_file = "//hal/src/main/python:config_file",
+    internal_project_dependencies = ["wpiutil"],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    visibility = ["//hal/src/main/python:__subpackages__"],
+    init_file = "_init_wpiHal.py"
 )
