@@ -18,6 +18,6 @@ create_pybind_library(
 
 filegroup(
     name = "python_files",
-    srcs = glob(["*.py"]),
+    srcs = glob(["**/*.py"]),
     visibility = ["//wpiutil/src/main/python:__subpackages__"],
 )

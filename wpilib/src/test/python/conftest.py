@@ -3,7 +3,6 @@ import logging
 import pytest
 import ntcore
 import wpilib
-import wpilib
 
 
 @pytest.fixture
@@ -21,4 +20,4 @@ def nt(cfg_logging):
     finally:
         instance.stopLocal()
         instance._reset()
-        _wpilib_core._clearSmartDashboardData()
+        wpilib._wpilib_core._clearSmartDashboardData()

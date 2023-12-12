@@ -4,7 +4,7 @@ import threading
 
 from . import _ntcore
 
-import wpiutil
+import wpiutil.sync
 
 
 class InstanceAlreadyStartedError(Exception):

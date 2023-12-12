@@ -1,4 +1,4 @@
-from _wpiutil.sync import (
+from .._wpiutil.sync import (
     createEvent,
     createSemaphore,
     createSignalObject,
