@@ -1,4 +1,5 @@
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
 
 
 create_pybind_library(
@@ -17,7 +18,6 @@ filegroup(
     srcs = glob(["*.py"]),
     visibility = ["//hal/src/main/python:__subpackages__"],
 )
-load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
 
 generate_robotpy_project_files(
     name = "hal",

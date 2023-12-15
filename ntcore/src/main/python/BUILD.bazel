@@ -46,5 +46,7 @@ py_library(
     deps = [
         "//wpinet/src/main/python:pkgcfg",
         "//wpiutil/src/main/python:pkgcfg",
-    ]
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
 )

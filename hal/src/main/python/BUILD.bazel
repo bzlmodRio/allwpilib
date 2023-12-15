@@ -50,8 +50,11 @@ py_library(
     name = "pkgcfg",
     srcs = [
         "//hal/src/main/python/hal:pkgcfg",
+        "//hal/src/main/python/hal/simulation:pkgcfg",
     ],
     deps = [
         "//wpiutil/src/main/python:pkgcfg",
-    ]
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
 )

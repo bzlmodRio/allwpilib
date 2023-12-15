@@ -72,6 +72,7 @@ pybind_python_library(
     name = "wpimath",
     srcs = [
         "//wpimath/src/main/python/wpimath:python_files",
+        "//wpimath/src/main/python/wpimath/_impl:python_files",
         "//wpimath/src/main/python/wpimath/_controls:python_files",
         "//wpimath/src/main/python/wpimath/controller:python_files",
         "//wpimath/src/main/python/wpimath/estimator:python_files",
@@ -97,4 +98,23 @@ pybind_python_library(
     deps = [
         "//wpiutil/src/main/python:wpiutil",
     ],
+)
+
+py_library(
+    name = "pkgcfg",
+    srcs = [
+        "//wpimath/src/main/python/wpimath:pkgcfg",
+        "//wpimath/src/main/python/wpimath/_controls:pkgcfg",
+        "//wpimath/src/main/python/wpimath/_impl:pkgcfg",
+        "//wpimath/src/main/python/wpimath/filter:pkgcfg",
+        "//wpimath/src/main/python/wpimath/geometry:pkgcfg",
+        "//wpimath/src/main/python/wpimath/interpolation:pkgcfg",
+        "//wpimath/src/main/python/wpimath/kinematics:pkgcfg",
+        "//wpimath/src/main/python/wpimath/spline:pkgcfg",
+    ],
+    deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
 )

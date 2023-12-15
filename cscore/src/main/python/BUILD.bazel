@@ -7,6 +7,12 @@ generated_files_helper(
     visibility = ["//cscore/src/main/python:__subpackages__"],
 )
 
+filegroup(
+    name = "config_file",
+    srcs = ["pyproject.toml"],
+    visibility = ["//cscore/src/main/python:__subpackages__"]
+)
+
 generate_robotpy_source_files(
     name = "cscore",
     config_file = ":pyproject.toml",
