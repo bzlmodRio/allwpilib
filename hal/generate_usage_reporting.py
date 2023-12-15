@@ -3,11 +3,11 @@
 # Copyright (c) FIRST and other WPILib contributors.
 # Open Source Software; you can modify and/or share it under the terms of
 # the WPILib BSD license file in the root directory of this project.
-import os
+import pathlib
 import argparse
 
-def main():
 
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output_directory",
@@ -15,38 +15,49 @@ def main():
     )
     args = parser.parse_args()
 
-    output_dir = args.output_directory or "hal/src/generated/"
+    if args.output_directory:
+        HAL_ROOT = pathlib.Path("hal")
+        output_dir = pathlib.Path(args.output_directory)
+    else:
+        HAL_ROOT = pathlib.Path(__file__).parent
+        output_dir = HAL_ROOT / "src/generated"
 
+    # Gets the folder this script is in (the hal/ directory)
     java_package = "edu/wpi/first/hal"
-    os.makedirs(f"{output_dir}/main/native/include/hal", exist_ok=True)
-    os.makedirs(f"{output_dir}/main/java/{java_package}", exist_ok=True)
-    usage_reporting_types_cpp = ""
-    usage_reporting_instances_cpp = ""
-    usage_reporting_types = ""
-    usage_reporting_instances = ""
-    with open("hal/src/generate/Instances.txt") as instances:
+    (output_dir/"main/native/include/hal").mkdir(parents=True, exist_ok=True)
+    (output_dir/f"main/java/{java_package}").mkdir(parents=True, exist_ok=True)
+    usage_reporting_types_cpp = [] 
+    usage_reporting_instances_cpp = []
+    usage_reporting_types = []
+    usage_reporting_instances = []
+    with open(HAL_ROOT/"src/generate/Instances.txt") as instances:
         for instance in instances:
-            usage_reporting_instances_cpp = f"{usage_reporting_instances_cpp}\n    {instance.strip()},"
-            usage_reporting_instances = f"{usage_reporting_instances}\n    public static final int {instance.strip()};"
+            usage_reporting_instances_cpp.append(f"    {instance.strip()},")
+            usage_reporting_instances.append(
+                f"    /** {instance.strip()}. */\n"
+                f"    public static final int {instance.strip()};")
 
-    with open("hal/src/generate/ResourceType.txt") as resource_types:
+    with open(HAL_ROOT/"src/generate/ResourceType.txt") as resource_types:
         for resource_type in resource_types:
-            usage_reporting_types_cpp = f"{usage_reporting_types_cpp}\n    {resource_type.strip()},"
-            usage_reporting_types = f"{usage_reporting_types}\n    public static final int {resource_type.strip()};"
+            usage_reporting_types_cpp.append(f"    {resource_type.strip()},")
+            usage_reporting_types.append(
+                f"    /** {resource_type.strip()}. */\n"
+                f"    public static final int {resource_type.strip()};")
 
-    with open("hal/src/generate/FRCNetComm.java.in") as java_usage_reporting:
-        contents = java_usage_reporting.read()
-        contents = contents.replace(
-            r"${usage_reporting_types}", usage_reporting_types)
-        with open(f"{output_dir}/main/java/{java_package}/FRCNetComm.java", "w") as java_out:
-            java_out.write(contents.replace(
-                r"${usage_reporting_instances}", usage_reporting_instances))
+    with open(HAL_ROOT/"src/generate/FRCNetComm.java.in") as java_usage_reporting:
+        contents = (java_usage_reporting.read()
+            .replace(r"${usage_reporting_types}", "\n".join(usage_reporting_types))
+            .replace(r"${usage_reporting_instances}", "\n".join(usage_reporting_instances)))
+        
+        with open(output_dir/f"main/java/{java_package}/FRCNetComm.java", "w") as java_out:
+            java_out.write(contents)
 
-    with open("hal/src/generate/FRCUsageReporting.h.in") as cpp_usage_reporting:
-        contents = cpp_usage_reporting.read()
-        contents = contents.replace(r"${usage_reporting_types_cpp}", usage_reporting_types_cpp).replace(
-            r"${usage_reporting_instances_cpp}", usage_reporting_instances_cpp)
-        with open(f"{output_dir}/main/native/include/hal/FRCUsageReporting.h", "w") as cpp_out:
+    with open(HAL_ROOT/"src/generate/FRCUsageReporting.h.in") as cpp_usage_reporting:
+        contents = (cpp_usage_reporting.read()
+            .replace(r"${usage_reporting_types_cpp}", "\n".join(usage_reporting_types_cpp))
+            .replace(r"${usage_reporting_instances_cpp}", "\n".join(usage_reporting_instances_cpp)))
+
+        with open(output_dir/"main/native/include/hal/FRCUsageReporting.h", "w") as cpp_out:
             cpp_out.write(contents)
 
 
