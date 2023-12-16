@@ -21,6 +21,7 @@ filegroup(
         "src/rpy/*.h",
         "src/rpy/*.inc",
     ]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
 )
 
 wpilib_cc_library(

@@ -16,6 +16,7 @@ filegroup(
 generate_robotpy_source_files(
     name = "cscore",
     config_file = ":pyproject.toml",
+    internal_project_dependencies = ["wpiutil", "wpinet", "ntcore"],
     headers = ["//cscore/src/main/native:headers"] + ["//cameraserver/src/main/native:headers"],
     python_deps = [
         "//wpiutil/src/main/python:pkgcfg",

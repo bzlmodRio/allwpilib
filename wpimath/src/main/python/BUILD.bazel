@@ -1,6 +1,7 @@
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
 load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 
 filegroup(
     name = "config_file",
@@ -116,5 +117,22 @@ py_library(
         "//wpiutil/src/main/python:pkgcfg",
     ],
     imports = ["."],
+    visibility = ["//visibility:public"],
+)
+
+
+write_source_files(
+    name = "write_on_build_dl_files",
+    additional_update_targets = [
+        "//wpimath/src/main/python/wpimath:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/_controls:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/_impl:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/filter:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/geometry:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/interpolation:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/kinematics:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/spline:write_on_build_dl_files",
+    ],
+    suggested_update_target = "//:write_on_build_dl_files",
     visibility = ["//visibility:public"],
 )

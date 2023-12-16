@@ -1,6 +1,7 @@
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
 load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 
 
 filegroup(
@@ -53,7 +54,8 @@ generated_files_helper(
 generate_robotpy_source_files(
     name = "wpilib",
     config_file = ":pyproject.toml",
-    headers = ["//wpilibc/src/main/native:headers", ":rpy_headers"],
+    headers = ["//wpilibc/src/main/native:headers", "//wpilib/src/main/python/wpilib:rpy_headers"],
+    internal_project_dependencies = ["wpiutil", "wpinet", "ntcore", "hal", "wpimath"],
     projects = [
         "wpilib",
         "_impl",
@@ -101,4 +103,20 @@ pybind_python_library(
         "//ntcore/src/main/python:ntcore",
         "//wpimath/src/main/python:wpimath",
     ],
+)
+
+write_source_files(
+    name = "write_on_build_dl_files",
+    additional_update_targets = [
+        "//wpilib/src/main/python/wpilib:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/_impl:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/counter:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/drive:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/event:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/interfaces:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/shuffleboard:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/simulation:write_on_build_dl_files",
+    ],
+    suggested_update_target = "//:write_on_build_dl_files",
+    visibility = ["//visibility:public"],
 )
