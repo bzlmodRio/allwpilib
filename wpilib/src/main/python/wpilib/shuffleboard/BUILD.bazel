@@ -1,0 +1,39 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+
+
+generate_robotpy_project_files(
+    name = "shuffleboard",
+    config_file = "//wpilib/src/main/python:config_file",
+    internal_project_dependencies = ["hal", "wpiutil", "wpimath", "ntcore"],
+    python_deps = [
+       "//hal/src/main/python:pkgcfg",
+       "//wpimath/src/main/python:pkgcfg",
+       "//ntcore/src/main/python:pkgcfg",
+    ],
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+    parent_folder = "wpilib/",
+)
+
+create_pybind_library(
+    "shuffleboard",
+    entry_point = ["shuffleboard.cpp"],
+    extension_visibility = ["//wpilib/src/main/python:__subpackages__"],
+    extra_hdrs = glob(["*.h"]),
+    extra_srcs = glob(
+        ["*.cpp"],
+        exclude = ["shuffleboard.cpp"],
+    ),
+    generation_helper_prefix = "//wpilib/src/main/python:wpilibc_shuffleboard",
+    strip_include_prefix = ".",
+    deps = [
+        "//wpilib/src/main/python/wpilib:wpilib_pybind_library",
+        "//wpilibc/src/main/native:wpilibc.shared",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)

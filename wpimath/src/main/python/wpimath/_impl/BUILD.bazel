@@ -1,0 +1,27 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+
+generate_robotpy_project_files(
+    name = "_impl",
+    config_file = "//wpimath/src/main/python:config_file",
+    internal_project_dependencies = ["wpiutil"],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+    init_file = "_init_wpimath_cpp.py",
+    parent_folder = "wpimath/",
+)
+
+cc_library(
+    name = "_impl",
+    hdrs = glob(["src/**/*.h"]),
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+    strip_include_prefix = "src",
+    includes = ["src/type_casters"],
+)
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)

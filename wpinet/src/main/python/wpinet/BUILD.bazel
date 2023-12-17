@@ -1,0 +1,29 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+
+generate_robotpy_project_files(
+    name = "wpinet",
+    config_file = "//wpinet/src/main/python:config_file",
+    internal_project_dependencies = ["wpiutil"],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    visibility = ["//wpinet/src/main/python:__subpackages__"],
+)
+
+create_pybind_library(
+    "wpinet",
+    entry_point = ["src/main.cpp"],
+    extension_visibility = ["//wpinet/src/main/python:__subpackages__"],
+    generation_helper_prefix = "//wpinet/src/main/python:wpinet",
+    deps = [
+        "//wpinet/src/main/native:wpinet.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpinet/src/main/python:__subpackages__"],
+)

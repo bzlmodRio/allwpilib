@@ -1,0 +1,71 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+
+filegroup(
+    name = "config_file",
+    srcs = ["pyproject.toml"],
+    visibility = ["//hal/src/main/python:__subpackages__"]
+)
+
+generated_files_helper(
+    name = "wpiHal",
+    visibility = ["//hal/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "hal_simulation",
+    visibility = ["//hal/src/main/python:__subpackages__"],
+)
+
+generate_robotpy_source_files(
+    name = "hal",
+    config_file = ":config_file",
+    headers = ["//hal/src/main/native:headers"],
+    internal_project_dependencies = ["wpiutil"],
+    projects = [
+        "wpiHal",
+        "simulation",
+    ],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+     ],
+)
+
+pybind_python_library(
+    name = "hal",
+    srcs = ["//hal/src/main/python/hal:python_files"],
+    data = [
+        "//hal/src/main/python/hal:_wpiHal.so",
+        "//hal/src/main/python/hal/simulation:_simulation.so",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpiutil/src/main/python:wpiutil",
+    ],
+)
+
+py_library(
+    name = "pkgcfg",
+    srcs = [
+        "//hal/src/main/python/hal:pkgcfg",
+        "//hal/src/main/python/hal/simulation:pkgcfg",
+    ],
+    deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+)
+
+write_source_files(
+    name = "write_on_build_dl_files",
+    additional_update_targets = [
+        "//hal/src/main/python/hal:write_on_build_dl_files",
+        "//hal/src/main/python/hal/simulation:write_on_build_dl_files",
+    ],
+    suggested_update_target = "//:write_on_build_dl_files",
+    visibility = ["//visibility:public"],
+)

@@ -1,0 +1,19 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
+
+wpilib_py_test(
+    "apriltag_tests",
+    data = glob([
+        "*.png",
+        "*.jpg",
+    ]),
+    extra_sources = ["conftest.py"],
+    tests = glob(
+        ["**/*.py"],
+        exclude = ["conftest.py"],
+    ),
+    deps = [
+        requirement("opencv-python"),
+        "//apriltag/src/main/python:apriltag",
+    ],
+)

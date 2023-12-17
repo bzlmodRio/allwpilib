@@ -1,0 +1,44 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
+
+generated_files_helper(
+    name = "apriltag",
+    visibility = ["//apriltag/src/main/python:__subpackages__"],
+)
+
+filegroup(
+    name = "config_file",
+    srcs = ["pyproject.toml"],
+    visibility = ["//apriltag/src/main/python:__subpackages__"]
+)
+
+generate_robotpy_source_files(
+    name = "apriltag",
+    config_file = ":pyproject.toml",
+    headers = ["//apriltag/src/main/native:headers"],
+    internal_project_dependencies = [
+        "wpimath",
+        "wpiutil",
+    ],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+        "//wpimath/src/main/python:pkgcfg",
+    ],
+)
+
+pybind_python_library(
+    name = "apriltag",
+    srcs = ["//apriltag/src/main/python/robotpy_apriltag:python_files"] + glob([
+        "apriltag/**/*.py",
+    ]),
+    data = [
+        "//apriltag/src/main/python/robotpy_apriltag:_apriltag.so",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpimath/src/main/python:wpimath",
+        "//wpiutil/src/main/python:wpiutil",
+    ],
+)

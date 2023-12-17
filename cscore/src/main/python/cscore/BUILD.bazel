@@ -1,0 +1,35 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+
+generate_robotpy_project_files(
+    name = "cscore",
+    config_file = "//cscore/src/main/python:config_file",
+    internal_project_dependencies = ["wpiutil", "wpinet", "ntcore"],
+    python_deps = [
+        "//ntcore/src/main/python:pkgcfg",
+        "//wpinet/src/main/python:pkgcfg",
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    visibility = ["//cscore/src/main/python:__subpackages__"],
+)
+
+create_pybind_library(
+    "cscore",
+    entry_point = ["src/main.cpp"],
+    extension_visibility = ["//cscore/src/main/python:__subpackages__"],
+    extra_hdrs = glob(["cvnp/*.h"]),
+    extra_srcs = glob(["cvnp/*.cpp"]),
+    generation_helper_prefix = "//cscore/src/main/python:cscore",
+    strip_include_prefix = ".",
+    deps = [
+        "//cameraserver/src/main/native:cameraserver.shared",
+        "//cscore/src/main/native:cscore.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//cscore/src/main/python:__subpackages__"],
+)

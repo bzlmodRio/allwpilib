@@ -118,3 +118,55 @@ http_archive(
 load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
 
 aspect_bazel_lib_dependencies()
+
+http_archive(
+    name = "rules_robotpy_utils",
+    sha256 = "bb70e976cb4a478356a955306ec1389b9d4547c983751974451c31672aef7743",
+    strip_prefix = "rules_robotpy_utils-60db7881a544f528ab9895f7c7422384c2305278",
+    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/60db7881a544f528ab9895f7c7422384c2305278.tar.gz",
+)
+
+# local_repository(
+#     name = "rules_robotpy_utils",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+#     # path = "C:/Users/PJ/git/bzlmodrio/monorepo/rules/rules_robotpy_utils",
+# )
+
+load("@rules_robotpy_utils//:download_dependencies.bzl", "download_rules_robotpy_utils_dependencies")
+
+download_rules_robotpy_utils_dependencies()
+
+load("@rules_robotpy_utils//:setup_dependencies.bzl", "setup_rules_robotpy_utils_dependencies")
+
+setup_rules_robotpy_utils_dependencies()
+
+load("@rules_robotpy_utils_pip_deps//:requirements.bzl", install_rules_robotpy_utils_pip_deps = "install_deps")
+
+install_rules_robotpy_utils_pip_deps()
+
+load("@pybind11_bazel//:python_configure.bzl", "python_configure")
+load("@rules_python//python:repositories.bzl", "python_register_toolchains")
+
+python_register_toolchains(
+    name = "python3_10",
+    ignore_root_user_error = True,
+    python_version = "3.10.6",
+)
+
+load("@python3_10//:defs.bzl", "interpreter")
+
+python_configure(
+    name = "local_config_python",
+    python_interpreter_target = interpreter,
+)
+
+http_archive(
+    name = "rules_python_pytest",
+    sha256 = "8b82935e16f7b28e3711a68ae5f88f44d8685ccd906b869f7721fdd4c32f2369",
+    strip_prefix = "rules_python_pytest-1.1.0",
+    url = "https://github.com/caseyduquettesc/rules_python_pytest/releases/download/v1.1.0/rules_python_pytest-v1.1.0.tar.gz",
+)
+
+load("@rules_python_pytest//python_pytest:repositories.bzl", "rules_python_pytest_dependencies")
+
+rules_python_pytest_dependencies()

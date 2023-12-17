@@ -1,0 +1,41 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
+
+generated_files_helper(
+    name = "cscore",
+    visibility = ["//cscore/src/main/python:__subpackages__"],
+)
+
+filegroup(
+    name = "config_file",
+    srcs = ["pyproject.toml"],
+    visibility = ["//cscore/src/main/python:__subpackages__"]
+)
+
+generate_robotpy_source_files(
+    name = "cscore",
+    config_file = ":pyproject.toml",
+    internal_project_dependencies = ["wpiutil", "wpinet", "ntcore"],
+    headers = ["//cscore/src/main/native:headers"] + ["//cameraserver/src/main/native:headers"],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+        "//wpinet/src/main/python:pkgcfg",
+        "//ntcore/src/main/python:pkgcfg",
+    ],
+)
+
+pybind_python_library(
+    name = "cscore",
+    srcs = ["//cscore/src/main/python/cscore:python_files"],
+    data = [
+        "//cscore/src/main/python/cscore:_cscore.so",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore/src/main/python:ntcore",
+        "//wpinet/src/main/python:wpinet",
+        "//wpiutil/src/main/python:wpiutil",
+    ],
+)

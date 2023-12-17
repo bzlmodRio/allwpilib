@@ -1,0 +1,38 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+
+generate_robotpy_project_files(
+    name = "ntcore",
+    config_file = "//ntcore/src/main/python:config_file",
+    internal_project_dependencies = ["wpiutil", "wpinet"],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+        "//wpinet/src/main/python:pkgcfg",
+    ],
+    visibility = ["//ntcore/src/main/python:__subpackages__"],
+)
+create_pybind_library(
+    "ntcore",
+    entry_point = ["src/ntcore.cpp"],
+    extension_visibility = ["//ntcore/src/main/python:__subpackages__"],
+    extra_hdrs = glob([
+        "src/*.h",
+        "src/*.inl",
+    ]),
+    extra_srcs = glob(
+        ["src/*.cpp"],
+        exclude = ["src/ntcore.cpp"],
+    ),
+    generation_helper_prefix = "//ntcore/src/main/python:ntcore",
+    strip_include_prefix = ".",
+    deps = [
+        "//ntcore/src/main/native:ntcore.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//ntcore/src/main/python:__subpackages__"],
+)
