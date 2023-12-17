@@ -39,8 +39,8 @@ filegroup(
 
 filegroup(
     name = "headers",
-    srcs = glob(["include/**/*"]) + ["//hal:generated_cc_headers"],
-    visibility = ["//hal/src/main/python:__subpackages__"],
+    srcs = glob(["include/**/*"]) + ["//hal:generated_cc_header_files"],
+    visibility = ["//hal/src/main:__subpackages__"],
 )
 
 wpilib_cc_static_and_shared_library(

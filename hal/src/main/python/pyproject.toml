@@ -30,6 +30,10 @@ libs = ["wpiHal"]
 
 [tool.robotpy-build.wrappers."hal"]
 
+extra_includes = [
+    "hal/src/generated/main/native/include"
+]
+
 name = "wpiHal"
 sources = [
     "hal/src/hal.cpp"

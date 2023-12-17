@@ -34,9 +34,15 @@ write_source_files(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "generated_cc_header_files",
+    srcs = glob(["src/generated/main/native/include/**"]),
+    visibility = ["//ntcore/src/main:__subpackages__"],
+)
+
 wpilib_cc_library(
     name = "generated_cc_headers",
-    hdrs = glob(["src/generated/main/native/include/**"]),
+    hdrs = [":generated_cc_header_files"],
     includes = ["src/generated/main/native/include"],
     strip_include_prefix = "src/generated/main/native/include",
     visibility = ["//ntcore:__subpackages__"],

@@ -39,6 +39,8 @@ libs = ["wpilibc"]
 name = "wpilibc"
 depends = ["wpiHal", "wpiutil", "wpimath_cpp", "ntcore"]
 
+extra_includes = ["wpilibc/src/main/native/include"]
+
 [tool.robotpy-build.wrappers."wpilib"]
 name = "wpilib_core"
 extension = "_wpilib"
@@ -51,7 +53,7 @@ sources = [
     "wpilib/src/rpy/MotorControllerGroup.cpp",
 ]
 
-extra_includes = ["wpilib/src"]
+extra_includes = ["wpilib/src", "wpilib/src/main/python/wpilib/src", "wpilibc/src/main/native/include"]
 
 generation_data = "gen"
 depends = [

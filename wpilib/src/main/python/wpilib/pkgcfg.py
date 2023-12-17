@@ -9,7 +9,7 @@ depends = ['wpiHal', 'wpiutil', 'ntcore', 'wpimath_cpp', 'wpimath_geometry', 'wp
 pypi_package = 'wpilib'
 
 def get_include_dirs():
-    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/wpilib/rpy-include"), join(_root, "src")]
+    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/wpilib/rpy-include"), join(_root, "src"), join(_root, "src", "main", "python", "wpilib", "src"), join(_root, "..", "wpilibc", "src", "main", "native", "include")]
     import os
     for d in output:
         if not os.path.exists(d):

@@ -9,7 +9,7 @@ depends = ['wpiutil', 'wpimath_cpp']
 pypi_package = 'robotpy-apriltag'
 
 def get_include_dirs():
-    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/robotpy_apriltag/rpy-include")]
+    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/robotpy_apriltag/rpy-include"), join(_root, "..", "apriltag", "src", "main", "native", "include")]
     import os
     for d in output:
         if not os.path.exists(d):

@@ -9,7 +9,7 @@ depends = ['wpiutil', 'wpinet', 'ntcore']
 pypi_package = 'robotpy-cscore'
 
 def get_include_dirs():
-    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/cscore/rpy-include")]
+    output = [join(_root, "src/main/native/include"), join(_root, "src/main/python/generated/rpy-include/cscore/rpy-include"), join(_root, "..", "cameraserver", "src", "main", "native", "include")]
     import os
     for d in output:
         if not os.path.exists(d):

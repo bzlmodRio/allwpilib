@@ -81,6 +81,8 @@ pybind_python_library(
         "//wpimath/src/main/python/wpimath/geometry:python_files",
         "//wpimath/src/main/python/wpimath/interpolation:python_files",
         "//wpimath/src/main/python/wpimath/kinematics:python_files",
+        "//wpimath/src/main/python/wpimath/optimization:python_files",
+        "//wpimath/src/main/python/wpimath/path:python_files",
         "//wpimath/src/main/python/wpimath/spline:python_files",
         "//wpimath/src/main/python/wpimath/system:python_files",
         "//wpimath/src/main/python/wpimath/trajectory:python_files",
