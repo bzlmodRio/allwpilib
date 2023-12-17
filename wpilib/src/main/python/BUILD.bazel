@@ -1,13 +1,12 @@
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
-load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
-load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-
 
 filegroup(
     name = "config_file",
     srcs = ["pyproject.toml"],
-    visibility = ["//wpilib/src/main/python:__subpackages__"]
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
 )
 
 generated_files_helper(
@@ -54,8 +53,17 @@ generated_files_helper(
 generate_robotpy_source_files(
     name = "wpilib",
     config_file = ":pyproject.toml",
-    headers = ["//wpilibc/src/main/native:headers", "//wpilib/src/main/python/wpilib:rpy_headers"],
-    internal_project_dependencies = ["wpiutil", "wpinet", "ntcore", "hal", "wpimath"],
+    headers = [
+        "//wpilibc/src/main/native:headers",
+        "//wpilib/src/main/python/wpilib:rpy_headers",
+    ],
+    internal_project_dependencies = [
+        "wpiutil",
+        "wpinet",
+        "ntcore",
+        "hal",
+        "wpimath",
+    ],
     projects = [
         "wpilib",
         "_impl",

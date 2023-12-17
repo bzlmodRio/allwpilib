@@ -1,5 +1,6 @@
-load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("@rules_python//python:defs.bzl", "py_library")
 load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
 
 generated_files_helper(
@@ -10,7 +11,7 @@ generated_files_helper(
 filegroup(
     name = "config_file",
     srcs = ["pyproject.toml"],
-    visibility = ["//wpiutil/src/main/python:__subpackages__"]
+    visibility = ["//wpiutil/src/main/python:__subpackages__"],
 )
 
 generate_robotpy_source_files(
@@ -37,4 +38,3 @@ py_library(
     imports = ["."],
     visibility = ["//visibility:public"],
 )
-

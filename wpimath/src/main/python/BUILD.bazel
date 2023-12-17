@@ -1,12 +1,13 @@
-load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
-load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
-load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
 
 filegroup(
     name = "config_file",
     srcs = ["pyproject.toml"],
-    visibility = ["//wpimath/src/main/python:__subpackages__"]
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
 )
 
 generated_files_helper(
@@ -73,8 +74,8 @@ pybind_python_library(
     name = "wpimath",
     srcs = [
         "//wpimath/src/main/python/wpimath:python_files",
-        "//wpimath/src/main/python/wpimath/_impl:python_files",
         "//wpimath/src/main/python/wpimath/_controls:python_files",
+        "//wpimath/src/main/python/wpimath/_impl:python_files",
         "//wpimath/src/main/python/wpimath/controller:python_files",
         "//wpimath/src/main/python/wpimath/estimator:python_files",
         "//wpimath/src/main/python/wpimath/filter:python_files",
@@ -115,13 +116,12 @@ py_library(
         "//wpimath/src/main/python/wpimath/kinematics:pkgcfg",
         "//wpimath/src/main/python/wpimath/spline:pkgcfg",
     ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
     deps = [
         "//wpiutil/src/main/python:pkgcfg",
     ],
-    imports = ["."],
-    visibility = ["//visibility:public"],
 )
-
 
 write_source_files(
     name = "write_on_build_dl_files",

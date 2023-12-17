@@ -1,5 +1,6 @@
-load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("@rules_python//python:defs.bzl", "py_library")
 load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
 
 generated_files_helper(
@@ -10,14 +11,17 @@ generated_files_helper(
 filegroup(
     name = "config_file",
     srcs = ["pyproject.toml"],
-    visibility = ["//ntcore/src/main/python:__subpackages__"]
+    visibility = ["//ntcore/src/main/python:__subpackages__"],
 )
 
 generate_robotpy_source_files(
     name = "ntcore",
     config_file = ":config_file",
     headers = ["//ntcore/src/main/native:headers"],
-    internal_project_dependencies = ["wpiutil", "wpinet"],
+    internal_project_dependencies = [
+        "wpiutil",
+        "wpinet",
+    ],
     python_deps = [
         "//wpinet/src/main/python:pkgcfg",
         "//wpiutil/src/main/python:pkgcfg",
@@ -43,10 +47,10 @@ py_library(
     srcs = [
         "//ntcore/src/main/python/ntcore:pkgcfg",
     ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
     deps = [
         "//wpinet/src/main/python:pkgcfg",
         "//wpiutil/src/main/python:pkgcfg",
     ],
-    imports = ["."],
-    visibility = ["//visibility:public"],
 )

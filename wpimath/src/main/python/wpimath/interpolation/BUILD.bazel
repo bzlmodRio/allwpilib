@@ -1,16 +1,16 @@
-load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 
 generate_robotpy_project_files(
     name = "interpolation",
     config_file = "//wpimath/src/main/python:config_file",
     internal_project_dependencies = ["wpiutil"],
+    # init_file = "_init_geometry.py",
+    parent_folder = "wpimath/",
     python_deps = [
         "//wpiutil/src/main/python:pkgcfg",
     ],
     visibility = ["//wpimath/src/main/python:__subpackages__"],
-    # init_file = "_init_geometry.py",
-    parent_folder = "wpimath/",
 )
 
 create_pybind_library(

@@ -69,7 +69,6 @@ write_source_files(
     ],
 )
 
-
 write_source_files(
     name = "write_all_python_files",
     additional_update_targets = [
