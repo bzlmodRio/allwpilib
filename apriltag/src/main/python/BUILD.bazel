@@ -13,19 +13,19 @@ filegroup(
     visibility = ["//apriltag/src/main/python:__subpackages__"]
 )
 
-generate_robotpy_source_files(
-    name = "apriltag",
-    config_file = ":pyproject.toml",
-    headers = ["//apriltag/src/main/native:headers"],
-    internal_project_dependencies = [
-        "wpimath",
-        "wpiutil",
-    ],
-    python_deps = [
-        "//wpiutil/src/main/python:pkgcfg",
-        "//wpimath/src/main/python:pkgcfg",
-    ],
-)
+# generate_robotpy_source_files(
+#     name = "apriltag",
+#     config_file = ":pyproject.toml",
+#     headers = ["//apriltag/src/main/native:headers"],
+#     internal_project_dependencies = [
+#         "wpimath",
+#         "wpiutil",
+#     ],
+#     python_deps = [
+#         "//wpiutil/src/main/python:pkgcfg",
+#         "//wpimath/src/main/python:pkgcfg",
+#     ],
+# )
 
 pybind_python_library(
     name = "apriltag",
