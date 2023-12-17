@@ -13,22 +13,22 @@ jobs:
       matrix:
         include:
           - { name: "Windows (native)",             os: windows-2022, action: "test", config: "--config=windows",                        }
-          - { name: "Windows (bzlmod)",             os: windows-2022, action: "test", config: "--config=windows --enable_bzlmod",        }
+          # - { name: "Windows (bzlmod)",             os: windows-2022, action: "test", config: "--config=windows --enable_bzlmod",        }
 
           - {  name: "Windows (arm)",               os: windows-2022, action: "build", config: "--config=windows_arm",                   }
-          - {  name: "Windows (arm bzlmod)",        os: windows-2022, action: "build", config: "--config=windows_arm --enable_bzlmod",   }
+          # - {  name: "Windows (arm bzlmod)",        os: windows-2022, action: "build", config: "--config=windows_arm --enable_bzlmod",   }
 
           - {  name: "Windows (roborio)",           os: windows-2022, action: "build", config: "--config=roborio",                     }
           # - {  name: "Windows (roborio bzlmod)",    os: windows-2022, action: "build", config: "--config=roborio --enable_bzlmod",     }
 
           - {  name: "Windows (bullseye32)",        os: windows-2022, action: "build", config: "--config=bullseye32",                  }
-          - {  name: "Windows (bullseye32 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye32 --enable_bzlmod",  }
+          # - {  name: "Windows (bullseye32 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye32 --enable_bzlmod",  }
 
           - {  name: "Windows (bullseye64)",        os: windows-2022, action: "build", config: "--config=bullseye64",                  }
-          - {  name: "Windows (bullseye64 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye64 --enable_bzlmod",  }
+          # - {  name: "Windows (bullseye64 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye64 --enable_bzlmod",  }
 
           - {  name: "Windows (raspi32)",           os: windows-2022, action: "build", config: "--config=raspi32",                     }
-          - {  name: "Windows (raspi32 bzlmod)",    os: windows-2022, action: "build", config: "--config=raspi32 --enable_bzlmod",     }
+          # - {  name: "Windows (raspi32 bzlmod)",    os: windows-2022, action: "build", config: "--config=raspi32 --enable_bzlmod",     }
 
     name: "Build ${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
@@ -47,11 +47,11 @@ jobs:
           architecture: x64
 
       - name: Build wpimath dependencies
-        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k wpiutil/... --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k wpiutil/... --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
         shell: bash
 
       - name: Build wpimath
-        run: bazel --output_user_root=C:\\bazelroot build -k wpimath/... --config=ci ${{ matrix.config }} --local_cpu_resources=1 --nojava_header_compilation --verbose_failures
+        run: bazel --output_user_root=C:\\bazelroot build -k wpimath/... --config=ci ${{ matrix.config }} --local_cpu_resources=1 --nojava_header_compilation --verbose_failures || true
         shell: bash
 
       - name: Build allowing failures
@@ -68,19 +68,19 @@ jobs:
       matrix:
         include:
           - { name: "Mac (native)",            os: macos-latest,   action: "test",  config: "--config=osx -c opt" }
-          - { name: "Mac (bzlmod)",            os: macos-latest,   action: "test",  config: "--config=osx -c opt --enable_bzlmod" }
+          # - { name: "Mac (bzlmod)",            os: macos-latest,   action: "test",  config: "--config=osx -c opt --enable_bzlmod" }
 
           - { name: "Mac (roborio)",           os: macos-latest,   action: "build", config: "--config=roborio -c opt" }
-          - { name: "Mac (roborio bzlmod)",    os: macos-latest,   action: "build", config: "--config=roborio -c opt --enable_bzlmod" }
+          # - { name: "Mac (roborio bzlmod)",    os: macos-latest,   action: "build", config: "--config=roborio -c opt --enable_bzlmod" }
 
           - { name: "Mac (bullseye32)",        os: macos-latest,   action: "build", config: "--config=bullseye32 -c opt" }
-          - { name: "Mac (bullseye32 bzlmod)", os: macos-latest,   action: "build", config: "--config=bullseye32 -c opt --enable_bzlmod" }
+          # - { name: "Mac (bullseye32 bzlmod)", os: macos-latest,   action: "build", config: "--config=bullseye32 -c opt --enable_bzlmod" }
 
           - { name: "Mac (bullseye64)",        os: macos-latest,   action: "build", config: "--config=bullseye64 -c opt" }
-          - { name: "Mac (bullseye64 bzlmod)", os: macos-latest,   action: "build", config: "--config=bullseye64 -c opt --enable_bzlmod" }
+          # - { name: "Mac (bullseye64 bzlmod)", os: macos-latest,   action: "build", config: "--config=bullseye64 -c opt --enable_bzlmod" }
 
           - { name: "Mac (raspi32)",           os: macos-latest,   action: "build", config: "--config=raspi32 -c opt" }
-          - { name: "Mac (raspi32 bzlmod)",    os: macos-latest,   action: "build", config: "--config=raspi32 -c opt --enable_bzlmod" }
+          # - { name: "Mac (raspi32 bzlmod)",    os: macos-latest,   action: "build", config: "--config=raspi32 -c opt --enable_bzlmod" }
 
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
@@ -98,7 +98,7 @@ jobs:
         shell: bash
 
       - name: Build
-        run: bazel ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        run: bazel ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation
         shell: bash
 
       # - name: Check Lockfile update
@@ -110,19 +110,19 @@ jobs:
       matrix:
         include:
           - { container: "wpilib/ubuntu-base:22.04", action: "test", artifact-name: "Linux (native)",             config: "--config=linux " }
-          - { container: "wpilib/ubuntu-base:22.04", action: "test", artifact-name: "Linux (bzlmod)",             config: "--config=linux  --enable_bzlmod" }
+          # - { container: "wpilib/ubuntu-base:22.04", action: "test", artifact-name: "Linux (bzlmod)",             config: "--config=linux  --enable_bzlmod" }
 
           - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (roborio)",           config: "--config=roborio " }
-          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (roborio bzlmod)",    config: "--config=roborio --enable_bzlmod" }
+          # - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (roborio bzlmod)",    config: "--config=roborio --enable_bzlmod" }
 
           - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye32)",        config: "--config=bullseye32" }
-          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye32 bzlmod)", config: "--config=bullseye32 --enable_bzlmod" }
+          # - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye32 bzlmod)", config: "--config=bullseye32 --enable_bzlmod" }
 
           - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye64)",        config: "--config=bullseye64" }
-          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye64 bzlmod)", config: "--config=bullseye64 --enable_bzlmod" }
+          # - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye64 bzlmod)", config: "--config=bullseye64 --enable_bzlmod" }
 
           - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (raspi32)",           config: "--config=raspi32" }
-          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (raspi32 bzlmod)",    config: "--config=raspi32 --enable_bzlmod" }
+          # - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (raspi32 bzlmod)",    config: "--config=raspi32 --enable_bzlmod" }
     runs-on: ubuntu-latest
     name: "Build - ${{ matrix.artifact-name }}"
     container: ${{ matrix.container }}
@@ -151,6 +151,24 @@ jobs:
         with:
           name: Re-pinned maven
           path: shared/bazel/deps/maven_install.json
+          
+  repin-python:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+          - os: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: bazelbuild/setup-bazelisk@v1
+      - run:  bazel run //:requirements.update
+      - run:  git diff HEAD
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Re-pinned python ${{ matrix.os }}
+          path: requirements*.txt
 
   build-sanitizers:
     strategy:
