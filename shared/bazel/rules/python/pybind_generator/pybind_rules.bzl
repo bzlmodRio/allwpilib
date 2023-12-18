@@ -51,7 +51,7 @@ def pybind_python_test(name, tags = [], **kwargs):
             "no-tsan",
         ],
         target_compatible_with = select({
-            "@rules_bazelrio//conditions:windows": ["@platforms//:incompatible"],
+            # "@rules_bazelrio//conditions:windows": ["@platforms//:incompatible"],
             "@rules_bzlmodrio_toolchains//constraints/is_bullseye32:bullseye32": ["@platforms//:incompatible"],
             "@rules_bzlmodrio_toolchains//constraints/is_bullseye64:bullseye64": ["@platforms//:incompatible"],
             "@rules_bzlmodrio_toolchains//constraints/is_raspi32:raspi32": ["@platforms//:incompatible"],

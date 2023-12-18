@@ -121,9 +121,9 @@ aspect_bazel_lib_dependencies()
 
 http_archive(
     name = "rules_robotpy_utils",
-    sha256 = "bb70e976cb4a478356a955306ec1389b9d4547c983751974451c31672aef7743",
-    strip_prefix = "rules_robotpy_utils-60db7881a544f528ab9895f7c7422384c2305278",
-    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/60db7881a544f528ab9895f7c7422384c2305278.tar.gz",
+    sha256 = "097bbf2fef31db1e8a586f89f4168f74dcc1fd80a37bdc23d3ae2a28dae7576c",
+    strip_prefix = "rules_robotpy_utils-4b4dab58015187c86f4d476c8b9b1e9853a9cfc7",
+    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/4b4dab58015187c86f4d476c8b9b1e9853a9cfc7.tar.gz",
 )
 
 # local_repository(

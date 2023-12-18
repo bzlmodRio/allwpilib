@@ -33,7 +33,7 @@ pybind_python_library(
     name = "cscore",
     srcs = ["//cscore/src/main/python/cscore:python_files"],
     data = [
-        "//cscore/src/main/python/cscore:_cscore.so",
+        "//cscore/src/main/python/cscore:cscore.pyso",
     ],
     imports = ["."],
     visibility = ["//visibility:public"],

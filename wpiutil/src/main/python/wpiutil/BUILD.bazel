@@ -1,5 +1,6 @@
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 
 generate_robotpy_project_files(
     name = "wpiutil",
@@ -21,6 +22,13 @@ create_pybind_library(
     deps = [
         "//wpiutil/src/main/native:wpiutil.shared",
     ],
+)
+
+copy_file(
+    name = "copy_lib",
+    src = "//wpiutil/src/main/native:wpiutil",
+    out = "lib/wpiutil.dll",
+    visibility = ["//visibility:public"]
 )
 
 filegroup(

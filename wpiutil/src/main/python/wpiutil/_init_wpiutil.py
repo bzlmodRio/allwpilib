@@ -4,4 +4,22 @@
 from os.path import abspath, join, dirname, exists
 _root = abspath(dirname(__file__))
 
+from ctypes import cdll
+import os
+
+print("Loading library...")
+
+print(os.listdir(_root))
+
+
+try:
+    _lib = cdll.LoadLibrary(join(_root, "lib", "wpiutil.dll"))
+    # _lib2 = cdll.LoadLibrary(join(_root, "_wpiutil.pyd"))
+except FileNotFoundError:
+    if not exists(join(_root, "lib", "libwpiutil.so")):
+        raise FileNotFoundError("libwpiutil.so was not found on your system. Is this package correctly installed?")
+    raise FileNotFoundError("libwpiutil.so could not be loaded. There is a missing dependency.")
+
+print("Done loading...")
+
 

@@ -1,5 +1,6 @@
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 
 generate_robotpy_project_files(
     name = "wpimath",
@@ -22,6 +23,13 @@ create_pybind_library(
         "//wpimath/src/main/python/wpimath/_impl",
         "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
     ],
+)
+
+copy_file(
+    name = "copy_lib",
+    src = "//wpimath/src/main/native:wpimath",
+    out = "lib/wpimath.dll",
+    visibility = ["//visibility:public"]
 )
 
 filegroup(

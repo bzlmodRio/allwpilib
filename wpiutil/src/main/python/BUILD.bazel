@@ -24,7 +24,8 @@ pybind_python_library(
     name = "wpiutil",
     srcs = ["//wpiutil/src/main/python/wpiutil:python_files"],
     data = [
-        "//wpiutil/src/main/python/wpiutil:_wpiutil.so",
+        "//wpiutil/src/main/python/wpiutil:copy_lib",
+        "//wpiutil/src/main/python/wpiutil:wpiutil.pyso",
     ],
     imports = ["."],
     visibility = ["//visibility:public"],
