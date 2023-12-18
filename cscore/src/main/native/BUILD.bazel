@@ -51,6 +51,16 @@ wpilib_objc_library(
     ],
 )
 
+alias(
+    name = "opencv.static",
+    actual = "@bzlmodrio-opencv//libraries/cpp/opencv:static"
+)
+
+alias(
+    name = "opencv.shared",
+    actual = "@bzlmodrio-opencv//libraries/cpp/opencv:shared"
+)
+
 wpilib_cc_static_and_shared_library(
     name = "cscore",
     srcs = [":native-srcs"] + glob(
@@ -63,7 +73,6 @@ wpilib_cc_static_and_shared_library(
         "include",
     ],
     standard_deps = [
-        "@bzlmodrio-opencv//libraries/cpp/opencv",
     ] + select({
         "@bazel_tools//src/conditions:darwin": [":cscore-mac"],
         "//conditions:default": [],
@@ -71,6 +80,7 @@ wpilib_cc_static_and_shared_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
+        ":opencv",
         "//wpiutil/src/main/native:wpiutil",
         "//wpinet/src/main/native:wpinet",
     ],

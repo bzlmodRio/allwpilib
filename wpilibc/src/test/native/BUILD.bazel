@@ -17,7 +17,8 @@ wpilib_cc_test(
     ],
     deps = [
         ":test-headers",
-        "//wpilibc/src/main/native:wpilibc.static",
+        "//wpilibc/src/main/native:wpilibc.shared",
+        "//cameraserver/src/main/native:cameraserver.shared",
         "@gtest",
     ],
 )

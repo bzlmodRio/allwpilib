@@ -8,7 +8,7 @@ wpilib_cc_test(
         "**/*.h",
     ]),
     deps = [
-        "//cameraserver/src/main/native:cameraserver.static",
+        "//cameraserver/src/main/native:cameraserver.shared",
         "@gtest",
     ],
 )

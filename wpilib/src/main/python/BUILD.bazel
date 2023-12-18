@@ -54,7 +54,7 @@ generate_robotpy_source_files(
     name = "wpilib",
     config_file = ":pyproject.toml",
     headers = [
-        "//wpilibc/src/main/native:headers",
+        "//wpilibc/src/main/native:header_files",
         "//wpilib/src/main/python/wpilib:rpy_headers",
     ],
     internal_project_dependencies = [

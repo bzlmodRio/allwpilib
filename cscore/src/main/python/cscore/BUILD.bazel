@@ -26,8 +26,8 @@ create_pybind_library(
     generation_helper_prefix = "//cscore/src/main/python:cscore",
     strip_include_prefix = ".",
     deps = [
-        "//cameraserver/src/main/native:cameraserver.shared",
-        "//cscore/src/main/native:cscore.shared",
+        "//cameraserver/src/main/native:cameraserver.static",
+        "//cscore/src/main/native:cscore.static",
         "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
     ],
 )

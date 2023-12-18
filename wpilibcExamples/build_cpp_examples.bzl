@@ -112,6 +112,7 @@ def build_examples(halsim_deps = []):
             srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"]),
             deps = [
                 "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
+                "//cameraserver/src/main/native:cameraserver.shared",
                 "//apriltag/src/main/native:apriltag.shared",
                 "//romiVendordep/src/main/native:romi.shared",
                 "//xrpVendordep/src/main/native:xrp.shared",
@@ -141,6 +142,7 @@ def build_templates():
             hdrs = native.glob(["src/main/cpp/templates/" + folder + "/**/*.h"]),
             deps = [
                 "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
+                "//cameraserver/src/main/native:cameraserver.shared",
             ],
             strip_include_prefix = "src/main/cpp/templates/" + folder + "/include",
             tags = ["wpi-example"],

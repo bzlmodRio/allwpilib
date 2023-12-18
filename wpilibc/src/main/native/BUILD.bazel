@@ -1,29 +1,77 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library", "wpilib_cc_shared_library", "wpilib_cc_library")
 
 filegroup(
-    name = "headers",
+    name = "header_files",
     srcs = glob(["include/**/*"]),
     visibility = ["//wpilib/src/main/python:__subpackages__"],
 )
 
-wpilib_cc_static_and_shared_library(
-    name = "wpilibc",
+wpilib_cc_library(
+    name = "headers",
+    hdrs = [":header_files"],
+    strip_include_prefix = "include",
+)
+
+filegroup(
+    name = "sources",
     srcs = [
         "//wpilibc/src/generate:generate-version",
     ] + glob([
         "cppcs/**",
         "cpp/**",
     ]),
-    hdrs = glob(["include/**"]),
-    strip_include_prefix = "include",
+)
+
+wpilib_cc_library(
+    name = "wpilibc.static",
+    srcs = ["sources"],
     visibility = ["//visibility:public"],
-    wpi_maybe_shared_deps = [
-        "//wpimath/src/main/native:wpimath",
-        "//hal/src/main/native:wpiHal",
-        "//wpinet/src/main/native:wpinet",
-        "//wpiutil/src/main/native:wpiutil",
-        "//cscore/src/main/native:cscore",
-        "//ntcore/src/main/native:ntcore",
-        "//cameraserver/src/main/native:cameraserver",
+    deps = [
+        ":headers",
+        "//wpimath/src/main/native:wpimath.static",
+        "//hal/src/main/native:wpiHal.static",
+        "//wpinet/src/main/native:wpinet.static",
+        "//wpiutil/src/main/native:wpiutil.static",
+        "//ntcore/src/main/native:ntcore.static",
+        "//cameraserver/src/main/native:cameraserver.static",
+        "//cscore/src/main/native:cscore.static",
     ],
 )
+
+wpilib_cc_shared_library(
+    name = "wpilibc",
+    srcs = [":sources"],
+    visibility = ["//visibility:public"],
+    defines = ["DYNAMIC_CAMERA_SERVER=1"],
+    deps = [
+        ":headers",
+        "//wpimath/src/main/native:wpimath.shared",
+        "//hal/src/main/native:wpiHal.shared",
+        "//wpinet/src/main/native:wpinet.shared",
+        "//wpiutil/src/main/native:wpiutil.shared",
+        "//ntcore/src/main/native:ntcore.shared",
+        "//cameraserver/src/main/native:cameraserver_shared_hdr",
+    ],
+)
+
+# wpilib_cc_static_and_shared_library(
+#     name = "wpilibc",
+#     srcs = [
+#         "//wpilibc/src/generate:generate-version",
+#     ] + glob([
+#         "cppcs/**",
+#         "cpp/**",
+#     ]),
+#     hdrs = glob(["include/**"]),
+#     strip_include_prefix = "include",
+#     visibility = ["//visibility:public"],
+#     wpi_maybe_shared_deps = [
+#         "//wpimath/src/main/native:wpimath",
+#         "//hal/src/main/native:wpiHal",
+#         "//wpinet/src/main/native:wpinet",
+#         "//wpiutil/src/main/native:wpiutil",
+#         # "//cscore/src/main/native:cscore",
+#         "//ntcore/src/main/native:ntcore",
+#         # "//cameraserver/src/main/native:cameraserver",
+#     ],
+# )

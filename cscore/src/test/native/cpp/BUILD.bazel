@@ -8,7 +8,7 @@ wpilib_cc_test(
         "**/*.h",
     ]),
     deps = [
-        "//cscore/src/main/native:cscore.static",
+        "//cscore/src/main/native:cscore.shared",
         "@gtest",
     ],
 )
