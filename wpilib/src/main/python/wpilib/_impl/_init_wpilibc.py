@@ -9,3 +9,12 @@ import hal._init_wpiHal
 import wpiutil._init_wpiutil
 import wpimath._impl._init_wpimath_cpp
 import ntcore._init_ntcore
+from ctypes import cdll
+
+try:
+    _lib = cdll.LoadLibrary(join(_root, "lib", "libwpilibc.so"))
+except FileNotFoundError:
+    if not exists(join(_root, "lib", "libwpilibc.so")):
+        raise FileNotFoundError("libwpilibc.so was not found on your system. Is this package correctly installed?")
+    raise FileNotFoundError("libwpilibc.so could not be loaded. There is a missing dependency.")
+

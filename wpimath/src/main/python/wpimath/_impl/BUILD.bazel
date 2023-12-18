@@ -1,5 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+load("//shared/bazel/rules/python/pybind_generator:copy_native_file.bzl", "copy_native_file")
 
 generate_robotpy_project_files(
     name = "_impl",
@@ -25,4 +26,9 @@ filegroup(
     name = "python_files",
     srcs = glob(["*.py"]),
     visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+copy_native_file(
+    name = "wpimath",
+    library = "//wpimath/src/main/native:wpimath",
 )

@@ -8,4 +8,3 @@ _root = abspath(dirname(__file__))
 import wpiutil._init_wpiutil
 import wpimath._impl._init_wpimath_cpp
 import wpimath.geometry._init_geometry
-

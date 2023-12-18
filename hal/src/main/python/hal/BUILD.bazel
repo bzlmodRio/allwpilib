@@ -1,6 +1,6 @@
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
 load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
-load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
+load("//shared/bazel/rules/python/pybind_generator:copy_native_file.bzl", "copy_native_file")
 
 create_pybind_library(
     "wpiHal",
@@ -13,11 +13,9 @@ create_pybind_library(
     ],
 )
 
-copy_file(
-    name = "copy_lib",
-    src = "//hal/src/main/native:wpiHal",
-    out = "lib/wpiHal.dll",
-    visibility = ["//visibility:public"]
+copy_native_file(
+    name = "wpiHal",
+    library = "//hal/src/main/native:wpiHal",
 )
 
 filegroup(

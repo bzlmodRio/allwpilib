@@ -17,13 +17,13 @@ def get_include_dirs():
     return output
 
 def get_library_dirs():
-    return []
+    return [join(_root, "lib")]
 
 def get_library_dirs_rel():
-    return []
+    return ['lib']
 
 def get_library_names():
-    return []
+    return ['wpiHal']
 
 def get_library_full_names():
-    return []
+    return ['libwpiHal.so']

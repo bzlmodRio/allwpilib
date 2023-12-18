@@ -6,14 +6,12 @@ _root = abspath(dirname(__file__))
 
 # runtime dependencies
 import wpiutil._init_wpiutil
-
 from ctypes import cdll
 
 try:
-    _lib = cdll.LoadLibrary(join(_root, "lib", "wpinet.dll"))
-    # _lib2 = cdll.LoadLibrary(join(_root, "_wpiutil.pyd"))
+    _lib = cdll.LoadLibrary(join(_root, "lib", "libwpinet.so"))
 except FileNotFoundError:
-    if not exists(join(_root, "lib", "libwpiutil.so")):
-        raise FileNotFoundError("libwpiutil.so was not found on your system. Is this package correctly installed?")
-    raise FileNotFoundError("libwpiutil.so could not be loaded. There is a missing dependency.")
+    if not exists(join(_root, "lib", "libwpinet.so")):
+        raise FileNotFoundError("libwpinet.so was not found on your system. Is this package correctly installed?")
+    raise FileNotFoundError("libwpinet.so could not be loaded. There is a missing dependency.")
 

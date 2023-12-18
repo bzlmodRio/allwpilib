@@ -17,16 +17,16 @@ def get_include_dirs():
     return output
 
 def get_library_dirs():
-    return []
+    return [join(_root, "lib")]
 
 def get_library_dirs_rel():
-    return []
+    return ['lib']
 
 def get_library_names():
-    return []
+    return ['wpiutil']
 
 def get_library_full_names():
-    return []
+    return ['libwpiutil.so']
 
 def get_type_casters_cfg(casters):
     casters.update({'wpi::array': {'hdr': 'wpi_array_type_caster.h'}, 'wpi::json': {'hdr': 'wpi_json_type_caster.h'}, 'std::span': {'hdr': 'wpi_span_type_caster.h'}, 'wpi::SmallSet': {'hdr': 'wpi_smallset_type_caster.h'}, 'wpi::SmallVector': {'hdr': 'wpi_smallvector_type_caster.h'}, 'wpi::SmallVectorImpl': {'hdr': 'wpi_smallvectorimpl_type_caster.h'}, 'wpi::StringMap': {'hdr': 'wpi_string_map_caster.h'}, 'wpi::ct_string': {'hdr': 'wpi_ct_string_type_caster.h'}})
