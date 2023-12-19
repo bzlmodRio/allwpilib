@@ -8,7 +8,8 @@ wpilib_cc_test(
         "no-asan",
     ],
     deps = [
-        "//apriltag/src/main/native:apriltag.shared",
+        "//apriltag/src/main/native:apriltag.static",
         "@gtest",
     ],
+    linkstatic=1,
 )

@@ -9,7 +9,8 @@ wpilib_cc_test(
     ]),
     tags = ["no-tsan"],
     deps = [
-        "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
+        "//wpilibNewCommands/src/main/native:wpilibNewCommands.static",
         "@gtest",
     ],
+    linkstatic=1,
 )
