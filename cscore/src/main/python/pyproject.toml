@@ -13,7 +13,7 @@ install_requires = [
 
 [build-system]
 requires = [
-    "robotpy-build<2025.0.0,~=2024.0.0b7",
+    "robotpy-build<2025.0.0,~=2024.0.0b8",
     "robotpy-wpiutil~=2024.0.0b4",
     "robotpy-wpinet~=2024.0.0b4",
     "pyntcore~=2024.0.0b4",
@@ -58,7 +58,7 @@ sources = [
   "cscore/cvnp/cvnp_synonyms.cpp",
 ]
 
-depends = ["wpiutil", "wpinet", "ntcore"]
+depends = ["wpiutil", "wpinet", "ntcore", "opencv_cpp", "cscore_cpp", "cameraserver_cpp", ]
 generation_data = "gen"
 
 [tool.robotpy-build.wrappers."cscore".autogen_headers]

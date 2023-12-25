@@ -28,7 +28,7 @@ PyNotifier::PyNotifier(std::function<void()> handler) {
   m_notifier = HAL_InitializeNotifier(&status);
   FRC_CheckErrorStatus(status, "InitializeNotifier");
 
-  std::function<void()> target([=] {
+  std::function<void()> target([this] {
     py::gil_scoped_release release;
     for (;;) {
       int32_t status = 0;
