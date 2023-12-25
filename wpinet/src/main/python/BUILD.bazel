@@ -30,6 +30,7 @@ pybind_python_library(
     name = "wpinet",
     srcs = ["//wpinet/src/main/python/wpinet:python_files"],
     data = [
+        "//wpinet/src/main/native:wpinet",
         "//wpinet/src/main/python/wpinet:copy_lib",
         "//wpinet/src/main/python/wpinet:wpinet.pyso",
     ],

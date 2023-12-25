@@ -38,6 +38,7 @@ pybind_python_library(
     name = "hal",
     srcs = ["//hal/src/main/python/hal:python_files"],
     data = [
+        "//hal/src/main/native:wpiHal",
         "//hal/src/main/python/hal:copy_lib",
         "//hal/src/main/python/hal:wpiHal.pyso",
         "//hal/src/main/python/hal/simulation:simulation.pyso",

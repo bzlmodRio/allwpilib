@@ -32,6 +32,7 @@ pybind_python_library(
     name = "ntcore",
     srcs = ["//ntcore/src/main/python/ntcore:python_files"],
     data = [
+        "//ntcore/src/main/native:ntcore",
         "//ntcore/src/main/python/ntcore:copy_lib",
         "//ntcore/src/main/python/ntcore:ntcore.pyso",
     ],
