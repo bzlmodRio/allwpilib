@@ -65,7 +65,7 @@ write_source_files(
         "//hal/src/main/python:write_on_build_gen",
         "//wpimath/src/main/python:write_on_build_gen",
         "//cscore/src/main/python:write_on_build_gen",
-        # "//apriltag/src/main/python:write_on_build_gen",
+        "//apriltag/src/main/python:write_on_build_gen",
         "//wpilib/src/main/python:write_on_build_gen",
     ],
 )
