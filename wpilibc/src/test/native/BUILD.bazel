@@ -11,15 +11,15 @@ wpilib_cc_test(
     name = "wpilibc-test",
     size = "small",
     srcs = glob(["cpp/**"]),
+    linkstatic = 1,
     tags = [
         "no-asan",
         "no-tsan",
     ],
     deps = [
         ":test-headers",
-        "//wpilibc/src/main/native:wpilibc.static",
         "//cameraserver/src/main/native:cameraserver.static",
+        "//wpilibc/src/main/native:wpilibc.static",
         "@gtest",
     ],
-    linkstatic=1,
 )

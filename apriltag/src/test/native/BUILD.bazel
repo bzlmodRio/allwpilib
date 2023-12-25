@@ -4,6 +4,7 @@ wpilib_cc_test(
     name = "apriltag-test",
     size = "small",
     srcs = glob(["cpp/**"]),
+    linkstatic = 1,
     tags = [
         "no-asan",
     ],
@@ -11,5 +12,4 @@ wpilib_cc_test(
         "//apriltag/src/main/native:apriltag.static",
         "@gtest",
     ],
-    linkstatic=1,
 )

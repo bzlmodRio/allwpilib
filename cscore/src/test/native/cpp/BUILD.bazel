@@ -7,9 +7,9 @@ wpilib_cc_test(
         "**/*.cpp",
         "**/*.h",
     ]),
+    linkstatic = 1,
     deps = [
         "//cscore/src/main/native:cscore.static",
         "@gtest",
     ],
-    linkstatic=1
 )

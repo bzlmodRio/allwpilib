@@ -32,8 +32,8 @@ pybind_python_library(
         "apriltag/**/*.py",
     ]),
     data = [
-        "//apriltag/src/main/python/robotpy_apriltag:copy_lib",
         "//apriltag/src/main/python/robotpy_apriltag:apriltag.pyso",
+        "//apriltag/src/main/python/robotpy_apriltag:copy_lib",
     ],
     imports = ["."],
     visibility = ["//visibility:public"],

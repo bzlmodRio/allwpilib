@@ -7,10 +7,10 @@ wpilib_cc_test(
         "**/*.cpp",
         "**/*.h",
     ]),
+    linkstatic = 1,
     tags = ["no-tsan"],
     deps = [
         "//wpilibNewCommands/src/main/native:wpilibNewCommands.static",
         "@gtest",
     ],
-    linkstatic=1,
 )

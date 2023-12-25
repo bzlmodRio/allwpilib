@@ -1,4 +1,4 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library", "wpilib_cc_shared_library", "wpilib_cc_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library")
 
 filegroup(
     name = "header_files",
@@ -28,29 +28,29 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//wpimath/src/main/native:wpimath.static",
-        "//hal/src/main/native:wpiHal.static",
-        "//wpinet/src/main/native:wpinet.static",
-        "//wpiutil/src/main/native:wpiutil.static",
-        "//ntcore/src/main/native:ntcore.static",
         "//cameraserver/src/main/native:cameraserver.static",
         "//cscore/src/main/native:cscore.static",
+        "//hal/src/main/native:wpiHal.static",
+        "//ntcore/src/main/native:ntcore.static",
+        "//wpimath/src/main/native:wpimath.static",
+        "//wpinet/src/main/native:wpinet.static",
+        "//wpiutil/src/main/native:wpiutil.static",
     ],
 )
 
 wpilib_cc_shared_library(
     name = "wpilibc",
     srcs = [":sources"],
-    visibility = ["//visibility:public"],
     defines = ["DYNAMIC_CAMERA_SERVER=1"],
+    visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//wpimath/src/main/native:wpimath.shared",
+        "//cameraserver/src/main/native:cameraserver_shared_hdr",
         "//hal/src/main/native:wpiHal.shared",
+        "//ntcore/src/main/native:ntcore.shared",
+        "//wpimath/src/main/native:wpimath.shared",
         "//wpinet/src/main/native:wpinet.shared",
         "//wpiutil/src/main/native:wpiutil.shared",
-        "//ntcore/src/main/native:ntcore.shared",
-        "//cameraserver/src/main/native:cameraserver_shared_hdr",
     ],
 )
 

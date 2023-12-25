@@ -29,8 +29,8 @@ create_pybind_library(
         exclude = ["shuffleboard.cpp"],
     ),
     generation_helper_prefix = "//wpilib/src/main/python:wpilibc_shuffleboard",
-    strip_include_prefix = ".",
     local_defines = ["DYNAMIC_CAMERA_SERVER=1"],
+    strip_include_prefix = ".",
     deps = [
         "//wpilib/src/main/python/wpilib:wpilib_pybind_library",
         "//wpilibc/src/main/native:wpilibc.shared",

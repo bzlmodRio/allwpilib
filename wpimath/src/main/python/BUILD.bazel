@@ -89,9 +89,9 @@ pybind_python_library(
         "//wpimath/src/main/python/wpimath/trajectory:python_files",
     ],
     data = [
-        "//wpimath/src/main/python/wpimath/_impl:copy_lib",
         "//wpimath/src/main/python/wpimath:wpimath.pyso",
         "//wpimath/src/main/python/wpimath/_controls:controls.pyso",
+        "//wpimath/src/main/python/wpimath/_impl:copy_lib",
         "//wpimath/src/main/python/wpimath/filter:filter.pyso",
         "//wpimath/src/main/python/wpimath/geometry:geometry.pyso",
         "//wpimath/src/main/python/wpimath/interpolation:interpolation.pyso",

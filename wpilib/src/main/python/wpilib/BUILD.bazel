@@ -44,12 +44,12 @@ create_pybind_library(
         ["src/rpy/*.cpp"],
     ),
     generation_helper_prefix = "//wpilib/src/main/python:wpilib_core",
+    local_defines = ["DYNAMIC_CAMERA_SERVER=1"],
     deps = [
         ":rpy_includes",
         "//ntcore/src/main/python/ntcore:ntcore_pybind_library",
         "//wpilib/src/main/python/wpilib/interfaces:interfaces_pybind_library",
     ],
-    local_defines = ["DYNAMIC_CAMERA_SERVER=1"],
 )
 
 filegroup(

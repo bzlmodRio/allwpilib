@@ -53,12 +53,12 @@ wpilib_objc_library(
 
 alias(
     name = "opencv.static",
-    actual = "@bzlmodrio-opencv//libraries/cpp/opencv:static"
+    actual = "@bzlmodrio-opencv//libraries/cpp/opencv:static",
 )
 
 alias(
     name = "opencv.shared",
-    actual = "@bzlmodrio-opencv//libraries/cpp/opencv:shared"
+    actual = "@bzlmodrio-opencv//libraries/cpp/opencv:shared",
 )
 
 wpilib_cc_static_and_shared_library(
