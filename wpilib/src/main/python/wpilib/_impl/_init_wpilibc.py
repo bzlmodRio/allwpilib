@@ -12,9 +12,9 @@ import ntcore._init_ntcore
 from ctypes import cdll
 
 try:
-    _lib = cdll.LoadLibrary(join(_root, "lib", "libwpilibc.so"))
+    _lib = cdll.LoadLibrary(join(_root, "lib", "wpilibc.dll"))
 except FileNotFoundError:
-    if not exists(join(_root, "lib", "libwpilibc.so")):
-        raise FileNotFoundError("libwpilibc.so was not found on your system. Is this package correctly installed?")
-    raise FileNotFoundError("libwpilibc.so could not be loaded. There is a missing dependency.")
+    if not exists(join(_root, "lib", "wpilibc.dll")):
+        raise FileNotFoundError("wpilibc.dll was not found on your system. Is this package correctly installed?")
+    raise Exception("wpilibc.dll could not be loaded. Do you have Visual Studio C++ Redistributible 2019 installed?")
 
