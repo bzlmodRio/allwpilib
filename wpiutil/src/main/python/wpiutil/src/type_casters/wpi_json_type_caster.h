@@ -80,7 +80,7 @@ namespace pyjson
             {
                 obj[i] = from_json(j[i]);
             }
-            return std::move(obj);
+            return obj;
         }
         else // Object
         {
@@ -89,7 +89,7 @@ namespace pyjson
             {
                 obj[py::str(it.key())] = from_json(it.value());
             }
-            return std::move(obj);
+            return obj;
         }
     }
 

@@ -10,6 +10,8 @@
 #include <networktables/RawTopic.h>
 
 
+#include <src/nt_type_caster.h>
+
 
 
 

@@ -32,6 +32,8 @@
 
 
 
+#include <src/nt_type_caster.h>
+
 
 
 #include <type_traits>

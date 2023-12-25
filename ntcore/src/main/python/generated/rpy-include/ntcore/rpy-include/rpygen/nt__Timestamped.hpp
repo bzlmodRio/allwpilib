@@ -10,6 +10,8 @@
 #include <ntcore_cpp_types.h>
 
 
+#include <src/nt_type_caster.h>
+
 
 
 

@@ -9,5 +9,6 @@ wpilib_py_test(
     ),
     deps = [
         "//wpiutil/src/main/python:wpiutil",
+        "//wpiutil/src/test/python/cpp:wpiutil_test",
     ],
 )

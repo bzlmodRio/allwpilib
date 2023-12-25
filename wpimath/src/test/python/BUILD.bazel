@@ -9,5 +9,6 @@ wpilib_py_test(
     ),
     deps = [
         "//wpimath/src/main/python:wpimath",
+        "//wpimath/src/test/python/cpp:wpimath_test",
     ],
 )

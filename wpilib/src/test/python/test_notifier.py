@@ -60,3 +60,6 @@ if False:
         stepTiming(10)
 
         assert counter.get() == 1
+else:
+    def test_dummy():
+        pass
