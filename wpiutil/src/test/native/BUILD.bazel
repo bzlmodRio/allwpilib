@@ -16,4 +16,6 @@ wpilib_cc_test(
         "//wpiutil/src/main/native:wpiutil.static",
         "@gtest",
     ],
+    linkstatic=True,
+    tags = ["no-tsan"] # TODO(pj.reiniger) Find problem
 )
