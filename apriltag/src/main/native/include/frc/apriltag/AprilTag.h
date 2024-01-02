@@ -12,18 +12,20 @@
 
 namespace frc {
 
+/**
+ * Represents an AprilTag's metadata.
+ */
 struct WPILIB_DLLEXPORT AprilTag {
+  /// The tag's ID.
   int ID;
 
+  /// The tag's pose.
   Pose3d pose;
 
-  /**
-   * Checks equality between this AprilTag and another object.
-   */
   bool operator==(const AprilTag&) const = default;
 
-  static wpi::RawFrame Generate36h11AprilTagImage(int id);
-  static wpi::RawFrame Generate16h5AprilTagImage(int id);
+  static bool Generate36h11AprilTagImage(wpi::RawFrame* frame, int id);
+  static bool Generate16h5AprilTagImage(wpi::RawFrame* frame, int id);
 };
 
 WPILIB_DLLEXPORT
