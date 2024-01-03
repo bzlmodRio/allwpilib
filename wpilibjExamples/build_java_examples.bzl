@@ -155,6 +155,7 @@ def build_tests():
     for folder in TEST_FOLDERS:
         wpilib_java_junit5_test(
             name = folder + "-test",
+            size = "small",
             srcs = native.glob(["src/test/java/edu/wpi/first/wpilibj/examples/" + folder + "/**/*.java"]),
             deps = [
                 ":" + folder + "-example",

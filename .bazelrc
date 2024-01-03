@@ -2,6 +2,7 @@ try-import %workspace%/user.bazelrc
 
 build --java_language_version=11
 test --test_output=errors
+test --test_verbose_timeout_warnings
 
 import shared/bazel/rc/buildbuddy.rc
 import shared/bazel/compiler_flags/sanitizers.rc

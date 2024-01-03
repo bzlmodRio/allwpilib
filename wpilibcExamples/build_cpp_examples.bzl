@@ -152,6 +152,7 @@ def build_tests():
         example_test_folder = "src/test/cpp/examples/" + folder
         wpilib_cc_test(
             name = folder + "-test",
+            size = "small",
             srcs = native.glob([example_test_folder + "/**/*.cpp", example_src_folder + "/cpp/**/*.cpp", example_src_folder + "/c/**/*.c"]),
             deps = [
                 "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
