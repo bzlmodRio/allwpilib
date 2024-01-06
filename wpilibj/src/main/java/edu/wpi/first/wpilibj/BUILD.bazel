@@ -11,6 +11,7 @@ wpilib_java_library(
         "//ntcore/src/main/java/edu/wpi/first/networktables",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
         "//wpinet/src/main/java/edu/wpi/first/net:wpinet",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:org_ejml_ejml_core",
         "@maven//:org_ejml_ejml_simple",

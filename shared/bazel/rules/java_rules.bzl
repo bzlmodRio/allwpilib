@@ -112,11 +112,11 @@ def wpilib_java_junit5_test(
     ]
 
     junit_runtime_deps = [
-        "@maven//:org_junit_platform_junit_platform_commons",
+        # "@maven//:org_junit_platform_junit_platform_commons",
         "@maven//:org_junit_platform_junit_platform_console",
-        "@maven//:org_junit_platform_junit_platform_engine",
-        "@maven//:org_junit_platform_junit_platform_launcher",
-        "@maven//:org_junit_platform_junit_platform_suite_api",
+        # "@maven//:org_junit_platform_junit_platform_engine",
+        # "@maven//:org_junit_platform_junit_platform_launcher",
+        # "@maven//:org_junit_platform_junit_platform_suite_api",
     ]
 
     java_test(
