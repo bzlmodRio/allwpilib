@@ -10,7 +10,8 @@ package edu.wpi.first.hal;
  * <p>This class defines enums for CAN device types and manufacturer IDs as specified in the WPILib
  * documentation: https://docs.wpilib.org/en/stable/docs/software/can-devices/can-addressing.html
  */
-public class CANAPITypes {
+@SuppressWarnings("PMD.MissingStaticMethodInNonInstantiatableClass")
+public final class CANAPITypes {
   /**
    * FRC CAN device type.
    *
@@ -22,18 +23,31 @@ public class CANAPITypes {
    *     Device Types</a>
    */
   public enum CANDeviceType {
+    /** Broadcast. */
     kBroadcast(0),
+    /** Robot controller. */
     kRobotController(1),
+    /** Motor controller. */
     kMotorController(2),
+    /** Relay controller. */
     kRelayController(3),
+    /** Gyro sensor. */
     kGyroSensor(4),
+    /** Accelerometer. */
     kAccelerometer(5),
+    /** Ultrasonic sensor. */
     kUltrasonicSensor(6),
+    /** Gear tooth sensor. */
     kGearToothSensor(7),
+    /** Power distribution. */
     kPowerDistribution(8),
+    /** Pneumatics. */
     kPneumatics(9),
+    /** Miscellaneous. */
     kMiscellaneous(10),
+    /** IO breakout. */
     kIOBreakout(11),
+    /** Firmware update. */
     kFirmwareUpdate(31);
 
     @SuppressWarnings("PMD.MemberName")
@@ -55,22 +69,39 @@ public class CANAPITypes {
    *     Manufacturer IDs</a>
    */
   public enum CANManufacturer {
+    /** Broadcast. */
     kBroadcast(0),
+    /** National Instruments. */
     kNI(1),
+    /** Luminary Micro. */
     kLM(2),
+    /** DEKA Research and Development Corp. */
     kDEKA(3),
+    /** Cross the Road Electronics. */
     kCTRE(4),
+    /** REV Robotics. */
     kREV(5),
+    /** Grapple. */
     kGrapple(6),
+    /** MindSensors. */
     kMS(7),
+    /** Team use. */
     kTeamUse(8),
+    /** Kauai Labs. */
     kKauaiLabs(9),
+    /** Copperforge. */
     kCopperforge(10),
+    /** Playing With Fusion. */
     kPWF(11),
+    /** Studica. */
     kStudica(12),
+    /** TheThriftyBot. */
     kTheThriftyBot(13),
+    /** Redux Robotics. */
     kReduxRobotics(14),
+    /** AndyMark. */
     kAndyMark(15),
+    /** Vivid-Hosting. */
     kVividHosting(16);
 
     @SuppressWarnings("PMD.MemberName")
@@ -80,4 +111,7 @@ public class CANAPITypes {
       this.id = id;
     }
   }
+
+  /** Utility class. */
+  private CANAPITypes() {}
 }
