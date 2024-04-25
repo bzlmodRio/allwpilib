@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "d4fc5f362f895360bff564ff70f6554687d313bc980231a9b4491c362a2706aa",
+  "moduleFileHash": "05e9c84c851d1c203b3249f7c2853a7323c6f376a76202f929332883bc91580d",
   "flags": {
     "cmdRegistries": [
       "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/"
@@ -30,7 +30,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 47,
+            "line": 46,
             "column": 22
           },
           "imports": {
@@ -65,7 +65,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 48,
+                "line": 47,
                 "column": 14
               }
             }
@@ -79,7 +79,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 75,
+            "line": 74,
             "column": 38
           },
           "imports": {
@@ -98,7 +98,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 83,
+            "line": 82,
             "column": 20
           },
           "imports": {
@@ -116,8 +116,38 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 84,
+                "line": 83,
                 "column": 10
+              }
+            }
+          ],
+          "hasDevUseExtension": false,
+          "hasNonDevUseExtension": true
+        },
+        {
+          "extensionBzlFile": "@rules_python//extensions:python.bzl",
+          "extensionName": "python",
+          "usingModule": "<root>",
+          "location": {
+            "file": "@@//:MODULE.bazel",
+            "line": 91,
+            "column": 23
+          },
+          "imports": {},
+          "devImports": [],
+          "tags": [
+            {
+              "tagName": "toolchain",
+              "attributeValues": {
+                "python_version": "3.11",
+                "is_default": true,
+                "ignore_root_user_error": true
+              },
+              "devDependency": false,
+              "location": {
+                "file": "@@//:MODULE.bazel",
+                "line": 93,
+                "column": 17
               }
             }
           ],
@@ -5842,7 +5872,7 @@
       "os:linux,arch:amd64": {
         "bzlTransitiveDigest": "uFkpjNy82iJvZ+ranQekcaslLaa7VoI4TMftq2r8doA=",
         "recordedFileInputs": {
-          "@@//requirements_lock.txt": "715db314386dd7cb9cba1a1f6e387fa0d4cc48dc2ce97725142e7c8fc8cd1720"
+          "@@//requirements_lock.txt": "2639664664023356002ecaab7616603de974c0a03496b765a7509db1ea85cd3d"
         },
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -5857,7 +5887,7 @@
               "whl_patches": {},
               "experimental_target_platforms": [],
               "python_interpreter": "",
-              "python_interpreter_target": "@@rules_python~~python~python_3_11_host//:python",
+              "python_interpreter_target": "@@rules_python~~python2~python_3_11_host//:python",
               "quiet": true,
               "timeout": 600,
               "isolated": true,
@@ -5889,7 +5919,7 @@
               "whl_patches": {},
               "experimental_target_platforms": [],
               "python_interpreter": "",
-              "python_interpreter_target": "@@rules_python~~python~python_3_11_host//:python",
+              "python_interpreter_target": "@@rules_python~~python2~python_3_11_host//:python",
               "quiet": true,
               "timeout": 600,
               "isolated": true,
@@ -6024,17 +6054,17 @@
           [
             "rules_python~",
             "pythons_hub",
-            "rules_python~~python~pythons_hub"
+            "rules_python~~python2~pythons_hub"
           ],
           [
-            "rules_python~~python~pythons_hub",
+            "rules_python~~python2~pythons_hub",
             "python_3_11_host",
-            "rules_python~~python~python_3_11_host"
+            "rules_python~~python2~python_3_11_host"
           ],
           [
-            "rules_python~~python~pythons_hub",
+            "rules_python~~python2~pythons_hub",
             "python_3_11_x86_64-unknown-linux-gnu",
-            "rules_python~~python~python_3_11_x86_64-unknown-linux-gnu"
+            "rules_python~~python2~python_3_11_x86_64-unknown-linux-gnu"
           ]
         ]
       }
