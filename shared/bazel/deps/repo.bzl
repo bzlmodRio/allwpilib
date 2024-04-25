@@ -33,7 +33,7 @@ def load_third_party():
             "https://repo1.maven.org/maven2",
             "https://frcmaven.wpi.edu/artifactory/release/",
         ],
-        maven_install_json = "//shared/bazel/deps:maven_install.json",
+        # maven_install_json = "//shared/bazel/deps:maven_install.json",
     )
 
     pip_parse(
