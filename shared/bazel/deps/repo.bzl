@@ -1,6 +1,6 @@
+load("@python_3_11//:defs.bzl", "interpreter")
 load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
-load("@python_3_11//:defs.bzl", "interpreter")
 load("@rules_python//python:pip.bzl", "pip_parse")
 load("//shared/bazel/deps:quickbuf_protoc.bzl", "setup_non_bzlmod_quickbuf_protoc")
 load("//shared/bazel/deps/gtest:repo.bzl", "third_party_gtest")
