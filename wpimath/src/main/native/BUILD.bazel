@@ -6,13 +6,19 @@ wpilib_cc_static_and_shared_library(
     srcs = glob(
         ["cpp/**"],
         exclude = ["cpp/jni/**"],
-    ),
+    ) + [
+        "//wpimath/src/main/native/thirdparty/sleipnir:sleipnir-srcs",
+    ],
     hdrs = glob(["include/**/*"]),
     defines = ["WPILIB_EXPORTS"],
     export_symbols = False,
-    includes = ["include"],
+    includes = [
+        "include",
+        "thirdparty/sleipnir/src",
+    ],
     standard_deps = [
         "//wpimath/src/main/native/thirdparty/eigen:eigen-headers",
+        "//wpimath/src/main/native/thirdparty/sleipnir:sleipnir-headers",
         "//wpimath/src/main/native/thirdparty/gcem",
         "//wpimath/src/main/proto:cc_proto",
     ],
