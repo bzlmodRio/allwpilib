@@ -33,10 +33,10 @@ jobs:
     name: "Build ${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       - uses: actions/setup-java@v3
@@ -84,10 +84,10 @@ jobs:
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
       - uses: actions/setup-java@v3
@@ -130,9 +130,9 @@ jobs:
     name: "Build - ${{ matrix.artifact-name }}"
     container: ${{ matrix.container }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - uses: bazelbuild/setup-bazelisk@v1
+      - uses: bazelbuild/setup-bazelisk@v3
 
       - name: Build and allow failures
         run: bazel build ... --config=ci ${{ matrix.config }} -k --verbose_failures || true
@@ -146,7 +146,7 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run:  bazel run --noenable_bzlmod @unpinned_maven//:pin
       - run:  git diff HEAD
       - uses: actions/upload-artifact@v2
@@ -166,9 +166,9 @@ jobs:
     container: wpilib/ubuntu-base:22.04
     name: "Sanitizer ${{ matrix.config }}"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
-      - uses: bazelbuild/setup-bazelisk@v1
+      - uses: bazelbuild/setup-bazelisk@v3
       - name: Build and Test
         run: bazel test  -k --config=ci --config=linux --noenable_bzlmod --config=${{ matrix.config }} //...
 
@@ -176,7 +176,7 @@ jobs:
     runs-on: ubuntu-22.04
     name: "Code Coverage"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
 
       - name: Install LCOV
@@ -199,7 +199,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Set up Go 1.15.x
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: 1.15.x
         id: go
@@ -209,7 +209,7 @@ jobs:
           cd $(mktemp -d)
           GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@6.0.0
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
 
       - name: Run buildifier
@@ -233,12 +233,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Set up Go 1.15.x
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v5
         with:
           go-version: 1.15.x
         id: go
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Unused Deps
         run: |
