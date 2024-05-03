@@ -1,6 +1,6 @@
-
 EXAMPLES_FOLDERS = [
     "addressableled",
+    "apriltagsvision",
     "arcadedrive",
     "arcadedrivexboxcontroller",
     "armbot",
@@ -15,11 +15,14 @@ EXAMPLES_FOLDERS = [
     "drivedistanceoffboard",
     "dutycycleencoder",
     "dutycycleinput",
+    "elevatorexponentialprofile",
+    "elevatorexponentialsimulation",
     "elevatorprofiledpid",
     "elevatorsimulation",
     "elevatortrapezoidprofile",
     "encoder",
     "eventloop",
+    "flywheelbangbangcontroller",
     "frisbeebot",
     "gearsbot",
     "gettingstarted",
@@ -39,8 +42,6 @@ EXAMPLES_FOLDERS = [
     "motorcontrol",
     "potentiometerpid",
     "quickvision",
-    "ramsetecommand",
-    "ramsetecontroller",
     "rapidreactcommandbot",
     "relay",
     "romireference",
@@ -49,18 +50,19 @@ EXAMPLES_FOLDERS = [
     "simpledifferentialdrivesimulation",
     "solenoid",
     "statespacearm",
-    "statespacedifferentialdrivesimulation",
     "statespaceelevator",
     "statespaceflywheel",
     "statespaceflywheelsysid",
     "swervebot",
     "swervecontrollercommand",
     "swervedriveposeestimator",
+    "sysid",
     "tankdrive",
     "tankdrivexboxcontroller",
     "ultrasonic",
     "ultrasonicpid",
     "unittest",
+    "xrpreference",
 ]
 
 COMMANDS_V2_FOLDERS = [
@@ -92,9 +94,19 @@ TEMPLATES_FOLDERS = [
     "timedskeleton",
     "timeslice",
     "timesliceskeleton",
+    "xrpcommandbased",
+    "xrpeducational",
+    "xrptimed",
 ]
 
 TEST_FOLDERS = [
     "addressableled",
+    "armsimulation",
+    "digitalcommunication",
+    "elevatorsimulation",
+    "i2ccommunication",
+    "potentiometerpid",
+    "ultrasonicpid",
     "unittest",
 ]
+

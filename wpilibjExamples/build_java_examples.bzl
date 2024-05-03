@@ -18,6 +18,8 @@ def build_examples(halsim_deps):
                 "//wpilibNewCommands/src/main/java/edu/wpi/first/wpilibj2/command:wpilibNewCommands",
                 "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
                 "//romiVendordep/src/main/java/edu/wpi/first/wpilibj/romi",
+                "//xrpVendordep/src/main/java/edu/wpi/first/wpilibj/xrp",
+                "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
             tags = ["wpi-example"],
@@ -48,6 +50,7 @@ def build_templates():
                 "//wpilibNewCommands/src/main/java/edu/wpi/first/wpilibj2/command:wpilibNewCommands",
                 "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
                 "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+                "//xrpVendordep/src/main/java/edu/wpi/first/wpilibj/xrp",
             ],
             tags = ["wpi-example"],
         )
