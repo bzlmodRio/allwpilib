@@ -20,4 +20,5 @@ wpilib_cc_test(
         "//wpimath/src/main/native:wpimath.static",
         "@gtest",
     ],
+    tags = ["no-bullseye", "no-raspbian"],
 )
