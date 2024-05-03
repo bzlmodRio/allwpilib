@@ -17,7 +17,7 @@ wpilib_cc_test(
     ]),
     tags = [
         "no-bullseye",
-        "no-raspbian",
+        "no-raspi",
     ],
     deps = [
         ":test_headers",
