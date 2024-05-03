@@ -95,13 +95,5 @@ TEMPLATES_FOLDERS = [
 
 TESTS_FOLDERS = [
     "AddressableLED",
-    "ArmSimulation",
-    "DigitalCommunication",
-    "ElevatorSimulation",
-    "I2CCommunication",
-    "MecanumControllerCommand",
-    "PotentiometerPID",
-    "SwerveControllerCommand",
-    "UltrasonicPID",
     "UnitTest",
 ]

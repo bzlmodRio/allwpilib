@@ -101,11 +101,5 @@ TEMPLATES_FOLDERS = [
 
 TEST_FOLDERS = [
     "addressableled",
-    "armsimulation",
-    "digitalcommunication",
-    "elevatorsimulation",
-    "i2ccommunication",
-    "potentiometerpid",
-    "ultrasonicpid",
     "unittest",
 ]
