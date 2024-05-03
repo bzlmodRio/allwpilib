@@ -109,4 +109,3 @@ TEST_FOLDERS = [
     "ultrasonicpid",
     "unittest",
 ]
-

@@ -1,5 +1,5 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_test")
-load("//wpilibcExamples:example_projects.bzl", "EXAMPLE_FOLDERS", "COMMANDS_V2_FOLDERS", "TEMPLATES_FOLDERS", "TESTS_FOLDERS")
+load("//wpilibcExamples:example_projects.bzl", "COMMANDS_V2_FOLDERS", "EXAMPLE_FOLDERS", "TEMPLATES_FOLDERS", "TESTS_FOLDERS")
 
 def build_examples(halsim_deps = []):
     for folder in EXAMPLE_FOLDERS:

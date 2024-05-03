@@ -35,7 +35,7 @@ def main():
         f.write("EXAMPLE_FOLDERS = [\n    \"" + "\",\n    \"".join(examples) + "\",\n]\n\n")
         f.write("COMMANDS_V2_FOLDERS = [\n    \"" + "\",\n    \"".join(commands) + "\",\n]\n\n")
         f.write("TEMPLATES_FOLDERS = [\n    \"" + "\",\n    \"".join(templates) + "\",\n]\n\n")
-        f.write("TESTS_FOLDERS = [\n    \"" + "\",\n    \"".join(tests) + "\",\n]\n\n")
+        f.write("TESTS_FOLDERS = [\n    \"" + "\",\n    \"".join(tests) + "\",\n]\n")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test", "wpilib_java_library")
-load("//wpilibjExamples:example_projects.bzl", "EXAMPLES_FOLDERS", "COMMANDS_V2_FOLDERS", "TEMPLATES_FOLDERS", "TEST_FOLDERS")
+load("//wpilibjExamples:example_projects.bzl", "COMMANDS_V2_FOLDERS", "EXAMPLES_FOLDERS", "TEMPLATES_FOLDERS", "TEST_FOLDERS")
 
 def build_examples(halsim_deps):
     for folder in EXAMPLES_FOLDERS:
