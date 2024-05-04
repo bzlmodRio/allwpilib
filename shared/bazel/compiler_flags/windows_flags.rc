@@ -2,6 +2,7 @@
 # Warning level
 build:windows --copt=/W3
 build:windows --copt=/WX
+build:windows --copt=/U_WIN32_WINNT
 
 # C++ options
 build:windows --cxxopt=/EHsc
