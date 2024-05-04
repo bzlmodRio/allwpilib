@@ -91,43 +91,54 @@ public final class RuntimeLoader<T> {
       System.loadLibrary(m_libraryName);
     } catch (UnsatisfiedLinkError ule) {
       // Then load the hash from the resources
-      String hashName = RuntimeDetector.getHashLibraryResource(m_libraryName);
-      String resName = RuntimeDetector.getLibraryResource(m_libraryName);
-      try (InputStream hashIs = m_loadClass.getResourceAsStream(hashName)) {
-        if (hashIs == null) {
-          throw new IOException(getLoadErrorMessage(ule));
-        }
-        try (Scanner scanner = new Scanner(hashIs, StandardCharsets.UTF_8)) {
-          String hash = scanner.nextLine();
-          File jniLibrary = new File(m_extractionRoot, resName + "." + hash);
-          try {
-            // Try to load from an already extracted hash
-            System.load(jniLibrary.getAbsolutePath());
-          } catch (UnsatisfiedLinkError ule2) {
-            // If extraction failed, extract
-            try (InputStream resIs = m_loadClass.getResourceAsStream(resName)) {
-              if (resIs == null) {
-                throw new IOException(getLoadErrorMessage(ule));
-              }
+      loadLibraryFromHash(ule);
+    }
+  }
 
-              var parentFile = jniLibrary.getParentFile();
-              if (parentFile == null) {
-                throw new IOException("JNI library has no parent file");
-              }
-              parentFile.mkdirs();
-
-              try (OutputStream os = Files.newOutputStream(jniLibrary.toPath())) {
-                byte[] buffer = new byte[0xFFFF]; // 64K copy buffer
-                int readBytes;
-                while ((readBytes = resIs.read(buffer)) != -1) { // NOPMD
-                  os.write(buffer, 0, readBytes);
-                }
-              }
-              System.load(jniLibrary.getAbsolutePath());
-            }
-          }
+  private void loadLibraryFromHash(UnsatisfiedLinkError ule) throws IOException {
+    System.out.println("Falling back to hash loading");
+    String hashName = RuntimeDetector.getHashLibraryResource(m_libraryName);
+    String resName = RuntimeDetector.getLibraryResource(m_libraryName);
+    try (InputStream hashIs = m_loadClass.getResourceAsStream(hashName)) {
+      if (hashIs == null) {
+        throw new IOException(getLoadErrorMessage(ule));
+      }
+      try (Scanner scanner = new Scanner(hashIs, StandardCharsets.UTF_8)) {
+        String hash = scanner.nextLine();
+        File jniLibrary = new File(m_extractionRoot, resName + "." + hash);
+        try {
+          // Try to load from an already extracted hash
+          System.load(jniLibrary.getAbsolutePath());
+        } catch (UnsatisfiedLinkError ule2) {
+          // If extraction failed, extract
+          extractAndLoadLibrary(jniLibrary, resName, ule);
         }
       }
+    }
+  }
+
+  private void extractAndLoadLibrary(File jniLibrary, String resName, UnsatisfiedLinkError ule)
+      throws IOException {
+    System.out.println("Falling back to extraction");
+    try (InputStream resIs = m_loadClass.getResourceAsStream(resName)) {
+      if (resIs == null) {
+        throw new IOException(getLoadErrorMessage(ule));
+      }
+
+      var parentFile = jniLibrary.getParentFile();
+      if (parentFile == null) {
+        throw new IOException("JNI library has no parent file");
+      }
+      parentFile.mkdirs();
+
+      try (OutputStream os = Files.newOutputStream(jniLibrary.toPath())) {
+        byte[] buffer = new byte[0xFFFF]; // 64K copy buffer
+        int readBytes;
+        while ((readBytes = resIs.read(buffer)) != -1) { // NOPMD
+          os.write(buffer, 0, readBytes);
+        }
+      }
+      System.load(jniLibrary.getAbsolutePath());
     }
   }
 
