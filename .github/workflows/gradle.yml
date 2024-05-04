@@ -157,23 +157,23 @@ jobs:
         if: ${{ always() }}
       - name: Dump Test Infos
         run: |
-          ls -alR apriltag/build/install/ >> test_info.txt
-          ls -alR cscore/build/install/ >> test_info.txt
-          ls -alR hal/build/install/ >> test_info.txt
-          ls -alR ntcore/build/install/ >> test_info.txt
-          ls -alR wpimath/build/install/ >> test_info.txt
-          ls -alR wpinet/build/install/ >> test_info.txt
-          ls -alR wpiutil/build/install/ >> test_info.txt
+          ls -alR apriltag/build/install >> test_info.txt
+          ls -alR cscore/build/install >> test_info.txt
+          ls -alR hal/build/install >> test_info.txt
+          ls -alR ntcore/build/install >> test_info.txt
+          ls -alR wpimath/build/install >> test_info.txt
+          ls -alR wpinet/build/install >> test_info.txt
+          ls -alR wpiutil/build/install >> test_info.txt
         if: runner.os == 'macOS'
       - name: Dump Test Infos
         run: |
-          dir -Recurse apriltag\build\install\ >> test_info.txt
-          dir -Recurse cscore\build\install\ >> test_info.txt
-          dir -Recurse hal\build\install\ >> test_info.txt
-          dir -Recurse ntcore\build\install\ >> test_info.txt
-          dir -Recurse wpimath\build\install\ >> test_info.txt
-          dir -Recurse wpinet\build\install\ >> test_info.txt
-          dir -Recurse wpiutil\build\install\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\apriltag\build\install\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\cscore\build\install\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\hal\build\install\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\ntcore\build\install\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\wpimath\build\install\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\wpinet\build\install\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\wpiutil\build\install\ >> test_info.txt
         if: runner.os == 'Windows'
       - uses: actions/upload-artifact@v4
         with:
