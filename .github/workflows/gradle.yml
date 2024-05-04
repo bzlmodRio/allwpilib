@@ -168,11 +168,6 @@ jobs:
           name: ${{ matrix.artifact-name }} BUILD OPTIONS
           path: "${{ matrix.build-dir }}/**/build/tmp/**/options.txt"
         if: ${{ always() }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.artifact-name }} BUILD OPTIONS
-          path: "**/build/tmp/**/options.txt"
-        if: ${{ always() }}
       - name: Dump Test Infos
         run: |
           ls -alR apriltag/build/install/ >> test_info.txt
