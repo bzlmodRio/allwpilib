@@ -167,7 +167,7 @@ jobs:
         if: runner.os == 'macOS'
       - name: Dump Test Infos
         run: |
-          dir -Recurse ${{ matrix.build-dir }}\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\**\build\install\** >> test_info.txt
         if: runner.os == 'Windows'
       - uses: actions/upload-artifact@v4
         with:
