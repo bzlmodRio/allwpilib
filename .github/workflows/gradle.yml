@@ -150,19 +150,6 @@ jobs:
         env:
           ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PUBLISH_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-      - name: Sign Libraries with Developer ID
-        run: ./gradlew copyAllOutputs --build-cache -PbuildServer -PskipJavaFormat -PdeveloperID=${{ secrets.APPLE_DEVELOPER_ID }} ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }}
-        working-directory: ${{ matrix.build-dir }}
-        if: |
-          matrix.artifact-name == 'macOS' && (github.repository_owner == 'wpilibsuite' &&
-          (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')))
-      - name: Check disk free space (Windows)
-        run: wmic logicaldisk get caption, freespace
-        if: matrix.os == 'windows-2022'
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.artifact-name }}
-          path: ${{ matrix.build-dir }}/${{ matrix.outputs }}
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }} BUILD OPTIONS
@@ -178,11 +165,34 @@ jobs:
           ls -alR wpinet/build/install/ >> test_info.txt
           ls -alR wpiutil/build/install/ >> test_info.txt
         if: runner.os == 'macOS'
+      - name: Dump Test Infos
+        run: |
+          dir -Recurse apriltag\build\install\ >> test_info.txt
+          dir -Recurse cscore\build\install\ >> test_info.txt
+          dir -Recurse hal\build\install\ >> test_info.txt
+          dir -Recurse ntcore\build\install\ >> test_info.txt
+          dir -Recurse wpimath\build\install\ >> test_info.txt
+          dir -Recurse wpinet\build\install\ >> test_info.txt
+          dir -Recurse wpiutil\build\install\ >> test_info.txt
+        if: runner.os == 'Windows'
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }} TEST INFOS
           path: "test_info.txt"
-        if: runner.os == 'macOS'
+        if: ${{ always() }}
+      - name: Sign Libraries with Developer ID
+        run: ./gradlew copyAllOutputs --build-cache -PbuildServer -PskipJavaFormat -PdeveloperID=${{ secrets.APPLE_DEVELOPER_ID }} ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }}
+        working-directory: ${{ matrix.build-dir }}
+        if: |
+          matrix.artifact-name == 'macOS' && (github.repository_owner == 'wpilibsuite' &&
+          (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')))
+      - name: Check disk free space (Windows)
+        run: wmic logicaldisk get caption, freespace
+        if: matrix.os == 'windows-2022'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.build-dir }}/${{ matrix.outputs }}
 
   build-documentation:
     name: "Build - Documentation"
