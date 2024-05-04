@@ -150,30 +150,6 @@ jobs:
         env:
           ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PUBLISH_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.artifact-name }} BUILD OPTIONS
-          path: "${{ matrix.build-dir }}/**/build/tmp/**/options.txt"
-        if: ${{ always() }}
-      - name: Dump Test Infos
-        run: |
-          ls -alR apriltag/build/install >> test_info.txt
-          ls -alR cscore/build/install >> test_info.txt
-          ls -alR hal/build/install >> test_info.txt
-          ls -alR ntcore/build/install >> test_info.txt
-          ls -alR wpimath/build/install >> test_info.txt
-          ls -alR wpinet/build/install >> test_info.txt
-          ls -alR wpiutil/build/install >> test_info.txt
-        if: runner.os == 'macOS'
-      - name: Dump Test Infos
-        run: |
-          dir -Recurse ${{ matrix.build-dir }}\**\build\install\** >> test_info.txt
-        if: runner.os == 'Windows'
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.artifact-name }} TEST INFOS
-          path: "test_info.txt"
-        if: ${{ always() }}
       - name: Sign Libraries with Developer ID
         run: ./gradlew copyAllOutputs --build-cache -PbuildServer -PskipJavaFormat -PdeveloperID=${{ secrets.APPLE_DEVELOPER_ID }} ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }}
         working-directory: ${{ matrix.build-dir }}

@@ -41,10 +41,6 @@ public class WPIUtilJNI {
 
   static {
     if (Helper.getExtractOnStaticLoad()) {
-      System.out.println("*************************************");
-      System.out.println(System.getenv("PATH"));
-      System.out.println(System.getenv("LD_LIBRARY_PATH"));
-      System.out.println("*************************************");
       try {
         loader =
             new RuntimeLoader<>(
@@ -55,10 +51,6 @@ public class WPIUtilJNI {
         System.exit(1);
       }
       libraryLoaded = true;
-
-      // if (true) {
-      //   throw new RuntimeException();
-      // }
     }
   }
 
