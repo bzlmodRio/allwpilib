@@ -167,13 +167,7 @@ jobs:
         if: runner.os == 'macOS'
       - name: Dump Test Infos
         run: |
-          dir -Recurse ${{ matrix.build-dir }}\apriltag\build\install\ >> test_info.txt
-          dir -Recurse ${{ matrix.build-dir }}\cscore\build\install\ >> test_info.txt
-          dir -Recurse ${{ matrix.build-dir }}\hal\build\install\ >> test_info.txt
-          dir -Recurse ${{ matrix.build-dir }}\ntcore\build\install\ >> test_info.txt
-          dir -Recurse ${{ matrix.build-dir }}\wpimath\build\install\ >> test_info.txt
-          dir -Recurse ${{ matrix.build-dir }}\wpinet\build\install\ >> test_info.txt
-          dir -Recurse ${{ matrix.build-dir }}\wpiutil\build\install\ >> test_info.txt
+          dir -Recurse ${{ matrix.build-dir }}\ >> test_info.txt
         if: runner.os == 'Windows'
       - uses: actions/upload-artifact@v4
         with:
