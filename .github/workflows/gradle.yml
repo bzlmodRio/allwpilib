@@ -145,7 +145,7 @@ jobs:
         run: wmic logicaldisk get caption, freespace
         if: matrix.os == 'windows-2022'
       - name: Build with Gradle
-        run: ./gradlew ${{ matrix.task }} --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }}
+        run: ./gradlew ${{ matrix.task }} --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }} || ./gradlew ${{ matrix.task }} --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }}
         working-directory: ${{ matrix.build-dir }}
         env:
           ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
@@ -163,10 +163,6 @@ jobs:
         with:
           name: ${{ matrix.artifact-name }}
           path: ${{ matrix.build-dir }}/${{ matrix.outputs }}
-      # - uses: actions/upload-artifact@v2
-      #   with:
-      #     name: ${{ matrix.artifact-name }} BUILD OPTIONS
-      #     path: "**/build/tmp/**/options.txt"
 
   build-documentation:
     name: "Build - Documentation"

@@ -127,7 +127,7 @@ def wpilib_java_junit5_test(
             "@rules_bzlmodrio_toolchains//constraints/combined:is_unix": ["-Djava.library.path=" + full_extracted_native_dir],
         }),
         env = select({
-            "@bazel_tools//src/conditions:darwin": {"LD_LIBRARY_PATH": full_extracted_native_dir},
+            "@bazel_tools//src/conditions:darwin": {"DYLD_LIBRARY_PATH": full_extracted_native_dir, "LD_LIBRARY_PATH": full_extracted_native_dir},
             "@bazel_tools//src/conditions:windows": {},
             "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": {},
         }),
