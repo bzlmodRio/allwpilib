@@ -163,12 +163,12 @@ jobs:
         with:
           name: ${{ matrix.artifact-name }}
           path: ${{ matrix.build-dir }}/${{ matrix.outputs }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }} BUILD OPTIONS
-          path: "**/build/tmp/**/options.txt"
+          path: "${{ matrix.build-dir }}/**/build/tmp/**/options.txt"
         if: ${{ always() }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }} BUILD OPTIONS
           path: "**/build/tmp/**/options.txt"
@@ -183,10 +183,10 @@ jobs:
           ls -alR wpinet/build/install/ >> test_info.txt
           ls -alR wpiutil/build/install/ >> test_info.txt
         if: runner.os == 'macOS'
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }} TEST INFOS
-          path: "**/build/tmp/**/options.txt"
+          path: "test_info.txt"
         if: runner.os == 'macOS'
 
   build-documentation:
