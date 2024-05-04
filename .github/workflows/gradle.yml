@@ -145,7 +145,7 @@ jobs:
         run: wmic logicaldisk get caption, freespace
         if: matrix.os == 'windows-2022'
       - name: Build with Gradle
-        run: ./gradlew ${{ matrix.task }} --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }}
+        run: ./gradlew ${{ matrix.task }} --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }} || ./gradlew ${{ matrix.task }} --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }}
         working-directory: ${{ matrix.build-dir }}
         env:
           ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
@@ -163,6 +163,31 @@ jobs:
         with:
           name: ${{ matrix.artifact-name }}
           path: ${{ matrix.build-dir }}/${{ matrix.outputs }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.artifact-name }} BUILD OPTIONS
+          path: "**/build/tmp/**/options.txt"
+        if: ${{ always() }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.artifact-name }} BUILD OPTIONS
+          path: "**/build/tmp/**/options.txt"
+        if: ${{ always() }}
+      - name: Dump Test Infos
+        run: |
+          ls -alR apriltag/build/install/ >> test_info.txt
+          ls -alR cscore/build/install/ >> test_info.txt
+          ls -alR hal/build/install/ >> test_info.txt
+          ls -alR ntcore/build/install/ >> test_info.txt
+          ls -alR wpimath/build/install/ >> test_info.txt
+          ls -alR wpinet/build/install/ >> test_info.txt
+          ls -alR wpiutil/build/install/ >> test_info.txt
+        if: runner.os == 'macOS'
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.artifact-name }} TEST INFOS
+          path: "**/build/tmp/**/options.txt"
+        if: runner.os == 'macOS'
 
   build-documentation:
     name: "Build - Documentation"
