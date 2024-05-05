@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 3,
-  "moduleFileHash": "73b99d6bcc9682cf38469bc89e5497b76f5c5ca9f795aa2a35d7f68c208ebf4a",
+  "moduleFileHash": "00ad400568037216e48a427d1f03de9abc9c25ea852766c72865fc923b0412be",
   "flags": {
     "cmdRegistries": [
       "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/"
@@ -98,7 +98,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 85,
+            "line": 84,
             "column": 23
           },
           "imports": {},
@@ -107,10 +107,11 @@
             {
               "tagName": "toolchain",
               "attributeValues": {
+                "is_default": true,
                 "python_version": "3.11",
-                "is_default": true
+                "ignore_root_user_error": true
               },
-              "devDependency": false,
+              "devDependency": true,
               "location": {
                 "file": "@@//:MODULE.bazel",
                 "line": 89,
@@ -118,8 +119,8 @@
               }
             }
           ],
-          "hasDevUseExtension": false,
-          "hasNonDevUseExtension": true
+          "hasDevUseExtension": true,
+          "hasNonDevUseExtension": false
         },
         {
           "extensionBzlFile": "@rules_python//python/extensions:pip.bzl",
@@ -127,7 +128,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 103,
+            "line": 95,
             "column": 20
           },
           "imports": {
@@ -145,7 +146,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 104,
+                "line": 96,
                 "column": 10
               }
             }
