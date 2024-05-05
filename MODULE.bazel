@@ -12,7 +12,7 @@ bazel_dep(name = "rules_java", version = "7.5.0")
 bazel_dep(name = "rules_jvm_external", version = "6.1")
 bazel_dep(name = "rules_python", version = "0.31.0")
 bazel_dep(name = "rules_proto", version = "6.0.0")
-bazel_dep(name = "protobuf", version = "23.1", repo_name = "com_google_protobuf")
+bazel_dep(name = "protobuf", version = "26.0", repo_name = "com_google_protobuf")
 bazel_dep(name = "bzlmodrio-apriltaglib", version = "2024.3.3.0-1")
 bazel_dep(name = "bzlmodrio-imgui", version = "2024.1.89.9-1")
 bazel_dep(name = "bzlmodrio-libssh", version = "2024.0.105-1")
@@ -21,10 +21,12 @@ bazel_dep(name = "bzlmodrio-opencv", version = "2024.4.8.0-2")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 
-# git_override(
-#     module_name = "protobuf",
-#     commit = "v3.21.12",
-#     patches = [
+# archive_override(
+#     module_name = "protobuf", 
+#     urls = ["https://github.com/protocolbuffers/protobuf/archive/refs/tags/v26.1.zip"], 
+#     integrity = "sha256-RNWGESffT5SuV+JJv0lOuvuo3sUUd5/dUwSpZEEZp8g=", 
+#     # strip_prefix='', 
+#     patches=[
 #         "//upstream_utils/protobuf_patches:0001-Fix-sign-compare-warnings.patch",
 #         "//upstream_utils/protobuf_patches:0002-Remove-redundant-move.patch",
 #         "//upstream_utils/protobuf_patches:0003-Fix-maybe-uninitialized-warnings.patch",
@@ -36,8 +38,7 @@ bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 #         "//upstream_utils/protobuf_patches:0009-Disable-unused-function-warning.patch",
 #         "//upstream_utils/protobuf_patches:0010-Disable-pedantic-warning.patch",
 #         "//upstream_utils/protobuf_patches:0011-Avoid-use-of-sprintf.patch",
-#     ],
-#     remote = "https://github.com/protocolbuffers/protobuf",
+#     ], 
 # )
 
 # local_path_override(

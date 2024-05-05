@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "1c19c525595d0dc077c4d7a1bc2ce78aaf4748b62c96e469e39878e310e61dfb",
+  "moduleFileHash": "3e4b9db44570ff20f03bcdcf44b2da0c63e5a58956f2f54e7ffc249407f53666",
   "flags": {
     "cmdRegistries": [
       "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/"
@@ -30,7 +30,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 48,
+            "line": 49,
             "column": 22
           },
           "imports": {
@@ -65,7 +65,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 49,
+                "line": 50,
                 "column": 14
               }
             }
@@ -79,7 +79,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 76,
+            "line": 77,
             "column": 38
           },
           "imports": {
@@ -98,7 +98,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 84,
+            "line": 85,
             "column": 23
           },
           "imports": {},
@@ -114,7 +114,7 @@
               "devDependency": true,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 89,
+                "line": 90,
                 "column": 17
               }
             }
@@ -128,7 +128,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 95,
+            "line": 96,
             "column": 20
           },
           "imports": {
@@ -146,7 +146,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 96,
+                "line": 97,
                 "column": 10
               }
             }
@@ -164,7 +164,7 @@
         "rules_jvm_external": "rules_jvm_external@6.1",
         "rules_python": "rules_python@0.31.0",
         "rules_proto": "rules_proto@6.0.0",
-        "com_google_protobuf": "protobuf@23.1",
+        "com_google_protobuf": "protobuf@26.0",
         "bzlmodrio-apriltaglib": "bzlmodrio-apriltaglib@2024.3.3.0-1",
         "bzlmodrio-imgui": "bzlmodrio-imgui@2024.1.89.9-1",
         "bzlmodrio-libssh": "bzlmodrio-libssh@2024.0.105-1",
@@ -1006,7 +1006,7 @@
         "bazel_skylib": "bazel_skylib@1.5.0",
         "platforms": "platforms@0.0.9",
         "rules_proto": "rules_proto@6.0.0",
-        "com_google_protobuf": "protobuf@23.1",
+        "com_google_protobuf": "protobuf@26.0",
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_"
       },
@@ -1057,86 +1057,26 @@
         }
       }
     },
-    "protobuf@23.1": {
+    "protobuf@26.0": {
       "name": "protobuf",
-      "version": "23.1",
-      "key": "protobuf@23.1",
+      "version": "26.0",
+      "key": "protobuf@26.0",
       "repoName": "protobuf",
       "executionPlatformsToRegister": [],
       "toolchainsToRegister": [],
-      "extensionUsages": [
-        {
-          "extensionBzlFile": "@protobuf//:non_module_deps.bzl",
-          "extensionName": "non_module_deps",
-          "usingModule": "protobuf@23.1",
-          "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/MODULE.bazel",
-            "line": 20,
-            "column": 32
-          },
-          "imports": {
-            "utf8_range": "utf8_range"
-          },
-          "devImports": [],
-          "tags": [],
-          "hasDevUseExtension": false,
-          "hasNonDevUseExtension": true
-        },
-        {
-          "extensionBzlFile": "@rules_jvm_external//:extensions.bzl",
-          "extensionName": "maven",
-          "usingModule": "protobuf@23.1",
-          "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/MODULE.bazel",
-            "line": 28,
-            "column": 22
-          },
-          "imports": {
-            "maven": "maven"
-          },
-          "devImports": [],
-          "tags": [
-            {
-              "tagName": "install",
-              "attributeValues": {
-                "name": "maven",
-                "artifacts": [
-                  "com.google.code.findbugs:jsr305:3.0.2",
-                  "com.google.code.gson:gson:2.8.9",
-                  "com.google.errorprone:error_prone_annotations:2.3.2",
-                  "com.google.j2objc:j2objc-annotations:1.3",
-                  "com.google.guava:guava:31.1-jre",
-                  "com.google.guava:guava-testlib:31.1-jre",
-                  "com.google.truth:truth:1.1.2",
-                  "junit:junit:4.13.2",
-                  "org.mockito:mockito-core:4.3.1"
-                ]
-              },
-              "devDependency": false,
-              "location": {
-                "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/MODULE.bazel",
-                "line": 30,
-                "column": 14
-              }
-            }
-          ],
-          "hasDevUseExtension": false,
-          "hasNonDevUseExtension": true
-        }
-      ],
+      "extensionUsages": [],
       "deps": {
-        "bazel_skylib": "bazel_skylib@1.5.0",
-        "rules_python": "rules_python@0.31.0",
-        "rules_cc": "rules_cc@0.0.9",
-        "rules_proto": "rules_proto@6.0.0",
-        "rules_java": "rules_java@7.5.0",
-        "rules_pkg": "rules_pkg@0.7.0",
-        "platforms": "platforms@0.0.9",
         "com_google_absl": "abseil-cpp@20230802.0.bcr.1",
-        "zlib": "zlib@1.3",
-        "upb": "upb@0.0.0-20230516-61a97ef",
+        "bazel_skylib": "bazel_skylib@1.5.0",
+        "jsoncpp": "jsoncpp@1.9.5",
+        "rules_cc": "rules_cc@0.0.9",
+        "rules_java": "rules_java@7.5.0",
         "rules_jvm_external": "rules_jvm_external@6.1",
-        "com_google_googletest": "googletest@1.14.0",
+        "rules_pkg": "rules_pkg@0.7.0",
+        "rules_python": "rules_python@0.31.0",
+        "platforms": "platforms@0.0.9",
+        "zlib": "zlib@1.3",
+        "rules_proto": "rules_proto@6.0.0",
         "bazel_tools": "bazel_tools@_",
         "local_config_platform": "local_config_platform@_"
       },
@@ -1145,18 +1085,13 @@
         "ruleClassName": "http_archive",
         "attributes": {
           "urls": [
-            "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.1.zip"
+            "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v26.0.zip"
           ],
-          "integrity": "sha256-wOqfTXWzfqjp14zkxnDQZry3zr26GQ+l/IxXsfAMDCw=",
-          "strip_prefix": "protobuf-23.1",
+          "integrity": "sha256-wscevJCvl5bog09lCT8vq4iwqCsqPoBbNIQmRaKvxLA=",
+          "strip_prefix": "protobuf-26.0",
           "remote_patches": {
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/patches/0001-Add-MODULE.bazel.patch": "sha256-x8O0nVdHrIdFH2VajXrAzYjLiIaZNcNfZk7kYyor0pg=",
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/patches/0002-Add-utf8_range-dependency.patch": "sha256-UPhKk5lQVa/8675JZJG/h/WTIzmQml6g/wTFJWgWnL8=",
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/patches/0003-Examples-MODULE.bazel.patch": "sha256-mzBuXdk9K9RTN4PhYkoXcSXDXncPjSYjj6nVcq+dNv4=",
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/patches/0004-Relative-labels.patch": "sha256-VDVDwTRcVGkO4c2Ej6zE6gMYmHdk+V0pzG7nuScF3dQ=",
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/patches/0005-Migrate-from-bind-to-alias.patch": "sha256-OHsXlAzbHYMAvGRlKGcxmolaoLXa86Rc5lhs84YAApg=",
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/patches/0006-Make-rules_ruby-a-dev-only-dependency.patch": "sha256-+OEree/96gfqgK7Is+KA7/bi77icq8zaFq/9j+1lFuk=",
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/23.1/patches/0007-bazel-Get-rid-of-exec_tools.-13401.patch": "sha256-Thj5ZYqMpgaUrjZv8XyWqyD+I6XQNcZjo4jI14a7QxE="
+            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/26.0/patches/0001-Add-MODULE.bazel.patch": "sha256-Sy7TJp6JGHzGsCebJBh+vaizSbJbytfX7JsRKYXGfKY=",
+            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/protobuf/26.0/patches/0002-relative-labels.patch": "sha256-NvicAuuDJLFNLEi9pvGj7PPj/GbpYYYoVdihRosZgSA="
           },
           "remote_patch_strip": 1
         }
@@ -1880,7 +1815,7 @@
         "rules_python": "rules_python@0.31.0",
         "buildozer": "buildozer@6.4.0.2",
         "platforms": "platforms@0.0.9",
-        "com_google_protobuf": "protobuf@23.1",
+        "com_google_protobuf": "protobuf@26.0",
         "zlib": "zlib@1.3",
         "build_bazel_apple_support": "apple_support@1.15.1",
         "local_config_platform": "local_config_platform@_"
@@ -2273,6 +2208,35 @@
         }
       }
     },
+    "jsoncpp@1.9.5": {
+      "name": "jsoncpp",
+      "version": "1.9.5",
+      "key": "jsoncpp@1.9.5",
+      "repoName": "jsoncpp",
+      "executionPlatformsToRegister": [],
+      "toolchainsToRegister": [],
+      "extensionUsages": [],
+      "deps": {
+        "bazel_tools": "bazel_tools@_",
+        "local_config_platform": "local_config_platform@_"
+      },
+      "repoSpec": {
+        "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+        "ruleClassName": "http_archive",
+        "attributes": {
+          "urls": [
+            "https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.9.5.tar.gz"
+          ],
+          "integrity": "sha256-9AmFblkgwY0ML7hSduJO5gfSoJtefV8KNxNokDwnXaI=",
+          "strip_prefix": "jsoncpp-1.9.5",
+          "remote_patches": {
+            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/jsoncpp/1.9.5/patches/build_dot_bazel.patch": "sha256-Vj8diXSWps8I8h5cdEqBDYmKBA2ulvWxMZBEQlIgcpU=",
+            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/jsoncpp/1.9.5/patches/module_dot_bazel.patch": "sha256-7RC7fS8N11vcyeDEaUZ05yBqr0YY7OzuzqaWz5W2XDo="
+          },
+          "remote_patch_strip": 1
+        }
+      }
+    },
     "rules_pkg@0.7.0": {
       "name": "rules_pkg",
       "version": "0.7.0",
@@ -2332,60 +2296,6 @@
             "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/zlib/1.3/patches/module_dot_bazel.patch": "sha256-fPWLM+2xaF/kuy+kZc1YTfW6hNjrkG400Ho7gckuyJk="
           },
           "remote_patch_strip": 0
-        }
-      }
-    },
-    "upb@0.0.0-20230516-61a97ef": {
-      "name": "upb",
-      "version": "0.0.0-20230516-61a97ef",
-      "key": "upb@0.0.0-20230516-61a97ef",
-      "repoName": "upb",
-      "executionPlatformsToRegister": [],
-      "toolchainsToRegister": [],
-      "extensionUsages": [
-        {
-          "extensionBzlFile": "@upb//:non_module_deps.bzl",
-          "extensionName": "non_module_deps",
-          "usingModule": "upb@0.0.0-20230516-61a97ef",
-          "location": {
-            "file": "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/upb/0.0.0-20230516-61a97ef/MODULE.bazel",
-            "line": 15,
-            "column": 32
-          },
-          "imports": {
-            "utf8_range": "utf8_range"
-          },
-          "devImports": [],
-          "tags": [],
-          "hasDevUseExtension": false,
-          "hasNonDevUseExtension": true
-        }
-      ],
-      "deps": {
-        "bazel_skylib": "bazel_skylib@1.5.0",
-        "rules_proto": "rules_proto@6.0.0",
-        "com_google_protobuf": "protobuf@23.1",
-        "com_google_absl": "abseil-cpp@20230802.0.bcr.1",
-        "rules_pkg": "rules_pkg@0.7.0",
-        "platforms": "platforms@0.0.9",
-        "bazel_tools": "bazel_tools@_",
-        "local_config_platform": "local_config_platform@_"
-      },
-      "repoSpec": {
-        "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-        "ruleClassName": "http_archive",
-        "attributes": {
-          "urls": [
-            "https://github.com/protocolbuffers/upb/archive/61a97efa24a5ce01fb8cc73c9d1e6e7060f8ea98.tar.gz"
-          ],
-          "integrity": "sha256-fRnyrJweUIqGonKRPZqmfIFHgn+UkDWCiRC7BdnyzwM=",
-          "strip_prefix": "upb-61a97efa24a5ce01fb8cc73c9d1e6e7060f8ea98",
-          "remote_patches": {
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/upb/0.0.0-20230516-61a97ef/patches/0001-Add-MODULE.bazel.patch": "sha256-YSOPeNFt006ghZRI1D056RQ1USwCodZnjXMw6pAPhKc=",
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/upb/0.0.0-20230516-61a97ef/patches/0002-Add-utf8_range-dependency.patch": "sha256-L9jPxcjZqoJh5t9mH4BR01puRI5aUY4jtYptZt5T/p8=",
-            "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/upb/0.0.0-20230516-61a97ef/patches/0003-Backport-path-generation-instead-of-hardcoded-one.patch": "sha256-K+OqQb2b+5k43UOwHupBlfqakuNST470j/yTfvwjj04="
-          },
-          "remote_patch_strip": 1
         }
       }
     },
@@ -6699,16 +6609,7 @@
                 "{ \"group\": \"org.apache.ant\", \"artifact\": \"ant\", \"version\": \"1.10.12\" }",
                 "{ \"group\": \"org.apache.ant\", \"artifact\": \"ant-junit\", \"version\": \"1.10.12\" }",
                 "{ \"group\": \"org.mockito\", \"artifact\": \"mockito-core\", \"version\": \"4.1.0\" }",
-                "{ \"group\": \"us.hebi.quickbuf\", \"artifact\": \"quickbuf-runtime\", \"version\": \"1.3.3\" }",
-                "{ \"group\": \"com.google.code.findbugs\", \"artifact\": \"jsr305\", \"version\": \"3.0.2\" }",
-                "{ \"group\": \"com.google.code.gson\", \"artifact\": \"gson\", \"version\": \"2.8.9\" }",
-                "{ \"group\": \"com.google.errorprone\", \"artifact\": \"error_prone_annotations\", \"version\": \"2.3.2\" }",
-                "{ \"group\": \"com.google.j2objc\", \"artifact\": \"j2objc-annotations\", \"version\": \"1.3\" }",
-                "{ \"group\": \"com.google.guava\", \"artifact\": \"guava\", \"version\": \"31.1-jre\" }",
-                "{ \"group\": \"com.google.guava\", \"artifact\": \"guava-testlib\", \"version\": \"31.1-jre\" }",
-                "{ \"group\": \"com.google.truth\", \"artifact\": \"truth\", \"version\": \"1.1.2\" }",
-                "{ \"group\": \"junit\", \"artifact\": \"junit\", \"version\": \"4.13.2\" }",
-                "{ \"group\": \"org.mockito\", \"artifact\": \"mockito-core\", \"version\": \"4.3.1\" }"
+                "{ \"group\": \"us.hebi.quickbuf\", \"artifact\": \"quickbuf-runtime\", \"version\": \"1.3.3\" }"
               ],
               "fail_on_missing_checksum": true,
               "fetch_sources": false,
