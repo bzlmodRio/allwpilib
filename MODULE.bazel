@@ -87,9 +87,9 @@ python = use_extension(
     dev_dependency = True,
 )
 python.toolchain(
+    ignore_root_user_error = True,
     is_default = True,
     python_version = "3.11",
-    ignore_root_user_error = True,
 )
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
