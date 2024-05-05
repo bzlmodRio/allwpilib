@@ -82,7 +82,7 @@ use_repo(
 )
 
 python = use_extension(
-    "@rules_python//extensions:python.bzl",
+    "@rules_python//python/extensions:python.bzl",
     "python",
     dev_dependency = True,
 )
