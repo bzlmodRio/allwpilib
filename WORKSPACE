@@ -149,3 +149,17 @@ python_register_toolchains(
     ignore_root_user_error = True,
     python_version = "3.11",
 )
+
+
+http_archive(
+    name = "rules_bzlmodrio_jdk",
+    integrity = "sha256-8273HuW8oS/UDfYwhTuTfBwOq1LFhNWUuUxOjUVYSjs=",
+    strip_prefix = "rules_bzlmodrio_jdk-cc62bf1fee1e3e9ead2d5910dee9e96e445be98e",
+    urls = [
+        "https://github.com/bzlmodRio/rules_bzlmodrio_jdk/archive/cc62bf1fee1e3e9ead2d5910dee9e96e445be98e.zip",
+    ],
+)
+
+load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
+
+setup_legacy_setup_jdk_dependencies()

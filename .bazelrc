@@ -4,6 +4,8 @@ build --java_language_version=11
 test --test_output=errors
 test --test_verbose_timeout_warnings
 
+build --java_runtime_version=roboriojdk_17
+
 import shared/bazel/rc/buildbuddy.rc
 import shared/bazel/compiler_flags/sanitizers.rc
 import shared/bazel/compiler_flags/bullseye32_flags.rc
