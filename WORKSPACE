@@ -150,7 +150,6 @@ python_register_toolchains(
     python_version = "3.11",
 )
 
-
 http_archive(
     name = "rules_bzlmodrio_jdk",
     integrity = "sha256-8273HuW8oS/UDfYwhTuTfBwOq1LFhNWUuUxOjUVYSjs=",

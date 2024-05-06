@@ -24,13 +24,12 @@ bazel_dep(name = "rules_bzlmodrio_jdk", version = "")
 
 git_override(
     module_name = "protobuf",
-    commit = "f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c", # "3.21.12",
+    commit = "f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",  # "3.21.12",
     patches = [
         "//upstream_utils/protobuf_patches/bzlmod:0001-Add-MODULE.bazel.patch",
     ],
     remote = "https://github.com/protocolbuffers/protobuf",
 )
-
 
 git_override(
     module_name = "rules_bzlmodrio_jdk",
