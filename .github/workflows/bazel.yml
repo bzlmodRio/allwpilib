@@ -35,6 +35,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: 17
+          architecture: x64
 
       - name: Build wpimath dependencies
         run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k wpiutil/... --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
