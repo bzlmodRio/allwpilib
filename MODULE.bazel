@@ -33,7 +33,7 @@ git_override(
 
 git_override(
     module_name = "rules_bzlmodrio_jdk",
-    commit = "cc62bf1fee1e3e9ead2d5910dee9e96e445be98e",
+    commit = "1dc7181473f4099147adfb0ab36e9c0b17c2f445",
     remote = "https://github.com/bzlmodRio/rules_bzlmodrio_jdk",
 )
 

@@ -152,10 +152,10 @@ python_register_toolchains(
 
 http_archive(
     name = "rules_bzlmodrio_jdk",
-    integrity = "sha256-8273HuW8oS/UDfYwhTuTfBwOq1LFhNWUuUxOjUVYSjs=",
-    strip_prefix = "rules_bzlmodrio_jdk-cc62bf1fee1e3e9ead2d5910dee9e96e445be98e",
+    integrity = "sha256-EhkwMmQe07FWiy7mcXfFDZWhj25ivhZsqfYGPf4fVno=",
+    strip_prefix = "rules_bzlmodrio_jdk-1dc7181473f4099147adfb0ab36e9c0b17c2f445",
     urls = [
-        "https://github.com/bzlmodRio/rules_bzlmodrio_jdk/archive/cc62bf1fee1e3e9ead2d5910dee9e96e445be98e.zip",
+        "https://github.com/bzlmodRio/rules_bzlmodrio_jdk/archive/1dc7181473f4099147adfb0ab36e9c0b17c2f445.zip",
     ],
 )
 
