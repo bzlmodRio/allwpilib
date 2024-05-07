@@ -1,57 +1,51 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
-    name = "com_google_protobuf",
-    patch_args = ["-p1"],
-    patches = [
-        "//upstream_utils/protobuf_patches:0001-Fix-sign-compare-warnings.patch",
-        "//upstream_utils/protobuf_patches:0002-Remove-redundant-move.patch",
-        "//upstream_utils/protobuf_patches:0003-Fix-maybe-uninitialized-warnings.patch",
-        "//upstream_utils/protobuf_patches:0004-Fix-coded_stream-WriteRaw.patch",
-        "//upstream_utils/protobuf_patches:0005-Suppress-enum-enum-conversion-warning.patch",
-        "//upstream_utils/protobuf_patches:0006-Fix-noreturn-function-returning.patch",
-        "//upstream_utils/protobuf_patches:0007-Work-around-GCC-12-restrict-warning-compiler-bug.patch",
-        "//upstream_utils/protobuf_patches:0008-Disable-MSVC-switch-warning.patch",
-        "//upstream_utils/protobuf_patches:0009-Disable-unused-function-warning.patch",
-        "//upstream_utils/protobuf_patches:0010-Disable-pedantic-warning.patch",
-        "//upstream_utils/protobuf_patches:0011-Avoid-use-of-sprintf.patch",
-    ],
-    sha256 = "f7042d540c969b00db92e8e1066a9b8099c8379c33f40f360eb9e1d98a36ca26",
-    strip_prefix = "protobuf-3.21.12",
-    urls = [
-        "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.21.12.zip",
-    ],
+    name = "build_bazel_apple_support",
+    sha256 = "c4bb2b7367c484382300aee75be598b92f847896fb31bbd22f3a2346adf66a80",
+    url = "https://github.com/bazelbuild/apple_support/releases/download/1.15.1/apple_support.1.15.1.tar.gz",
 )
+
+load(
+    "@build_bazel_apple_support//lib:repositories.bzl",
+    "apple_support_dependencies",
+)
+
+apple_support_dependencies()
 
 http_archive(
     name = "rules_proto",
-    sha256 = "dc3fb206a2cb3441b485eb1e423165b231235a1ea9b031b4433cf7bc1fa460dd",
-    strip_prefix = "rules_proto-5.3.0-21.7",
-    urls = [
-        "https://github.com/bazelbuild/rules_proto/archive/refs/tags/5.3.0-21.7.tar.gz",
-    ],
+    sha256 = "303e86e722a520f6f326a50b41cfc16b98fe6d1955ce46642a5b7a67c11c0f5d",
+    strip_prefix = "rules_proto-6.0.0",
+    url = "https://github.com/bazelbuild/rules_proto/releases/download/6.0.0/rules_proto-6.0.0.tar.gz",
 )
 
-load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies", "rules_proto_toolchains")
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies")
 
 rules_proto_dependencies()
+
+load("@rules_proto//proto:toolchains.bzl", "rules_proto_toolchains")
 
 rules_proto_toolchains()
 
 # Rules Python
 http_archive(
     name = "rules_python",
-    sha256 = "94750828b18044533e98a129003b6a68001204038dc4749f40b195b24c38f49f",
-    strip_prefix = "rules_python-0.21.0",
-    url = "https://github.com/bazelbuild/rules_python/releases/download/0.21.0/rules_python-0.21.0.tar.gz",
+    sha256 = "c68bdc4fbec25de5b5493b8819cfc877c4ea299c0dcb15c244c5a00208cde311",
+    strip_prefix = "rules_python-0.31.0",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.31.0/rules_python-0.31.0.tar.gz",
 )
+
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
+
+py_repositories()
 
 # Download Extra java rules
 http_archive(
     name = "rules_jvm_external",
-    sha256 = "f86fd42a809e1871ca0aabe89db0d440451219c3ce46c58da240c7dcdc00125f",
-    strip_prefix = "rules_jvm_external-5.2",
-    url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/5.2/rules_jvm_external-5.2.tar.gz",
+    sha256 = "08ea921df02ffe9924123b0686dc04fd0ff875710bfadb7ad42badb931b0fd50",
+    strip_prefix = "rules_jvm_external-6.1",
+    url = "https://github.com/bazelbuild/rules_jvm_external/releases/download/6.1/rules_jvm_external-6.1.tar.gz",
 )
 
 load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
@@ -110,11 +104,61 @@ pinned_maven_install()
 
 http_archive(
     name = "aspect_bazel_lib",
-    sha256 = "4d6010ca5e3bb4d7045b071205afa8db06ec11eb24de3f023d74d77cca765f66",
-    strip_prefix = "bazel-lib-1.39.0",
-    url = "https://github.com/aspect-build/bazel-lib/releases/download/v1.39.0/bazel-lib-v1.39.0.tar.gz",
+    sha256 = "a8a92645e7298bbf538aa880131c6adb4cf6239bbd27230f077a00414d58e4ce",
+    strip_prefix = "bazel-lib-2.7.2",
+    url = "https://github.com/aspect-build/bazel-lib/releases/download/v2.7.2/bazel-lib-v2.7.2.tar.gz",
 )
 
 load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
 
 aspect_bazel_lib_dependencies()
+
+http_archive(
+    name = "com_google_protobuf",
+    patch_args = ["-p1"],
+    patches = [
+        "//upstream_utils/protobuf_patches:0001-Fix-sign-compare-warnings.patch",
+        "//upstream_utils/protobuf_patches:0002-Remove-redundant-move.patch",
+        "//upstream_utils/protobuf_patches:0003-Fix-maybe-uninitialized-warnings.patch",
+        "//upstream_utils/protobuf_patches:0004-Fix-coded_stream-WriteRaw.patch",
+        "//upstream_utils/protobuf_patches:0005-Suppress-enum-enum-conversion-warning.patch",
+        "//upstream_utils/protobuf_patches:0006-Fix-noreturn-function-returning.patch",
+        "//upstream_utils/protobuf_patches:0007-Work-around-GCC-12-restrict-warning-compiler-bug.patch",
+        "//upstream_utils/protobuf_patches:0008-Disable-MSVC-switch-warning.patch",
+        "//upstream_utils/protobuf_patches:0009-Disable-unused-function-warning.patch",
+        "//upstream_utils/protobuf_patches:0010-Disable-pedantic-warning.patch",
+        "//upstream_utils/protobuf_patches:0011-Avoid-use-of-sprintf.patch",
+    ],
+    sha256 = "f7042d540c969b00db92e8e1066a9b8099c8379c33f40f360eb9e1d98a36ca26",
+    strip_prefix = "protobuf-3.21.12",
+    urls = [
+        "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.21.12.zip",
+    ],
+)
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+load("@bazel_features//:deps.bzl", "bazel_features_deps")
+
+bazel_features_deps()
+
+python_register_toolchains(
+    name = "python_3_11",
+    ignore_root_user_error = True,
+    python_version = "3.11",
+)
+
+http_archive(
+    name = "rules_bzlmodrio_jdk",
+    integrity = "sha256-lomuqGaQPqVLzlGyfDb/mlEyAGPFAV6dF+pr0GINGxg=",
+    strip_prefix = "rules_bzlmodrio_jdk-32d4c03e8343a17dbc0b4bdf1a482e77a3d37058",
+    urls = [
+        "https://github.com/bzlmodRio/rules_bzlmodrio_jdk/archive/32d4c03e8343a17dbc0b4bdf1a482e77a3d37058.zip",
+    ],
+)
+
+load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
+
+setup_legacy_setup_jdk_dependencies()

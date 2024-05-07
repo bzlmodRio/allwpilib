@@ -10,8 +10,11 @@ fieldImages/bin
 hal/bin
 myRobot/bin
 ntcore/bin
+romiVendordep/bin
 wpilibNewCommands/bin
 wpilibj/bin
 wpimath/bin
 wpinet/bin
 wpiutil/bin
+wpiunits/bin
+xrpVendordep/bin
