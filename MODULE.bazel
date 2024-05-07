@@ -5,14 +5,14 @@ module(
 )
 
 bazel_dep(name = "googletest", version = "1.14.0", repo_name = "gtest")
-bazel_dep(name = "aspect_bazel_lib", version = "2.7.1")
+bazel_dep(name = "aspect_bazel_lib", version = "2.7.2")
 bazel_dep(name = "apple_support", version = "1.15.1", repo_name = "build_bazel_apple_support")
 bazel_dep(name = "rules_cc", version = "0.0.9")
-bazel_dep(name = "rules_java", version = "6.4.0")
-bazel_dep(name = "rules_jvm_external", version = "5.3")
-bazel_dep(name = "rules_python", version = "0.21.0")
-bazel_dep(name = "rules_proto", version = "6.0.0-rc3")
-bazel_dep(name = "protobuf", version = "21.7", repo_name = "com_google_protobuf")
+bazel_dep(name = "rules_java", version = "7.5.0")
+bazel_dep(name = "rules_jvm_external", version = "6.1")
+bazel_dep(name = "rules_python", version = "0.31.0")
+bazel_dep(name = "rules_proto", version = "6.0.0")
+bazel_dep(name = "protobuf", version = "26.0", repo_name = "com_google_protobuf")
 bazel_dep(name = "bzlmodrio-apriltaglib", version = "2024.3.3.0-1")
 bazel_dep(name = "bzlmodrio-imgui", version = "2024.1.89.9-1")
 bazel_dep(name = "bzlmodrio-libssh", version = "2024.0.105-1")
@@ -20,25 +20,27 @@ bazel_dep(name = "bzlmodrio-ni", version = "2024.2.1")
 bazel_dep(name = "bzlmodrio-opencv", version = "2024.4.8.0-2")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
+bazel_dep(name = "rules_bzlmodrio_jdk", version = "")
 
 git_override(
-    module_name = "com_google_protobuf",
-    commit = "v3.21.12",
+    module_name = "protobuf",
+    commit = "f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",  # "3.21.12",
     patches = [
-        "//upstream_utils/protobuf_patches:0001-Fix-sign-compare-warnings.patch",
-        "//upstream_utils/protobuf_patches:0002-Remove-redundant-move.patch",
-        "//upstream_utils/protobuf_patches:0003-Fix-maybe-uninitialized-warnings.patch",
-        "//upstream_utils/protobuf_patches:0004-Fix-coded_stream-WriteRaw.patch",
-        "//upstream_utils/protobuf_patches:0005-Suppress-enum-enum-conversion-warning.patch",
-        "//upstream_utils/protobuf_patches:0006-Fix-noreturn-function-returning.patch",
-        "//upstream_utils/protobuf_patches:0007-Work-around-GCC-12-restrict-warning-compiler-bug.patch",
-        "//upstream_utils/protobuf_patches:0008-Disable-MSVC-switch-warning.patch",
-        "//upstream_utils/protobuf_patches:0009-Disable-unused-function-warning.patch",
-        "//upstream_utils/protobuf_patches:0010-Disable-pedantic-warning.patch",
-        "//upstream_utils/protobuf_patches:0011-Avoid-use-of-sprintf.patch",
+        "//upstream_utils/protobuf_patches/bzlmod:0001-Add-MODULE.bazel.patch",
     ],
     remote = "https://github.com/protocolbuffers/protobuf",
 )
+
+git_override(
+    module_name = "rules_bzlmodrio_jdk",
+    commit = "32d4c03e8343a17dbc0b4bdf1a482e77a3d37058",
+    remote = "https://github.com/bzlmodRio/rules_bzlmodrio_jdk",
+)
+
+# local_path_override(
+#     module_name = "rules_bzlmodrio_jdk",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_bzlmodrio_jdk",
+# )
 
 # local_path_override(
 #     module_name = "rules_bzlmodrio_toolchains",
@@ -81,21 +83,21 @@ use_repo(
     "quickbuffer_protoc_windows",
 )
 
-python = use_extension("@rules_python//python:extensions.bzl", "python")
+python = use_extension(
+    "@rules_python//python/extensions:python.bzl",
+    "python",
+    dev_dependency = True,
+)
 python.toolchain(
-    name = "python3_10",
     ignore_root_user_error = True,
-    python_version = "3.10",
-)
-use_repo(python, "python3_10_toolchains")
-
-register_toolchains(
-    "@python3_10_toolchains//:all",
+    is_default = True,
+    python_version = "3.11",
 )
 
-pip = use_extension("@rules_python//python:extensions.bzl", "pip")
+pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
-    name = "allwpilib_pip_deps",
+    hub_name = "allwpilib_pip_deps",
+    python_version = "3.11",
     requirements_lock = "//:requirements_lock.txt",
 )
 use_repo(pip, "allwpilib_pip_deps")
