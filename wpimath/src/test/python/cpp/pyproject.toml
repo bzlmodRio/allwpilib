@@ -12,6 +12,8 @@ sources = [
 ]
 generation_data = "gen"
 
+extra_includes = ["/home/pjreiniger/git/allwpilib/wpimath/src/test/python/cpp/wpimath_test/include"]
+
 [tool.robotpy-build.wrappers."wpimath_test".autogen_headers]
 module = "module.h"
 

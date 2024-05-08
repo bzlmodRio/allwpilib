@@ -158,7 +158,7 @@ def
     ((SimCB*)param)->m_fn();
   }, cb.get());
   cb->SetUID(uid);
-  return std::move(cb);
+  return cb;
 }
 ,
       py::arg("callback")
@@ -174,7 +174,7 @@ def
     ((SimCB*)param)->m_fn();
   }, cb.get());
   cb->SetUID(uid);
-  return std::move(cb);
+  return cb;
 }
 ,
       py::arg("callback")

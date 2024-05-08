@@ -138,8 +138,8 @@ void finish() {
   cls_NetworkTableEntry.doc() =
     "NetworkTables Entry\n"
 "\n"
-".. note:: For backwards compatibility, the NetworkTableEntry destructor does not\n"
-"   release the entry.\n"
+".. note:: F\n"
+"release the entry.\n"
 "\n"
 "@ingroup ntcore_cpp_api";
 
@@ -334,12 +334,12 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.\n"
+"          .. note:: T\n"
+"          concern, use GetValue() instead.\n"
 "          \n"
-"          .. note:: The returned array is std::vector<int> instead of std::vector<bool>\n"
-"             because std::vector<bool> is special-cased in C++.  0 is false, any\n"
-"             non-zero value is true.")
+"          .. note:: T\n"
+"          because std::vector<bool> is special-cased in C++.  0 is false, any\n"
+"          non-zero value is true.")
   )
   
   
@@ -357,8 +357,8 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -376,8 +376,8 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -395,8 +395,8 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -414,8 +414,8 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   

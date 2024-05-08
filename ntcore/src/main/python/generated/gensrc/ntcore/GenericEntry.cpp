@@ -294,12 +294,12 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.\n"
+"          .. note:: T\n"
+"          concern, use GetValue() instead.\n"
 "          \n"
-"          .. note:: The returned array is std::vector<int> instead of std::vector<bool>\n"
-"             because std::vector<bool> is special-cased in C++.  0 is false, any\n"
-"             non-zero value is true.")
+"          .. note:: T\n"
+"          because std::vector<bool> is special-cased in C++.  0 is false, any\n"
+"          non-zero value is true.")
   )
   
   
@@ -316,8 +316,8 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -334,8 +334,8 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -352,8 +352,8 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -370,8 +370,8 @@ def
 "\n"
 ":returns: the entry's value or the given default value\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -383,8 +383,8 @@ def
     "Get an array of all value changes since the last call to ReadQueue.\n"
 "Also provides a timestamp for each value.\n"
 "\n"
-".. note:: The \"poll storage\" subscribe option can be used to set the queue\n"
-"   depth.\n"
+".. note:: T\n"
+"depth.\n"
 "\n"
 ":returns: Array of timestamped values; empty array if no new changes have\n"
 "          been published since the previous call.")
@@ -832,7 +832,7 @@ def
   cls_GenericEntry.doc() =
     "NetworkTables generic entry.\n"
 "\n"
-".. note:: Unlike NetworkTableEntry, the entry goes away when this is destroyed.";
+".. note:: U";
 
   cls_GenericEntry
   

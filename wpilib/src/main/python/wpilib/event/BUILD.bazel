@@ -1,0 +1,37 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+generate_robotpy_project_files(
+    name = "event",
+    config_file = "//wpilib/src/main/python:config_file",
+    internal_project_dependencies = [
+        "hal",
+        "wpiutil",
+        "wpimath",
+        "ntcore",
+    ],
+    parent_folder = "wpilib/",
+    python_deps = [
+        "//hal/src/main/python:pkgcfg",
+        "//wpimath/src/main/python:pkgcfg",
+        "//ntcore/src/main/python:pkgcfg",
+    ],
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+create_pybind_library(
+    "event",
+    entry_point = ["event.cpp"],
+    extension_visibility = ["//wpilib/src/main/python:__subpackages__"],
+    generation_helper_prefix = "//wpilib/src/main/python:wpilibc_event",
+    deps = [
+        "//wpilibc/src/main/native:wpilibc.shared",
+        "//wpimath/src/main/python/wpimath:wpimath_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)

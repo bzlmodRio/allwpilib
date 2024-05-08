@@ -1,5 +1,3 @@
-from .version import version as __version__
-
 # Only needed for side effects
 from . import _initialize
 from .exceptions import HALError

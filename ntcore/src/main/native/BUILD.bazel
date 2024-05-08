@@ -12,6 +12,14 @@ wpilib_cc_library(
     strip_include_prefix = "cpp",
 )
 
+filegroup(
+    name = "headers",
+    srcs = glob(["include/**/*"]) + [
+        "//ntcore:generated_cc_header_files",
+    ],
+    visibility = ["//ntcore/src/main/python:__subpackages__"],
+)
+
 wpilib_cc_static_and_shared_library(
     name = "ntcore",
     srcs = glob(

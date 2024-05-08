@@ -9,7 +9,7 @@
 
 
 
-
+#include <iostream>
 
 
 
@@ -62,7 +62,7 @@ struct rpybuild_SimDeviceData_initializer {
 
     m(m)
   {
-    
+    std::cout << "HELLO" << std::endl;
     
 
     
@@ -129,7 +129,7 @@ def
     ((SimValueCB*)param)->m_fn(name, handle, (HAL_SimValueDirection)direction, *value);
   }, initialNotify);
   cb->SetUID(uid);
-  return std::move(cb);
+  return cb;
 }
 ,
       py::arg("device"), py::arg("callback"), py::arg("initialNotify")
@@ -149,7 +149,7 @@ def
     ((SimValueCB*)param)->m_fn(name, handle, (HAL_SimValueDirection)direction, *value);
   }, initialNotify);
   cb->SetUID(uid);
-  return std::move(cb);
+  return cb;
 }
 ,
       py::arg("value"), py::arg("callback"), py::arg("initialNotify")
@@ -169,7 +169,7 @@ def
     ((SimValueCB*)param)->m_fn(name, handle, (HAL_SimValueDirection)direction, *value);
   }, initialNotify);
   cb->SetUID(uid);
-  return std::move(cb);
+  return cb;
 }
 ,
       py::arg("value"), py::arg("callback"), py::arg("initialNotify"), py::doc(

@@ -246,8 +246,8 @@ def
 "Also provides a timestamp for each value. Values that cannot be unpacked\n"
 "are dropped.\n"
 "\n"
-".. note:: The \"poll storage\" subscribe option can be used to set the queue\n"
-"   depth.\n"
+".. note:: T\n"
+"depth.\n"
 "\n"
 ":returns: Array of timestamped values; empty array if no valid new changes\n"
 "          have been published since the previous call.")

@@ -29,6 +29,11 @@ version = "2024.3.2"
 libs = ["ntcore"]
 
 [tool.robotpy-build.wrappers."ntcore"]
+
+extra_includes = [
+    "ntcore/src/generated/main/native/include"
+]
+
 name = "ntcore"
 sources = [
     "ntcore/src/ntcore.cpp",

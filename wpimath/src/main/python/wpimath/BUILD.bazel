@@ -1,0 +1,34 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+generate_robotpy_project_files(
+    name = "wpimath",
+    config_file = "//wpimath/src/main/python:config_file",
+    init_file = "_init_wpimath.py",
+    internal_project_dependencies = ["wpiutil"],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+create_pybind_library(
+    "wpimath",
+    entry_point = ["src/wpimath.cpp"],
+    extension_visibility = ["//wpimath/src/main/python:__subpackages__"],
+    generation_helper_prefix = "//wpimath/src/main/python:wpimath",
+    deps = [
+        "//wpimath/src/main/native:wpimath.shared",
+        "//wpimath/src/main/python/wpimath/_impl",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob([
+        "*.py",
+        "_impl/*.py",
+    ]),  # TODO bad
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)

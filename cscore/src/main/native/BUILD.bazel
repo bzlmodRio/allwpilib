@@ -23,6 +23,12 @@ filegroup(
     }),
 )
 
+filegroup(
+    name = "headers",
+    srcs = glob(["include/**/*"]),
+    visibility = ["//cscore/src/main/python:__subpackages__"],
+)
+
 wpilib_objc_library(
     name = "cscore-mac",
     srcs = glob([

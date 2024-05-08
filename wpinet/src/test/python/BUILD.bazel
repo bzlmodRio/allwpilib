@@ -1,0 +1,13 @@
+load("//shared/bazel/rules/python:python_rules.bzl", "wpilib_py_test")
+
+wpilib_py_test(
+    "wpinet_tests",
+    extra_sources = ["conftest.py"],
+    tests = glob(
+        ["**/*.py"],
+        exclude = ["conftest.py"],
+    ),
+    deps = [
+        "//wpinet/src/main/python:wpinet",
+    ],
+)

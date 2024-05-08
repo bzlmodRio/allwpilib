@@ -1,0 +1,59 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+generate_robotpy_project_files(
+    name = "wpilib",
+    config_file = "//wpilib/src/main/python:config_file",
+    internal_project_dependencies = [
+        "hal",
+        "wpiutil",
+        "wpimath",
+        "ntcore",
+    ],
+    python_deps = [
+        "//hal/src/main/python:pkgcfg",
+        "//wpimath/src/main/python:pkgcfg",
+        "//ntcore/src/main/python:pkgcfg",
+    ],
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+filegroup(
+    name = "rpy_headers",
+    srcs = glob([
+        "src/rpy/*.h",
+        "src/rpy/*.inc",
+    ]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+wpilib_cc_library(
+    name = "rpy_includes",
+    hdrs = [":rpy_headers"],
+    includes = ["src"],
+    strip_include_prefix = ".",
+)
+
+create_pybind_library(
+    "wpilib",
+    entry_point = ["src/main.cpp"],
+    extension_visibility = ["//wpilib/src/main/python:__subpackages__"],
+    #extra_hdrs = ,
+    extra_srcs = glob(
+        ["src/rpy/*.cpp"],
+    ),
+    generation_helper_prefix = "//wpilib/src/main/python:wpilib_core",
+    local_defines = ["DYNAMIC_CAMERA_SERVER=1"],
+    deps = [
+        ":rpy_includes",
+        "//ntcore/src/main/python/ntcore:ntcore_pybind_library",
+        "//wpilib/src/main/python/wpilib/interfaces:interfaces_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)

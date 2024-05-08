@@ -757,9 +757,9 @@ def
 "\n"
 ":returns: False if the table key already exists with a different type\n"
 "          \n"
-"          .. note:: The array must be of int's rather than of bool's because\n"
-"             std::vector<bool> is special-cased in C++.  0 is false, any\n"
-"             non-zero value is true.")
+"          .. note:: T\n"
+"          std::vector<bool> is special-cased in C++.  0 is false, any\n"
+"          non-zero value is true.")
   )
   
   
@@ -801,12 +801,12 @@ def
 ":returns: the value associated with the given key or the given default value\n"
 "          if there is no value associated with the key\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.\n"
+"          .. note:: T\n"
+"          concern, use GetValue() instead.\n"
 "          \n"
-"          .. note:: The returned array is std::vector<int> instead of std::vector<bool>\n"
-"             because std::vector<bool> is special-cased in C++.  0 is false, any\n"
-"             non-zero value is true.")
+"          .. note:: T\n"
+"          because std::vector<bool> is special-cased in C++.  0 is false, any\n"
+"          non-zero value is true.")
   )
   
   
@@ -863,8 +863,8 @@ def
 ":returns: the value associated with the given key or the given default value\n"
 "          if there is no value associated with the key\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -921,8 +921,8 @@ def
 ":returns: the value associated with the given key or the given default value\n"
 "          if there is no value associated with the key\n"
 "          \n"
-"          .. note:: This makes a copy of the array.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   
@@ -979,8 +979,8 @@ def
 ":returns: the value associated with the given key or the given default value\n"
 "          if there is no value associated with the key\n"
 "          \n"
-"          .. note:: This makes a copy of the raw contents.  If the overhead of this is a\n"
-"             concern, use GetValue() instead.")
+"          .. note:: T\n"
+"          concern, use GetValue() instead.")
   )
   
   

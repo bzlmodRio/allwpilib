@@ -37,6 +37,12 @@ filegroup(
     }),
 )
 
+filegroup(
+    name = "headers",
+    srcs = glob(["include/**/*"]) + ["//hal:generated_cc_header_files"],
+    visibility = ["//hal/src/main:__subpackages__"],
+)
+
 wpilib_cc_static_and_shared_library(
     name = "wpiHal",
     srcs = ["platform-srcs"] + glob(

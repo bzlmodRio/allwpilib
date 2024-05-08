@@ -1,0 +1,142 @@
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
+
+filegroup(
+    name = "config_file",
+    srcs = ["pyproject.toml"],
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpimath",
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpimath_controls",
+    rpy_include_dir = "generated/rpy-include/wpimath/_controls/rpy-include",
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpimath_filter",
+    rpy_include_dir = "generated/rpy-include/wpimath/filter/rpy-include",
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpimath_geometry",
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpimath_interpolation",
+    rpy_include_dir = "generated/rpy-include/wpimath/interpolation/rpy-include",
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpimath_kinematics",
+    rpy_include_dir = "generated/rpy-include/wpimath/kinematics/rpy-include",
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpimath_spline",
+    rpy_include_dir = "generated/rpy-include/wpimath/spline/rpy-include",
+    visibility = ["//wpimath/src/main/python:__subpackages__"],
+)
+
+generate_robotpy_source_files(
+    name = "wpimath",
+    config_file = ":config_file",
+    headers = ["//wpimath/src/main/native:headers"],
+    internal_project_dependencies = ["wpiutil"],
+    projects = [
+        "wpimath",
+        "_impl",
+        "_controls",
+        "filter",
+        "geometry",
+        "kinematics",
+        "interpolation",
+        "spline",
+    ],
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+)
+
+pybind_python_library(
+    name = "wpimath",
+    srcs = [
+        "//wpimath/src/main/python/wpimath:python_files",
+        "//wpimath/src/main/python/wpimath/_controls:python_files",
+        "//wpimath/src/main/python/wpimath/_impl:python_files",
+        "//wpimath/src/main/python/wpimath/controller:python_files",
+        "//wpimath/src/main/python/wpimath/estimator:python_files",
+        "//wpimath/src/main/python/wpimath/filter:python_files",
+        "//wpimath/src/main/python/wpimath/geometry:python_files",
+        "//wpimath/src/main/python/wpimath/interpolation:python_files",
+        "//wpimath/src/main/python/wpimath/kinematics:python_files",
+        "//wpimath/src/main/python/wpimath/optimization:python_files",
+        "//wpimath/src/main/python/wpimath/path:python_files",
+        "//wpimath/src/main/python/wpimath/spline:python_files",
+        "//wpimath/src/main/python/wpimath/system:python_files",
+        "//wpimath/src/main/python/wpimath/trajectory:python_files",
+    ],
+    data = [
+        "//wpimath/src/main/native:wpimath",
+        "//wpimath/src/main/python/wpimath:wpimath.pyso",
+        "//wpimath/src/main/python/wpimath/_controls:controls.pyso",
+        "//wpimath/src/main/python/wpimath/_impl:copy_lib",
+        "//wpimath/src/main/python/wpimath/filter:filter.pyso",
+        "//wpimath/src/main/python/wpimath/geometry:geometry.pyso",
+        "//wpimath/src/main/python/wpimath/interpolation:interpolation.pyso",
+        "//wpimath/src/main/python/wpimath/kinematics:kinematics.pyso",
+        "//wpimath/src/main/python/wpimath/spline:spline.pyso",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpiutil/src/main/python:wpiutil",
+    ],
+)
+
+py_library(
+    name = "pkgcfg",
+    srcs = [
+        "//wpimath/src/main/python/wpimath:pkgcfg",
+        "//wpimath/src/main/python/wpimath/_controls:pkgcfg",
+        "//wpimath/src/main/python/wpimath/_impl:pkgcfg",
+        "//wpimath/src/main/python/wpimath/filter:pkgcfg",
+        "//wpimath/src/main/python/wpimath/geometry:pkgcfg",
+        "//wpimath/src/main/python/wpimath/interpolation:pkgcfg",
+        "//wpimath/src/main/python/wpimath/kinematics:pkgcfg",
+        "//wpimath/src/main/python/wpimath/spline:pkgcfg",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+)
+
+write_source_files(
+    name = "write_on_build_dl_files",
+    additional_update_targets = [
+        "//wpimath/src/main/python/wpimath:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/_controls:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/_impl:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/filter:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/geometry:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/interpolation:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/kinematics:write_on_build_dl_files",
+        "//wpimath/src/main/python/wpimath/spline:write_on_build_dl_files",
+    ],
+    suggested_update_target = "//:write_on_build_dl_files",
+    visibility = ["//visibility:public"],
+)

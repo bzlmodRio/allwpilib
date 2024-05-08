@@ -89,7 +89,7 @@ void finish(const char * set_doc = NULL, const char * add_doc = NULL) {
   cls_StructEntry.doc() =
     "NetworkTables struct-encoded value entry.\n"
 "\n"
-".. note:: Unlike NetworkTableEntry, the entry goes away when this is destroyed.";
+".. note:: U";
 
   cls_StructEntry
   

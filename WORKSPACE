@@ -109,9 +109,15 @@ http_archive(
     url = "https://github.com/aspect-build/bazel-lib/releases/download/v2.7.2/bazel-lib-v2.7.2.tar.gz",
 )
 
-load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
+load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies", "aspect_bazel_lib_register_toolchains")
+
+# Required bazel-lib dependencies
 
 aspect_bazel_lib_dependencies()
+
+# Register bazel-lib toolchains
+
+aspect_bazel_lib_register_toolchains()
 
 http_archive(
     name = "com_google_protobuf",
@@ -205,13 +211,13 @@ load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependenci
 
 setup_legacy_setup_jdk_dependencies()
 
-# http_archive(
-#     name = "rules_python_pytest",
-#     sha256 = "8b82935e16f7b28e3711a68ae5f88f44d8685ccd906b869f7721fdd4c32f2369",
-#     strip_prefix = "rules_python_pytest-1.1.0",
-#     url = "https://github.com/caseyduquettesc/rules_python_pytest/releases/download/v1.1.0/rules_python_pytest-v1.1.0.tar.gz",
-# )
-# 
-# load("@rules_python_pytest//python_pytest:repositories.bzl", "rules_python_pytest_dependencies")
-# 
-# rules_python_pytest_dependencies()
+http_archive(
+    name = "rules_python_pytest",
+    sha256 = "8b82935e16f7b28e3711a68ae5f88f44d8685ccd906b869f7721fdd4c32f2369",
+    strip_prefix = "rules_python_pytest-1.1.0",
+    url = "https://github.com/caseyduquettesc/rules_python_pytest/releases/download/v1.1.0/rules_python_pytest-v1.1.0.tar.gz",
+)
+
+load("@rules_python_pytest//python_pytest:repositories.bzl", "rules_python_pytest_dependencies")
+
+rules_python_pytest_dependencies()

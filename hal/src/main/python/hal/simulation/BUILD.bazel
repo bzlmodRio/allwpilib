@@ -1,0 +1,33 @@
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
+
+create_pybind_library(
+    "simulation",
+    entry_point = ["main.cpp"],
+    extension_visibility = ["//hal/src/main/python:__subpackages__"],
+    extra_srcs = ["resethandles.cpp"],
+    extra_hdrs = glob(["*.h"]),
+    generation_helper_prefix = "//hal/src/main/python:hal_simulation",
+    includes = ["."],
+    deps = [
+        "//hal/src/main/native:wpiHal.shared",
+        "//wpiutil/src/main/python/wpiutil:wpiutil_pybind_library",
+    ],
+)
+
+filegroup(
+    name = "python_files",
+    srcs = glob(["*.py"]),
+    visibility = ["//hal/src/main/python:__subpackages__"],
+)
+
+generate_robotpy_project_files(
+    name = "simulation",
+    config_file = "//hal/src/main/python:config_file",
+    internal_project_dependencies = ["wpiutil"],
+    parent_folder = "hal/",
+    python_deps = [
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+    visibility = ["//hal/src/main/python:__subpackages__"],
+)

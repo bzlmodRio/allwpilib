@@ -647,7 +647,7 @@ def_static
 "\n"
 ":returns: The entry value\n"
 "          \n"
-"          .. note:: This function moves the values out of the vector.")
+"          .. note:: T")
   )
   
   
@@ -666,7 +666,7 @@ def_static
 "\n"
 ":returns: The entry value\n"
 "          \n"
-"          .. note:: This function moves the values out of the vector.")
+"          .. note:: T")
   )
   
   
@@ -685,7 +685,7 @@ def_static
 "\n"
 ":returns: The entry value\n"
 "          \n"
-"          .. note:: This function moves the values out of the vector.")
+"          .. note:: T")
   )
   
   
@@ -704,7 +704,7 @@ def_static
 "\n"
 ":returns: The entry value\n"
 "          \n"
-"          .. note:: This function moves the values out of the vector.")
+"          .. note:: T")
   )
   
   

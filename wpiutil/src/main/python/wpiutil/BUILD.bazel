@@ -31,10 +31,10 @@ create_pybind_library(
     ],
 )
 
-# copy_native_file(
-#     name = "wpiutil",
-#     library = "//wpiutil/src/main/native:wpiutil",
-# )
+copy_native_file(
+    name = "wpiutil",
+    library = "//wpiutil/src/main/native:wpiutil",
+)
 
 filegroup(
     name = "python_files",

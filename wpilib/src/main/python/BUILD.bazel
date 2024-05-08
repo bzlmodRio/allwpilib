@@ -1,0 +1,131 @@
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
+
+filegroup(
+    name = "config_file",
+    srcs = ["pyproject.toml"],
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpilib_core",
+    rpy_include_dir = "generated/rpy-include/wpilib/rpy-include",
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpilibc_interfaces",
+    rpy_include_dir = "generated/rpy-include/wpilib/interfaces/rpy-include",
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpilibc_counter",
+    rpy_include_dir = "generated/rpy-include/wpilib/counter/rpy-include",
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpilibc_drive",
+    rpy_include_dir = "generated/rpy-include/wpilib/drive/rpy-include",
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpilibc_event",
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpilibc_shuffleboard",
+    rpy_include_dir = "generated/rpy-include/wpilib/shuffleboard/rpy-include",
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+generated_files_helper(
+    name = "wpilibc_simulation",
+    rpy_include_dir = "generated/rpy-include/wpilib/simulation/rpy-include",
+    visibility = ["//wpilib/src/main/python:__subpackages__"],
+)
+
+generate_robotpy_source_files(
+    name = "wpilib",
+    config_file = ":pyproject.toml",
+    headers = [
+        "//wpilibc/src/main/native:header_files",
+        "//wpilib/src/main/python/wpilib:rpy_headers",
+    ],
+    internal_project_dependencies = [
+        "wpiutil",
+        "wpinet",
+        "ntcore",
+        "hal",
+        "wpimath",
+    ],
+    projects = [
+        "wpilib",
+        "_impl",
+        "counter",
+        "drive",
+        "event",
+        "interfaces",
+        "shuffleboard",
+        "simulation",
+    ],
+    python_deps = [
+        "//hal/src/main/python:pkgcfg",
+        "//ntcore/src/main/python:pkgcfg",
+        "//wpinet/src/main/python:pkgcfg",
+        "//wpimath/src/main/python:pkgcfg",
+        "//wpiutil/src/main/python:pkgcfg",
+    ],
+)
+
+pybind_python_library(
+    name = "wpilib",
+    srcs = [
+        "//wpilib/src/main/python/wpilib:python_files",
+        "//wpilib/src/main/python/wpilib/_impl:python_files",
+        "//wpilib/src/main/python/wpilib/counter:python_files",
+        "//wpilib/src/main/python/wpilib/drive:python_files",
+        "//wpilib/src/main/python/wpilib/event:python_files",
+        "//wpilib/src/main/python/wpilib/interfaces:python_files",
+        "//wpilib/src/main/python/wpilib/shuffleboard:python_files",
+        "//wpilib/src/main/python/wpilib/simulation:python_files",
+    ],
+    data = [
+        "//wpilib/src/main/python/wpilib:wpilib.pyso",
+        "//wpilib/src/main/python/wpilib/_impl:copy_lib",
+        "//wpilib/src/main/python/wpilib/counter:counter.pyso",
+        "//wpilib/src/main/python/wpilib/drive:drive.pyso",
+        "//wpilib/src/main/python/wpilib/event:event.pyso",
+        "//wpilib/src/main/python/wpilib/interfaces:interfaces.pyso",
+        "//wpilib/src/main/python/wpilib/shuffleboard:shuffleboard.pyso",
+        "//wpilib/src/main/python/wpilib/simulation:simulation.pyso",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//hal/src/main/python:hal",
+        "//ntcore/src/main/python:ntcore",
+        "//wpimath/src/main/python:wpimath",
+    ],
+)
+
+write_source_files(
+    name = "write_on_build_dl_files",
+    additional_update_targets = [
+        "//wpilib/src/main/python/wpilib:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/_impl:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/counter:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/drive:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/event:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/interfaces:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/shuffleboard:write_on_build_dl_files",
+        "//wpilib/src/main/python/wpilib/simulation:write_on_build_dl_files",
+    ],
+    suggested_update_target = "//:write_on_build_dl_files",
+    visibility = ["//visibility:public"],
+)

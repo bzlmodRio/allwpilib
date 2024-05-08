@@ -1060,9 +1060,9 @@ def
 def
 ("flush", &nt::NetworkTableInstance::Flush, release_gil(), py::doc(
     "Flushes all updated values immediately to the network.\n"
-".. note:: This is rate-limited to protect the network from flooding.\n"
-"   This is primarily useful for synchronizing network updates with\n"
-"   user code.")
+".. note:: T\n"
+"This is primarily useful for synchronizing network updates with\n"
+"user code.")
   )
   
   

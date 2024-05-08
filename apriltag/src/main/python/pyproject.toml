@@ -36,6 +36,10 @@ sources = [
 ]
 
 depends = ["wpiutil", "wpimath_cpp"]
+
+
+extra_includes = ["apriltag/src/main/native/include"]
+
 generation_data = "gen"
 
 [tool.robotpy-build.wrappers."robotpy_apriltag".autogen_headers]
