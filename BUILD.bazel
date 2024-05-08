@@ -1,6 +1,7 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_proto//proto:defs.bzl", "proto_lang_toolchain")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+load("//shared/bazel/rules/python/pybind_generator:disable_flags.bzl", "DISABLE_PROJECT_GEN_TEST")
 
 # bazel build //:requirements.lock
 compile_pip_requirements(
@@ -70,7 +71,7 @@ write_source_files(
         "//apriltag/src/main/python:write_on_build_gen",
         "//wpilib/src/main/python:write_on_build_gen",
         "//wpimath/src/test/python/cpp:write_on_build_gen",
-    ],
+    ] if not DISABLE_PROJECT_GEN_TEST else [],
 )
 
 write_source_files(
