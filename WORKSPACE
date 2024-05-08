@@ -159,9 +159,9 @@ bazel_features_deps()
 # -------------------------
 http_archive(
     name = "rules_robotpy_utils",
-    integrity = "sha256-7QlvRqZBYzie3+zzR8o8wJx30jjEucUzDlDRXW7UmjE=",
-    strip_prefix = "rules_robotpy_utils-2af8aa27400759465b3dfe593869dcdb3c15e766",
-    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/2af8aa27400759465b3dfe593869dcdb3c15e766.tar.gz",
+    integrity = "sha256-zVwZMFDUyAyjhUdyJiIjXnJ8KhjnhspgfMAiHMVp4Xw=",
+    strip_prefix = "rules_robotpy_utils-d86e696d999cb95b945fd5cc4906384cb842d2c3",
+    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/d86e696d999cb95b945fd5cc4906384cb842d2c3.tar.gz",
 )
 
 # local_repository(

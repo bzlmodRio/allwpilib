@@ -5,7 +5,7 @@
 
 
 
-#include <src/wpistruct/wpystruct_fns.h>
+#include <wpystruct_fns.h>
 
 
 #include <pybind11/functional.h>

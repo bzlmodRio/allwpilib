@@ -14,27 +14,37 @@ filegroup(
     visibility = ["//wpiutil/src/main/python:__subpackages__"],
 )
 
+cc_library(
+    name = "type_casters_headers",
+    hdrs = glob(["src/type_casters/*.h"]),
+    strip_include_prefix = "src/type_casters",
+)
+
+cc_library(
+    name = "wpistruct_headers",
+    hdrs = glob(["src/wpistruct/*.h"]),
+    strip_include_prefix = "src/wpistruct",
+)
+
 create_pybind_library(
     "wpiutil",
     entry_point = ["src/main.cpp"],
     extension_visibility = ["//wpiutil/src/main/python:__subpackages__"],
-    extra_hdrs = glob([
-        "src/type_casters/*.h",
-        "src/wpistruct/*.h",
-    ]),
     extra_srcs = glob(
         ["src/**/*.cpp"],
         exclude = ["src/main.cpp"],
     ),
     generation_helper_prefix = "//wpiutil/src/main/python:wpiutil",
     includes = [
-        ".",
+        # ".",
         "src/type_casters",
-        "src/wpistruct",
+        # "src/wpistruct",
     ],
-    strip_include_prefix = "src",
+    # strip_include_prefix = "src/type_casters",
     deps = [
         "//wpiutil/src/main/native:wpiutil.shared",
+        ":type_casters_headers",
+        ":wpistruct_headers",
     ],
 )
 
