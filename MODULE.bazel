@@ -51,15 +51,30 @@ git_override(
 #     path = "C:/Users/PJ/git/bzlmodrio/monorepo/rules/rules_bzlmodrio_toolchains",
 # )
 
-local_path_override(
+git_override(
     module_name = "rules_robotpy_utils",
-    path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+    commit = "2af8aa27400759465b3dfe593869dcdb3c15e766",
+    remote = "https://github.com/bzlmodRio/rules_robotpy_utils",
 )
 
-local_path_override(
-    module_name = "pybind11_bazel",
-    path = "/home/pjreiniger/git/temp/pybind11_bazel",
-)
+# local_path_override(
+#     module_name = "rules_robotpy_utils",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+# )
+
+# git_override(
+#     module_name = "pybind11_bazel",
+#     commit = "e52898dac60aff7a0bc926891f2d781e065acdbf",
+#     remote = "https://github.com/pybind/pybind11_bazel",
+#     patches = [
+#         "//:0001-Use-bespoke-version-of-pybind11.patch",
+#     ],
+# )
+
+# local_path_override(
+#     module_name = "pybind11_bazel",
+#     path = "/home/pjreiniger/git/temp/pybind11_bazel",
+# )
 
 
 

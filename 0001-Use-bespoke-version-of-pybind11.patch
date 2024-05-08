@@ -1,0 +1,31 @@
+From 88d5692f3aeaab3d0867eeb7f5c9d9ff5f4fe00e Mon Sep 17 00:00:00 2001
+From: PJ Reiniger <pj.reiniger@gmail.com>
+Date: Wed, 8 May 2024 00:41:03 -0400
+Subject: [PATCH] Use bespoke version of pybind11
+
+---
+ internal_configure.bzl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/internal_configure.bzl b/internal_configure.bzl
+index b569f6b..8106c2b 100644
+--- a/internal_configure.bzl
++++ b/internal_configure.bzl
+@@ -16,12 +16,12 @@ def _internal_configure_extension_impl(module_ctx):
+ 
+     # The pybind11_bazel version should typically just be the pybind11 version,
+     # but can end with ".bzl.<N>" if the Bazel plumbing was updated separately.
+-    version = version.split(".bzl.")[0]
++    version = "a5b0cdcb937b2853e012489633d692099dab7078" # version.split(".bzl.")[0]
+     http_archive(
+         name = "pybind11",
+         build_file = "//:pybind11-BUILD.bazel",
+         strip_prefix = "pybind11-%s" % version,
+-        urls = ["https://github.com/pybind/pybind11/archive/v%s.zip" % version],
++        urls = ["https://github.com/pybind/pybind11/archive/%s.zip" % version],
+     )
+ 
+ internal_configure_extension = module_extension(implementation = _internal_configure_extension_impl)
+-- 
+2.34.1
+

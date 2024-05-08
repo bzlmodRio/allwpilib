@@ -52,6 +52,9 @@ load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
 
 rules_jvm_external_deps()
 
+# -------------------------
+# bzlmodRio
+# -------------------------
 # local_repository(
 #     name = "bzlmodRio",
 #     path = "../bzlmodRio/monorepo/bzlmodRio",
@@ -62,6 +65,7 @@ http_archive(
     strip_prefix = "bzlmodRio-311bfd2a4584eb1e26bff7367f1016f631fee4fc",
     url = "https://github.com/bzlmodRio/bzlmodRio/archive/311bfd2a4584eb1e26bff7367f1016f631fee4fc.tar.gz",
 )
+# -------------------------
 
 load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_dependencies")
 
@@ -150,32 +154,38 @@ load("@bazel_features//:deps.bzl", "bazel_features_deps")
 
 bazel_features_deps()
 
-# http_archive(
+# -------------------------
+# rules_robotpy_utils
+# -------------------------
+http_archive(
+    name = "rules_robotpy_utils",
+    integrity = "sha256-7QlvRqZBYzie3+zzR8o8wJx30jjEucUzDlDRXW7UmjE=",
+    strip_prefix = "rules_robotpy_utils-2af8aa27400759465b3dfe593869dcdb3c15e766",
+    url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/2af8aa27400759465b3dfe593869dcdb3c15e766.tar.gz",
+)
+
+# local_repository(
 #     name = "rules_robotpy_utils",
-#     sha256 = "d17d9f28deb0123836d996b7ae200c54d95ed4bf99f72fdeb5c6602499cff7af",
-#     strip_prefix = "rules_robotpy_utils-4e4f8b2b4e7b99f926a57f760806db4aa5fa6d48",
-#     url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/4e4f8b2b4e7b99f926a57f760806db4aa5fa6d48.tar.gz",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+#     # path = "C:/Users/PJ/git/bzlmodrio/monorepo/rules/rules_robotpy_utils",
 # )
 
-local_repository(
-    name = "rules_robotpy_utils",
-    path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
-    # path = "C:/Users/PJ/git/bzlmodrio/monorepo/rules/rules_robotpy_utils",
-)
-
-http_archive(
-  name = "pybind11_bazel",
-  strip_prefix = "pybind11_bazel-2.12.0",
-  urls = ["https://github.com/pybind/pybind11_bazel/archive/v2.12.0.zip"],
-)
-
-http_archive(
-  name = "pybind11",
-  build_file = "@pybind11_bazel//:pybind11-BUILD.bazel",
-  strip_prefix = "pybind11-a5b0cdcb937b2853e012489633d692099dab7078",
-  integrity = "sha256-ONA//pxfMap4Hs1OtYk/Yk4UMBZ3B0PmIBsVoYIjdFE=",
-  urls = ["https://github.com/pybind/pybind11/archive/a5b0cdcb937b2853e012489633d692099dab7078.zip"],
-)
+# -------------------------
+# TO DELETE
+# -------------------------
+# http_archive(
+#   name = "pybind11_bazel",
+#   strip_prefix = "pybind11_bazel-2.12.0",
+#   urls = ["https://github.com/pybind/pybind11_bazel/archive/v2.12.0.zip"],
+# )
+# 
+# http_archive(
+#   name = "pybind11",
+#   build_file = "@pybind11_bazel//:pybind11-BUILD.bazel",
+#   strip_prefix = "pybind11-a5b0cdcb937b2853e012489633d692099dab7078",
+#   integrity = "sha256-ONA//pxfMap4Hs1OtYk/Yk4UMBZ3B0PmIBsVoYIjdFE=",
+#   urls = ["https://github.com/pybind/pybind11/archive/a5b0cdcb937b2853e012489633d692099dab7078.zip"],
+# )
 
 load("@rules_robotpy_utils//:download_dependencies.bzl", "download_rules_robotpy_utils_dependencies")
 
@@ -188,9 +198,6 @@ setup_rules_robotpy_utils_dependencies()
 load("@rules_robotpy_utils_pip_deps//:requirements.bzl", install_rules_robotpy_utils_pip_deps = "install_deps")
 
 install_rules_robotpy_utils_pip_deps()
-# 
-# load("@pybind11_bazel//:python_configure.bzl", "python_configure")
-# load("@rules_python//python:repositories.bzl", "python_register_toolchains")
 
 python_register_toolchains(
     name = "python_3_11",
