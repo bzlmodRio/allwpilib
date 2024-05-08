@@ -1,15 +1,15 @@
-load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_project_files.bzl", "generate_robotpy_project_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "create_pybind_library")
 
 generate_robotpy_project_files(
     name = "wpiutil_test",
     config_file = "//wpiutil/src/test/python/cpp:config_file",
     init_file = "_initmodule.py",
-    visibility = ["//wpiutil/src/test/python:__subpackages__"],
     internal_project_dependencies = ["wpiutil"],
     python_deps = [
         "//wpiutil/src/main/python:pkgcfg",
     ],
+    visibility = ["//wpiutil/src/test/python:__subpackages__"],
 )
 
 create_pybind_library(

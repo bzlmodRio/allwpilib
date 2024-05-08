@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "204eb6d6c070a95f621be67cc1d1cc48065deda9813eba260926dbbe91ac52bf",
+  "moduleFileHash": "9aa2ae6a8298eacb79c7e6f7150020cd982d0ae0e07dfd4cc124f9b65d9988bb",
   "flags": {
     "cmdRegistries": [
       "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/"
@@ -30,7 +30,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 81,
+            "line": 90,
             "column": 22
           },
           "imports": {
@@ -65,7 +65,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 82,
+                "line": 91,
                 "column": 14
               }
             }
@@ -79,7 +79,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 109,
+            "line": 118,
             "column": 38
           },
           "imports": {
@@ -98,7 +98,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 117,
+            "line": 126,
             "column": 23
           },
           "imports": {},
@@ -114,7 +114,7 @@
               "devDependency": true,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 122,
+                "line": 131,
                 "column": 17
               }
             }
@@ -128,7 +128,7 @@
           "usingModule": "<root>",
           "location": {
             "file": "@@//:MODULE.bazel",
-            "line": 128,
+            "line": 137,
             "column": 20
           },
           "imports": {
@@ -146,7 +146,7 @@
               "devDependency": false,
               "location": {
                 "file": "@@//:MODULE.bazel",
-                "line": 129,
+                "line": 138,
                 "column": 10
               }
             }
@@ -4104,7 +4104,7 @@
     },
     "@@pybind11_bazel~//:internal_configure.bzl%internal_configure_extension": {
       "general": {
-        "bzlTransitiveDigest": "jqTGIMgQVcqD4/G5lFysEIcX5jviYJrChbi0Mo7rAaE=",
+        "bzlTransitiveDigest": "2FwdEshBvbgwbZNaBRcLqfan6UhLBGuWVMfoeLiqMdU=",
         "recordedFileInputs": {
           "@@pybind11_bazel~//MODULE.bazel": "1b09013052b0d899e6c89e9bd9a1c375dfdc83f2971cb9b846dc80533333860c"
         },
@@ -4116,9 +4116,9 @@
             "ruleClassName": "http_archive",
             "attributes": {
               "build_file": "@@pybind11_bazel~//:pybind11-BUILD.bazel",
-              "strip_prefix": "pybind11-2.12.0",
+              "strip_prefix": "pybind11-a5b0cdcb937b2853e012489633d692099dab7078",
               "urls": [
-                "https://github.com/pybind/pybind11/archive/v2.12.0.zip"
+                "https://github.com/pybind/pybind11/archive/a5b0cdcb937b2853e012489633d692099dab7078.zip"
               ]
             }
           }
@@ -8372,7 +8372,7 @@
       "os:linux,arch:amd64": {
         "bzlTransitiveDigest": "uFkpjNy82iJvZ+ranQekcaslLaa7VoI4TMftq2r8doA=",
         "recordedFileInputs": {
-          "@@//requirements_lock.txt": "169bba604d570dc877e64cadb23ef85cc7931d5e270f45322c7bd91ce89922e3",
+          "@@//requirements_lock.txt": "8317c73ea784ae7ea72747365b2db6a14e1191b2bbf7d8c788fbfd2c975cad1d",
           "@@rules_robotpy_utils~//requirements_lock.txt": "477d2ec58f7cff397290d2a6cf7bf8513d589e141a8bbf5c8706f5e056cb056d"
         },
         "recordedDirentsInputs": {},
@@ -8583,30 +8583,6 @@
             "ruleClassName": "whl_library",
             "attributes": {
               "requirement": "iniconfig==2.0.0     --hash=sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3     --hash=sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374",
-              "repo": "allwpilib_pip_deps_311",
-              "repo_prefix": "allwpilib_pip_deps_311_",
-              "whl_patches": {},
-              "experimental_target_platforms": [],
-              "python_interpreter": "",
-              "python_interpreter_target": "@@rules_python~~python~python_3_11_host//:python",
-              "quiet": true,
-              "timeout": 600,
-              "isolated": true,
-              "extra_pip_args": [],
-              "download_only": false,
-              "pip_data_exclude": [],
-              "enable_implicit_namespace_pkgs": false,
-              "environment": {},
-              "envsubst": [],
-              "group_name": "",
-              "group_deps": []
-            }
-          },
-          "allwpilib_pip_deps_311_tomli": {
-            "bzlFile": "@@rules_python~//python/pip_install:pip_repository.bzl",
-            "ruleClassName": "whl_library",
-            "attributes": {
-              "requirement": "tomli==2.0.1     --hash=sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc     --hash=sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f",
               "repo": "allwpilib_pip_deps_311",
               "repo_prefix": "allwpilib_pip_deps_311_",
               "whl_patches": {},
@@ -8914,30 +8890,6 @@
               "group_deps": []
             }
           },
-          "allwpilib_pip_deps_311_exceptiongroup": {
-            "bzlFile": "@@rules_python~//python/pip_install:pip_repository.bzl",
-            "ruleClassName": "whl_library",
-            "attributes": {
-              "requirement": "exceptiongroup==1.2.0     --hash=sha256:4bfd3996ac73b41e9b9628b04e079f193850720ea5945fc96a08633c66912f14     --hash=sha256:91f5c769735f051a4290d52edd0858999b57e5876e9f85937691bd4c9fa3ed68",
-              "repo": "allwpilib_pip_deps_311",
-              "repo_prefix": "allwpilib_pip_deps_311_",
-              "whl_patches": {},
-              "experimental_target_platforms": [],
-              "python_interpreter": "",
-              "python_interpreter_target": "@@rules_python~~python~python_3_11_host//:python",
-              "quiet": true,
-              "timeout": 600,
-              "isolated": true,
-              "extra_pip_args": [],
-              "download_only": false,
-              "pip_data_exclude": [],
-              "enable_implicit_namespace_pkgs": false,
-              "environment": {},
-              "envsubst": [],
-              "group_name": "",
-              "group_deps": []
-            }
-          },
           "allwpilib_pip_deps_311_pytest": {
             "bzlFile": "@@rules_python~//python/pip_install:pip_repository.bzl",
             "ruleClassName": "whl_library",
@@ -8992,9 +8944,6 @@
             "attributes": {
               "repo_name": "allwpilib_pip_deps",
               "whl_map": {
-                "exceptiongroup": [
-                  "3.11"
-                ],
                 "iniconfig": [
                   "3.11"
                 ],
@@ -9017,9 +8966,6 @@
                   "3.11"
                 ],
                 "pytest": [
-                  "3.11"
-                ],
-                "tomli": [
                   "3.11"
                 ]
               },

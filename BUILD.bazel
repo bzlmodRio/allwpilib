@@ -53,7 +53,6 @@ write_source_files(
         "//cscore/src/main/python/cscore:write_on_build_dl_files",
         "//apriltag/src/main/python/robotpy_apriltag:write_on_build_dl_files",
         "//wpilib/src/main/python:write_on_build_dl_files",
-        
         "//wpiutil/src/test/python/cpp/wpiutil_test:write_on_build_dl_files",
         "//wpimath/src/test/python/cpp/wpimath_test:write_on_build_dl_files",
     ],
@@ -70,7 +69,6 @@ write_source_files(
         "//cscore/src/main/python:write_on_build_gen",
         "//apriltag/src/main/python:write_on_build_gen",
         "//wpilib/src/main/python:write_on_build_gen",
-
         "//wpimath/src/test/python/cpp:write_on_build_gen",
     ],
 )

@@ -5,8 +5,8 @@ create_pybind_library(
     "simulation",
     entry_point = ["main.cpp"],
     extension_visibility = ["//hal/src/main/python:__subpackages__"],
-    extra_srcs = ["resethandles.cpp"],
     extra_hdrs = glob(["*.h"]),
+    extra_srcs = ["resethandles.cpp"],
     generation_helper_prefix = "//hal/src/main/python:hal_simulation",
     includes = ["."],
     deps = [

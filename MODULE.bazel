@@ -25,7 +25,6 @@ bazel_dep(name = "rules_bzlmodrio_jdk", version = "")
 bazel_dep(name = "rules_robotpy_utils", version = "")
 bazel_dep(name = "caseyduquettesc_rules_python_pytest", version = "1.1.0", repo_name = "rules_python_pytest")
 
-
 git_override(
     module_name = "protobuf",
     commit = "f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",  # "3.21.12",
@@ -71,12 +70,19 @@ git_override(
 #     ],
 # )
 
+archive_override(
+    module_name = "pybind11_bazel",
+    # integrity = "sha256-0YuXdkx1VSjBBR03bjNUXQ62DG6/hWgENoE/pbBMw9E=",
+    patch_strip = 1,
+    patches = ["@//:0001-Use-bespoke-version-of-pybind11.patch"],
+    strip_prefix = "pybind11_bazel-e52898dac60aff7a0bc926891f2d781e065acdbf",
+    urls = ["https://github.com/pybind/pybind11_bazel/archive/e52898dac60aff7a0bc926891f2d781e065acdbf.zip"],
+)
+
 # local_path_override(
 #     module_name = "pybind11_bazel",
 #     path = "/home/pjreiniger/git/temp/pybind11_bazel",
 # )
-
-
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
