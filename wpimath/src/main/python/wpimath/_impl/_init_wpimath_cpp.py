@@ -9,9 +9,9 @@ import wpiutil._init_wpiutil
 from ctypes import cdll
 
 try:
-    _lib = cdll.LoadLibrary(join(_root, "lib", "libwpimath.so"))
+    _lib = cdll.LoadLibrary(join(_root, "lib", "wpimath.dll"))
 except FileNotFoundError:
-    if not exists(join(_root, "lib", "libwpimath.so")):
-        raise FileNotFoundError("libwpimath.so was not found on your system. Is this package correctly installed?")
-    raise FileNotFoundError("libwpimath.so could not be loaded. There is a missing dependency.")
+    if not exists(join(_root, "lib", "wpimath.dll")):
+        raise FileNotFoundError("wpimath.dll was not found on your system. Is this package correctly installed?")
+    raise Exception("wpimath.dll could not be loaded. Do you have Visual Studio C++ Redistributible 2019 installed?")
 
