@@ -45,7 +45,7 @@ def wpilib_cc_shared_library(
         deps = deps,
         linkshared = 1,
         tags = tags,
-        visibility = ["//visibility:private"],
+        visibility = ["//visibility:public"],
         **shared_binary_kwargs
     )
 

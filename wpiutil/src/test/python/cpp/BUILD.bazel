@@ -1,0 +1,28 @@
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
+
+# generated_files_helper(
+#     name = "wpiutil_test",
+#     visibility = ["//wpiutil/src/test/python:__subpackages__"],
+# )
+
+filegroup(
+    name = "config_file",
+    srcs = ["pyproject.toml"],
+    visibility = ["//wpiutil/src/test/python:__subpackages__"],
+)
+
+# generate_robotpy_source_files(
+#     name = "wpiutil",
+#     config_file = ":config_file",
+#     headers = [],
+# )
+
+pybind_python_library(
+    name = "wpiutil_test",
+    srcs = ["//wpiutil/src/test/python/cpp/wpiutil_test:python_files"],
+    data = [
+        "//wpiutil/src/test/python/cpp/wpiutil_test:module.pyso",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+)

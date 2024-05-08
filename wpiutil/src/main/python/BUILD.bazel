@@ -1,0 +1,42 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_robotpy_utils//rules_robotpy_utils:pybind_rules.bzl", "generated_files_helper")
+load("//shared/bazel/rules/python/pybind_generator:generate_robotpy_source_files.bzl", "generate_robotpy_source_files")
+load("//shared/bazel/rules/python/pybind_generator:pybind_rules.bzl", "pybind_python_library")
+
+generated_files_helper(
+    name = "wpiutil",
+    visibility = ["//wpiutil/src/main/python:__subpackages__"],
+)
+
+filegroup(
+    name = "config_file",
+    srcs = ["pyproject.toml"],
+    visibility = ["//wpiutil/src/main/python:__subpackages__"],
+)
+
+generate_robotpy_source_files(
+    name = "wpiutil",
+    config_file = ":config_file",
+    headers = ["//wpiutil/src/main/native:headers"] + ["//wpiutil/src/main/python/wpiutil:special_headers"],
+)
+
+pybind_python_library(
+    name = "wpiutil",
+    srcs = ["//wpiutil/src/main/python/wpiutil:python_files"],
+    data = [
+        "//wpiutil/src/main/native:wpiutil",
+        "//wpiutil/src/main/python/wpiutil:copy_lib",
+        "//wpiutil/src/main/python/wpiutil:wpiutil.pyso",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+)
+
+py_library(
+    name = "pkgcfg",
+    srcs = [
+        "//wpiutil/src/main/python/wpiutil:pkgcfg",
+    ],
+    imports = ["."],
+    visibility = ["//visibility:public"],
+)

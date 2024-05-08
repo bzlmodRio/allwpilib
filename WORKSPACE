@@ -144,6 +144,48 @@ load("@bazel_features//:deps.bzl", "bazel_features_deps")
 
 bazel_features_deps()
 
+# http_archive(
+#     name = "rules_robotpy_utils",
+#     sha256 = "d17d9f28deb0123836d996b7ae200c54d95ed4bf99f72fdeb5c6602499cff7af",
+#     strip_prefix = "rules_robotpy_utils-4e4f8b2b4e7b99f926a57f760806db4aa5fa6d48",
+#     url = "https://github.com/bzlmodRio/rules_robotpy_utils/archive/4e4f8b2b4e7b99f926a57f760806db4aa5fa6d48.tar.gz",
+# )
+
+local_repository(
+    name = "rules_robotpy_utils",
+    path = "/home/pjreiniger/git/bzlmodRio/monorepo/rules/rules_robotpy_utils",
+    # path = "C:/Users/PJ/git/bzlmodrio/monorepo/rules/rules_robotpy_utils",
+)
+
+http_archive(
+  name = "pybind11_bazel",
+  strip_prefix = "pybind11_bazel-2.12.0",
+  urls = ["https://github.com/pybind/pybind11_bazel/archive/v2.12.0.zip"],
+)
+
+http_archive(
+  name = "pybind11",
+  build_file = "@pybind11_bazel//:pybind11-BUILD.bazel",
+  strip_prefix = "pybind11-a5b0cdcb937b2853e012489633d692099dab7078",
+  integrity = "sha256-ONA//pxfMap4Hs1OtYk/Yk4UMBZ3B0PmIBsVoYIjdFE=",
+  urls = ["https://github.com/pybind/pybind11/archive/a5b0cdcb937b2853e012489633d692099dab7078.zip"],
+)
+
+load("@rules_robotpy_utils//:download_dependencies.bzl", "download_rules_robotpy_utils_dependencies")
+
+download_rules_robotpy_utils_dependencies()
+
+load("@rules_robotpy_utils//:setup_dependencies.bzl", "setup_rules_robotpy_utils_dependencies")
+
+setup_rules_robotpy_utils_dependencies()
+
+load("@rules_robotpy_utils_pip_deps//:requirements.bzl", install_rules_robotpy_utils_pip_deps = "install_deps")
+
+install_rules_robotpy_utils_pip_deps()
+# 
+# load("@pybind11_bazel//:python_configure.bzl", "python_configure")
+# load("@rules_python//python:repositories.bzl", "python_register_toolchains")
+
 python_register_toolchains(
     name = "python_3_11",
     ignore_root_user_error = True,
@@ -162,3 +204,14 @@ http_archive(
 load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
 
 setup_legacy_setup_jdk_dependencies()
+
+# http_archive(
+#     name = "rules_python_pytest",
+#     sha256 = "8b82935e16f7b28e3711a68ae5f88f44d8685ccd906b869f7721fdd4c32f2369",
+#     strip_prefix = "rules_python_pytest-1.1.0",
+#     url = "https://github.com/caseyduquettesc/rules_python_pytest/releases/download/v1.1.0/rules_python_pytest-v1.1.0.tar.gz",
+# )
+# 
+# load("@rules_python_pytest//python_pytest:repositories.bzl", "rules_python_pytest_dependencies")
+# 
+# rules_python_pytest_dependencies()
