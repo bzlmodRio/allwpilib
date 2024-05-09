@@ -52,7 +52,7 @@ git_override(
 
 git_override(
     module_name = "rules_robotpy_utils",
-    commit = "9d3eb80d7ecd23d812b8a5028415020a48ccc80d",
+    commit = "a88a59ab0fef15e09836e12a00a5167507083655",
     remote = "https://github.com/bzlmodRio/rules_robotpy_utils",
 )
 
