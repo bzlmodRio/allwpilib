@@ -21,5 +21,12 @@ wpilib_cc_test(
     ],
     wpi_maybe_shared_deps = [
         "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath",
+        "//hal/src/main/native:wpiHal",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
+        "//cscore/src/main/native:cscore",
+        "//ntcore/src/main/native:ntcore",
+        "//cameraserver/src/main/native:cameraserver",
     ],
 )

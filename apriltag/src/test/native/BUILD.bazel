@@ -12,6 +12,8 @@ wpilib_cc_test(
     ],
     wpi_maybe_shared_deps = [
         "//apriltag/src/main/native:apriltag",
+        "//wpiutil/src/main/native:wpiutil",
+        "//wpimath/src/main/native:wpimath",
     ],
     create_static_test = False,
 )

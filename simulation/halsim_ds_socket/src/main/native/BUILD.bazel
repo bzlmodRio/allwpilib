@@ -15,8 +15,12 @@ wpilib_cc_shared_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//hal/src/main/native:wpiHal.static",
+        "//wpinet/src/main/native:wpinet.static",
         ":headers",
-        "//hal/src/main/native:wpiHal.shared",
-        "//wpinet/src/main/native:wpinet.shared",
     ],
+    dynamic_deps = [
+        # "//hal/src/main/native:wpiHal",
+        # "//wpinet/src/main/native:wpinet",
+    ]
 )

@@ -12,5 +12,6 @@ wpilib_cc_test(
     ],
     wpi_maybe_shared_deps = [
         "//hal/src/main/native:wpiHal",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )

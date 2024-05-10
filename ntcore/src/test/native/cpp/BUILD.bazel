@@ -18,5 +18,7 @@ wpilib_cc_test(
     ],
     wpi_maybe_shared_deps = [
         "//ntcore/src/main/native:ntcore",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )

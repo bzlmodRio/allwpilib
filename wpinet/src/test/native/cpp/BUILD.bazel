@@ -13,6 +13,7 @@ wpilib_cc_test(
         "@gtest",
     ],
     wpi_maybe_shared_deps = [
+        "//wpiutil/src/main/native:wpiutil",
         "//wpinet/src/main/native:wpinet",
     ]
 )

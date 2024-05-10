@@ -1,9 +1,10 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_dev_binary")
 
-wpilib_cc_binary(
+wpilib_dev_binary(
     name = "DevMain",
     srcs = ["main.cpp"],
-    deps = [
-        "//hal/src/main/native:wpiHal.shared",
+    wpi_maybe_shared_deps = [
+        "//hal/src/main/native:wpiHal",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )

@@ -13,7 +13,8 @@ wpilib_cc_library(
     deps = [
         "//fieldImages/src/main/native:fieldImages-cpp",
         "//wpigui/src/main/native:wpigui",
-        "//wpimath/src/main/native:wpimath.shared",
-        "//wpiutil/src/main/native:wpiutil.shared",
+        "//wpimath/src/main/native:wpimath.static",
+        "//wpiutil/src/main/native:wpiutil.static",
     ],
+    linkstatic = 1,
 )

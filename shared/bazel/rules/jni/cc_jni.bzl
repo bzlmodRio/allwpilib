@@ -7,11 +7,12 @@ def wpilib_jni_cc_library(
         wpi_maybe_shared_deps = [],
         java_dep = None,
         **kwargs):
-    deps = standard_deps + [x + ".shared" for x in wpi_maybe_shared_deps]
+    # deps = standard_deps + [x + ".shared" for x in wpi_maybe_shared_deps]
 
     jni = "@rules_bzlmodrio_toolchains//jni"
     wpilib_cc_shared_library(
         name = name,
-        deps = [jni, java_dep + ".hdrs"] + deps,
+        deps = [jni, java_dep + ".hdrs"] + standard_deps + [x + ".static" for x in wpi_maybe_shared_deps],
+        dynamic_deps = [x + ".shared" for x in wpi_maybe_shared_deps],
         **kwargs
     )

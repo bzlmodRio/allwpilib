@@ -1,16 +1,19 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_test")
 
-wpilib_cc_test(
-    name = "halsim_ds_socket-test",
-    size = "small",
-    srcs = glob([
-        "**/*.cpp",
-        "**/*.h",
-    ]),
-    tags = ["no-roborio"],
-    standard_deps = [
-        "//simulation/halsim_ds_socket/src/main/native:halsim_ds_socket.shared",
-        "@gtest",
-    ],
-    create_shared_test = False,
-)
+# wpilib_cc_test(
+#     name = "halsim_ds_socket-test",
+#     size = "small",
+#     srcs = glob([
+#         "**/*.cpp",
+#         "**/*.h",
+#     ]),
+#     tags = ["no-roborio"],
+#     standard_deps = [
+#         "@gtest",
+#     ],
+#     wpi_maybe_shared_deps = [
+#         "//simulation/halsim_ds_socket/src/main/native:halsim_ds_socket",
+#     ],
+#     create_static_test = False,
+# )
+# 

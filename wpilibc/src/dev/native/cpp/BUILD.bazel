@@ -1,9 +1,16 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_dev_binary")
 
-wpilib_cc_binary(
+wpilib_dev_binary(
     name = "DevMain",
     srcs = ["main.cpp"],
-    deps = [
-        "//wpilibc/src/main/native:wpilibc.shared",
+    wpi_maybe_shared_deps = [
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath",
+        "//hal/src/main/native:wpiHal",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
+        "//cscore/src/main/native:cscore",
+        "//ntcore/src/main/native:ntcore",
+        "//cameraserver/src/main/native:cameraserver",
     ],
 )

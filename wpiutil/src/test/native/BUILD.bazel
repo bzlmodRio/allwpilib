@@ -11,6 +11,7 @@ wpilib_cc_test(
     name = "wpiutil-test",
     size = "small",
     srcs = glob(["cpp/**"]),
+   #  linkstatic = True,
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
     standard_deps = [
         ":wpiutil-testlib",

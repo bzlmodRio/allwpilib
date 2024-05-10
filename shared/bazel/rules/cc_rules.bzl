@@ -29,14 +29,14 @@ def wpilib_cc_test(
         create_shared_test = True,
         **kwargs):
         
-    static_deps = standard_deps + [x + ".static" for x in wpi_maybe_shared_deps]
-    shared_deps = standard_deps + [x + ".shared" for x in wpi_maybe_shared_deps]
+    static_deps = [x + ".static" for x in wpi_maybe_shared_deps]
+    shared_deps = [x + ".shared" for x in wpi_maybe_shared_deps]
 
     if create_static_test:
         cc_test(
             name = name + ".static",
             tags = tags + ["allwpilib-build-cpp"],
-            deps = static_deps,
+            deps = standard_deps + static_deps,
             **kwargs
         )
     
@@ -46,7 +46,8 @@ def wpilib_cc_test(
         cc_test(
             name = name + ".shared",
             tags = tags + ["allwpilib-build-cpp"],
-            deps = shared_deps,
+            deps = standard_deps + static_deps,
+            dynamic_deps = shared_deps,
             **kwargs
         )
 
@@ -112,6 +113,9 @@ def wpilib_cc_static_and_shared_library(
         visibility = None,
         strip_include_prefix = None,
         export_symbols = True):
+
+    print("Making Shared+Static for " + name)
+
     headers_name = name + ".headers"
     wpilib_cc_library(
         name = headers_name,
@@ -134,19 +138,43 @@ def wpilib_cc_static_and_shared_library(
         defines = defines,
         deps = static_deps + [":" + headers_name],
         visibility = visibility,
+        linkstatic = True
     )
 
-    shared_deps = standard_deps + [x + ".shared" for x in wpi_maybe_shared_deps] + [":" + headers_name]
-    shared_features = list(features)
-    if export_symbols:
-        shared_features.append("windows_export_all_symbols")
+    dynamic_deps = [x + ".shared" for x in wpi_maybe_shared_deps]
 
-    wpilib_cc_shared_library(
-        name = name,
-        srcs = [name + ".sources"],
-        deps = shared_deps,
-        defines = defines,
+    print(standard_deps)
+    print(dynamic_deps)
+    print()
+    native.cc_shared_library(
+        name = name + "",
+        deps = [static_lib_name],
+        dynamic_deps = dynamic_deps,
+        visibility = ["//visibility:private"]
+        # visibility = visibility,
+    )
+
+    native.alias(
+        name = name + ".shared",
+        actual = name,
         visibility = visibility,
-        features = shared_features,
-        includes = includes,
     )
+
+    print("\n\n")
+
+
+def wpilib_dev_binary(
+    name,
+    wpi_maybe_shared_deps = [],
+    **kwargs):
+
+    deps = [x + ".static" for x in wpi_maybe_shared_deps]
+    dynamic_deps = [x + ".shared" for x in wpi_maybe_shared_deps]
+
+    wpilib_cc_binary(
+        name = name,
+        deps = deps,
+        dynamic_deps = dynamic_deps,
+        **kwargs,
+    )
+
