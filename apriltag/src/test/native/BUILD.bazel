@@ -7,8 +7,11 @@ wpilib_cc_test(
     tags = [
         "no-asan",
     ],
-    deps = [
-        "//apriltag/src/main/native:apriltag.shared",
+    standard_deps = [
         "@gtest",
     ],
+    wpi_maybe_shared_deps = [
+        "//apriltag/src/main/native:apriltag",
+    ],
+    create_static_test = False,
 )

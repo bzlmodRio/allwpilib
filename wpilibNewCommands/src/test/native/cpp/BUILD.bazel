@@ -8,8 +8,10 @@ wpilib_cc_test(
         "**/*.h",
     ]),
     tags = ["no-tsan"],
-    deps = [
-        "//wpilibNewCommands/src/main/native:wpilibNewCommands.static",
+    standard_deps = [
         "@gtest",
     ],
+    wpi_maybe_shared_deps = [
+        "//wpilibNewCommands/src/main/native:wpilibNewCommands",
+    ]
 )

@@ -13,8 +13,9 @@ wpilib_cc_test(
         "no-asan",
         "wpi-cpp-gui",
     ],
-    deps = [
+    standard_deps = [
         "//simulation/halsim_gui/src/main/native:halsim_gui.shared",
         "@gtest",
     ],
+    create_shared_test = False,
 )

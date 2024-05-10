@@ -15,9 +15,11 @@ wpilib_cc_test(
         "no-asan",
         "no-tsan",
     ],
-    deps = [
+    standard_deps = [
         ":test-headers",
-        "//wpilibc/src/main/native:wpilibc.static",
         "@gtest",
+    ],
+    wpi_maybe_shared_deps = [
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

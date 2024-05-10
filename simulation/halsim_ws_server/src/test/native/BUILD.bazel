@@ -15,9 +15,10 @@ wpilib_cc_test(
         "no-asan",
         "no-roborio",
     ],
-    deps = [
+    standard_deps = [
         ":test_headers",
         "//simulation/halsim_ws_server/src/main/native:halsim_ws_server.shared",
         "@gtest",
     ],
+    create_shared_test = False,
 )

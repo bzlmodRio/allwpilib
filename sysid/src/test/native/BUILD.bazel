@@ -7,8 +7,9 @@ wpilib_cc_test(
     tags = [
         "no-asan",
     ],
-    deps = [
+    standard_deps = [
         "//sysid/src/main/native:sysid-lib",
         "@gtest",
     ],
+    create_shared_test = False,
 )

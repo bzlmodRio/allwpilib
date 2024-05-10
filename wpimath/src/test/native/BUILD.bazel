@@ -19,9 +19,11 @@ wpilib_cc_test(
         "no-bullseye",
         "no-raspi",
     ],
-    deps = [
+    standard_deps = [
         ":test_headers",
-        "//wpimath/src/main/native:wpimath.static",
         "@gtest",
+    ],
+    wpi_maybe_shared_deps = [
+        "//wpimath/src/main/native:wpimath",
     ],
 )

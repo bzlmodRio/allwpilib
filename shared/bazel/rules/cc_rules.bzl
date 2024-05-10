@@ -23,12 +23,32 @@ def wpilib_cc_binary(
 def wpilib_cc_test(
         name,
         tags = [],
+        standard_deps = [],
+        wpi_maybe_shared_deps = [],
+        create_static_test = True,
+        create_shared_test = True,
         **kwargs):
-    cc_test(
-        name = name,
-        tags = tags + ["allwpilib-build-cpp"],
-        **kwargs
-    )
+        
+    static_deps = standard_deps + [x + ".static" for x in wpi_maybe_shared_deps]
+    shared_deps = standard_deps + [x + ".shared" for x in wpi_maybe_shared_deps]
+
+    if create_static_test:
+        cc_test(
+            name = name + ".static",
+            tags = tags + ["allwpilib-build-cpp"],
+            deps = static_deps,
+            **kwargs
+        )
+    
+    if create_shared_test:
+        if not wpi_maybe_shared_deps:
+            fail("No maybe-shared deps for " + name + "... consider not creating shared test")
+        cc_test(
+            name = name + ".shared",
+            tags = tags + ["allwpilib-build-cpp"],
+            deps = shared_deps,
+            **kwargs
+        )
 
 def wpilib_cc_shared_library(
         name,

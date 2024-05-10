@@ -12,9 +12,11 @@ wpilib_cc_test(
         "no-asan",
         "no-tsan",
     ],
-    deps = [
-        "//ntcore/src/main/native:ntcore.static",
+    standard_deps = [
         "//wpiutil/src/test/native:wpiutil-testlib",
         "@gtest",
+    ],
+    wpi_maybe_shared_deps = [
+        "//ntcore/src/main/native:ntcore",
     ],
 )

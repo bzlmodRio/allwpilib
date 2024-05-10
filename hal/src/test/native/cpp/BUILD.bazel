@@ -7,8 +7,10 @@ wpilib_cc_test(
         "**/*.cpp",
         "**/*.h",
     ]),
-    deps = [
-        "//hal/src/main/native:wpiHal.static",
+    standard_deps = [
         "@gtest",
+    ],
+    wpi_maybe_shared_deps = [
+        "//hal/src/main/native:wpiHal",
     ],
 )

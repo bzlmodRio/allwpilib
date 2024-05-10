@@ -8,9 +8,11 @@ wpilib_cc_test(
         "**/*.h",
     ]),
     tags = ["no-asan"],
-    deps = [
-        "//wpinet/src/main/native:wpinet.static",
+    standard_deps = [
         "//wpiutil/src/test/native:wpiutil-testlib",
         "@gtest",
     ],
+    wpi_maybe_shared_deps = [
+        "//wpinet/src/main/native:wpinet",
+    ]
 )

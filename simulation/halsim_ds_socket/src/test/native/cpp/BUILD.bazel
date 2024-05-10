@@ -8,8 +8,9 @@ wpilib_cc_test(
         "**/*.h",
     ]),
     tags = ["no-roborio"],
-    deps = [
+    standard_deps = [
         "//simulation/halsim_ds_socket/src/main/native:halsim_ds_socket.shared",
         "@gtest",
     ],
+    create_shared_test = False,
 )

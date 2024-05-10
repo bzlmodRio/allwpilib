@@ -57,10 +57,12 @@ def build_tests():
             name = folder + "-test",
             size = "small",
             srcs = native.glob([example_test_folder + "/**/*.cpp", example_src_folder + "/cpp/**/*.cpp", example_src_folder + "/c/**/*.c"]),
-            deps = [
-                "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
+            standard_deps = [
                 ":{}-examples-headers".format(folder),
                 "@gtest",
+            ],
+            wpi_maybe_shared_deps = [
+                "//wpilibNewCommands/src/main/native:wpilibNewCommands",
             ],
             defines = ["RUNNING_FRC_TESTS=1"],
             tags = ["wpi-example", "no-tsan", "no-asan", "no-ubsan"],
