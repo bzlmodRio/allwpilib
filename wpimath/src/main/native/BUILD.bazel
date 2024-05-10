@@ -10,7 +10,7 @@ wpilib_cc_static_and_shared_library(
         "//wpimath/src/main/native/thirdparty/sleipnir:sleipnir-srcs",
     ],
     hdrs = glob(["include/**/*"]),
-    defines = ["WPILIB_EXPORTS"],
+    defines = ["WPILIB_EXPORTS", "SLEIPNIR_EXPORTS"],
     export_symbols = False,
     includes = [
         "include",
