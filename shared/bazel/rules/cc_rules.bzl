@@ -145,12 +145,18 @@ def wpilib_cc_static_and_shared_library(
 
     print(standard_deps)
     print(dynamic_deps)
+    
+    shared_features = list(features)
+    if export_symbols:
+        shared_features += ["windows_export_all_symbols"]
+
     print()
     native.cc_shared_library(
         name = name + "",
         deps = [static_lib_name],
         dynamic_deps = dynamic_deps,
-        visibility = ["//visibility:private"]
+        visibility = ["//visibility:private"],
+        features = shared_features,
         # visibility = visibility,
     )
 
