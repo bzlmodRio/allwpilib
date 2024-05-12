@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Peter Johnson <johnson.peter@gmail.com>
 Date: Sat, 10 Jun 2023 15:03:38 -0700
-Subject: [PATCH 04/12] Fix coded_stream WriteRaw
+Subject: [PATCH 4/9] Fix coded_stream WriteRaw
 
 ---
  src/google/protobuf/implicit_weak_message.h | 2 +-
@@ -9,10 +9,10 @@ Subject: [PATCH 04/12] Fix coded_stream WriteRaw
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/google/protobuf/implicit_weak_message.h b/src/google/protobuf/implicit_weak_message.h
-index b894ab4809090011f381828857d1674a6b7bff9b..c358c14c06f773d87f5089c75566a5a6fcba13e6 100644
+index 979c89750cab872223301c5435aefa99258d97c2..449db88dacf119bd97f900463f574514be0bf8b7 100644
 --- a/src/google/protobuf/implicit_weak_message.h
 +++ b/src/google/protobuf/implicit_weak_message.h
-@@ -100,7 +100,7 @@ class PROTOBUF_EXPORT ImplicitWeakMessage : public MessageLite {
+@@ -102,7 +102,7 @@ class PROTOBUF_EXPORT ImplicitWeakMessage : public MessageLite {
      if (data_ == nullptr) {
        return target;
      }
@@ -22,10 +22,10 @@ index b894ab4809090011f381828857d1674a6b7bff9b..c358c14c06f773d87f5089c75566a5a6
    }
  
 diff --git a/src/google/protobuf/io/coded_stream.h b/src/google/protobuf/io/coded_stream.h
-index c8fc994f916d047c0a7b176e53c9e946ebd752de..6c0dd4ab4099d1d748957af8bfc5f8c59c2aa3d6 100644
+index 998da317a69c2de87777a6bc4b02041343f53aa4..010eb8dae5d7b78a57bbfd8e121e8993cb2cfdb0 100644
 --- a/src/google/protobuf/io/coded_stream.h
 +++ b/src/google/protobuf/io/coded_stream.h
-@@ -677,8 +677,8 @@ class PROTOBUF_EXPORT EpsCopyOutputStream {
+@@ -681,8 +681,8 @@ class PROTOBUF_EXPORT EpsCopyOutputStream {
      return ptr;
    }
  
@@ -35,4 +35,4 @@ index c8fc994f916d047c0a7b176e53c9e946ebd752de..6c0dd4ab4099d1d748957af8bfc5f8c5
 +    if (PROTOBUF_PREDICT_FALSE(end_ - ptr < static_cast<int>(size))) {
        return WriteRawFallback(data, size, ptr);
      }
-     std::memcpy(ptr, data, size);
+     std::memcpy(ptr, data, static_cast<unsigned int>(size));

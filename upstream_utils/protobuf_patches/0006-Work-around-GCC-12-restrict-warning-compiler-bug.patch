@@ -1,0 +1,29 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Peter Johnson <johnson.peter@gmail.com>
+Date: Sat, 10 Jun 2023 15:59:45 -0700
+Subject: [PATCH 6/9] Work around GCC 12 restrict warning compiler bug
+
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=105329
+---
+ src/google/protobuf/io/tokenizer.cc | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/google/protobuf/io/tokenizer.cc b/src/google/protobuf/io/tokenizer.cc
+index d75dfabf195a9b70b651945a80026036fe7c7ed0..d5b4bc791416f24f620fd58ae9c65811b05d1853 100644
+--- a/src/google/protobuf/io/tokenizer.cc
++++ b/src/google/protobuf/io/tokenizer.cc
+@@ -585,7 +585,14 @@ Tokenizer::NextCommentStatus Tokenizer::TryConsumeCommentStart() {
+     } else {
+       // Oops, it was just a slash.  Return it.
+       current_.type = TYPE_SYMBOL;
++#if defined(__GNUC__) && !defined(__clang__)
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wrestrict"
++#endif
+       current_.text = "/";
++#if defined(__GNUC__) && !defined(__clang__)
++#pragma GCC diagnostic pop
++#endif
+       current_.line = line_;
+       current_.column = column_ - 1;
+       current_.end_column = column_;

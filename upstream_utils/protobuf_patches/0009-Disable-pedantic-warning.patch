@@ -1,0 +1,76 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Peter Johnson <johnson.peter@gmail.com>
+Date: Wed, 14 Jun 2023 00:02:26 -0700
+Subject: [PATCH 9/9] Disable pedantic warning
+
+---
+ src/google/protobuf/descriptor.h                    | 8 ++++++++
+ src/google/protobuf/generated_message_reflection.cc | 2 ++
+ src/google/protobuf/parse_context.h                 | 8 ++++++++
+ 3 files changed, 18 insertions(+)
+
+diff --git a/src/google/protobuf/descriptor.h b/src/google/protobuf/descriptor.h
+index 347f51abfe02dde9af3fc4b6d8af0060de0a83a6..10c06af8caa05f853dabb9a7c7c090d92585f308 100644
+--- a/src/google/protobuf/descriptor.h
++++ b/src/google/protobuf/descriptor.h
+@@ -83,6 +83,10 @@
+ #define PROTOBUF_IGNORE_DEPRECATION_STOP
+ #endif
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wpedantic"
++#endif
+ 
+ namespace google {
+ namespace protobuf {
+@@ -2720,6 +2724,10 @@ PROTOBUF_EXPORT Utf8CheckMode GetUtf8CheckMode(const FieldDescriptor* field,
+ }  // namespace protobuf
+ }  // namespace google
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic pop
++#endif
++
+ #undef PROTOBUF_INTERNAL_CHECK_CLASS_SIZE
+ #include "google/protobuf/port_undef.inc"
+ 
+diff --git a/src/google/protobuf/generated_message_reflection.cc b/src/google/protobuf/generated_message_reflection.cc
+index 0a82ae6d02f60686d5fa95f10864afc842443e39..bc2e87bdf583751f9a5f1025ea374cfa41c74522 100644
+--- a/src/google/protobuf/generated_message_reflection.cc
++++ b/src/google/protobuf/generated_message_reflection.cc
+@@ -85,6 +85,8 @@ using google::protobuf::internal::StringSpaceUsedExcludingSelfLong;
+ 
+ #ifdef _MSC_VER
+ #pragma warning(disable : 4065)
++#elif defined(__GNUC__)
++#pragma GCC diagnostic ignored "-Wpedantic"
+ #endif
+ 
+ namespace google {
+diff --git a/src/google/protobuf/parse_context.h b/src/google/protobuf/parse_context.h
+index 45c89cd656c68d88fd1255d405ab6210aa5029d9..16345dd94082eb46e1d61254b3de2ebe063c8ac9 100644
+--- a/src/google/protobuf/parse_context.h
++++ b/src/google/protobuf/parse_context.h
+@@ -59,6 +59,10 @@
+ // Must be included last.
+ #include "google/protobuf/port_def.inc"
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wpedantic"
++#endif
+ 
+ namespace google {
+ namespace protobuf {
+@@ -1443,6 +1447,10 @@ PROTOBUF_NODISCARD PROTOBUF_EXPORT const char* UnknownFieldParse(
+ }  // namespace protobuf
+ }  // namespace google
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic pop
++#endif
++
+ #include "google/protobuf/port_undef.inc"
+ 
+ #endif  // GOOGLE_PROTOBUF_PARSE_CONTEXT_H__

@@ -78,7 +78,16 @@ ext {
                     include '**/*.cpp'
                 }
                 exportedHeaders {
-                    srcDirs 'src/main/native/thirdparty/protobuf/include'
+                    srcDirs 'src/main/native/thirdparty/protobuf/include', 'src/main/native/thirdparty/abseil/include'
+                }
+            }
+            abseilCpp(CppSourceSet) {
+                source {
+                    srcDirs 'src/main/native/thirdparty/abseil/src'
+                    include '**/*.cpp'
+                }
+                exportedHeaders {
+                    srcDirs 'src/main/native/thirdparty/abseil/include'
                 }
             }
             resourcesCpp(CppSourceSet) {
@@ -204,6 +213,9 @@ cppHeadersZip {
     from('src/main/native/thirdparty/protobuf/include') {
         into '/'
     }
+    from('src/main/native/thirdparty/abseil/include') {
+        into '/'
+    }
 }
 
 cppSourcesZip {
@@ -225,6 +237,9 @@ cppSourcesZip {
     from('src/main/native/thirdparty/protobuf/src') {
         into '/'
     }
+    from('src/main/native/thirdparty/absiel/src') {
+        into '/'
+    }
     from('src/main/native/thirdparty/sigslot/src') {
         into '/'
     }
@@ -235,7 +250,7 @@ model {
         all {
             it.sources.each {
                 it.exportedHeaders {
-                    srcDirs 'src/main/native/include', 'src/main/native/thirdparty/expected/include', 'src/main/native/thirdparty/fmtlib/include', 'src/main/native/thirdparty/llvm/include', 'src/main/native/thirdparty/sigslot/include', 'src/main/native/thirdparty/json/include', 'src/main/native/thirdparty/memory/include', 'src/main/native/thirdparty/mpack/include', 'src/main/native/thirdparty/protobuf/include'
+                    srcDirs 'src/main/native/include', 'src/main/native/thirdparty/expected/include', 'src/main/native/thirdparty/fmtlib/include', 'src/main/native/thirdparty/llvm/include', 'src/main/native/thirdparty/sigslot/include', 'src/main/native/thirdparty/json/include', 'src/main/native/thirdparty/memory/include', 'src/main/native/thirdparty/mpack/include', 'src/main/native/thirdparty/protobuf/include', 'src/main/native/thirdparty/abseil/include'
                 }
             }
         }

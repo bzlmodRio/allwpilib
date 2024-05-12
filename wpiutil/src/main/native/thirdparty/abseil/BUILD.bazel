@@ -1,0 +1,18 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+
+wpilib_cc_library(
+    name = "abseil-headers",
+    hdrs = glob([
+        "include/**/*.h",
+        "include/**/*.inc",
+    ]),
+    includes = ["include"],
+    strip_include_prefix = "include",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+filegroup(
+    name = "abseil-srcs",
+    srcs = glob(["src/**"]),
+    visibility = ["//wpiutil:__subpackages__"],
+)

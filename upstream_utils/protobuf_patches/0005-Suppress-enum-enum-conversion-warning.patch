@@ -1,17 +1,17 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Peter Johnson <johnson.peter@gmail.com>
 Date: Sat, 10 Jun 2023 15:13:45 -0700
-Subject: [PATCH 05/12] Suppress enum-enum conversion warning
+Subject: [PATCH 5/9] Suppress enum-enum conversion warning
 
 ---
- src/google/protobuf/generated_message_tctable_impl.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ src/google/protobuf/generated_message_tctable_impl.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/src/google/protobuf/generated_message_tctable_impl.h b/src/google/protobuf/generated_message_tctable_impl.h
-index 21fa5332d39b24e0bdb6432f27183df743d512c6..ce3d9110e28706ca18dcf0f2c94feba75f447dc7 100644
+index c076455a56dd385805df735f56fc8c19e7dea752..57bb9221eecafd76a96bb73cbdcfb198242faa5b 100644
 --- a/src/google/protobuf/generated_message_tctable_impl.h
 +++ b/src/google/protobuf/generated_message_tctable_impl.h
-@@ -180,6 +180,12 @@ static_assert(kFmtShift + kFmtBits == 12, "number of bits changed");
+@@ -210,6 +210,12 @@ static_assert(kFmtShift + kFmtBits == 13, "number of bits changed");
  // This assertion should not change unless the storage width changes:
  static_assert(kFmtShift + kFmtBits <= 16, "too many bits");
  
@@ -24,13 +24,14 @@ index 21fa5332d39b24e0bdb6432f27183df743d512c6..ce3d9110e28706ca18dcf0f2c94feba7
  // Convenience aliases (16 bits, with format):
  enum FieldType : uint16_t {
    // Numeric types:
-@@ -232,6 +238,9 @@ enum FieldType : uint16_t {
+@@ -262,6 +268,10 @@ enum FieldType : uint16_t {
    // Map types:
    kMap             = kFkMap,
  };
 +#ifdef __GNUC__
 +#pragma GCC diagnostic pop
 +#endif
- 
++
  // clang-format on
  }  // namespace field_layout
+ 

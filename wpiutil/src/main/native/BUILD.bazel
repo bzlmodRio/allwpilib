@@ -28,6 +28,7 @@ wpilib_cc_static_and_shared_library(
     ) + [
         ":generate-resources",
         ":native-srcs",
+        "//wpiutil/src/main/native/thirdparty/abseil:abseil-srcs",
         "//wpiutil/src/main/native/thirdparty/fmtlib:fmtlib-srcs",
         "//wpiutil/src/main/native/thirdparty/json:json-srcs",
         "//wpiutil/src/main/native/thirdparty/llvm:llvm-srcs",
@@ -37,6 +38,7 @@ wpilib_cc_static_and_shared_library(
     hdrs = glob(["include/**/*"]),
     includes = ["include"],
     standard_deps = [
+        "//wpiutil/src/main/native/thirdparty/abseil:abseil-headers",
         "//wpiutil/src/main/native/thirdparty/expected:expected-headers",
         "//wpiutil/src/main/native/thirdparty/fmtlib:fmtlib-headers",
         "//wpiutil/src/main/native/thirdparty/json:json-headers",
