@@ -51,7 +51,7 @@ TEST(CrcCordState, Normalize) {
 
   // The checksum should not change as a result of calling Normalize().
   EXPECT_EQ(state.Checksum(), crc);
-  EXPECT_EQ(rep->removed_prefix.length, 0);
+  EXPECT_EQ(rep->removed_prefix.length, 0u);
 }
 
 TEST(CrcCordState, Copy) {

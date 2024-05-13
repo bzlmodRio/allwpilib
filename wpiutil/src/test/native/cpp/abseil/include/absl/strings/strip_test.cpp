@@ -146,7 +146,7 @@ TEST(Strip, RemoveExtraAsciiWhitespace) {
   std::string zero_string = "";
   assert(zero_string.empty());
   absl::RemoveExtraAsciiWhitespace(&zero_string);
-  EXPECT_EQ(zero_string.size(), 0);
+  EXPECT_EQ(zero_string.size(), 0u);
   EXPECT_TRUE(zero_string.empty());
 }
 

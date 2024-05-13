@@ -31,6 +31,10 @@
 #include <string>
 #include <utility>
 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
+
 #include "absl/base/attributes.h"
 #include "absl/base/config.h"
 #include "absl/base/internal/endian.h"
@@ -57,6 +61,7 @@
 #include "absl/strings/strip.h"
 #include "absl/types/optional.h"
 #include "absl/types/span.h"
+
 
 namespace absl {
 ABSL_NAMESPACE_BEGIN

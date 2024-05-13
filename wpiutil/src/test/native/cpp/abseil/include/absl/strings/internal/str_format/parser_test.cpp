@@ -54,7 +54,7 @@ TEST(LengthModTest, Names) {
     {__LINE__, LengthMod::t,    "t" },
     {__LINE__, LengthMod::q,    "q" },
   };
-  EXPECT_EQ(ABSL_ARRAYSIZE(kExpect), 10);
+  EXPECT_EQ(ABSL_ARRAYSIZE(kExpect), 10u);
   for (auto e : kExpect) {
     SCOPED_TRACE(e.line);
     EXPECT_EQ(e.name, LengthModToString(e.mod));

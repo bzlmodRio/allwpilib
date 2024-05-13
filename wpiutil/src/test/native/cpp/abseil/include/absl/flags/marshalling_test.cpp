@@ -288,39 +288,39 @@ TEST(MarshallingTest, TestUint32Parsing) {
 
   // Decimal values.
   EXPECT_TRUE(absl::ParseFlag("1", &value, &err));
-  EXPECT_EQ(value, 1);
+  EXPECT_EQ(value, 1u);
   EXPECT_TRUE(absl::ParseFlag("0", &value, &err));
-  EXPECT_EQ(value, 0);
+  EXPECT_EQ(value, 0u);
   EXPECT_TRUE(absl::ParseFlag("123", &value, &err));
-  EXPECT_EQ(value, 123);
+  EXPECT_EQ(value, 123u);
   EXPECT_TRUE(absl::ParseFlag("+3", &value, &err));
-  EXPECT_EQ(value, 3);
+  EXPECT_EQ(value, 3u);
 
   // Leading zero values.
   EXPECT_TRUE(absl::ParseFlag("01", &value, &err));
-  EXPECT_EQ(value, 1);
+  EXPECT_EQ(value, 1u);
   EXPECT_TRUE(absl::ParseFlag("0000100", &value, &err));
-  EXPECT_EQ(value, 100);
+  EXPECT_EQ(value, 100u);
 
   // Hex values.
   EXPECT_TRUE(absl::ParseFlag("0x10", &value, &err));
-  EXPECT_EQ(value, 16);
+  EXPECT_EQ(value, 16u);
   EXPECT_TRUE(absl::ParseFlag("0X234", &value, &err));
-  EXPECT_EQ(value, 564);
+  EXPECT_EQ(value, 564u);
   EXPECT_TRUE(absl::ParseFlag("0xFFFFFFFD", &value, &err));
-  EXPECT_EQ(value, 4294967293);
+  EXPECT_EQ(value, 4294967293u);
   EXPECT_TRUE(absl::ParseFlag("+0x31", &value, &err));
-  EXPECT_EQ(value, 49);
+  EXPECT_EQ(value, 49u);
 
   // Whitespace handling
   EXPECT_TRUE(absl::ParseFlag("10  ", &value, &err));
-  EXPECT_EQ(value, 10);
+  EXPECT_EQ(value, 10u);
   EXPECT_TRUE(absl::ParseFlag("  11", &value, &err));
-  EXPECT_EQ(value, 11);
+  EXPECT_EQ(value, 11u);
   EXPECT_TRUE(absl::ParseFlag("  012  ", &value, &err));
-  EXPECT_EQ(value, 12);
+  EXPECT_EQ(value, 12u);
   EXPECT_TRUE(absl::ParseFlag(" 0x22    ", &value, &err));
-  EXPECT_EQ(value, 34);
+  EXPECT_EQ(value, 34u);
 
   // Invalid values.
   EXPECT_FALSE(absl::ParseFlag("", &value, &err));
@@ -405,37 +405,37 @@ TEST(MarshallingTest, TestUInt64Parsing) {
 
   // Decimal values.
   EXPECT_TRUE(absl::ParseFlag("1", &value, &err));
-  EXPECT_EQ(value, 1);
+  EXPECT_EQ(value, 1u);
   EXPECT_TRUE(absl::ParseFlag("0", &value, &err));
-  EXPECT_EQ(value, 0);
+  EXPECT_EQ(value, 0u);
   EXPECT_TRUE(absl::ParseFlag("123", &value, &err));
-  EXPECT_EQ(value, 123);
+  EXPECT_EQ(value, 123u);
   EXPECT_TRUE(absl::ParseFlag("+13", &value, &err));
-  EXPECT_EQ(value, 13);
+  EXPECT_EQ(value, 13u);
 
   // Leading zero values.
   EXPECT_TRUE(absl::ParseFlag("01", &value, &err));
-  EXPECT_EQ(value, 1);
+  EXPECT_EQ(value, 1u);
   EXPECT_TRUE(absl::ParseFlag("001", &value, &err));
-  EXPECT_EQ(value, 1);
+  EXPECT_EQ(value, 1u);
   EXPECT_TRUE(absl::ParseFlag("0000300", &value, &err));
-  EXPECT_EQ(value, 300);
+  EXPECT_EQ(value, 300u);
 
   // Hex values.
   EXPECT_TRUE(absl::ParseFlag("0x10", &value, &err));
-  EXPECT_EQ(value, 16);
+  EXPECT_EQ(value, 16u);
   EXPECT_TRUE(absl::ParseFlag("0XFFFF", &value, &err));
-  EXPECT_EQ(value, 65535);
+  EXPECT_EQ(value, 65535u);
   EXPECT_TRUE(absl::ParseFlag("+0x31", &value, &err));
-  EXPECT_EQ(value, 49);
+  EXPECT_EQ(value, 49u);
 
   // Whitespace handling
   EXPECT_TRUE(absl::ParseFlag("10  ", &value, &err));
-  EXPECT_EQ(value, 10);
+  EXPECT_EQ(value, 10u);
   EXPECT_TRUE(absl::ParseFlag("  11", &value, &err));
-  EXPECT_EQ(value, 11);
+  EXPECT_EQ(value, 11u);
   EXPECT_TRUE(absl::ParseFlag("  012  ", &value, &err));
-  EXPECT_EQ(value, 12);
+  EXPECT_EQ(value, 12u);
 
   // Invalid values.
   EXPECT_FALSE(absl::ParseFlag("", &value, &err));

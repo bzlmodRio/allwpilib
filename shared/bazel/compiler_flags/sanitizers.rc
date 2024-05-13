@@ -4,6 +4,7 @@ build:asan --copt -fno-omit-frame-pointer
 build:asan --linkopt -fsanitize=address
 build:asan --build_tests_only
 build:asan --test_tag_filters=-no-asan
+build:asan --test_timeout 180,900,2700,10800
 
 # TSAN (thread sanitizer)
 build:tsan --strip=never
@@ -16,6 +17,7 @@ build:tsan --copt -fno-omit-frame-pointer
 build:tsan --linkopt -fsanitize=thread
 build:tsan --build_tests_only
 build:tsan --test_tag_filters=-no-tsan
+build:tsan --test_timeout 180,900,2700,10800
 
 # USAN (Undefined Behavior Sanitizer)
 build:ubsan --copt -fsanitize=undefined
@@ -25,3 +27,4 @@ build:ubsan --linkopt -fsanitize=undefined
 build:ubsan --linkopt -fno-sanitize-recover=all
 build:ubsan --build_tests_only
 build:ubsan --test_tag_filters=-no-ubsan
+build:ubsan --test_timeout 180,900,2700,10800
