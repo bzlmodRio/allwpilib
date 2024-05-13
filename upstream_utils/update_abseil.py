@@ -16,7 +16,7 @@ from upstream_utils import (
 
 def main():
     upstream_root = clone_repo(
-        "https://github.com/abseil/abseil-cpp.git", "20230125.3"
+        "https://github.com/abseil/abseil-cpp.git", "20230802.1"
     )
     wpilib_root = get_repo_root()
     wpiutil = os.path.join(wpilib_root, "wpiutil")

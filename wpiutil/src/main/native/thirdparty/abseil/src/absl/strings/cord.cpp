@@ -12,11 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
-#if defined(__GNUC__)
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif
-
 #include "absl/strings/cord.h"
 
 #include <algorithm>
@@ -53,7 +48,6 @@
 #include "absl/strings/internal/cordz_update_tracker.h"
 #include "absl/strings/internal/resize_uninitialized.h"
 #include "absl/strings/str_cat.h"
-#include "absl/strings/str_format.h"
 #include "absl/strings/str_join.h"
 #include "absl/strings/string_view.h"
 
@@ -800,7 +794,7 @@ int CompareChunks(absl::string_view* lhs, absl::string_view* rhs,
 }
 
 // This overload set computes comparison results from memcmp result. This
-// interface is used inside GenericCompare below. Differet implementations
+// interface is used inside GenericCompare below. Different implementations
 // are specialized for int and bool. For int we clamp result to {-1, 0, 1}
 // set. For bool we just interested in "value == 0".
 template <typename ResultType>
