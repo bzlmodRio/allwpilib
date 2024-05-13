@@ -8,12 +8,12 @@ Subject: [PATCH 7/9] Disable MSVC switch warning
  1 file changed, 4 insertions(+)
 
 diff --git a/src/google/protobuf/generated_message_reflection.cc b/src/google/protobuf/generated_message_reflection.cc
-index 626672b515e6508810bfdca2d78dec0412180514..0a82ae6d02f60686d5fa95f10864afc842443e39 100644
+index 4705538f808eed314f20299c642ea9624d06fbba..7913032065f1bf4bb269ee8aae6bd5c89c360d1b 100644
 --- a/src/google/protobuf/generated_message_reflection.cc
 +++ b/src/google/protobuf/generated_message_reflection.cc
-@@ -83,6 +83,10 @@ using google::protobuf::internal::ReflectionSchema;
- using google::protobuf::internal::RepeatedPtrFieldBase;
+@@ -87,6 +87,10 @@ using google::protobuf::internal::RepeatedPtrFieldBase;
  using google::protobuf::internal::StringSpaceUsedExcludingSelfLong;
+ using google::protobuf::internal::cpp::IsLazilyInitializedFile;
  
 +#ifdef _MSC_VER
 +#pragma warning(disable : 4065)

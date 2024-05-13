@@ -1,5 +1,5 @@
 // Protocol Buffers - Google's data interchange format
-// Copyright 2023 Google Inc.  All rights reserved.
+// Copyright 2008 Google Inc.  All rights reserved.
 // https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,10 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "google/protobuf/reflection_mode.h"
+#include "google/protobuf/raw_ptr.h"
+
+#include "absl/base/attributes.h"
+#include "absl/base/optimization.h"
 
 // Must be included last.
 #include "google/protobuf/port_def.inc"
@@ -37,20 +40,8 @@ namespace google {
 namespace protobuf {
 namespace internal {
 
-#if !defined(PROTOBUF_NO_THREADLOCAL)
-
-#if defined(PROTOBUF_USE_DLLS) && defined(_WIN32)
-ReflectionMode& ScopedReflectionMode::reflection_mode() {
-  static PROTOBUF_THREAD_LOCAL ReflectionMode reflection_mode =
-      ReflectionMode::kDefault;
-  return reflection_mode;
-}
-#else
-PROTOBUF_CONSTINIT PROTOBUF_THREAD_LOCAL ReflectionMode
-    ScopedReflectionMode::reflection_mode_ = ReflectionMode::kDefault;
-#endif
-
-#endif
+ABSL_CONST_INIT PROTOBUF_EXPORT
+    ABSL_CACHELINE_ALIGNED const char kZeroBuffer[ABSL_CACHELINE_SIZE] = {};
 
 }  // namespace internal
 }  // namespace protobuf

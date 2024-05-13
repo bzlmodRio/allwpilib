@@ -586,10 +586,15 @@ class PROTOBUF_EXPORT TcParser final {
   static const char* FastMlS1(PROTOBUF_TC_PARAM_DECL);
   static const char* FastMlS2(PROTOBUF_TC_PARAM_DECL);
 
+  // NOTE: Do not dedup RefAt by having one call the other with a const_cast. It
+  // causes ICEs of gcc 7.5.
+  // https://github.com/protocolbuffers/protobuf/issues/13715
   template <typename T>
   static inline T& RefAt(void* x, size_t offset) {
     T* target = reinterpret_cast<T*>(static_cast<char*>(x) + offset);
-#ifndef NDEBUG
+#if !defined(NDEBUG) && !(defined(_MSC_VER) && defined(_M_IX86))
+    // Check the alignment in debug mode, except in 32-bit msvc because it does
+    // not respect the alignment as expressed by `alignof(T)`
     if (PROTOBUF_PREDICT_FALSE(
             reinterpret_cast<uintptr_t>(target) % alignof(T) != 0)) {
       AlignFail(std::integral_constant<size_t, alignof(T)>(),
@@ -605,7 +610,9 @@ class PROTOBUF_EXPORT TcParser final {
   static inline const T& RefAt(const void* x, size_t offset) {
     const T* target =
         reinterpret_cast<const T*>(static_cast<const char*>(x) + offset);
-#ifndef NDEBUG
+#if !defined(NDEBUG) && !(defined(_MSC_VER) && defined(_M_IX86))
+    // Check the alignment in debug mode, except in 32-bit msvc because it does
+    // not respect the alignment as expressed by `alignof(T)`
     if (PROTOBUF_PREDICT_FALSE(
             reinterpret_cast<uintptr_t>(target) % alignof(T) != 0)) {
       AlignFail(std::integral_constant<size_t, alignof(T)>(),
@@ -818,8 +825,8 @@ class PROTOBUF_EXPORT TcParser final {
   static inline const char* RepeatedString(PROTOBUF_TC_PARAM_DECL);
 
   static inline const char* ParseRepeatedStringOnce(
-      const char* ptr, Arena* arena, SerialArena* serial_arena,
-      ParseContext* ctx, RepeatedPtrField<std::string>& field);
+      const char* ptr, SerialArena* serial_arena, ParseContext* ctx,
+      RepeatedPtrField<std::string>& field);
 
   static void AddUnknownEnum(MessageLite* msg, const TcParseTableBase* table,
                              uint32_t tag, int32_t enum_value);
@@ -860,6 +867,10 @@ class PROTOBUF_EXPORT TcParser final {
                            const TcParseTableBase* table,
                            const TcParseTableBase::FieldEntry& entry,
                            uint16_t xform_val);
+  static bool MpVerifyUtf8(const absl::Cord& wire_bytes,
+                           const TcParseTableBase* table,
+                           const TcParseTableBase::FieldEntry& entry,
+                           uint16_t xform_val);
 
   // For FindFieldEntry tests:
   friend class FindFieldEntryTest;
@@ -881,7 +892,8 @@ class PROTOBUF_EXPORT TcParser final {
   static const char* MpRepeatedString(PROTOBUF_TC_PARAM_DECL);
   template <bool is_split>
   static const char* MpMessage(PROTOBUF_TC_PARAM_DECL);
-  static const char* MpRepeatedMessage(PROTOBUF_TC_PARAM_DECL);
+  template <bool is_group>
+  static const char* MpRepeatedMessageOrGroup(PROTOBUF_TC_PARAM_DECL);
   static const char* MpLazyMessage(PROTOBUF_TC_PARAM_DECL);
   static const char* MpFallback(PROTOBUF_TC_PARAM_DECL);
   static const char* MpMap(PROTOBUF_TC_PARAM_DECL);

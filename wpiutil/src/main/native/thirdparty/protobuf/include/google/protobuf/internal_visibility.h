@@ -27,31 +27,37 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-#include "google/protobuf/reflection_mode.h"
-
-// Must be included last.
-#include "google/protobuf/port_def.inc"
+#ifndef GOOGLE_PROTOBUF_INTERNAL_VISIBILITY_H__
+#define GOOGLE_PROTOBUF_INTERNAL_VISIBILITY_H__
 
 namespace google {
 namespace protobuf {
+
+class Message;
+class MessageLite;
+
 namespace internal {
 
-#if !defined(PROTOBUF_NO_THREADLOCAL)
+class InternalVisibilityForTesting;
 
-#if defined(PROTOBUF_USE_DLLS) && defined(_WIN32)
-ReflectionMode& ScopedReflectionMode::reflection_mode() {
-  static PROTOBUF_THREAD_LOCAL ReflectionMode reflection_mode =
-      ReflectionMode::kDefault;
-  return reflection_mode;
-}
-#else
-PROTOBUF_CONSTINIT PROTOBUF_THREAD_LOCAL ReflectionMode
-    ScopedReflectionMode::reflection_mode_ = ReflectionMode::kDefault;
-#endif
+// Empty class to use as a mandatory 'internal token' for functions that have to
+// be public, such as arena constructors, but that are for internal use only.
+class InternalVisibility {
+ private:
+  // Note: we don't use `InternalVisibility() = default` here, but default the
+  // ctor outside of the class to force a private ctor instance.
+  explicit InternalVisibility();
 
-#endif
+  friend class ::google::protobuf::Message;
+  friend class ::google::protobuf::MessageLite;
+
+  friend class InternalVisibilityForTesting;
+};
+
+inline InternalVisibility::InternalVisibility() = default;
 
 }  // namespace internal
 }  // namespace protobuf
 }  // namespace google
+
+#endif  // GOOGLE_PROTOBUF_INTERNAL_VISIBILITY_H__

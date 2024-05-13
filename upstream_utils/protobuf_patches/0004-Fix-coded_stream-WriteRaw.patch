@@ -9,7 +9,7 @@ Subject: [PATCH 4/9] Fix coded_stream WriteRaw
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/google/protobuf/implicit_weak_message.h b/src/google/protobuf/implicit_weak_message.h
-index 979c89750cab872223301c5435aefa99258d97c2..449db88dacf119bd97f900463f574514be0bf8b7 100644
+index e8c1710a9fdc1e650216629eb2462b8d66594a54..6bb334f3ed5e103434bc3858cb228ebf36f9ecd1 100644
 --- a/src/google/protobuf/implicit_weak_message.h
 +++ b/src/google/protobuf/implicit_weak_message.h
 @@ -102,7 +102,7 @@ class PROTOBUF_EXPORT ImplicitWeakMessage : public MessageLite {

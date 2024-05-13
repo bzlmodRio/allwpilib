@@ -1,5 +1,5 @@
 // Protocol Buffers - Google's data interchange format
-// Copyright 2008 Google Inc.  All rights reserved.
+// Copyright 2023 Google Inc.  All rights reserved.
 // https://developers.google.com/protocol-buffers/
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,27 +27,24 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// This file contains miscellaneous (non-lite) helper code not suitable to
+// generated_message_util.h. This should not be used directly by users.
 
-#include "google/protobuf/arena_config.h"
+#ifndef GOOGLE_PROTOBUF_INTERNAL_MESSAGE_UTIL_H__
+#define GOOGLE_PROTOBUF_INTERNAL_MESSAGE_UTIL_H__
 
-#include <atomic>
-#include <cstddef>
-
-// Must be included last.
-#include "google/protobuf/port_def.inc"
+#include "google/protobuf/message.h"
 
 namespace google {
 namespace protobuf {
 namespace internal {
 
-PROTOBUF_CONSTINIT const size_t kDefaultDefaultArenaMaxBlockSize = 32 << 10;
+// Walks the entire message tree and eager parses all lazy fields.
+void EagerParseLazyField(Message& message);
 
-namespace arena_config_internal {
-
-std::atomic<size_t> default_arena_max_block_size{
-    kDefaultDefaultArenaMaxBlockSize};
-
-}  // namespace arena_config_internal
 }  // namespace internal
 }  // namespace protobuf
 }  // namespace google
+
+#endif  // GOOGLE_PROTOBUF_INTERNAL_MESSAGE_UTIL_H__

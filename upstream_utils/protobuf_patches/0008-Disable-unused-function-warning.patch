@@ -8,10 +8,10 @@ Subject: [PATCH 8/9] Disable unused function warning
  1 file changed, 4 insertions(+)
 
 diff --git a/src/google/protobuf/generated_message_tctable_lite.cc b/src/google/protobuf/generated_message_tctable_lite.cc
-index 61836a0cd746a2168e8201123dcd8ffb15ec18ab..f18f2fe8426a8faca460ca35a6f5c8dba2756231 100644
+index 59dbda8811994e7c86206598e4759c0119e8d0ed..6adc02d5606271a15014f9a6e40b51b847c9ced1 100644
 --- a/src/google/protobuf/generated_message_tctable_lite.cc
 +++ b/src/google/protobuf/generated_message_tctable_lite.cc
-@@ -50,6 +50,10 @@
+@@ -56,6 +56,10 @@
  #include "google/protobuf/port_def.inc"
  // clang-format on
  

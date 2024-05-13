@@ -8,7 +8,7 @@ Subject: [PATCH 5/9] Suppress enum-enum conversion warning
  1 file changed, 10 insertions(+)
 
 diff --git a/src/google/protobuf/generated_message_tctable_impl.h b/src/google/protobuf/generated_message_tctable_impl.h
-index c076455a56dd385805df735f56fc8c19e7dea752..57bb9221eecafd76a96bb73cbdcfb198242faa5b 100644
+index 4b7e5edad3116d76299f9ed8e27770518a58b9c3..fb520d4c39e4dc16845591af0d1a2a52469475e1 100644
 --- a/src/google/protobuf/generated_message_tctable_impl.h
 +++ b/src/google/protobuf/generated_message_tctable_impl.h
 @@ -210,6 +210,12 @@ static_assert(kFmtShift + kFmtBits == 13, "number of bits changed");

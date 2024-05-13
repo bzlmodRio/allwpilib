@@ -24,7 +24,7 @@ index 338ceb078ed7d52f066ba2fa0bf5edc3fe95b4bb..5bab0c8b4addb71f03a4a73762bf21f9
      if (ApplyMapping(canonical_disk_file, mappings_[i].disk_path,
                       mappings_[i].virtual_path, virtual_file)) {
 diff --git a/src/google/protobuf/compiler/parser.cc b/src/google/protobuf/compiler/parser.cc
-index 867a34f4a8bfe1f75058060934f6fc1d0c1e5ccf..7cd24346c145565fd2162e677f88f787ce850d33 100644
+index d0231a8da87e7d704436ea18f41d94dd752130ae..90d0731544ff2f540c0da278d4bd7206877c1bb2 100644
 --- a/src/google/protobuf/compiler/parser.cc
 +++ b/src/google/protobuf/compiler/parser.cc
 @@ -170,7 +170,7 @@ bool IsLowerUnderscore(absl::string_view name) {

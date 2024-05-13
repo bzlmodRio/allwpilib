@@ -10,7 +10,7 @@ Subject: [PATCH 9/9] Disable pedantic warning
  3 files changed, 18 insertions(+)
 
 diff --git a/src/google/protobuf/descriptor.h b/src/google/protobuf/descriptor.h
-index 347f51abfe02dde9af3fc4b6d8af0060de0a83a6..10c06af8caa05f853dabb9a7c7c090d92585f308 100644
+index bebaca08d42034577d240d80d7c2d80872d6d8db..7f150bf4aeab6c3a73a3731d6f386b5de1571f3d 100644
 --- a/src/google/protobuf/descriptor.h
 +++ b/src/google/protobuf/descriptor.h
 @@ -83,6 +83,10 @@
@@ -24,7 +24,7 @@ index 347f51abfe02dde9af3fc4b6d8af0060de0a83a6..10c06af8caa05f853dabb9a7c7c090d9
  
  namespace google {
  namespace protobuf {
-@@ -2720,6 +2724,10 @@ PROTOBUF_EXPORT Utf8CheckMode GetUtf8CheckMode(const FieldDescriptor* field,
+@@ -2951,6 +2955,10 @@ PROTOBUF_EXPORT bool IsLazilyInitializedFile(absl::string_view filename);
  }  // namespace protobuf
  }  // namespace google
  
@@ -36,10 +36,10 @@ index 347f51abfe02dde9af3fc4b6d8af0060de0a83a6..10c06af8caa05f853dabb9a7c7c090d9
  #include "google/protobuf/port_undef.inc"
  
 diff --git a/src/google/protobuf/generated_message_reflection.cc b/src/google/protobuf/generated_message_reflection.cc
-index 0a82ae6d02f60686d5fa95f10864afc842443e39..bc2e87bdf583751f9a5f1025ea374cfa41c74522 100644
+index 7913032065f1bf4bb269ee8aae6bd5c89c360d1b..aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3 100644
 --- a/src/google/protobuf/generated_message_reflection.cc
 +++ b/src/google/protobuf/generated_message_reflection.cc
-@@ -85,6 +85,8 @@ using google::protobuf::internal::StringSpaceUsedExcludingSelfLong;
+@@ -89,6 +89,8 @@ using google::protobuf::internal::cpp::IsLazilyInitializedFile;
  
  #ifdef _MSC_VER
  #pragma warning(disable : 4065)
@@ -49,10 +49,10 @@ index 0a82ae6d02f60686d5fa95f10864afc842443e39..bc2e87bdf583751f9a5f1025ea374cfa
  
  namespace google {
 diff --git a/src/google/protobuf/parse_context.h b/src/google/protobuf/parse_context.h
-index 45c89cd656c68d88fd1255d405ab6210aa5029d9..16345dd94082eb46e1d61254b3de2ebe063c8ac9 100644
+index cbb34a462dce1168c917c467cd2f57f2a357821e..324e2aeeea2d1326bcc3fdc745eeb38175cd669d 100644
 --- a/src/google/protobuf/parse_context.h
 +++ b/src/google/protobuf/parse_context.h
-@@ -59,6 +59,10 @@
+@@ -60,6 +60,10 @@
  // Must be included last.
  #include "google/protobuf/port_def.inc"
  

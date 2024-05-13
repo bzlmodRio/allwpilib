@@ -28,11 +28,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef GOOGLE_PROTOBUF_ARENA_CONFIG_H__
-#define GOOGLE_PROTOBUF_ARENA_CONFIG_H__
+#ifndef GOOGLE_PROTOBUF_RAW_PTR_H__
+#define GOOGLE_PROTOBUF_RAW_PTR_H__
 
-#include <atomic>
-#include <cstddef>
+#include <algorithm>
+
+#include "absl/base/optimization.h"
 
 // Must be included last.
 #include "google/protobuf/port_def.inc"
@@ -40,28 +41,35 @@
 namespace google {
 namespace protobuf {
 namespace internal {
-namespace arena_config_internal {
 
-// We use an atomic here only for correctness so that we can read/write
-// concurrently. We don't have memory order requirements so we use relaxed
-// memory ordering.
-PROTOBUF_EXPORT extern std::atomic<size_t> default_arena_max_block_size;
+PROTOBUF_EXPORT ABSL_CACHELINE_ALIGNED extern const char
+    kZeroBuffer[std::max(ABSL_CACHELINE_SIZE, 64)];
 
-}  // namespace arena_config_internal
+// This class is trivially copyable/trivially destructible and constexpr
+// constructible. The class allows for storing a raw pointer to a non-trivial
+// object in a constexpr context.
+template <typename T>
+class RawPtr {
+ public:
+  constexpr RawPtr() : RawPtr(kZeroBuffer) {
+    static_assert(sizeof(T) <= sizeof(kZeroBuffer), "");
+    static_assert(alignof(T) <= ABSL_CACHELINE_SIZE, "");
+  }
+  explicit constexpr RawPtr(const void* p) : p_(const_cast<void*>(p)) {}
 
-// The default value to use for DefaultArenaMaxBlockSize when
-// SetDefaultArenaMaxBlockSize hasn't been called.
-PROTOBUF_EXPORT extern const size_t kDefaultDefaultArenaMaxBlockSize;
+  bool IsDefault() const { return p_ == kZeroBuffer; }
 
-// The default value to use for arena max block size when no value is provided
-// in ArenaOptions.
-inline size_t GetDefaultArenaMaxBlockSize() {
-  return arena_config_internal::default_arena_max_block_size.load(
-      std::memory_order_relaxed);
-}
-inline void SetDefaultArenaMaxBlockSize(size_t default_arena_max_block_size) {
-  return arena_config_internal::default_arena_max_block_size.store(
-      default_arena_max_block_size, std::memory_order_relaxed);
+  void Set(const void* p) { p_ = const_cast<void*>(p); }
+  T* Get() const { return reinterpret_cast<T*>(p_); }
+  T* operator->() const { return Get(); }
+  T& operator*() const { return *Get(); }
+
+ private:
+  void* p_;
+};
+
+constexpr void* DefaultRawPtr() {
+  return const_cast<void*>(static_cast<const void*>(kZeroBuffer));
 }
 
 }  // namespace internal
@@ -70,4 +78,4 @@ inline void SetDefaultArenaMaxBlockSize(size_t default_arena_max_block_size) {
 
 #include "google/protobuf/port_undef.inc"
 
-#endif  // GOOGLE_PROTOBUF_ARENA_CONFIG_H__
+#endif  // GOOGLE_PROTOBUF_RAW_PTR_H__
