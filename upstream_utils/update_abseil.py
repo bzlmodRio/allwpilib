@@ -55,6 +55,12 @@ def main():
         if not f.endswith(".cc"):
             return False
 
+        if "chi_square.cc" == f:
+            return False
+
+        if "gaussian_distribution_gentables.cc" == f:
+            return False
+
         # if ("base/internal" in dp):
         #     return True
 
@@ -102,6 +108,8 @@ def main():
         include_files,
         os.path.join(wpiutil, "src/main/native/thirdparty/abseil/include"),
     )
+
+    # Move internal files
 
 
 if __name__ == "__main__":
