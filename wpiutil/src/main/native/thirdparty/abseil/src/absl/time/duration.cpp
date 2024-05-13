@@ -622,10 +622,10 @@ timespec ToTimespec(Duration d) {
     }
   }
   if (d >= ZeroDuration()) {
-    ts.tv_sec = std::numeric_limits<time_t>::max();
+    ts.tv_sec = (std::numeric_limits<time_t>::max)();
     ts.tv_nsec = 1000 * 1000 * 1000 - 1;
   } else {
-    ts.tv_sec = std::numeric_limits<time_t>::min();
+    ts.tv_sec = (std::numeric_limits<time_t>::min)();
     ts.tv_nsec = 0;
   }
   return ts;
