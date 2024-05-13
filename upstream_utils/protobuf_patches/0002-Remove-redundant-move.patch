@@ -8,10 +8,10 @@ Subject: [PATCH 02/10] Remove redundant move
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/google/protobuf/extension_set.h b/src/google/protobuf/extension_set.h
-index f45a1c858ca25e210e1d721c26e9b6a82bcc9519..207f3945165027bf0e9832b2305e84b7039f3cad 100644
+index e85370a412ccb9557986525516cc1acfae2452ad..583a735aac277d488ce77e7ba01aa9802b891f3f 100644
 --- a/src/google/protobuf/extension_set.h
 +++ b/src/google/protobuf/extension_set.h
-@@ -716,7 +716,7 @@ class PROTOBUF_EXPORT ExtensionSet {
+@@ -752,7 +752,7 @@ class PROTOBUF_EXPORT ExtensionSet {
    static KeyValueFunctor ForEach(Iterator begin, Iterator end,
                                   KeyValueFunctor func) {
      for (Iterator it = begin; it != end; ++it) func(it->first, it->second);

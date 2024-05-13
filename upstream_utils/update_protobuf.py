@@ -313,7 +313,7 @@ def matches(dp, f, files):
 
 def main():
     upstream_root = clone_repo(
-        "https://github.com/protocolbuffers/protobuf", "v25.3"
+        "https://github.com/protocolbuffers/protobuf", "v26.0"
     )
     wpilib_root = get_repo_root()
     wpiutil = os.path.join(wpilib_root, "wpiutil")

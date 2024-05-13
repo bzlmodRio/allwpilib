@@ -10,10 +10,10 @@ Subject: [PATCH 03/10] Fix maybe-uninitialized warnings
  3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/src/google/protobuf/arena.cc b/src/google/protobuf/arena.cc
-index c854413489581a4683dd1335f986575ab0d32bbb..61379661c3416e7c65958f42812e5770e5dd6cba 100644
+index 023e9c261d8b062397ef8239b28652c6a83e5c1c..a9cfb2ff4841a87de792aa53c6de3bce0d303cda 100644
 --- a/src/google/protobuf/arena.cc
 +++ b/src/google/protobuf/arena.cc
-@@ -753,7 +753,7 @@ uint64_t ThreadSafeArena::Reset() {
+@@ -743,7 +743,7 @@ uint64_t ThreadSafeArena::Reset() {
  
  void* ThreadSafeArena::AllocateAlignedWithCleanup(size_t n, size_t align,
                                                    void (*destructor)(void*)) {
@@ -22,7 +22,7 @@ index c854413489581a4683dd1335f986575ab0d32bbb..61379661c3416e7c65958f42812e5770
    if (PROTOBUF_PREDICT_TRUE(GetSerialArenaFast(&arena))) {
      return arena->AllocateAlignedWithCleanup(n, align, destructor);
    } else {
-@@ -766,7 +766,7 @@ void ThreadSafeArena::AddCleanup(void* elem, void (*cleanup)(void*)) {
+@@ -756,7 +756,7 @@ void ThreadSafeArena::AddCleanup(void* elem, void (*cleanup)(void*)) {
  }
  
  SerialArena* ThreadSafeArena::GetSerialArena() {
@@ -32,10 +32,10 @@ index c854413489581a4683dd1335f986575ab0d32bbb..61379661c3416e7c65958f42812e5770
      arena = GetSerialArenaFallback(kMaxCleanupNodeSize);
    }
 diff --git a/src/google/protobuf/generated_message_tctable_lite.cc b/src/google/protobuf/generated_message_tctable_lite.cc
-index 531d0556a7c4ded7d4e320d5df97b1a39832a8e0..5712cb285ffdb85fdbdaf2f2f979617bc38b3145 100644
+index eafa3da238e7e2f4ef4ef63c284638ff6a5c33e0..c8bf0136b3076ff80da278bacf4f30f7b1ea4ae5 100644
 --- a/src/google/protobuf/generated_message_tctable_lite.cc
 +++ b/src/google/protobuf/generated_message_tctable_lite.cc
-@@ -1086,7 +1086,7 @@ PROTOBUF_ALWAYS_INLINE const char* TcParser::SingularEnum(
+@@ -1094,7 +1094,7 @@ PROTOBUF_ALWAYS_INLINE const char* TcParser::SingularEnum(
    PrefetchEnumData(xform_val, aux);
    const char* ptr2 = ptr;  // Save for unknown enum case
    ptr += sizeof(TagType);  // Consume tag
@@ -44,7 +44,7 @@ index 531d0556a7c4ded7d4e320d5df97b1a39832a8e0..5712cb285ffdb85fdbdaf2f2f979617b
    ptr = ParseVarint(ptr, &tmp);
    if (PROTOBUF_PREDICT_FALSE(ptr == nullptr)) {
      PROTOBUF_MUSTTAIL return Error(PROTOBUF_TC_PARAM_NO_DATA_PASS);
-@@ -1131,7 +1131,7 @@ PROTOBUF_ALWAYS_INLINE const char* TcParser::RepeatedEnum(
+@@ -1139,7 +1139,7 @@ PROTOBUF_ALWAYS_INLINE const char* TcParser::RepeatedEnum(
    do {
      const char* ptr2 = ptr;  // save for unknown enum case
      ptr += sizeof(TagType);
@@ -53,7 +53,7 @@ index 531d0556a7c4ded7d4e320d5df97b1a39832a8e0..5712cb285ffdb85fdbdaf2f2f979617b
      ptr = ParseVarint(ptr, &tmp);
      if (PROTOBUF_PREDICT_FALSE(ptr == nullptr)) {
        PROTOBUF_MUSTTAIL return Error(PROTOBUF_TC_PARAM_NO_DATA_PASS);
-@@ -1872,7 +1872,7 @@ PROTOBUF_NOINLINE const char* TcParser::MpVarint(PROTOBUF_TC_PARAM_DECL) {
+@@ -1880,7 +1880,7 @@ PROTOBUF_NOINLINE const char* TcParser::MpVarint(PROTOBUF_TC_PARAM_DECL) {
  
    // Parse the value:
    const char* ptr2 = ptr;  // save for unknown enum case
@@ -63,7 +63,7 @@ index 531d0556a7c4ded7d4e320d5df97b1a39832a8e0..5712cb285ffdb85fdbdaf2f2f979617b
    if (ptr == nullptr) {
      PROTOBUF_MUSTTAIL return Error(PROTOBUF_TC_PARAM_NO_DATA_PASS);
 diff --git a/src/google/protobuf/io/coded_stream.cc b/src/google/protobuf/io/coded_stream.cc
-index fdfc2d096e0aa2d56e748ede3df698bd7d0c52b7..63d65da68915f101127e86b3acdf03abd7bde960 100644
+index 61f6393087d26a4b07c8ec51e9ff4064779f09e2..e819066ae3f21ba72bd041e3fe12d6e67cde5c65 100644
 --- a/src/google/protobuf/io/coded_stream.cc
 +++ b/src/google/protobuf/io/coded_stream.cc
 @@ -494,7 +494,7 @@ int64_t CodedInputStream::ReadVarint32Fallback(uint32_t first_byte_or_zero) {

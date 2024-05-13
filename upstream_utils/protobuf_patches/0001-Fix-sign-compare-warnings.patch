@@ -24,7 +24,7 @@ index 9e68da679876b2aa9aa9830557a3e0b992b1f957..ce94fe1237013e49c9d8012cc82bd835
      if (ApplyMapping(canonical_disk_file, mappings_[i].disk_path,
                       mappings_[i].virtual_path, virtual_file)) {
 diff --git a/src/google/protobuf/compiler/parser.cc b/src/google/protobuf/compiler/parser.cc
-index a40270126885ca616be489be3ca98456d7a0007f..9f265d8f18f74e1cca11ba9ab73ac3e5f20d35fb 100644
+index ae6be8ff3006be1f96430dfc4ea0c1b9d441bb56..99647de97680fc8e558200a9a66b1764c0bb9976 100644
 --- a/src/google/protobuf/compiler/parser.cc
 +++ b/src/google/protobuf/compiler/parser.cc
 @@ -148,7 +148,7 @@ bool IsLowerUnderscore(absl::string_view name) {
@@ -36,7 +36,7 @@ index a40270126885ca616be489be3ca98456d7a0007f..9f265d8f18f74e1cca11ba9ab73ac3e5
      const char c = name[i];
      if (IsNumber(c) && name[i - 1] == '_') {
        return true;
-@@ -506,7 +506,7 @@ void Parser::LocationRecorder::AttachComments(
+@@ -509,7 +509,7 @@ void Parser::LocationRecorder::AttachComments(
    if (!trailing->empty()) {
      location_->mutable_trailing_comments()->swap(*trailing);
    }
