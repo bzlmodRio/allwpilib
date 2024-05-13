@@ -421,13 +421,8 @@ abseil_sources = set([
 
 def matches(dp, f, files):
     p = dp[len("./"):] + "/" + f
-    if p in files:
-        print(dp, f)
-        return True
-    # p = dp[6:] + "/" + f
-    # return p in files
-
-    return False
+    p = p.replace("\\", "/")
+    return p in files
 
 def main():
     upstream_root = clone_repo(

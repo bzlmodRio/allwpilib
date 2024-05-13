@@ -307,9 +307,10 @@ use_include_files = (
 
 
 def matches(dp, f, files):
-    if not dp.startswith("./src/"):
+    if not dp.replace("\\", "/").startswith("./src/"):
         return False
     p = dp[6:] + "/" + f
+    p = p.replace("\\", "/")
     return p in files
 
 

@@ -20,6 +20,12 @@
 #pragma GCC diagnostic ignored "-Wattributes"
 #endif
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4065)
+#pragma warning(disable : 4141)
+#pragma warning(disable : 4305)
+#endif
+
 #include "absl/base/optimization.h"
 #include "absl/log/absl_check.h"
 #include "absl/log/absl_log.h"

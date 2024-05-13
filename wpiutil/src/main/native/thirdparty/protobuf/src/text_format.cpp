@@ -53,6 +53,10 @@
 // Must be included last.
 #include "google/protobuf/port_def.inc"
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4805)
+#endif
+
 namespace google {
 namespace protobuf {
 

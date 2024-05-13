@@ -115,6 +115,7 @@ aspect_bazel_lib_dependencies()
 
 http_archive(
     name = "com_google_protobuf",
+    integrity = "sha256-wscevJCvl5bog09lCT8vq4iwqCsqPoBbNIQmRaKvxLA=",
     patch_args = ["-p1"],
     patches = [
         "//upstream_utils/protobuf_patches:0001-Fix-sign-compare-warnings.patch",
@@ -128,7 +129,6 @@ http_archive(
         "//upstream_utils/protobuf_patches:0009-Disable-pedantic-warning.patch",
         "//upstream_utils/protobuf_patches:0010-Hand-updates.patch",
     ],
-    integrity = "sha256-wscevJCvl5bog09lCT8vq4iwqCsqPoBbNIQmRaKvxLA=",
     strip_prefix = "protobuf-26.0",
     urls = [
         "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v26.0.zip",

@@ -344,7 +344,7 @@ std::vector<TailCallTableInfo::FastFieldInfo> SplitFastFieldsForSize(
     int table_size_log2,
     const TailCallTableInfo::MessageOptions& message_options,
     const TailCallTableInfo::OptionProvider& option_provider) {
-  std::vector<TailCallTableInfo::FastFieldInfo> result(1 << table_size_log2);
+  std::vector<TailCallTableInfo::FastFieldInfo> result(1ull << table_size_log2);
   const uint32_t idx_mask = static_cast<uint32_t>(result.size() - 1);
   const auto tag_to_idx = [&](uint32_t tag) {
     // The field index is determined by the low bits of the field number, where
@@ -886,7 +886,7 @@ TailCallTableInfo::TailCallTableInfo(
   int num_fast_fields = -1;
   auto end_group_tag = GetEndGroupTag(descriptor);
   for (int try_size_log2 : {0, 1, 2, 3, 4, 5}) {
-    size_t try_size = 1 << try_size_log2;
+    size_t try_size = 1ull << try_size_log2;
     auto split_fields =
         SplitFastFieldsForSize(end_group_tag, field_entries, try_size_log2,
                                message_options, option_provider);
