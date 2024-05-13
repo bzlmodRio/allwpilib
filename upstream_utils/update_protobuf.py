@@ -295,15 +295,8 @@ protobuf_includes = set(
     ]
 )
 
-protobuf_internal_includes = set(
-    [
-    ]
-)
-
 use_src_files = protobuf_lite_sources | protobuf_sources
-use_include_files = (
-    protobuf_lite_includes | protobuf_includes | protobuf_internal_includes
-)
+use_include_files = protobuf_lite_includes | protobuf_includes
 
 
 def matches(dp, f, files):
@@ -315,9 +308,7 @@ def matches(dp, f, files):
 
 
 def main():
-    upstream_root = clone_repo(
-        "https://github.com/protocolbuffers/protobuf", "v26.0"
-    )
+    upstream_root = clone_repo("https://github.com/protocolbuffers/protobuf", "v26.0")
     wpilib_root = get_repo_root()
     wpiutil = os.path.join(wpilib_root, "wpiutil")
 
@@ -335,7 +326,10 @@ def main():
         "0009-Disable-pedantic-warning.patch",
         "0010-Hand-updates.patch",
     ]:
-        git_am(os.path.join(wpilib_root, "upstream_utils/protobuf_patches", f), use_threeway=True)
+        git_am(
+            os.path.join(wpilib_root, "upstream_utils/protobuf_patches", f),
+            use_threeway=True,
+        )
 
     # Delete old install
     for d in [
