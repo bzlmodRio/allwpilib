@@ -29,29 +29,29 @@ def clone_repo(url, treeish, shallow=True):
         dest = dest[:-4]
 
     # Clone Git repository into current directory or update it
-    # if not os.path.exists(dest):
-    #     cmd = ["git", "clone"]
-    #     if shallow:
-    #         cmd += ["--branch", treeish, "--depth", "1"]
-    #     subprocess.run(cmd + [url, dest])
-    #     os.chdir(dest)
-    # else:
-    #     os.chdir(dest)
-    #     subprocess.run(["git", "fetch", "origin", treeish])
+    if not os.path.exists(dest):
+        cmd = ["git", "clone"]
+        if shallow:
+            cmd += ["--branch", treeish, "--depth", "1"]
+        subprocess.run(cmd + [url, dest])
+        os.chdir(dest)
+    else:
+        os.chdir(dest)
+        subprocess.run(["git", "fetch", "origin", treeish])
 
-    # # Get list of heads
-    # # Example output of "git ls-remote --heads":
-    # #   From https://gitlab.com/libeigen/eigen.git
-    # #   77c66e368c7e355f8be299659f57b0ffcaedb505  refs/heads/3.4
-    # #   3e006bfd31e4389e8c5718c30409cddb65a73b04  refs/heads/master
-    # ls_out = subprocess.check_output(["git", "ls-remote", "--heads"]).decode().rstrip()
-    # heads = [x.split()[1] for x in ls_out.split("\n")[1:]]
+    # Get list of heads
+    # Example output of "git ls-remote --heads":
+    #   From https://gitlab.com/libeigen/eigen.git
+    #   77c66e368c7e355f8be299659f57b0ffcaedb505  refs/heads/3.4
+    #   3e006bfd31e4389e8c5718c30409cddb65a73b04  refs/heads/master
+    ls_out = subprocess.check_output(["git", "ls-remote", "--heads"]).decode().rstrip()
+    heads = [x.split()[1] for x in ls_out.split("\n")[1:]]
 
-    # if f"refs/heads/{treeish}" in heads:
-    #     # Checking out the remote branch avoids needing to handle syncing a
-    #     # preexisting local one
-    #     subprocess.run(["git", "checkout", f"origin/{treeish}"])
-    # else:
+    if f"refs/heads/{treeish}" in heads:
+        # Checking out the remote branch avoids needing to handle syncing a
+        # preexisting local one
+        subprocess.run(["git", "checkout", f"origin/{treeish}"])
+    else:
         subprocess.run(["git", "checkout", treeish])
 
     os.chdir(cwd)

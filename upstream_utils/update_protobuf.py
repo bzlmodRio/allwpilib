@@ -322,15 +322,16 @@ def main():
     # Apply patches to upstream Git repo
     os.chdir(upstream_root)
     for f in [
-        # "0001-Fix-sign-compare-warnings.patch",
-        # "0002-Remove-redundant-move.patch",
-        # "0003-Fix-maybe-uninitialized-warnings.patch",
-        # "0004-Fix-coded_stream-WriteRaw.patch",
-        # "0005-Suppress-enum-enum-conversion-warning.patch",
-        # "0006-Work-around-GCC-12-restrict-warning-compiler-bug.patch",
-        # "0007-Disable-MSVC-switch-warning.patch",
-        # "0008-Disable-unused-function-warning.patch",
-        # "0009-Disable-pedantic-warning.patch",
+        "0001-Fix-sign-compare-warnings.patch",
+        "0002-Remove-redundant-move.patch",
+        "0003-Fix-maybe-uninitialized-warnings.patch",
+        "0004-Fix-coded_stream-WriteRaw.patch",
+        "0005-Suppress-enum-enum-conversion-warning.patch",
+        "0006-Work-around-GCC-12-restrict-warning-compiler-bug.patch",
+        "0007-Disable-MSVC-switch-warning.patch",
+        "0008-Disable-unused-function-warning.patch",
+        "0009-Disable-pedantic-warning.patch",
+        "0010-Hand-updates.patch",
     ]:
         git_am(os.path.join(wpilib_root, "upstream_utils/protobuf_patches", f))
 
