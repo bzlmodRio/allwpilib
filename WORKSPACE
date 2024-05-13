@@ -126,11 +126,12 @@ http_archive(
         "//upstream_utils/protobuf_patches:0007-Disable-MSVC-switch-warning.patch",
         "//upstream_utils/protobuf_patches:0008-Disable-unused-function-warning.patch",
         "//upstream_utils/protobuf_patches:0009-Disable-pedantic-warning.patch",
+        "//upstream_utils/protobuf_patches:0010-Hand-updates.patch",
     ],
-    sha256 = "9f47ba30e0db51bf58d4fdfbdedebefa8bf9b27be5a676db9336ebf623c89f9a",
-    strip_prefix = "protobuf-23.4",
+    integrity = "sha256-wscevJCvl5bog09lCT8vq4iwqCsqPoBbNIQmRaKvxLA=",
+    strip_prefix = "protobuf-26.0",
     urls = [
-        "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v23.4.zip",
+        "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v26.0.zip",
     ],
 )
 
