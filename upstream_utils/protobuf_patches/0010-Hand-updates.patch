@@ -4,15 +4,56 @@ Date: Sun, 12 May 2024 21:27:31 -0400
 Subject: [PATCH 10/10] Hand updates
 
 ---
+ src/google/protobuf/generated_enum_util.cc         |  6 +++++-
+ src/google/protobuf/generated_message_bases.cc     |  4 ++++
  .../protobuf/generated_message_reflection.cc       | 14 +++++++++-----
  .../protobuf/generated_message_tctable_gen.cc      |  6 +++++-
- .../protobuf/generated_message_tctable_lite.cc     |  7 +++++++
+ .../protobuf/generated_message_tctable_lite.cc     |  9 +++++++++
  src/google/protobuf/io/coded_stream.cc             |  6 +++---
  src/google/protobuf/map.cc                         |  2 +-
  src/google/protobuf/message_lite.cc                |  2 +-
  src/google/protobuf/varint_shuffle.h               |  9 +++++++++
- 7 files changed, 35 insertions(+), 11 deletions(-)
+ 9 files changed, 46 insertions(+), 12 deletions(-)
 
+diff --git a/src/google/protobuf/generated_enum_util.cc b/src/google/protobuf/generated_enum_util.cc
+index 372899e1605a5828f6e4afa69cbf265e5960be64..1f276d483d1515b43e03d3e82aef59d3c77ab413 100644
+--- a/src/google/protobuf/generated_enum_util.cc
++++ b/src/google/protobuf/generated_enum_util.cc
+@@ -21,6 +21,10 @@
+ // Must be included last.
+ #include "google/protobuf/port_def.inc"
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
++#endif
++
+ namespace google {
+ namespace protobuf {
+ namespace internal {
+@@ -149,7 +153,7 @@ std::vector<uint32_t> GenerateEnumData(absl::Span<const int32_t> values) {
+     // If we can fit it on the already allocated bitmap, do so.
+     if (adjusted < kBitmapBlockSize * bitmap_values.size()) {
+       // We can fit it in the existing bitmap.
+-      ABSL_DCHECK_EQ(fallback_values_after_bitmap.size(), 0);
++      ABSL_DCHECK_EQ(fallback_values_after_bitmap.size(), 0u);
+       add_bit(adjusted);
+       continue;
+     }
+diff --git a/src/google/protobuf/generated_message_bases.cc b/src/google/protobuf/generated_message_bases.cc
+index 319a0ae681b0eb9e52ce55ce594368442f1a6461..d0b44e0eb6fbd7f6a5ac53c8c9a44ccdd1b3b6e6 100644
+--- a/src/google/protobuf/generated_message_bases.cc
++++ b/src/google/protobuf/generated_message_bases.cc
+@@ -17,6 +17,10 @@
+ // Must be last:
+ #include "google/protobuf/port_def.inc"
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
++#endif
++
+ namespace google {
+ namespace protobuf {
+ namespace internal {
 diff --git a/src/google/protobuf/generated_message_reflection.cc b/src/google/protobuf/generated_message_reflection.cc
 index d50f44b52d1b892e60ea2eb1c7813b8d14405882..665f64e02eab901a95cda2d4c6f7b59e0690862e 100644
 --- a/src/google/protobuf/generated_message_reflection.cc
@@ -98,7 +139,7 @@ index 7c1736d63ebd2854a824b2d3abb8c5803b7b60f8..d6c522ed85a84b9dd0a7a68935586373
    // shift the high bits and add a continue bit.
    if (uint32_t hibits = tag & 0xFFFFFF80) {
 diff --git a/src/google/protobuf/generated_message_tctable_lite.cc b/src/google/protobuf/generated_message_tctable_lite.cc
-index 6c7bd86ba9b063e8da88d39b2e4f7a1091c14b42..92bb7c1c53d63ac9a7d82db997be8a3a70877489 100644
+index 6c7bd86ba9b063e8da88d39b2e4f7a1091c14b42..124d7286aca9ea6ec7e7944cd663ed4cf9b02afb 100644
 --- a/src/google/protobuf/generated_message_tctable_lite.cc
 +++ b/src/google/protobuf/generated_message_tctable_lite.cc
 @@ -14,6 +14,12 @@
@@ -114,7 +155,23 @@ index 6c7bd86ba9b063e8da88d39b2e4f7a1091c14b42..92bb7c1c53d63ac9a7d82db997be8a3a
  #include "absl/base/optimization.h"
  #include "absl/log/absl_check.h"
  #include "absl/log/absl_log.h"
-@@ -2668,6 +2674,7 @@ const char* TcParser::ParseOneMapEntry(
+@@ -2018,6 +2024,7 @@ PROTOBUF_NOINLINE const char* TcParser::MpRepeatedVarint(
+               PROTOBUF_TC_PARAM_PASS);
+         default:
+           PROTOBUF_ASSUME(false);
++          return nullptr;
+       }
+     case field_layout::kRep8Bits >> field_layout::kRepShift:
+       PROTOBUF_MUSTTAIL return MpRepeatedVarintT<is_split, bool, 0>(
+@@ -2115,6 +2122,7 @@ PROTOBUF_NOINLINE const char* TcParser::MpPackedVarint(PROTOBUF_TC_PARAM_DECL) {
+               PROTOBUF_TC_PARAM_PASS);
+         default:
+           PROTOBUF_ASSUME(false);
++          return nullptr;
+       }
+     case field_layout::kRep8Bits >> field_layout::kRepShift:
+       PROTOBUF_MUSTTAIL return MpPackedVarintT<is_split, bool, 0>(
+@@ -2668,6 +2676,7 @@ const char* TcParser::ParseOneMapEntry(
              continue;
            default:
              PROTOBUF_ASSUME(false);
