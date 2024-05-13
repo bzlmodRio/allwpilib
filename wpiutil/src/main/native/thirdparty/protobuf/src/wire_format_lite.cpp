@@ -666,7 +666,7 @@ static size_t VarintSize(const T* data, const int n) {
   }
 // Clang is not smart enough to see that this loop doesn't run many times
 // NOLINTNEXTLINE(google3-runtime-pragma-loop-hint): b/315043579
-#pragma clang loop vectorize(disable) unroll(disable) interleave(disable)
+// #pragma clang loop vectorize(disable) unroll(disable) interleave(disable)
   for (; i < n; i++) {
     uint32_t x = data[i];
     if (ZigZag) {
@@ -708,7 +708,7 @@ static size_t VarintSize64(const T* data, const int n) {
   }
 // Clang is not smart enough to see that this loop doesn't run many times
 // NOLINTNEXTLINE(google3-runtime-pragma-loop-hint): b/315043579
-#pragma clang loop vectorize(disable) unroll(disable) interleave(disable)
+// #pragma clang loop vectorize(disable) unroll(disable) interleave(disable)
   for (; i < n; i++) {
     uint64_t x = data[i];
     if (ZigZag) {
