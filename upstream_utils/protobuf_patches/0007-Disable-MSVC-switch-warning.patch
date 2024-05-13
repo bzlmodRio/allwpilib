@@ -8,10 +8,10 @@ Subject: [PATCH 07/10] Disable MSVC switch warning
  1 file changed, 4 insertions(+)
 
 diff --git a/src/google/protobuf/generated_message_reflection.cc b/src/google/protobuf/generated_message_reflection.cc
-index 4705538f808eed314f20299c642ea9624d06fbba..7913032065f1bf4bb269ee8aae6bd5c89c360d1b 100644
+index 452fd5240d17a568541b5766b8615cc4490e1f1c..62720fbe83e38d24a20f7d7841e55e63cb9123e5 100644
 --- a/src/google/protobuf/generated_message_reflection.cc
 +++ b/src/google/protobuf/generated_message_reflection.cc
-@@ -87,6 +87,10 @@ using google::protobuf::internal::RepeatedPtrFieldBase;
+@@ -65,6 +65,10 @@ using google::protobuf::internal::RepeatedPtrFieldBase;
  using google::protobuf::internal::StringSpaceUsedExcludingSelfLong;
  using google::protobuf::internal::cpp::IsLazilyInitializedFile;
  

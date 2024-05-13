@@ -11,10 +11,10 @@ Subject: [PATCH 01/10] Fix sign-compare warnings
  4 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/src/google/protobuf/compiler/importer.cc b/src/google/protobuf/compiler/importer.cc
-index 338ceb078ed7d52f066ba2fa0bf5edc3fe95b4bb..5bab0c8b4addb71f03a4a73762bf21f9d15c7e1e 100644
+index 9e68da679876b2aa9aa9830557a3e0b992b1f957..ce94fe1237013e49c9d8012cc82bd83548da18f7 100644
 --- a/src/google/protobuf/compiler/importer.cc
 +++ b/src/google/protobuf/compiler/importer.cc
-@@ -397,7 +397,7 @@ DiskSourceTree::DiskFileToVirtualFile(absl::string_view disk_file,
+@@ -374,7 +374,7 @@ DiskSourceTree::DiskFileToVirtualFile(absl::string_view disk_file,
    int mapping_index = -1;
    std::string canonical_disk_file = CanonicalizePath(disk_file);
  
@@ -24,10 +24,10 @@ index 338ceb078ed7d52f066ba2fa0bf5edc3fe95b4bb..5bab0c8b4addb71f03a4a73762bf21f9
      if (ApplyMapping(canonical_disk_file, mappings_[i].disk_path,
                       mappings_[i].virtual_path, virtual_file)) {
 diff --git a/src/google/protobuf/compiler/parser.cc b/src/google/protobuf/compiler/parser.cc
-index d0231a8da87e7d704436ea18f41d94dd752130ae..90d0731544ff2f540c0da278d4bd7206877c1bb2 100644
+index a40270126885ca616be489be3ca98456d7a0007f..9f265d8f18f74e1cca11ba9ab73ac3e5f20d35fb 100644
 --- a/src/google/protobuf/compiler/parser.cc
 +++ b/src/google/protobuf/compiler/parser.cc
-@@ -170,7 +170,7 @@ bool IsLowerUnderscore(absl::string_view name) {
+@@ -148,7 +148,7 @@ bool IsLowerUnderscore(absl::string_view name) {
  }
  
  bool IsNumberFollowUnderscore(absl::string_view name) {
@@ -36,7 +36,7 @@ index d0231a8da87e7d704436ea18f41d94dd752130ae..90d0731544ff2f540c0da278d4bd7206
      const char c = name[i];
      if (IsNumber(c) && name[i - 1] == '_') {
        return true;
-@@ -528,7 +528,7 @@ void Parser::LocationRecorder::AttachComments(
+@@ -506,7 +506,7 @@ void Parser::LocationRecorder::AttachComments(
    if (!trailing->empty()) {
      location_->mutable_trailing_comments()->swap(*trailing);
    }
@@ -46,10 +46,10 @@ index d0231a8da87e7d704436ea18f41d94dd752130ae..90d0731544ff2f540c0da278d4bd7206
    }
    detached_comments->clear();
 diff --git a/src/google/protobuf/io/io_win32.cc b/src/google/protobuf/io/io_win32.cc
-index 684c56743c1523b36c345d943ff2590e33345ae9..8c098b12ddfd65f33390100dd0f67862748f22b5 100644
+index 7fc76b99f7674cda9320186175739a716f880417..3a606c4d0132ee63cf5b51f85cdbbad81b1e06ed 100644
 --- a/src/google/protobuf/io/io_win32.cc
 +++ b/src/google/protobuf/io/io_win32.cc
-@@ -198,7 +198,7 @@ wstring normalize(wstring path) {
+@@ -175,7 +175,7 @@ wstring normalize(wstring path) {
    // Join all segments.
    bool first = true;
    std::wstringstream result;
@@ -59,10 +59,10 @@ index 684c56743c1523b36c345d943ff2590e33345ae9..8c098b12ddfd65f33390100dd0f67862
        result << L'\\';
      }
 diff --git a/src/google/protobuf/util/field_mask_util.cc b/src/google/protobuf/util/field_mask_util.cc
-index eee14b1e9f6573909797aff4e7cbb7a666b1416f..6ab94e598b1fc88ae46e2ceebe63fc1ecea2122a 100644
+index c79066715623fc7c690220a03c615853cbdfa953..7c81a5bb46624de197709bd40b752895f5a9c4ef 100644
 --- a/src/google/protobuf/util/field_mask_util.cc
 +++ b/src/google/protobuf/util/field_mask_util.cc
-@@ -370,7 +370,7 @@ void FieldMaskTree::RemovePath(absl::string_view path,
+@@ -347,7 +347,7 @@ void FieldMaskTree::RemovePath(absl::string_view path,
    Node* node = &root_;
    const Descriptor* current_descriptor = descriptor;
    Node* new_branch_node = nullptr;

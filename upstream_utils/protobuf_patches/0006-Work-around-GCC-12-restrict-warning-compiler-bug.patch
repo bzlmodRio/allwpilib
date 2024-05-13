@@ -9,10 +9,10 @@ https://gcc.gnu.org/bugzilla/show_bug.cgi?id=105329
  1 file changed, 7 insertions(+)
 
 diff --git a/src/google/protobuf/io/tokenizer.cc b/src/google/protobuf/io/tokenizer.cc
-index d75dfabf195a9b70b651945a80026036fe7c7ed0..d5b4bc791416f24f620fd58ae9c65811b05d1853 100644
+index 24c09dbadefa0f90d0ec7a15051d8d047d09d986..47bdcdb0774973d9a5ae3527a26324f57a9f4bbc 100644
 --- a/src/google/protobuf/io/tokenizer.cc
 +++ b/src/google/protobuf/io/tokenizer.cc
-@@ -585,7 +585,14 @@ Tokenizer::NextCommentStatus Tokenizer::TryConsumeCommentStart() {
+@@ -563,7 +563,14 @@ Tokenizer::NextCommentStatus Tokenizer::TryConsumeCommentStart() {
      } else {
        // Oops, it was just a slash.  Return it.
        current_.type = TYPE_SYMBOL;

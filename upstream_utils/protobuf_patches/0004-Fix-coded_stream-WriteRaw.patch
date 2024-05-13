@@ -9,10 +9,10 @@ Subject: [PATCH 04/10] Fix coded_stream WriteRaw
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/google/protobuf/implicit_weak_message.h b/src/google/protobuf/implicit_weak_message.h
-index e8c1710a9fdc1e650216629eb2462b8d66594a54..6bb334f3ed5e103434bc3858cb228ebf36f9ecd1 100644
+index 170155a2c9d748463c4443520753b3a98439258d..58031242eb6235b41cd661425e8e5532881a8d04 100644
 --- a/src/google/protobuf/implicit_weak_message.h
 +++ b/src/google/protobuf/implicit_weak_message.h
-@@ -102,7 +102,7 @@ class PROTOBUF_EXPORT ImplicitWeakMessage : public MessageLite {
+@@ -85,7 +85,7 @@ class PROTOBUF_EXPORT ImplicitWeakMessage : public MessageLite {
      if (data_ == nullptr) {
        return target;
      }
@@ -22,10 +22,10 @@ index e8c1710a9fdc1e650216629eb2462b8d66594a54..6bb334f3ed5e103434bc3858cb228ebf
    }
  
 diff --git a/src/google/protobuf/io/coded_stream.h b/src/google/protobuf/io/coded_stream.h
-index 998da317a69c2de87777a6bc4b02041343f53aa4..010eb8dae5d7b78a57bbfd8e121e8993cb2cfdb0 100644
+index 09c66aff38dfd48626357d63ce4d641279e756ec..f1ae6ad6a41c8a26ffb7548a0ccf6271c0992eb4 100644
 --- a/src/google/protobuf/io/coded_stream.h
 +++ b/src/google/protobuf/io/coded_stream.h
-@@ -681,8 +681,8 @@ class PROTOBUF_EXPORT EpsCopyOutputStream {
+@@ -658,8 +658,8 @@ class PROTOBUF_EXPORT EpsCopyOutputStream {
      return ptr;
    }
  

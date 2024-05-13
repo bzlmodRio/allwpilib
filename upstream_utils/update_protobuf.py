@@ -314,7 +314,7 @@ def matches(dp, f, files):
 
 def main():
     upstream_root = clone_repo(
-        "https://github.com/protocolbuffers/protobuf", "v24.4"
+        "https://github.com/protocolbuffers/protobuf", "v25.3"
     )
     wpilib_root = get_repo_root()
     wpiutil = os.path.join(wpilib_root, "wpiutil")
@@ -333,7 +333,7 @@ def main():
         "0009-Disable-pedantic-warning.patch",
         "0010-Hand-updates.patch",
     ]:
-        git_am(os.path.join(wpilib_root, "upstream_utils/protobuf_patches", f))
+        git_am(os.path.join(wpilib_root, "upstream_utils/protobuf_patches", f), use_threeway=True)
 
     # Delete old install
     for d in [

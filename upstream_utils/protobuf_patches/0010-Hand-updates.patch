@@ -14,10 +14,10 @@ Subject: [PATCH 10/10] Hand updates
  7 files changed, 35 insertions(+), 11 deletions(-)
 
 diff --git a/src/google/protobuf/generated_message_reflection.cc b/src/google/protobuf/generated_message_reflection.cc
-index aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3..a9537b89d0b46a12feacc011c6e3e45b4875be5b 100644
+index d50f44b52d1b892e60ea2eb1c7813b8d14405882..665f64e02eab901a95cda2d4c6f7b59e0690862e 100644
 --- a/src/google/protobuf/generated_message_reflection.cc
 +++ b/src/google/protobuf/generated_message_reflection.cc
-@@ -69,6 +69,10 @@
+@@ -47,6 +47,10 @@
  #include "google/protobuf/port_def.inc"
  // clang-format on
  
@@ -28,7 +28,7 @@ index aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3..a9537b89d0b46a12feacc011c6e3e45b
  #define GOOGLE_PROTOBUF_HAS_ONEOF
  
  using google::protobuf::internal::ArenaStringPtr;
-@@ -660,7 +664,7 @@ void SwapFieldHelper::SwapInlinedStrings(const Reflection* r, Message* lhs,
+@@ -638,7 +642,7 @@ void SwapFieldHelper::SwapInlinedStrings(const Reflection* r, Message* lhs,
    auto* lhs_string = r->MutableRaw<InlinedStringField>(lhs, field);
    auto* rhs_string = r->MutableRaw<InlinedStringField>(rhs, field);
    uint32_t index = r->schema_.InlinedStringIndex(field);
@@ -37,7 +37,7 @@ index aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3..a9537b89d0b46a12feacc011c6e3e45b
    uint32_t* lhs_array = r->MutableInlinedStringDonatedArray(lhs);
    uint32_t* rhs_array = r->MutableInlinedStringDonatedArray(rhs);
    uint32_t* lhs_state = &lhs_array[index / 32];
-@@ -1916,7 +1920,7 @@ void Reflection::SetString(Message* message, const FieldDescriptor* field,
+@@ -1891,7 +1895,7 @@ void Reflection::SetString(Message* message, const FieldDescriptor* field,
        case FieldOptions::STRING: {
          if (IsInlined(field)) {
            const uint32_t index = schema_.InlinedStringIndex(field);
@@ -46,7 +46,7 @@ index aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3..a9537b89d0b46a12feacc011c6e3e45b
            uint32_t* states =
                &MutableInlinedStringDonatedArray(message)[index / 32];
            uint32_t mask = ~(static_cast<uint32_t>(1) << (index % 32));
-@@ -1977,7 +1981,7 @@ void Reflection::SetString(Message* message, const FieldDescriptor* field,
+@@ -1952,7 +1956,7 @@ void Reflection::SetString(Message* message, const FieldDescriptor* field,
          if (IsInlined(field)) {
            auto* str = MutableField<InlinedStringField>(message, field);
            const uint32_t index = schema_.InlinedStringIndex(field);
@@ -55,7 +55,7 @@ index aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3..a9537b89d0b46a12feacc011c6e3e45b
            uint32_t* states =
                &MutableInlinedStringDonatedArray(message)[index / 32];
            uint32_t mask = ~(static_cast<uint32_t>(1) << (index % 32));
-@@ -2795,7 +2799,7 @@ uint32_t* Reflection::MutableInlinedStringDonatedArray(Message* message) const {
+@@ -2801,7 +2805,7 @@ uint32_t* Reflection::MutableInlinedStringDonatedArray(Message* message) const {
  bool Reflection::IsInlinedStringDonated(const Message& message,
                                          const FieldDescriptor* field) const {
    uint32_t index = schema_.InlinedStringIndex(field);
@@ -64,7 +64,7 @@ index aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3..a9537b89d0b46a12feacc011c6e3e45b
    return IsIndexInHasBitSet(GetInlinedStringDonatedArray(message), index);
  }
  
-@@ -2828,7 +2832,7 @@ void Reflection::SwapInlinedStringDonated(Message* lhs, Message* rhs,
+@@ -2834,7 +2838,7 @@ void Reflection::SwapInlinedStringDonated(Message* lhs, Message* rhs,
    ABSL_CHECK_EQ(rhs_array[0] & 0x1u, 0u);
    // Swap donation status bit.
    uint32_t index = schema_.InlinedStringIndex(field);
@@ -74,10 +74,10 @@ index aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3..a9537b89d0b46a12feacc011c6e3e45b
      SetInlinedStringDonated(index, lhs_array);
      ClearInlinedStringDonated(index, rhs_array);
 diff --git a/src/google/protobuf/generated_message_tctable_gen.cc b/src/google/protobuf/generated_message_tctable_gen.cc
-index 086825e2587c742deebf8834e8d72e452536c6ef..f5db70d52998529e9cfabc1da172530a62e6acad 100644
+index 7c1736d63ebd2854a824b2d3abb8c5803b7b60f8..d6c522ed85a84b9dd0a7a689355863739f5bc397 100644
 --- a/src/google/protobuf/generated_message_tctable_gen.cc
 +++ b/src/google/protobuf/generated_message_tctable_gen.cc
-@@ -45,6 +45,10 @@
+@@ -25,6 +25,10 @@
  // Must come last:
  #include "google/protobuf/port_def.inc"
  
@@ -88,7 +88,7 @@ index 086825e2587c742deebf8834e8d72e452536c6ef..f5db70d52998529e9cfabc1da172530a
  namespace google {
  namespace protobuf {
  namespace internal {
-@@ -333,7 +337,7 @@ absl::optional<uint32_t> GetEndGroupTag(const Descriptor* descriptor) {
+@@ -320,7 +324,7 @@ absl::optional<uint32_t> GetEndGroupTag(const Descriptor* descriptor) {
  }
  
  uint32_t RecodeTagForFastParsing(uint32_t tag) {
@@ -98,10 +98,10 @@ index 086825e2587c742deebf8834e8d72e452536c6ef..f5db70d52998529e9cfabc1da172530a
    // shift the high bits and add a continue bit.
    if (uint32_t hibits = tag & 0xFFFFFF80) {
 diff --git a/src/google/protobuf/generated_message_tctable_lite.cc b/src/google/protobuf/generated_message_tctable_lite.cc
-index 6adc02d5606271a15014f9a6e40b51b847c9ced1..accefbedb1ed1b51e6ba7f974c993a1d407d9b67 100644
+index 6c7bd86ba9b063e8da88d39b2e4f7a1091c14b42..92bb7c1c53d63ac9a7d82db997be8a3a70877489 100644
 --- a/src/google/protobuf/generated_message_tctable_lite.cc
 +++ b/src/google/protobuf/generated_message_tctable_lite.cc
-@@ -36,6 +36,12 @@
+@@ -14,6 +14,12 @@
  #include <type_traits>
  #include <utility>
  
@@ -113,8 +113,8 @@ index 6adc02d5606271a15014f9a6e40b51b847c9ced1..accefbedb1ed1b51e6ba7f974c993a1d
 +
  #include "absl/base/optimization.h"
  #include "absl/log/absl_check.h"
- #include "absl/numeric/bits.h"
-@@ -2646,6 +2652,7 @@ const char* TcParser::ParseOneMapEntry(
+ #include "absl/log/absl_log.h"
+@@ -2668,6 +2674,7 @@ const char* TcParser::ParseOneMapEntry(
              continue;
            default:
              PROTOBUF_ASSUME(false);
@@ -123,10 +123,10 @@ index 6adc02d5606271a15014f9a6e40b51b847c9ced1..accefbedb1ed1b51e6ba7f974c993a1d
        case WFL::WIRETYPE_FIXED32:
          ptr = ReadFixed<uint32_t>(obj, ptr);
 diff --git a/src/google/protobuf/io/coded_stream.cc b/src/google/protobuf/io/coded_stream.cc
-index d05c2afc0898e5933e66850c7b34c31d01403683..ef3159626875ec74bfeacbcfdf99de610e7a09d0 100644
+index 63d65da68915f101127e86b3acdf03abd7bde960..ae9962348ff656af1d3d2e629f2c2c6ed70cda57 100644
 --- a/src/google/protobuf/io/coded_stream.cc
 +++ b/src/google/protobuf/io/coded_stream.cc
-@@ -405,7 +405,7 @@ namespace {
+@@ -382,7 +382,7 @@ namespace {
  // subtracting 0x80 at each iteration, it subtracts properly shifted mask once.
  template <size_t N>
  const uint8_t* DecodeVarint64KnownSize(const uint8_t* buffer, uint64_t* value) {
@@ -135,7 +135,7 @@ index d05c2afc0898e5933e66850c7b34c31d01403683..ef3159626875ec74bfeacbcfdf99de61
    uint64_t result = static_cast<uint64_t>(buffer[N - 1]) << (7 * (N - 1));
    for (size_t i = 0, offset = 0; i < N - 1; i++, offset += 7) {
      result += static_cast<uint64_t>(buffer[i] - 0x80) << offset;
-@@ -427,7 +427,7 @@ inline ::std::pair<bool, const uint8_t*> ReadVarint32FromArray(
+@@ -404,7 +404,7 @@ inline ::std::pair<bool, const uint8_t*> ReadVarint32FromArray(
    // Fast path:  We have enough bytes left in the buffer to guarantee that
    // this read won't cross the end, so we can skip the checks.
    ABSL_DCHECK_EQ(*buffer, first_byte);
@@ -144,7 +144,7 @@ index d05c2afc0898e5933e66850c7b34c31d01403683..ef3159626875ec74bfeacbcfdf99de61
    const uint8_t* ptr = buffer;
    uint32_t b;
    uint32_t result = first_byte - 0x80;
-@@ -515,7 +515,7 @@ int64_t CodedInputStream::ReadVarint32Fallback(uint32_t first_byte_or_zero) {
+@@ -492,7 +492,7 @@ int64_t CodedInputStream::ReadVarint32Fallback(uint32_t first_byte_or_zero) {
        // Optimization:  We're also safe if the buffer is non-empty and it ends
        // with a byte that would terminate a varint.
        (buffer_end_ > buffer_ && !(buffer_end_[-1] & 0x80))) {
@@ -154,23 +154,23 @@ index d05c2afc0898e5933e66850c7b34c31d01403683..ef3159626875ec74bfeacbcfdf99de61
      uint32_t temp = 0;
      ::std::pair<bool, const uint8_t*> p =
 diff --git a/src/google/protobuf/map.cc b/src/google/protobuf/map.cc
-index e8e139c20ffef0514a5d4e289408f7f6d3c6aa6d..903d4e0943aa319d401aedc055bfd604bd14e15c 100644
+index a70bf38f66e3632e7912509d749cd30104b90632..dc74fbca6adb471b88b84e3382e773a59a35502f 100644
 --- a/src/google/protobuf/map.cc
 +++ b/src/google/protobuf/map.cc
-@@ -143,7 +143,7 @@ void UntypedMapBase::ClearTable(const ClearInput input) {
+@@ -120,7 +120,7 @@ void UntypedMapBase::ClearTable(const ClearInput input) {
    ABSL_DCHECK_NE(num_buckets_, kGlobalEmptyTableSize);
  
    if (alloc_.arena() == nullptr) {
 -    const auto loop = [=](auto destroy_node) {
 +    const auto loop = [=, this](auto destroy_node) {
        const TableEntryPtr* table = table_;
-       for (size_type b = index_of_first_non_null_, end = num_buckets_; b < end;
-            ++b) {
+       for (map_index_t b = index_of_first_non_null_, end = num_buckets_;
+            b < end; ++b) {
 diff --git a/src/google/protobuf/message_lite.cc b/src/google/protobuf/message_lite.cc
-index c0456c3f2bbd22c11f210d02386d39044a77e1d2..b9b0820a0f55a3aa1983e3fe3e61c3676d16ba26 100644
+index 4505222763c5ecfa97b9a63dfdc03c743d854816..0228730a677935f4e8d1605016c8ba80a923000b 100644
 --- a/src/google/protobuf/message_lite.cc
 +++ b/src/google/protobuf/message_lite.cc
-@@ -233,7 +233,7 @@ bool MessageLite::MergeFromImpl(io::CodedInputStream* input,
+@@ -230,7 +230,7 @@ bool MessageLite::MergeFromImpl(io::CodedInputStream* input,
    if (PROTOBUF_PREDICT_FALSE(!ptr)) return false;
    ctx.BackUp(ptr);
    if (!ctx.EndedAtEndOfStream()) {
@@ -180,10 +180,10 @@ index c0456c3f2bbd22c11f210d02386d39044a77e1d2..b9b0820a0f55a3aa1983e3fe3e61c367
      input->SetLastTag(ctx.LastTag());
    } else {
 diff --git a/src/google/protobuf/varint_shuffle.h b/src/google/protobuf/varint_shuffle.h
-index c0647474cd2c4d77aac4c7dec2438b0c580cd069..44f5b3a39d1ef444b399802ed85c2c1914a3465a 100644
+index 1269dd7a69df63f0d8166790814ab49485a21546..b99034401b340abeb82c8cc229553da3e595feba 100644
 --- a/src/google/protobuf/varint_shuffle.h
 +++ b/src/google/protobuf/varint_shuffle.h
-@@ -40,6 +40,11 @@
+@@ -17,6 +17,11 @@
  // Must be included last.
  #include "google/protobuf/port_def.inc"
  
@@ -195,7 +195,7 @@ index c0647474cd2c4d77aac4c7dec2438b0c580cd069..44f5b3a39d1ef444b399802ed85c2c19
  namespace google {
  namespace protobuf {
  namespace internal {
-@@ -181,6 +186,10 @@ limit0:
+@@ -158,6 +163,10 @@ limit0:
  }  // namespace protobuf
  }  // namespace google
  
