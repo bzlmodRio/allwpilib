@@ -47,8 +47,8 @@ struct PolicyWithoutOptionalOps {
 std::function<int(int)> PolicyWithoutOptionalOps::apply_impl;
 std::function<Slot&(Slot*)> PolicyWithoutOptionalOps::value;
 
-struct Test : ::testing::Test {
-  Test() {
+struct TestHashingPolicy : ::testing::Test {
+  TestHashingPolicy() {
     PolicyWithoutOptionalOps::apply_impl = [&](int a1) -> int {
       return apply.Call(a1);
     };
@@ -63,12 +63,12 @@ struct Test : ::testing::Test {
   MockFunction<Slot&(Slot*)> value;
 };
 
-TEST_F(Test, apply) {
+TEST_F(TestHashingPolicy, apply) {
   EXPECT_CALL(apply, Call(42)).WillOnce(Return(1337));
   EXPECT_EQ(1337, (hash_policy_traits<PolicyWithoutOptionalOps>::apply(42)));
 }
 
-TEST_F(Test, value) {
+TEST_F(TestHashingPolicy, value) {
   int b = 0;
   EXPECT_CALL(value, Call(&a)).WillOnce(ReturnRef(b));
   EXPECT_EQ(&b, &hash_policy_traits<PolicyWithoutOptionalOps>::value(&a));

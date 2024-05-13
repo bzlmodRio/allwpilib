@@ -292,6 +292,14 @@ abseil_headers = set(
 # bazel query 'kind("source file", deps(//:protobuf))' | grep @com_google_absl//absl/.*\.cc$ | tr : /
 abseil_sources = set(
     [
+        "absl/time/internal/cctz/src/time_zone_fixed.h",
+        "absl/time/internal/cctz/src/time_zone_if.h",
+        "absl/time/internal/cctz/src/time_zone_impl.h",
+        "absl/time/internal/cctz/src/time_zone_info.h",
+        "absl/time/internal/cctz/src/time_zone_libc.h",
+        "absl/time/internal/cctz/src/time_zone_posix.h",
+        "absl/time/internal/cctz/src/tzfile.h",
+
         "absl/base/internal/cycleclock.cc",
         "absl/base/internal/low_level_alloc.cc",
         "absl/base/internal/raw_logging.cc",
@@ -460,6 +468,23 @@ def main():
         include_files,
         os.path.join(wpiutil, "src/main/native/thirdparty/abseil/include"),
     )
+
+    # Copy test files into allwpilib
+    def test_matcher(dp, f):
+        if f.endswith("_test.cc"):
+            print("Keeping", f)
+            return True
+        return False
+
+    os.chdir(upstream_root)
+    include_files = walk_if(".", test_matcher)
+    os.chdir(os.path.join(upstream_root))
+    copy_to(
+        include_files,
+        os.path.join(wpiutil, "src/test/native/abseil/include"),
+    )
+
+
 
 
 if __name__ == "__main__":

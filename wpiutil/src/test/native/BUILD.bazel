@@ -7,6 +7,31 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
 )
 
+ABSEIL_FOLDERS = [
+    "cpp/abseil/include/absl/algorithm/**",
+    "cpp/abseil/include/absl/base/internal/**",
+    "cpp/abseil/include/absl/base/**",
+    "cpp/abseil/include/absl/cleanup/**",
+    "cpp/abseil/include/absl/container/internal/**",
+    "cpp/abseil/include/absl/container/**",
+    "cpp/abseil/include/absl/crc/**",
+    "cpp/abseil/include/absl/debugging/**",
+    "cpp/abseil/include/absl/flags/**",
+    "cpp/abseil/include/absl/functional/**",
+    "cpp/abseil/include/absl/hash/**",
+    "cpp/abseil/include/absl/log/**",
+    "cpp/abseil/include/absl/memory/**",
+    "cpp/abseil/include/absl/meta/**",
+    "cpp/abseil/include/absl/numeric/**",
+    "cpp/abseil/include/absl/profiling/**",
+    "cpp/abseil/include/absl/status/**",
+    "cpp/abseil/include/absl/strings/**",
+    "cpp/abseil/include/absl/synchronization/**",
+    "cpp/abseil/include/absl/time/**",
+    "cpp/abseil/include/absl/types/**",
+    "cpp/abseil/include/absl/utility/**",
+]
+
 wpilib_cc_test(
     name = "wpiutil-test",
     size = "small",
