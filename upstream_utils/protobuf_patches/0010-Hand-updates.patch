@@ -1,0 +1,208 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: PJ Reiniger <pj.reiniger@gmail.com>
+Date: Sun, 12 May 2024 21:27:31 -0400
+Subject: [PATCH 10/10] Hand updates
+
+---
+ .../protobuf/generated_message_reflection.cc       | 14 +++++++++-----
+ .../protobuf/generated_message_tctable_gen.cc      |  6 +++++-
+ .../protobuf/generated_message_tctable_lite.cc     |  7 +++++++
+ src/google/protobuf/io/coded_stream.cc             |  6 +++---
+ src/google/protobuf/map.cc                         |  2 +-
+ src/google/protobuf/message_lite.cc                |  2 +-
+ src/google/protobuf/varint_shuffle.h               |  9 +++++++++
+ 7 files changed, 35 insertions(+), 11 deletions(-)
+
+diff --git a/src/google/protobuf/generated_message_reflection.cc b/src/google/protobuf/generated_message_reflection.cc
+index aabc2b960ae3ff01ba3ed859ae806ad4ac1680f3..a9537b89d0b46a12feacc011c6e3e45b4875be5b 100644
+--- a/src/google/protobuf/generated_message_reflection.cc
++++ b/src/google/protobuf/generated_message_reflection.cc
+@@ -69,6 +69,10 @@
+ #include "google/protobuf/port_def.inc"
+ // clang-format on
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
++#endif
++
+ #define GOOGLE_PROTOBUF_HAS_ONEOF
+ 
+ using google::protobuf::internal::ArenaStringPtr;
+@@ -660,7 +664,7 @@ void SwapFieldHelper::SwapInlinedStrings(const Reflection* r, Message* lhs,
+   auto* lhs_string = r->MutableRaw<InlinedStringField>(lhs, field);
+   auto* rhs_string = r->MutableRaw<InlinedStringField>(rhs, field);
+   uint32_t index = r->schema_.InlinedStringIndex(field);
+-  ABSL_DCHECK_GT(index, 0);
++  ABSL_DCHECK_GT(index, 0u);
+   uint32_t* lhs_array = r->MutableInlinedStringDonatedArray(lhs);
+   uint32_t* rhs_array = r->MutableInlinedStringDonatedArray(rhs);
+   uint32_t* lhs_state = &lhs_array[index / 32];
+@@ -1916,7 +1920,7 @@ void Reflection::SetString(Message* message, const FieldDescriptor* field,
+       case FieldOptions::STRING: {
+         if (IsInlined(field)) {
+           const uint32_t index = schema_.InlinedStringIndex(field);
+-          ABSL_DCHECK_GT(index, 0);
++          ABSL_DCHECK_GT(index, 0u);
+           uint32_t* states =
+               &MutableInlinedStringDonatedArray(message)[index / 32];
+           uint32_t mask = ~(static_cast<uint32_t>(1) << (index % 32));
+@@ -1977,7 +1981,7 @@ void Reflection::SetString(Message* message, const FieldDescriptor* field,
+         if (IsInlined(field)) {
+           auto* str = MutableField<InlinedStringField>(message, field);
+           const uint32_t index = schema_.InlinedStringIndex(field);
+-          ABSL_DCHECK_GT(index, 0);
++          ABSL_DCHECK_GT(index, 0u);
+           uint32_t* states =
+               &MutableInlinedStringDonatedArray(message)[index / 32];
+           uint32_t mask = ~(static_cast<uint32_t>(1) << (index % 32));
+@@ -2795,7 +2799,7 @@ uint32_t* Reflection::MutableInlinedStringDonatedArray(Message* message) const {
+ bool Reflection::IsInlinedStringDonated(const Message& message,
+                                         const FieldDescriptor* field) const {
+   uint32_t index = schema_.InlinedStringIndex(field);
+-  ABSL_DCHECK_GT(index, 0);
++  ABSL_DCHECK_GT(index, 0u);
+   return IsIndexInHasBitSet(GetInlinedStringDonatedArray(message), index);
+ }
+ 
+@@ -2828,7 +2832,7 @@ void Reflection::SwapInlinedStringDonated(Message* lhs, Message* rhs,
+   ABSL_CHECK_EQ(rhs_array[0] & 0x1u, 0u);
+   // Swap donation status bit.
+   uint32_t index = schema_.InlinedStringIndex(field);
+-  ABSL_DCHECK_GT(index, 0);
++  ABSL_DCHECK_GT(index, 0u);
+   if (rhs_donated) {
+     SetInlinedStringDonated(index, lhs_array);
+     ClearInlinedStringDonated(index, rhs_array);
+diff --git a/src/google/protobuf/generated_message_tctable_gen.cc b/src/google/protobuf/generated_message_tctable_gen.cc
+index 086825e2587c742deebf8834e8d72e452536c6ef..f5db70d52998529e9cfabc1da172530a62e6acad 100644
+--- a/src/google/protobuf/generated_message_tctable_gen.cc
++++ b/src/google/protobuf/generated_message_tctable_gen.cc
+@@ -45,6 +45,10 @@
+ // Must come last:
+ #include "google/protobuf/port_def.inc"
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
++#endif
++
+ namespace google {
+ namespace protobuf {
+ namespace internal {
+@@ -333,7 +337,7 @@ absl::optional<uint32_t> GetEndGroupTag(const Descriptor* descriptor) {
+ }
+ 
+ uint32_t RecodeTagForFastParsing(uint32_t tag) {
+-  ABSL_DCHECK_LE(tag, 0x3FFF);
++  ABSL_DCHECK_LE(tag, 0x3FFFu);
+   // Construct the varint-coded tag. If it is more than 7 bits, we need to
+   // shift the high bits and add a continue bit.
+   if (uint32_t hibits = tag & 0xFFFFFF80) {
+diff --git a/src/google/protobuf/generated_message_tctable_lite.cc b/src/google/protobuf/generated_message_tctable_lite.cc
+index 6adc02d5606271a15014f9a6e40b51b847c9ced1..accefbedb1ed1b51e6ba7f974c993a1d407d9b67 100644
+--- a/src/google/protobuf/generated_message_tctable_lite.cc
++++ b/src/google/protobuf/generated_message_tctable_lite.cc
+@@ -36,6 +36,12 @@
+ #include <type_traits>
+ #include <utility>
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic ignored "-Wunused-function"
++#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
++#pragma GCC diagnostic ignored "-Wattributes"
++#endif
++
+ #include "absl/base/optimization.h"
+ #include "absl/log/absl_check.h"
+ #include "absl/numeric/bits.h"
+@@ -2646,6 +2652,7 @@ const char* TcParser::ParseOneMapEntry(
+             continue;
+           default:
+             PROTOBUF_ASSUME(false);
++            continue;
+         }
+       case WFL::WIRETYPE_FIXED32:
+         ptr = ReadFixed<uint32_t>(obj, ptr);
+diff --git a/src/google/protobuf/io/coded_stream.cc b/src/google/protobuf/io/coded_stream.cc
+index d05c2afc0898e5933e66850c7b34c31d01403683..ef3159626875ec74bfeacbcfdf99de610e7a09d0 100644
+--- a/src/google/protobuf/io/coded_stream.cc
++++ b/src/google/protobuf/io/coded_stream.cc
+@@ -405,7 +405,7 @@ namespace {
+ // subtracting 0x80 at each iteration, it subtracts properly shifted mask once.
+ template <size_t N>
+ const uint8_t* DecodeVarint64KnownSize(const uint8_t* buffer, uint64_t* value) {
+-  ABSL_DCHECK_GT(N, 0);
++  ABSL_DCHECK_GT(N, 0u);
+   uint64_t result = static_cast<uint64_t>(buffer[N - 1]) << (7 * (N - 1));
+   for (size_t i = 0, offset = 0; i < N - 1; i++, offset += 7) {
+     result += static_cast<uint64_t>(buffer[i] - 0x80) << offset;
+@@ -427,7 +427,7 @@ inline ::std::pair<bool, const uint8_t*> ReadVarint32FromArray(
+   // Fast path:  We have enough bytes left in the buffer to guarantee that
+   // this read won't cross the end, so we can skip the checks.
+   ABSL_DCHECK_EQ(*buffer, first_byte);
+-  ABSL_DCHECK_EQ(first_byte & 0x80, 0x80) << first_byte;
++  ABSL_DCHECK_EQ(first_byte & 0x80, 0x80u) << first_byte;
+   const uint8_t* ptr = buffer;
+   uint32_t b;
+   uint32_t result = first_byte - 0x80;
+@@ -515,7 +515,7 @@ int64_t CodedInputStream::ReadVarint32Fallback(uint32_t first_byte_or_zero) {
+       // Optimization:  We're also safe if the buffer is non-empty and it ends
+       // with a byte that would terminate a varint.
+       (buffer_end_ > buffer_ && !(buffer_end_[-1] & 0x80))) {
+-    ABSL_DCHECK_NE(first_byte_or_zero, 0)
++    ABSL_DCHECK_NE(first_byte_or_zero, 0u)
+         << "Caller should provide us with *buffer_ when buffer is non-empty";
+     uint32_t temp = 0;
+     ::std::pair<bool, const uint8_t*> p =
+diff --git a/src/google/protobuf/map.cc b/src/google/protobuf/map.cc
+index e8e139c20ffef0514a5d4e289408f7f6d3c6aa6d..903d4e0943aa319d401aedc055bfd604bd14e15c 100644
+--- a/src/google/protobuf/map.cc
++++ b/src/google/protobuf/map.cc
+@@ -143,7 +143,7 @@ void UntypedMapBase::ClearTable(const ClearInput input) {
+   ABSL_DCHECK_NE(num_buckets_, kGlobalEmptyTableSize);
+ 
+   if (alloc_.arena() == nullptr) {
+-    const auto loop = [=](auto destroy_node) {
++    const auto loop = [=, this](auto destroy_node) {
+       const TableEntryPtr* table = table_;
+       for (size_type b = index_of_first_non_null_, end = num_buckets_; b < end;
+            ++b) {
+diff --git a/src/google/protobuf/message_lite.cc b/src/google/protobuf/message_lite.cc
+index c0456c3f2bbd22c11f210d02386d39044a77e1d2..b9b0820a0f55a3aa1983e3fe3e61c3676d16ba26 100644
+--- a/src/google/protobuf/message_lite.cc
++++ b/src/google/protobuf/message_lite.cc
+@@ -233,7 +233,7 @@ bool MessageLite::MergeFromImpl(io::CodedInputStream* input,
+   if (PROTOBUF_PREDICT_FALSE(!ptr)) return false;
+   ctx.BackUp(ptr);
+   if (!ctx.EndedAtEndOfStream()) {
+-    ABSL_DCHECK_NE(ctx.LastTag(), 1);  // We can't end on a pushed limit.
++    ABSL_DCHECK_NE(ctx.LastTag(), 1u);  // We can't end on a pushed limit.
+     if (ctx.IsExceedingLimit(ptr)) return false;
+     input->SetLastTag(ctx.LastTag());
+   } else {
+diff --git a/src/google/protobuf/varint_shuffle.h b/src/google/protobuf/varint_shuffle.h
+index c0647474cd2c4d77aac4c7dec2438b0c580cd069..44f5b3a39d1ef444b399802ed85c2c1914a3465a 100644
+--- a/src/google/protobuf/varint_shuffle.h
++++ b/src/google/protobuf/varint_shuffle.h
+@@ -40,6 +40,11 @@
+ // Must be included last.
+ #include "google/protobuf/port_def.inc"
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wignored-qualifiers"
++#endif
++
+ namespace google {
+ namespace protobuf {
+ namespace internal {
+@@ -181,6 +186,10 @@ limit0:
+ }  // namespace protobuf
+ }  // namespace google
+ 
++#ifdef __GNUC__
++#pragma GCC diagnostic pop
++#endif
++
+ #include "google/protobuf/port_undef.inc"
+ 
+ #endif  // GOOGLE_PROTOBUF_VARINT_SHUFFLE_H__
