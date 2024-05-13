@@ -1,6 +1,6 @@
 {
   "lockFileVersion": 6,
-  "moduleFileHash": "eb804ac3f89a66507844ec929ccd42b9c41a062bbaf898e0bd1f805b15a64050",
+  "moduleFileHash": "f32568e93a03454779c953e4908a5ffd6d32345ef0276a81a75c39f9039b0585",
   "flags": {
     "cmdRegistries": [
       "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/"
@@ -3177,7 +3177,7 @@
     },
     "@@rules_bzlmodrio_jdk~//:maven_deps.bzl%deps": {
       "general": {
-        "bzlTransitiveDigest": "+jW3Or50ly5/u+fSIan79p90V65+Mn9a0k7yFJ93+cA=",
+        "bzlTransitiveDigest": "SvvvXhFpTwzbrM+xRnI9pzR7hity5rvwDiI44fN5Qgs=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
