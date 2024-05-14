@@ -34,7 +34,7 @@ ABSEIL_FOLDERS = [
 
 wpilib_cc_test(
     name = "wpiutil-test",
-    size = "small",
+    size = "medium",
     srcs = glob(["cpp/**"]),
     linkstatic = True,
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
