@@ -20,6 +20,10 @@
 #include "gtest/gtest.h"
 #include "absl/types/optional.h"
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wunneeded-internal-declaration"
+#endif
+
 namespace {
 
 struct TypeWithoutOstreamOp {};

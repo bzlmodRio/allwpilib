@@ -21,6 +21,10 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wunneeded-internal-declaration"
+#endif
+
 namespace absl {
 ABSL_NAMESPACE_BEGIN
 namespace container_internal {

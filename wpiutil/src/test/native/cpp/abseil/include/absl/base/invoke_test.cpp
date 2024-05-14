@@ -24,6 +24,10 @@
 #include "absl/memory/memory.h"
 #include "absl/strings/str_cat.h"
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wunneeded-internal-declaration"
+#endif
+
 namespace absl {
 ABSL_NAMESPACE_BEGIN
 namespace base_internal {
