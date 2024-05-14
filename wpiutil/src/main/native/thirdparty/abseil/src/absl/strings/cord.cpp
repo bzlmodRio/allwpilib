@@ -12,10 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
-#endif
-
 #include "absl/strings/cord.h"
 
 #include <algorithm>

@@ -28,6 +28,10 @@
 #include <smmintrin.h>
 #include <tmmintrin.h>
 #endif
+ 
+#ifdef __GNUC__
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
 
 namespace utf8_range {
 namespace {
