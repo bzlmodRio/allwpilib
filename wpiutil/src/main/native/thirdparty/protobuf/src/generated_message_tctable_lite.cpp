@@ -833,7 +833,7 @@ PROTOBUF_NOINLINE const char* TcParser::SingularVarBigint(
   asm("" : "+m"(spill));
 #endif
 
-  uint64_t tmp;
+  uint64_t tmp = 0;
   PROTOBUF_ASSUME(static_cast<int8_t>(*ptr) < 0);
   ptr = ParseVarint(ptr, &tmp);
 
@@ -943,7 +943,7 @@ PROTOBUF_ALWAYS_INLINE const char* TcParser::RepeatedVarint(
   const auto expected_tag = UnalignedLoad<TagType>(ptr);
   do {
     ptr += sizeof(TagType);
-    FieldType tmp;
+    FieldType tmp{};
     ptr = ParseVarint(ptr, &tmp);
     if (PROTOBUF_PREDICT_FALSE(ptr == nullptr)) {
       PROTOBUF_MUSTTAIL return Error(PROTOBUF_TC_PARAM_NO_DATA_PASS);
@@ -1078,7 +1078,7 @@ PROTOBUF_NOINLINE const char* TcParser::FastUnknownEnumFallback(
   if (PROTOBUF_PREDICT_FALSE(ptr == nullptr)) {
     PROTOBUF_MUSTTAIL return Error(PROTOBUF_TC_PARAM_NO_DATA_PASS);
   }
-  uint64_t tmp;
+  uint64_t tmp = 0;
   ptr = ParseVarint(ptr, &tmp);
   if (PROTOBUF_PREDICT_FALSE(ptr == nullptr)) {
     PROTOBUF_MUSTTAIL return Error(PROTOBUF_TC_PARAM_NO_DATA_PASS);
@@ -1091,7 +1091,7 @@ PROTOBUF_NOINLINE const char* TcParser::MpUnknownEnumFallback(
     PROTOBUF_TC_PARAM_DECL) {
   // Like FastUnknownEnumFallback, but with the Mp ABI.
   uint32_t tag = data.tag();
-  uint64_t tmp;
+  uint64_t tmp = 0;
   ptr = ParseVarint(ptr, &tmp);
   if (PROTOBUF_PREDICT_FALSE(ptr == nullptr)) {
     PROTOBUF_MUSTTAIL return Error(PROTOBUF_TC_PARAM_NO_DATA_PASS);
@@ -1582,7 +1582,7 @@ PROTOBUF_ALWAYS_INLINE const char* TcParser::RepeatedString(
   };
 
   auto* arena = field.GetArena();
-  SerialArena* serial_arena;
+  SerialArena* serial_arena = nullptr;
   if (PROTOBUF_PREDICT_TRUE(arena != nullptr &&
                             arena->impl_.GetSerialArenaFast(&serial_arena) &&
                             field.PrepareForParse())) {
@@ -2285,7 +2285,7 @@ PROTOBUF_NOINLINE const char* TcParser::MpRepeatedString(
       uint32_t next_tag;
 
       auto* arena = field.GetArena();
-      SerialArena* serial_arena;
+      SerialArena* serial_arena = nullptr;
       if (PROTOBUF_PREDICT_TRUE(
               arena != nullptr &&
               arena->impl_.GetSerialArenaFast(&serial_arena) &&
@@ -2670,7 +2670,7 @@ const char* TcParser::ParseOneMapEntry(
 
     switch (type_card.wiretype()) {
       case WFL::WIRETYPE_VARINT:
-        uint64_t tmp;
+        uint64_t tmp = 0;
         ptr = ParseVarint(ptr, &tmp);
         if (PROTOBUF_PREDICT_FALSE(ptr == nullptr)) return nullptr;
         switch (type_card.cpp_type()) {

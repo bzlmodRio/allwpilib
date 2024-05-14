@@ -1076,8 +1076,10 @@ void Printer::Print(absl::string_view text, const Args&... args) {
   absl::string_view vars[] = {args..., ""};
   absl::flat_hash_map<absl::string_view, absl::string_view> map;
   map.reserve(sizeof...(args) / 2);
-  for (size_t i = 0; i < sizeof...(args); i += 2) {
-    map.emplace(vars[i], vars[i + 1]);
+  if (sizeof...(args) != 0u) {
+    for (size_t i = 0; i < sizeof...(args); i += 2) {
+      map.emplace(vars[i], vars[i + 1]);
+    }
   }
 
   Print(map, text);
