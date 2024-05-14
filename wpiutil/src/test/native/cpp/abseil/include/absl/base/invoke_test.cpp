@@ -24,7 +24,7 @@
 #include "absl/memory/memory.h"
 #include "absl/strings/str_cat.h"
 
-#if defined(__GNUC__)
+#if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wunneeded-internal-declaration"
 #endif
 

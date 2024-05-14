@@ -21,7 +21,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-#if defined(__GNUC__)
+#if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wunneeded-internal-declaration"
 #endif
 

@@ -20,7 +20,7 @@
 #include "gtest/gtest.h"
 #include "absl/types/optional.h"
 
-#if defined(__GNUC__)
+#if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wunneeded-internal-declaration"
 #endif
 
