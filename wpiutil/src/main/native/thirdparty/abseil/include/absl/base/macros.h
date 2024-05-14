@@ -55,29 +55,6 @@ auto ArraySizeHelper(const T (&array)[N]) -> char (&)[N];
 ABSL_NAMESPACE_END
 }  // namespace absl
 
-// ABSL_BAD_CALL_IF()
-//
-// Used on a function overload to trap bad calls: any call that matches the
-// overload will cause a compile-time error. This macro uses a clang-specific
-// "enable_if" attribute, as described at
-// https://clang.llvm.org/docs/AttributeReference.html#enable-if
-//
-// Overloads which use this macro should be bracketed by
-// `#ifdef ABSL_BAD_CALL_IF`.
-//
-// Example:
-//
-//   int isdigit(int c);
-//   #ifdef ABSL_BAD_CALL_IF
-//   int isdigit(int c)
-//     ABSL_BAD_CALL_IF(c <= -1 || c > 255,
-//                       "'c' must have the value of an unsigned char or EOF");
-//   #endif // ABSL_BAD_CALL_IF
-// #if ABSL_HAVE_ATTRIBUTE(enable_if)
-// #define ABSL_BAD_CALL_IF(expr, msg) \
-//   __attribute__((enable_if(expr, "Bad call trap"), unavailable(msg)))
-// #endif
-
 // ABSL_ASSERT()
 //
 // In C++11, `assert` can't be used portably within constexpr functions.
