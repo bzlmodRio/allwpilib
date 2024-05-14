@@ -44,12 +44,12 @@
 #if ((defined(_WIN32_WINNT_WIN10) && !defined(__MINGW32__)) ||        \
      (defined(NTDDI_WIN10_NI) && NTDDI_VERSION >= NTDDI_WIN10_NI)) && \
     (_WIN32_WINNT >= _WIN32_WINNT_WINXP)
-#define USE_WIN32_LOCAL_TIME_ZONE
-#include <roapi.h>
-#include <tchar.h>
-#include <wchar.h>
-#include <windows.globalization.h>
-#include <windows.h>
+// #define USE_WIN32_LOCAL_TIME_ZONE
+// #include <roapi.h>
+// #include <tchar.h>
+// #include <wchar.h>
+// #include <windows.globalization.h>
+// #include <windows.h>
 #endif
 #endif
 

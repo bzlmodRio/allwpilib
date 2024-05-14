@@ -81,8 +81,8 @@ namespace {
 using time_internal::kTicksPerNanosecond;
 using time_internal::kTicksPerSecond;
 
-constexpr int64_t kint64max = std::numeric_limits<int64_t>::max();
-constexpr int64_t kint64min = std::numeric_limits<int64_t>::min();
+constexpr int64_t kint64max = (std::numeric_limits<int64_t>::max)();
+constexpr int64_t kint64min = (std::numeric_limits<int64_t>::min)();
 
 // Can't use std::isinfinite() because it doesn't exist on windows.
 inline bool IsFinite(double d) {
@@ -646,10 +646,10 @@ timeval ToTimeval(Duration d) {
   tv.tv_sec = static_cast<decltype(tv.tv_sec)>(ts.tv_sec);
   if (tv.tv_sec != ts.tv_sec) {  // narrowing
     if (ts.tv_sec < 0) {
-      tv.tv_sec = std::numeric_limits<decltype(tv.tv_sec)>::min();
+      tv.tv_sec = (std::numeric_limits<decltype(tv.tv_sec)>::min)();
       tv.tv_usec = 0;
     } else {
-      tv.tv_sec = std::numeric_limits<decltype(tv.tv_sec)>::max();
+      tv.tv_sec = (std::numeric_limits<decltype(tv.tv_sec)>::max)();
       tv.tv_usec = 1000 * 1000 - 1;
     }
     return tv;
@@ -735,7 +735,7 @@ void AppendNumberUnit(std::string* out, int64_t n, DisplayUnit unit) {
 // always fits in buf[].
 void AppendNumberUnit(std::string* out, double n, DisplayUnit unit) {
   constexpr int kBufferSize = std::numeric_limits<double>::digits10;
-  const int prec = std::min(kBufferSize, unit.prec);
+  const int prec = (std::min)(kBufferSize, unit.prec);
   char buf[kBufferSize];  // also large enough to hold integer part
   char* ep = buf + sizeof(buf);
   double d = 0;

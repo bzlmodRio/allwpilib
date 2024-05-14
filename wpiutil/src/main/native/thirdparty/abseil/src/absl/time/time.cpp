@@ -61,7 +61,7 @@ inline int64_t FloorToUnit(absl::Duration d, absl::Duration unit) {
   absl::Duration rem;
   int64_t q = absl::IDivDuration(d, unit, &rem);
   return (q > 0 || rem >= ZeroDuration() ||
-          q == std::numeric_limits<int64_t>::min())
+          q == (std::numeric_limits<int64_t>::min)())
              ? q
              : q - 1;
 }
@@ -69,7 +69,7 @@ inline int64_t FloorToUnit(absl::Duration d, absl::Duration unit) {
 ABSL_INTERNAL_DISABLE_DEPRECATED_DECLARATION_WARNING
 inline absl::Time::Breakdown InfiniteFutureBreakdown() {
   absl::Time::Breakdown bd;
-  bd.year = std::numeric_limits<int64_t>::max();
+  bd.year = (std::numeric_limits<int64_t>::max)();
   bd.month = 12;
   bd.day = 31;
   bd.hour = 23;
@@ -86,7 +86,7 @@ inline absl::Time::Breakdown InfiniteFutureBreakdown() {
 
 inline absl::Time::Breakdown InfinitePastBreakdown() {
   Time::Breakdown bd;
-  bd.year = std::numeric_limits<int64_t>::min();
+  bd.year = (std::numeric_limits<int64_t>::min)();
   bd.month = 1;
   bd.day = 1;
   bd.hour = 0;
@@ -104,7 +104,7 @@ ABSL_INTERNAL_RESTORE_DEPRECATED_DECLARATION_WARNING
 
 inline absl::TimeZone::CivilInfo InfiniteFutureCivilInfo() {
   TimeZone::CivilInfo ci;
-  ci.cs = CivilSecond::max();
+  ci.cs = (CivilSecond::max)();
   ci.subsecond = InfiniteDuration();
   ci.offset = 0;
   ci.is_dst = false;
@@ -114,7 +114,7 @@ inline absl::TimeZone::CivilInfo InfiniteFutureCivilInfo() {
 
 inline absl::TimeZone::CivilInfo InfinitePastCivilInfo() {
   TimeZone::CivilInfo ci;
-  ci.cs = CivilSecond::min();
+  ci.cs = (CivilSecond::min)();
   ci.subsecond = -InfiniteDuration();
   ci.offset = 0;
   ci.is_dst = false;
@@ -310,10 +310,10 @@ timespec ToTimespec(Time t) {
     }
   }
   if (d >= absl::ZeroDuration()) {
-    ts.tv_sec = std::numeric_limits<time_t>::max();
+    ts.tv_sec = (std::numeric_limits<time_t>::max)();
     ts.tv_nsec = 1000 * 1000 * 1000 - 1;
   } else {
-    ts.tv_sec = std::numeric_limits<time_t>::min();
+    ts.tv_sec = (std::numeric_limits<time_t>::min)();
     ts.tv_nsec = 0;
   }
   return ts;
@@ -325,10 +325,10 @@ timeval ToTimeval(Time t) {
   tv.tv_sec = static_cast<decltype(tv.tv_sec)>(ts.tv_sec);
   if (tv.tv_sec != ts.tv_sec) {  // narrowing
     if (ts.tv_sec < 0) {
-      tv.tv_sec = std::numeric_limits<decltype(tv.tv_sec)>::min();
+      tv.tv_sec = (std::numeric_limits<decltype(tv.tv_sec)>::min)();
       tv.tv_usec = 0;
     } else {
-      tv.tv_sec = std::numeric_limits<decltype(tv.tv_sec)>::max();
+      tv.tv_sec = (std::numeric_limits<decltype(tv.tv_sec)>::max)();
       tv.tv_usec = 1000 * 1000 - 1;
     }
     return tv;
