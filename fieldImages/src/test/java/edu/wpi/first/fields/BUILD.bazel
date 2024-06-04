@@ -5,6 +5,6 @@ wpilib_java_junit5_test(
     size = "small",
     srcs = glob(["*.java"]),
     deps = [
-        "//fieldImages/src/main/java/edu/wpi/fields:fieldImages-java",
+        "//fieldImages/src/main/java/edu/wpi/first/fields:fieldImages-java",
     ],
 )
