@@ -8,7 +8,7 @@ cameraserver/multiCameraServer/bin
 cscore/bin
 fieldImages/bin
 hal/bin
-myRobot/bin
+developerRobot/bin
 ntcore/bin
 romiVendordep/bin
 wpilibNewCommands/bin
