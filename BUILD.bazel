@@ -46,5 +46,7 @@ write_source_files(
     additional_update_targets = [
         "//wpimath:write_wpimath",
         "//ntcore:write_ntcore",
+        "//wpilibcExamples:write_example_project_list",
+        "//wpilibjExamples:write_example_project_list",
     ],
 )

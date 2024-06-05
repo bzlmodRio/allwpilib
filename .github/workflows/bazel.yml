@@ -42,7 +42,7 @@ jobs:
           architecture: x64
 
       - name: Build wpimath dependencies
-        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k wpiutil/... --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k wpiutil/... wpimath/src/main/proto/... --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
         shell: bash
 
       - name: Build wpimath
