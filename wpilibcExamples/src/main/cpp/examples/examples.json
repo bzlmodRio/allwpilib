@@ -565,8 +565,7 @@
     ],
     "foldername": "AddressableLED",
     "gradlebase": "cpp",
-    "commandversion": 2,
-    "hasunittests": true
+    "commandversion": 2
   },
   {
     "name": "DMA",

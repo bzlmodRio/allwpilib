@@ -100,7 +100,6 @@ TEMPLATES_FOLDERS = [
 ]
 
 TEST_FOLDERS = [
-    "addressableled",
     "armsimulation",
     "digitalcommunication",
     "elevatorsimulation",

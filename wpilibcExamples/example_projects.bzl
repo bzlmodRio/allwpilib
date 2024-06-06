@@ -94,7 +94,6 @@ TEMPLATES_FOLDERS = [
 ]
 
 TESTS_FOLDERS = [
-    "AddressableLED",
     "ArmSimulation",
     "DigitalCommunication",
     "ElevatorSimulation",

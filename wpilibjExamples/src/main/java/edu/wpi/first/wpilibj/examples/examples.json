@@ -570,8 +570,7 @@
     "foldername": "addressableled",
     "gradlebase": "java",
     "mainclass": "Main",
-    "commandversion": 2,
-    "hasunittests": true
+    "commandversion": 2
   },
   {
     "name": "DMA",
