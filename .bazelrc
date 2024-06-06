@@ -31,5 +31,4 @@ build --registry=https://raw.githubusercontent.com/pjreiniger/bazel-central-regi
 
 build:ci --config=remote
 
-build --proto_toolchain_for_java=//:quickbuf_toolchain
 build --proto_toolchain_for_cc=//:proto_cc_toolchain
