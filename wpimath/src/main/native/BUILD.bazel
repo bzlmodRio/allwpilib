@@ -265,6 +265,81 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
+##################################
+# Controller
+##################################
+CONTROLLER_SRCS = glob([
+        "cpp/controller/*.cpp",
+        "cpp/controller/proto/*.cpp",
+        "cpp/controller/struct/*.cpp",
+    ])
+CONTROLLER_HDRS = glob([
+        "include/frc/controller/*", 
+        "include/frc/controller/proto/*", 
+        "include/frc/controller/struct/*", 
+    ])
+
+# REMAINDER_EXCLUDED_SRCS += CONTROLLER_SRCS
+# REMAINDER_EXCLUDED_HDRS += CONTROLLER_HDRS
+
+
+# wpilib_cc_static_and_shared_library(
+#     name = "wpimath-controller",
+#     srcs = CONTROLLER_SRCS,
+#     hdrs = CONTROLLER_HDRS,
+#     defines = ["WPILIB_EXPORTS"],
+#     export_symbols = False,
+#     includes = [
+#         "include",
+#     ],
+#     standard_deps = [
+#        "//wpimath/src/main/proto:cc_proto",
+#     ],
+#     strip_include_prefix = "include",
+#     visibility = ["//visibility:public"],
+#     wpi_maybe_shared_deps = [
+#         ":wpimath-geometry",
+#     ],
+# )
+
+##################################
+# System
+##################################
+SYSTEM_SRCS = glob([
+        "cpp/system/*.cpp",
+        "cpp/system/plant/*.cpp",
+        "cpp/system/plant/proto/*.cpp",
+        "cpp/system/plant/struct/*.cpp",
+    ], exclude = ["cpp/system/LinearSystemLoop.cpp"])
+SYSTEM_HDRS = glob([
+        "include/frc/system/*", 
+        "include/frc/system/plant/*",
+        "include/frc/system/plant/proto/*", 
+        "include/frc/system/plant/struct/*", 
+    ], exclude = ["includefrc/system/LinearSystemLoop.h"])
+
+# REMAINDER_EXCLUDED_SRCS += SYSTEM_SRCS
+# REMAINDER_EXCLUDED_HDRS += SYSTEM_HDRS
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-system",
+    srcs = SYSTEM_SRCS,
+    hdrs = SYSTEM_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+    ],
+)
 
 ##################################
 # Remainder
