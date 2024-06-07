@@ -1,6 +1,8 @@
 load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
 
+REMAINDER_FILE_EXCLUDE = []
+
 CORE_FILES = glob(["interpolation/*.java"]) + glob(["util/*.java"]) + [
     "MathUtil.java", 
     "MatBuilder.java", 
@@ -15,6 +17,7 @@ CORE_FILES = glob(["interpolation/*.java"]) + glob(["util/*.java"]) + [
     "jni/EigenJNI.java",
     "jni/StateSpaceUtilJNI.java",
 ]
+REMAINDER_FILE_EXCLUDE += CORE_FILES
 
 wpilib_java_jni_library(
     name = "wpimath-core",
@@ -31,6 +34,7 @@ wpilib_java_jni_library(
 )
 
 GEOMETRY_FILES = glob(["geometry/**/*.java"]) + ["jni/Ellipse2dJNI.java", "jni/Pose3dJNI.java"]
+REMAINDER_FILE_EXCLUDE += GEOMETRY_FILES
 
 wpilib_java_jni_library(
     name = "wpimath-geometry",
@@ -54,6 +58,7 @@ wpilib_java_jni_library(
 
 
 FILTER_FILES = glob(["filter/**/*.java"])
+REMAINDER_FILE_EXCLUDE += FILTER_FILES
 
 wpilib_java_library(
     name = "wpimath-filter",
@@ -74,14 +79,62 @@ wpilib_java_library(
 )
 
 
+KINEMATICS_FILES = glob(["kinematics/**/*.java"])
+REMAINDER_FILE_EXCLUDE += KINEMATICS_FILES
+
+wpilib_java_library(
+    name = "wpimath-kinematics",
+    srcs = KINEMATICS_FILES,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpimath-core",
+        ":wpimath-geometry",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_ddense",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
+
+SPLINE_FILES = glob(["spline/**/*.java"])
+REMAINDER_FILE_EXCLUDE += SPLINE_FILES
+
+wpilib_java_library(
+    name = "wpimath-spline",
+    srcs = SPLINE_FILES,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpimath-core",
+        ":wpimath-geometry",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_ddense",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
+
 wpilib_java_jni_library(
     name = "wpimath-remainder",
-    srcs = glob(["**/*.java"], exclude = CORE_FILES + GEOMETRY_FILES + FILTER_FILES),
+    srcs = glob(["**/*.java"], exclude = REMAINDER_FILE_EXCLUDE),
     native_libs = ["//wpimath/src/main/native:wpimathremainderjni"],
     visibility = ["//visibility:public"],
     deps = [
         ":wpimath-core",
         ":wpimath-geometry",
+        ":wpimath-kinematics",
+        ":wpimath-spline",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",

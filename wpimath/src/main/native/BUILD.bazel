@@ -23,6 +23,10 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
+REMAINDER_EXCLUDED_SRCS = []
+REMAINDER_EXCLUDED_HDRS = []
+REMAINDER_EXCLUDED_JNI = []
+
 ##################################
 # Core
 ##################################
@@ -35,6 +39,10 @@ CORE_HDRS = glob(["include/units/**"]) + [
         "include/frc/fmt/Eigen.h", 
     ]
 CORE_JNI_SRCS = ["cpp/jni/EigenJNI.cpp", "cpp/jni/StateSpaceUtilJNI.cpp"]
+
+REMAINDER_EXCLUDED_SRCS += CORE_SRCS
+REMAINDER_EXCLUDED_HDRS += CORE_HDRS
+REMAINDER_EXCLUDED_JNI  += CORE_JNI_SRCS
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-core",
@@ -83,6 +91,10 @@ GEOMETRY_HDRS = glob([
 
 GEOMETRY_JNI_SRCS = ["cpp/jni/Ellipse2dJNI.cpp", "cpp/jni/Pose3dJNI.cpp"]
 
+REMAINDER_EXCLUDED_SRCS += GEOMETRY_SRCS
+REMAINDER_EXCLUDED_HDRS += GEOMETRY_HDRS
+REMAINDER_EXCLUDED_JNI  += GEOMETRY_JNI_SRCS
+
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-geometry",
@@ -124,6 +136,10 @@ FILTER_SRCS = glob([
 FILTER_HDRS = glob([
         "include/frc/filter/*", 
     ])
+    
+
+REMAINDER_EXCLUDED_SRCS += FILTER_SRCS
+REMAINDER_EXCLUDED_HDRS += FILTER_HDRS
 
 
 wpilib_cc_static_and_shared_library(
@@ -145,19 +161,123 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
+##################################
+# Interpolation
+##################################
+INTERPOLATION_SRCS = glob([
+        "cpp/interpolation/*.cpp",
+    ])
+INTERPOLATION_HDRS = glob([
+        "include/frc/interpolation/*", 
+    ])
+
+
+REMAINDER_EXCLUDED_SRCS += INTERPOLATION_SRCS
+REMAINDER_EXCLUDED_HDRS += INTERPOLATION_HDRS
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-interpolation",
+    srcs = INTERPOLATION_SRCS,
+    hdrs = INTERPOLATION_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+    ],
+)
+
+##################################
+# Kinematics
+##################################
+KINEMATICS_SRCS = glob([
+        "cpp/kinematics/*.cpp",
+        "cpp/kinematics/proto/*.cpp",
+        "cpp/kinematics/struct/*.cpp",
+    ])
+KINEMATICS_HDRS = glob([
+        "include/frc/kinematics/*", 
+        "include/frc/kinematics/proto/*", 
+        "include/frc/kinematics/struct/*", 
+    ])
+    
+
+REMAINDER_EXCLUDED_SRCS += KINEMATICS_SRCS
+REMAINDER_EXCLUDED_HDRS += KINEMATICS_HDRS
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-kinematics",
+    srcs = KINEMATICS_SRCS,
+    hdrs = KINEMATICS_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+    ],
+)
+
+##################################
+# Spline
+##################################
+SPLINE_SRCS = glob([
+        "cpp/spline/*.cpp",
+    ])
+SPLINE_HDRS = glob([
+        "include/frc/spline/*", 
+    ])
+
+REMAINDER_EXCLUDED_SRCS += SPLINE_SRCS
+REMAINDER_EXCLUDED_HDRS += SPLINE_HDRS
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-spline",
+    srcs = SPLINE_SRCS,
+    hdrs = SPLINE_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+    ],
+)
+
 
 ##################################
 # Remainder
 ##################################
 REMAINDER_SRCS = glob(
         ["cpp/**"],
-        exclude = ["cpp/jni/**"] + CORE_SRCS + GEOMETRY_SRCS,
+        exclude = ["cpp/jni/**"] + REMAINDER_EXCLUDED_SRCS,
     )
 
 REMAINDER_HDRS = glob(["include/**/*"], 
-    exclude =  CORE_HDRS + GEOMETRY_HDRS)
+    exclude =  REMAINDER_EXCLUDED_HDRS)
 
-REMAINDER_JNI_SRCS = glob(["cpp/jni/**"], exclude = CORE_JNI_SRCS + GEOMETRY_JNI_SRCS)
+REMAINDER_JNI_SRCS = glob(["cpp/jni/**"], exclude = REMAINDER_EXCLUDED_JNI)
 
 
 wpilib_cc_static_and_shared_library(
@@ -174,6 +294,9 @@ wpilib_cc_static_and_shared_library(
     wpi_maybe_shared_deps = [
         ":wpimath-core",
         ":wpimath-geometry",
+        ":wpimath-interpolation",
+        ":wpimath-kinematics",
+        ":wpimath-spline",
         ":wpimath-sleipnir",
     ],
 )

@@ -1,7 +1,10 @@
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 
-CORE_TEST_SRCS = ["math/jni/EigenJNITest.java", "math/jni/StateSpaceUtilJNITest.java"]
 
+REMAINDER_TEST_SRCS = []
+
+CORE_TEST_SRCS = ["math/jni/EigenJNITest.java", "math/jni/StateSpaceUtilJNITest.java"]
+REMAINDER_TEST_SRCS += CORE_TEST_SRCS
 
 wpilib_java_junit5_test(
     name = "wpimath-core-test",
@@ -17,6 +20,7 @@ wpilib_java_junit5_test(
 )
 
 GEOMETRY_TEST_SRCS = glob(["math/geometry/**/*.java"]) + ["math/jni/Ellipse2dJNITest.java", "math/jni/Pose3dJNITest.java"]
+REMAINDER_TEST_SRCS += GEOMETRY_TEST_SRCS
 
 wpilib_java_junit5_test(
     name = "wpimath-geometry-test",
@@ -33,6 +37,7 @@ wpilib_java_junit5_test(
 )
 
 FILTER_TEST_SRCS = glob(["math/filter/**/*.java"])
+REMAINDER_TEST_SRCS += FILTER_TEST_SRCS
 
 wpilib_java_junit5_test(
     name = "wpimath-filter-test",
@@ -41,6 +46,46 @@ wpilib_java_junit5_test(
     deps = [
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-filter",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_simple",
+    ],
+)
+
+
+
+KINEMATICS_TEST_SRCS = glob(["math/kinematics/**/*.java"])
+REMAINDER_TEST_SRCS += KINEMATICS_TEST_SRCS
+
+wpilib_java_junit5_test(
+    name = "wpimath-kinematics-test",
+    size = "small",
+    srcs = KINEMATICS_TEST_SRCS,
+    deps = [
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-kinematics",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-remainder",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_simple",
+    ],
+)
+
+
+SPLINE_TEST_SRCS = glob(["math/spline/**/*.java"])
+REMAINDER_TEST_SRCS += SPLINE_TEST_SRCS
+
+wpilib_java_junit5_test(
+    name = "wpimath-spline-test",
+    size = "small",
+    srcs = SPLINE_TEST_SRCS,
+    deps = [
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-spline",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:org_ejml_ejml_core",
@@ -61,11 +106,12 @@ wpilib_java_junit5_test(
     ] + 
     glob([
         "**/*.java"
-        ], exclude = CORE_TEST_SRCS + GEOMETRY_TEST_SRCS +  FILTER_TEST_SRCS + ["math/jni/**"]),
+        ], exclude = REMAINDER_TEST_SRCS + ["math/jni/**"]),
     deps = [
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-remainder",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-kinematics",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:org_ejml_ejml_core",
