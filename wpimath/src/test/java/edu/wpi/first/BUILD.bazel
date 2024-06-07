@@ -32,6 +32,22 @@ wpilib_java_junit5_test(
     ],
 )
 
+FILTER_TEST_SRCS = glob(["math/filter/**/*.java"])
+
+wpilib_java_junit5_test(
+    name = "wpimath-filter-test",
+    size = "small",
+    srcs = FILTER_TEST_SRCS,
+    deps = [
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-filter",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_simple",
+    ],
+)
+
 print(glob(["math/jni/**"]))
 wpilib_java_junit5_test(
     name = "wpimath-test",
@@ -44,8 +60,8 @@ wpilib_java_junit5_test(
         "math/jni/TrajectoryUtilJNITest.java"
     ] + 
     glob([
-        # "**/*.java"
-        ], exclude = GEOMETRY_TEST_SRCS + CORE_TEST_SRCS + ["math/jni/**"]),
+        "**/*.java"
+        ], exclude = CORE_TEST_SRCS + GEOMETRY_TEST_SRCS +  FILTER_TEST_SRCS + ["math/jni/**"]),
     deps = [
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",

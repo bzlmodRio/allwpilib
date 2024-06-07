@@ -52,9 +52,31 @@ wpilib_java_jni_library(
 )
 
 
+
+FILTER_FILES = glob(["filter/**/*.java"])
+
+wpilib_java_library(
+    name = "wpimath-filter",
+    srcs = FILTER_FILES,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpimath-core",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_ddense",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
+
 wpilib_java_jni_library(
     name = "wpimath-remainder",
-    srcs = glob(["**/*.java"], exclude = CORE_FILES + GEOMETRY_FILES),
+    srcs = glob(["**/*.java"], exclude = CORE_FILES + GEOMETRY_FILES + FILTER_FILES),
     native_libs = ["//wpimath/src/main/native:wpimathremainderjni"],
     visibility = ["//visibility:public"],
     deps = [

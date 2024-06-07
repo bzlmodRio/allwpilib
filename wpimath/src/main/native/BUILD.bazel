@@ -1,7 +1,9 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 
-
+##################################
+# sleipnir
+##################################
 wpilib_cc_static_and_shared_library(
     name = "wpimath-sleipnir",
     srcs = ["//wpimath/src/main/native/thirdparty/sleipnir:sleipnir-srcs"],
@@ -21,7 +23,10 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
-CORE_SRCS = glob(["cpp/*.cpp"], exclude = ["cpp/ComputerVisionUtil.cpp"])
+##################################
+# Core
+##################################
+CORE_SRCS = glob(["cpp/*.cpp"], exclude = ["cpp/ComputerVisionUtil.cpp", "cpp/DARE.cpp"])
 CORE_HDRS = glob(["include/units/**"]) + [
         "include/wpimath/MathShared.h", 
         "include/frc/EigenCore.h", 
@@ -29,6 +34,7 @@ CORE_HDRS = glob(["include/units/**"]) + [
         "include/frc/StateSpaceUtil.h", 
         "include/frc/fmt/Eigen.h", 
     ]
+CORE_JNI_SRCS = ["cpp/jni/EigenJNI.cpp", "cpp/jni/StateSpaceUtilJNI.cpp"]
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-core",
@@ -50,6 +56,20 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
+
+wpilib_jni_cc_library(
+    name = "wpimathcorejni",
+    srcs = CORE_JNI_SRCS,
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+    ],
+)
+
+##################################
+# Geometry
+##################################
 GEOMETRY_SRCS = glob([
         "cpp/geometry/*.cpp",
         "cpp/geometry/proto/*.cpp",
@@ -60,6 +80,9 @@ GEOMETRY_HDRS = glob([
         "include/frc/geometry/proto/*", 
         "include/frc/geometry/struct/*"
     ])
+
+GEOMETRY_JNI_SRCS = ["cpp/jni/Ellipse2dJNI.cpp", "cpp/jni/Pose3dJNI.cpp"]
+
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-geometry",
@@ -81,7 +104,51 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
+wpilib_jni_cc_library(
+    name = "wpimathgeometryjni",
+    srcs = GEOMETRY_JNI_SRCS,
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+    ],
+)
 
+
+##################################
+# Filter
+##################################
+FILTER_SRCS = glob([
+        "cpp/filter/*.cpp",
+    ])
+FILTER_HDRS = glob([
+        "include/frc/filter/*", 
+    ])
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-filter",
+    srcs = FILTER_SRCS,
+    hdrs = FILTER_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+    ],
+)
+
+
+##################################
+# Remainder
+##################################
 REMAINDER_SRCS = glob(
         ["cpp/**"],
         exclude = ["cpp/jni/**"] + CORE_SRCS + GEOMETRY_SRCS,
@@ -89,6 +156,8 @@ REMAINDER_SRCS = glob(
 
 REMAINDER_HDRS = glob(["include/**/*"], 
     exclude =  CORE_HDRS + GEOMETRY_HDRS)
+
+REMAINDER_JNI_SRCS = glob(["cpp/jni/**"], exclude = CORE_JNI_SRCS + GEOMETRY_JNI_SRCS)
 
 
 wpilib_cc_static_and_shared_library(
@@ -109,42 +178,9 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
-
-#################################
-# JNI
-#################################
-
-CORE_JNI_SRCS = ["cpp/jni/EigenJNI.cpp", "cpp/jni/StateSpaceUtilJNI.cpp"]
-
-
-wpilib_jni_cc_library(
-    name = "wpimathcorejni",
-    srcs = CORE_JNI_SRCS,
-    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
-    visibility = ["//visibility:public"],
-    wpi_maybe_shared_deps = [
-        ":wpimath-core",
-    ],
-)
-
-
-GEOMETRY_JNI_SRCS = ["cpp/jni/Ellipse2dJNI.cpp", "cpp/jni/Pose3dJNI.cpp"]
-
-
-wpilib_jni_cc_library(
-    name = "wpimathgeometryjni",
-    srcs = GEOMETRY_JNI_SRCS,
-    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
-    visibility = ["//visibility:public"],
-    wpi_maybe_shared_deps = [
-        ":wpimath-geometry",
-    ],
-)
-
-
 wpilib_jni_cc_library(
     name = "wpimathremainderjni",
-    srcs = glob(["cpp/jni/**"], exclude = CORE_JNI_SRCS + GEOMETRY_JNI_SRCS),
+    srcs = REMAINDER_JNI_SRCS,
     java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-remainder",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
