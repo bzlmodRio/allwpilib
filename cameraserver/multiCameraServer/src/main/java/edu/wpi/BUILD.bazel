@@ -8,7 +8,7 @@ wpilib_java_binary(
         "//cscore/src/main/java/edu/wpi/first/cscore",
         "//hal/src/main/java/edu/wpi/first/hal",
         "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        # "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:com_google_code_gson_gson",
     ],

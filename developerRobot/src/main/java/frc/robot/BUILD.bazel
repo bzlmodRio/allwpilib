@@ -8,7 +8,7 @@ wpilib_java_binary(
         "//hal/src/main/java/edu/wpi/first/hal",
         "//ntcore/src/main/java/edu/wpi/first/networktables",
         "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
     ],
 )

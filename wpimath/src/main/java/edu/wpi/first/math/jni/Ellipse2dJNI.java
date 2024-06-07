@@ -15,7 +15,7 @@ public final class Ellipse2dJNI {
   static {
     if (Helper.getExtractOnStaticLoad()) {
       try {
-        RuntimeLoader.loadLibrary("wpimathjni");
+        RuntimeLoader.loadLibrary("wpimathgeometryjni");
       } catch (Exception ex) {
         ex.printStackTrace();
         System.exit(1);

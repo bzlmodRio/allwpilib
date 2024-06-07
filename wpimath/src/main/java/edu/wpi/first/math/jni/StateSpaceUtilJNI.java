@@ -15,7 +15,7 @@ public final class StateSpaceUtilJNI {
   static {
     if (Helper.getExtractOnStaticLoad()) {
       try {
-        RuntimeLoader.loadLibrary("wpimathjni");
+        RuntimeLoader.loadLibrary("wpimathcorejni");
       } catch (Exception ex) {
         ex.printStackTrace();
         System.exit(1);
@@ -33,7 +33,7 @@ public final class StateSpaceUtilJNI {
     if (libraryLoaded) {
       return;
     }
-    RuntimeLoader.loadLibrary("wpimathjni");
+    RuntimeLoader.loadLibrary("wpimathcorejni");
     libraryLoaded = true;
   }
 

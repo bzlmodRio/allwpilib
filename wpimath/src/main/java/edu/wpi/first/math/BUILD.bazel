@@ -1,11 +1,65 @@
 load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+
+CORE_FILES = glob(["interpolation/*.java"]) + glob(["util/*.java"]) + [
+    "MathUtil.java", 
+    "MatBuilder.java", 
+    "MathShared.java", 
+    "MathSharedStore.java", 
+    "MathUsageId.java", 
+    "Matrix.java", 
+    "Num.java", 
+    "Pair.java", 
+    "VecBuilder.java", 
+    "Vector.java", 
+    "jni/EigenJNI.java",
+    "jni/StateSpaceUtilJNI.java",
+]
 
 wpilib_java_jni_library(
-    name = "wpimath",
-    srcs = ["//wpimath:generated_java"] + glob(["**/*.java"]),
-    native_libs = ["//wpimath/src/main/native:wpimathjni"],
+    name = "wpimath-core",
+    srcs = ["//wpimath:generated_java"] + CORE_FILES,
+    native_libs = ["//wpimath/src/main/native:wpimathcorejni"],
     visibility = ["//visibility:public"],
     deps = [
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_ddense",
+        "@maven//:org_ejml_ejml_simple",
+    ],
+)
+
+GEOMETRY_FILES = glob(["geometry/**/*.java"]) + ["jni/Ellipse2dJNI.java", "jni/Pose3dJNI.java"]
+
+wpilib_java_jni_library(
+    name = "wpimath-geometry",
+    srcs = GEOMETRY_FILES,
+    native_libs = ["//wpimath/src/main/native:wpimathgeometryjni"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpimath-core",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_ddense",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
+
+wpilib_java_jni_library(
+    name = "wpimath-remainder",
+    srcs = glob(["**/*.java"], exclude = CORE_FILES + GEOMETRY_FILES),
+    native_libs = ["//wpimath/src/main/native:wpimathremainderjni"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpimath-core",
+        ":wpimath-geometry",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",

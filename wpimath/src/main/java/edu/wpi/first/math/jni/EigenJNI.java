@@ -15,7 +15,7 @@ public final class EigenJNI {
   static {
     if (Helper.getExtractOnStaticLoad()) {
       try {
-        RuntimeLoader.loadLibrary("wpimathjni");
+        RuntimeLoader.loadLibrary("wpimathcorejni");
       } catch (Exception ex) {
         ex.printStackTrace();
         System.exit(1);

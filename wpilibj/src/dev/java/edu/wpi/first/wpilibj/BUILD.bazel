@@ -6,7 +6,7 @@ wpilib_java_binary(
     deps = [
         "//hal/src/main/java/edu/wpi/first/hal",
         "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
     ],
 )

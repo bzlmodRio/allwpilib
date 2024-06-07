@@ -4,6 +4,6 @@ wpilib_java_binary(
     name = "DevMain",
     srcs = ["DevMain.java"],
     deps = [
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
     ],
 )

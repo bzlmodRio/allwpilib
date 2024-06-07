@@ -108,3 +108,20 @@ void frc::from_json(const wpi::json& json, Pose2d& pose) {
   pose = Pose2d{json.at("translation").get<Translation2d>(),
                 json.at("rotation").get<Rotation2d>()};
 }
+
+Eigen::Vector3d PoseToVector(const Pose2d& pose) {
+  return Eigen::Vector3d{pose.X().value(), pose.Y().value(),
+                         pose.Rotation().Radians().value()};
+}
+
+Eigen::Vector3d PoseTo3dVector(const Pose2d& pose) {
+  return Eigen::Vector3d{pose.Translation().X().value(),
+                         pose.Translation().Y().value(),
+                         pose.Rotation().Radians().value()};
+}
+
+Eigen::Vector4d PoseTo4dVector(const Pose2d& pose) {
+  return Eigen::Vector4d{pose.Translation().X().value(),
+                         pose.Translation().Y().value(), pose.Rotation().Cos(),
+                         pose.Rotation().Sin()};
+}

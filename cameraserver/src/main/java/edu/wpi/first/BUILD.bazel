@@ -8,7 +8,7 @@ wpilib_java_library(
         "//cscore/src/main/java/edu/wpi/first/cscore",
         "//hal/src/main/java/edu/wpi/first/hal",
         "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        # "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
         "//wpinet/src/main/java/edu/wpi/first/net:wpinet",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@bzlmodrio-opencv//libraries/java/opencv",

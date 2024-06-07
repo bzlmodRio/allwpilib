@@ -1,26 +1,18 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 
+
 wpilib_cc_static_and_shared_library(
-    name = "wpimath",
-    srcs = glob(
-        ["cpp/**"],
-        exclude = ["cpp/jni/**"],
-    ) + [
-        "//wpimath/src/main/native/thirdparty/sleipnir:sleipnir-srcs",
-    ],
-    hdrs = glob(["include/**/*"]),
+    name = "wpimath-sleipnir",
+    srcs = ["//wpimath/src/main/native/thirdparty/sleipnir:sleipnir-srcs"],
     defines = ["WPILIB_EXPORTS"],
     export_symbols = False,
     includes = [
-        "include",
         "thirdparty/sleipnir/src",
     ],
     standard_deps = [
         "//wpimath/src/main/native/thirdparty/eigen:eigen-headers",
-        "//wpimath/src/main/native/thirdparty/sleipnir:sleipnir-headers",
-        "//wpimath/src/main/native/thirdparty/gcem",
-        "//wpimath/src/main/proto:cc_proto",
+        "//wpimath/src/main/native/thirdparty/sleipnir:sleipnir-headers"
     ],
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
@@ -29,12 +21,135 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
-wpilib_jni_cc_library(
-    name = "wpimathjni",
-    srcs = glob(["cpp/jni/**"]),
-    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+CORE_SRCS = glob(["cpp/*.cpp"], exclude = ["cpp/ComputerVisionUtil.cpp"])
+CORE_HDRS = glob(["include/units/**"]) + [
+        "include/wpimath/MathShared.h", 
+        "include/frc/EigenCore.h", 
+        "include/frc/MathUtil.h",
+        "include/frc/StateSpaceUtil.h", 
+        "include/frc/fmt/Eigen.h", 
+    ]
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-core",
+    srcs = CORE_SRCS,
+    hdrs = CORE_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+        "//wpimath/src/main/native/thirdparty/eigen:eigen-headers",
+        "//wpimath/src/main/native/thirdparty/gcem",
+    ],
+    strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        ":wpimath",
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+GEOMETRY_SRCS = glob([
+        "cpp/geometry/*.cpp",
+        "cpp/geometry/proto/*.cpp",
+        "cpp/geometry/struct/*.cpp"
+    ])
+GEOMETRY_HDRS = glob([
+        "include/frc/geometry/*", 
+        "include/frc/geometry/proto/*", 
+        "include/frc/geometry/struct/*"
+    ])
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-geometry",
+    srcs = GEOMETRY_SRCS,
+    hdrs = GEOMETRY_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+        ":wpimath-sleipnir",
+    ],
+)
+
+
+REMAINDER_SRCS = glob(
+        ["cpp/**"],
+        exclude = ["cpp/jni/**"] + CORE_SRCS + GEOMETRY_SRCS,
+    )
+
+REMAINDER_HDRS = glob(["include/**/*"], 
+    exclude =  CORE_HDRS + GEOMETRY_HDRS)
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-remainder",
+    srcs = REMAINDER_SRCS,
+    hdrs = REMAINDER_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+        ":wpimath-geometry",
+        ":wpimath-sleipnir",
+    ],
+)
+
+
+#################################
+# JNI
+#################################
+
+CORE_JNI_SRCS = ["cpp/jni/EigenJNI.cpp", "cpp/jni/StateSpaceUtilJNI.cpp"]
+
+
+wpilib_jni_cc_library(
+    name = "wpimathcorejni",
+    srcs = CORE_JNI_SRCS,
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+    ],
+)
+
+
+GEOMETRY_JNI_SRCS = ["cpp/jni/Ellipse2dJNI.cpp", "cpp/jni/Pose3dJNI.cpp"]
+
+
+wpilib_jni_cc_library(
+    name = "wpimathgeometryjni",
+    srcs = GEOMETRY_JNI_SRCS,
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+    ],
+)
+
+
+wpilib_jni_cc_library(
+    name = "wpimathremainderjni",
+    srcs = glob(["cpp/jni/**"], exclude = CORE_JNI_SRCS + GEOMETRY_JNI_SRCS),
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-remainder",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+        ":wpimath-geometry",
+        ":wpimath-remainder",
     ],
 )

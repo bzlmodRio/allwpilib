@@ -16,7 +16,6 @@
 #include <wpi/SymbolExports.h>
 
 #include "frc/EigenCore.h"
-#include "frc/geometry/Pose2d.h"
 
 namespace frc {
 
@@ -202,26 +201,6 @@ Vectord<N> MakeWhiteNoiseVector(const std::array<double, N>& stdDevs) {
 }
 
 /**
- * Converts a Pose2d into a vector of [x, y, theta].
- *
- * @param pose The pose that is being represented.
- *
- * @return The vector.
- */
-WPILIB_DLLEXPORT
-Eigen::Vector3d PoseTo3dVector(const Pose2d& pose);
-
-/**
- * Converts a Pose2d into a vector of [x, y, std::cos(theta), std::sin(theta)].
- *
- * @param pose The pose that is being represented.
- *
- * @return The vector.
- */
-WPILIB_DLLEXPORT
-Eigen::Vector4d PoseTo4dVector(const Pose2d& pose);
-
-/**
  * Returns true if (A, B) is a stabilizable pair.
  *
  * (A, B) is stabilizable if and only if the uncontrollable eigenvalues of A, if
@@ -297,16 +276,6 @@ bool IsDetectable(const Matrixd<States, States>& A,
                   const Matrixd<Outputs, States>& C) {
   return IsStabilizable<States, Outputs>(A.transpose(), C.transpose());
 }
-
-/**
- * Converts a Pose2d into a vector of [x, y, theta].
- *
- * @param pose The pose that is being represented.
- *
- * @return The vector.
- */
-WPILIB_DLLEXPORT
-Eigen::Vector3d PoseToVector(const Pose2d& pose);
 
 /**
  * Clamps input vector between system's minimum and maximum allowable input.

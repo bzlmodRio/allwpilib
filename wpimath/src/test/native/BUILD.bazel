@@ -9,7 +9,7 @@ wpilib_cc_library(
 )
 
 wpilib_cc_test(
-    name = "wpimath-cpp-test",
+    name = "wpimath-remainder-cpp-test",
     size = "small",
     srcs = glob([
         "cpp/**/*.cpp",
@@ -21,7 +21,7 @@ wpilib_cc_test(
     ],
     deps = [
         ":test_headers",
-        "//wpimath/src/main/native:wpimath.static",
+        "//wpimath/src/main/native:wpimath-remainder.static",
         "@gtest",
     ],
 )

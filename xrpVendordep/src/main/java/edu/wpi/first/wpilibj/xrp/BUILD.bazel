@@ -7,6 +7,6 @@ wpilib_java_library(
     deps = [
         "//hal/src/main/java/edu/wpi/first/hal",
         "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
     ],
 )

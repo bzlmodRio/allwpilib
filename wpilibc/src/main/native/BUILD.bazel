@@ -12,7 +12,7 @@ wpilib_cc_static_and_shared_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        "//wpimath/src/main/native:wpimath",
+        "//wpimath/src/main/native:wpimath-remainder",
         "//hal/src/main/native:wpiHal",
         "//wpinet/src/main/native:wpinet",
         "//wpiutil/src/main/native:wpiutil",

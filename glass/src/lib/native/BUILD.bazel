@@ -13,7 +13,7 @@ wpilib_cc_library(
     deps = [
         "//fieldImages/src/main/native:fieldImages-cpp",
         "//wpigui/src/main/native:wpigui",
-        "//wpimath/src/main/native:wpimath.shared",
+        "//wpimath/src/main/native:wpimath-geometry.shared",
         "//wpiutil/src/main/native:wpiutil.shared",
     ],
 )

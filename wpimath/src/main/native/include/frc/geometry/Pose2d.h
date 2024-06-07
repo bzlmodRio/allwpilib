@@ -211,6 +211,37 @@ void to_json(wpi::json& json, const Pose2d& pose);
 WPILIB_DLLEXPORT
 void from_json(const wpi::json& json, Pose2d& pose);
 
+
+/**
+ * Converts a Pose2d into a vector of [x, y, theta].
+ *
+ * @param pose The pose that is being represented.
+ *
+ * @return The vector.
+ */
+WPILIB_DLLEXPORT
+Eigen::Vector3d PoseTo3dVector(const Pose2d& pose);
+
+/**
+ * Converts a Pose2d into a vector of [x, y, std::cos(theta), std::sin(theta)].
+ *
+ * @param pose The pose that is being represented.
+ *
+ * @return The vector.
+ */
+WPILIB_DLLEXPORT
+Eigen::Vector4d PoseTo4dVector(const Pose2d& pose);
+
+/**
+ * Converts a Pose2d into a vector of [x, y, theta].
+ *
+ * @param pose The pose that is being represented.
+ *
+ * @return The vector.
+ */
+WPILIB_DLLEXPORT
+Eigen::Vector3d PoseToVector(const Pose2d& pose);
+
 }  // namespace frc
 
 #include "frc/geometry/proto/Pose2dProto.h"
