@@ -148,6 +148,29 @@ wpilib_java_library(
 )
 
 
+DARE_FILES = ["DARE.java", "jni/DAREJNI.java"]
+REMAINDER_FILE_EXCLUDE += DARE_FILES
+
+wpilib_java_jni_library(
+    name = "wpimath-dare",
+    srcs = DARE_FILES,
+    native_libs = ["//wpimath/src/main/native:wpimathDAREjni"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpimath-core",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_ddense",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
+
 wpilib_java_jni_library(
     name = "wpimath-remainder",
     srcs = glob(["**/*.java"], exclude = REMAINDER_FILE_EXCLUDE),
@@ -159,6 +182,7 @@ wpilib_java_jni_library(
         ":wpimath-kinematics",
         ":wpimath-spline",
         ":wpimath-system",
+        ":wpimath-dare",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",

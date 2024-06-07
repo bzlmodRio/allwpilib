@@ -1,7 +1,20 @@
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library", "wpilib_java_junit5_test")
 
 
 REMAINDER_TEST_SRCS = []
+
+wpilib_java_library(
+    name = "utility_class_test",
+    srcs = ["wpilibj/UtilityClassTest.java"],
+    deps = [
+        
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_params",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+    ]
+)
+
+REMAINDER_TEST_SRCS += ["wpilibj/UtilityClassTest.java"]
 
 CORE_TEST_SRCS = ["math/jni/EigenJNITest.java", "math/jni/StateSpaceUtilJNITest.java"]
 REMAINDER_TEST_SRCS += CORE_TEST_SRCS
@@ -63,6 +76,7 @@ wpilib_java_junit5_test(
     size = "small",
     srcs = KINEMATICS_TEST_SRCS,
     deps = [
+        ":utility_class_test",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-kinematics",
@@ -113,13 +127,33 @@ wpilib_java_junit5_test(
     ],
 )
 
+DARE_TEST_SRCS = ["math/DARETest.java", "math/jni/DAREJNITest.java"]
+REMAINDER_TEST_SRCS += DARE_TEST_SRCS
+
+wpilib_java_junit5_test(
+    name = "wpimath-dare-test",
+    size = "small",
+    srcs = DARE_TEST_SRCS,
+    deps = [
+        ":utility_class_test",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-dare",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-spline",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-system",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_simple",
+    ],
+)
+
 print(glob(["math/jni/**"]))
 wpilib_java_junit5_test(
     name = "wpimath-test",
     size = "small",
     srcs = [
         "math/jni/ArmFeedforwardJNITest.java", 
-        "math/jni/DAREJNITest.java", 
         "math/jni/EigenJNITest.java", 
         "math/jni/StateSpaceUtilJNITest.java", 
         "math/jni/TrajectoryUtilJNITest.java"
@@ -128,6 +162,8 @@ wpilib_java_junit5_test(
         "**/*.java"
         ], exclude = REMAINDER_TEST_SRCS + ["math/jni/**"]),
     deps = [
+        ":utility_class_test",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-dare",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-remainder",

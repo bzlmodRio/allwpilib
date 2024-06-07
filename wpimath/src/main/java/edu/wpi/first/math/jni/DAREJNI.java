@@ -15,7 +15,7 @@ public final class DAREJNI {
   static {
     if (Helper.getExtractOnStaticLoad()) {
       try {
-        RuntimeLoader.loadLibrary("wpimathremainderjni");
+        RuntimeLoader.loadLibrary("wpimathDAREjni");
       } catch (Exception ex) {
         ex.printStackTrace();
         System.exit(1);

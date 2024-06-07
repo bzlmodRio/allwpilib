@@ -8,13 +8,49 @@
 
 #include <wpi/jni_util.h>
 
-#include "Exceptions.h"
 #include "edu_wpi_first_math_jni_DAREJNI.h"
 #include "frc/DARE.h"
 
 using namespace wpi::java;
 
+//
+// Globals and load/unload
+//
+
+JException illegalArgEx;
+
+static const JExceptionInit exceptions[] = {
+    {"java/lang/IllegalArgumentException", &illegalArgEx}};
+
 extern "C" {
+  
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
+  JNIEnv* env;
+  if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+    return JNI_ERR;
+  }
+
+  // Cache references to exceptions
+  for (auto& c : exceptions) {
+    *c.cls = JException(env, c.name);
+    if (!*c.cls) {
+      return JNI_ERR;
+    }
+  }
+
+  return JNI_VERSION_1_6;
+}
+
+JNIEXPORT void JNICALL JNI_OnUnload(JavaVM* vm, void* reserved) {
+  JNIEnv* env;
+  if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+    return;
+  }
+  // Delete global references
+  for (auto& c : exceptions) {
+    c.cls->free(env);
+  }
+}
 
 /*
  * Class:     edu_wpi_first_math_jni_DAREJNI

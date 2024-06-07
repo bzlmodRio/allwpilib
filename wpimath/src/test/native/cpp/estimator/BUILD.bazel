@@ -1,0 +1,12 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_test")
+
+wpilib_cc_test(
+    name = "wpimath-estimator-test",
+    size = "small",
+    srcs = glob(["*.cpp"]),
+    deps = [
+        "//wpimath/src/main/native:wpimath-estimator.static",
+        "//wpimath/src/main/native:wpimath-remainder.static",
+        "@gtest//:gtest_main",
+    ],
+)

@@ -1,4 +1,4 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library", "wpilib_cc_library")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 
 ##################################
@@ -74,6 +74,50 @@ wpilib_jni_cc_library(
         ":wpimath-core",
     ],
 )
+
+##################################
+# DARE
+##################################
+DARE_HDRS = ["include/frc/DARE.h"]
+DARE_JNI_SRCS = ["cpp/jni/DAREJNI.cpp"]
+
+REMAINDER_EXCLUDED_HDRS += DARE_HDRS
+REMAINDER_EXCLUDED_JNI  += DARE_JNI_SRCS
+
+wpilib_cc_library(
+    name = "wpimath-DARE.static",
+    hdrs = DARE_HDRS,
+    deps = [
+        ":wpimath-core.static",
+    ],
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
+    name = "wpimath-DARE.shared",
+    hdrs = DARE_HDRS,
+    deps = [
+        ":wpimath-core.shared",
+    ],
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+wpilib_jni_cc_library(
+    name = "wpimathDAREjni",
+    srcs = DARE_JNI_SRCS,
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-dare",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-DARE",
+    ],
+)
+
 
 ##################################
 # Geometry
@@ -266,6 +310,43 @@ wpilib_cc_static_and_shared_library(
 )
 
 ##################################
+# Estimator
+##################################
+ESTIMATOR_SRCS = glob([
+        "cpp/estimator/*.cpp",
+    ])
+ESTIMATOR_HDRS = glob([
+        "include/frc/estimator/*", 
+    ])
+
+REMAINDER_EXCLUDED_SRCS += ESTIMATOR_SRCS
+REMAINDER_EXCLUDED_HDRS += ESTIMATOR_HDRS
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-estimator",
+    srcs = ESTIMATOR_SRCS,
+    hdrs = ESTIMATOR_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+        ":wpimath-kinematics",
+        ":wpimath-interpolation",
+        ":wpimath-system",
+        ":wpimath-DARE",
+    ],
+)
+
+##################################
 # Controller
 ##################################
 CONTROLLER_SRCS = glob([
@@ -299,6 +380,8 @@ CONTROLLER_HDRS = glob([
 #     visibility = ["//visibility:public"],
 #     wpi_maybe_shared_deps = [
 #         ":wpimath-geometry",
+#         ":wpimath-kinematics",
+#         ":wpimath-system",
 #     ],
 # )
 
@@ -318,8 +401,9 @@ SYSTEM_HDRS = glob([
         "include/frc/system/plant/struct/*", 
     ], exclude = ["includefrc/system/LinearSystemLoop.h"])
 
-# REMAINDER_EXCLUDED_SRCS += SYSTEM_SRCS
-# REMAINDER_EXCLUDED_HDRS += SYSTEM_HDRS
+REMAINDER_EXCLUDED_SRCS += SYSTEM_SRCS
+REMAINDER_EXCLUDED_HDRS += SYSTEM_HDRS
+print(SYSTEM_HDRS )
 
 
 wpilib_cc_static_and_shared_library(
@@ -341,6 +425,41 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
+# ##################################
+# # Trajectory
+# ##################################
+# TRAJECTORY_SRCS = glob(["cpp/trajectory/**/*.cpp"])
+# TRAJECTORY_HDRS = glob([
+#         "include/frc/trajectory/**", 
+#         #"include/frc/trajectory/proto/*", 
+#         #"include/frc/trajectory/struct/*", 
+#     ])
+# 
+# # REMAINDER_EXCLUDED_SRCS += TRAJECTORY_SRCS
+# # REMAINDER_EXCLUDED_HDRS += TRAJECTORY_HDRS
+# 
+# 
+# wpilib_cc_static_and_shared_library(
+#     name = "wpimath-trajectory",
+#     srcs = TRAJECTORY_SRCS,
+#     hdrs = TRAJECTORY_HDRS,
+#     defines = ["WPILIB_EXPORTS"],
+#     export_symbols = False,
+#     includes = [
+#         "include",
+#     ],
+#     standard_deps = [
+#        "//wpimath/src/main/proto:cc_proto",
+#     ],
+#     strip_include_prefix = "include",
+#     visibility = ["//visibility:public"],
+#     wpi_maybe_shared_deps = [
+#         ":wpimath-geometry",
+#         ":wpimath-kinematics",
+#         ":wpimath-spline",
+#     ],
+# )
+
 ##################################
 # Remainder
 ##################################
@@ -354,6 +473,7 @@ REMAINDER_HDRS = glob(["include/**/*"],
 
 REMAINDER_JNI_SRCS = glob(["cpp/jni/**"], exclude = REMAINDER_EXCLUDED_JNI)
 
+print(REMAINDER_HDRS)
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-remainder",
@@ -368,13 +488,19 @@ wpilib_cc_static_and_shared_library(
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         ":wpimath-core",
+        ":wpimath-DARE",
+        ":wpimath-estimator",
+        ":wpimath-filter",
         ":wpimath-geometry",
         ":wpimath-interpolation",
         ":wpimath-kinematics",
         ":wpimath-spline",
+        ":wpimath-system",
         ":wpimath-sleipnir",
     ],
 )
+
+print(REMAINDER_JNI_SRCS)
 
 wpilib_jni_cc_library(
     name = "wpimathremainderjni",

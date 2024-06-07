@@ -6,6 +6,27 @@ wpilib_cc_library(
         "include/**",
     ]),
     strip_include_prefix = "include",
+    visibility = ["//wpimath/src/test:__subpackages__"]
+)
+
+REMAINDER_EXCLUDED_TESTS = []
+
+DARE_TEST_SRCS = glob(["cpp/DARETest*"])
+REMAINDER_EXCLUDED_TESTS += DARE_TEST_SRCS
+
+
+wpilib_cc_test(
+    name = "wpimath-DARE-cpp-test",
+    size = "small",
+    srcs = DARE_TEST_SRCS,
+    tags = [
+        "no-bullseye",
+        "no-raspi",
+    ],
+    deps = [
+        "//wpimath/src/main/native:wpimath-DARE.static",
+        "@gtest//:gtest_main",
+    ],
 )
 
 wpilib_cc_test(
@@ -14,7 +35,7 @@ wpilib_cc_test(
     srcs = glob([
         "cpp/**/*.cpp",
         "cpp/**/*.h",
-    ]),
+    ], exclude = REMAINDER_EXCLUDED_TESTS),
     tags = [
         "no-bullseye",
         "no-raspi",
