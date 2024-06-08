@@ -27,8 +27,6 @@ REMAINDER_EXCLUDED_SRCS = []
 
 REMAINDER_EXCLUDED_HDRS = []
 
-REMAINDER_EXCLUDED_JNI = []
-
 ##################################
 # Core
 ##################################
@@ -56,8 +54,6 @@ CORE_JNI_SRCS = [
 REMAINDER_EXCLUDED_SRCS += CORE_SRCS
 
 REMAINDER_EXCLUDED_HDRS += CORE_HDRS
-
-REMAINDER_EXCLUDED_JNI += CORE_JNI_SRCS
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-core",
@@ -97,8 +93,6 @@ DARE_HDRS = ["include/frc/DARE.h"]
 DARE_JNI_SRCS = ["cpp/jni/DAREJNI.cpp"]
 
 REMAINDER_EXCLUDED_HDRS += DARE_HDRS
-
-REMAINDER_EXCLUDED_JNI += DARE_JNI_SRCS
 
 wpilib_cc_library(
     name = "wpimath-DARE.static",
@@ -154,8 +148,6 @@ CONTROLLER_JNI_SRCS = ["cpp/jni/ArmFeedforwardJNI.cpp"]
 REMAINDER_EXCLUDED_SRCS += CONTROLLER_SRCS
 
 REMAINDER_EXCLUDED_HDRS += CONTROLLER_HDRS
-
-REMAINDER_EXCLUDED_JNI += CONTROLLER_JNI_SRCS
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-controller",
@@ -287,8 +279,6 @@ GEOMETRY_JNI_SRCS = [
 REMAINDER_EXCLUDED_SRCS += GEOMETRY_SRCS
 
 REMAINDER_EXCLUDED_HDRS += GEOMETRY_HDRS
-
-REMAINDER_EXCLUDED_JNI += GEOMETRY_JNI_SRCS
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-geometry",
@@ -493,8 +483,6 @@ REMAINDER_EXCLUDED_SRCS += TRAJECTORY_SRCS
 
 REMAINDER_EXCLUDED_HDRS += TRAJECTORY_HDRS
 
-REMAINDER_EXCLUDED_JNI += TRAJECTORY_JNI_SRCS
-
 wpilib_cc_static_and_shared_library(
     name = "wpimath-trajectory",
     srcs = TRAJECTORY_SRCS,
@@ -541,11 +529,6 @@ REMAINDER_HDRS = glob(
     exclude = REMAINDER_EXCLUDED_HDRS,
 )
 
-REMAINDER_JNI_SRCS = glob(
-    ["cpp/jni/**"],
-    exclude = REMAINDER_EXCLUDED_JNI,
-)
-
 print("REMAINDER SOURCES")
 
 print(REMAINDER_SRCS)
@@ -553,10 +536,6 @@ print(REMAINDER_SRCS)
 print("REMAINDER HEADERS")
 
 print(REMAINDER_HDRS)
-
-print("REMAINDER JNI")
-
-print(REMAINDER_JNI_SRCS)
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-remainder",
@@ -582,17 +561,5 @@ wpilib_cc_static_and_shared_library(
         ":wpimath-spline",
         ":wpimath-system",
         ":wpimath-sleipnir",
-    ],
-)
-
-wpilib_jni_cc_library(
-    name = "wpimathremainderjni",
-    srcs = REMAINDER_JNI_SRCS,
-    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-remainder",
-    visibility = ["//visibility:public"],
-    wpi_maybe_shared_deps = [
-        ":wpimath-core",
-        ":wpimath-geometry",
-        ":wpimath-remainder",
     ],
 )

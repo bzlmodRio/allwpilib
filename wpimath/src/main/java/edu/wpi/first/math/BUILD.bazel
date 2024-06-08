@@ -105,15 +105,9 @@ wpilib_java_library(
         ":wpimath-geometry",
         ":wpimath-kinematics",
         ":wpimath-system",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
-        "@maven//:com_fasterxml_jackson_core_jackson_core",
-        "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:org_ejml_ejml_core",
         "@maven//:org_ejml_ejml_ddense",
         "@maven//:org_ejml_ejml_simple",
-        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
 
@@ -127,15 +121,8 @@ wpilib_java_library(
     visibility = ["//visibility:public"],
     deps = [
         ":wpimath-core",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
-        "@maven//:com_fasterxml_jackson_core_jackson_core",
-        "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:org_ejml_ejml_core",
-        "@maven//:org_ejml_ejml_ddense",
         "@maven//:org_ejml_ejml_simple",
-        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
 
@@ -178,11 +165,6 @@ wpilib_java_library(
         ":wpimath-geometry",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
-        "@maven//:com_fasterxml_jackson_core_jackson_core",
-        "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:org_ejml_ejml_core",
-        "@maven//:org_ejml_ejml_ddense",
         "@maven//:org_ejml_ejml_simple",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
@@ -199,15 +181,8 @@ wpilib_java_library(
     deps = [
         ":wpimath-core",
         ":wpimath-geometry",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
-        "@maven//:com_fasterxml_jackson_core_jackson_core",
-        "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:org_ejml_ejml_core",
-        "@maven//:org_ejml_ejml_ddense",
         "@maven//:org_ejml_ejml_simple",
-        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
 
@@ -225,13 +200,7 @@ wpilib_java_library(
     deps = [
         ":wpimath-core",
         ":wpimath-geometry",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
-        "@maven//:com_fasterxml_jackson_core_jackson_core",
-        "@maven//:com_fasterxml_jackson_core_jackson_databind",
-        "@maven//:org_ejml_ejml_core",
-        "@maven//:org_ejml_ejml_ddense",
         "@maven//:org_ejml_ejml_simple",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
@@ -266,13 +235,16 @@ wpilib_java_jni_library(
     ],
 )
 
-wpilib_java_jni_library(
+REMAINDER_FIELS = glob(
+    ["**/*.java"],
+    exclude = REMAINDER_FILE_EXCLUDE,
+)
+
+print("Remainder java files: ", REMAINDER_FIELS)
+
+wpilib_java_library(
     name = "wpimath-remainder",
-    srcs = glob(
-        ["**/*.java"],
-        exclude = REMAINDER_FILE_EXCLUDE,
-    ),
-    native_libs = ["//wpimath/src/main/native:wpimathremainderjni"],
+    srcs = REMAINDER_FIELS,
     visibility = ["//visibility:public"],
     deps = [
         ":wpimath-controller",

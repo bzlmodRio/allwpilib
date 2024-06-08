@@ -39,10 +39,6 @@ wpilib_cc_test(
         ],
         exclude = REMAINDER_EXCLUDED_TESTS,
     ),
-    tags = [
-        "no-bullseye",
-        "no-raspi",
-    ],
     deps = [
         ":test_headers",
         "//wpimath/src/main/native:wpimath-remainder.static",

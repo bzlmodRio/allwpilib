@@ -9,4 +9,8 @@ wpilib_cc_test(
         "//wpimath/src/main/native:wpimath-trajectory.static",
         "@gtest//:gtest_main",
     ],
+    tags = [
+        "no-bullseye",
+        "no-raspi",
+    ],
 )

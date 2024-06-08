@@ -12,7 +12,6 @@ wpilib_java_library(
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-filter",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-kinematics",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-system",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-trajectory",
         "//wpinet/src/main/java/edu/wpi/first/net:wpinet",
