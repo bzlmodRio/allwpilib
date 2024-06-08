@@ -10,12 +10,13 @@ build:bullseye32 --cxxopt=-Wformat=2
 build:bullseye32 --cxxopt=-pedantic
 build:bullseye32 --cxxopt=-Wno-psabi
 build:bullseye32 --cxxopt=-Wno-unused-parameter
-build:bullseye32 --cxxopt=-Wno-error=deprecated-declarations
 build:bullseye32 --cxxopt=-fPIC
 build:bullseye32 --cxxopt=-pthread
 
+build:bullseye32 --cxxopt=-Wno-error=deprecated-declarations
+
 # Extra 11
-# build:bullseye32 --cxxopt=-Wno-error=deprecated-enum-enum-conversion
+build:bullseye32 --cxxopt=-Wno-error=deprecated-enum-enum-conversion
 
 # C Only
 build:bullseye32 --conlyopt=-Wformat=2
@@ -25,9 +26,9 @@ build:bullseye32 --conlyopt=-Wno-unused-parameter
 build:bullseye32 --conlyopt=-fPIC
 build:bullseye32 --conlyopt=-pthread
 
-
 # Linker
 build:bullseye32 --linkopt=-rdynamic
 build:bullseye32 --linkopt=-pthread
 build:bullseye32 --linkopt=-ldl
 build:bullseye32 --linkopt=-latomic
+build:bullseye32 --linkopt=-Wl,-rpath,'$ORIGIN'
