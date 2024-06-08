@@ -1,4 +1,4 @@
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 
 wpilib_java_junit5_test(
     name = "wpimath-estimator-test",
@@ -7,10 +7,10 @@ wpilib_java_junit5_test(
     deps = [
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-dare",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-estimator",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-system",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-kinematics",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-system",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-trajectory",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",

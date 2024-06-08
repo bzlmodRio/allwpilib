@@ -1,24 +1,25 @@
-load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 
 REMAINDER_FILE_EXCLUDE = []
 
 CORE_FILES = glob(["interpolation/*.java"]) + glob(["util/*.java"]) + [
     "InterpolatingMatrixTreeMap.java",
-    "MatBuilder.java", 
-    "MathShared.java", 
-    "MathSharedStore.java", 
-    "MathUtil.java", 
-    "MathUsageId.java", 
-    "Matrix.java", 
-    "Num.java", 
-    "Pair.java", 
-    "StateSpaceUtil.java", 
-    "VecBuilder.java", 
-    "Vector.java", 
+    "MatBuilder.java",
+    "MathShared.java",
+    "MathSharedStore.java",
+    "MathUtil.java",
+    "MathUsageId.java",
+    "Matrix.java",
+    "Num.java",
+    "Pair.java",
+    "StateSpaceUtil.java",
+    "VecBuilder.java",
+    "Vector.java",
     "jni/EigenJNI.java",
     "jni/StateSpaceUtilJNI.java",
 ]
+
 REMAINDER_FILE_EXCLUDE += CORE_FILES
 
 wpilib_java_jni_library(
@@ -28,14 +29,18 @@ wpilib_java_jni_library(
     visibility = ["//visibility:public"],
     deps = [
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
         "@maven//:org_ejml_ejml_core",
         "@maven//:org_ejml_ejml_ddense",
         "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
 
-DARE_FILES = ["DARE.java", "jni/DAREJNI.java"]
+DARE_FILES = [
+    "DARE.java",
+    "jni/DAREJNI.java",
+]
+
 REMAINDER_FILE_EXCLUDE += DARE_FILES
 
 wpilib_java_jni_library(
@@ -57,8 +62,8 @@ wpilib_java_jni_library(
     ],
 )
 
-
 CONTROLLER_FILES = glob(["controller/**/*.java"]) + ["jni/ArmFeedforwardJNI.java"]
+
 REMAINDER_FILE_EXCLUDE += CONTROLLER_FILES
 
 wpilib_java_jni_library(
@@ -85,8 +90,8 @@ wpilib_java_jni_library(
     ],
 )
 
-
 ESTIMATOR_FILES = glob(["estimator/**/*.java"])
+
 REMAINDER_FILE_EXCLUDE += ESTIMATOR_FILES
 
 wpilib_java_library(
@@ -96,10 +101,10 @@ wpilib_java_library(
     visibility = ["//visibility:public"],
     deps = [
         ":wpimath-core",
+        ":wpimath-dare",
         ":wpimath-geometry",
         ":wpimath-kinematics",
         ":wpimath-system",
-        ":wpimath-dare",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",
@@ -112,8 +117,8 @@ wpilib_java_library(
     ],
 )
 
-
 FILTER_FILES = glob(["filter/**/*.java"])
+
 REMAINDER_FILE_EXCLUDE += FILTER_FILES
 
 wpilib_java_library(
@@ -134,8 +139,11 @@ wpilib_java_library(
     ],
 )
 
+GEOMETRY_FILES = glob(["geometry/**/*.java"]) + [
+    "jni/Ellipse2dJNI.java",
+    "jni/Pose3dJNI.java",
+]
 
-GEOMETRY_FILES = glob(["geometry/**/*.java"]) + ["jni/Ellipse2dJNI.java", "jni/Pose3dJNI.java"]
 REMAINDER_FILE_EXCLUDE += GEOMETRY_FILES
 
 wpilib_java_jni_library(
@@ -157,10 +165,8 @@ wpilib_java_jni_library(
     ],
 )
 
-
-
-
 KINEMATICS_FILES = glob(["kinematics/**/*.java"])
+
 REMAINDER_FILE_EXCLUDE += KINEMATICS_FILES
 
 wpilib_java_library(
@@ -182,8 +188,8 @@ wpilib_java_library(
     ],
 )
 
-
 SPLINE_FILES = glob(["spline/**/*.java"])
+
 REMAINDER_FILE_EXCLUDE += SPLINE_FILES
 
 wpilib_java_library(
@@ -205,7 +211,11 @@ wpilib_java_library(
     ],
 )
 
-SYSTEM_FILES = glob(["system/**/*.java"], exclude = ["system/LinearSystemLoop.java"])
+SYSTEM_FILES = glob(
+    ["system/**/*.java"],
+    exclude = ["system/LinearSystemLoop.java"],
+)
+
 REMAINDER_FILE_EXCLUDE += SYSTEM_FILES
 
 wpilib_java_library(
@@ -227,8 +237,11 @@ wpilib_java_library(
     ],
 )
 
+TRAJECTORY_FILES = glob(
+    ["trajectory/**/*.java"],
+    exclude = ["trajectory/constraint/DifferentialDriveVoltageConstraint.java"],
+) + ["jni/TrajectoryUtilJNI.java"]
 
-TRAJECTORY_FILES = glob(["trajectory/**/*.java"], exclude=["trajectory/constraint/DifferentialDriveVoltageConstraint.java"]) + ["jni/TrajectoryUtilJNI.java"]
 REMAINDER_FILE_EXCLUDE += TRAJECTORY_FILES
 
 wpilib_java_jni_library(
@@ -253,21 +266,23 @@ wpilib_java_jni_library(
     ],
 )
 
-
 wpilib_java_jni_library(
     name = "wpimath-remainder",
-    srcs = glob(["**/*.java"], exclude = REMAINDER_FILE_EXCLUDE),
+    srcs = glob(
+        ["**/*.java"],
+        exclude = REMAINDER_FILE_EXCLUDE,
+    ),
     native_libs = ["//wpimath/src/main/native:wpimathremainderjni"],
     visibility = ["//visibility:public"],
     deps = [
-        ":wpimath-core",
         ":wpimath-controller",
-        ":wpimath-geometry",
+        ":wpimath-core",
+        ":wpimath-dare",
         ":wpimath-estimator",
+        ":wpimath-geometry",
         ":wpimath-kinematics",
         ":wpimath-spline",
         ":wpimath-system",
-        ":wpimath-dare",
         ":wpimath-trajectory",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",

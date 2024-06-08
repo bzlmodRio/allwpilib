@@ -1,14 +1,14 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_test")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_test")
 
 wpilib_cc_test(
     name = "wpimath-trajectory-test",
     size = "small",
     srcs = glob(["*.cpp"]),
     deps = [
-        "//wpimath/src/test/native:test_headers",
         "//wpimath/src/main/native:wpimath-controller.static",
-        "//wpimath/src/main/native:wpimath-trajectory.static",
         "//wpimath/src/main/native:wpimath-remainder.static",
+        "//wpimath/src/main/native:wpimath-trajectory.static",
+        "//wpimath/src/test/native:test_headers",
         "@gtest//:gtest_main",
     ],
 )

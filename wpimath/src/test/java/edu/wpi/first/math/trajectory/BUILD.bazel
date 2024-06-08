@@ -1,4 +1,4 @@
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 
 wpilib_java_junit5_test(
     name = "wpimath-trajectory-test",
@@ -6,10 +6,10 @@ wpilib_java_junit5_test(
     srcs = glob(["**/*.java"]),
     deps = [
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-controller",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-remainder",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-kinematics",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-kinematics",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-remainder",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath-trajectory",
         "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
