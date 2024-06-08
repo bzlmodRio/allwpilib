@@ -15,7 +15,7 @@ public final class ArmFeedforwardJNI {
   static {
     if (Helper.getExtractOnStaticLoad()) {
       try {
-        RuntimeLoader.loadLibrary("wpimathremainderjni");
+        RuntimeLoader.loadLibrary("wpimathcontrollerjni");
       } catch (Exception ex) {
         ex.printStackTrace();
         System.exit(1);

@@ -12,7 +12,12 @@ wpilib_cc_static_and_shared_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        "//wpimath/src/main/native:wpimath-remainder",
+        "//wpimath/src/main/native:wpimath-core",
+        "//wpimath/src/main/native:wpimath-geometry",
+        "//wpimath/src/main/native:wpimath-filter",
+        "//wpimath/src/main/native:wpimath-kinematics",
+        "//wpimath/src/main/native:wpimath-system",
+        "//wpimath/src/main/native:wpimath-trajectory",
         "//hal/src/main/native:wpiHal",
         "//wpinet/src/main/native:wpinet",
         "//wpiutil/src/main/native:wpiutil",

@@ -120,6 +120,135 @@ wpilib_jni_cc_library(
 
 
 ##################################
+# Controller
+##################################
+CONTROLLER_SRCS = glob([
+        "cpp/controller/*.cpp",
+        "cpp/controller/proto/*.cpp",
+        "cpp/controller/struct/*.cpp",
+    ])
+CONTROLLER_HDRS = glob([
+        "include/frc/controller/*", 
+        "include/frc/controller/proto/*", 
+        "include/frc/controller/struct/*", 
+    ])
+CONTROLLER_JNI_SRCS = ["cpp/jni/ArmFeedforwardJNI.cpp"]
+
+REMAINDER_EXCLUDED_SRCS += CONTROLLER_SRCS
+REMAINDER_EXCLUDED_HDRS += CONTROLLER_HDRS
+REMAINDER_EXCLUDED_JNI  += CONTROLLER_JNI_SRCS
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-controller",
+    srcs = CONTROLLER_SRCS,
+    hdrs = CONTROLLER_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+        ":wpimath-kinematics",
+        ":wpimath-DARE",
+        ":wpimath-system",
+        ":wpimath-trajectory",
+    ],
+)
+
+
+wpilib_jni_cc_library(
+    name = "wpimathcontrollerjni",
+    srcs = CONTROLLER_JNI_SRCS,
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-controller",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+        ":wpimath-geometry",
+        ":wpimath-controller",
+    ],
+)
+
+##################################
+# Estimator
+##################################
+ESTIMATOR_SRCS = glob([
+        "cpp/estimator/*.cpp",
+    ])
+ESTIMATOR_HDRS = glob([
+        "include/frc/estimator/*", 
+    ])
+
+REMAINDER_EXCLUDED_SRCS += ESTIMATOR_SRCS
+REMAINDER_EXCLUDED_HDRS += ESTIMATOR_HDRS
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-estimator",
+    srcs = ESTIMATOR_SRCS,
+    hdrs = ESTIMATOR_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+        ":wpimath-kinematics",
+        ":wpimath-interpolation",
+        ":wpimath-system",
+        ":wpimath-DARE",
+    ],
+)
+
+
+##################################
+# Filter
+##################################
+FILTER_SRCS = glob([
+        "cpp/filter/*.cpp",
+    ])
+FILTER_HDRS = glob([
+        "include/frc/filter/*", 
+    ])
+    
+
+REMAINDER_EXCLUDED_SRCS += FILTER_SRCS
+REMAINDER_EXCLUDED_HDRS += FILTER_HDRS
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-filter",
+    srcs = FILTER_SRCS,
+    hdrs = FILTER_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+    ],
+)
+
+
+##################################
 # Geometry
 ##################################
 GEOMETRY_SRCS = glob([
@@ -171,39 +300,6 @@ wpilib_jni_cc_library(
 )
 
 
-##################################
-# Filter
-##################################
-FILTER_SRCS = glob([
-        "cpp/filter/*.cpp",
-    ])
-FILTER_HDRS = glob([
-        "include/frc/filter/*", 
-    ])
-    
-
-REMAINDER_EXCLUDED_SRCS += FILTER_SRCS
-REMAINDER_EXCLUDED_HDRS += FILTER_HDRS
-
-
-wpilib_cc_static_and_shared_library(
-    name = "wpimath-filter",
-    srcs = FILTER_SRCS,
-    hdrs = FILTER_HDRS,
-    defines = ["WPILIB_EXPORTS"],
-    export_symbols = False,
-    includes = [
-        "include",
-    ],
-    standard_deps = [
-       "//wpimath/src/main/proto:cc_proto",
-    ],
-    strip_include_prefix = "include",
-    visibility = ["//visibility:public"],
-    wpi_maybe_shared_deps = [
-        ":wpimath-core",
-    ],
-)
 
 ##################################
 # Interpolation
@@ -310,82 +406,6 @@ wpilib_cc_static_and_shared_library(
 )
 
 ##################################
-# Estimator
-##################################
-ESTIMATOR_SRCS = glob([
-        "cpp/estimator/*.cpp",
-    ])
-ESTIMATOR_HDRS = glob([
-        "include/frc/estimator/*", 
-    ])
-
-REMAINDER_EXCLUDED_SRCS += ESTIMATOR_SRCS
-REMAINDER_EXCLUDED_HDRS += ESTIMATOR_HDRS
-
-
-wpilib_cc_static_and_shared_library(
-    name = "wpimath-estimator",
-    srcs = ESTIMATOR_SRCS,
-    hdrs = ESTIMATOR_HDRS,
-    defines = ["WPILIB_EXPORTS"],
-    export_symbols = False,
-    includes = [
-        "include",
-    ],
-    standard_deps = [
-       "//wpimath/src/main/proto:cc_proto",
-    ],
-    strip_include_prefix = "include",
-    visibility = ["//visibility:public"],
-    wpi_maybe_shared_deps = [
-        ":wpimath-geometry",
-        ":wpimath-kinematics",
-        ":wpimath-interpolation",
-        ":wpimath-system",
-        ":wpimath-DARE",
-    ],
-)
-
-##################################
-# Controller
-##################################
-CONTROLLER_SRCS = glob([
-        "cpp/controller/*.cpp",
-        "cpp/controller/proto/*.cpp",
-        "cpp/controller/struct/*.cpp",
-    ])
-CONTROLLER_HDRS = glob([
-        "include/frc/controller/*", 
-        "include/frc/controller/proto/*", 
-        "include/frc/controller/struct/*", 
-    ])
-
-# REMAINDER_EXCLUDED_SRCS += CONTROLLER_SRCS
-# REMAINDER_EXCLUDED_HDRS += CONTROLLER_HDRS
-
-
-# wpilib_cc_static_and_shared_library(
-#     name = "wpimath-controller",
-#     srcs = CONTROLLER_SRCS,
-#     hdrs = CONTROLLER_HDRS,
-#     defines = ["WPILIB_EXPORTS"],
-#     export_symbols = False,
-#     includes = [
-#         "include",
-#     ],
-#     standard_deps = [
-#        "//wpimath/src/main/proto:cc_proto",
-#     ],
-#     strip_include_prefix = "include",
-#     visibility = ["//visibility:public"],
-#     wpi_maybe_shared_deps = [
-#         ":wpimath-geometry",
-#         ":wpimath-kinematics",
-#         ":wpimath-system",
-#     ],
-# )
-
-##################################
 # System
 ##################################
 SYSTEM_SRCS = glob([
@@ -403,7 +423,6 @@ SYSTEM_HDRS = glob([
 
 REMAINDER_EXCLUDED_SRCS += SYSTEM_SRCS
 REMAINDER_EXCLUDED_HDRS += SYSTEM_HDRS
-print(SYSTEM_HDRS )
 
 
 wpilib_cc_static_and_shared_library(
@@ -425,40 +444,54 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
-# ##################################
-# # Trajectory
-# ##################################
-# TRAJECTORY_SRCS = glob(["cpp/trajectory/**/*.cpp"])
-# TRAJECTORY_HDRS = glob([
-#         "include/frc/trajectory/**", 
-#         #"include/frc/trajectory/proto/*", 
-#         #"include/frc/trajectory/struct/*", 
-#     ])
-# 
-# # REMAINDER_EXCLUDED_SRCS += TRAJECTORY_SRCS
-# # REMAINDER_EXCLUDED_HDRS += TRAJECTORY_HDRS
-# 
-# 
-# wpilib_cc_static_and_shared_library(
-#     name = "wpimath-trajectory",
-#     srcs = TRAJECTORY_SRCS,
-#     hdrs = TRAJECTORY_HDRS,
-#     defines = ["WPILIB_EXPORTS"],
-#     export_symbols = False,
-#     includes = [
-#         "include",
-#     ],
-#     standard_deps = [
-#        "//wpimath/src/main/proto:cc_proto",
-#     ],
-#     strip_include_prefix = "include",
-#     visibility = ["//visibility:public"],
-#     wpi_maybe_shared_deps = [
-#         ":wpimath-geometry",
-#         ":wpimath-kinematics",
-#         ":wpimath-spline",
-#     ],
-# )
+##################################
+# Trajectory
+##################################
+TRAJECTORY_SRCS = glob(["cpp/trajectory/**/*.cpp"], exclude=["cpp/trajectory/constraint/DifferentialDriveVoltageConstraint.cpp"])
+TRAJECTORY_HDRS = glob([
+        "include/frc/trajectory/**", 
+    ], exclude = ["include/frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h"])
+
+TRAJECTORY_JNI_SRCS = ["cpp/jni/TrajectoryUtilJNI.cpp"]
+
+REMAINDER_EXCLUDED_SRCS += TRAJECTORY_SRCS
+REMAINDER_EXCLUDED_HDRS += TRAJECTORY_HDRS
+REMAINDER_EXCLUDED_JNI  += TRAJECTORY_JNI_SRCS
+
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath-trajectory",
+    srcs = TRAJECTORY_SRCS,
+    hdrs = TRAJECTORY_HDRS,
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "include",
+    ],
+    standard_deps = [
+       "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-geometry",
+        ":wpimath-kinematics",
+        ":wpimath-spline",
+    ],
+)
+
+
+wpilib_jni_cc_library(
+    name = "wpimathtrajectoryjni",
+    srcs = TRAJECTORY_JNI_SRCS,
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath-trajectory",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath-core",
+        ":wpimath-geometry",
+        ":wpimath-trajectory",
+    ],
+)
 
 ##################################
 # Remainder
@@ -473,7 +506,15 @@ REMAINDER_HDRS = glob(["include/**/*"],
 
 REMAINDER_JNI_SRCS = glob(["cpp/jni/**"], exclude = REMAINDER_EXCLUDED_JNI)
 
+
+print("REMAINDER SOURCES")
+print(REMAINDER_SRCS)
+
+print("REMAINDER HEADERS")
 print(REMAINDER_HDRS)
+
+print("REMAINDER JNI")
+print(REMAINDER_JNI_SRCS)
 
 wpilib_cc_static_and_shared_library(
     name = "wpimath-remainder",
@@ -494,13 +535,13 @@ wpilib_cc_static_and_shared_library(
         ":wpimath-geometry",
         ":wpimath-interpolation",
         ":wpimath-kinematics",
+        ":wpimath-controller",
+        ":wpimath-trajectory",
         ":wpimath-spline",
         ":wpimath-system",
         ":wpimath-sleipnir",
     ],
 )
-
-print(REMAINDER_JNI_SRCS)
 
 wpilib_jni_cc_library(
     name = "wpimathremainderjni",

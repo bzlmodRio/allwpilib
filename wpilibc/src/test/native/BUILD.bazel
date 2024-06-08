@@ -18,6 +18,7 @@ wpilib_cc_test(
     deps = [
         ":test-headers",
         "//wpilibc/src/main/native:wpilibc.static",
+        "//wpimath/src/main/native:wpimath-controller.static",
         "@gtest",
     ],
 )

@@ -8,11 +8,27 @@
 
 #include <wpi/jni_util.h>
 
-#include "Exceptions.h"
 #include "edu_wpi_first_math_jni_TrajectoryUtilJNI.h"
 #include "frc/trajectory/TrajectoryUtil.h"
 
 using namespace wpi::java;
+
+
+//
+// Globals and load/unload
+//
+
+JException illegalArgEx;
+JException ioEx;
+JException trajectorySerializationEx;
+
+static const JExceptionInit exceptions[] = {
+    {"java/lang/IllegalArgumentException", &illegalArgEx},
+    {"java/io/IOException", &ioEx},
+    {"edu/wpi/first/math/trajectory/"
+     "TrajectoryUtil$TrajectorySerializationException",
+     &trajectorySerializationEx}};
+
 
 std::vector<double> GetElementsFromTrajectory(
     const frc::Trajectory& trajectory) {
@@ -55,6 +71,34 @@ frc::Trajectory CreateTrajectoryFromElements(std::span<const double> elements) {
 }
 
 extern "C" {
+  
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
+  JNIEnv* env;
+  if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+    return JNI_ERR;
+  }
+
+  // Cache references to exceptions
+  for (auto& c : exceptions) {
+    *c.cls = JException(env, c.name);
+    if (!*c.cls) {
+      return JNI_ERR;
+    }
+  }
+
+  return JNI_VERSION_1_6;
+}
+
+JNIEXPORT void JNICALL JNI_OnUnload(JavaVM* vm, void* reserved) {
+  JNIEnv* env;
+  if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
+    return;
+  }
+  // Delete global references
+  for (auto& c : exceptions) {
+    c.cls->free(env);
+  }
+}
 
 /*
  * Class:     edu_wpi_first_math_jni_TrajectoryUtilJNI

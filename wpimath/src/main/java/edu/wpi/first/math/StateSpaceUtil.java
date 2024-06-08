@@ -4,7 +4,6 @@
 
 package edu.wpi.first.math;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.jni.StateSpaceUtilJNI;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -127,16 +126,6 @@ public final class StateSpaceUtil {
   }
 
   /**
-   * Convert a {@link Pose2d} to a vector of [x, y, theta], where theta is in radians.
-   *
-   * @param pose A pose to convert to a vector.
-   * @return The given pose in vector form, with the third element, theta, in radians.
-   */
-  public static Matrix<N3, N1> poseToVector(Pose2d pose) {
-    return VecBuilder.fill(pose.getX(), pose.getY(), pose.getRotation().getRadians());
-  }
-
-  /**
    * Clamp the input u to the min and max.
    *
    * @param u The input to clamp.
@@ -172,33 +161,5 @@ public final class StateSpaceUtil {
       return u.times(maxMagnitude / maxValue);
     }
     return u;
-  }
-
-  /**
-   * Convert a {@link Pose2d} to a vector of [x, y, cos(theta), sin(theta)], where theta is in
-   * radians.
-   *
-   * @param pose A pose to convert to a vector.
-   * @return The given pose in as a 4x1 vector of x, y, cos(theta), and sin(theta).
-   */
-  public static Matrix<N4, N1> poseTo4dVector(Pose2d pose) {
-    return VecBuilder.fill(
-        pose.getTranslation().getX(),
-        pose.getTranslation().getY(),
-        pose.getRotation().getCos(),
-        pose.getRotation().getSin());
-  }
-
-  /**
-   * Convert a {@link Pose2d} to a vector of [x, y, theta], where theta is in radians.
-   *
-   * @param pose A pose to convert to a vector.
-   * @return The given pose in vector form, with the third element, theta, in radians.
-   */
-  public static Matrix<N3, N1> poseTo3dVector(Pose2d pose) {
-    return VecBuilder.fill(
-        pose.getTranslation().getX(),
-        pose.getTranslation().getY(),
-        pose.getRotation().getRadians());
   }
 }

@@ -21,6 +21,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.numbers.N4;
 
 /** Represents a 2D pose containing translational and rotational elements. */
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -294,6 +299,44 @@ public class Pose2d implements Interpolatable<Pose2d>, ProtobufSerializable, Str
                 (Pose2d other) ->
                     Math.abs(this.getRotation().minus(other.getRotation()).getRadians())));
   }
+  
+  /**
+   * Convert a {@link Pose2d} to a vector of [x, y, cos(theta), sin(theta)], where theta is in
+   * radians.
+   *
+   * @param pose A pose to convert to a vector.
+   * @return The given pose in as a 4x1 vector of x, y, cos(theta), and sin(theta).
+   */
+  public static Matrix<N4, N1> poseTo4dVector(Pose2d pose) {
+    return VecBuilder.fill(
+        pose.getTranslation().getX(),
+        pose.getTranslation().getY(),
+        pose.getRotation().getCos(),
+        pose.getRotation().getSin());
+  }
+
+  /**
+   * Convert a {@link Pose2d} to a vector of [x, y, theta], where theta is in radians.
+   *
+   * @param pose A pose to convert to a vector.
+   * @return The given pose in vector form, with the third element, theta, in radians.
+   */
+  public static Matrix<N3, N1> poseTo3dVector(Pose2d pose) {
+    return VecBuilder.fill(
+        pose.getTranslation().getX(),
+        pose.getTranslation().getY(),
+        pose.getRotation().getRadians());
+  }
+
+  /**
+   * Convert a {@link Pose2d} to a vector of [x, y, theta], where theta is in radians.
+   *
+   * @param pose A pose to convert to a vector.
+   * @return The given pose in vector form, with the third element, theta, in radians.
+   */
+  public static Matrix<N3, N1> poseToVector(Pose2d pose) {
+    return VecBuilder.fill(pose.getX(), pose.getY(), pose.getRotation().getRadians());
+  }
 
   @Override
   public String toString() {
@@ -336,4 +379,5 @@ public class Pose2d implements Interpolatable<Pose2d>, ProtobufSerializable, Str
 
   /** Pose2d struct for serialization. */
   public static final Pose2dStruct struct = new Pose2dStruct();
+  
 }

@@ -9,5 +9,6 @@ wpilib_cc_static_and_shared_library(
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath-controller",
     ],
 )

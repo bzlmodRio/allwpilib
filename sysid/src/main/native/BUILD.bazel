@@ -24,7 +24,8 @@ wpilib_cc_library(
     visibility = ["//sysid:__subpackages__"],
     deps = [
         "//glass/src/libnt/native:libglassnt",
-        "//wpimath/src/main/native:wpimath-remainder.static",
+        "//wpimath/src/main/native:wpimath-filter.static",
+        "//wpimath/src/main/native:wpimath-controller.static",
     ],
 )
 

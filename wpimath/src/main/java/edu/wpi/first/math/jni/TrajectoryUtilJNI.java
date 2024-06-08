@@ -15,7 +15,7 @@ public final class TrajectoryUtilJNI {
   static {
     if (Helper.getExtractOnStaticLoad()) {
       try {
-        RuntimeLoader.loadLibrary("wpimathremainderjni");
+        RuntimeLoader.loadLibrary("wpimathtrajectoryjni");
       } catch (Exception ex) {
         ex.printStackTrace();
         System.exit(1);

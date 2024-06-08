@@ -1,0 +1,15 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library", "wpilib_java_junit5_test")
+
+wpilib_java_junit5_test(
+    name = "wpimath-geometry-test",
+    size = "small",
+    srcs = glob(["**/*.java"]),
+    deps = [
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-core",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath-geometry",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_simple",
+    ],
+)

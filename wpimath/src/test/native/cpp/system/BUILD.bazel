@@ -7,7 +7,6 @@ wpilib_cc_test(
     deps = [
         "//wpimath/src/test/native:test_headers",
         "//wpimath/src/main/native:wpimath-system.static",
-        "//wpimath/src/main/native:wpimath-remainder.static",
         "@gtest//:gtest_main",
     ],
 )

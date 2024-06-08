@@ -6,7 +6,7 @@ wpilib_cc_test(
     srcs = glob(["*.cpp"]),
     deps = [
         "//wpimath/src/main/native:wpimath-kinematics.static",
-        "//wpimath/src/main/native:wpimath-remainder.static",
+        "//wpimath/src/main/native:wpimath-trajectory.static",
         "@gtest//:gtest_main",
     ],
 )

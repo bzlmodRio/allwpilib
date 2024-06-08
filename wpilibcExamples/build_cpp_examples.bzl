@@ -15,6 +15,8 @@ def build_examples(halsim_deps = []):
             srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"]),
             deps = [
                 "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
+                "//wpimath/src/main/native:wpimath-estimator.shared",
+                "//wpimath/src/main/native:wpimath-remainder.shared",
                 "//apriltag/src/main/native:apriltag.shared",
                 "//romiVendordep/src/main/native:romi.shared",
                 "//xrpVendordep/src/main/native:xrp.shared",
