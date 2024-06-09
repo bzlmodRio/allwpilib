@@ -1,7 +1,7 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_python//python:defs.bzl", "py_binary")
 load("//wpilibj:generate.bzl", "generate_wpilibj")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
 
 py_binary(
     name = "generate_hids",

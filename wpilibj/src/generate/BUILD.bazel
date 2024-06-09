@@ -9,7 +9,10 @@ generate_version_file(
 
 filegroup(
     name = "hid_schema",
-    srcs = ["hids.json", "hids.schema.json"],
+    srcs = [
+        "hids.json",
+        "hids.schema.json",
+    ],
     visibility = ["//visibility:public"],
 )
 

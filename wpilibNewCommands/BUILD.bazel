@@ -1,7 +1,8 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("//wpilibNewCommands:generate.bzl", "generate_wpilib_new_commands")
+load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+load("//wpilibNewCommands:generate.bzl", "generate_wpilib_new_commands")
 
 py_binary(
     name = "generate_hids",
@@ -23,7 +24,6 @@ write_source_files(
     suggested_update_target = "//:write_all",
     visibility = ["//visibility:public"],
 )
-
 
 wpilib_cc_library(
     name = "generated_cc_headers",

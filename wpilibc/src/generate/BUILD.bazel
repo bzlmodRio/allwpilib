@@ -8,6 +8,7 @@ generate_version_file(
 )
 
 print(glob(["main/native/**"]))
+
 filegroup(
     name = "templates",
     srcs = glob(["main/native/**"]) + [

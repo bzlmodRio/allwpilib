@@ -78,9 +78,7 @@ def main():
 
     # C++ simulation headers
     env = Environment(
-        loader=FileSystemLoader(
-            f"{template_root}/main/native/include/frc/simulation"
-        ),
+        loader=FileSystemLoader(f"{template_root}/main/native/include/frc/simulation"),
         autoescape=False,
         keep_trailing_newline=True,
     )

@@ -5,11 +5,11 @@ wpilib_cc_static_and_shared_library(
     srcs = glob(["cpp/**"]) + ["//wpilibNewCommands:generated_cc_source"],
     hdrs = glob(["include/**"]),
     includes = ["include"],
-    strip_include_prefix = "include",
-    visibility = ["//visibility:public"],
     standard_deps = [
         "//wpilibNewCommands:generated_cc_headers",
     ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         "//wpilibc/src/main/native:wpilibc",
     ],

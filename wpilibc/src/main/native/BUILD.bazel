@@ -9,11 +9,11 @@ wpilib_cc_static_and_shared_library(
         "cpp/**",
     ]) + ["//wpilibc:generated_cc_source"],
     hdrs = glob(["include/**"]),
-    strip_include_prefix = "include",
-    visibility = ["//visibility:public"],
     standard_deps = [
         "//wpilibc:generated_cc_headers",
     ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         "//wpimath/src/main/native:wpimath",
         "//hal/src/main/native:wpiHal",

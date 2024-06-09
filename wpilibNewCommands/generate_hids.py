@@ -59,9 +59,7 @@ def main():
         autoescape=False,
         keep_trailing_newline=True,
     )
-    rootPath = (
-        f"{generation_root}/main/java/edu/wpi/first/wpilibj2/command/button"
-    )
+    rootPath = f"{generation_root}/main/java/edu/wpi/first/wpilibj2/command/button"
     template = env.get_template("commandhid.java.jinja")
     for controller in controllers:
         controllerName = os.path.basename(
@@ -89,9 +87,7 @@ def main():
 
     # C++ files
     env = Environment(
-        loader=FileSystemLoader(
-            f"{template_root}/main/native/cpp/frc2/command/button"
-        ),
+        loader=FileSystemLoader(f"{template_root}/main/native/cpp/frc2/command/button"),
         autoescape=False,
     )
     rootPath = f"{generation_root}/main/native/cpp/frc2/command/button"
