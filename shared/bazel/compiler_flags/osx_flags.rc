@@ -41,4 +41,4 @@ build:osx --linkopt=-headerpad_max_install_names
 build:osx --linkopt=-Wl,-rpath,'@loader_path'"
 
 # Things not in nativetools
-# build:osx --copt=-Wno-shorten-64-to-32
+build:osx --copt=-Wno-shorten-64-to-32
