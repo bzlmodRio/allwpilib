@@ -1,0 +1,43 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("//wpilibc:generate.bzl", "generate_wpilibc")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+
+py_binary(
+    name = "generate_hids",
+    srcs = ["generate_hids.py"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [requirement("jinja2")],
+)
+
+generate_wpilibc(
+    name = "generate_wpilibc",
+)
+
+write_source_files(
+    name = "write_wpilibc",
+    files = {
+        "src/generated": ":generate_wpilibc",
+    },
+    suggested_update_target = "//:write_all",
+    visibility = ["//visibility:public"],
+)
+
+
+wpilib_cc_library(
+    name = "generated_cc_headers",
+    hdrs = glob(["src/generated/main/native/include/**"]),
+    includes = ["src/generated/main/native/include"],
+    strip_include_prefix = "src/generated/main/native/include",
+    visibility = ["//wpilibc:__subpackages__"],
+)
+
+filegroup(
+    name = "generated_cc_source",
+    srcs = glob(
+        ["src/generated/main/native/cpp/**"],
+        exclude = ["src/generated/main/native/cpp/jni/**"],
+    ),
+    visibility = ["//wpilibc:__subpackages__"],
+)

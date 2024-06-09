@@ -5,20 +5,22 @@
 # the WPILib BSD license file in the root directory of this project.
 import json
 import os
+import argparse
 
 from jinja2 import Environment, FileSystemLoader
 
 
-def write_controller_file(outPath, controllerName, contents):
+def write_controller_file(outPath, controllerName, contents, always_write):
     if not os.path.exists(outPath):
         os.makedirs(outPath)
 
     outpathname = f"{outPath}/{controllerName}"
 
-    if os.path.exists(outpathname):
-        with open(outpathname, "r") as f:
-            if f.read() == contents:
-                return
+    if not always_write:
+        if os.path.exists(outpathname):
+            with open(outpathname, "r") as f:
+                if f.read() == contents:
+                    return
 
     # File either doesn't exist or has different contents
     with open(outpathname, "w", newline="\n") as f:
@@ -26,33 +28,50 @@ def write_controller_file(outPath, controllerName, contents):
 
 
 def main():
-    dirname, _ = os.path.split(os.path.abspath(__file__))
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--output_directory",
+        help="Optional. If set, will output the generated files to this directory, otherwise it will use a path relative to the script",
+    )
+    parser.add_argument(
+        "--always_write",
+        action="store_true",
+        help="If set, will always genenerate the files. Not recommended for use with gradle as it will cause cache misses",
+    )
+    args = parser.parse_args()
 
-    with open(f"{dirname}/src/generate/hids.json") as f:
+    if args.output_directory:
+        generation_root = args.output_directory
+        template_root = "wpilibj/src/generate"
+    else:
+        dirname, _ = os.path.split(os.path.abspath(__file__))
+        raise
+
+    with open(f"{template_root}/hids.json") as f:
         controllers = json.load(f)
 
     # Java files
     env = Environment(
-        loader=FileSystemLoader(f"{dirname}/src/generate/"),
+        loader=FileSystemLoader(f"{template_root}"),
         autoescape=False,
         keep_trailing_newline=True,
     )
-    rootPath = f"{dirname}/src/generated/main/java/edu/wpi/first/wpilibj"
+    rootPath = f"{generation_root}/main/java/edu/wpi/first/wpilibj"
     template = env.get_template("hid.java.jinja")
     for controller in controllers:
         controllerName = os.path.basename(f"{controller['ConsoleName']}Controller.java")
         output = template.render(controller)
-        write_controller_file(rootPath, controllerName, output)
+        write_controller_file(rootPath, controllerName, output, args.always_write)
 
     # Java simulation files
-    rootPath = f"{dirname}/src/generated/main/java/edu/wpi/first/wpilibj/simulation"
+    rootPath = f"{generation_root}/main/java/edu/wpi/first/wpilibj/simulation"
     template = env.get_template("hidsim.java.jinja")
     for controller in controllers:
         controllerName = os.path.basename(
             f"{controller['ConsoleName']}ControllerSim.java"
         )
         output = template.render(controller)
-        write_controller_file(rootPath, controllerName, output)
+        write_controller_file(rootPath, controllerName, output, args.always_write)
 
 
 if __name__ == "__main__":

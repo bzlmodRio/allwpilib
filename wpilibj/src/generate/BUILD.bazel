@@ -6,3 +6,15 @@ generate_version_file(
     template = "WPILibVersion.java.in",
     visibility = ["//visibility:public"],
 )
+
+filegroup(
+    name = "hid_schema",
+    srcs = ["hids.json", "hids.schema.json"],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "templates",
+    srcs = glob(["*.jinja"]) + [":hid_schema"],
+    visibility = ["//visibility:public"],
+)

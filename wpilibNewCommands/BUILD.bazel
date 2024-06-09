@@ -1,0 +1,46 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("//wpilibNewCommands:generate.bzl", "generate_wpilib_new_commands")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+
+py_binary(
+    name = "generate_hids",
+    srcs = ["generate_hids.py"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [requirement("jinja2")],
+)
+
+generate_wpilib_new_commands(
+    name = "generate_wpilib_new_commands",
+)
+
+write_source_files(
+    name = "write_wpilib_new_commands",
+    files = {
+        "src/generated": ":generate_wpilib_new_commands",
+    },
+    suggested_update_target = "//:write_all",
+    visibility = ["//visibility:public"],
+)
+
+
+wpilib_cc_library(
+    name = "generated_cc_headers",
+    hdrs = glob(["src/generated/main/native/include/**"]),
+    includes = ["src/generated/main/native/include"],
+    strip_include_prefix = "src/generated/main/native/include",
+    visibility = ["//wpilibNewCommands:__subpackages__"],
+)
+
+filegroup(
+    name = "generated_cc_source",
+    srcs = glob(["src/generated/main/native/cpp/**"]),
+    visibility = ["//wpilibNewCommands:__subpackages__"],
+)
+
+filegroup(
+    name = "generated_java",
+    srcs = glob(["src/generated/main/java/**/*.java"]),
+    visibility = ["//wpilibNewCommands:__subpackages__"],
+)
