@@ -45,7 +45,8 @@ def main():
         template_root = "wpilibj/src/generate"
     else:
         dirname, _ = os.path.split(os.path.abspath(__file__))
-        raise
+        generation_root = os.path.join(dirname, "src/generated")
+        template_root = os.path.join(dirname, "src/generate")
 
     with open(f"{template_root}/hids.json") as f:
         controllers = json.load(f)
