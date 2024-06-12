@@ -7,8 +7,11 @@ wpilib_cc_static_and_shared_library(
     ] + glob([
         "cppcs/**",
         "cpp/**",
-    ]),
+    ]) + ["//wpilibc:generated_cc_source"],
     hdrs = glob(["include/**"]),
+    standard_deps = [
+        "//wpilibc:generated_cc_headers",
+    ],
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [

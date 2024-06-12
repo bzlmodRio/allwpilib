@@ -6,3 +6,13 @@ generate_version_file(
     template = "WPILibVersion.cpp.in",
     visibility = ["//wpilibc:__subpackages__"],
 )
+
+print(glob(["main/native/**"]))
+
+filegroup(
+    name = "templates",
+    srcs = glob(["main/native/**"]) + [
+        "//wpilibj/src/generate:hid_schema",
+    ],
+    visibility = ["//wpilibc:__subpackages__"],
+)

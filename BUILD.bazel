@@ -37,7 +37,10 @@ write_source_files(
     additional_update_targets = [
         "//wpimath:write_wpimath",
         "//ntcore:write_ntcore",
+        "//wpilibc:write_wpilibc",
         "//wpilibcExamples:write_example_project_list",
+        "//wpilibj:write_wpilibj",
         "//wpilibjExamples:write_example_project_list",
+        "//wpilibNewCommands:write_wpilib_new_commands",
     ],
 )
