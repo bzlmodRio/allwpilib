@@ -3,6 +3,8 @@ def __generate_wpilibc_impl(ctx):
 
     args = ctx.actions.args()
     args.add("--output_directory", output_dir.path)
+    args.add("--schema_root", "wpilibj/src/generate")
+    args.add("--template_root", "wpilibc/src/generate")
 
     ctx.actions.run(
         inputs = ctx.attr._templates.files,
@@ -20,7 +22,7 @@ generate_wpilibc = rule(
             default = Label("//wpilibc/src/generate:templates"),
         ),
         "_tool": attr.label(
-            default = Label("//wpilibc:generate_hids"),
+            default = Label("//wpilibc:generate_wpilibc_py"),
             cfg = "exec",
             executable = True,
         ),

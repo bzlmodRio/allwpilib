@@ -7,12 +7,11 @@ generate_version_file(
     visibility = ["//wpilibc:__subpackages__"],
 )
 
-print(glob(["main/native/**"]))
-
 filegroup(
     name = "templates",
     srcs = glob(["main/native/**"]) + [
         "//wpilibj/src/generate:hid_schema",
+        "//wpilibj/src/generate:pwm_schema",
     ],
     visibility = ["//wpilibc:__subpackages__"],
 )

@@ -17,7 +17,18 @@ filegroup(
 )
 
 filegroup(
+    name = "pwm_schema",
+    srcs = [
+        "pwm_motor_controllers.json",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
     name = "templates",
-    srcs = glob(["*.jinja"]) + [":hid_schema"],
+    srcs = glob(["*.jinja"]) + [
+        ":hid_schema",
+        ":pwm_schema",
+    ],
     visibility = ["//visibility:public"],
 )
