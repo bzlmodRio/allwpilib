@@ -1,4 +1,4 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_test")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_test", "wpilib_cc_binary")
 
 wpilib_cc_library(
     name = "test-headers",
@@ -19,5 +19,14 @@ wpilib_cc_test(
         ":test-headers",
         "//wpilibc/src/main/native:wpilibc.static",
         "@gtest",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "wpilibc-c-test",
+    srcs = glob(["c/**"]),
+    deps = [
+        "//wpilibc/src/main/native:wpilibc.static",
+        "@gtest//:gtest_main",
     ],
 )

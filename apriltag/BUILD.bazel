@@ -1,0 +1,5 @@
+
+py_binary(
+    name = "convert_apriltag_layouts",
+    srcs = ["convert_apriltag_layouts.py"],
+)
