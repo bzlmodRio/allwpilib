@@ -42,7 +42,7 @@ jobs:
           architecture: x64
 
       - name: Install Dumpbin
-        uses: |
+        run: |
           # scripts/install-dumpbin.ps1
 
           # Install Chocolatey
