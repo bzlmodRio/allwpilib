@@ -33,7 +33,7 @@ py_binary(
     deps = [
         ":generate_numbers",
         ":generate_quickbuf",
-    ]
+    ],
 )
 
 generate_wpimath(
