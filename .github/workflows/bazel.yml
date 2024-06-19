@@ -58,10 +58,11 @@ jobs:
         shell: bash
 
       - name: Failure Debug
-        run: bazel test --config=ci ${{ matrix.config }} //wpiutil/src/test/java/edu/wpi/first/util:util-test || bazel run --config=ci ${{ matrix.config }} //wpiutil/src/test/java/edu/wpi/first/util:util-test    
+        run: bazel --output_user_root=C:\\bazelroot test --config=ci ${{ matrix.config }} //wpiutil/src/test/java/edu/wpi/first/util:util-test || bazel --output_user_root=C:\\bazelroot run --config=ci ${{ matrix.config }} //wpiutil/src/test/java/edu/wpi/first/util:util-test    
         if: ${{ failure() }}
 
       - name: Failure Debug
+        shell: cmd
         run: |
           dir /s bazel-bin\wpiutil\src\test\java\edu\wpi\first\util
           dumpbin bazel-bin\wpiutil\src\test\java\edu\wpi\first\util\util-test.exe.runfiles\__main__\wpiutil.dll
