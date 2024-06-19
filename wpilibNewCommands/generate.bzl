@@ -3,6 +3,7 @@ def __generate_wpilib_new_commands_impl(ctx):
 
     args = ctx.actions.args()
     args.add("--output_directory", output_dir.path)
+    args.add("--template_root", "wpilibNewCommands/src/generate")
 
     ctx.actions.run(
         inputs = ctx.attr._templates.files,
