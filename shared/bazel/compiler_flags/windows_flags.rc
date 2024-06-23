@@ -27,4 +27,5 @@ build:windows --conlyopt=/FS
 build:windows --conlyopt=/Zc:inline
 build:windows --conlyopt=/D_CRT_SECURE_NO_WARNINGS
 
-build:windows --linkopt=/IGNORE:4099
+# build:windows --linkopt=/IGNORE:4099
+build:windows --linkopt=/DEPENDENTLOADFLAG:0x1100

@@ -1,4 +1,5 @@
 import json
+import sys
 
 
 def load_foldernames(filename):
@@ -40,7 +41,11 @@ def main():
         "wpilibjExamples/src/main/java/edu/wpi/first/wpilibj/examples/examples.json"
     )
 
-    with open("wpilibjExamples/example_projects.bzl", "w") as f:
+    output_file = "wpilibjExamples/example_projects.bzl"
+    if len(sys.argv) == 2:
+        output_file = sys.argv[1]
+
+    with open(output_file, "w") as f:
         f.write(
             'EXAMPLES_FOLDERS = [\n    "' + '",\n    "'.join(examples) + '",\n]\n\n'
         )

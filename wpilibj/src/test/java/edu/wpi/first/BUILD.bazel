@@ -11,6 +11,7 @@ wpilib_java_junit5_test(
         "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
         "//wpilibj/src/test/resources",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
     ],
 )

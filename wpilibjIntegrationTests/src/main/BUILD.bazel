@@ -1,0 +1,19 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary")
+
+wpilib_java_binary(
+    name = "wpilibjIntegrationTests",
+    testonly = True,
+    srcs = glob(["java/**"]),
+    resources = glob(["resources/**"]),
+    deps = [
+        "//hal/src/main/java/edu/wpi/first/hal",
+        "//ntcore/src/main/java/edu/wpi/first/networktables",
+        "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:junit_junit",
+        "@maven//:org_apache_ant_ant",
+        "@maven//:org_apache_ant_ant_junit",
+        "@maven//:org_hamcrest_hamcrest_all",
+    ],
+)

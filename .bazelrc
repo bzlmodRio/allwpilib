@@ -1,6 +1,6 @@
 try-import %workspace%/user.bazelrc
 
-build --java_language_version=11
+build --java_language_version=17
 build --java_runtime_version=roboriojdk_17
 build --tool_java_language_version=11
 build --tool_java_runtime_version=remotejdk_11
@@ -26,10 +26,9 @@ build:no_example --test_tag_filters=-wpi-example --build_tag_filters=-wpi-exampl
 test:no_example --test_tag_filters=-wpi-example --build_tag_filters=-wpi-example
 
 
-build --lockfile_mode=update
-build --registry=https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/
+common --lockfile_mode=update
+common --registry=https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/
 
 build:ci --config=remote
 
-build --proto_toolchain_for_java=//:quickbuf_toolchain
 build --proto_toolchain_for_cc=//:proto_cc_toolchain

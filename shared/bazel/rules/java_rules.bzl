@@ -51,7 +51,7 @@ def wpilib_java_library(
         **kwargs
     )
 
-def wpilib_java_binary(name, deps = [], runtime_deps = [], data = [], tags = [], **kwargs):
+def wpilib_java_binary(name, deps = [], runtime_deps = [], data = [], tags = [], testonly = False, **kwargs):
     native_shared_libraries_symlink = name + ".symlink_native"
     _symlink_java_native_libraries(
         name = native_shared_libraries_symlink,
@@ -61,6 +61,7 @@ def wpilib_java_binary(name, deps = [], runtime_deps = [], data = [], tags = [],
             "//conditions:default": name + ".runfiles",
         }),
         tags = ["manual"],
+        testonly = testonly,
     )
 
     java_binary(
@@ -70,6 +71,7 @@ def wpilib_java_binary(name, deps = [], runtime_deps = [], data = [], tags = [],
         deps = deps,
         tags = tags + ["allwpilib-build-java"],
         runtime_deps = runtime_deps,
+        testonly = testonly,
         **kwargs
     )
 

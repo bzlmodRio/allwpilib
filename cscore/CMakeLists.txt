@@ -84,12 +84,11 @@ if(WITH_JAVA)
     find_package(Java REQUIRED)
     find_package(JNI REQUIRED)
     include(UseJava)
-    set(CMAKE_JAVA_COMPILE_FLAGS "-encoding" "UTF8" "-Xlint:unchecked")
 
     #find java files, copy them locally
 
     if("${OPENCV_JAVA_INSTALL_DIR}" STREQUAL "")
-        set(OPENCV_JAVA_INSTALL_DIR ${OpenCV_INSTALL_PATH}/share/OpenCV/java/)
+        set(OPENCV_JAVA_INSTALL_DIR ${OpenCV_INSTALL_PATH}/share/java/opencv4)
     endif()
 
     find_file(
@@ -99,6 +98,7 @@ if(WITH_JAVA)
             ${OPENCV_JAVA_INSTALL_DIR}
             ${OpenCV_INSTALL_PATH}/bin
             ${OpenCV_INSTALL_PATH}/share/java
+            ${OpenCV_INSTALL_PATH}/share/OpenCV/java
         NO_DEFAULT_PATH
     )
     find_file(
@@ -113,7 +113,10 @@ if(WITH_JAVA)
             ${OpenCV_INSTALL_PATH}/bin/Release
             ${OpenCV_INSTALL_PATH}/bin/Debug
             ${OpenCV_INSTALL_PATH}/lib
+            ${OpenCV_INSTALL_PATH}/lib/Release
+            ${OpenCV_INSTALL_PATH}/lib/Debug
             ${OpenCV_INSTALL_PATH}/lib/jni
+            ${OpenCV_INSTALL_PATH}/share/java/opencv4
         NO_DEFAULT_PATH
     )
 
@@ -129,6 +132,7 @@ if(WITH_JAVA)
         OUTPUT_NAME cscore
         GENERATE_NATIVE_HEADERS cscore_jni_headers
     )
+    set_property(TARGET cscore_jar PROPERTY FOLDER "java")
 
     install_jar(cscore_jar DESTINATION ${java_lib_dest})
     install_jar_exports(TARGETS cscore_jar FILE cscore_jar.cmake DESTINATION share/cscore)
@@ -142,6 +146,7 @@ if(WITH_JAVA)
                 ${cvFile}Loc
                 NAMES
                     ${cvFile}${OpenCV_VERSION_MAJOR}${OpenCV_VERSION_MINOR}${OpenCV_VERSION_PATCH}.dll
+                    ${cvFile}${OpenCV_VERSION_MAJOR}${OpenCV_VERSION_MINOR}${OpenCV_VERSION_PATCH}d.dll
                 PATHS
                     ${OPENCV_JAVA_INSTALL_DIR}
                     ${OpenCV_INSTALL_PATH}/bin

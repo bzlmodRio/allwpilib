@@ -1,4 +1,5 @@
 import json
+import sys
 
 
 def load_foldernames(filename):
@@ -34,7 +35,11 @@ def main():
     )
     tests = load_tests("wpilibcExamples/src/main/cpp/examples/examples.json")
 
-    with open("wpilibcExamples/example_projects.bzl", "w") as f:
+    output_file = "wpilibcExamples/example_projects.bzl"
+    if len(sys.argv) == 2:
+        output_file = sys.argv[1]
+
+    with open(output_file, "w") as f:
         f.write('EXAMPLE_FOLDERS = [\n    "' + '",\n    "'.join(examples) + '",\n]\n\n')
         f.write(
             'COMMANDS_V2_FOLDERS = [\n    "' + '",\n    "'.join(commands) + '",\n]\n\n'

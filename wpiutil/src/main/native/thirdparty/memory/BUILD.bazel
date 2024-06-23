@@ -3,7 +3,7 @@ load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
 wpilib_cc_library(
     name = "memory-headers",
     hdrs = glob([
-        "include/**/*.h",
+        "include/**/*.hpp",
     ]),
     includes = ["include"],
     strip_include_prefix = "include",

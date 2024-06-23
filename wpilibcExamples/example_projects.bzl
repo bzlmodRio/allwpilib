@@ -6,7 +6,6 @@ EXAMPLE_FOLDERS = [
     "ArmBot",
     "ArmBotOffboard",
     "ArmSimulation",
-    "AxisCameraSample",
     "CANPDP",
     "DMA",
     "DifferentialDriveBot",
@@ -33,6 +32,7 @@ EXAMPLE_FOLDERS = [
     "HatchbotInlined",
     "HatchbotTraditional",
     "HidRumble",
+    "HttpCamera",
     "I2CCommunication",
     "IntermediateVision",
     "MecanumBot",
@@ -94,6 +94,13 @@ TEMPLATES_FOLDERS = [
 ]
 
 TESTS_FOLDERS = [
-    "AddressableLED",
+    "ArmSimulation",
+    "DigitalCommunication",
+    "ElevatorSimulation",
+    "I2CCommunication",
+    # "MecanumControllerCommand",
+    "PotentiometerPID",
+    # "SwerveControllerCommand",
+    "UltrasonicPID",
     "UnitTest",
 ]

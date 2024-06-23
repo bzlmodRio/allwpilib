@@ -3,6 +3,7 @@ def __generate_wpimath_impl(ctx):
 
     args = ctx.actions.args()
     args.add("--output_directory", output_dir.path)
+    args.add("--quickbuf_plugin", "placeholder")
 
     ctx.actions.run(
         inputs = ctx.attr._templates.files,
@@ -20,7 +21,7 @@ generate_wpimath = rule(
             default = Label("//wpimath:templates"),
         ),
         "_tool": attr.label(
-            default = Label("//wpimath:generate_numbers"),
+            default = Label("//wpimath:generate_wpimath_py"),
             cfg = "exec",
             executable = True,
         ),

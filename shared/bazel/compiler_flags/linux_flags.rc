@@ -10,7 +10,7 @@ build:linux --cxxopt=-Wformat=2
 build:linux --cxxopt=-pedantic
 build:linux --cxxopt=-Wno-psabi
 build:linux --cxxopt=-Wno-unused-parameter
-build:linux --cxxopt=-Wno-error=deprecated-declarations
+# build:linux --cxxopt=-Wno-error=deprecated-declarations
 build:linux --cxxopt=-Wno-error=deprecated-enum-enum-conversion
 build:linux --cxxopt=-fPIC
 build:linux --cxxopt=-pthread
@@ -28,3 +28,4 @@ build:linux --linkopt=-rdynamic
 build:linux --linkopt=-pthread
 build:linux --linkopt=-ldl
 build:linux --linkopt=-latomic
+build:linux --linkopt=-Wl,-rpath,'$ORIGIN'
