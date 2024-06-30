@@ -1,0 +1,21 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary")
+
+wpilib_cc_binary(
+    name = "processstarter",
+    srcs = select({
+        "@bazel_tools//src/conditions:darwin": glob(["osx/**"]),
+        "@bazel_tools//src/conditions:windows": glob(["windows/**"]),
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": glob(["linux/**"]),
+    }),
+    linkopts = select({
+        "@bazel_tools//src/conditions:windows": ["-SUBSYSTEM:WINDOWS"],
+        "//conditions:default": [],
+    }),
+    # TODO support these other platforms
+    target_compatible_with = select({
+        "@bazel_tools//src/conditions:darwin": ["@platforms//:incompatible"],
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    deps = [],
+)

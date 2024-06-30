@@ -1,0 +1,16 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
+
+wpilib_cc_static_and_shared_library(
+    name = "wpilibNewCommands",
+    srcs = glob(["cpp/**"]) + ["//wpilibNewCommands:generated_cc_source"],
+    hdrs = glob(["include/**"]),
+    includes = ["include"],
+    standard_deps = [
+        "//wpilibNewCommands:generated_cc_headers",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpilibc/src/main/native:wpilibc",
+    ],
+)
