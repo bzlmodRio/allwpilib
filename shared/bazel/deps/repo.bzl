@@ -24,6 +24,8 @@ def load_third_party():
         maven.artifact("org.apache.ant", "ant", "1.10.12", testonly = True),
         maven.artifact("org.apache.ant", "ant-junit", "1.10.12", testonly = True),
         maven.artifact("org.mockito", "mockito-core", "4.1.0", testonly = True),
+        "com.google.auto.service:auto-service:1.1.1",
+        maven.artifact("com.google.testing.compile", "compile-testing", "0.21.0", testonly = True),
     ]
 
     maven_install(

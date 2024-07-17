@@ -104,7 +104,7 @@
   "moduleExtensions": {
     "//shared/bazel/deps:quickbuf_protoc.bzl%setup_quickbuf_protoc": {
       "general": {
-        "bzlTransitiveDigest": "fMKDSylIsf0zJhcI/VljbcjaDZ22Fjpc6o8Rh4FU5Ig=",
+        "bzlTransitiveDigest": "4mXqQXekVxN7aGmO7/Op+/5zF4epec8O0U7wsieDmj4=",
         "usagesDigest": "xdR8//ZNNxhiiMTip2/rlHFce34RWxL0pP37baxPen4=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -1941,7 +1941,7 @@
     "@@rules_jvm_external~//:extensions.bzl%maven": {
       "general": {
         "bzlTransitiveDigest": "Pq3YnJEflPAALx/UMykUnN3aA5bve0fNm/cuLvt/zvI=",
-        "usagesDigest": "BAMLMmJRUncI9Pg46D3vYI/zv6LrZdxJpfCnwgdNpOA=",
+        "usagesDigest": "TJimpP6e9lL53mniEwwzaKn0MZwhD51AHFgjtFg8YWQ=",
         "recordedFileInputs": {
           "@@rules_jvm_external~//rules_jvm_external_deps_install.json": "0bfbc915d9155df44d7a3b216e8f3c1fbcd110e358dd07637dc393583a5227e8"
         },
@@ -4768,6 +4768,8 @@
                 "{ \"group\": \"org.mockito\", \"artifact\": \"mockito-core\", \"version\": \"4.1.0\" }",
                 "{ \"group\": \"us.hebi.quickbuf\", \"artifact\": \"quickbuf-runtime\", \"version\": \"1.3.3\" }",
                 "{ \"group\": \"junit\", \"artifact\": \"junit\", \"version\": \"4.13.2\" }",
+                "{ \"group\": \"com.google.auto.service\", \"artifact\": \"auto-service\", \"version\": \"1.1.1\" }",
+                "{ \"group\": \"com.google.testing.compile\", \"artifact\": \"compile-testing\", \"version\": \"0.21.0\" }",
                 "{ \"group\": \"com.google.code.findbugs\", \"artifact\": \"jsr305\", \"version\": \"3.0.2\" }",
                 "{ \"group\": \"com.google.code.gson\", \"artifact\": \"gson\", \"version\": \"2.8.9\" }",
                 "{ \"group\": \"com.google.errorprone\", \"artifact\": \"error_prone_annotations\", \"version\": \"2.3.2\" }",

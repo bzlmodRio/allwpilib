@@ -7,6 +7,9 @@ def build_examples(halsim_deps):
             name = folder + "-example",
             srcs = native.glob(["src/main/java/edu/wpi/first/wpilibj/examples/" + folder + "/**/*.java"]),
             main_class = "edu/wpi/first/wpilibj/examples/" + folder + "/Main",
+            plugins = [
+                "//epilogue-processor/src/main/java/edu/wpi/first/epilogue/processor:plugin",
+            ],
             deps = [
                 "//apriltag/src/main/java/edu/wpi/first/apriltag",
                 "//cameraserver/src/main/java/edu/wpi/first:cameraserver",
@@ -20,6 +23,7 @@ def build_examples(halsim_deps):
                 "//romiVendordep/src/main/java/edu/wpi/first/wpilibj/romi",
                 "//xrpVendordep/src/main/java/edu/wpi/first/wpilibj/xrp",
                 "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+                "//epilogue-runtime/src/main/java/edu/wpi/first/epilogue",
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
             tags = ["wpi-example"],
@@ -70,5 +74,6 @@ def build_tests():
                 "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
                 "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
             ],
+            flaky = True,
             tags = ["wpi-example"],
         )
