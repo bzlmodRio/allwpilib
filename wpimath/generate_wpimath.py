@@ -2,7 +2,6 @@ import sys
 import argparse
 from pathlib import Path
 from wpimath.generate_numbers import generate_numbers
-from wpimath.generate_quickbuf import generate_quickbuf
 
 
 def main(argv):

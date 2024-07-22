@@ -9,6 +9,6 @@ wpilib_cc_test(
     ],
     deps = [
         "//apriltag/src/main/native:apriltag.shared",
-        "@gtest",
+        "//thirdparty/googletest",
     ],
 )

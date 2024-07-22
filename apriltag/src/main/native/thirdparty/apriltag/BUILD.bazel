@@ -1,0 +1,34 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+
+wpilib_cc_library(
+    name = "apriltag",
+    srcs = glob(["src/**"]),
+    hdrs = glob(["include/**"]),
+    copts = select({
+        "@bazel_tools//src/conditions:darwin": [
+            "-Wno-format-nonliteral",
+            "-Wno-gnu-zero-variadic-macro-arguments",
+            "-Wno-uninitialized",
+            "-Wno-sign-compare",
+            "-Wno-type-limits",
+        ],
+        "@bazel_tools//src/conditions:windows": [
+            "/wd2220",
+            "/wd4005",
+            "/wd4018",
+            "/wd4244",
+            "/wd4267",
+            "/wd4996",
+        ],
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": [
+            "-Wno-format-nonliteral",
+            "-Wno-gnu-zero-variadic-macro-arguments",
+            "-Wno-maybe-uninitialized",
+            "-Wno-sign-compare",
+            "-Wno-type-limits",
+        ],
+    }),
+    includes = ["include/common"],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+)

@@ -67,8 +67,8 @@ load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_depen
 
 download_dependencies(
     allwpilib_version = None,
-    apriltaglib_version = "3.3.0-1",
-    imgui_version = "2024.1.89.9-1",
+    apriltaglib_version = None,
+    imgui_version = None,
     libssh_version = "2024.0.105-1",
     local_monorepo_base = "../bzlmodRio/monorepo",
     navx_version = None,

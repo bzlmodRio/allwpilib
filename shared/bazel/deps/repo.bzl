@@ -2,11 +2,8 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 load("@rules_jvm_external//:specs.bzl", "maven")
 load("@rules_python//python:pip.bzl", "pip_parse")
 load("//shared/bazel/deps:quickbuf_protoc.bzl", "setup_non_bzlmod_quickbuf_protoc")
-load("//shared/bazel/deps/gtest:repo.bzl", "third_party_gtest")
 
 def load_third_party():
-    third_party_gtest()
-
     # Last compared to gradle on 10/15/22
     maven_artifacts = [
         "org.ejml:ejml-simple:0.43.1",

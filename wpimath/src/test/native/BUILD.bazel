@@ -21,7 +21,7 @@ wpilib_cc_test(
     ],
     deps = [
         ":test_headers",
+        "//thirdparty/googletest",
         "//wpimath/src/main/native:wpimath.static",
-        "@gtest",
     ],
 )

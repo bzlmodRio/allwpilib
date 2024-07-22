@@ -9,6 +9,6 @@ wpilib_cc_test(
     ],
     deps = [
         "//sysid/src/main/native:sysid-lib",
-        "@gtest",
+        "//thirdparty/googletest",
     ],
 )

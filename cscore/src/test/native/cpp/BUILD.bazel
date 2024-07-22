@@ -9,6 +9,6 @@ wpilib_cc_test(
     ]),
     deps = [
         "//cscore/src/main/native:cscore.static",
-        "@gtest",
+        "//thirdparty/googletest",
     ],
 )

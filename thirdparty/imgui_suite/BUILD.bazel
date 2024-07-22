@@ -1,0 +1,38 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "gl3w",
+    srcs = ["generated/gl3w/src/gl3w.c"],
+    hdrs = [
+        "generated/gl3w/include/GL/gl3w.h",
+        "generated/gl3w/include/GL/glcorearb.h",
+        "generated/gl3w/include/KHR/khrplatform.h",
+    ],
+    includes = [
+        "generated/gl3w/include",
+    ],
+    strip_include_prefix = "generated/gl3w/include",
+)
+
+cc_library(
+    name = "fonts",
+    srcs = glob(["generated/fonts/src/**"]),
+    hdrs = glob(["generated/fonts/include/**"]),
+    includes = ["generated/fonts/include"],
+    deps = [
+        "//thirdparty/imgui_suite/imgui",
+    ],
+)
+
+cc_library(
+    name = "imgui_suite",
+    linkstatic = True,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":fonts",
+        ":gl3w",
+        "//thirdparty/imgui_suite/imgui",
+        "//thirdparty/imgui_suite/implot",
+        "//thirdparty/imgui_suite/stb",
+    ],
+)

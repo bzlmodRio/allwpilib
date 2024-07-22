@@ -87,6 +87,7 @@ def wpilib_cc_static_and_shared_library(
         includes = [],
         features = [],
         defines = [],
+        copts = [],
         standard_deps = [],
         wpi_maybe_shared_deps = [],
         visibility = None,
@@ -112,6 +113,7 @@ def wpilib_cc_static_and_shared_library(
         srcs = [name + ".sources"],
         includes = includes,
         defines = defines,
+        copts = copts,
         deps = static_deps + [":" + headers_name],
         visibility = visibility,
     )
@@ -126,6 +128,7 @@ def wpilib_cc_static_and_shared_library(
         srcs = [name + ".sources"],
         deps = shared_deps,
         defines = defines,
+        copts = copts,
         visibility = visibility,
         features = shared_features,
         includes = includes,

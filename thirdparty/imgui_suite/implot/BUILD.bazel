@@ -1,0 +1,14 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+
+wpilib_cc_library(
+    name = "implot",
+    srcs = glob(["cpp/**"]),
+    hdrs = glob(["include/**"]),
+    includes = ["include"],
+    linkstatic = True,
+    strip_include_prefix = "include",
+    visibility = ["//thirdparty/imgui_suite:__subpackages__"],
+    deps = [
+        "//thirdparty/imgui_suite/imgui",
+    ],
+)

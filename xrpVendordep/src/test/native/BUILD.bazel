@@ -5,6 +5,6 @@ wpilib_cc_test(
     size = "small",
     srcs = glob(["cpp/**"]),
     deps = [
-        "@gtest",
+        "//thirdparty/googletest",
     ],
 )

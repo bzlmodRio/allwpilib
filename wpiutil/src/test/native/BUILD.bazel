@@ -15,7 +15,7 @@ wpilib_cc_test(
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
     deps = [
         ":wpiutil-testlib",
+        "//thirdparty/googletest",
         "//wpiutil/src/main/native:wpiutil.static",
-        "@gtest",
     ],
 )

@@ -14,7 +14,7 @@ wpilib_cc_test(
     ],
     deps = [
         "//ntcore/src/main/native:ntcore.static",
+        "//thirdparty/googletest",
         "//wpiutil/src/test/native:wpiutil-testlib",
-        "@gtest",
     ],
 )

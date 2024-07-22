@@ -17,16 +17,19 @@ wpilib_cc_test(
     ],
     deps = [
         ":test-headers",
+        "//thirdparty/googletest",
         "//wpilibc/src/main/native:wpilibc.static",
-        "@gtest",
     ],
 )
 
 wpilib_cc_binary(
     name = "wpilibc-c-test",
-    srcs = glob(["c/**"]),
+    srcs = glob([
+        "c/**",
+        "cpp/main.cpp",
+    ]),
     deps = [
+        "//thirdparty/googletest",
         "//wpilibc/src/main/native:wpilibc.static",
-        "@gtest//:gtest_main",
     ],
 )

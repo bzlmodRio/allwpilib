@@ -19,7 +19,7 @@ wpilib_cc_binary(
     deps = [
         ":test_headers",
         "//hal/src/main/native:wpiHal.shared",
+        "//thirdparty/googletest",
         "//wpinet/src/main/native:wpinet.shared",
-        "@gtest",
     ],
 )

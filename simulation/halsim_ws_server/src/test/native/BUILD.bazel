@@ -18,6 +18,6 @@ wpilib_cc_test(
     deps = [
         ":test_headers",
         "//simulation/halsim_ws_server/src/main/native:halsim_ws_server.shared",
-        "@gtest",
+        "//thirdparty/googletest",
     ],
 )

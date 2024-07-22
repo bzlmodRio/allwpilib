@@ -18,7 +18,7 @@ wpilib_objc_library(
     srcs = MAC_SRCS,
     deps = [
         ":headers",
-        "@bzlmodrio-imgui//libraries/cpp/imgui",
+        "//thirdparty/imgui_suite",
     ],
 )
 
@@ -38,7 +38,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "@bzlmodrio-imgui//libraries/cpp/imgui",
+        "//thirdparty/imgui_suite",
     ] + select({
         "@bazel_tools//src/conditions:darwin": [":wpigui-mac"],
         "//conditions:default": [],

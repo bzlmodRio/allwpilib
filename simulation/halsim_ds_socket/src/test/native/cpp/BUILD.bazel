@@ -10,6 +10,6 @@ wpilib_cc_test(
     tags = ["no-roborio"],
     deps = [
         "//simulation/halsim_ds_socket/src/main/native:halsim_ds_socket.shared",
-        "@gtest",
+        "//thirdparty/googletest",
     ],
 )

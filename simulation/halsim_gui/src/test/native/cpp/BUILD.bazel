@@ -15,6 +15,6 @@ wpilib_cc_test(
     ],
     deps = [
         "//simulation/halsim_gui/src/main/native:halsim_gui.shared",
-        "@gtest",
+        "//thirdparty/googletest",
     ],
 )
