@@ -10,5 +10,6 @@ wpilib_java_junit5_test(
         "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
         "@maven//:org_ejml_ejml_core",
         "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
