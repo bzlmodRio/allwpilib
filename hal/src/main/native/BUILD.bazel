@@ -44,6 +44,10 @@ wpilib_cc_static_and_shared_library(
         exclude = ["cpp/jni/**"],
     ),
     hdrs = glob(["include/**/*"]),
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/U_WIN32_WINNT"],
+        "//conditions:default": [],
+    }),
     includes = ["include"],
     standard_deps = ["//hal:generated_cc_headers"] + HAL_DEPS,
     strip_include_prefix = "include",

@@ -30,5 +30,6 @@ common --lockfile_mode=update
 common --registry=https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/
 
 build:ci --config=remote
+build:ci --remote_download_minimal
 
 build --proto_toolchain_for_cc=//:proto_cc_toolchain
