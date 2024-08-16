@@ -78,7 +78,6 @@ COMMANDS_V2_FOLDERS = [
     "profiledpidsubsystem",
     "sequentialcommandgroup",
     "subsystem2",
-    "trapezoidprofilecommand",
     "trapezoidprofilesubsystem",
 ]
 
