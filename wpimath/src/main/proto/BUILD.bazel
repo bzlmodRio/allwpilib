@@ -1,15 +1,76 @@
 load("@rules_cc//cc:defs.bzl", "cc_proto_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
-proto_library(
-    name = "proto_files",
+
+cmd = "$(locations //protoplugin:bazel_wrapper) $(SRCS)"
+genrule(
+    name = "generate_proto",
     srcs = glob(["*.proto"]),
-    strip_import_prefix = "",
-    visibility = ["//visibility:public"],
+    tools = ["//protoplugin:bazel_wrapper", "//protoplugin/src/main/java/org/wpilib:protoplugin"],
+    outs = [
+        "temp_proto/controller.pb.cc",
+        "temp_proto/controller.pb.h",
+        "temp_proto/geometry2d.pb.cc",
+        "temp_proto/geometry2d.pb.h",
+        "temp_proto/geometry3d.pb.cc",
+        "temp_proto/geometry3d.pb.h",
+        "temp_proto/kinematics.pb.cc",
+        "temp_proto/kinematics.pb.h",
+        "temp_proto/plant.pb.cc",
+        "temp_proto/plant.pb.h",
+        "temp_proto/spline.pb.cc",
+        "temp_proto/spline.pb.h",
+        "temp_proto/system.pb.cc",
+        "temp_proto/system.pb.h",
+        "temp_proto/trajectory.pb.cc",
+        "temp_proto/trajectory.pb.h",
+        "temp_proto/wpimath.pb.cc",
+        "temp_proto/wpimath.pb.h",
+    ],
+    cmd = cmd,
+    visibility = ["//visibility:public"]
 )
 
-cc_proto_library(
+cc_library(
     name = "cc_proto",
+    srcs = [
+        "temp_proto/controller.pb.cc",
+        "temp_proto/geometry2d.pb.cc",
+        "temp_proto/geometry3d.pb.cc",
+        "temp_proto/kinematics.pb.cc",
+        "temp_proto/plant.pb.cc",
+        "temp_proto/spline.pb.cc",
+        "temp_proto/system.pb.cc",
+        "temp_proto/trajectory.pb.cc",
+        "temp_proto/wpimath.pb.cc",
+    ],
+    hdrs = [
+        "temp_proto/controller.pb.h",
+        "temp_proto/geometry2d.pb.h",
+        "temp_proto/geometry3d.pb.h",
+        "temp_proto/kinematics.pb.h",
+        "temp_proto/plant.pb.h",
+        "temp_proto/spline.pb.h",
+        "temp_proto/system.pb.h",
+        "temp_proto/trajectory.pb.h",
+        "temp_proto/wpimath.pb.h",
+    ],
+    includes = ["temp_proto"],
     visibility = ["//visibility:public"],
-    deps = [":proto_files"],
+    deps = [
+        "//wpiutil/src/main/native:wpiutil.static",
+    ]
 )
+
+# proto_library(
+#     name = "proto_files",
+#     srcs = glob(["*.proto"]),
+#     strip_import_prefix = "",
+#     visibility = ["//visibility:public"],
+# )
+# 
+# cc_proto_library(
+#     name = "cc_proto",
+#     visibility = ["//visibility:public"],
+#     deps = [":proto_files"],
+# )

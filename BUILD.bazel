@@ -25,12 +25,15 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-proto_lang_toolchain(
-    name = "proto_cc_toolchain",
-    command_line = "--cpp_out=$(OUT)",
-    runtime = "//wpiutil/src/main/native:wpiutil.static",
-    visibility = ["//visibility:public"],
-)
+# proto_lang_toolchain(
+#     name = "proto_cc_toolchain",
+#     plugin = "//protoplugin",
+#     plugin_format_flag = "--plugin=protoc-gen-wpilib=%s",
+#     command_line = "--wpilib_out=$(OUT)",
+#     #command_line = "--cpp_out=$(OUT)",
+#     runtime = "//wpiutil/src/main/native:wpiutil.static",
+#     visibility = ["//visibility:public"],
+# )
 
 write_source_files(
     name = "write_all",

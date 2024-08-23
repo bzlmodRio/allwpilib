@@ -1,0 +1,30 @@
+
+# java_import(
+#     name = "wpiprotoplugin",
+#     jars = ["wpiprotoplugin.jar"],
+# )
+# 
+# java_binary(
+#     name = "binary",
+#     runtime_deps = [":wpiprotoplugin"],
+#     main_class = "org.wpilib.ProtoCDllGenerator",
+#     visibility = ["//visibility:public"],
+# )
+
+alias(
+    name = "protoplugin",
+    actual = "//protoplugin/src/main/java/org/wpilib:protoplugin",
+    visibility = ["//visibility:public"],
+)
+
+sh_binary(
+    name = "bazel_wrapper",
+    srcs = ["bazel_wrapper.sh"],
+    data = [
+        ":protoplugin",
+        "@com_google_protobuf//:protoc",
+    ],
+    
+    deps = ["@bazel_tools//tools/bash/runfiles"],
+    visibility = ["//visibility:public"],
+)
