@@ -22,9 +22,7 @@ def main():
     cmd.append(protoc)
     cmd.append(f"--cpp_out={output_directory}")
     cmd.append(f"-Iwpimath/src/main/proto")
-    cmd.append(
-        f"--wpilib_out=bazel-out/k8-fastbuild/bin/wpimath/src/main/proto/temp_proto"
-    )
+    cmd.append(f"--wpilib_out={output_directory}")
     cmd.append(f"--plugin=protoc-gen-wpilib={plugin}")
     cmd.extend(args.proto_files)
 
