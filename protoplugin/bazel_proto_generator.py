@@ -13,10 +13,19 @@ def main():
     assert len(args.proto_files) * 2 == len(args.output_files)
 
     r = Runfiles.Create()
-    protoc = r.Rlocation("com_google_protobuf/protoc")
-    plugin = r.Rlocation("__main__/protoplugin/src/main/java/org/wpilib/protoplugin")
+    if os.name == 'nt':
+        protoc = r.Rlocation("com_google_protobuf/protoc.exe")
+        plugin = r.Rlocation("__main__/protoplugin/src/main/java/org/wpilib/protoplugin.exe")
+    else:
+        protoc = r.Rlocation("com_google_protobuf/protoc")
+        plugin = r.Rlocation("__main__/protoplugin/src/main/java/org/wpilib/protoplugin")
+
 
     output_directory = os.path.dirname(args.output_files[0])
+
+    print(protoc)
+    print(plugin)
+    print(output_directory)
 
     cmd = []
     cmd.append(protoc)

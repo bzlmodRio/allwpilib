@@ -34,5 +34,3 @@ build:ci --remote_download_minimal
 
 build --proto_toolchain_for_cc=//:proto_cc_toolchain
 
-build:linux --per_file_copt=external/com_google_protobuf/...@-Wno-missing-field-initializers,-Wno-deprecated-enum-enum-conversion
-build:macos --per_file_copt=external/com_google_protobuf/...@-Wno-deprecated-non-prototype
