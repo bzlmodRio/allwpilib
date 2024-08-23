@@ -22,6 +22,10 @@ def main():
 
     output_directory = os.path.dirname(args.output_files[0])
 
+    print(protoc)
+    print(plugin)
+    print(output_directory)
+
     cmd = []
     cmd.append(protoc)
     cmd.append(f"--cpp_out={output_directory}")

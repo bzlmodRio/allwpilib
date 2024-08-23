@@ -42,3 +42,6 @@ build:osx --linkopt=-Wl,-rpath,'@loader_path'"
 
 # Things not in nativetools
 build:osx --copt=-Wno-shorten-64-to-32
+
+# Turn off warnings for protobuf related things when we build the compiler
+build:osx --per_file_copt=external/zlib/...@-Wno-deprecated-non-prototype
