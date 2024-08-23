@@ -2,11 +2,11 @@ load("@rules_cc//cc:defs.bzl", "cc_proto_library")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 
 
-cmd = "$(locations //protoplugin:bazel_wrapper) $(SRCS)"
+cmd = "$(locations //protoplugin:bazel_proto_generator) --proto_files $(SRCS) --output_files $(OUTS)"
 genrule(
     name = "generate_proto",
     srcs = glob(["*.proto"]),
-    tools = ["//protoplugin:bazel_wrapper", "//protoplugin/src/main/java/org/wpilib:protoplugin"],
+    tools = ["//protoplugin:bazel_proto_generator", "//protoplugin/src/main/java/org/wpilib:protoplugin"],
     outs = [
         "temp_proto/controller.pb.cc",
         "temp_proto/controller.pb.h",
@@ -68,7 +68,7 @@ cc_library(
 #     strip_import_prefix = "",
 #     visibility = ["//visibility:public"],
 # )
-# 
+#
 # cc_proto_library(
 #     name = "cc_proto",
 #     visibility = ["//visibility:public"],

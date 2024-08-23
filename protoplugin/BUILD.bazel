@@ -17,14 +17,13 @@ alias(
     visibility = ["//visibility:public"],
 )
 
-sh_binary(
-    name = "bazel_wrapper",
-    srcs = ["bazel_wrapper.sh"],
+py_binary(
+    name = "bazel_proto_generator",
+    srcs = ["bazel_proto_generator.py"],
     data = [
         ":protoplugin",
         "@com_google_protobuf//:protoc",
     ],
-    
-    deps = ["@bazel_tools//tools/bash/runfiles"],
+    deps = ["@rules_python//python/runfiles"],
     visibility = ["//visibility:public"],
 )
