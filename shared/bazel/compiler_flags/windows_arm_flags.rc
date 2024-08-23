@@ -29,3 +29,6 @@ build:windows_arm --conlyopt=/Zc:inline
 build:windows_arm --conlyopt=/D_CRT_SECURE_NO_WARNINGS
 
 build:windows_arm --linkopt=/IGNORE:4099
+
+# TODO there is a "bug" in bazel that forces "/D_WIN32_WINNT=0x0601". Remove it from the files that break because of this.
+build:windows_arm --per_file_copt=wpiutil/src/main/native/cpp/timestamp.cpp,wpinet/src/main/native/thirdparty/libuv/src/win/util.cpp,hal/src/main/native/sim/HAL.cpp@/U_WIN32_WINNT

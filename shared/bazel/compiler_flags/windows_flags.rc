@@ -31,3 +31,6 @@ build:windows --linkopt=/DEPENDENTLOADFLAG:0x1100
 
 # TODO
 build:windows --copt=/D_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR
+
+# TODO there is a "bug" in bazel that forces "/D_WIN32_WINNT=0x0601". Remove it from the files that break because of this.
+build:windows --per_file_copt=wpiutil/src/main/native/cpp/timestamp.cpp,wpinet/src/main/native/thirdparty/libuv/src/win/util.cpp,hal/src/main/native/sim/HAL.cpp@/U_WIN32_WINNT

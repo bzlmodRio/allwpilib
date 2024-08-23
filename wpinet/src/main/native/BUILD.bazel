@@ -36,10 +36,6 @@ wpilib_cc_static_and_shared_library(
         "//wpinet/src/main/native/thirdparty/tcpsockets:tcpsockets-srcs",
     ] + ["native-srcs"],
     hdrs = glob(["include/**/*"]),
-    copts = select({
-        "@bazel_tools//src/conditions:windows": ["/U_WIN32_WINNT"],
-        "//conditions:default": [],
-    }),
     includes = ["include"],
     standard_deps = [
         ":private_includes",

@@ -1,5 +1,4 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_proto//proto:defs.bzl", "proto_lang_toolchain")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 
 # bazel build //:requirements.lock
@@ -22,13 +21,6 @@ alias(
         "@bazel_tools//src/conditions:windows": "@quickbuffer_protoc_windows//file",
         "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": "@quickbuffer_protoc_linux//file",
     }),
-    visibility = ["//visibility:public"],
-)
-
-proto_lang_toolchain(
-    name = "proto_cc_toolchain",
-    command_line = "--cpp_out=$(OUT)",
-    runtime = "//wpiutil/src/main/native:wpiutil.static",
     visibility = ["//visibility:public"],
 )
 
