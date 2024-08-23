@@ -1,12 +1,10 @@
-load("@rules_cc//cc:defs.bzl", "cc_proto_library")
-load("@rules_proto//proto:defs.bzl", "proto_library")
-
+load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cmd = "$(locations //protoplugin:bazel_proto_generator) --proto_files $(SRCS) --output_files $(OUTS)"
+
 genrule(
     name = "generate_proto",
     srcs = glob(["*.proto"]),
-    tools = ["//protoplugin:bazel_proto_generator", "//protoplugin/src/main/java/org/wpilib:protoplugin"],
     outs = [
         "temp_proto/controller.pb.cc",
         "temp_proto/controller.pb.h",
@@ -28,7 +26,11 @@ genrule(
         "temp_proto/wpimath.pb.h",
     ],
     cmd = cmd,
-    visibility = ["//visibility:public"]
+    tools = [
+        "//protoplugin:bazel_proto_generator",
+        "//protoplugin/src/main/java/org/wpilib:protoplugin",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -59,7 +61,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//wpiutil/src/main/native:wpiutil.static",
-    ]
+    ],
 )
 
 # proto_library(

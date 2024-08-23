@@ -1,10 +1,11 @@
+load("@rules_java//java:defs.bzl", "java_binary")
 
 java_binary(
     name = "protoplugin",
     srcs = ["ProtoCDllGenerator.java"],
+    main_class = "org.wpilib.ProtoCDllGenerator",
     visibility = ["//visibility:public"],
     deps = [
         "@com_google_protobuf//:protobuf_java",
     ],
-    main_class = "org.wpilib.ProtoCDllGenerator",
 )

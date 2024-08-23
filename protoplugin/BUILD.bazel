@@ -1,15 +1,16 @@
-
 # java_import(
 #     name = "wpiprotoplugin",
 #     jars = ["wpiprotoplugin.jar"],
 # )
-# 
+#
 # java_binary(
 #     name = "binary",
 #     runtime_deps = [":wpiprotoplugin"],
 #     main_class = "org.wpilib.ProtoCDllGenerator",
 #     visibility = ["//visibility:public"],
 # )
+
+load("@rules_python//python:defs.bzl", "py_binary")
 
 alias(
     name = "protoplugin",
@@ -24,6 +25,6 @@ py_binary(
         ":protoplugin",
         "@com_google_protobuf//:protoc",
     ],
-    deps = ["@rules_python//python/runfiles"],
     visibility = ["//visibility:public"],
+    deps = ["@rules_python//python/runfiles"],
 )
