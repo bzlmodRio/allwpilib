@@ -9,6 +9,8 @@ FATAL: In-source builds are not allowed.
     )
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
     set(CMAKE_SYSTEM_VERSION 10.0.18362.0 CACHE STRING INTERNAL FORCE)
     set(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION 10.0.18362.0 CACHE STRING INTERNAL FORCE)
@@ -26,6 +28,7 @@ endif()
 
 set(WPILIB_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
+include(CMakeDependentOption)
 include(CPack)
 include(OptionValidation)
 
@@ -55,12 +58,18 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 # Options for building certain parts of the repo. Everything is built by default.
 option(BUILD_SHARED_LIBS "Build with shared libs (needed for JNI)" ON)
-option(WITH_JAVA "Include Java and JNI in the build" ON)
+option(WITH_JAVA "Include Java and JNI in the build" OFF)
 option(WITH_JAVA_SOURCE "Build Java source jars" ${WITH_JAVA})
 option(WITH_CSCORE "Build cscore (needs OpenCV)" ON)
 option(WITH_NTCORE "Build ntcore" ON)
 option(WITH_WPIMATH "Build wpimath" ON)
-option(WITH_WPIUNITS "Build wpiunits" ON)
+cmake_dependent_option(
+    WITH_WPIUNITS
+    "Build wpiunits"
+    ON
+    WITH_JAVA
+    OFF
+)
 option(WITH_WPILIB "Build hal, wpilibc/j, and developerRobot (needs OpenCV)" ON)
 option(WITH_EXAMPLES "Build examples" OFF)
 option(WITH_TESTS "Build unit tests (requires internet connection)" ON)
@@ -114,6 +123,9 @@ if(WITH_JAVA OR WITH_JAVA_SOURCE)
     set(CMAKE_JAVA_COMPILE_FLAGS "-encoding" "UTF8" "-Xlint:unchecked")
     find_package(Java REQUIRED COMPONENTS Development)
     find_package(JNI REQUIRED COMPONENTS JVM)
+else()
+    # Protoc requires the java runtime
+    find_package(Java REQUIRED COMPONENTS Runtime)
 endif()
 
 find_package(LIBSSH 0.7.1)
@@ -263,6 +275,8 @@ if(WITH_NTCORE)
     add_subdirectory(wpinet)
     add_subdirectory(ntcore)
 endif()
+
+add_subdirectory(protoplugin)
 
 if(WITH_WPIMATH)
     if(WITH_JAVA)
