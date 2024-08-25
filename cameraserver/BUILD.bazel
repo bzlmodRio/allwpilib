@@ -1,5 +1,21 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+
+cc_library(
+    name = "cameraserver.static",
+    srcs = glob(["src/main/native/cpp/**"]),
+    hdrs = glob(["src/main/native/include/**/*"]),
+    includes = [
+        "src/main/native/cpp",
+        "src/main/native/include",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//cscore:cscore.static",
+        "//ntcore:ntcore.static",
+    ],
+)
 
 java_library(
     name = "cameraserver-java",
@@ -16,6 +32,19 @@ java_library(
     ],
 )
 
+cc_test(
+    name = "cameraserver-cpp-test",
+    size = "small",
+    srcs = glob([
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
+    ]),
+    deps = [
+        ":cameraserver.static",
+        "//thirdparty/googletest",
+    ],
+)
+
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
@@ -28,6 +57,15 @@ java_binary(
     srcs = ["src/dev/java/edu/wpi/first/cameraserver/DevMain.java"],
     main_class = "edu.wpi.first.cameraserver.DevMain",
     deps = [
+    ],
+)
+
+cc_binary(
+    name = "multiCameraServer-cpp",
+    srcs = ["multiCameraServer/src/main/native/cpp/main.cpp"],
+    deps = [
+        ":cameraserver.static",
+        "//ntcore:ntcore.static",
     ],
 )
 

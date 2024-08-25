@@ -1,5 +1,37 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# Objective-C Rules
+http_archive(
+    name = "build_bazel_apple_support",
+    sha256 = "c4bb2b7367c484382300aee75be598b92f847896fb31bbd22f3a2346adf66a80",
+    url = "https://github.com/bazelbuild/apple_support/releases/download/1.15.1/apple_support.1.15.1.tar.gz",
+)
+
+load(
+    "@build_bazel_apple_support//lib:repositories.bzl",
+    "apple_support_dependencies",
+)
+
+apple_support_dependencies()
+
+# Rules Python
+http_archive(
+    name = "rules_python",
+    sha256 = "c68bdc4fbec25de5b5493b8819cfc877c4ea299c0dcb15c244c5a00208cde311",
+    strip_prefix = "rules_python-0.31.0",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.31.0/rules_python-0.31.0.tar.gz",
+)
+
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
+
+py_repositories()
+
+python_register_toolchains(
+    name = "python_3_11",
+    ignore_root_user_error = True,
+    python_version = "3.11",
+)
+
 # Download Extra java rules
 http_archive(
     name = "rules_jvm_external",
@@ -32,6 +64,20 @@ maven_install(
     ],
 )
 
+# Protobuf
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "f7042d540c969b00db92e8e1066a9b8099c8379c33f40f360eb9e1d98a36ca26",
+    strip_prefix = "protobuf-3.21.12",
+    urls = [
+        "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v3.21.12.zip",
+    ],
+)
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
 # Download toolchains
 http_archive(
     name = "rules_bzlmodrio_toolchains",
@@ -47,7 +93,6 @@ load("@rules_bzlmodrio_toolchains//toolchains:load_toolchains.bzl", "load_toolch
 
 load_toolchains()
 
-#
 http_archive(
     name = "rules_bzlmodrio_jdk",
     sha256 = "a00d5fa971fbcad8a17b1968cdc5350688397035e90b0cb94e040d375ecd97b4",
