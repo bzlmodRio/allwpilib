@@ -70,7 +70,7 @@ java_library(
         "//cscore:cscore-java",
         "//hal:hal-java",
         "//ntcore:networktables-java",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpimath:wpimath-java",
         "//wpinet:wpinet-java",
         "//wpiunits",
         "//wpiutil:wpiutil-java",
@@ -87,11 +87,10 @@ wpilib_java_junit5_test(
     resource_strip_prefix = "wpilibj/src/test/resources",
     resources = glob(["src/test/resources/**"]),
     deps = [
+        ":wpilibj",
         "//hal:hal-java",
         "//ntcore:networktables-java",
-        ":wpilibj",
-        # "//wpilibj/src/test/resources",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpimath:wpimath-java",
         "//wpiunits",
         "//wpiutil:wpiutil-java",
     ],
@@ -111,7 +110,7 @@ wpilib_java_binary(
     deps = [
         "//hal:hal-java",
         "//ntcore:networktables-java",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpimath:wpimath-java",
         "//wpiutil:wpiutil-java",
     ],
 )

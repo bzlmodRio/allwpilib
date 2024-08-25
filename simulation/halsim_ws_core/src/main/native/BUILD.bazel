@@ -13,8 +13,8 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//hal/src/main/native:wpiHal.shared",
-        "//wpinet/src/main/native:wpinet.shared",
-        "//wpiutil/src/main/native:wpiutil.shared",
+        "//hal:wpiHal.shared",
+        "//wpinet:wpinet.shared",
+        "//wpiutil:wpiutil.shared",
     ],
 )

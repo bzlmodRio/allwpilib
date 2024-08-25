@@ -8,8 +8,8 @@ wpilib_java_junit5_test(
     resources = ["//apriltag/src/test/resources"],
     deps = [
         "//apriltag/src/main/java/edu/wpi/first/apriltag",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//wpimath:wpimath-java",
+        "//wpiutil:wpiutil-java",
         "@bzlmodrio-opencv//libraries/java/opencv",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
     ],

@@ -16,7 +16,7 @@ wpilib_cc_shared_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//hal/src/main/native:wpiHal.shared",
-        "//wpinet/src/main/native:wpinet.shared",
+        "//hal:wpiHal.shared",
+        "//wpinet:wpinet.shared",
     ],
 )

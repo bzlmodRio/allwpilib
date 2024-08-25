@@ -5,8 +5,8 @@ wpilib_java_library(
     srcs = glob(["**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//ntcore:networktables-java",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
     ],
 )

@@ -5,8 +5,8 @@ wpilib_java_library(
     srcs = glob(["**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//hal/src/main/java/edu/wpi/first/hal",
-        "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//hal:hal-java",
+        "//wpilibj",
+        "//wpimath:wpimath-java",
     ],
 )

@@ -8,8 +8,8 @@ wpilib_java_jni_library(
     resources = ["//apriltag/src/main/native/resources:java-resources"],
     visibility = ["//visibility:public"],
     deps = [
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//wpimath:wpimath-java",
+        "//wpiutil:wpiutil-java",
         "@bzlmodrio-opencv//libraries/java/opencv",
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",
         "@maven//:com_fasterxml_jackson_core_jackson_core",

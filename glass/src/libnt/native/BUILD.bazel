@@ -12,6 +12,6 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//glass/src/lib/native:libglass",
-        "//ntcore/src/main/native:ntcore.shared",
+        "//ntcore:ntcore.shared",
     ],
 )

@@ -16,8 +16,8 @@ wpilib_cc_static_and_shared_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        "//wpiutil/src/main/native:wpiutil",
-        "//wpimath/src/main/native:wpimath",
+        "//wpiutil:wpiutil",
+        "//wpimath:wpimath",
     ],
 )
 
