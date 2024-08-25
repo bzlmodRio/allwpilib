@@ -62,8 +62,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: "Mac (native)",            os: macos-14,   action: "test",  config: "--config=osx -c opt --noenable_bzlmod",      }
-          - { name: "Mac (bzlmod)",            os: macos-14,   action: "test",  config: "--config=osx -c opt --enable_bzlmod" }
+          - { name: "Mac (native)",            os: macos-14,   action: "test",  config: "--config=macos -c opt --noenable_bzlmod",      }
+          - { name: "Mac (bzlmod)",            os: macos-14,   action: "test",  config: "--config=macos -c opt --enable_bzlmod" }
 
           - { name: "Mac (roborio)",           os: macos-14,   action: "build", config: "--config=roborio -c opt --noenable_bzlmod",      }
           - { name: "Mac (roborio bzlmod)",    os: macos-14,   action: "build", config: "--config=roborio -c opt --enable_bzlmod" }
