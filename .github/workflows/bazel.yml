@@ -41,14 +41,6 @@ jobs:
           java-version: 17
           architecture: x64
 
-      - name: Build wpimath dependencies
-        run: bazel --output_user_root=C:\\bazelroot build -k wpiutil/... wpimath/src/main/proto/... --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
-        shell: bash
-
-      - name: Build wpimath
-        run: bazel --output_user_root=C:\\bazelroot build -k wpimath/... --config=ci ${{ matrix.config }} --local_cpu_resources=1 --nojava_header_compilation --verbose_failures
-        shell: bash
-
       - name: Build allowing failures
         run: bazel --output_user_root=C:\\bazelroot build -k ...   --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
         shell: bash
