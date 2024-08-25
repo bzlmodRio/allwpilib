@@ -1,0 +1,6 @@
+load("//protoplugin:wpi_proto_library.bzl", "wpi_proto_library")
+
+wpi_proto_library(
+    name = "",
+    proto_files = glob(["*.proto"]),
+)

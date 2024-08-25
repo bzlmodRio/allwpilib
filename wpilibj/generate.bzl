@@ -18,7 +18,7 @@ generate_wpilibj = rule(
     implementation = __generate_wpilibj_impl,
     attrs = {
         "_templates": attr.label(
-            default = Label("//wpilibj/src/generate:templates"),
+            default = Label("//wpilibj:templates"),
         ),
         "_tool": attr.label(
             default = Label("//wpilibj:generate_wpilibj_py"),

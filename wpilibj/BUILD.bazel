@@ -47,27 +47,52 @@ write_source_files(
     visibility = ["//visibility:public"],
 )
 
+generate_version_file(
+    name = "generate-version",
+    output_file = "WPILibVersion.java",
+    template = "src/generate/WPILibVersion.java.in",
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//wpilibj:__subpackages__"],
 )
 
-wpilib_java_library(
+java_library(
     name = "wpilibj",
-    srcs = ["//wpilibj/src/generate:generate-version"] + glob(["src/main/java/**/*.java"]) + ["//wpilibj:generated_java"],
+    srcs = [":generate-version"] + glob(["src/main/java/**/*.java"]) + ["//wpilibj:generated_java"],
     visibility = ["//visibility:public"],
     deps = [
-        "//cameraserver/src/main/java/edu/wpi/first:cameraserver",
-        "//cscore/src/main/java/edu/wpi/first/cscore",
-        "//hal/src/main/java/edu/wpi/first/hal",
-        "//ntcore/src/main/java/edu/wpi/first/networktables",
+        "//cameraserver:cameraserver-java",
+        "//cscore:cscore-java",
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpinet/src/main/java/edu/wpi/first/net:wpinet",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//wpinet:wpinet-java",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
         "@maven//:org_ejml_ejml_core",
         "@maven//:org_ejml_ejml_simple",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "wpilibj-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    flaky = True,
+    resource_strip_prefix = "wpilibj/src/test/resources",
+    resources = glob(["src/test/resources/**"]),
+    deps = [
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
+        ":wpilibj",
+        # "//wpilibj/src/test/resources",
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpiunits:wpiunits",
+        "//wpiutil:wpiutil-java",
     ],
 )
 
@@ -81,26 +106,20 @@ wpilib_cc_binary(
 wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/wpilibj/DevMain.java"],
+    main_class = "edu.wpi.first.wpilibj.DevMain",
     deps = [
-        "//hal/src/main/java/edu/wpi/first/hal",
-        "//ntcore/src/main/java/edu/wpi/first/networktables",
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
         "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//wpiutil:wpiutil-java",
     ],
-)
-
-generate_version_file(
-    name = "generate-version",
-    output_file = "WPILibVersion.java",
-    template = "WPILibVersion.java.in",
-    visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "hid_schema",
     srcs = [
-        "hids.json",
-        "hids.schema.json",
+        "src/generate/hids.json",
+        "src/generate/hids.schema.json",
     ],
     visibility = ["//visibility:public"],
 )
@@ -108,39 +127,16 @@ filegroup(
 filegroup(
     name = "pwm_schema",
     srcs = [
-        "pwm_motor_controllers.json",
+        "src/generate/pwm_motor_controllers.json",
     ],
     visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "templates",
-    srcs = glob(["*.jinja"]) + [
+    srcs = glob(["src/generate/*.jinja"]) + [
         ":hid_schema",
         ":pwm_schema",
     ],
     visibility = ["//visibility:public"],
-)
-
-wpilib_java_junit5_test(
-    name = "wpilibj-test",
-    size = "small",
-    srcs = glob(["**/*.java"]),
-    flaky = True,
-    deps = [
-        "//hal/src/main/java/edu/wpi/first/hal",
-        "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
-        "//wpilibj/src/test/resources",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-    ],
-)
-
-wpilib_java_library(
-    name = "resources",
-    testonly = True,
-    resources = glob(["**"]),
-    visibility = ["//wpilibj/src/test:__subpackages__"],
 )

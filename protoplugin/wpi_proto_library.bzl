@@ -31,6 +31,6 @@ def wpi_proto_library(
         includes = ["generated_proto"],
         visibility = ["//visibility:public"],
         deps = [
-            "//wpiutil/src/main/native:wpiutil.static",
+            "//wpiutil:wpiutil.static",
         ],
     )
