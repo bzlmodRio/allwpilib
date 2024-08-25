@@ -1,7 +1,10 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//hal:generate.bzl", "generate_hal")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 
 filegroup(
     name = "templates",
@@ -41,4 +44,113 @@ filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//hal:__subpackages__"],
+)
+
+ATHENA_SRCS = glob([
+    "athena/*.cpp",
+    "athena/*.h",
+    "athena/cpp/*.cpp",
+    "athena/ctre/*.cpp",
+    "athena/ctre/*.h",
+    "athena/rev/*.cpp",
+    "athena/rev/*.h",
+    "athena/frccansae/*.h",
+    "athena/mockdata/*.cpp",
+])
+
+ATHENA_DEPS = ["@bzlmodrio-ni//libraries/cpp/ni:shared"]
+
+SIM_SRCS = glob([
+    "sim/*.cpp",
+    "sim/mockdata/*.cpp",
+    "sim/*.h",
+    "sim/mockdata/*.h",
+])
+
+SIM_DEPS = []
+
+HAL_DEPS = select({
+    "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ATHENA_DEPS,
+    "//conditions:default": SIM_DEPS,
+})
+
+filegroup(
+    name = "platform-srcs",
+    srcs = select({
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ATHENA_SRCS,
+        "//conditions:default": SIM_SRCS,
+    }),
+)
+
+wpilib_cc_static_and_shared_library(
+    name = "wpiHal",
+    srcs = ["platform-srcs"] + glob(
+        ["src/main/native/cpp/**"],
+        exclude = ["src/main/native/cpp/jni/**"],
+    ),
+    hdrs = glob(["src/main/native/include/**/*"]),
+    includes = ["src/main/native/include"],
+    standard_deps = ["//hal:generated_cc_headers"] + HAL_DEPS,
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "wpiHaljni",
+    srcs = glob(["src/main/native/cpp/jni/**"]),
+    java_dep = "//hal/src/main/java/edu/wpi/first/hal:hal",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpiHal",
+    ],
+)
+
+wpilib_java_jni_library(
+    name = "hal",
+    srcs = ["//hal:generated_java"] + glob(["src/main/java/**/*.java"]),
+    native_libs = ["//hal/src/main/native:wpiHaljni"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+    ],
+)
+
+wpilib_cc_test(
+    name = "hal-cpp-test",
+    size = "small",
+    srcs = glob([
+        "**/*.cpp",
+        "**/*.h",
+    ]),
+    deps = [
+        "//hal/src/main/native:wpiHal.static",
+        "//thirdparty/googletest",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+        ":wpiHal.shared",
+    ],
+)
+
+wpilib_java_binary(
+    name = "DevMain-Java",
+    srcs = ["src/dev/java/edu/wpi/first/hal/DevMain.java"],
+    deps = [
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "hal-test",
+    size = "small",
+    srcs = glob(["*.java"]),
+    deps = [
+        "//hal/src/main/java/edu/wpi/first/hal",
+    ],
 )
