@@ -2,12 +2,12 @@ load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
 
 wpilib_cc_library(
     name = "halsim_ws_core",
-    srcs = glob(["cpp/*.cpp"]),
+    srcs = glob(["src/main/native/cpp/*.cpp"]),
     hdrs = glob([
-        "include/*.h",
-        "include/*.inc",
+        "src/main/native/include/*.h",
+        "src/main/native/include/*.inc",
     ]),
-    strip_include_prefix = "include",
+    strip_include_prefix = "src/main/native/include",
     tags = [
         "no-roborio",
     ],

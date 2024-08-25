@@ -1,0 +1,27 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_shared_library")
+
+wpilib_cc_shared_library(
+    name = "halsim_xrp",
+    srcs = glob([
+        "src/main/native/cpp/*",
+        "src/main/native/include/*.h",
+    ]),
+    features = ["windows_export_all_symbols"],
+    includes = ["src/main/native/include"],
+    tags = [
+        "no-roborio",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//simulation/halsim_ws_core",
+        "//xrpVendordep:xrp-cpp.shared",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    tags = [
+        "no-roborio",
+    ],
+)
