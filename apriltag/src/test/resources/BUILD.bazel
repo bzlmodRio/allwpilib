@@ -1,5 +1,0 @@
-filegroup(
-    name = "resources",
-    srcs = glob(["edu/**"]),
-    visibility = ["//visibility:public"],
-)

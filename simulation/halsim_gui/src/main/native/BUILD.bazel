@@ -16,7 +16,7 @@ wpilib_cc_shared_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//glass/src/libnt/native:libglassnt",
+        "//glass:libglassnt",
         "//hal:wpiHal.shared",
     ],
 )

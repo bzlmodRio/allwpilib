@@ -28,7 +28,7 @@ wpilib_cc_binary(
         "wpi-cpp-gui",
     ],
     deps = [
-        "//glass/src/lib/native:libglass",
-        "//glass/src/libnt/native:libglassnt",
+        "//glass:libglass",
+        "//glass:libglassnt",
     ],
 )

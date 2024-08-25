@@ -19,7 +19,7 @@ generate_wpilibc = rule(
     implementation = __generate_wpilibc_impl,
     attrs = {
         "_templates": attr.label(
-            default = Label("//wpilibc/src/generate:templates"),
+            default = Label("//wpilibc:templates"),
         ),
         "_tool": attr.label(
             default = Label("//wpilibc:generate_wpilibc_py"),
