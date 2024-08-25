@@ -40,8 +40,8 @@ wpilib_objc_library(
     ]),
     includes = [
         "src/main/native/cpp",
-        "src/main/native/objcpp",
         "src/main/native/include",
+        "src/main/native/objcpp",
     ],
     deps = [
         "//wpinet/src/main/native:wpinet.static",

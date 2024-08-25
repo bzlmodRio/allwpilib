@@ -1,3 +1,5 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
@@ -150,8 +152,6 @@ wpilib_cc_static_and_shared_library(
     ],
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = ["src/main/native/include"],
-    strip_include_prefix = "src/main/native/include",
-    visibility = ["//visibility:public"],
     standard_deps = [
         ":expected-headers",
         ":fmtlib-headers",
@@ -165,6 +165,8 @@ wpilib_cc_static_and_shared_library(
         "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bzlmodrio-ni//libraries/cpp/ni:shared"],
         "//conditions:default": [],
     }),
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_jni_cc_library(

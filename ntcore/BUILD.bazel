@@ -85,12 +85,12 @@ wpilib_cc_static_and_shared_library(
     ) + [":generated_cc_source"],
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = ["src/main/native/include"],
-    strip_include_prefix = "src/main/native/include",
-    visibility = ["//visibility:public"],
     standard_deps = [
         ":generated_cc_headers",
         ":private_includes",
     ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         "//wpinet:wpinet",
         "//wpiutil:wpiutil",
