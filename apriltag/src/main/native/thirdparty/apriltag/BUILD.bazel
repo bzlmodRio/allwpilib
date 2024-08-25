@@ -7,7 +7,6 @@ wpilib_cc_library(
     copts = select({
         "@bazel_tools//src/conditions:darwin": [
             "-Wno-format-nonliteral",
-            "-Wno-gnu-zero-variadic-macro-arguments",
             "-Wno-uninitialized",
             "-Wno-sign-compare",
             "-Wno-type-limits",
@@ -22,7 +21,6 @@ wpilib_cc_library(
         ],
         "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": [
             "-Wno-format-nonliteral",
-            "-Wno-gnu-zero-variadic-macro-arguments",
             "-Wno-maybe-uninitialized",
             "-Wno-sign-compare",
             "-Wno-type-limits",

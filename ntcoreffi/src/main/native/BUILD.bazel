@@ -28,7 +28,7 @@ wpilib_cc_static_and_shared_library(
     includes = ["include"],
     strip_include_prefix = "include",
     wpi_maybe_shared_deps = [
-        "//ntcore/src/main/native:ntcore",
-        "//wpiutil/src/main/native:wpiutil",
+        "//ntcore:ntcore",
+        "//wpiutil:wpiutil",
     ],
 )
