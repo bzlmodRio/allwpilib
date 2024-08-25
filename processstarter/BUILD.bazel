@@ -3,9 +3,9 @@ load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary")
 wpilib_cc_binary(
     name = "processstarter",
     srcs = select({
-        "@bazel_tools//src/conditions:darwin": glob(["osx/**"]),
-        "@bazel_tools//src/conditions:windows": glob(["windows/**"]),
-        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": glob(["linux/**"]),
+        "@bazel_tools//src/conditions:darwin": glob(["src/main/native/osx/**"]),
+        "@bazel_tools//src/conditions:windows": glob(["src/main/native/windows/**"]),
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": glob(["src/main/native/linux/**"]),
     }),
     linkopts = select({
         "@bazel_tools//src/conditions:windows": ["-SUBSYSTEM:WINDOWS"],
