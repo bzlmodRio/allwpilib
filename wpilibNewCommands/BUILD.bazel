@@ -1,7 +1,8 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test", "wpilib_java_library")
 load("//wpilibNewCommands:generate.bzl", "generate_wpilib_new_commands")
 
 py_binary(
@@ -10,6 +11,14 @@ py_binary(
     tags = ["manual"],
     visibility = ["//visibility:public"],
     deps = [requirement("jinja2")],
+)
+
+filegroup(
+    name = "templates",
+    srcs = glob(["src/generate/main/**"]) + [
+        "//wpilibj:hid_schema",
+    ],
+    visibility = ["//wpilibNewCommands:__subpackages__"],
 )
 
 generate_wpilib_new_commands(
@@ -43,4 +52,86 @@ filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//wpilibNewCommands:__subpackages__"],
+)
+
+wpilib_cc_static_and_shared_library(
+    name = "wpilibNewCommands",
+    srcs = glob(["src/main/native/cpp/**"]) + ["//wpilibNewCommands:generated_cc_source"],
+    hdrs = glob(["src/main/native/include/**"]),
+    includes = ["src/main/native/include"],
+    standard_deps = [
+        ":generated_cc_headers",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpilibc:wpilibc",
+    ],
+)
+
+wpilib_java_library(
+    name = "wpilibNewCommands-java",
+    srcs = glob(["src/main/java/**/*.java"]) + ["//wpilibNewCommands:generated_java"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//cscore:cscore-java",
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
+        "//wpilibj",
+        "//wpimath:wpimath-java",
+        "//wpinet:wpinet-java",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
+    ],
+)
+
+wpilib_cc_test(
+    name = "wpilibNewCommands-cpp-test",
+    size = "small",
+    srcs = glob([
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
+    ]),
+    tags = ["no-tsan"],
+    deps = [
+        ":wpilibNewCommands.static",
+        "//thirdparty/googletest",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "wpilibNewCommands-java-test",
+    size = "small",
+    srcs = glob(["**/*.java"]),
+    resource_strip_prefix = "wpilibNewCommands/src/test/resources",
+    resources = glob(["src/test/resources/**"]),
+    deps = [
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
+        "//wpilibNewCommands",
+        "//wpilibj",
+        "//wpimath:wpimath-java",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
+        "@maven//:org_mockito_mockito_core",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+    ],
+)
+
+wpilib_java_binary(
+    name = "DevMain-Java",
+    srcs = ["src/dev/java/edu/wpi/first/wpilibj2/commands/DevMain.java"],
+    main_class = "edu.wpi.first.wpilibj2.commands.DevMain",
+    deps = [
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
+        "//wpimath:wpimath-java",
+        "//wpiutil:wpiutil-java",
+    ],
 )

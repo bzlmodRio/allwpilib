@@ -1,0 +1,25 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library")
+
+ATHENA_SOURCES = glob(["src/main/native/cpp/**"])
+
+NON_ATHENA_SOURCES = glob(["src/main/native/dt/**"])
+
+wpilib_cc_library(
+    name = "test_headers",
+    hdrs = glob(["src/main/native/include/**"]),
+    strip_include_prefix = "src/main/native/include",
+)
+
+wpilib_cc_binary(
+    name = "crossConnIntegrationTests",
+    srcs = select({
+        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ATHENA_SOURCES,
+        "//conditions:default": NON_ATHENA_SOURCES,
+    }),
+    deps = [
+        ":test_headers",
+        "//hal:wpiHal.shared",
+        "//thirdparty/googletest",
+        "//wpinet:wpinet.shared",
+    ],
+)

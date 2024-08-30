@@ -2,7 +2,10 @@ load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//ntcore:generate_ntcore.bzl", "generate_ntcore")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 
 generate_ntcore(
     name = "generate_ntcore",
@@ -61,4 +64,104 @@ filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//ntcore:__subpackages__"],
+)
+
+wpilib_cc_library(
+    name = "private_includes",
+    hdrs = glob([
+        "src/main/native/cpp/*.h",
+        "src/main/native/cpp/net/*.h",
+        "src/main/native/cpp/net/*.inc",
+        "src/main/native/cpp/net3/*.h",
+    ]),
+    strip_include_prefix = "src/main/native/cpp",
+)
+
+wpilib_cc_static_and_shared_library(
+    name = "ntcore",
+    srcs = glob(
+        ["src/main/native/cpp/**"],
+        exclude = ["src/main/native/cpp/jni/**"],
+    ) + [":generated_cc_source"],
+    hdrs = glob(["src/main/native/include/**/*"]),
+    includes = ["src/main/native/include"],
+    standard_deps = [
+        ":generated_cc_headers",
+        ":private_includes",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpinet:wpinet",
+        "//wpiutil:wpiutil",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "ntcorejni",
+    srcs = glob(["src/main/native/cpp/jni/**"]) + ["//ntcore:generated_jni"],
+    java_dep = ":networktables-java",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":ntcore",
+    ],
+)
+
+wpilib_java_jni_library(
+    name = "networktables-java",
+    srcs = glob(["src/main/java/**/*.java"]) + [":generated_java"],
+    native_libs = [":ntcorejni"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpiutil:wpiutil-java",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
+wpilib_cc_test(
+    name = "ntcore-cpp-test",
+    size = "small",
+    srcs = glob([
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
+    ]),
+    tags = [
+        "exclusive",
+        "no-asan",
+        "no-tsan",
+    ],
+    deps = [
+        ":ntcore.static",
+        "//thirdparty/googletest",
+        "//wpiutil:wpiutil-testlib",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "ntcore-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    tags = ["exclusive"],
+    deps = [
+        ":networktables-java",
+        "//wpiutil:wpiutil-java",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+        ":ntcore.shared",
+    ],
+)
+
+wpilib_java_binary(
+    name = "DevMain-Java",
+    srcs = ["src/dev/java/edu/wpi/first/ntcore/DevMain.java"],
+    main_class = "edu.wpi.first.ntcore.DevMain",
+    deps = [
+        "networktables-java",
+        "//wpiutil:wpiutil-java",
+    ],
 )

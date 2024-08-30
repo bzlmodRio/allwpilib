@@ -1,7 +1,0 @@
-filegroup(
-    name = "templates",
-    srcs = glob(["main/**"]) + [
-        "//wpilibj/src/generate:hid_schema",
-    ],
-    visibility = ["//wpilibNewCommands:__subpackages__"],
-)

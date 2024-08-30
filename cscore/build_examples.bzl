@@ -16,7 +16,7 @@ def build_cpp_examples():
             srcs = native.glob([
                 "examples/" + example_dir + "/*.cpp",
             ]),
-            deps = ["//wpigui/src/main/native:wpigui", "//cscore/src/main/native:cscore.static"],
+            deps = ["//wpigui/src/main/native:wpigui", "//cscore:cscore.static"],
             tags = [
                 "wpi-example",
             ],

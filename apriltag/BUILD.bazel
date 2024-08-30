@@ -1,4 +1,141 @@
 load("@rules_python//python:defs.bzl", "py_binary")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules/gen:gen-resources.bzl", "generate_resources")
+load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
+
+wpilib_cc_library(
+    name = "thirdparty-apriltag",
+    srcs = glob(["src/main/native/thirdparty/apriltag/src/**"]),
+    hdrs = glob(["src/main/native/thirdparty/apriltag/include/**"]),
+    copts = select({
+        "@bazel_tools//src/conditions:darwin": [
+            "-Wno-format-nonliteral",
+            "-Wno-gnu-zero-variadic-macro-arguments",
+            "-Wno-uninitialized",
+            "-Wno-sign-compare",
+            "-Wno-type-limits",
+        ],
+        "@bazel_tools//src/conditions:windows": [
+            "/wd2220",
+            "/wd4005",
+            "/wd4018",
+            "/wd4244",
+            "/wd4267",
+            "/wd4996",
+        ],
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": [
+            "-Wno-format-nonliteral",
+            "-Wno-maybe-uninitialized",
+            "-Wno-sign-compare",
+            "-Wno-type-limits",
+        ],
+    }),
+    includes = ["src/main/native/thirdparty/apriltag/include/common"],
+    strip_include_prefix = "src/main/native/thirdparty/apriltag/include",
+    visibility = ["//visibility:public"],
+)
+
+generate_resources(
+    name = "generate-resources",
+    namespace = "frc",
+    prefix = "APRILTAG",
+    resource_files = glob(["src/main/native/resources/**"]),
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_static_and_shared_library(
+    name = "apriltag",
+    srcs = [":generate-resources"] + glob(
+        ["src/main/native/cpp/**"],
+        exclude = ["src/main/native/cpp/jni/**"],
+    ),
+    hdrs = glob(["src/main/native/include/**/*"]),
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    standard_deps = [
+        ":thirdparty-apriltag",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpiutil:wpiutil",
+        "//wpimath:wpimath",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "apriltagjni",
+    srcs = glob(["src/main/native/cpp/jni/**"]),
+    java_dep = ":apriltag-java",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":apriltag",
+    ],
+)
+
+wpilib_java_jni_library(
+    name = "apriltag-java",
+    srcs = glob(["src/main/java/**/*.java"]),
+    native_libs = [":apriltagjni"],
+    resource_strip_prefix = "apriltag/src/main/native/resources",
+    resources = glob(["src/main/native/resources/**"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpimath:wpimath-java",
+        "//wpiutil:wpiutil-java",
+        "@bzlmodrio-opencv//libraries/java/opencv",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+    ],
+)
+
+wpilib_cc_test(
+    name = "apriltag-cpp-test",
+    size = "small",
+    srcs = glob(["src/test/native/cpp/**"]),
+    tags = [
+        "no-asan",
+    ],
+    deps = [
+        ":apriltag.shared",
+        "//thirdparty/googletest",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "apriltag-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    resource_strip_prefix = "apriltag/src/test/resources",
+    resources = glob(["src/test/resources/**"]),
+    deps = [
+        ":apriltag-java",
+        "//wpimath:wpimath-java",
+        "//wpiutil:wpiutil-java",
+        "@bzlmodrio-opencv//libraries/java/opencv",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+        ":apriltag.shared",
+    ],
+)
+
+wpilib_java_binary(
+    name = "DevMain-Java",
+    srcs = ["src/dev/java/edu/wpi/first/apriltag/DevMain.java"],
+    main_class = "edu.wpi.first.apriltag.DevMain",
+    deps = [
+        ":apriltag-java",
+    ],
+)
 
 py_binary(
     name = "convert_apriltag_layouts",

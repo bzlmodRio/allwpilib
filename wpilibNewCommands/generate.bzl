@@ -18,7 +18,7 @@ generate_wpilib_new_commands = rule(
     implementation = __generate_wpilib_new_commands_impl,
     attrs = {
         "_templates": attr.label(
-            default = Label("//wpilibNewCommands/src/generate:templates"),
+            default = Label("//wpilibNewCommands:templates"),
         ),
         "_tool": attr.label(
             default = Label("//wpilibNewCommands:generate_hids"),
