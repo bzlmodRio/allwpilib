@@ -1,6 +1,11 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
+load("//protoplugin:wpi_proto_library.bzl", "wpi_proto_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 load("//wpimath:generate.bzl", "generate_wpimath")
 
 filegroup(
@@ -54,4 +59,163 @@ filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//wpimath:__subpackages__"],
+)
+
+wpilib_cc_library(
+    name = "eigen-headers",
+    hdrs = glob([
+        "src/main/native/thirdparty/eigen/include/**",
+    ]),
+    includes = ["src/main/native/thirdparty/eigen/include"],
+    strip_include_prefix = "src/main/native/thirdparty/eigen/include",
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+wpilib_cc_library(
+    name = "gcem",
+    hdrs = glob([
+        "src/main/native/thirdparty/gcem/include/**",
+    ]),
+    includes = ["src/main/native/thirdparty/gcem/include"],
+    strip_include_prefix = "src/main/native/thirdparty/gcem/include",
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+wpilib_cc_library(
+    name = "sleipnir-headers",
+    hdrs = glob([
+        "src/main/native/thirdparty/sleipnir/include/**/*.hpp",
+    ]),
+    includes = ["src/main/native/thirdparty/sleipnir/include"],
+    strip_include_prefix = "src/main/native/thirdparty/sleipnir/include",
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+filegroup(
+    name = "sleipnir-srcs",
+    srcs = glob(["src/main/native/thirdparty/sleipnir/src/**"]),
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath",
+    srcs = glob(
+        ["src/main/native/cpp/**"],
+        exclude = ["src/main/native/cpp/jni/**"],
+    ) + [
+        ":sleipnir-srcs",
+    ],
+    hdrs = glob(["src/main/native/include/**/*"]),
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "src/main/native/include",
+        "thirdparty/sleipnir/src",
+    ],
+    standard_deps = [
+        ":eigen-headers",
+        ":sleipnir-headers",
+        "//wpimath/src/main/native/thirdparty/gcem",
+        "//wpimath/src/main/proto:cc_proto",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "wpimathjni",
+    srcs = glob(["src/main/native/cpp/jni/**"]),
+    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath",
+    ],
+)
+
+wpilib_java_jni_library(
+    name = "wpimath",
+    srcs = ["//wpimath:generated_java"] + glob(["src/main/java/**/*.java"]),
+    native_libs = ["//wpimath/src/main/native:wpimathjni"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:com_fasterxml_jackson_core_jackson_annotations",
+        "@maven//:com_fasterxml_jackson_core_jackson_core",
+        "@maven//:com_fasterxml_jackson_core_jackson_databind",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_ddense",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
+wpilib_cc_library(
+    name = "test_headers",
+    hdrs = glob([
+        "src/test/native/include/**",
+    ]),
+    strip_include_prefix = "src/test/native/include",
+)
+
+wpilib_cc_test(
+    name = "wpimath-cpp-test",
+    size = "small",
+    srcs = glob([
+        "src/test/native/cpp/**/*.cpp",
+        "src/test/native/cpp/**/*.h",
+    ]),
+    tags = [
+        "no-bullseye",
+        "no-raspi",
+    ],
+    deps = [
+        ":test_headers",
+        ":wpimath.static",
+        "//thirdparty/googletest",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+        ":wpimath.static",
+    ],
+)
+
+wpilib_java_binary(
+    name = "DevMain-Java",
+    srcs = ["src/dev/java/edu/wpi/first/math/DevMain.java"],
+    deps = [
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+    ],
+)
+
+py_binary(
+    name = "ExponentialProfileModel",
+    srcs = ["ExponentialProfileModel.py"],
+    tags = ["manual"],
+)
+
+wpi_proto_library(
+    name = "",
+    proto_files = glob(["*.proto"]),
+)
+
+wpilib_java_junit5_test(
+    name = "wpimath-test",
+    size = "small",
+    srcs = glob(["**/*.java"]),
+    deps = [
+        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
 )

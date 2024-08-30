@@ -1,0 +1,52 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_library")
+
+wpilib_cc_static_and_shared_library(
+    name = "romi",
+    srcs = glob([
+        "src/main/native/cpp/**",
+    ]),
+    hdrs = glob(["src/main/native/include/**"]),
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpilibc/src/main/native:wpilibc",
+    ],
+)
+
+wpilib_java_library(
+    name = "romi",
+    srcs = glob(["src/main/java/**/*.java"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//hal/src/main/java/edu/wpi/first/hal",
+        "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
+    ],
+)
+
+wpilib_cc_test(
+    name = "romi-test",
+    size = "small",
+    srcs = glob(["src/test/native/cpp/**"]),
+    deps = [
+        "//thirdparty/googletest",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+        "//wpiutil/src/main/native:wpiutil.shared",
+    ],
+)
+
+wpilib_java_binary(
+    name = "DevMain-Java",
+    srcs = ["src/dev/java/edu/wpi/first/wpilibj/romi/DevMain.java"],
+    deps = [
+        "//hal/src/main/java/edu/wpi/first/hal",
+        "//ntcore/src/main/java/edu/wpi/first/networktables",
+        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+    ],
+)
