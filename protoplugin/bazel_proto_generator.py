@@ -6,6 +6,7 @@ import os
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--include_prefix", required=True)
     parser.add_argument("--proto_files", nargs="+")
     parser.add_argument("--output_files", nargs="+")
 
@@ -25,7 +26,7 @@ def main():
     cmd = []
     cmd.append(protoc)
     cmd.append(f"--cpp_out={output_directory}")
-    cmd.append(f"-Iwpimath/src/main/proto")
+    cmd.append(f"-I{args.include_prefix}")
     cmd.append(f"--wpilib_out={output_directory}")
     cmd.append(f"--plugin=protoc-gen-wpilib={plugin}")
     cmd.extend(args.proto_files)

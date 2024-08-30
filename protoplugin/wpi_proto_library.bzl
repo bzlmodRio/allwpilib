@@ -2,7 +2,8 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 def wpi_proto_library(
         name,
-        proto_files):
+        proto_files,
+        include_prefix):
     gen_srcs = []
     gen_hdrs = []
 
@@ -10,7 +11,7 @@ def wpi_proto_library(
         gen_srcs.append("generated_proto/" + pf[:-5] + "pb.cc")
         gen_hdrs.append("generated_proto/" + pf[:-5] + "pb.h")
 
-    cmd = "$(locations //protoplugin:bazel_proto_generator) --proto_files $(SRCS) --output_files $(OUTS)"
+    cmd = "$(locations //protoplugin:bazel_proto_generator) --include_prefix={} --proto_files $(SRCS) --output_files $(OUTS)".format(include_prefix)
     native.genrule(
         name = "generate_proto",
         srcs = proto_files,
@@ -22,13 +23,14 @@ def wpi_proto_library(
         visibility = ["//visibility:public"],
     )
 
-    cc_library(
-        name = "cc_proto",
+    native.filegroup(
+        name = name + ".srcs",
         srcs = gen_srcs,
+    )
+
+    cc_library(
+        name = name + ".hdrs",
         hdrs = gen_hdrs,
         includes = ["generated_proto/src/main/proto"],
         visibility = ["//visibility:public"],
-        deps = [
-            "//wpiutil:wpiutil.static",
-        ],
     )
