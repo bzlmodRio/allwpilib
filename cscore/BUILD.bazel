@@ -8,16 +8,16 @@ load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 build_cpp_examples()
 
 WIN_SRCS = glob([
-    "windows/**/*.cpp",
-    "windows/**/*.h",
+    "src/main/native/windows/**/*.cpp",
+    "src/main/native/windows/**/*.h",
 ])
 
 LINUX_SRCS = glob([
-    "linux/**/*.cpp",
-    "linux/**/*.h",
+    "src/main/native/linux/**/*.cpp",
+    "src/main/native/linux/**/*.h",
 ])
 
-MAC_SRCS = glob(["osx/**/*.cpp"])
+MAC_SRCS = glob(["src/main/native/osx/**/*.cpp"])
 
 filegroup(
     name = "native-srcs",
@@ -31,21 +31,21 @@ filegroup(
 wpilib_objc_library(
     name = "cscore-mac",
     srcs = glob([
-        "objcpp/**/*.mm",
+        "src/main/native/objcpp/**/*.mm",
         "src/main/native/cpp/*.h",
     ]),
     hdrs = glob([
         "src/main/native/include/**/*",
-        "objcpp/**/*.h",
+        "src/main/native/objcpp/**/*.h",
     ]),
     includes = [
-        "cpp",
-        "objcpp",
+        "src/main/native/cpp",
         "src/main/native/include",
+        "src/main/native/objcpp",
     ],
     deps = [
-        "//wpinet/src/main/native:wpinet.static",
-        "//wpiutil/src/main/native:wpiutil.static",
+        "//wpinet:wpinet.static",
+        "//wpiutil:wpiutil.static",
         "@bzlmodrio-opencv//libraries/cpp/opencv",
     ],
 )
@@ -58,7 +58,7 @@ wpilib_cc_static_and_shared_library(
     ),
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = [
-        "cpp",
+        "src/main/native/cpp",
         "src/main/native/include",
     ],
     standard_deps = [
@@ -70,15 +70,15 @@ wpilib_cc_static_and_shared_library(
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        "//wpiutil/src/main/native:wpiutil",
-        "//wpinet/src/main/native:wpinet",
+        "//wpiutil:wpiutil",
+        "//wpinet:wpinet",
     ],
 )
 
 wpilib_jni_cc_library(
     name = "cscorejni",
     srcs = glob(["src/main/native/cpp/jni/**"]),
-    java_dep = "//cscore/src/main/java/edu/wpi/first/cscore:cscore",
+    java_dep = ":cscore-java",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         ":cscore",
@@ -86,26 +86,36 @@ wpilib_jni_cc_library(
 )
 
 wpilib_java_jni_library(
-    name = "cscore",
+    name = "cscore-java",
     srcs = glob(["src/main/java/**/*.java"]),
-    native_libs = ["//cscore/src/main/native:cscorejni"],
+    native_libs = [":cscorejni"],
     visibility = ["//visibility:public"],
     deps = [
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//wpiutil:wpiutil-java",
         "@bzlmodrio-opencv//libraries/java/opencv",
     ],
 )
 
 wpilib_cc_test(
-    name = "cscore-test",
+    name = "cscore-cpp-test",
     size = "small",
     srcs = glob([
-        "**/*.cpp",
-        "**/*.h",
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
     ]),
     deps = [
-        "//cscore/src/main/native:cscore.static",
+        ":cscore.static",
         "//thirdparty/googletest",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "cscore-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = [
+        ":cscore-java",
+        "//wpiutil:wpiutil-java",
     ],
 )
 
@@ -120,18 +130,9 @@ wpilib_cc_binary(
 wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/cscore/DevMain.java"],
+    main_class = "edu.wpi.first.cscore.DevMain",
     deps = [
-        "//cscore/src/main/java/edu/wpi/first/cscore",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-    ],
-)
-
-wpilib_java_junit5_test(
-    name = "cscore-test",
-    size = "small",
-    srcs = glob(["*.java"]),
-    deps = [
-        "//cscore/src/main/java/edu/wpi/first/cscore",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        ":cscore-java",
+        "//wpiutil:wpiutil-java",
     ],
 )

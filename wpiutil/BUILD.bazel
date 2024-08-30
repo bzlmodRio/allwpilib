@@ -1,3 +1,5 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
@@ -38,12 +40,6 @@ wpilib_cc_library(
     ]),
     includes = ["src/main/native/thirdparty/json/include"],
     strip_include_prefix = "src/main/native/thirdparty/json/include",
-    visibility = ["//wpiutil:__subpackages__"],
-)
-
-filegroup(
-    name = "json-srcs",
-    srcs = glob(["src/main/native/thirdparty/json/cpp/**"]),
     visibility = ["//wpiutil:__subpackages__"],
 )
 
@@ -126,17 +122,17 @@ generate_resources(
     name = "generate-resources",
     namespace = "dlt",
     prefix = "DLT",
-    resource_files = glob(["resources/*"]),
+    resource_files = glob(["src/main/native/resources/*"]),
 )
 
 filegroup(
     name = "native-srcs",
     srcs = select({
         "@bazel_tools//src/conditions:windows": glob([
-            "windows/*.cpp",
-            "windows/*.h",
+            "src/main/native/windows/*.cpp",
+            "src/main/native/windows/*.h",
         ]),
-        "@rules_bzlmodrio_toolchains//constraints/combined:is_unix": glob(["unix/*.cpp"]),
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_unix": glob(["src/main/native/unix/*.cpp"]),
     }),
 )
 
@@ -148,7 +144,6 @@ wpilib_cc_static_and_shared_library(
     ) + [
         ":fmtlib-srcs",
         ":generate-resources",
-        ":json-srcs",
         ":llvm-srcs",
         ":memory-srcs",
         ":mpack-srcs",
@@ -162,8 +157,8 @@ wpilib_cc_static_and_shared_library(
         ":fmtlib-headers",
         ":json-headers",
         ":llvm-headers",
-        ":mpack-headers",
         ":memory-headers",
+        ":mpack-headers",
         ":protobuf-headers",
         ":sigslot-headers",
     ] + select({
@@ -177,7 +172,7 @@ wpilib_cc_static_and_shared_library(
 wpilib_jni_cc_library(
     name = "wpiutiljni",
     srcs = glob(["src/main/native/cpp/jni/**"]),
-    java_dep = "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+    java_dep = ":wpiutil-java",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         ":wpiutil",
@@ -185,9 +180,9 @@ wpilib_jni_cc_library(
 )
 
 wpilib_java_jni_library(
-    name = "wpiutil",
+    name = "wpiutil-java",
     srcs = glob(["src/main/java/**/*.java"]),
-    native_libs = ["//wpiutil/src/main/native:wpiutiljni"],
+    native_libs = [":wpiutiljni"],
     visibility = ["//visibility:public"],
     deps = [
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",
@@ -205,7 +200,7 @@ wpilib_cc_library(
 )
 
 wpilib_cc_test(
-    name = "wpiutil-test",
+    name = "wpiutil-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
     linkstatic = True,
@@ -214,6 +209,15 @@ wpilib_cc_test(
         ":wpiutil.static",
         ":wpiutil-testlib",
         "//thirdparty/googletest",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "wpiutil-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = [
+        ":wpiutil-java",
     ],
 )
 
@@ -228,8 +232,9 @@ wpilib_cc_binary(
 wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/util/DevMain.java"],
+    main_class = "edu.wpi.first.util.DevMain",
     deps = [
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        ":wpiutil-java",
     ],
 )
 
@@ -239,35 +244,27 @@ py_binary(
     tags = ["manual"],
 )
 
-wpilib_cc_binary(
+cc_binary(
     name = "printlog",
-    srcs = ["printlog.cpp"],
+    srcs = ["examples/printlog/printlog.cpp"],
     deps = [
         ":wpiutil.static",
     ],
 )
 
-wpilib_cc_binary(
+cc_binary(
     name = "writelog",
-    srcs = ["writelog.cpp"],
+    srcs = ["examples/writelog/writelog.cpp"],
     deps = [
         ":wpiutil.static",
     ],
 )
 
-wpilib_java_binary(
-    name = "printlog",
-    srcs = ["PrintLog.java"],
+java_binary(
+    name = "printlog-java",
+    srcs = ["src/printlog/java/printlog/PrintLog.java"],
+    main_class = "printlog.PrintLog",
     deps = [
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-    ],
-)
-
-wpilib_java_junit5_test(
-    name = "util-test",
-    size = "small",
-    srcs = glob(["**/*.java"]),
-    deps = [
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        ":wpiutil-java",
     ],
 )

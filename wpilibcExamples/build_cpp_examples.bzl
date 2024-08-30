@@ -14,10 +14,10 @@ def build_examples(halsim_deps = []):
             name = folder + "-example",
             srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"]),
             deps = [
-                "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
-                "//apriltag/src/main/native:apriltag.shared",
-                "//romiVendordep/src/main/native:romi.shared",
-                "//xrpVendordep/src/main/native:xrp.shared",
+                "//wpilibNewCommands:wpilibNewCommands.shared",
+                "//apriltag:apriltag.shared",
+                "//romiVendordep:romi-cpp.shared",
+                "//xrpVendordep:xrp-cpp.shared",
                 ":{}-examples-headers".format(folder),
             ],
             tags = ["wpi-example"],
@@ -30,7 +30,7 @@ def build_commands():
             srcs = native.glob(["src/main/cpp/commands/" + folder + "/**/*.cpp"]),
             hdrs = native.glob(["src/main/cpp/commands/" + folder + "/**/*.h"]),
             deps = [
-                "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
+                "//wpilibNewCommands:wpilibNewCommands.shared",
             ],
             strip_include_prefix = "src/main/cpp/commands/" + folder,
             tags = ["wpi-example"],
@@ -43,7 +43,7 @@ def build_templates():
             srcs = native.glob(["src/main/cpp/templates/" + folder + "/**/*.cpp"]),
             hdrs = native.glob(["src/main/cpp/templates/" + folder + "/**/*.h"]),
             deps = [
-                "//wpilibNewCommands/src/main/native:wpilibNewCommands.shared",
+                "//wpilibNewCommands:wpilibNewCommands.shared",
             ],
             strip_include_prefix = "src/main/cpp/templates/" + folder + "/include",
             tags = ["wpi-example"],
@@ -58,7 +58,7 @@ def build_tests():
             size = "small",
             srcs = native.glob([example_test_folder + "/**/*.cpp", example_src_folder + "/cpp/**/*.cpp", example_src_folder + "/c/**/*.c"]),
             deps = [
-                "//wpilibNewCommands/src/main/native:wpilibNewCommands.static",
+                "//wpilibNewCommands:wpilibNewCommands.static",
                 ":{}-examples-headers".format(folder),
                 "//thirdparty/googletest",
             ],

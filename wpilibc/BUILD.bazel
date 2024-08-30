@@ -33,8 +33,24 @@ py_binary(
     ],
 )
 
+filegroup(
+    name = "templates",
+    srcs = glob(["src/generate/main/native/**"]) + [
+        "//wpilibj:hid_schema",
+        "//wpilibj:pwm_schema",
+    ],
+    visibility = ["//wpilibc:__subpackages__"],
+)
+
 generate_wpilibc(
     name = "generate_wpilibc",
+)
+
+generate_version_file(
+    name = "generate-version",
+    output_file = "WPILibVersion.cpp",
+    template = "src/generate/WPILibVersion.cpp.in",
+    visibility = ["//wpilibc:__subpackages__"],
 )
 
 write_source_files(
@@ -66,25 +82,25 @@ filegroup(
 wpilib_cc_static_and_shared_library(
     name = "wpilibc",
     srcs = [
-        "//wpilibc/src/generate:generate-version",
+        ":generate-version",
     ] + glob([
-        "cppcs/**",
+        "src/main/native/cppcs/**",
         "src/main/native/cpp/**",
-    ]) + ["//wpilibc:generated_cc_source"],
+    ]) + [":generated_cc_source"],
     hdrs = glob(["src/main/native/include/**"]),
     standard_deps = [
-        "//wpilibc:generated_cc_headers",
+        ":generated_cc_headers",
     ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        "//wpimath/src/main/native:wpimath",
-        "//hal/src/main/native:wpiHal",
-        "//wpinet/src/main/native:wpinet",
-        "//wpiutil/src/main/native:wpiutil",
-        "//cscore/src/main/native:cscore",
-        "//ntcore/src/main/native:ntcore",
-        "//cameraserver/src/main/native:cameraserver",
+        "//wpimath:wpimath",
+        "//hal:wpiHal",
+        "//wpinet:wpinet",
+        "//wpiutil:wpiutil",
+        "//cscore:cscore",
+        "//ntcore:ntcore",
+        "//cameraserver:cameraserver",
     ],
 )
 
@@ -113,7 +129,7 @@ wpilib_cc_test(
 wpilib_cc_binary(
     name = "wpilibc-c-test",
     srcs = glob([
-        "c/**",
+        "src/test/native/c/**",
         "src/test/native/cpp/main.cpp",
     ]),
     deps = [
@@ -128,20 +144,4 @@ wpilib_cc_binary(
     deps = [
         ":wpilibc.shared",
     ],
-)
-
-generate_version_file(
-    name = "generate-version",
-    output_file = "WPILibVersion.cpp",
-    template = "WPILibVersion.cpp.in",
-    visibility = ["//wpilibc:__subpackages__"],
-)
-
-filegroup(
-    name = "templates",
-    srcs = glob(["main/native/**"]) + [
-        "//wpilibj/src/generate:hid_schema",
-        "//wpilibj/src/generate:pwm_schema",
-    ],
-    visibility = ["//wpilibc:__subpackages__"],
 )

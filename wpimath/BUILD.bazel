@@ -61,6 +61,11 @@ filegroup(
     visibility = ["//wpimath:__subpackages__"],
 )
 
+wpi_proto_library(
+    name = "cc_proto",
+    proto_files = glob(["src/main/proto/*.proto"]),
+)
+
 wpilib_cc_library(
     name = "eigen-headers",
     hdrs = glob([
@@ -110,25 +115,25 @@ wpilib_cc_static_and_shared_library(
     export_symbols = False,
     includes = [
         "src/main/native/include",
-        "thirdparty/sleipnir/src",
+        "src/main/native/thirdparty/sleipnir/src",
     ],
     standard_deps = [
         ":eigen-headers",
         ":sleipnir-headers",
-        "//wpimath/src/main/native/thirdparty/gcem",
-        "//wpimath/src/main/proto:cc_proto",
+        ":gcem",
+        ":cc_proto",
     ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        "//wpiutil/src/main/native:wpiutil",
+        "//wpiutil:wpiutil",
     ],
 )
 
 wpilib_jni_cc_library(
     name = "wpimathjni",
     srcs = glob(["src/main/native/cpp/jni/**"]),
-    java_dep = "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+    java_dep = ":wpimath-java",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         ":wpimath",
@@ -136,13 +141,13 @@ wpilib_jni_cc_library(
 )
 
 wpilib_java_jni_library(
-    name = "wpimath",
+    name = "wpimath-java",
     srcs = ["//wpimath:generated_java"] + glob(["src/main/java/**/*.java"]),
-    native_libs = ["//wpimath/src/main/native:wpimathjni"],
+    native_libs = [":wpimathjni"],
     visibility = ["//visibility:public"],
     deps = [
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
         "@maven//:com_fasterxml_jackson_core_jackson_annotations",
         "@maven//:com_fasterxml_jackson_core_jackson_core",
         "@maven//:com_fasterxml_jackson_core_jackson_databind",
@@ -179,6 +184,20 @@ wpilib_cc_test(
     ],
 )
 
+wpilib_java_junit5_test(
+    name = "wpimath-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = [
+        ":wpimath-java",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
 wpilib_cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
@@ -190,8 +209,9 @@ wpilib_cc_binary(
 wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/math/DevMain.java"],
+    main_class = "edu.wpi.first.math.DevMain",
     deps = [
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
+        ":wpimath-java",
     ],
 )
 
@@ -199,23 +219,4 @@ py_binary(
     name = "ExponentialProfileModel",
     srcs = ["ExponentialProfileModel.py"],
     tags = ["manual"],
-)
-
-wpi_proto_library(
-    name = "",
-    proto_files = glob(["*.proto"]),
-)
-
-wpilib_java_junit5_test(
-    name = "wpimath-test",
-    size = "small",
-    srcs = glob(["**/*.java"]),
-    deps = [
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-        "@maven//:org_ejml_ejml_core",
-        "@maven//:org_ejml_ejml_simple",
-        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
-    ],
 )

@@ -13,6 +13,14 @@ py_binary(
     deps = [requirement("jinja2")],
 )
 
+filegroup(
+    name = "templates",
+    srcs = glob(["src/generate/main/**"]) + [
+        "//wpilibj:hid_schema",
+    ],
+    visibility = ["//wpilibNewCommands:__subpackages__"],
+)
+
 generate_wpilib_new_commands(
     name = "generate_wpilib_new_commands",
 )
@@ -52,28 +60,28 @@ wpilib_cc_static_and_shared_library(
     hdrs = glob(["src/main/native/include/**"]),
     includes = ["src/main/native/include"],
     standard_deps = [
-        "//wpilibNewCommands:generated_cc_headers",
+        ":generated_cc_headers",
     ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        "//wpilibc/src/main/native:wpilibc",
+        "//wpilibc:wpilibc",
     ],
 )
 
 wpilib_java_library(
-    name = "wpilibNewCommands",
+    name = "wpilibNewCommands-java",
     srcs = glob(["src/main/java/**/*.java"]) + ["//wpilibNewCommands:generated_java"],
     visibility = ["//visibility:public"],
     deps = [
-        "//cscore/src/main/java/edu/wpi/first/cscore",
-        "//hal/src/main/java/edu/wpi/first/hal",
-        "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpinet/src/main/java/edu/wpi/first/net:wpinet",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//cscore:cscore-java",
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
+        "//wpilibj",
+        "//wpimath:wpimath-java",
+        "//wpinet:wpinet-java",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
     ],
 )
 
@@ -81,13 +89,31 @@ wpilib_cc_test(
     name = "wpilibNewCommands-cpp-test",
     size = "small",
     srcs = glob([
-        "**/*.cpp",
-        "**/*.h",
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
     ]),
     tags = ["no-tsan"],
     deps = [
+        ":wpilibNewCommands.static",
         "//thirdparty/googletest",
-        "//wpilibNewCommands/src/main/native:wpilibNewCommands.static",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "wpilibNewCommands-java-test",
+    size = "small",
+    srcs = glob(["**/*.java"]),
+    resource_strip_prefix = "wpilibNewCommands/src/test/resources",
+    resources = glob(["src/test/resources/**"]),
+    deps = [
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
+        "//wpilibNewCommands",
+        "//wpilibj",
+        "//wpimath:wpimath-java",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
+        "@maven//:org_mockito_mockito_core",
     ],
 )
 
@@ -101,42 +127,11 @@ wpilib_cc_binary(
 wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/wpilibj2/commands/DevMain.java"],
+    main_class = "edu.wpi.first.wpilibj2.commands.DevMain",
     deps = [
-        "//hal/src/main/java/edu/wpi/first/hal",
-        "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
+        "//wpimath:wpimath-java",
+        "//wpiutil:wpiutil-java",
     ],
-)
-
-filegroup(
-    name = "templates",
-    srcs = glob(["main/**"]) + [
-        "//wpilibj/src/generate:hid_schema",
-    ],
-    visibility = ["//wpilibNewCommands:__subpackages__"],
-)
-
-wpilib_java_junit5_test(
-    name = "wpilibNewCommands-test",
-    size = "small",
-    srcs = glob(["**/*.java"]),
-    deps = [
-        "//hal/src/main/java/edu/wpi/first/hal",
-        "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpilibNewCommands/src/main/java/edu/wpi/first/wpilibj2/command:wpilibNewCommands",
-        "//wpilibNewCommands/src/test/resources",
-        "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
-        "@maven//:org_mockito_mockito_core",
-    ],
-)
-
-wpilib_java_library(
-    name = "resources",
-    testonly = True,
-    resources = glob(["**"]),
-    visibility = ["//wpilibNewCommands/src/test:__subpackages__"],
 )

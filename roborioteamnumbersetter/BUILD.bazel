@@ -7,18 +7,18 @@ generate_resources(
     name = "generate-resources",
     namespace = "rtns",
     prefix = "RTNS",
-    resource_files = glob(["native/resources/*"]),
+    resource_files = glob(["src/main/native/resources/*"]),
 )
 
 generate_version_file(
     name = "generate-version",
     output_file = "WPILibVersion.cpp",
-    template = "generate/WPILibVersion.cpp.in",
+    template = "src/main/generate/WPILibVersion.cpp.in",
 )
 
 wpilib_cc_binary(
     name = "roborioteamnumbersetter",
-    srcs = glob(["native/cpp/*"]) + [
+    srcs = glob(["src/main/native/cpp/*"]) + [
         ":generate-resources",
         ":generate-version",
     ],
@@ -29,8 +29,8 @@ wpilib_cc_binary(
         "wpi-cpp-gui",
     ],
     deps = [
-        "//glass/src/lib/native:libglass",
-        "//glass/src/libnt/native:libglassnt",
+        "//glass:libglass",
+        "//glass:libglassnt",
         "@bzlmodrio-libssh//libraries/cpp/libssh",
     ],
 )

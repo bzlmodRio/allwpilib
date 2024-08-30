@@ -10,8 +10,6 @@ def wpi_proto_library(
         gen_srcs.append("generated_proto/" + pf[:-5] + "pb.cc")
         gen_hdrs.append("generated_proto/" + pf[:-5] + "pb.h")
 
-    print(gen_srcs)
-
     cmd = "$(locations //protoplugin:bazel_proto_generator) --proto_files $(SRCS) --output_files $(OUTS)"
     native.genrule(
         name = "generate_proto",
@@ -28,9 +26,9 @@ def wpi_proto_library(
         name = "cc_proto",
         srcs = gen_srcs,
         hdrs = gen_hdrs,
-        includes = ["generated_proto"],
+        includes = ["generated_proto/src/main/proto"],
         visibility = ["//visibility:public"],
         deps = [
-            "//wpiutil/src/main/native:wpiutil.static",
+            "//wpiutil:wpiutil.static",
         ],
     )

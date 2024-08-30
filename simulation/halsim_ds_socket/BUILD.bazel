@@ -16,8 +16,8 @@ wpilib_cc_shared_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//hal/src/main/native:wpiHal.shared",
-        "//wpinet/src/main/native:wpinet.shared",
+        "//hal:wpiHal.shared",
+        "//wpinet:wpinet.shared",
     ],
 )
 
@@ -25,12 +25,12 @@ wpilib_cc_test(
     name = "halsim_ds_socket-test",
     size = "small",
     srcs = glob([
-        "**/*.cpp",
-        "**/*.h",
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
     ]),
     tags = ["no-roborio"],
     deps = [
-        "//simulation/halsim_ds_socket/src/main/native:halsim_ds_socket.shared",
+        "//simulation/halsim_ds_socket:halsim_ds_socket.shared",
         "//thirdparty/googletest",
     ],
 )

@@ -1,5 +1,7 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_java//java:defs.bzl", "java_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules/gen:gen-resources.bzl", "generate_resources")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
@@ -92,15 +94,15 @@ generate_resources(
     name = "generate-resources",
     namespace = "dlt",
     prefix = "DLT",
-    resource_files = glob(["resources/*"]),
+    resource_files = glob(["src/main/native/resources/*"]),
 )
 
 filegroup(
     name = "native-srcs",
     srcs = ["generate-resources"] + select({
-        "@bazel_tools//src/conditions:darwin": glob(["macOS/*"]),
-        "@bazel_tools//src/conditions:windows": glob(["windows/*"]),
-        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": glob(["linux/*"]),
+        "@bazel_tools//src/conditions:darwin": glob(["src/main/native/macOS/*"]),
+        "@bazel_tools//src/conditions:windows": glob(["src/main/native/windows/*"]),
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": glob(["src/main/native/linux/*"]),
     }),
 )
 
@@ -109,7 +111,7 @@ wpilib_cc_library(
     hdrs = glob([
         "src/main/native/cpp/*.h",
     ]),
-    strip_include_prefix = "cpp",
+    strip_include_prefix = "src/main/native/cpp",
 )
 
 wpilib_cc_static_and_shared_library(
@@ -124,14 +126,14 @@ wpilib_cc_static_and_shared_library(
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = ["src/main/native/include"],
     standard_deps = [
-        ":private_includes",
         ":libuv-headers",
+        ":private_includes",
         ":tcpsockets-headers",
     ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
-        "//wpiutil/src/main/native:wpiutil",
+        "//wpiutil:wpiutil",
     ],
 )
 
@@ -141,7 +143,7 @@ wpilib_jni_cc_library(
         "src/main/native/cpp/jni/**",
         "src/main/native/cpp/**/*.h",
     ]),
-    java_dep = "//wpinet/src/main/java/edu/wpi/first/net:wpinet",
+    java_dep = ":wpinet-java",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         ":wpinet",
@@ -149,27 +151,36 @@ wpilib_jni_cc_library(
 )
 
 wpilib_java_jni_library(
-    name = "wpinet",
+    name = "wpinet-java",
     srcs = glob(["src/main/java/**/*.java"]),
-    native_libs = ["//wpinet/src/main/native:wpinetjni"],
+    native_libs = [":wpinetjni"],
     visibility = ["//visibility:public"],
     deps = [
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//wpiutil:wpiutil-java",
     ],
 )
 
 wpilib_cc_test(
-    name = "wpinet-test",
+    name = "wpinet-cpp-test",
     size = "small",
     srcs = glob([
-        "**/*.cpp",
-        "**/*.h",
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
     ]),
     tags = ["no-asan"],
     deps = [
+        ":wpinet.static",
         "//thirdparty/googletest",
-        "//wpinet/src/main/native:wpinet.static",
-        "//wpiutil/src/test/native:wpiutil-testlib",
+        "//wpiutil:wpiutil-testlib",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "wpinet-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = [
+        ":wpinet-java",
     ],
 )
 
@@ -181,42 +192,19 @@ wpilib_cc_binary(
     ],
 )
 
-wpilib_java_binary(
-    name = "DevMain-Java",
+java_binary(
+    name = "DevMain-java",
     srcs = ["src/dev/java/edu/wpi/first/net/DevMain.java"],
+    main_class = "edu.wpi.first.net.DevMain",
     deps = [
-        "//wpinet/src/main/java/edu/wpi/first/net:wpinet",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        ":wpinet-java",
+        "//wpiutil:wpiutil-java",
     ],
 )
 
-wpilib_cc_binary(
-    name = "dsclient",
-    srcs = ["dsclient.cpp"],
-    deps = [
-        ":wpinet.static",
-    ],
-)
-
-wpilib_cc_binary(
-    name = "parallelconnect",
-    srcs = ["parallelconnect.cpp"],
-    deps = [
-        ":wpinet.static",
-    ],
-)
-
-wpilib_cc_binary(
-    name = "webserver",
-    srcs = ["webserver.cpp"],
-    deps = [
-        ":wpinet.static",
-    ],
-)
-
-wpilib_cc_binary(
+cc_binary(
     name = "netconsoleServer",
-    srcs = ["main.cpp"],
+    srcs = ["src/netconsoleServer/native/cpp/main.cpp"],
     linkopts = select({
         "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["-lutil"],
         "//conditions:default": [],
@@ -226,19 +214,34 @@ wpilib_cc_binary(
     ],
 )
 
-wpilib_cc_binary(
+cc_binary(
     name = "netconsoleTee",
-    srcs = ["main.cpp"],
+    srcs = ["src/netconsoleTee/native/cpp/main.cpp"],
     deps = [
         ":wpinet.static",
     ],
 )
 
-wpilib_java_junit5_test(
-    name = "wpinet-test",
-    size = "small",
-    srcs = glob(["*.java"]),
+cc_binary(
+    name = "dsclient",
+    srcs = ["examples/dsclient/dsclient.cpp"],
     deps = [
-        "//wpinet/src/main/java/edu/wpi/first/net:wpinet",
+        ":wpinet.static",
+    ],
+)
+
+cc_binary(
+    name = "parallelconnect",
+    srcs = ["examples/parallelconnect/parallelconnect.cpp"],
+    deps = [
+        ":wpinet.static",
+    ],
+)
+
+cc_binary(
+    name = "webserver",
+    srcs = ["examples/webserver/webserver.cpp"],
+    deps = [
+        ":wpinet.static",
     ],
 )

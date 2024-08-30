@@ -16,8 +16,8 @@ wpilib_cc_shared_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//glass/src/libnt/native:libglassnt",
-        "//hal/src/main/native:wpiHal.shared",
+        "//glass:libglassnt",
+        "//hal:wpiHal.shared",
     ],
 )
 
@@ -25,8 +25,8 @@ wpilib_cc_test(
     name = "halsim_gui-test",
     size = "small",
     srcs = glob([
-        "**/*.cpp",
-        "**/*.h",
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
     ]),
     linkopts = get_wpigui_linker_flags(console = True),
     tags = [
@@ -34,7 +34,7 @@ wpilib_cc_test(
         "wpi-cpp-gui",
     ],
     deps = [
-        "//simulation/halsim_gui/src/main/native:halsim_gui.shared",
+        ":halsim_gui.shared",
         "//thirdparty/googletest",
     ],
 )

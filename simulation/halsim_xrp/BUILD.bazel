@@ -13,8 +13,8 @@ wpilib_cc_shared_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//simulation/halsim_ws_core/src/main/native:halsim_ws_core",
-        "//xrpVendordep/src/main/native:xrp.shared",
+        "//simulation/halsim_ws_core",
+        "//xrpVendordep:xrp-cpp.shared",
     ],
 )
 

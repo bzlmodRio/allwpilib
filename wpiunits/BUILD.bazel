@@ -7,19 +7,20 @@ wpilib_java_library(
     deps = [],
 )
 
-wpilib_java_binary(
-    name = "DevMain-Java",
-    srcs = ["src/dev/java/edu/wpi/first/units/DevMain.java"],
-    deps = [
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
-    ],
-)
-
 wpilib_java_junit5_test(
     name = "wpiunits-test",
     size = "small",
-    srcs = glob(["**/*.java"]),
+    srcs = glob(["src/test/java/**/*.java"]),
     deps = [
-        "//wpiunits/src/main/java/edu/wpi/first/units:wpiunits",
+        ":wpiunits",
+    ],
+)
+
+wpilib_java_binary(
+    name = "DevMain-Java",
+    srcs = ["src/dev/java/edu/wpi/first/units/DevMain.java"],
+    main_class = "edu.wpi.first.units.DevMain",
+    deps = [
+        ":wpiunits",
     ],
 )

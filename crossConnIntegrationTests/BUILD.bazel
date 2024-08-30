@@ -1,13 +1,13 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library")
 
-ATHENA_SOURCES = glob(["cpp/**"])
+ATHENA_SOURCES = glob(["src/main/native/cpp/**"])
 
-NON_ATHENA_SOURCES = glob(["dt/**"])
+NON_ATHENA_SOURCES = glob(["src/main/native/dt/**"])
 
 wpilib_cc_library(
     name = "test_headers",
-    hdrs = glob(["include/**"]),
-    strip_include_prefix = "include",
+    hdrs = glob(["src/main/native/include/**"]),
+    strip_include_prefix = "src/main/native/include",
 )
 
 wpilib_cc_binary(
@@ -18,8 +18,8 @@ wpilib_cc_binary(
     }),
     deps = [
         ":test_headers",
-        "//hal/src/main/native:wpiHal.shared",
+        "//hal:wpiHal.shared",
         "//thirdparty/googletest",
-        "//wpinet/src/main/native:wpinet.shared",
+        "//wpinet:wpinet.shared",
     ],
 )

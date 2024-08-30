@@ -1,20 +1,15 @@
 load("@rules_java//java:defs.bzl", "java_plugin")
-load("@rules_jvm_external//:defs.bzl", "java_plugin_artifact")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_library")
 
 wpilib_java_library(
     name = "processor",
     srcs = glob(["src/main/java/**/*.java"]),
-    plugins = [
-        java_plugin_artifact("com.google.auto.service:auto-service", "com.google.auto.service.processor.AutoServiceProcessor"),
-    ],
     visibility = ["//visibility:public"],
     runtime_deps = [
-        "//wpilibNewCommands/src/main/java/edu/wpi/first/wpilibj2/command:wpilibNewCommands",
+        "//wpilibNewCommands:wpilibNewCommands-java",
     ],
     deps = [
-        "//epilogue-runtime/src/main/java/edu/wpi/first/epilogue",
-        "@maven//:com_google_auto_service_auto_service_annotations",
+        "//epilogue-runtime:epilogue",
     ],
 )
 
@@ -28,14 +23,14 @@ java_plugin(
 )
 
 wpilib_java_junit5_test(
-    name = "processor",
+    name = "processor-test",
     size = "small",
-    srcs = glob(["*.java"]),
+    srcs = glob(["src/test/java/**/*.java"]),
     plugins = [
-        "//epilogue-processor/src/main/java/edu/wpi/first/epilogue/processor:plugin",
+        ":plugin",
     ],
     deps = [
-        "//epilogue-processor/src/main/java/edu/wpi/first/epilogue/processor",
+        ":processor",
         "@maven//:com_google_testing_compile_compile_testing",
     ],
 )

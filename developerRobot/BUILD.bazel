@@ -2,23 +2,23 @@ load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary")
 
 wpilib_java_binary(
-    name = "myRobot",
-    srcs = glob(["*.java"]),
+    name = "Main",
+    srcs = glob(["src/main/java/**/*.java"]),
     tags = ["wpi-example"],
     deps = [
-        "//hal/src/main/java/edu/wpi/first/hal",
-        "//ntcore/src/main/java/edu/wpi/first/networktables",
-        "//wpilibj/src/main/java/edu/wpi/first/wpilibj",
-        "//wpimath/src/main/java/edu/wpi/first/math:wpimath",
-        "//wpiutil/src/main/java/edu/wpi/first/util:wpiutil",
+        "//hal:hal-java",
+        "//ntcore:networktables-java",
+        "//wpilibj",
+        "//wpimath:wpimath-java",
+        "//wpiutil:wpiutil-java",
     ],
 )
 
 wpilib_cc_binary(
     name = "DeveloperRobot",
-    srcs = ["Robot.cpp"],
+    srcs = ["src/main/native/cpp/Robot.cpp"],
     tags = ["wpi-example"],
     deps = [
-        "//wpilibc/src/main/native:wpilibc.shared",
+        "//wpilibc:wpilibc.shared",
     ],
 )
