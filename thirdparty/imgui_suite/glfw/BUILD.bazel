@@ -141,6 +141,7 @@ wpilib_objc_library(
     copts = [
         "-fno-objc-arc",
         "-Wno-unused-parameter",
+        "-Wno-sign-compare",
         "-Wno-unused-command-line-argument",
     ],
     defines = DARWIN_DEFINES + ["GLFW_INVALID_CODEPOINT"],
