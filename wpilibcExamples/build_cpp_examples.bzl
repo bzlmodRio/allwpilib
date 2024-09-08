@@ -60,7 +60,7 @@ def build_tests():
             deps = [
                 "//wpilibNewCommands:wpilibNewCommands.static",
                 ":{}-examples-headers".format(folder),
-                "//thirdparty/googletest",
+                "//thirdparty/googletest:googletest.static",
             ],
             defines = ["RUNNING_FRC_TESTS=1"],
             tags = ["wpi-example", "no-tsan", "no-asan", "no-ubsan", "exclusive"],

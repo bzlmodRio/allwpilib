@@ -38,7 +38,7 @@ wpilib_cc_test(
     deps = [
         ":halsim_ws_server.shared",
         ":test_headers",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 

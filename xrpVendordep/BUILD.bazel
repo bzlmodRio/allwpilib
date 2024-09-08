@@ -30,7 +30,7 @@ wpilib_cc_test(
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
     deps = [
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 

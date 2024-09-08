@@ -170,7 +170,7 @@ wpilib_cc_test(
     tags = ["no-asan"],
     deps = [
         ":wpinet.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
         "//wpiutil:wpiutil-testlib",
     ],
 )

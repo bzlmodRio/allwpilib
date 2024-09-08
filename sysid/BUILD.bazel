@@ -51,6 +51,6 @@ wpilib_cc_test(
     ],
     deps = [
         ":sysid-lib",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )

@@ -10,6 +10,6 @@ wpilib_cc_binary(
         "wpi-cpp-gui",
     ],
     deps = [
-        "//wpigui/src/main/native:wpigui",
+        "//wpigui",
     ],
 )

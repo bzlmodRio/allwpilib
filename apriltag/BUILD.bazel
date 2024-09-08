@@ -101,7 +101,7 @@ wpilib_cc_test(
     ],
     deps = [
         ":apriltag.shared",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 

@@ -95,7 +95,7 @@ wpilib_cc_test(
     tags = ["no-tsan"],
     deps = [
         ":wpilibNewCommands.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 

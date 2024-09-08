@@ -122,7 +122,7 @@ wpilib_cc_test(
     deps = [
         ":test-headers",
         ":wpilibc.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 
@@ -134,7 +134,7 @@ wpilib_cc_binary(
     ]),
     deps = [
         ":wpilibc.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 
