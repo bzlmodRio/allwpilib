@@ -1,4 +1,29 @@
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test", "wpilib_java_library")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("//wpiunits:generate_wpiunits.bzl", "generate_wpiunits")
+
+py_binary(
+    name = "generate_units",
+    srcs = ["generate_units.py"],
+    data = glob(["src/generate/main/java/**"]),
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [requirement("jinja2")],
+)
+
+generate_wpiunits(
+    name = "gen_units",
+)
+
+write_source_files(
+    name = "write_wpiunits",
+    files = {
+        "src/generated": ":gen_units",
+    },
+    suggested_update_target = "//:write_all",
+    visibility = ["//visibility:public"],
+)
 
 wpilib_java_library(
     name = "wpiunits",

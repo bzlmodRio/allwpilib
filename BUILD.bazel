@@ -44,5 +44,6 @@ write_source_files(
         "//wpilibjExamples:write_example_project_list",
         "//wpilibNewCommands:write_wpilib_new_commands",
         "//wpimath:write_wpimath",
+        "//wpiunits:write_wpiunits",
     ],
 )
