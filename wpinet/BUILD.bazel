@@ -167,7 +167,6 @@ wpilib_cc_test(
         "src/test/native/**/*.cpp",
         "src/test/native/**/*.h",
     ]),
-    tags = ["no-asan"],
     deps = [
         ":wpinet.static",
         "//thirdparty/googletest",

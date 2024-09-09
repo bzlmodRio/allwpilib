@@ -127,8 +127,6 @@ wpilib_cc_test(
     ]),
     tags = [
         "exclusive",
-        "no-asan",
-        "no-tsan",
     ],
     deps = [
         ":ntcore.static",

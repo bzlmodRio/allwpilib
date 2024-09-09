@@ -96,9 +96,6 @@ wpilib_cc_test(
     name = "apriltag-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
-    tags = [
-        "no-asan",
-    ],
     deps = [
         ":apriltag.shared",
         "//thirdparty/googletest",

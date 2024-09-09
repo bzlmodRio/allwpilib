@@ -30,7 +30,6 @@ wpilib_cc_test(
     ]),
     linkopts = get_wpigui_linker_flags(console = True),
     tags = [
-        "no-asan",
         "wpi-cpp-gui",
     ],
     deps = [
