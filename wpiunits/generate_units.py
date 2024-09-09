@@ -9,8 +9,11 @@
 # Generated files will be located in wpiunits/src/generated/main/
 
 import inspect
+import argparse
 import os
 import re
+import sys
+from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -310,12 +313,29 @@ def mtou(measure_name):
         return re.sub(regex, "\\1Unit\\2", measure_name)
 
 
-def main():
+def main(argv):
+    script_path = Path(__file__).resolve()
+    script_dir = script_path.parent
 
-    dirname, _ = os.path.split(os.path.abspath(__file__))
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--output_directory",
+        help="Optional. If set, will output the generated files to this directory, otherwise it will use a path relative to the script",
+        default=script_dir / "src/generated",
+        type=Path,
+    )
+    parser.add_argument(
+        "--template_root",
+        help="Optional. If set, will use this directory as the root for the jinja templates",
+        default=script_dir / "src/generate",
+        type=Path,
+    )
+    args = parser.parse_args(argv)
+
+    dirname = args.output_directory
 
     env = Environment(
-        loader=FileSystemLoader(f"{dirname}/src/generate/main/java"),
+        loader=FileSystemLoader(f"{args.template_root}/main/java"),
         autoescape=False,
         keep_trailing_newline=True,
     )
@@ -323,7 +343,7 @@ def main():
     interfaceTemplate = env.get_template("Measure-interface.java.jinja")
     immutableTemplate = env.get_template("Measure-immutable.java.jinja")
     mutableTemplate = env.get_template("Measure-mutable.java.jinja")
-    rootPath = f"{dirname}/src/generated/main/java/edu/wpi/first/units"
+    rootPath = f"{dirname}/main/java/edu/wpi/first/units"
 
     helpers = {
         "type_decl": type_decl,
@@ -359,4 +379,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
