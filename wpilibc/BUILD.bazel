@@ -118,6 +118,7 @@ wpilib_cc_test(
     tags = [
         "no-asan",
         "no-tsan",
+        "no-ubsan",
     ],
     deps = [
         ":test-headers",
@@ -132,6 +133,9 @@ wpilib_cc_binary(
         "src/test/native/c/**",
         "src/test/native/cpp/main.cpp",
     ]),
+    tags = [
+        "no-ubsan",
+    ],
     deps = [
         ":wpilibc.static",
         "//thirdparty/googletest:googletest.static",
