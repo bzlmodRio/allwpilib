@@ -92,10 +92,13 @@ wpilib_cc_test(
         "src/test/native/**/*.cpp",
         "src/test/native/**/*.h",
     ]),
-    tags = ["no-tsan"],
+    tags = [
+        "no-tsan",
+        "no-ubsan",
+    ],
     deps = [
         ":wpilibNewCommands.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 

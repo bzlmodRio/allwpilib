@@ -182,7 +182,7 @@ wpilib_cc_test(
     deps = [
         ":test_headers",
         ":wpimath.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 

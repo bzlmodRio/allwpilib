@@ -1,16 +1,16 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
 
-WIN_SRCS = glob(["directx11/**/*.cpp"])
+WIN_SRCS = glob(["src/main/native/directx11/**/*.cpp"])
 
-LINUX_SRCS = glob(["opengl3/**/*.cpp"])
+LINUX_SRCS = glob(["src/main/native/opengl3/**/*.cpp"])
 
-MAC_SRCS = glob(["metal/**/*.mm"])
+MAC_SRCS = glob(["src/main/native/metal/**/*.mm"])
 
 wpilib_cc_library(
     name = "headers",
-    hdrs = glob(["include/**/*"]),
-    strip_include_prefix = "include",
+    hdrs = glob(["src/main/native/include/**/*"]),
+    strip_include_prefix = "src/main/native/include",
 )
 
 wpilib_objc_library(
@@ -24,7 +24,7 @@ wpilib_objc_library(
 
 wpilib_cc_library(
     name = "wpigui",
-    srcs = glob(["cpp/**/*.cpp"]) +
+    srcs = glob(["src/main/native/cpp/**/*.cpp"]) +
            select({
                "@bazel_tools//src/conditions:darwin": [],
                "@bazel_tools//src/conditions:windows": WIN_SRCS,

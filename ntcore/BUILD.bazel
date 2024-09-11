@@ -132,7 +132,7 @@ wpilib_cc_test(
     ],
     deps = [
         ":ntcore.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
         "//wpiutil:wpiutil-testlib",
     ],
 )

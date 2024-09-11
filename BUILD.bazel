@@ -1,6 +1,15 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 
+filegroup(
+    name = "license",
+    srcs = [
+        "LICENSE.md",
+        "ThirdPartyNotices.txt",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 # bazel build //:requirements.lock
 compile_pip_requirements(
     name = "requirements",
@@ -35,5 +44,6 @@ write_source_files(
         "//wpilibjExamples:write_example_project_list",
         "//wpilibNewCommands:write_wpilib_new_commands",
         "//wpimath:write_wpimath",
+        "//wpiunits:write_wpiunits",
     ],
 )

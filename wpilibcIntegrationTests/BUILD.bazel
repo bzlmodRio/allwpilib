@@ -18,7 +18,7 @@ wpilib_cc_binary(
     }),
     deps = [
         ":test_headers",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
         "//wpilibc:wpilibc.shared",
     ],
 )

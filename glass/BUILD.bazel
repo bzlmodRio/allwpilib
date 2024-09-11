@@ -14,8 +14,8 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//fieldImages:fieldImages-cpp",
-        "//wpigui/src/main/native:wpigui",
+        "//fieldImages:fieldImages.static",
+        "//wpigui",
         "//wpimath:wpimath.shared",
         "//wpiutil:wpiutil.shared",
     ],

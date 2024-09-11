@@ -28,6 +28,11 @@ def wpi_proto_library(
         srcs = gen_srcs,
     )
 
+    native.filegroup(
+        name = name + ".hdr_files",
+        srcs = gen_hdrs,
+    )
+
     cc_library(
         name = name + ".hdrs",
         hdrs = gen_hdrs,

@@ -127,7 +127,7 @@ wpilib_cc_test(
     ]),
     deps = [
         ":wpiHal.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 

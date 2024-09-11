@@ -41,7 +41,7 @@ wpilib_cc_test(
     ]),
     deps = [
         ":cameraserver.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 

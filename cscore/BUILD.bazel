@@ -105,7 +105,7 @@ wpilib_cc_test(
     ]),
     deps = [
         ":cscore.static",
-        "//thirdparty/googletest",
+        "//thirdparty/googletest:googletest.static",
     ],
 )
 
