@@ -18,6 +18,16 @@ wpilib_cc_library(
 )
 
 wpilib_cc_library(
+    name = "concurrentqueue-headers",
+    hdrs = glob([
+        "src/main/native/thirdparty/concurrentqueue/include/**/*",
+    ]),
+    includes = ["src/main/native/thirdparty/concurrentqueue/include"],
+    strip_include_prefix = "src/main/native/thirdparty/concurrentqueue/include",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+wpilib_cc_library(
     name = "fmtlib-headers",
     hdrs = glob([
         "src/main/native/thirdparty/fmtlib/include/**/*.h",
@@ -153,6 +163,7 @@ wpilib_cc_static_and_shared_library(
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = ["src/main/native/include"],
     standard_deps = [
+        ":concurrentqueue-headers",
         ":expected-headers",
         ":fmtlib-headers",
         ":json-headers",
