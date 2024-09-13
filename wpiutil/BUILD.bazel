@@ -8,6 +8,16 @@ load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 
 wpilib_cc_library(
+    name = "argparse-headers",
+    hdrs = glob([
+        "src/main/native/thirdparty/argparse/include/**/*",
+    ]),
+    includes = ["src/main/native/thirdparty/argparse/include"],
+    strip_include_prefix = "src/main/native/thirdparty/argparse/include",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+wpilib_cc_library(
     name = "expected-headers",
     hdrs = glob([
         "src/main/native/thirdparty/expected/include/**/*",
@@ -163,6 +173,7 @@ wpilib_cc_static_and_shared_library(
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = ["src/main/native/include"],
     standard_deps = [
+        ":argparse-headers",
         ":concurrentqueue-headers",
         ":expected-headers",
         ":fmtlib-headers",
