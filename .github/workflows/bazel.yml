@@ -42,14 +42,16 @@ jobs:
           architecture: x64
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY == '' }}
         run: |
             echo "No API key secret detected, will setup readonly cache"
             echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY != '' }}
         run: |
             echo "API Key detected!"
@@ -100,14 +102,16 @@ jobs:
         with: { fetch-depth: 0 }
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY == '' }}
         run: |
             echo "No API key secret detected, will setup readonly cache"
             echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY != '' }}
         run: |
             echo "API Key detected!"
@@ -161,14 +165,16 @@ jobs:
       - uses: bazelbuild/setup-bazelisk@v3
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY == '' }}
         run: |
             echo "No API key secret detected, will setup readonly cache"
             echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY != '' }}
         run: |
             echo "API Key detected!"
@@ -218,14 +224,16 @@ jobs:
       - uses: bazelbuild/setup-bazelisk@v3
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY == '' }}
         run: |
             echo "No API key secret detected, will setup readonly cache"
             echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY != '' }}
         run: |
             echo "API Key detected!"
@@ -245,14 +253,16 @@ jobs:
         run: sudo apt-get install -y lcov
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY == '' }}
         run: |
             echo "No API key secret detected, will setup readonly cache"
             echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY != '' }}
         run: |
             echo "API Key detected!"
@@ -329,14 +339,16 @@ jobs:
 
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY == '' }}
         run: |
             echo "No API key secret detected, will setup readonly cache"
             echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
 
       - name: Set buildbuddy key
-        env: { API_KEY: ${{ secrets.BUILDBUDY_API_KEY }} }
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
         if: ${{ env.API_KEY != '' }}
         run: |
             echo "API Key detected!"
