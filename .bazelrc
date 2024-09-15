@@ -31,7 +31,6 @@ common --lockfile_mode=update
 common --registry=https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/
 
 build:ci --config=build_buddy
-build:ci --remote_download_minimal
 
 build:local_remote --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
 
