@@ -42,7 +42,21 @@ jobs:
           architecture: x64
 
       - name: Set buildbuddy key
-        run: echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY == '' }}
+        run: |
+            echo "No API key secret detected, will setup readonly cache"
+            echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
+
+      - name: Set buildbuddy key
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY != '' }}
+        run: |
+            echo "API Key detected!"
+            echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+            echo "build:ci --remote_download_minimal" >> bazel_auth.rc
 
       - name: Build Release allowing failures
         run: bazel --output_user_root=C:\\bazelroot build -k ...  -c opt --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
@@ -88,7 +102,21 @@ jobs:
         with: { fetch-depth: 0 }
 
       - name: Set buildbuddy key
-        run: echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY == '' }}
+        run: |
+            echo "No API key secret detected, will setup readonly cache"
+            echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
+
+      - name: Set buildbuddy key
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY != '' }}
+        run: |
+            echo "API Key detected!"
+            echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+            echo "build:ci --remote_download_minimal" >> bazel_auth.rc
 
       - name: Build Release allowing failures
         run: bazel build -k ...  -c opt --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
@@ -137,7 +165,21 @@ jobs:
       - uses: bazelbuild/setup-bazelisk@v3
 
       - name: Set buildbuddy key
-        run: echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY == '' }}
+        run: |
+            echo "No API key secret detected, will setup readonly cache"
+            echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
+
+      - name: Set buildbuddy key
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY != '' }}
+        run: |
+            echo "API Key detected!"
+            echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+            echo "build:ci --remote_download_minimal" >> bazel_auth.rc
 
       - name: Build Release and allow failures
         run: bazel build ... -c opt --config=ci ${{ matrix.config }} -k --verbose_failures || true
@@ -180,8 +222,23 @@ jobs:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: bazelbuild/setup-bazelisk@v3
+
       - name: Set buildbuddy key
-        run: echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY == '' }}
+        run: |
+            echo "No API key secret detected, will setup readonly cache"
+            echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
+
+      - name: Set buildbuddy key
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY != '' }}
+        run: |
+            echo "API Key detected!"
+            echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+            echo "build:ci --remote_download_minimal" >> bazel_auth.rc
       - name: Build and Test
         run: bazel test  -k --config=ci --config=linux --noenable_bzlmod --config=${{ matrix.config }} //...
 
@@ -196,7 +253,21 @@ jobs:
         run: sudo apt-get install -y lcov
 
       - name: Set buildbuddy key
-        run: echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY == '' }}
+        run: |
+            echo "No API key secret detected, will setup readonly cache"
+            echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
+
+      - name: Set buildbuddy key
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY != '' }}
+        run: |
+            echo "API Key detected!"
+            echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+            echo "build:ci --remote_download_minimal" >> bazel_auth.rc
 
       - name: Build, allow buildbudy failure
         run: bazel coverage --config=ci --config=linux --noenable_bzlmod -k -- //... -//simulation/halsim_gui:halsim_gui-test -//sysid:sysid-test
@@ -266,8 +337,23 @@ jobs:
           cd $(mktemp -d)
           GO111MODULE=on go get github.com/bazelbuild/buildtools/buildozer@5.1.0
 
+
       - name: Set buildbuddy key
-        run: echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY == '' }}
+        run: |
+            echo "No API key secret detected, will setup readonly cache"
+            echo "build:ci --noremote_upload_local_results" > bazel_auth.rc
+
+      - name: Set buildbuddy key
+        env: 
+          API_KEY: ${{ secrets.BUILDBUDY_API_KEY }}
+        if: ${{ env.API_KEY != '' }}
+        run: |
+            echo "API Key detected!"
+            echo "build:build_buddy --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDY_API_KEY }}" > bazel_auth.rc
+            echo "build:ci --remote_download_minimal" >> bazel_auth.rc
 
       - name: Dump Platform Flag
         run: |
