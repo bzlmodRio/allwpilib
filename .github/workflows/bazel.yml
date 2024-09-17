@@ -43,6 +43,8 @@ jobs:
 
       - id: Setup_build_buddy
         uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Build Release allowing failures
         run: bazel --output_user_root=C:\\bazelroot build -k ...  -c opt --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
@@ -89,6 +91,8 @@ jobs:
 
       - id: Setup_build_buddy
         uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Build Release allowing failures
         run: bazel build -k ...  -c opt --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
@@ -138,6 +142,8 @@ jobs:
 
       - id: Setup_build_buddy
         uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Build Release and allow failures
         run: bazel build ... -c opt --config=ci ${{ matrix.config }} -k --verbose_failures || true
@@ -183,6 +189,8 @@ jobs:
 
       - id: Setup_build_buddy
         uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Build and Test
         run: bazel test  -k --config=ci --config=linux --noenable_bzlmod --config=${{ matrix.config }} //...
@@ -199,6 +207,8 @@ jobs:
 
       - id: Setup_build_buddy
         uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Build, allow buildbudy failure
         run: bazel coverage --config=ci --config=linux --noenable_bzlmod -k -- //... -//simulation/halsim_gui:halsim_gui-test -//sysid:sysid-test
@@ -270,6 +280,8 @@ jobs:
 
       - id: Setup_build_buddy
         uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Dump Platform Flag
         run: |
