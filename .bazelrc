@@ -31,7 +31,7 @@ common --lockfile_mode=update
 common --registry=https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/
 
 build:ci --config=build_buddy
-# Don't set the download level, because ci may or may not be able to write to the cache
+build:ci --remote_download_minimal
 
 build:local_remote --config=build_buddy
 build:local_remote --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
