@@ -1,0 +1,10 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
+
+wpilib_cc_static_and_shared_library(
+    name = "googletest",
+    srcs = glob(["src/**"]),
+    hdrs = glob(["include/**"]),
+    includes = ["src/googletest"],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+)

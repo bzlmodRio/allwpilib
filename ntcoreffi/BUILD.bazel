@@ -1,0 +1,34 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
+
+cmd = "$(locations :generate_export_symbols) --output_file $(OUTS) --symbols_file=$(locations src/main/native/symbols.txt)"
+
+genrule(
+    name = "generate_symbols",
+    srcs = ["src/main/native/symbols.txt"],
+    outs = ["src/main/native/include/ExportedSymbols.h"],
+    cmd = cmd,
+    tools = [":generate_export_symbols"],
+)
+
+py_binary(
+    name = "generate_export_symbols",
+    srcs = ["src/main/native/generate_export_symbols.py"],
+    tags = ["manual"],
+)
+
+wpilib_cc_static_and_shared_library(
+    name = "ntcoreffi",
+    srcs = glob([
+        "src/main/native/c/**",
+        "src/main/native/cpp/**",
+    ]),
+    hdrs = glob(["src/main/native/include/**/*"]) + [":generate_symbols"],
+    export_symbols = False,
+    includes = ["src/main/native/include"],
+    strip_include_prefix = "src/main/native/include",
+    wpi_maybe_shared_deps = [
+        "//ntcore:ntcore",
+        "//wpiutil:wpiutil",
+    ],
+)
