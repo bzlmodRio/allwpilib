@@ -134,7 +134,7 @@ filegroup(
 
 filegroup(
     name = "templates",
-    srcs = glob(["src/generate/*.jinja"]) + [
+    srcs = glob(["src/generate/**/*.jinja"]) + [
         ":hid_schema",
         ":pwm_schema",
     ],
