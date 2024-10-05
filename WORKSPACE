@@ -78,7 +78,7 @@ setup_legacy_setup_jdk_dependencies()
 http_archive(
     name = "bzlmodrio-ni",
     sha256 = "28abfa366389514669dabf9e71cc723749f650e98a689bf428ec1fc998ca5de9",
-    url = "https://github.com/bzlmodRio/bzlmodRio-ni/releases/download/2024.2.1.bcr1/bzlmodRio-ni-2024.2.1.bcr1.tar.gz",
+    url = "https://github.com/wpilibsuite/bzlmodRio-ni/releases/download/2024.2.1.bcr1/bzlmodRio-ni-2024.2.1.bcr1.tar.gz",
 )
 
 load("@bzlmodrio-ni//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_ni_cpp_dependencies")
@@ -88,7 +88,7 @@ setup_legacy_bzlmodrio_ni_cpp_dependencies()
 http_archive(
     name = "bzlmodrio-opencv",
     sha256 = "5314cce05b49451a46bf3e3140fc401342e53d5f3357612ed4473e59bb616cba",
-    url = "https://github.com/bzlmodRio/bzlmodRio-opencv/releases/download/2024.4.8.0-4.bcr1/bzlmodRio-opencv-2024.4.8.0-4.bcr1.tar.gz",
+    url = "https://github.com/wpilibsuite/bzlmodRio-opencv/releases/download/2024.4.8.0-4.bcr1/bzlmodRio-opencv-2024.4.8.0-4.bcr1.tar.gz",
 )
 
 load("@bzlmodrio-opencv//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_opencv_cpp_dependencies")
