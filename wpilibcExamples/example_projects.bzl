@@ -73,13 +73,8 @@ COMMANDS_V2_FOLDERS = [
     "parallelcommandgroup",
     "paralleldeadlinegroup",
     "parallelracegroup",
-    "pidcommand",
-    "pidsubsystem2",
-    "profiledpidcommand",
-    "profiledpidsubsystem",
     "sequentialcommandgroup",
     "subsystem2",
-    "trapezoidprofilesubsystem",
 ]
 
 TEMPLATES_FOLDERS = [
@@ -97,9 +92,9 @@ TESTS_FOLDERS = [
     "DigitalCommunication",
     "ElevatorSimulation",
     "I2CCommunication",
-    # "MecanumControllerCommand",
+    "MecanumControllerCommand",
     "PotentiometerPID",
-    # "SwerveControllerCommand",
+    "SwerveControllerCommand",
     "UltrasonicPID",
     "UnitTest",
 ]
