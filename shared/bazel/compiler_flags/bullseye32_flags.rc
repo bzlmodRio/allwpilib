@@ -1,0 +1,13 @@
+
+build:bullseye32 --config=base_linux
+
+build:bullseye32 --platforms=@rules_bzlmodrio_toolchains//platforms/bullseye32
+build:bullseye32 --build_tag_filters=-no-bullseye
+build:bullseye32 --features=compiler_param_file
+build:bullseye32 --platform_suffix=bullseye32
+build:bullseye32 --incompatible_enable_cc_toolchain_resolution
+
+build:bullseye32 --cxxopt=-Wno-error=deprecated-declarations
+
+# Extra 11
+# build:bullseye32 --cxxopt=-Wno-error=deprecated-enum-enum-conversion
