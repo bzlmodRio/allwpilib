@@ -52,7 +52,7 @@ EXAMPLE_FOLDERS = [
     "SwerveBot",
     "SwerveControllerCommand",
     "SwerveDrivePoseEstimator",
-    "SysId",
+    "SysIdRoutine",
     "TankDrive",
     "TankDriveXboxController",
     "Ultrasonic",

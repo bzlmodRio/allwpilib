@@ -51,7 +51,7 @@ EXAMPLES_FOLDERS = [
     "swervebot",
     "swervecontrollercommand",
     "swervedriveposeestimator",
-    "sysid",
+    "sysidroutine",
     "tankdrive",
     "tankdrivexboxcontroller",
     "ultrasonic",
