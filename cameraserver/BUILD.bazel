@@ -59,27 +59,3 @@ wpilib_java_binary(
     deps = [
     ],
 )
-
-wpilib_cc_binary(
-    name = "multiCameraServer-cpp",
-    srcs = ["multiCameraServer/src/main/native/cpp/main.cpp"],
-    deps = [
-        ":cameraserver.static",
-        "//ntcore:ntcore.static",
-    ],
-)
-
-wpilib_java_binary(
-    name = "multiCameraServer-java",
-    srcs = ["multiCameraServer/src/main/java/edu/wpi/Main.java"],
-    main_class = "edu.wpi.Main",
-    deps = [
-        ":cameraserver-java",
-        "//cscore:cscore-java",
-        "//hal:hal-java",
-        "//ntcore:networktables-java",
-        "//wpimath:wpimath-java",
-        "//wpiutil:wpiutil-java",
-        "@maven//:com_google_code_gson_gson",
-    ],
-)
