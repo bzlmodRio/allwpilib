@@ -1,11 +1,12 @@
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_java_library", "bundle_artifacts")
 
 wpilib_java_library(
     name = "epilogue",
     srcs = glob(["src/main/java/**/*.java"]),
     visibility = ["//visibility:public"],
     deps = [
-        "//ntcore:networktables-java",
+        "//ntcore:ntcore-java",
         "//wpiunits",
         "//wpiutil:wpiutil-java",
     ],
@@ -18,5 +19,17 @@ wpilib_java_junit5_test(
     deps = [
         ":epilogue",
         "//wpiutil:wpiutil-java",
+    ],
+)
+
+assemble_java_library(
+    base_name = "epilogue-runtime",
+    src_directories = ["src/main/java"],
+)
+
+bundle_artifacts(
+    name = "epilogue-runtime-publishing",
+    artifacts = [
+        ("edu.wpi.first.epilogue:epilogue-runtime-java:-sources", "epilogue-runtime.java_srcs_pkg"),
     ],
 )

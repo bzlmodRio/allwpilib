@@ -1,5 +1,7 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+load("//shared/bazel/rules:publishing.bzl", "publish_artifacts")
 
 filegroup(
     name = "license",
@@ -7,6 +9,12 @@ filegroup(
         "LICENSE.md",
         "ThirdPartyNotices.txt",
     ],
+    visibility = ["//visibility:public"],
+)
+
+pkg_files(
+    name = "liscense_pkg_files",
+    srcs = [":license"],
     visibility = ["//visibility:public"],
 )
 
@@ -45,5 +53,40 @@ write_source_files(
         "//wpilibNewCommands:write_wpilib_new_commands",
         "//wpimath:write_wpimath",
         "//wpiunits:write_wpiunits",
+    ],
+)
+
+publish_artifacts(
+    name = "publish",
+    artifact_bundles = [
+        "//thirdparty/imgui_suite:imgui-publishing",
+        "//thirdparty/googletest:googletest-publishing",
+        "//wpiutil:wpiutil-publishing",
+        "//wpinet:wpinet-publishing",
+        "//wpiunits:wpiunits-publishing",
+        "//ntcore:ntcore-publishing",
+        "//cscore:cscore-publishing",  # Needs work
+        "//hal:hal-publishing",  # Needs work
+        "//epilogue-processor:epilogue-processor-publishing",
+        "//epilogue-runtime:epilogue-runtime-publishing",
+        "//fieldImages:fieldImages-publishing",
+        "//cameraserver:cameraserver-publishing",
+        "//wpimath:wpimath-publishing",  # Needs proto in src/hdr
+        "//apriltag:apriltag-publishing",
+        "//wpilibNewCommands:wpilibNewCommands-publishing",
+        "//wpilibj:wpilibj-publishing",  # Needs version file
+        "//wpilibc:wpilibc-publishing",  # Needs work
+        "//xrpVendordep:xrpVendordep-publishing",
+        "//romiVendordep:romiVendordep-publishing",
+        "//wpilibcExamples:wpilibcExamples-publishing",
+        "//wpilibjExamples:wpilibjExamples-publishing",
+        "//wpigui:wpigui-publishing",  # Needs work
+        "//glass:glass-publishing",
+        "//simulation/halsim_gui:halsim_gui-publishing",
+        "//simulation/halsim_ds_socket:halsim_ds_socket-publishing",
+        "//simulation/halsim_ws_client:halsim_ws_client-publishing",
+        "//simulation/halsim_ws_core:halsim_ws_core-publishing",
+        "//simulation/halsim_ws_server:halsim_ws_server-publishing",
+        "//simulation/halsim_xrp:halsim_xrp-publishing",
     ],
 )

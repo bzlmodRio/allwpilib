@@ -1,0 +1,15 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+
+py_binary(
+    name = "combine_artifacts",
+    srcs = ["combine_artifacts.py"],
+    visibility = ["//visibility:public"],
+)
+
+exports_files(["publish.py"])
+
+py_binary(
+    name = "publish",
+    srcs = ["publish.py"],
+    visibility = ["//visibility:public"],
+)

@@ -3,6 +3,7 @@ load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test", "wpilib_java_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "assemble_java_library", "bundle_artifacts")
 load("//wpilibNewCommands:generate.bzl", "generate_wpilib_new_commands")
 
 py_binary(
@@ -76,7 +77,7 @@ wpilib_java_library(
     deps = [
         "//cscore:cscore-java",
         "//hal:hal-java",
-        "//ntcore:networktables-java",
+        "//ntcore:ntcore-java",
         "//wpilibj",
         "//wpimath:wpimath-java",
         "//wpinet:wpinet-java",
@@ -110,7 +111,7 @@ wpilib_java_junit5_test(
     resources = glob(["src/test/resources/**"]),
     deps = [
         "//hal:hal-java",
-        "//ntcore:networktables-java",
+        "//ntcore:ntcore-java",
         "//wpilibNewCommands",
         "//wpilibj",
         "//wpimath:wpimath-java",
@@ -133,8 +134,39 @@ wpilib_java_binary(
     main_class = "edu.wpi.first.wpilibj2.commands.DevMain",
     deps = [
         "//hal:hal-java",
-        "//ntcore:networktables-java",
+        "//ntcore:ntcore-java",
         "//wpimath:wpimath-java",
         "//wpiutil:wpiutil-java",
+    ],
+)
+
+assemble_cpp_library(
+    base_name = "wpilibNewCommands",
+    hdr_directories = [
+        "src/main/native/include",
+        "src/generated/main/native/include",
+    ],
+    shared_library_pkg_files = "wpilibNewCommands.shared_pkg_files",
+    src_directories = ["src/main/native/cpp"],
+    static_library_pkg_files = "wpilibNewCommands.static_pkg_files",
+)
+
+assemble_java_library(
+    base_name = "wpilibNewCommands",
+    src_directories = [
+        "src/main/java",
+        "src/generated/main/java",
+    ],
+)
+
+bundle_artifacts(
+    name = "wpilibNewCommands-publishing",
+    artifacts = [
+        ("edu.wpi.first.wpilibNewCommands:wpilibNewCommands-cpp:-headers", "wpilibNewCommands.hdrs_pkg"),
+        ("edu.wpi.first.wpilibNewCommands:wpilibNewCommands-cpp:-sources", "wpilibNewCommands.srcs_pkg"),
+        ("edu.wpi.first.wpilibNewCommands:wpilibNewCommands-cpp:-{platform}", "wpilibNewCommands.shared_pkg"),
+        ("edu.wpi.first.wpilibNewCommands:wpilibNewCommands-cpp:-{platform}static", "wpilibNewCommands.static_pkg"),
+        ("edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:-sources", "wpilibNewCommands.java_srcs_pkg"),
+        # ("edu.wpi.first.wpilibNewCommands:wpilibNewCommands-java:-sources", "libwpilibNewCommands-java-src.jar"),
     ],
 )

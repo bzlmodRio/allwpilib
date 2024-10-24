@@ -15,7 +15,7 @@ def build_examples(halsim_deps):
                 "//cameraserver:cameraserver-java",
                 "//cscore:cscore-java",
                 "//hal:hal-java",
-                "//ntcore:networktables-java",
+                "//ntcore:ntcore-java",
                 "//wpimath:wpimath-java",
                 "//wpilibj:wpilibj",
                 "//wpilibNewCommands:wpilibNewCommands-java",
@@ -68,7 +68,7 @@ def build_tests():
             deps = [
                 ":" + folder + "-example",
                 "//hal:hal-java",
-                "//ntcore:networktables-java",
+                "//ntcore:ntcore-java",
                 "//wpilibj:wpilibj",
                 "//wpilibNewCommands:wpilibNewCommands-java",
                 "//wpimath:wpimath-java",

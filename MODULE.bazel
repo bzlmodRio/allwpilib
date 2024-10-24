@@ -19,6 +19,7 @@ bazel_dep(name = "bzlmodrio-opencv", version = "2024.4.8.0-2")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.8.1-1")
+bazel_dep(name = "rules_pkg", version = "0.0.10")
 
 git_override(
     module_name = "protobuf",

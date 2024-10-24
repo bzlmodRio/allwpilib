@@ -1,20 +1,40 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "bundle_artifacts")
 
-wpilib_cc_library(
+wpilib_cc_static_and_shared_library(
     name = "halsim_ws_core",
     srcs = glob(["src/main/native/cpp/*.cpp"]),
     hdrs = glob([
         "src/main/native/include/*.h",
         "src/main/native/include/*.inc",
     ]),
-    strip_include_prefix = "src/main/native/include",
-    tags = [
-        "no-roborio",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
+    standard_deps = [
         "//hal:wpiHal.shared",
         "//wpinet:wpinet.shared",
         "//wpiutil:wpiutil.shared",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    # tags = [
+    #     "no-roborio",
+    # ],
+    visibility = ["//visibility:public"],
+)
+
+assemble_cpp_library(
+    base_name = "halsim_ws_core",
+    hdr_directories = ["src/main/native/include"],
+    shared_library_pkg_files = "halsim_ws_core.shared_pkg_files",
+    src_directories = ["src/main/native/cpp"],
+    static_library_pkg_files = "halsim_ws_core.static_pkg_files",
+    include_license_files_in_srcs = True,
+)
+
+bundle_artifacts(
+    name = "halsim_ws_core-publishing",
+    artifacts = [
+        ("edu.wpi.first.halsim:halsim_ws_core:-headers", "halsim_ws_core.hdrs_pkg"),
+        ("edu.wpi.first.halsim:halsim_ws_core:-sources", "halsim_ws_core.srcs_pkg"),
+        ("edu.wpi.first.halsim:halsim_ws_core:-{platform}", "halsim_ws_core.shared_pkg"),
+        ("edu.wpi.first.halsim:halsim_ws_core:-{platform}static", "halsim_ws_core.static_pkg"),
     ],
 )

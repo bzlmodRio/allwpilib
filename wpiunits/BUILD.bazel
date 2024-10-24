@@ -2,6 +2,7 @@ load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test", "wpilib_java_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_java_library", "bundle_artifacts")
 load("//wpiunits:generate_wpiunits.bzl", "generate_wpiunits")
 
 py_binary(
@@ -48,5 +49,20 @@ wpilib_java_binary(
     main_class = "edu.wpi.first.units.DevMain",
     deps = [
         ":wpiunits",
+    ],
+)
+
+assemble_java_library(
+    base_name = "wpiunit",
+    src_directories = [
+        "src/main/java",
+        "src/generated/main/java",
+    ],
+)
+
+bundle_artifacts(
+    name = "wpiunits-publishing",
+    artifacts = [
+        ("edu.wpi.first.wpiunits:wpiunits-java:-sources", "wpiunit.java_srcs_pkg"),
     ],
 )

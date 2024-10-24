@@ -1,5 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_plugin")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_java_library", "bundle_artifacts")
 
 wpilib_java_library(
     name = "processor",
@@ -32,5 +33,17 @@ wpilib_java_junit5_test(
     deps = [
         ":processor",
         "@maven//:com_google_testing_compile_compile_testing",
+    ],
+)
+
+assemble_java_library(
+    base_name = "epilogue-processor",
+    src_directories = ["src/main/java"],
+)
+
+bundle_artifacts(
+    name = "epilogue-processor-publishing",
+    artifacts = [
+        ("edu.wpi.first.epilogue:epilogue-processor-java:-sources", "epilogue-processor.java_srcs_pkg"),
     ],
 )

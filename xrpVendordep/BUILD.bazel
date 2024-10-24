@@ -1,8 +1,9 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "assemble_java_library", "bundle_artifacts")
 
 wpilib_cc_static_and_shared_library(
-    name = "xrp-cpp",
+    name = "xrpVendordep",
     srcs = glob([
         "src/main/native/cpp/**",
     ]),
@@ -48,7 +49,31 @@ wpilib_java_binary(
     main_class = "edu.wpi.first.wpilibj.xrp.DevMain",
     deps = [
         "//hal:hal-java",
-        "//ntcore:networktables-java",
+        "//ntcore:ntcore-java",
         "//wpiutil:wpiutil-java",
+    ],
+)
+
+assemble_cpp_library(
+    base_name = "xrpVendordep",
+    hdr_directories = ["src/main/native/include"],
+    shared_library_pkg_files = "xrpVendordep.shared_pkg_files",
+    src_directories = ["src/main/native/cpp"],
+    static_library_pkg_files = "xrpVendordep.static_pkg_files",
+)
+
+assemble_java_library(
+    base_name = "xrpVendordep",
+    src_directories = ["src/main/java"],
+)
+
+bundle_artifacts(
+    name = "xrpVendordep-publishing",
+    artifacts = [
+        ("edu.wpi.first.xrpVendordep:xrpVendordep-cpp:-headers", "xrpVendordep.hdrs_pkg"),
+        ("edu.wpi.first.xrpVendordep:xrpVendordep-cpp:-sources", "xrpVendordep.srcs_pkg"),
+        ("edu.wpi.first.xrpVendordep:xrpVendordep-java:-sources", "xrpVendordep.java_srcs_pkg"),
+        ("edu.wpi.first.xrpVendordep:xrpVendordep-cpp:-{platform}", "xrpVendordep.shared_pkg"),
+        ("edu.wpi.first.xrpVendordep:xrpVendordep-cpp:-{platform}static", "xrpVendordep.static_pkg"),
     ],
 )

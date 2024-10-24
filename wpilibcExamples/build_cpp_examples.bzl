@@ -16,8 +16,8 @@ def build_examples(halsim_deps = []):
             deps = [
                 "//wpilibNewCommands:wpilibNewCommands.shared",
                 "//apriltag:apriltag.shared",
-                "//romiVendordep:romi-cpp.shared",
-                "//xrpVendordep:xrp-cpp.shared",
+                "//romiVendordep:romiVendordep.shared",
+                "//xrpVendordep:xrpVendordep.shared",
                 ":{}-examples-headers".format(folder),
             ],
             tags = ["wpi-example"],

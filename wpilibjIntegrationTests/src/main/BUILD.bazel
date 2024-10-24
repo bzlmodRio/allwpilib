@@ -7,7 +7,7 @@ wpilib_java_binary(
     resources = glob(["resources/**"]),
     deps = [
         "//hal:hal-java",
-        "//ntcore:networktables-java",
+        "//ntcore:ntcore-java",
         "//wpilibj",
         "//wpimath:wpimath-java",
         "//wpiutil:wpiutil-java",

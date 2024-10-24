@@ -1,5 +1,6 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "assemble_java_library", "bundle_artifacts")
 
 wpilib_cc_static_and_shared_library(
     name = "cameraserver",
@@ -24,7 +25,7 @@ wpilib_java_library(
     deps = [
         "//cscore:cscore-java",
         "//hal:hal-java",
-        "//ntcore:networktables-java",
+        "//ntcore:ntcore-java",
         "//wpimath:wpimath-java",
         "//wpinet:wpinet-java",
         "//wpiutil:wpiutil-java",
@@ -57,5 +58,29 @@ wpilib_java_binary(
     srcs = ["src/dev/java/edu/wpi/first/cameraserver/DevMain.java"],
     main_class = "edu.wpi.first.cameraserver.DevMain",
     deps = [
+    ],
+)
+
+assemble_cpp_library(
+    base_name = "cameraserver",
+    hdr_directories = ["src/main/native/include"],
+    shared_library_pkg_files = "cameraserver.shared_pkg_files",
+    src_directories = ["src/main/native/cpp"],
+    static_library_pkg_files = "cameraserver.static_pkg_files",
+)
+
+assemble_java_library(
+    base_name = "cameraserver",
+    src_directories = ["src/main/java"],
+)
+
+bundle_artifacts(
+    name = "cameraserver-publishing",
+    artifacts = [
+        ("edu.wpi.first.cameraserver:cameraserver-cpp:-headers", "cameraserver.hdrs_pkg"),
+        ("edu.wpi.first.cameraserver:cameraserver-cpp:-sources", "cameraserver.srcs_pkg"),
+        ("edu.wpi.first.cameraserver:cameraserver-cpp:-{platform}", "cameraserver.shared_pkg"),
+        ("edu.wpi.first.cameraserver:cameraserver-cpp:-{platform}static", "cameraserver.static_pkg"),
+        ("edu.wpi.first.cameraserver:cameraserver-java:-sources", "cameraserver.java_srcs_pkg"),
     ],
 )

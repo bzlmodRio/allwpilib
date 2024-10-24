@@ -4,6 +4,7 @@ load("@rules_python//python:defs.bzl", "py_binary")
 load("//ntcore:generate_ntcore.bzl", "generate_ntcore")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:publishing.bzl", "publish_default_jni_libraries")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 
@@ -91,7 +92,7 @@ wpilib_cc_static_and_shared_library(
 wpilib_jni_cc_library(
     name = "ntcorejni",
     srcs = glob(["src/main/native/cpp/jni/**"]) + ["//ntcore:generated_jni"],
-    java_dep = ":networktables-java",
+    java_dep = ":ntcore-java",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
         ":ntcore",
@@ -99,7 +100,7 @@ wpilib_jni_cc_library(
 )
 
 wpilib_java_jni_library(
-    name = "networktables-java",
+    name = "ntcore-java",
     srcs = glob(["src/main/java/**/*.java"]) + [":generated_java"],
     native_libs = [":ntcorejni"],
     visibility = ["//visibility:public"],
@@ -134,7 +135,7 @@ wpilib_java_junit5_test(
     srcs = glob(["src/test/java/**/*.java"]),
     tags = ["exclusive"],
     deps = [
-        ":networktables-java",
+        ":ntcore-java",
         "//wpiutil:wpiutil-java",
     ],
 )
@@ -152,7 +153,21 @@ wpilib_java_binary(
     srcs = ["src/dev/java/edu/wpi/first/ntcore/DevMain.java"],
     main_class = "edu.wpi.first.ntcore.DevMain",
     deps = [
-        "networktables-java",
+        "ntcore-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+publish_default_jni_libraries(
+    base_name = "ntcore",
+    extra_cpp_hdr_dirs = [
+        "src/generated/main/native/include",
+        # "src/main/native/include",
+        # "src/main/native/thirdparty/libuv/include",
+        # "src/main/native/thirdparty/tcpsockets/include",
+    ],
+    extra_java_src_dirs = [
+        "src/generated/main/java",
+    ],
+    group_id = "edu.wpi.first.ntcore",
 )

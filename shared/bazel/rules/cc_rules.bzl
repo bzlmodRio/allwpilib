@@ -1,4 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_import", "cc_library", "cc_test")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
 
 def wpilib_cc_library(
         name,
@@ -92,7 +93,8 @@ def wpilib_cc_static_and_shared_library(
         wpi_maybe_shared_deps = [],
         visibility = None,
         strip_include_prefix = None,
-        export_symbols = True):
+        export_symbols = True,
+        maven_coordinates = None):
     headers_name = name + ".headers"
     wpilib_cc_library(
         name = headers_name,
@@ -132,4 +134,17 @@ def wpilib_cc_static_and_shared_library(
         visibility = visibility,
         features = shared_features,
         includes = includes,
+    )
+
+    pkg_files(
+        name = name + ".static_pkg_files",
+        srcs = [static_lib_name],
+        excludes = ["**/*.so"],
+        prefix = "linux/x86-64/static",
+    )
+
+    pkg_files(
+        name = name + ".shared_pkg_files",
+        srcs = [":" + name],
+        prefix = "linux/x86-64/shared",
     )

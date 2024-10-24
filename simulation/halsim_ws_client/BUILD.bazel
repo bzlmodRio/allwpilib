@@ -1,6 +1,7 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_shared_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_static_and_shared_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "bundle_artifacts")
 
-wpilib_cc_shared_library(
+wpilib_cc_static_and_shared_library(
     name = "halsim_ws_client",
     srcs = glob([
         "src/main/native/cpp/*.cpp",
@@ -8,13 +9,13 @@ wpilib_cc_shared_library(
     ]),
     features = ["windows_export_all_symbols"],
     includes = ["src/main/native/include"],
-    tags = [
-        "no-roborio",
+    standard_deps = [
+        "//simulation/halsim_ws_core:halsim_ws_core.static",
     ],
+    # tags = [
+    #     "no-roborio",
+    # ],
     visibility = ["//visibility:public"],
-    deps = [
-        "//simulation/halsim_ws_core",
-    ],
 )
 
 wpilib_cc_binary(
@@ -25,5 +26,24 @@ wpilib_cc_binary(
     ],
     deps = [
         ":halsim_ws_client.shared",
+    ],
+)
+
+assemble_cpp_library(
+    base_name = "halsim_ws_client",
+    hdr_directories = ["src/main/native/include"],
+    shared_library_pkg_files = "halsim_ws_client.shared_pkg_files",
+    src_directories = ["src/main/native/cpp"],
+    static_library_pkg_files = "halsim_ws_client.static_pkg_files",
+    include_license_files_in_srcs = True,
+)
+
+bundle_artifacts(
+    name = "halsim_ws_client-publishing",
+    artifacts = [
+        ("edu.wpi.first.halsim:halsim_ws_client:-headers", "halsim_ws_client.hdrs_pkg"),
+        ("edu.wpi.first.halsim:halsim_ws_client:-sources", "halsim_ws_client.srcs_pkg"),
+        ("edu.wpi.first.halsim:halsim_ws_client:-{platform}", "halsim_ws_client.shared_pkg"),
+        ("edu.wpi.first.halsim:halsim_ws_client:-{platform}static", "halsim_ws_client.static_pkg"),
     ],
 )

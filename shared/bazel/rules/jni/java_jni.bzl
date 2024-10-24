@@ -1,4 +1,5 @@
 load("@bazel_tools//tools/cpp:toolchain_utils.bzl", "find_cpp_toolchain")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
 
 def _jni_headers_impl(ctx):
@@ -132,4 +133,11 @@ def wpilib_java_jni_library(
         tags = tags,
         testonly = testonly,
         visibility = visibility,
+    )
+
+    pkg_files(
+        name = name + ".jni_header_pkg_files",
+        srcs = [name + ".hdrs"],
+        strip_prefix = name + ".hdrs.h",
+        prefix = "jni",
     )

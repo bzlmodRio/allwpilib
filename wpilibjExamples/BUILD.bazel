@@ -1,5 +1,8 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_file")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
+load("@rules_pkg//:pkg.bzl", "pkg_zip")
 load("@rules_python//python:defs.bzl", "py_binary")
+load("//shared/bazel/rules:publishing.bzl", "bundle_artifacts")
 load("//wpilibjExamples:build_java_examples.bzl", "build_commands", "build_examples", "build_templates", "build_tests")
 
 py_binary(
@@ -40,3 +43,65 @@ build_examples(halsim_deps = halsim_deps)
 build_templates()
 
 build_tests()
+
+pkg_files(
+    name = "commands_pkg_files",
+    srcs = glob(["src/main/java/edu/wpi/first/wpilibj/commands/**"]),
+    strip_prefix = "src/main/java/edu/wpi/first/wpilibj",
+)
+
+pkg_zip(
+    name = "commands_pkg",
+    srcs = [
+        ":commands_pkg_files",
+        "//:liscense_pkg_files",
+    ],
+    tags = ["no-remote"],
+)
+
+pkg_files(
+    name = "example_pkg_files",
+    srcs = glob(["src/main/java/edu/wpi/first/wpilibj/examples/**"]),
+    strip_prefix = "src/main/java/edu/wpi/first/wpilibj",
+)
+
+pkg_files(
+    name = "example_test_pkg_files",
+    srcs = glob(["src/test/java/edu/wpi/first/wpilibj/examples/**"]),
+    prefix = "examples_test",
+    strip_prefix = "src/test/java/edu/wpi/first/wpilibj/examples",
+)
+
+pkg_zip(
+    name = "example_pkg",
+    srcs = [
+        ":example_pkg_files",
+        ":example_test_pkg_files",
+        "//:liscense_pkg_files",
+    ],
+    tags = ["no-remote"],
+)
+
+pkg_files(
+    name = "templates_pkg_files",
+    srcs = glob(["src/main/java/edu/wpi/first/wpilibj/templates/**"]),
+    strip_prefix = "src/main/java/edu/wpi/first/wpilibj",
+)
+
+pkg_zip(
+    name = "templates_pkg",
+    srcs = [
+        ":templates_pkg_files",
+        "//:liscense_pkg_files",
+    ],
+    tags = ["no-remote"],
+)
+
+bundle_artifacts(
+    name = "wpilibjExamples-publishing",
+    artifacts = [
+        ("edu.wpi.first.wpilibj:examples:", "example_pkg"),
+        ("edu.wpi.first.wpilibj:commands:", "commands_pkg"),
+        ("edu.wpi.first.wpilibj:templates:", "templates_pkg"),
+    ],
+)

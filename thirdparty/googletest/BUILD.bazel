@@ -1,4 +1,5 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "bundle_artifacts")
 
 wpilib_cc_static_and_shared_library(
     name = "googletest",
@@ -7,4 +8,23 @@ wpilib_cc_static_and_shared_library(
     includes = ["src/googletest"],
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
+)
+
+assemble_cpp_library(
+    base_name = "googletest",
+    hdr_directories = ["include"],
+    shared_library_pkg_files = "googletest.shared_pkg_files",
+    src_directories = ["src"],
+    static_library_pkg_files = "googletest.static_pkg_files",
+    include_license_files_in_srcs = True,
+)
+
+bundle_artifacts(
+    name = "googletest-publishing",
+    artifacts = [
+        ("edu.wpi.first.thirdparty.googletest:googletest-cpp:-headers", "googletest.hdrs_pkg"),
+        ("edu.wpi.first.thirdparty.googletest:googletest-cpp:-sources", "googletest.srcs_pkg"),
+        ("edu.wpi.first.thirdparty.googletest:googletest-cpp:-{platform}", "googletest.shared_pkg"),
+        ("edu.wpi.first.thirdparty.googletest:googletest-cpp:-{platform}static", "googletest.static_pkg"),
+    ],
 )

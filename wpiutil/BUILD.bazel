@@ -3,6 +3,7 @@ load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:publishing.bzl", "publish_default_jni_libraries")
 load("//shared/bazel/rules/gen:gen-resources.bzl", "generate_resources")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
@@ -140,8 +141,8 @@ wpilib_cc_library(
 
 generate_resources(
     name = "generate-resources",
-    namespace = "dlt",
-    prefix = "DLT",
+    namespace = "wpi",
+    prefix = "WPI",
     resource_files = glob(["src/main/native/resources/*"]),
 )
 
@@ -172,6 +173,7 @@ wpilib_cc_static_and_shared_library(
     ],
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = ["src/main/native/include"],
+    maven_coordinates = "edu.wpi.first.wpiutil",
     standard_deps = [
         ":argparse-headers",
         ":concurrentqueue-headers",
@@ -289,4 +291,29 @@ java_binary(
     deps = [
         ":wpiutil-java",
     ],
+)
+
+publish_default_jni_libraries(
+    base_name = "wpiutil",
+    extra_cpp_hdr_dirs = [
+        "src/main/native/thirdparty/argparse/include",
+        "src/main/native/thirdparty/expected/include",
+        "src/main/native/thirdparty/fmtlib/include",
+        "src/main/native/thirdparty/json/include",
+        "src/main/native/thirdparty/llvm/include",
+        "src/main/native/thirdparty/mpack/include",
+        "src/main/native/thirdparty/sigslot/include",
+        "src/main/native/thirdparty/memory/include",
+        "src/main/native/thirdparty/protobuf/include",
+    ],
+    extra_cpp_src_dirs = [
+        "src/main/native/thirdparty/fmtlib/src",
+        "src/main/native/thirdparty/json/cpp",
+        "src/main/native/thirdparty/llvm/cpp",
+        "src/main/native/thirdparty/memory/src",
+        "src/main/native/thirdparty/mpack/src",
+        "src/main/native/thirdparty/protobuf/src",
+        "src/main/native/thirdparty/sigslot/src",
+    ],
+    group_id = "edu.wpi.first.wpiutil",
 )

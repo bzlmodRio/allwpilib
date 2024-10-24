@@ -2,6 +2,7 @@ load("//cscore:build_examples.bzl", "build_cpp_examples")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
+load("//shared/bazel/rules:publishing.bzl", "publish_default_jni_libraries")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 
@@ -135,4 +136,15 @@ wpilib_java_binary(
         ":cscore-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+publish_default_jni_libraries(
+    base_name = "cscore",
+    extra_cpp_hdr_dirs = [
+        # "src/generated/main/native/include",
+        # "src/main/native/include",
+        # "src/main/native/thirdparty/libuv/include",
+        # "src/main/native/thirdparty/tcpsockets/include",
+    ],
+    group_id = "edu.wpi.first.cscore",
 )

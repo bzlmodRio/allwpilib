@@ -24,5 +24,4 @@ build:base_linux --conlyopt=-pthread
 build:base_linux --linkopt=-rdynamic
 build:base_linux --linkopt=-pthread
 build:base_linux --linkopt=-ldl
-build:base_linux --linkopt=-latomic
 build:base_linux --linkopt=-Wl,-rpath,'$ORIGIN'

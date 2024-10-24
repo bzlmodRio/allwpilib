@@ -1,8 +1,9 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "assemble_java_library", "bundle_artifacts")
 
 wpilib_cc_static_and_shared_library(
-    name = "romi-cpp",
+    name = "romiVendordep",
     srcs = glob([
         "src/main/native/cpp/**",
     ]),
@@ -47,7 +48,31 @@ wpilib_java_binary(
     main_class = "edu.wpi.first.wpilibj.romi.DevMain",
     deps = [
         "//hal:hal-java",
-        "//ntcore:networktables-java",
+        "//ntcore:ntcore-java",
         "//wpiutil:wpiutil-java",
+    ],
+)
+
+assemble_cpp_library(
+    base_name = "romiVendordep",
+    hdr_directories = ["src/main/native/include"],
+    shared_library_pkg_files = "romiVendordep.shared_pkg_files",
+    src_directories = ["src/main/native/cpp"],
+    static_library_pkg_files = "romiVendordep.static_pkg_files",
+)
+
+assemble_java_library(
+    base_name = "romiVendordep",
+    src_directories = ["src/main/java"],
+)
+
+bundle_artifacts(
+    name = "romiVendordep-publishing",
+    artifacts = [
+        ("edu.wpi.first.romiVendordep:romiVendordep-cpp:-headers", "romiVendordep.hdrs_pkg"),
+        ("edu.wpi.first.romiVendordep:romiVendordep-cpp:-sources", "romiVendordep.srcs_pkg"),
+        ("edu.wpi.first.romiVendordep:romiVendordep-java:-sources", "romiVendordep.java_srcs_pkg"),
+        ("edu.wpi.first.romiVendordep:romiVendordep-cpp:-{platform}", "romiVendordep.shared_pkg"),
+        ("edu.wpi.first.romiVendordep:romiVendordep-cpp:-{platform}static", "romiVendordep.static_pkg"),
     ],
 )

@@ -1,3 +1,4 @@
+load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_shared_library")
 
 def wpilib_jni_cc_library(
@@ -14,4 +15,10 @@ def wpilib_jni_cc_library(
         name = name,
         deps = [jni, java_dep + ".hdrs"] + deps,
         **kwargs
+    )
+
+    pkg_files(
+        name = name + ".pkg_files",
+        srcs = [name],
+        prefix = "linux/x86-64/shared",
     )

@@ -2,6 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "bundle_artifacts")
 
 cc_library(
     name = "gl3w",
@@ -353,5 +354,36 @@ cc_library(
         ":imgui",
         ":implot",
         ":stb",
+    ],
+)
+
+assemble_cpp_library(
+    base_name = "imguiSuite",
+    hdr_directories = [
+        "generated/fonts/include",
+        "generated/gl3w/include",
+        "glfw/include",
+        "imgui/include",
+        "implot/include",
+        "stb/include",
+    ],
+    shared_library_pkg_files = None,
+    src_directories = [
+        "generated/fonts/src",
+        "generated/gl3w/src",
+        "glfw/src",
+        "imgui/cpp",
+        "implot/cpp",
+        "stb/cpp",
+    ],
+    static_library_pkg_files = None,
+    include_license_files_in_srcs = True,
+)
+
+bundle_artifacts(
+    name = "imgui-publishing",
+    artifacts = [
+        ("edu.wpi.first.thirdparty.imguiSuite:imguiSuite-cpp:-headers", "imguiSuite.hdrs_pkg"),
+        ("edu.wpi.first.thirdparty.imguiSuite:imguiSuite-cpp:-sources", "imguiSuite.srcs_pkg"),
     ],
 )

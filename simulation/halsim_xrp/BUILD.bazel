@@ -1,6 +1,7 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_shared_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_static_and_shared_library")
+load("//shared/bazel/rules:publishing.bzl", "assemble_cpp_library", "bundle_artifacts")
 
-wpilib_cc_shared_library(
+wpilib_cc_static_and_shared_library(
     name = "halsim_xrp",
     srcs = glob([
         "src/main/native/cpp/*",
@@ -8,13 +9,16 @@ wpilib_cc_shared_library(
     ]),
     features = ["windows_export_all_symbols"],
     includes = ["src/main/native/include"],
-    tags = [
-        "no-roborio",
+    standard_deps = [
+        "//simulation/halsim_ws_core:halsim_ws_core.static",
+        "//xrpVendordep:xrpVendordep.static",
     ],
+    # tags = [
+    #     "no-roborio",
+    # ],
     visibility = ["//visibility:public"],
-    deps = [
-        "//simulation/halsim_ws_core",
-        "//xrpVendordep:xrp-cpp.shared",
+    wpi_maybe_shared_deps = [
+        # "//simulation/halsim_ws_core:halsim_ws_core",
     ],
 )
 
@@ -23,5 +27,24 @@ wpilib_cc_binary(
     srcs = ["src/dev/native/cpp/main.cpp"],
     tags = [
         "no-roborio",
+    ],
+)
+
+assemble_cpp_library(
+    base_name = "halsim_xrp",
+    hdr_directories = ["src/main/native/include"],
+    shared_library_pkg_files = "halsim_xrp.shared_pkg_files",
+    src_directories = ["src/main/native/cpp"],
+    static_library_pkg_files = "halsim_xrp.static_pkg_files",
+    include_license_files_in_srcs = True,
+)
+
+bundle_artifacts(
+    name = "halsim_xrp-publishing",
+    artifacts = [
+        ("edu.wpi.first.halsim:halsim_xrp:-headers", "halsim_xrp.hdrs_pkg"),
+        ("edu.wpi.first.halsim:halsim_xrp:-sources", "halsim_xrp.srcs_pkg"),
+        ("edu.wpi.first.halsim:halsim_xrp:-{platform}", "halsim_xrp.shared_pkg"),
+        ("edu.wpi.first.halsim:halsim_xrp:-{platform}static", "halsim_xrp.static_pkg"),
     ],
 )

@@ -4,6 +4,7 @@ load("@rules_python//python:defs.bzl", "py_binary")
 load("//protoplugin:wpi_proto_library.bzl", "wpi_proto_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:publishing.bzl", "publish_default_jni_libraries")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
 load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 load("//wpimath:generate.bzl", "generate_wpimath")
@@ -221,4 +222,17 @@ py_binary(
     name = "ExponentialProfileModel",
     srcs = ["ExponentialProfileModel.py"],
     tags = ["manual"],
+)
+
+publish_default_jni_libraries(
+    base_name = "wpimath",
+    extra_cpp_hdr_dirs = [
+        "src/main/native/thirdparty/eigen/include",
+        "src/main/native/thirdparty/gcem/include",
+        "src/main/native/thirdparty/sleipnir/include",
+    ],
+    extra_java_src_dirs = [
+        "src/generated/main/java",
+    ],
+    group_id = "edu.wpi.first.wpimath",
 )
