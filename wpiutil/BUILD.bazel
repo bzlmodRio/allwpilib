@@ -129,6 +129,23 @@ filegroup(
 )
 
 wpilib_cc_library(
+    name = "nanopb-headers",
+    hdrs = glob([
+        "src/main/native/thirdparty/nanopb/include/**/*.h",
+        "src/main/native/thirdparty/nanopb/include/**/*.inc",
+    ]),
+    includes = ["src/main/native/thirdparty/nanopb/include"],
+    strip_include_prefix = "src/main/native/thirdparty/nanopb/include",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+filegroup(
+    name = "nanopb-srcs",
+    srcs = glob(["src/main/native/thirdparty/nanopb/src/**"]),
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+wpilib_cc_library(
     name = "sigslot-headers",
     hdrs = glob([
         "src/main/native/thirdparty/sigslot/include/**/*.h",
@@ -167,6 +184,7 @@ wpilib_cc_static_and_shared_library(
         ":llvm-srcs",
         ":memory-srcs",
         ":mpack-srcs",
+        ":nanopb-srcs",
         ":native-srcs",
         ":protobuf-srcs",
     ],
@@ -182,6 +200,7 @@ wpilib_cc_static_and_shared_library(
         ":memory-headers",
         ":mpack-headers",
         ":protobuf-headers",
+        ":nanopb-headers",
         ":sigslot-headers",
     ] + select({
         "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bzlmodrio-ni//libraries/cpp/ni:shared"],
@@ -221,13 +240,25 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
 )
 
+wpilib_cc_library(
+    name = "nanopb-test-headers",
+    hdrs = glob(["src/generated/test/native/cpp/*.h"]),
+    includes = ["src/generated/test/native/cpp"],
+    strip_include_prefix = "src/generated/test/native/cpp",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
 wpilib_cc_test(
     name = "wpiutil-cpp-test",
     size = "small",
-    srcs = glob(["src/test/native/cpp/**"]),
+    srcs = glob([
+        "src/test/native/cpp/**",
+        "src/generated/test/native/cpp/*",
+    ]),
     linkstatic = True,
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
     deps = [
+        ":nanopb-test-headers",
         ":wpiutil.static",
         ":wpiutil-testlib",
         "//thirdparty/googletest:googletest.static",

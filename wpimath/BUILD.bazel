@@ -103,10 +103,21 @@ filegroup(
     visibility = ["//wpimath:__subpackages__"],
 )
 
+wpilib_cc_library(
+    name = "nanopb-generated-headers",
+    hdrs = glob(["src/generated/main/native/cpp/**/*.h"]),
+    includes = ["src/generated/main/native/cpp"],
+    strip_include_prefix = "src/generated/main/native/cpp",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
 wpilib_cc_static_and_shared_library(
     name = "wpimath",
     srcs = glob(
-        ["src/main/native/cpp/**"],
+        [
+            "src/main/native/cpp/**",
+            "src/generated/main/native/cpp/**/*.cpp",
+        ],
         exclude = ["src/main/native/cpp/jni/**"],
     ) + [
         ":cc_proto.srcs",
@@ -124,6 +135,7 @@ wpilib_cc_static_and_shared_library(
         ":sleipnir-headers",
         ":gcem",
         ":cc_proto.hdrs",
+        ":nanopb-generated-headers",
     ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
