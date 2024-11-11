@@ -1,7 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//protoplugin:wpi_proto_library.bzl", "wpi_proto_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
 load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
@@ -61,12 +60,6 @@ filegroup(
     visibility = ["//wpimath:__subpackages__"],
 )
 
-wpi_proto_library(
-    name = "cc_proto",
-    include_prefix = "wpimath/src/main/proto",
-    proto_files = glob(["src/main/proto/*.proto"]),
-)
-
 wpilib_cc_library(
     name = "eigen-headers",
     hdrs = glob([
@@ -119,10 +112,7 @@ wpilib_cc_static_and_shared_library(
             "src/generated/main/native/cpp/**/*.cpp",
         ],
         exclude = ["src/main/native/cpp/jni/**"],
-    ) + [
-        ":cc_proto.srcs",
-        ":sleipnir-srcs",
-    ],
+    ) + [":sleipnir-srcs"],
     hdrs = glob(["src/main/native/include/**/*"]),
     defines = ["WPILIB_EXPORTS"],
     export_symbols = False,
@@ -134,7 +124,6 @@ wpilib_cc_static_and_shared_library(
         ":eigen-headers",
         ":sleipnir-headers",
         ":gcem",
-        ":cc_proto.hdrs",
         ":nanopb-generated-headers",
     ],
     strip_include_prefix = "src/main/native/include",
