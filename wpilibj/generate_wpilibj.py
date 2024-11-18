@@ -1,5 +1,5 @@
-import os
 import argparse
+import os
 from pathlib import Path
 
 from wpilibj.generate_hids import generate_hids

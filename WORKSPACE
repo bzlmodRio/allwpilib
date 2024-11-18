@@ -152,11 +152,9 @@ python_register_toolchains(
 
 http_archive(
     name = "rules_bzlmodrio_jdk",
-    integrity = "sha256-lomuqGaQPqVLzlGyfDb/mlEyAGPFAV6dF+pr0GINGxg=",
-    strip_prefix = "rules_bzlmodrio_jdk-32d4c03e8343a17dbc0b4bdf1a482e77a3d37058",
-    urls = [
-        "https://github.com/bzlmodRio/rules_bzlmodrio_jdk/archive/32d4c03e8343a17dbc0b4bdf1a482e77a3d37058.zip",
-    ],
+    sha256 = "43a475e46852305ffc87f7499e772a42dc5343d7bfcc7631dbca83568712f44f",
+    strip_prefix = "rules_bzlmodrio_jdk-d5f0db20a611e4ec4b26f95d9c772e2436b69b55",
+    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/d5f0db20a611e4ec4b26f95d9c772e2436b69b55.tar.gz"],
 )
 
 load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")

@@ -1,5 +1,5 @@
-import os
 import argparse
+import os
 from pathlib import Path
 
 from wpilibc.generate_hids import generate_hids

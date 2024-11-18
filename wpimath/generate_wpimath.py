@@ -1,6 +1,7 @@
-import sys
 import argparse
+import sys
 from pathlib import Path
+
 from wpimath.generate_numbers import generate_numbers
 
 
