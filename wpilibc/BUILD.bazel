@@ -117,6 +117,7 @@ wpilib_cc_test(
     srcs = glob(["src/test/native/cpp/**"]),
     tags = [
         "no-asan",
+        "no-bullseye", # Tests don't compile with gcc10
         "no-tsan",
         "no-ubsan",
     ],
