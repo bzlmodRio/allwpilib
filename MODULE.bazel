@@ -8,26 +8,15 @@ bazel_dep(name = "platforms", version = "0.0.9")
 bazel_dep(name = "aspect_bazel_lib", version = "2.7.2")
 bazel_dep(name = "apple_support", version = "1.15.1", repo_name = "build_bazel_apple_support")
 bazel_dep(name = "rules_cc", version = "0.0.9")
-bazel_dep(name = "rules_java", version = "7.6.1")
+bazel_dep(name = "rules_java", version = "7.6.5")
 bazel_dep(name = "rules_jvm_external", version = "6.1")
 bazel_dep(name = "rules_python", version = "0.31.0")
-bazel_dep(name = "rules_proto", version = "6.0.0")
-bazel_dep(name = "protobuf", version = "26.0", repo_name = "com_google_protobuf")
 bazel_dep(name = "bzlmodrio-libssh", version = "2024.0.105-1")
 bazel_dep(name = "bzlmodrio-ni", version = "2024.2.1")
 bazel_dep(name = "bzlmodrio-opencv", version = "2024.4.8.0-2")
-bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1")
+bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1.bcr1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.8.1-1")
-
-git_override(
-    module_name = "protobuf",
-    commit = "f0dc78d7e6e331b8c6bb2d5283e06aa26883ca7c",  # "3.21.12",
-    patches = [
-        "//upstream_utils/protobuf_patches/bzlmod:0001-Add-MODULE.bazel.patch",
-    ],
-    remote = "https://github.com/protocolbuffers/protobuf",
-)
 
 archive_override(
     module_name = "rules_bzlmodrio_jdk",
