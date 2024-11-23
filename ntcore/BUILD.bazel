@@ -1,7 +1,43 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_python//python:defs.bzl", "py_binary")
+load("//ntcore:generate_ntcore.bzl", "generate_ntcore")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 
-cc_library(
+generate_ntcore(
+    name = "generate_ntcore",
+)
+
+filegroup(
+    name = "templates",
+    srcs = glob([
+        "src/generate/**/*.jinja",
+        "src/generate/*.json",
+    ]),
+)
+
+py_binary(
+    name = "generate_topics",
+    srcs = ["generate_topics.py"],
+    data = [":templates"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [requirement("jinja2")],
+)
+
+write_source_files(
+    name = "write_ntcore",
+    files = {
+        "src/generated": ":generate_ntcore",
+    },
+    suggested_update_target = "//:write_all",
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
     name = "generated_cc_headers",
     hdrs = glob(["src/generated/main/native/include/**"]),
     includes = ["src/generated/main/native/include"],
@@ -19,13 +55,19 @@ filegroup(
 )
 
 filegroup(
+    name = "generated_jni",
+    srcs = glob(["src/generated/main/native/cpp/jni/**"]),
+    visibility = ["//ntcore:__subpackages__"],
+)
+
+filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//ntcore:__subpackages__"],
 )
 
-cc_library(
-    name = "ntcore.static",
+wpilib_cc_static_and_shared_library(
+    name = "ntcore",
     srcs = glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
@@ -35,18 +77,31 @@ cc_library(
         "src/main/native/cpp",
         "src/main/native/include",
     ],
+    standard_deps = [
+        ":generated_cc_headers",
+    ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
-    deps = [
-        ":generated_cc_headers",
-        "//wpinet:wpinet.static",
-        "//wpiutil:wpiutil.static",
+    wpi_maybe_shared_deps = [
+        "//wpinet:wpinet",
+        "//wpiutil:wpiutil",
     ],
 )
 
-java_library(
+wpilib_jni_cc_library(
+    name = "ntcorejni",
+    srcs = glob(["src/main/native/cpp/jni/**"]) + ["//ntcore:generated_jni"],
+    java_dep = ":networktables-java",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":ntcore",
+    ],
+)
+
+wpilib_java_jni_library(
     name = "networktables-java",
     srcs = glob(["src/main/java/**/*.java"]) + [":generated_java"],
+    native_libs = [":ntcorejni"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpiutil:wpiutil-java",
@@ -54,7 +109,7 @@ java_library(
     ],
 )
 
-cc_test(
+wpilib_cc_test(
     name = "ntcore-cpp-test",
     size = "small",
     srcs = glob([
@@ -73,15 +128,26 @@ cc_test(
     ],
 )
 
-cc_binary(
-    name = "DevMain-Cpp",
-    srcs = ["src/dev/native/cpp/main.cpp"],
+wpilib_java_junit5_test(
+    name = "ntcore-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    tags = ["exclusive"],
     deps = [
-        ":ntcore.static",
+        ":networktables-java",
+        "//wpiutil:wpiutil-java",
     ],
 )
 
-java_binary(
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+        ":ntcore.shared",
+    ],
+)
+
+wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/ntcore/DevMain.java"],
     main_class = "edu.wpi.first.ntcore.DevMain",

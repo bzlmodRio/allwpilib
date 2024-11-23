@@ -1,7 +1,38 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_python//python:defs.bzl", "py_binary")
+load("//hal:generate.bzl", "generate_hal")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
 
-cc_library(
+filegroup(
+    name = "templates",
+    srcs = glob(["src/generate/*"]),
+)
+
+py_binary(
+    name = "generate_usage_reporting",
+    srcs = ["generate_usage_reporting.py"],
+    data = [":templates"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)
+
+generate_hal(
+    name = "generate_hal",
+)
+
+write_source_files(
+    name = "write_hal",
+    files = {
+        "src/generated": ":generate_hal",
+    },
+    suggested_update_target = "//:write_all",
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
     name = "generated_cc_headers",
     hdrs = glob(["src/generated/main/native/include/**"]),
     includes = ["src/generated/main/native/include"],
@@ -15,11 +46,26 @@ filegroup(
     visibility = ["//hal:__subpackages__"],
 )
 
-ATHENA_SRCS = glob(["src/main/native/athena/**"])
+ATHENA_SRCS = glob([
+    "src/main/native/athena/*.cpp",
+    "src/main/native/athena/*.h",
+    "src/main/native/athena/cpp/*.cpp",
+    "src/main/native/athena/ctre/*.cpp",
+    "src/main/native/athena/ctre/*.h",
+    "src/main/native/athena/rev/*.cpp",
+    "src/main/native/athena/rev/*.h",
+    "src/main/native/athena/frccansae/*.h",
+    "src/main/native/athena/mockdata/*.cpp",
+])
 
 ATHENA_DEPS = ["@bzlmodrio-ni//libraries/cpp/ni:shared"]
 
-SIM_SRCS = glob(["src/main/native/sim/**"])
+SIM_SRCS = glob([
+    "src/main/native/sim/*.cpp",
+    "src/main/native/sim/mockdata/*.cpp",
+    "src/main/native/sim/*.h",
+    "src/main/native/sim/mockdata/*.h",
+])
 
 SIM_DEPS = []
 
@@ -36,32 +82,43 @@ filegroup(
     }),
 )
 
-cc_library(
-    name = "wpiHal.static",
-    srcs = [":platform-srcs"] + glob(
+wpilib_cc_static_and_shared_library(
+    name = "wpiHal",
+    srcs = ["platform-srcs"] + glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
     ),
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = ["src/main/native/include"],
+    standard_deps = ["//hal:generated_cc_headers"] + HAL_DEPS,
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
-    deps = [
-        ":generated_cc_headers",
-        "//wpiutil:wpiutil.static",
-    ] + HAL_DEPS,
+    wpi_maybe_shared_deps = [
+        "//wpiutil:wpiutil",
+    ],
 )
 
-java_library(
+wpilib_jni_cc_library(
+    name = "wpiHaljni",
+    srcs = glob(["src/main/native/cpp/jni/**"]),
+    java_dep = ":hal-java",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpiHal",
+    ],
+)
+
+wpilib_java_jni_library(
     name = "hal-java",
-    srcs = [":generated_java"] + glob(["src/main/java/**/*.java"]),
+    srcs = ["//hal:generated_java"] + glob(["src/main/java/**/*.java"]),
+    native_libs = [":wpiHaljni"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpiutil:wpiutil-java",
     ],
 )
 
-cc_test(
+wpilib_cc_test(
     name = "hal-cpp-test",
     size = "small",
     srcs = glob([
@@ -74,15 +131,24 @@ cc_test(
     ],
 )
 
-cc_binary(
-    name = "DevMain-Cpp",
-    srcs = ["src/dev/native/cpp/main.cpp"],
+wpilib_java_junit5_test(
+    name = "hal-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
     deps = [
-        ":wpiHal.static",
+        ":hal-java",
     ],
 )
 
-java_binary(
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+        ":wpiHal.shared",
+    ],
+)
+
+wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/hal/DevMain.java"],
     main_class = "edu.wpi.first.hal.DevMain",

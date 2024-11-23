@@ -1,7 +1,7 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_static_and_shared_library")
 
-cc_library(
-    name = "googletest.static",
+wpilib_cc_static_and_shared_library(
+    name = "googletest",
     srcs = glob(["src/**"]),
     hdrs = glob(["include/**"]),
     includes = ["src/googletest"],

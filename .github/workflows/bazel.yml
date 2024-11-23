@@ -12,8 +12,23 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: "Windows (native)",             os: windows-2022, action: "test",  config: "--config=windows",     }
-          - { name: "Windows (arm)",                os: windows-2022, action: "build", config: "--config=windows_arm", }
+          - { name: "Windows (native)",             os: windows-2022, action: "test", config: "--config=windows --noenable_bzlmod",      }
+          - { name: "Windows (bzlmod)",             os: windows-2022, action: "test", config: "--config=windows --enable_bzlmod",        }
+
+          - {  name: "Windows (arm)",               os: windows-2022, action: "build", config: "--config=windows_arm --noenable_bzlmod", }
+          - {  name: "Windows (arm bzlmod)",        os: windows-2022, action: "build", config: "--config=windows_arm --enable_bzlmod",   }
+
+          - {  name: "Windows (roborio)",           os: windows-2022, action: "build", config: "--config=roborio --noenable_bzlmod",      }
+          # - {  name: "Windows (roborio bzlmod)",    os: windows-2022, action: "build", config: "--config=roborio --enable_bzlmod",     }
+
+          - {  name: "Windows (bullseye32)",        os: windows-2022, action: "build", config: "--config=bullseye32 --noenable_bzlmod",      }
+          - {  name: "Windows (bullseye32 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye32 --enable_bzlmod",  }
+
+          - {  name: "Windows (bullseye64)",        os: windows-2022, action: "build", config: "--config=bullseye64 --noenable_bzlmod",      }
+          - {  name: "Windows (bullseye64 bzlmod)", os: windows-2022, action: "build", config: "--config=bullseye64 --enable_bzlmod",  }
+
+          - {  name: "Windows (raspi32)",           os: windows-2022, action: "build", config: "--config=raspi32 --noenable_bzlmod",      }
+          - {  name: "Windows (raspi32 bzlmod)",    os: windows-2022, action: "build", config: "--config=raspi32 --enable_bzlmod",     }
 
     name: "Build ${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
@@ -31,13 +46,45 @@ jobs:
         with:
           token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
-      - name: Build Release
-        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ...   --config=ci -c opt ${{ matrix.config }} --verbose_failures
+      - name: Build Release allowing failures
+        run: bazel --output_user_root=C:\\bazelroot build -k ...  -c opt --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
         shell: bash
 
+      - name: Build Release
+        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ...  -c opt --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        shell: bash
+
+      - name: Build Debug allowing failures
+        run: bazel --output_user_root=C:\\bazelroot build -k ... -c dbg  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
+        shell: bash
+
+      # TODO enable. Unit test is failing
+      # - name: Build Debug
+      #   run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ... -c dbg  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+      #   shell: bash
+
   build-mac:
-    name: "Mac"
-    runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: "Mac (native)",            os: macos-14,   action: "test",  config: "--config=macos --noenable_bzlmod",      }
+          - { name: "Mac (bzlmod)",            os: macos-14,   action: "test",  config: "--config=macos --enable_bzlmod" }
+
+          - { name: "Mac (roborio)",           os: macos-14,   action: "build", config: "--config=roborio --noenable_bzlmod",      }
+          - { name: "Mac (roborio bzlmod)",    os: macos-14,   action: "build", config: "--config=roborio --enable_bzlmod" }
+
+          - { name: "Mac (bullseye32)",        os: macos-14,   action: "build", config: "--config=bullseye32 --noenable_bzlmod",      }
+          - { name: "Mac (bullseye32 bzlmod)", os: macos-14,   action: "build", config: "--config=bullseye32 --enable_bzlmod" }
+
+          - { name: "Mac (bullseye64)",        os: macos-14,   action: "build", config: "--config=bullseye64 --noenable_bzlmod",      }
+          - { name: "Mac (bullseye64 bzlmod)", os: macos-14,   action: "build", config: "--config=bullseye64 --enable_bzlmod" }
+
+          - { name: "Mac (raspi32)",           os: macos-14,   action: "build", config: "--config=raspi32 --noenable_bzlmod",      }
+          - { name: "Mac (raspi32 bzlmod)",    os: macos-14,   action: "build", config: "--config=raspi32 --enable_bzlmod" }
+
+    name: "${{ matrix.name }}"
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -47,19 +94,47 @@ jobs:
         with:
           token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
-      - name: Build Release
-        run: bazel test -k ...   --config=ci -c opt --config=macos --nojava_header_compilation --verbose_failures
+      - name: Build Release allowing failures
+        run: bazel build -k ...  -c opt --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
         shell: bash
+
+      - name: Build Release
+        run: bazel ${{ matrix.action }} -k ... -c opt  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        shell: bash
+
+      - name: Build Debug allowing failures
+        run: bazel build -k ...  -c dbg --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
+        shell: bash
+
+      - name: Build Debug
+        run: bazel ${{ matrix.action }} -k ... -c dbg  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+        shell: bash
+
+      # - name: Check Lockfile update
+      #   run: git --no-pager diff --exit-code HEAD
 
   build-linux:
     strategy:
       fail-fast: false
       matrix:
         include:
-          - { name: "Linux (native)",  os: ubuntu-22.04,   action: "test",  config: "--config=linux",    }
-          - { name: "Linux (roborio)", os: ubuntu-22.04,   action: "build", config: "--config=roborio",  }
-    name: "${{ matrix.name }}"
-    runs-on: ${{ matrix.os }}
+          - { container: "wpilib/ubuntu-base:22.04", action: "test", artifact-name: "Linux (native)",             config: "--config=linux  --noenable_bzlmod",      }
+          - { container: "wpilib/ubuntu-base:22.04", action: "test", artifact-name: "Linux (bzlmod)",             config: "--config=linux  --enable_bzlmod" }
+
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (roborio)",           config: "--config=roborio  --noenable_bzlmod",      }
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (roborio bzlmod)",    config: "--config=roborio --enable_bzlmod" }
+
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye32)",        config: "--config=bullseye32 --noenable_bzlmod",      }
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye32 bzlmod)", config: "--config=bullseye32 --enable_bzlmod" }
+
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye64)",        config: "--config=bullseye64 --noenable_bzlmod",      }
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (bullseye64 bzlmod)", config: "--config=bullseye64 --enable_bzlmod" }
+
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (raspi32)",           config: "--config=raspi32 --noenable_bzlmod",      }
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (raspi32 bzlmod)",    config: "--config=raspi32 --enable_bzlmod" }
+    runs-on: ubuntu-22.04
+    name: "Build - ${{ matrix.artifact-name }}"
+    container: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -70,8 +145,82 @@ jobs:
         with:
           token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
-      - name: Build and Test Release
-        run: bazel ${{ matrix.action }} ... --config=ci -c opt ${{ matrix.config }} -k --verbose_failures
+      - name: Build Release and allow failures
+        run: bazel build ... -c opt --config=ci ${{ matrix.config }} -k --verbose_failures || true
+
+      - name: Build Release and Test
+        run: bazel ${{ matrix.action }} ... -c opt --config=ci ${{ matrix.config }} -k --verbose_failures
+
+      - name: Build Debug and allow failures
+        run: bazel build ... -c dbg --config=ci ${{ matrix.config }} -k --verbose_failures || true
+
+      - name: Build Debug and Test
+        run: bazel ${{ matrix.action }} ... -c dbg --config=ci ${{ matrix.config }} -k --verbose_failures
+
+
+  repin-maven:
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run:  bazel run --noenable_bzlmod @unpinned_maven//:pin
+      - run:  git diff HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Re-pinned maven
+          path: shared/bazel/deps/maven_install.json
+
+  build-sanitizers:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - config: "tsan"
+          - config: "asan"
+          - config: "ubsan"
+    runs-on: ubuntu-22.04
+    container: wpilib/ubuntu-base:22.04
+    name: "Sanitizer ${{ matrix.config }}"
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: bazelbuild/setup-bazelisk@v3
+
+      - id: Setup_build_buddy
+        uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
+
+      - name: Build and Test
+        run: bazel test  -k --config=ci --config=linux --noenable_bzlmod --config=${{ matrix.config }} //...
+
+  build-coverage:
+    runs-on: ubuntu-22.04
+    name: "Code Coverage"
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Install LCOV
+        run: sudo apt-get install -y lcov
+
+      - id: Setup_build_buddy
+        uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
+
+      - name: Build, allow buildbudy failure
+        run: bazel coverage --config=ci --config=linux --noenable_bzlmod -k -- //... -//simulation/halsim_gui:halsim_gui-test -//sysid:sysid-test
+
+      - name: genhtml
+        run: |
+          genhtml bazel-out/_coverage/_coverage_report.dat -o coverage_report/combined
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "Coverage"
+          path: coverage_report
 
   buildifier:
     name: "buildifier"
@@ -106,4 +255,72 @@ jobs:
         with:
           name: ${{ matrix.platform }}-bazel-lint-fixes
           path: bazel-lint-fixes.patch
+        if: ${{ failure() }}
+
+  unused_deps:
+    name: "unused_deps"
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up Go 1.15.x
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.15.x
+        id: go
+
+      - uses: actions/checkout@v4
+
+      - name: Install Unused Deps
+        run: |
+          cd $(mktemp -d)
+          GO111MODULE=on go get github.com/bazelbuild/buildtools/unused_deps@5.1.0
+
+      - name: Install Buildozer
+        run: |
+          cd $(mktemp -d)
+          GO111MODULE=on go get github.com/bazelbuild/buildtools/buildozer@5.1.0
+
+      - id: Setup_build_buddy
+        uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
+
+      - name: Dump Platform Flag
+        run: |
+          echo "# Flags for unused deps"                 > user.bazelrc
+          echo "build --config=linux"                   >> user.bazelrc
+          echo "build --config=ci"                  >> user.bazelrc
+          echo "build --build_tag_filters=-wpi-cpp-gui" >> user.bazelrc
+          echo "build --test_tag_filters=-wpi-cpp-gui"  >> user.bazelrc
+          echo "common --noenable_bzlmod"  >> user.bazelrc
+
+      - name: Debug userrc
+        run: cat user.bazelrc
+
+      - name: Prep unused deps
+        run:  bazel query --tool_tag=unused_deps --keep_going "kind('(kt|java|android)_*', //...)" || true
+
+      - name: Run unused deps
+        run: unused_deps -cquery //... > buildozer-cmds.sh
+
+      - name: Show unused deps
+        run: cat buildozer-cmds.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Upload Unused Deps Script
+          path: buildozer-cmds.sh
+
+      - name: Fix unused deps
+        run: chmod +x buildozer-cmds.sh && ./buildozer-cmds.sh
+
+      - name: Generate diff
+        run: git diff > bazel-unused-deps-fixes.patch
+
+      - name: Check Output
+        run: git --no-pager diff --exit-code HEAD
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Upload Unused Deps Patch
+          path: bazel-unused-deps-fixes.patch
         if: ${{ failure() }}

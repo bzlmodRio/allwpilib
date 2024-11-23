@@ -1,5 +1,58 @@
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
+load("//shared/bazel/rules/jni:cc_jni.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules/jni:java_jni.bzl", "wpilib_java_jni_library")
+load("//wpimath:generate.bzl", "generate_wpimath")
+
+filegroup(
+    name = "templates",
+    srcs = glob(["src/generate/main/java/*.jinja"]),
+)
+
+py_binary(
+    name = "generate_numbers",
+    srcs = ["generate_numbers.py"],
+    data = [":templates"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [requirement("jinja2")],
+)
+
+py_binary(
+    name = "generate_quickbuf",
+    srcs = ["generate_quickbuf.py"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
+    name = "generate_wpimath_py",
+    srcs = ["generate_wpimath.py"],
+    main = "generate_wpimath.py",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":generate_numbers",
+        ":generate_quickbuf",
+    ],
+)
+
+generate_wpimath(
+    name = "generate_wpimath",
+)
+
+write_source_files(
+    name = "write_wpimath",
+    diff_test = False,
+    files = {
+        "src/generated": ":generate_wpimath",
+    },
+    suggested_update_target = "//:write_all",
+    visibility = ["//visibility:public"],
+)
 
 filegroup(
     name = "generated_java",
@@ -7,9 +60,93 @@ filegroup(
     visibility = ["//wpimath:__subpackages__"],
 )
 
-java_library(
+wpilib_cc_library(
+    name = "eigen-headers",
+    hdrs = glob([
+        "src/main/native/thirdparty/eigen/include/**",
+    ]),
+    includes = ["src/main/native/thirdparty/eigen/include"],
+    strip_include_prefix = "src/main/native/thirdparty/eigen/include",
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+wpilib_cc_library(
+    name = "gcem",
+    hdrs = glob([
+        "src/main/native/thirdparty/gcem/include/**",
+    ]),
+    includes = ["src/main/native/thirdparty/gcem/include"],
+    strip_include_prefix = "src/main/native/thirdparty/gcem/include",
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+wpilib_cc_library(
+    name = "sleipnir-headers",
+    hdrs = glob([
+        "src/main/native/thirdparty/sleipnir/include/**/*.hpp",
+    ]),
+    includes = ["src/main/native/thirdparty/sleipnir/include"],
+    strip_include_prefix = "src/main/native/thirdparty/sleipnir/include",
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+filegroup(
+    name = "sleipnir-srcs",
+    srcs = glob(["src/main/native/thirdparty/sleipnir/src/**"]),
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+wpilib_cc_library(
+    name = "nanopb-generated-headers",
+    hdrs = glob(["src/generated/main/native/cpp/**/*.h"]),
+    includes = ["src/generated/main/native/cpp"],
+    strip_include_prefix = "src/generated/main/native/cpp",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+wpilib_cc_static_and_shared_library(
+    name = "wpimath",
+    srcs = glob(
+        [
+            "src/main/native/cpp/**",
+            "src/generated/main/native/cpp/**/*.cpp",
+        ],
+        exclude = ["src/main/native/cpp/jni/**"],
+    ) + [":sleipnir-srcs"],
+    hdrs = glob(["src/main/native/include/**/*"]),
+    defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    includes = [
+        "src/main/native/include",
+        "src/main/native/thirdparty/sleipnir/src",
+    ],
+    standard_deps = [
+        ":eigen-headers",
+        ":sleipnir-headers",
+        ":gcem",
+        ":nanopb-generated-headers",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpiutil:wpiutil",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "wpimathjni",
+    srcs = glob(["src/main/native/cpp/jni/**"]),
+    java_dep = ":wpimath-java",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpimath",
+    ],
+)
+
+wpilib_java_jni_library(
     name = "wpimath-java",
-    srcs = [":generated_java"] + glob(["src/main/java/**/*.java"]),
+    srcs = ["//wpimath:generated_java"] + glob(["src/main/java/**/*.java"]),
+    native_libs = [":wpimathjni"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpiunits",
@@ -24,7 +161,55 @@ java_library(
     ],
 )
 
-java_binary(
+wpilib_cc_library(
+    name = "test_headers",
+    hdrs = glob([
+        "src/test/native/include/**",
+    ]),
+    strip_include_prefix = "src/test/native/include",
+)
+
+wpilib_cc_test(
+    name = "wpimath-cpp-test",
+    size = "small",
+    srcs = glob([
+        "src/test/native/cpp/**/*.cpp",
+        "src/test/native/cpp/**/*.h",
+    ]),
+    tags = [
+        "no-bullseye",
+        "no-raspi",
+    ],
+    deps = [
+        ":test_headers",
+        ":wpimath.static",
+        "//thirdparty/googletest:googletest.static",
+    ],
+)
+
+wpilib_java_junit5_test(
+    name = "wpimath-java-test",
+    size = "small",
+    srcs = glob(["src/test/java/**/*.java"]),
+    deps = [
+        ":wpimath-java",
+        "//wpiunits",
+        "//wpiutil:wpiutil-java",
+        "@maven//:org_ejml_ejml_core",
+        "@maven//:org_ejml_ejml_simple",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    deps = [
+        ":wpimath.static",
+    ],
+)
+
+wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/math/DevMain.java"],
     main_class = "edu.wpi.first.math.DevMain",
@@ -35,6 +220,6 @@ java_binary(
 
 py_binary(
     name = "ExponentialProfileModel",
-    srcs = ["algorithms/ExponentialProfileModel.py"],
+    srcs = ["ExponentialProfileModel.py"],
     tags = ["manual"],
 )

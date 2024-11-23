@@ -1,5 +1,30 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+http_archive(
+    name = "build_bazel_apple_support",
+    sha256 = "c4bb2b7367c484382300aee75be598b92f847896fb31bbd22f3a2346adf66a80",
+    url = "https://github.com/bazelbuild/apple_support/releases/download/1.15.1/apple_support.1.15.1.tar.gz",
+)
+
+load(
+    "@build_bazel_apple_support//lib:repositories.bzl",
+    "apple_support_dependencies",
+)
+
+apple_support_dependencies()
+
+# Rules Python
+http_archive(
+    name = "rules_python",
+    sha256 = "c68bdc4fbec25de5b5493b8819cfc877c4ea299c0dcb15c244c5a00208cde311",
+    strip_prefix = "rules_python-0.31.0",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.31.0/rules_python-0.31.0.tar.gz",
+)
+
+load("@rules_python//python:repositories.bzl", "py_repositories", "python_register_toolchains")
+
+py_repositories()
+
 # Download Extra java rules
 http_archive(
     name = "rules_jvm_external",
@@ -12,89 +37,80 @@ load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
 
 rules_jvm_external_deps()
 
-load("@rules_jvm_external//:defs.bzl", "maven_install")
-
-maven_artifacts = [
-    "org.ejml:ejml-simple:0.43.1",
-    "com.fasterxml.jackson.core:jackson-annotations:2.15.2",
-    "com.fasterxml.jackson.core:jackson-core:2.15.2",
-    "com.fasterxml.jackson.core:jackson-databind:2.15.2",
-    "us.hebi.quickbuf:quickbuf-runtime:1.3.3",
-    "com.google.code.gson:gson:2.10.1",
-]
-
-maven_install(
-    name = "maven",
-    artifacts = maven_artifacts,
-    repositories = [
-        "https://repo1.maven.org/maven2",
-        "https://frcmaven.wpi.edu/artifactory/release/",
-    ],
-)
-
-# Download toolchains
+# local_repository(
+#     name = "bzlmodRio",
+#     path = "../bzlmodRio/monorepo/bzlmodRio",
+# )
 http_archive(
-    name = "rules_bzlmodrio_toolchains",
-    sha256 = "2ef1cafce7f4fd4e909bb5de8b0dc771a934646afd55d5f100ff31f6b500df98",
-    url = "https://github.com/wpilibsuite/rules_bzlmodRio_toolchains/releases/download/2024-1.bcr1/rules_bzlmodRio_toolchains-2024-1.bcr1.tar.gz",
+    name = "bzlmodRio",
+    sha256 = "d976f4a7fa45b44929eee349f9d2923bf4d7ad1954ab6f6dbd4f211942ace4e2",
+    strip_prefix = "bzlmodRio-311bfd2a4584eb1e26bff7367f1016f631fee4fc",
+    url = "https://github.com/bzlmodRio/bzlmodRio/archive/311bfd2a4584eb1e26bff7367f1016f631fee4fc.tar.gz",
 )
 
-load("@rules_bzlmodrio_toolchains//:maven_deps.bzl", "setup_legacy_setup_toolchains_dependencies")
+load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_dependencies")
 
-setup_legacy_setup_toolchains_dependencies()
+download_dependencies(
+    allwpilib_version = None,
+    apriltaglib_version = None,
+    imgui_version = None,
+    libssh_version = "2024.0.105-1",
+    local_monorepo_base = "../bzlmodRio/monorepo",
+    navx_version = None,
+    ni_version = "2024.2.0",
+    opencv_version = "2024.4.8.0-2",
+    phoenix_version = None,
+    revlib_version = None,
+    rules_bazelrio_version = "0.0.13",
+    rules_checkstyle_version = None,
+    rules_pmd_version = None,
+    rules_spotless_version = None,
+    rules_toolchains_version = "2024-1",
+    rules_wpi_styleguide_version = None,
+    rules_wpiformat_version = None,
+)
 
-load("@rules_bzlmodrio_toolchains//toolchains:load_toolchains.bzl", "load_toolchains")
+load("@bzlmodRio//private/non_bzlmod:setup_dependencies.bzl", "setup_dependencies")
 
-load_toolchains()
+setup_dependencies()
 
-#
+load("//shared/bazel/deps:repo.bzl", "load_third_party")
+
+load_third_party()
+
+# Initialize repositories for all packages in requirements_lock.txt.
+load("@allwpilib_pip_deps//:requirements.bzl", "install_deps")
+
+install_deps()
+
+load("@maven//:defs.bzl", "pinned_maven_install")
+
+pinned_maven_install()
+
+http_archive(
+    name = "aspect_bazel_lib",
+    sha256 = "a8a92645e7298bbf538aa880131c6adb4cf6239bbd27230f077a00414d58e4ce",
+    strip_prefix = "bazel-lib-2.7.2",
+    url = "https://github.com/aspect-build/bazel-lib/releases/download/v2.7.2/bazel-lib-v2.7.2.tar.gz",
+)
+
+load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies")
+
+aspect_bazel_lib_dependencies()
+
+python_register_toolchains(
+    name = "python_3_11",
+    ignore_root_user_error = True,
+    python_version = "3.11",
+)
+
 http_archive(
     name = "rules_bzlmodrio_jdk",
-    sha256 = "a00d5fa971fbcad8a17b1968cdc5350688397035e90b0cb94e040d375ecd97b4",
-    url = "https://github.com/wpilibsuite/rules_bzlmodRio_jdk/releases/download/17.0.8.1-1/rules_bzlmodRio_jdk-17.0.8.1-1.tar.gz",
+    sha256 = "43a475e46852305ffc87f7499e772a42dc5343d7bfcc7631dbca83568712f44f",
+    strip_prefix = "rules_bzlmodrio_jdk-d5f0db20a611e4ec4b26f95d9c772e2436b69b55",
+    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/d5f0db20a611e4ec4b26f95d9c772e2436b69b55.tar.gz"],
 )
 
 load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
 
 setup_legacy_setup_jdk_dependencies()
-
-register_toolchains(
-    "@local_roborio//:macos",
-    "@local_roborio//:linux",
-    "@local_roborio//:windows",
-    "@local_raspi_32//:macos",
-    "@local_raspi_32//:linux",
-    "@local_raspi_32//:windows",
-    "@local_bullseye_32//:macos",
-    "@local_bullseye_32//:linux",
-    "@local_bullseye_32//:windows",
-    "@local_bullseye_64//:macos",
-    "@local_bullseye_64//:linux",
-    "@local_bullseye_64//:windows",
-)
-
-setup_legacy_setup_jdk_dependencies()
-
-http_archive(
-    name = "bzlmodrio-ni",
-    sha256 = "197fceac88bf44fb8427d5e000b0083118d3346172dd2ad31eccf83a5e61b3ce",
-    url = "https://github.com/wpilibsuite/bzlmodRio-ni/releases/download/2025.0.0/bzlmodRio-ni-2025.0.0.tar.gz",
-)
-
-load("@bzlmodrio-ni//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_ni_cpp_dependencies")
-
-setup_legacy_bzlmodrio_ni_cpp_dependencies()
-
-http_archive(
-    name = "bzlmodrio-opencv",
-    sha256 = "5314cce05b49451a46bf3e3140fc401342e53d5f3357612ed4473e59bb616cba",
-    url = "https://github.com/wpilibsuite/bzlmodRio-opencv/releases/download/2024.4.8.0-4.bcr1/bzlmodRio-opencv-2024.4.8.0-4.bcr1.tar.gz",
-)
-
-load("@bzlmodrio-opencv//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_opencv_cpp_dependencies")
-
-setup_legacy_bzlmodrio_opencv_cpp_dependencies()
-
-load("@bzlmodrio-opencv//:maven_java_deps.bzl", "setup_legacy_bzlmodrio_opencv_java_dependencies")
-
-setup_legacy_bzlmodrio_opencv_java_dependencies()

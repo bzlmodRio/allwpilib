@@ -1,0 +1,52 @@
+load("//shared/bazel/rules:cc_flags.bzl", "get_wpigui_linker_flags")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_shared_library", "wpilib_cc_test")
+
+wpilib_cc_shared_library(
+    name = "halsim_gui",
+    srcs = glob([
+        "src/main/native/cpp/*",
+        "src/main/native/include/*.h",
+    ]),
+    features = ["windows_export_all_symbols"],
+    includes = ["src/main/native/include"],
+    linkopts = get_wpigui_linker_flags(console = True),
+    tags = [
+        "no-roborio",
+        "wpi-cpp-gui",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//glass:libglassnt",
+        "//hal:wpiHal.shared",
+    ],
+)
+
+wpilib_cc_test(
+    name = "halsim_gui-test",
+    size = "small",
+    srcs = glob([
+        "src/test/native/**/*.cpp",
+        "src/test/native/**/*.h",
+    ]),
+    linkopts = get_wpigui_linker_flags(console = True),
+    tags = [
+        "no-asan",
+        "wpi-cpp-gui",
+    ],
+    deps = [
+        ":halsim_gui.shared",
+        "//thirdparty/googletest:googletest.static",
+    ],
+)
+
+wpilib_cc_binary(
+    name = "DevMain-Cpp",
+    srcs = ["src/dev/native/cpp/main.cpp"],
+    tags = [
+        "no-roborio",
+        "wpi-cpp-gui",
+    ],
+    deps = [
+        ":halsim_gui.shared",
+    ],
+)
