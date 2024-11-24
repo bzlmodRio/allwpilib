@@ -18,6 +18,22 @@ wpilib_cc_library(
 )
 
 wpilib_cc_library(
+    name = "debugging-headers",
+    hdrs = glob([
+        "src/main/native/thirdparty/debugging/include/**/*",
+    ]),
+    includes = ["src/main/native/thirdparty/debugging/include"],
+    strip_include_prefix = "src/main/native/thirdparty/debugging/include",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+filegroup(
+    name = "debugging-srcs",
+    srcs = glob(["src/main/native/thirdparty/debugging/src/**"]),
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+wpilib_cc_library(
     name = "expected-headers",
     hdrs = glob([
         "src/main/native/thirdparty/expected/include/**/*",
@@ -179,6 +195,7 @@ wpilib_cc_static_and_shared_library(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
     ) + [
+        ":debugging-srcs",
         ":fmtlib-srcs",
         ":generate-resources",
         ":llvm-srcs",
@@ -193,6 +210,7 @@ wpilib_cc_static_and_shared_library(
     standard_deps = [
         ":argparse-headers",
         ":concurrentqueue-headers",
+        ":debugging-headers",
         ":expected-headers",
         ":fmtlib-headers",
         ":json-headers",
