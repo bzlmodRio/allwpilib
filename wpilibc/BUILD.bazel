@@ -1,0 +1,54 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_python//python:defs.bzl", "py_binary")
+load("//wpilibc:generate.bzl", "generate_wpilibc")
+
+py_binary(
+    name = "generate_hids",
+    srcs = ["generate_hids.py"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [requirement("jinja2")],
+)
+
+py_binary(
+    name = "generate_pwm_motor_controllers",
+    srcs = ["generate_pwm_motor_controllers.py"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [requirement("jinja2")],
+)
+
+py_binary(
+    name = "generate_wpilibc_py",
+    srcs = ["generate_wpilibc.py"],
+    main = "generate_wpilibc.py",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":generate_hids",
+        ":generate_pwm_motor_controllers",
+    ],
+)
+
+filegroup(
+    name = "templates",
+    srcs = glob(["src/generate/main/native/**"]) + [
+        "//wpilibj:hid_schema",
+        "//wpilibj:pwm_schema",
+    ],
+    visibility = ["//wpilibc:__subpackages__"],
+)
+
+generate_wpilibc(
+    name = "generate_wpilibc",
+)
+
+write_source_files(
+    name = "write_wpilibc",
+    files = {
+        "src/generated": ":generate_wpilibc",
+    },
+    suggested_update_target = "//:write_all",
+    visibility = ["//visibility:public"],
+)
