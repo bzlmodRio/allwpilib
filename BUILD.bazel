@@ -18,6 +18,7 @@ compile_pip_requirements(
     requirements_txt = "requirements_lock.txt",
     tags = [
         "no-bullseye",
+        "no-bookworm",
         "no-raspi",
         "no-roborio",
     ],
@@ -45,5 +46,6 @@ write_source_files(
         "//wpilibNewCommands:write_wpilib_new_commands",
         "//wpimath:write_wpimath",
         "//wpiunits:write_wpiunits",
+        "//wpiutil:write_wpiutil",
     ],
 )

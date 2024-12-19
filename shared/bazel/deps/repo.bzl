@@ -38,6 +38,7 @@ def load_third_party():
     pip_parse(
         name = "allwpilib_pip_deps",
         requirements_lock = "//:requirements_lock.txt",
+        python_interpreter_target = "@python_3_10_host//:python",
     )
 
     setup_non_bzlmod_quickbuf_protoc()
