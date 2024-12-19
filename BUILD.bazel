@@ -18,6 +18,7 @@ compile_pip_requirements(
     requirements_txt = "requirements_lock.txt",
     tags = [
         "no-bullseye",
+        "no-bookworm",
         "no-raspi",
         "no-roborio",
     ],
