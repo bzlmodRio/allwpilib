@@ -49,6 +49,7 @@ wpilib_cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
+        ":cameraserver.static",
     ],
 )
 
