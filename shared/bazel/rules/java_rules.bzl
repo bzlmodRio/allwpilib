@@ -134,6 +134,6 @@ def wpilib_java_junit5_test(
             "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": {},
         }),
         use_testrunner = False,
-        tags = tags + ["no-roborio", "no-bionic", "no-raspbian", "allwpilib-build-java", "no-asan", "no-tsan", "no-ubsan"],
+        tags = tags + ["no-roborio", "no-bionic", "no-raspbian", "no-bookworm", "allwpilib-build-java", "no-asan", "no-tsan", "no-ubsan"],
         **kwargs
     )

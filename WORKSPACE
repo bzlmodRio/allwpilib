@@ -49,9 +49,16 @@ rules_jvm_external_deps()
 # )
 http_archive(
     name = "bzlmodRio",
-    sha256 = "d976f4a7fa45b44929eee349f9d2923bf4d7ad1954ab6f6dbd4f211942ace4e2",
-    strip_prefix = "bzlmodRio-311bfd2a4584eb1e26bff7367f1016f631fee4fc",
-    url = "https://github.com/bzlmodRio/bzlmodRio/archive/311bfd2a4584eb1e26bff7367f1016f631fee4fc.tar.gz",
+    sha256 = "349fdc6cbaa0b3093d79587e32fbad4ca6cace0b811b312b9e35301b9c411301",
+    strip_prefix = "bzlmodRio-c3f8f4c1c7a02953fc49044ef24df55757f25d61",
+    url = "https://github.com/bzlmodRio/bzlmodRio/archive/c3f8f4c1c7a02953fc49044ef24df55757f25d61.tar.gz",
+)
+
+http_archive(
+    name = "rules_bzlmodrio_toolchains",
+    sha256 = "b3b696dfdbb55ec42682f6601ca2d89fcd7a68df14e4bd2801209e4e3eeae045",
+    strip_prefix = "rules_bzlmodrio_toolchains-5b3f8f02c8fbf65f8fc31b87fb2d63003bea833a",
+    url = "https://github.com/bzlmodRio/rules_bzlmodrio_toolchains/archive/5b3f8f02c8fbf65f8fc31b87fb2d63003bea833a.tar.gz",
 )
 
 load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_dependencies")
@@ -63,15 +70,15 @@ download_dependencies(
     libssh_version = "2024.0.105-1",
     local_monorepo_base = "../bzlmodRio/monorepo",
     navx_version = None,
-    ni_version = "2024.2.0",
-    opencv_version = "2024.4.8.0-2",
+    ni_version = "2025.0.0",
+    opencv_version = "2025.4.10.0-2",
     phoenix_version = None,
     revlib_version = None,
     rules_bazelrio_version = "0.0.13",
     rules_checkstyle_version = None,
     rules_pmd_version = None,
     rules_spotless_version = None,
-    rules_toolchains_version = "2024-1",
+    rules_toolchains_version = "2025-1",
     rules_wpi_styleguide_version = None,
     rules_wpiformat_version = None,
 )
