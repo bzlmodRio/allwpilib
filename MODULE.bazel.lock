@@ -26,10 +26,10 @@
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/buildozer/7.1.2/source.json": "c9028a501d2db85793a6996205c8de120944f50a0d570438fcae0457a5f9d1f8",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-libssh/2024.0.105-1/MODULE.bazel": "227920fb312c32e0d4c0fd9967063dd4b6785e6c19dd2a031123c425e368b6de",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-libssh/2024.0.105-1/source.json": "54d94cd28362dca87ce9595296074db67b55f7bf5dc92c0df100ee37cbc66e8e",
-    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2024.2.1/MODULE.bazel": "3dd945146d4a1951c8bc96a7915c68d66ab82a4b11b88e6793858ccdb86a8a55",
-    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2024.2.1/source.json": "60978e4fba9af5eaaca40d378bbb5fc389c51a6104b764ddf194c24720aeac06",
-    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-opencv/2024.4.8.0-2/MODULE.bazel": "25e3373fc511399cd8aafe330cdfcdff5451c970840fd87fdbf808a0f6a27d1f",
-    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-opencv/2024.4.8.0-2/source.json": "71a26cc5418956a68a5d3a28749b708e7eee48405afdac244217a058975a010a",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2025.0.0/MODULE.bazel": "a32b92d4435358e2497161822a22f688ab2087eb24676728ef60ef56a366a103",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2025.0.0/source.json": "c27e1571d3ad44b1aa51037b67626a97d607f942190aba397e56c77c25d15d16",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-opencv/2025.4.10.0-2/MODULE.bazel": "5d27db34d58684ff8cf7e3dbdc1de31492343cc473ae63c548b32046bc165610",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-opencv/2025.4.10.0-2/source.json": "4d9e94fafc7b519895f1bd191dcd3cee29b99a5b8ad271b8195e8828894664e6",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/googletest/1.11.0/MODULE.bazel": "3a83f095183f66345ca86aa13c58b59f9f94a2f81999c093d4eeaa2d262d12f4",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/googletest/1.11.0/source.json": "c73d9ef4268c91bd0c1cd88f1f9dfa08e814b1dbe89b5f594a9f08ba0244d206",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/platforms/0.0.4/MODULE.bazel": "9b328e31ee156f53f3c416a64f8491f7eb731742655a47c9eec4703a71644aee",
@@ -878,8 +878,8 @@
     },
     "@@bzlmodrio-opencv~//:maven_cpp_deps.bzl%setup_bzlmodrio_opencv_cpp_dependencies": {
       "general": {
-        "bzlTransitiveDigest": "Hv5+WDUi9axdc86HsazJBjyawXGeYZIWQuVbC9QCRAc=",
-        "usagesDigest": "WX96f3XgAQn3SsUUNCdyVqavyGOCzfv6JQuMMxUe0kk=",
+        "bzlTransitiveDigest": "/isRufc59CS8aY7kAXMnt0yvSECYfW73nuUTH8/n50A=",
+        "usagesDigest": "lGVAFgrRnbChfs+f1NROEzTIRh7DE3ThIj3ry7rbq6s=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -888,342 +888,378 @@
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxathena.zip",
-              "sha256": "abe69f6cac06637e1b4fcd46ea9f08f09e43cdf36b37e531440677c69dfa7973",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxathena.zip",
+              "sha256": "625229e94bd0c5a32160e98e2a4cd92227b97c211dc32f13ffacd9b0b2239578",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
+            }
+          },
+          "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcore": {
+            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+            "ruleClassName": "http_archive",
+            "attributes": {
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxsystemcore.zip",
+              "sha256": "8e59b6dd9201cb2125aaaa3849cdf241fd836ab0595316744804e6da7a47c24e",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32staticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxarm32staticdebug.zip",
-              "sha256": "f7b6d779e86f6457482467ef87313ade4582665f15cfa44d5294c4b29a12d6a8",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxarm32staticdebug.zip",
+              "sha256": "fc29d872881e3245eaf2503f3aa977ebc816862bd63ebd3a645a717199789bd0",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64static": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxarm64static.zip",
-              "sha256": "77a75d1dfbbe6d543e031519b90fac6e61858129d6dd1f498b08b4723166a87d",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxarm64static.zip",
+              "sha256": "d6e55e0d27c677d31f12807f3e5dac725c33fa6ed3c8c3803c5e8913b9bbc83a",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_headers": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-headers.zip",
-              "sha256": "55c78d5cd6253656936310f417e12fb5f540f2864692cef9501bee73a9bf2e8e",
-              "build_file_content": "cc_library(\n    name = \"headers\",\n    hdrs = glob([\"**\"]),\n    includes = [\".\"],\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-headers.zip",
+              "sha256": "c6f5a2f3082b96d0c456e499aa7d5ad24fcad89c11dd6259e6709057fafa798d",
+              "build_file_content": "cc_library(\n    name = \"headers\",\n    hdrs = glob([\"**\"]),\n    includes = [\".\"],\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"header_files\",\n    srcs = glob([\"**\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxarm64": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-osxarm64.zip",
-              "sha256": "414c82269d608ab46e0c72aefd6bed5216596e75d16cd0dc2cfc508a15527c13",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-osxarm64.zip",
+              "sha256": "8edeb24523434f774057515a19fc0e350104e340f62c1262a1a63400f660b598",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64staticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxarm64staticdebug.zip",
-              "sha256": "5b161a35a92647f3bb598c190058f46f4f3e2ac5055d37260387ac501245f9c4",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxarm64staticdebug.zip",
+              "sha256": "5e28586b216189c526b58a7d6be44e31c97485ee70c77d6a8f8477e64513d2a8",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxarm64debug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-osxarm64debug.zip",
-              "sha256": "fa55dbe2cfb832752ed87ce31d351c4266b2d8d942c85c5019e0f5d79bfea468",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-osxarm64debug.zip",
+              "sha256": "7d5b9fdf4674495b8b9a07dba317fb137aff37bb349d162d959ed0745c40e039",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversal": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-osxuniversal.zip",
-              "sha256": "2a600d9b96ef31c605f929bab15643861e443a034ffdd869f5de9f8206a93f02",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-osxuniversal.zip",
+              "sha256": "45cd121c465016bdbbe946f7b03399e5cc2819322bfd577908e76e31345dddbc",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64staticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsarm64staticdebug.zip",
-              "sha256": "4cccf7d59b74742b3fb186d98932029137a42c5ad12c8113837b4c7e7d19f0a6",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsarm64staticdebug.zip",
+              "sha256": "656db4670e95120d74754fd3cafa53f62448afde1b042fe27db2eadab24e3d90",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxarm64.zip",
-              "sha256": "560e890ef4d9b8bf43549263548cb3ed20d1f438e64bed20527cd0f5e9ecddb4",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxarm64.zip",
+              "sha256": "e51b0c62f97f2274a9b62701ad418851a9ecc1f892093e81e9d6ef0e314a568d",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxx86-64.zip",
-              "sha256": "1a0a046ec0f022334562d5cd0c4fbfd1613a1d2e430fa2a58cda7347bb1491cf",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxx86-64.zip",
+              "sha256": "e9e88f5ff8e21a105c25db158873380a043176f1f87ab6151cdda6991c21f4e5",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathenadebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxathenadebug.zip",
-              "sha256": "598b2e5057833250a0b90f8153156d6f319833fd01669bd5014ef34f454548af",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxathenadebug.zip",
+              "sha256": "6d8f4f4ef966636f0503f12e7b679b2d01c184013bad7959a43ef386cc31289f",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32static": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxarm32static.zip",
-              "sha256": "4157692e6c812f50f266c524b1aa07fd318464f7e82756a5ebbcf6dcacc34ad3",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxarm32static.zip",
+              "sha256": "27ad5aa85831e13c0d58bd3e4e99f91a37af409f533e0d5af25c6580a98678eb",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64debug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxx86-64debug.zip",
-              "sha256": "964e492419ef40516625a35ffa4bade77861a16018bff4f511641e17c44823fa",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxx86-64debug.zip",
+              "sha256": "a6cd095a907c9820c996ff92f0c24aeb54de994dd85af45a2a957efb3235d288",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathenastaticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxathenastaticdebug.zip",
-              "sha256": "3d2e75dcaf5497ffd17f57b2a37b63b0e43f10cc5001a96b87cccd97b5667882",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxathenastaticdebug.zip",
+              "sha256": "7667f71e9a2b613757b483dd2c333c5a721fea7f3d1ae08c0790027998a0a67b",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversalstatic": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-osxuniversalstatic.zip",
-              "sha256": "88815a7d3e852dcd5124c0c7905c2c01fdb86cef89e1d741b09361ef6f6974ff",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-osxuniversalstatic.zip",
+              "sha256": "0a2149ece011534341d8c5665abda8bb4ffe0e13a66160a0d2a1b6013da27cec",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86staticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsx86staticdebug.zip",
-              "sha256": "4e3a22465b547f59feca9cb9cbe823885454f67e769213542841f53b90d7bbc9",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsx86staticdebug.zip",
+              "sha256": "11c530f7338682a567340d2dacec3956e98a3c1a01dce68c8024c0b1eba9196e",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64static": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsarm64static.zip",
-              "sha256": "9a248b758ec5532fb6860c1ba8e968b92a9c7e8de10aaecaad4dfd9bb51567df",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsarm64static.zip",
+              "sha256": "42c6ee66ca50c54310c30db7ed2484e5afd89d7f1acaa7f52ff644f621383da3",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
+            }
+          },
+          "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcorestatic": {
+            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+            "ruleClassName": "http_archive",
+            "attributes": {
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxsystemcorestatic.zip",
+              "sha256": "35a191ffbfed6172b6d09171a28d6901c0131099862f9f788e4284de7b6ed797",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64static": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsx86-64static.zip",
-              "sha256": "0592f3d25b8273bcd72110d32bdadacbcd227e0f494eff6814ddff6d5a0a6638",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsx86-64static.zip",
+              "sha256": "404a1795dde63ceb56151fe451c5b8f07fdded7767b2684f3d4bb521cf8977d2",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32debug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxarm32debug.zip",
-              "sha256": "efe862204bee3afe5b2e00cb8018b3df7549b3693d4cc93137e1000cc1465210",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxarm32debug.zip",
+              "sha256": "029cdfa474ae6778ec6b52b513fb3f427cd6761ddb3a8f81943c19189f92ff4d",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsx86-64.zip",
-              "sha256": "f62223e5490b60d0d2d181dcb7bc32cbf060082afbf548ee65a2ea9779dcce9d",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsx86-64.zip",
+              "sha256": "db1fe7c5727a440f9a04fb7010f62a2a977c80c3cce3aedcac37b566e68be8e5",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86static": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsx86static.zip",
-              "sha256": "86c78121562cc1ad0c090ff94f7621863857992a5589ef5d6aba852a6463014b",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsx86static.zip",
+              "sha256": "d14967095652036d7d559ec15919734ad50e1b3a749eec71ac353282b2c0a8af",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64staticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxx86-64staticdebug.zip",
-              "sha256": "1b8e25a36fb3e0ef0eaae0dc12a6d5169f024f02e76f104c70f620a12ac62f1e",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxx86-64staticdebug.zip",
+              "sha256": "28c40e3d23775c77974e680a4f9e38b90e2c393c8f23e0f29352a187503cc5d7",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_sources": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-sources.zip",
-              "sha256": "e8203be9fe553ce2cb80d286423e43fbb84891ac36de38a3dc71f0d302cca968",
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-sources.zip",
+              "sha256": "38b20790cdb7333c3cc4b4370b980eb22532c9abc9946c270d764f944afd25be",
               "build_file_content": "filegroup(\n     name = \"sources\",\n     srcs = glob([\"**\"]),\n     visibility = [\"//visibility:public\"],\n )\n "
+            }
+          },
+          "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcorestaticdebug": {
+            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+            "ruleClassName": "http_archive",
+            "attributes": {
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxsystemcorestaticdebug.zip",
+              "sha256": "5c374076814f7b2804e3125e39c9cae1d62b7c55bad5da2396832c5e1e51d302",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxathenastatic": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxathenastatic.zip",
-              "sha256": "e79f2f54a8aec9d33f350d85f1af6fe47e54291d1a2682a31e183f3797858d3c",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxathenastatic.zip",
+              "sha256": "89047dac67fe3a30dc80ebcca9633bb09af61ce87e7d4664d8a1ffc4132dc1fc",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsx86.zip",
-              "sha256": "ced00457d857648d949b4906af203af3199ba85725b32bbbdf357a0e8a3200a2",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsx86.zip",
+              "sha256": "e04a79e393b286d3a4aa2e6f87507fafbb778f434edf1546d7a6ad297f79f3aa",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxx86-64static": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxx86-64static.zip",
-              "sha256": "e1e9b2173e423a9e651d4740c29d8b9a2a2ab4d68526bbaccaad5949fa664a0d",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxx86-64static.zip",
+              "sha256": "97f06024300238faf29b139fc111cf085597f2682d44288cf9ddd521aaeaf273",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversaldebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-osxuniversaldebug.zip",
-              "sha256": "2b32c016424481cdcca43d230457361638ea947e44050f38458a4a2b798409db",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-osxuniversaldebug.zip",
+              "sha256": "018c2f2c2ed3248b49a541006586f20a40bfa31f5befb123a8d2473da3e17c37",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxarm64staticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-osxarm64staticdebug.zip",
-              "sha256": "fd34cddb9413d8e47c0c0293e285bbba53ad142d8357822827a8dc730c9f2f5e",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-osxarm64staticdebug.zip",
+              "sha256": "6c9291c5b4c39f54e5407ff96bbc03c67eb70d1c175d55f743b5489f7f47d8ff",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64staticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsx86-64staticdebug.zip",
-              "sha256": "7276013b1eddbd3b1e32f2329a6aa582543cd6bbb353dad98abf0416ee4fbc61",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsx86-64staticdebug.zip",
+              "sha256": "fb93511ca90ebf60d97ae51629ae0c03abd7d683d21e968b7f819a4da7c681e1",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86-64debug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsx86-64debug.zip",
-              "sha256": "8ba494f824a0c9bf5609679333e524c9dddd5e40ba1f5be91029782a7abd0a79",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsx86-64debug.zip",
+              "sha256": "39bad61710c7e793c3b716acccf951d7fac7fff76fac26137536e5c0a01784ae",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64debug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsarm64debug.zip",
-              "sha256": "9fd1b7d4164dc7e33f1d8e5582b802330f84bf656a387286ac12e09777c1994a",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsarm64debug.zip",
+              "sha256": "6e5821cf89dd1358a44d9357cf8f627646dad6afe319db05de646e92558fc2b5",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm32": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxarm32.zip",
-              "sha256": "d1f5289db0791a91d8eab7d073387775c99b886f6aa6139924059879c6bd7e32",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxarm32.zip",
+              "sha256": "7cf7f49d74727485a84fe1a9a3b639a8397dbc9c125fc189c8a63e6547146dc0",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxarm64static": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-osxarm64static.zip",
-              "sha256": "80d9a71b7cbcfa2edb0a21a7a7004d108bb66b2b57d9d4161650ced3460af657",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-osxarm64static.zip",
+              "sha256": "f24eb215b2739bb86c503a0242b4c987e9f4c377b5c3630e0a71fd92d2add452",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxarm64debug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-linuxarm64debug.zip",
-              "sha256": "3535fccb1c2371c0b5f3ffb174bd642314335b1a9689fcb4ee00e08c92a8cee2",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxarm64debug.zip",
+              "sha256": "7fdc676351062cee38ff2f4a55f8eae0d5370d9ec055818b333bbd652781721b",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
+            }
+          },
+          "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_linuxsystemcoredebug": {
+            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
+            "ruleClassName": "http_archive",
+            "attributes": {
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-linuxsystemcoredebug.zip",
+              "sha256": "44c7685d193edc0c1185501b90d1d3a31b54f8fd4b09e27f8f92aa9e98017960",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsarm64": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsarm64.zip",
-              "sha256": "ee612ae00850c0a5f0a2dce65978a496c27af6d6802bc4607b8089974ca2a9b6",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsarm64.zip",
+              "sha256": "f7dcca5c3606c96c355f1dd6c2c6aa4da08edd4f40fb9234c429efaccf0fcafd",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_osxuniversalstaticdebug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-osxuniversalstaticdebug.zip",
-              "sha256": "469e04a496c047935a33af827da25248d039d8c35e8acfb00484f6fb22392203",
-              "build_file_content": "\n\ncc_library(\n    name = \"static_libs\",\n    srcs = glob([\"**/*.lib\", \"**/*.a\"]),\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-osxuniversalstaticdebug.zip",
+              "sha256": "40396534fec1026c438d831e7d0a332f427646417783e6a1ebc02c8c0232ebde",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:static.BUILD.bazel"
             }
           },
           "bazelrio_edu_wpi_first_thirdparty_frc_opencv_opencv-cpp_windowsx86debug": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
             "ruleClassName": "http_archive",
             "attributes": {
-              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-cpp/4.8.0-2/opencv-cpp-4.8.0-2-windowsx86debug.zip",
-              "sha256": "2fcc58c9a82da9c5c69e16e0dd05767c4d5c6f0f5d05f24e7375c68234d9e663",
-              "build_file_content": "\nJNI_PATTERN=[\n    \"**/*jni.dll\",\n    \"**/*jni.so*\",\n    \"**/*jni.dylib\",\n    \"**/*_java*.dll\",\n    \"**/lib*_java*.dylib\",\n    \"**/lib*_java*.so\",\n]\n\nstatic_srcs = glob([\n        \"**/*.lib\",\n        \"**/*.a\"\n    ],\n    exclude=[\"**/*jni.lib\"]\n)\nshared_srcs = glob([\n        \"**/*.dll\",\n        \"**/*.so*\",\n        \"**/*.dylib\",\n    ],\n    exclude=JNI_PATTERN + [\"**/*.so.debug\"]\n)\nshared_jni_srcs = glob(JNI_PATTERN, exclude=[\"**/*.so.debug\"])\n\nfilegroup(\n    name = \"static_libs\",\n    srcs = static_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_libs\",\n    srcs = shared_srcs,\n    visibility = [\"//visibility:public\"],\n)\n\nfilegroup(\n    name = \"shared_jni_libs\",\n    srcs = shared_jni_srcs,\n    visibility = [\"//visibility:public\"],\n)\n"
+              "url": "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-cpp/4.10.0-2/opencv-cpp-4.10.0-2-windowsx86debug.zip",
+              "sha256": "af228940fbddf5ea6caf6025f83fcc27755828914e9899bb857bc1f8b27a90f4",
+              "build_file": "@@bzlmodrio-opencv~//private/cpp/opencv:shared.BUILD.bazel"
             }
           }
         },
@@ -1238,27 +1274,27 @@
     },
     "@@bzlmodrio-opencv~//:maven_java_deps.bzl%setup_bzlmodrio_opencv_java_dependencies": {
       "general": {
-        "bzlTransitiveDigest": "dFHSxf79yJbkvjMNjwfG1tII6/nuCB2CFG9zJogzP5Q=",
-        "usagesDigest": "NvLctt4i41IXy/3wSb+pYtfPb0nq67AtwH30cHJv1UI=",
+        "bzlTransitiveDigest": "fxkbwhKFyJILtk04Uyj6D9dlD9qGGi9qD8LzB6BOcg0=",
+        "usagesDigest": "WSlFSM+coPCx9whXhdyguaf3MEzT1bxy2TuqepD08GQ=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "edu_wpi_first_thirdparty_frc2024_opencv_opencv_java": {
+          "edu_wpi_first_thirdparty_frc2025_opencv_opencv_java": {
             "bzlFile": "@@bazel_tools//tools/build_defs/repo:jvm.bzl",
             "ruleClassName": "jvm_import_external",
             "attributes": {
-              "generated_rule_name": "edu_wpi_first_thirdparty_frc2024_opencv_opencv_java",
+              "generated_rule_name": "edu_wpi_first_thirdparty_frc2025_opencv_opencv_java",
               "artifact_urls": [
-                "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2024/opencv/opencv-java/4.8.0-2/opencv-java-4.8.0-2.jar"
+                "https://frcmaven.wpi.edu/release/edu/wpi/first/thirdparty/frc2025/opencv/opencv-java/4.10.0-2/opencv-java-4.10.0-2.jar"
               ],
               "srcjar_urls": [],
-              "canonical_id": "edu.wpi.first.thirdparty.frc2024.opencv:opencv-java:4.8.0-2",
+              "canonical_id": "edu.wpi.first.thirdparty.frc2025.opencv:opencv-java:4.10.0-2",
               "rule_name": "java_import",
               "tags": [
-                "maven_coordinates=edu.wpi.first.thirdparty.frc2024.opencv:opencv-java:4.8.0-2"
+                "maven_coordinates=edu.wpi.first.thirdparty.frc2025.opencv:opencv-java:4.10.0-2"
               ],
-              "artifact_sha256": "5410a9ecc510d7b88acf52e5998136a7b0c6318b4bcdcbf80102d9446a43763a"
+              "artifact_sha256": "3b6e65fd154670c7ebca45b47911d6d31faca322e56a70c05833871bedab90c9"
             }
           }
         },
