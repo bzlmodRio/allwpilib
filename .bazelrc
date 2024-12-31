@@ -16,6 +16,8 @@ import shared/bazel/compiler_flags/sanitizers.rc
 import shared/bazel/compiler_flags/base_linux_flags.rc
 import shared/bazel/compiler_flags/bullseye32_flags.rc
 import shared/bazel/compiler_flags/bullseye64_flags.rc
+import shared/bazel/compiler_flags/bookworm32_flags.rc
+import shared/bazel/compiler_flags/bookworm64_flags.rc
 import shared/bazel/compiler_flags/linux_flags.rc
 import shared/bazel/compiler_flags/osx_flags.rc
 import shared/bazel/compiler_flags/raspbian_flags.rc

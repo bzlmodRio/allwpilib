@@ -4,24 +4,33 @@ module(
     compatibility_level = 2023,
 )
 
-bazel_dep(name = "platforms", version = "0.0.9")
+bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "aspect_bazel_lib", version = "2.7.2")
 bazel_dep(name = "apple_support", version = "1.15.1", repo_name = "build_bazel_apple_support")
-bazel_dep(name = "rules_cc", version = "0.0.9")
+bazel_dep(name = "rules_cc", version = "0.0.15")
 bazel_dep(name = "rules_java", version = "7.6.5")
 bazel_dep(name = "rules_jvm_external", version = "6.1")
 bazel_dep(name = "rules_python", version = "0.31.0")
 bazel_dep(name = "bzlmodrio-libssh", version = "2024.0.105-1")
-bazel_dep(name = "bzlmodrio-ni", version = "2024.2.1")
-bazel_dep(name = "bzlmodrio-opencv", version = "2024.4.8.0-2")
-bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2024-1.bcr1")
+bazel_dep(name = "bzlmodrio-ni", version = "2025.0.0")
+bazel_dep(name = "bzlmodrio-opencv", version = "2025.4.10.0-2")
+bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.8.1-1")
+bazel_dep(name = "protobuf", version = "27.1")
+
 archive_override(
     module_name = "rules_bzlmodrio_jdk",
     integrity = "sha256-Q6R15GhSMF/8h/dJnncqQtxTQ9e/zHYx28qDVocS9E8=",
     strip_prefix = "rules_bzlmodrio_jdk-d5f0db20a611e4ec4b26f95d9c772e2436b69b55",
     urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/d5f0db20a611e4ec4b26f95d9c772e2436b69b55.tar.gz"],
+)
+
+archive_override(
+    module_name = "rules_bzlmodrio_toolchains",
+    integrity = "sha256-s7aW39u1XsQmgvZgHKLYn816aN8U5L0oASCeTj7q4EU=",
+    strip_prefix = "rules_bzlmodrio_toolchains-5b3f8f02c8fbf65f8fc31b87fb2d63003bea833a",
+    urls = ["https://github.com/bzlmodRio/rules_bzlmodrio_toolchains/archive/5b3f8f02c8fbf65f8fc31b87fb2d63003bea833a.tar.gz"],
 )
 
 # git_override(
@@ -88,13 +97,13 @@ python = use_extension(
 python.toolchain(
     ignore_root_user_error = True,
     is_default = True,
-    python_version = "3.11",
+    python_version = "3.10",
 )
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
     hub_name = "allwpilib_pip_deps",
-    python_version = "3.11",
+    python_version = "3.10",
     requirements_lock = "//:requirements_lock.txt",
 )
 use_repo(pip, "allwpilib_pip_deps")
