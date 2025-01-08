@@ -4,19 +4,21 @@ module(
     compatibility_level = 2023,
 )
 
-bazel_dep(name = "platforms", version = "0.0.9")
+bazel_dep(name = "platforms", version = "0.0.10")
 bazel_dep(name = "aspect_bazel_lib", version = "2.7.2")
 bazel_dep(name = "apple_support", version = "1.15.1", repo_name = "build_bazel_apple_support")
-bazel_dep(name = "rules_cc", version = "0.0.9")
+bazel_dep(name = "rules_cc", version = "0.0.15")
 bazel_dep(name = "rules_java", version = "7.6.5")
 bazel_dep(name = "rules_jvm_external", version = "6.1")
-bazel_dep(name = "rules_python", version = "0.31.0")
+bazel_dep(name = "rules_python", version = "0.40.0")
 bazel_dep(name = "bzlmodrio-libssh", version = "2024.0.105-1")
 bazel_dep(name = "bzlmodrio-ni", version = "2025.2.0")
 bazel_dep(name = "bzlmodrio-opencv", version = "2025.4.10.0-3")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr1")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.8.1-1")
+bazel_dep(name = "protobuf", version = "27.1")
+
 archive_override(
     module_name = "rules_bzlmodrio_jdk",
     integrity = "sha256-SrikyrF2v2lENdqn9aFC//d0TkIE620lR60yXTrWFTs=",
@@ -95,13 +97,13 @@ python = use_extension(
 python.toolchain(
     ignore_root_user_error = True,
     is_default = True,
-    python_version = "3.11",
+    python_version = "3.10",
 )
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
     hub_name = "allwpilib_pip_deps",
-    python_version = "3.11",
+    python_version = "3.10",
     requirements_lock = "//:requirements_lock.txt",
 )
 use_repo(pip, "allwpilib_pip_deps")
