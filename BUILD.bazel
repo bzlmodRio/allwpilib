@@ -46,5 +46,6 @@ write_source_files(
         "//wpilibNewCommands:write_wpilib_new_commands",
         "//wpimath:write_wpimath",
         "//wpiunits:write_wpiunits",
+        "//wpiutil:write_wpiutil",
     ],
 )
