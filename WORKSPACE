@@ -56,7 +56,6 @@ download_dependencies(
     # imgui_version = None,
     # libssh_version = "2024.0.105-1",
     local_monorepo_base = "../bzlmodRio/monorepo",
-    studica_version = None,
     ni_version = "2025.2.0",
     opencv_version = "2025.4.10.0-3",
     phoenix_version = None,
@@ -68,6 +67,7 @@ download_dependencies(
     rules_toolchains_version = "2025-1.bcr1",
     rules_wpi_styleguide_version = None,
     rules_wpiformat_version = None,
+    studica_version = None,
 )
 
 load("@bzlmodRio//private/non_bzlmod:setup_dependencies.bzl", "setup_dependencies")
@@ -110,6 +110,17 @@ http_archive(
     strip_prefix = "rules_bzlmodrio_jdk-d5f0db20a611e4ec4b26f95d9c772e2436b69b55",
     urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/d5f0db20a611e4ec4b26f95d9c772e2436b69b55.tar.gz"],
 )
+
+http_archive(
+    name = "bzlmodrio-libssh",
+    sha256 = "6087424b77f7ee453a4090510d304e09c8d4725041632b34faf3d8f76cd5aeb4",
+    strip_prefix = "bzlmodRio-libssh-8bb529e686069e9b198c0f55302d150df66da5d3",
+    urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8bb529e686069e9b198c0f55302d150df66da5d3.tar.gz"],
+)
+
+load("@bzlmodrio-libssh//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_libssh_cpp_dependencies")
+
+setup_legacy_bzlmodrio_libssh_cpp_dependencies()
 
 load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
 
