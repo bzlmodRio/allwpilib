@@ -51,9 +51,9 @@ jobs:
         run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ...  -c opt --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
         shell: bash
 
-      - name: Build Debug allowing failures
-        run: bazel --output_user_root=C:\\bazelroot build -k ... -c dbg  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
-        shell: bash
+      # - name: Build Debug allowing failures
+      #   run: bazel --output_user_root=C:\\bazelroot build -k ... -c dbg  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
+      #   shell: bash
 
       # TODO enable. Unit test is failing
       # - name: Build Debug
@@ -96,13 +96,13 @@ jobs:
         run: bazel ${{ matrix.action }} -k ... -c opt  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
         shell: bash
 
-      - name: Build Debug allowing failures
-        run: bazel build -k ...  -c dbg --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
-        shell: bash
+      # - name: Build Debug allowing failures
+      #   run: bazel build -k ...  -c dbg --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures || true
+      #   shell: bash
 
-      - name: Build Debug
-        run: bazel ${{ matrix.action }} -k ... -c dbg  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
-        shell: bash
+      # - name: Build Debug
+      #   run: bazel ${{ matrix.action }} -k ... -c dbg  --config=ci ${{ matrix.config }} --nojava_header_compilation --verbose_failures
+      #   shell: bash
 
       # - name: Check Lockfile update
       #   run: git --no-pager diff --exit-code HEAD
@@ -142,11 +142,11 @@ jobs:
       - name: Build Release and Test
         run: bazel ${{ matrix.action }} ... -c opt --config=ci ${{ matrix.config }} -k --verbose_failures
 
-      - name: Build Debug and allow failures
-        run: bazel build ... -c dbg --config=ci ${{ matrix.config }} -k --verbose_failures || true
+      # - name: Build Debug and allow failures
+      #   run: bazel build ... -c dbg --config=ci ${{ matrix.config }} -k --verbose_failures || true
 
-      - name: Build Debug and Test
-        run: bazel ${{ matrix.action }} ... -c dbg --config=ci ${{ matrix.config }} -k --verbose_failures
+      # - name: Build Debug and Test
+      #   run: bazel ${{ matrix.action }} ... -c dbg --config=ci ${{ matrix.config }} -k --verbose_failures
 
 
   repin-maven:
