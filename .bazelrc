@@ -14,14 +14,20 @@ common --registry=https://raw.githubusercontent.com/pjreiniger/bazel-central-reg
 
 import shared/bazel/compiler_flags/sanitizers.rc
 import shared/bazel/compiler_flags/base_linux_flags.rc
-import shared/bazel/compiler_flags/bullseye32_flags.rc
-import shared/bazel/compiler_flags/bullseye64_flags.rc
+import shared/bazel/compiler_flags/bookworm32_flags.rc
+import shared/bazel/compiler_flags/bookworm64_flags.rc
 import shared/bazel/compiler_flags/linux_flags.rc
 import shared/bazel/compiler_flags/osx_flags.rc
-import shared/bazel/compiler_flags/raspbian_flags.rc
+import shared/bazel/compiler_flags/raspi_bookworm_flags.rc
 import shared/bazel/compiler_flags/roborio_flags.rc
 import shared/bazel/compiler_flags/windows_flags.rc
 import shared/bazel/compiler_flags/coverage_flags.rc
+
+# Alias toolchain names to what wpilibsuite uses for CI/Artifact naming
+build:athena --config=roborio
+build:systemcore --config=bookworm64
+build:linuxarm32 --config=raspibookworm32
+build:linuxarm64 --config=bookworm64
 
 build:build_java --test_tag_filters=allwpilib-build-java --build_tag_filters=allwpilib-build-java
 build:build_cpp --test_tag_filters=+allwpilib-build-cpp --build_tag_filters=+allwpilib-build-cpp
@@ -53,7 +59,5 @@ build:ci --remote_download_minimal
 
 build:local_remote --config=build_buddy
 build:local_remote --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
-
-build --proto_toolchain_for_cc=//:proto_cc_toolchain
 
 build --build_metadata=REPO_URL=https://github.com/wpilibsuite/allwpilib.git
