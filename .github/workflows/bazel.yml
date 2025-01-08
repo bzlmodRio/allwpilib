@@ -22,7 +22,7 @@ jobs:
           # - {  name: "Windows (roborio bzlmod)",    os: windows-2022, action: "build", config: "--config=roborio --enable_bzlmod",     }
 
           - {  name: "Windows (linuxarm32)",        os: windows-2022, action: "build", config: "--config=linuxarm32 --noenable_bzlmod",  }
-          - {  name: "Windows (linuxarm32 bzlmod)", os: windows-2022, action: "build", config: "--config=linuxarm32 --enable_bzlmod",    }
+          # - {  name: "Windows (linuxarm32 bzlmod)", os: windows-2022, action: "build", config: "--config=linuxarm32 --enable_bzlmod",    }
 
           - {  name: "Windows (linuxarm64)",        os: windows-2022, action: "build", config: "--config=linuxarm64 --noenable_bzlmod",  }
           - {  name: "Windows (linuxarm64 bzlmod)", os: windows-2022, action: "build", config: "--config=linuxarm64 --enable_bzlmod",    }
