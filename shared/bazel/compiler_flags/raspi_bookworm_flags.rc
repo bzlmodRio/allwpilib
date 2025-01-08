@@ -1,0 +1,12 @@
+build:raspibookworm32 --config=base_linux
+
+build:raspibookworm32 --platforms=@rules_bzlmodrio_toolchains//platforms/raspibookworm32
+build:raspibookworm32 --build_tag_filters=-no-raspi
+build:raspibookworm32 --features=compiler_param_file
+build:raspibookworm32 --platform_suffix=raspibookworm32
+build:raspibookworm32 --incompatible_enable_cc_toolchain_resolution
+
+build:raspibookworm32 --cxxopt=-Wno-error=deprecated-declarations
+
+# Extra 11
+# build:raspibookworm32 --cxxopt=-Wno-error=deprecated-enum-enum-conversion

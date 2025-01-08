@@ -1,0 +1,13 @@
+
+build:bookworm64 --config=base_linux
+
+build:bookworm64 --platforms=@rules_bzlmodrio_toolchains//platforms/bookworm64
+build:bookworm64 --build_tag_filters=-no-bookworm
+build:bookworm64 --features=compiler_param_file
+build:bookworm64 --platform_suffix=bookworm64
+build:bookworm64 --incompatible_enable_cc_toolchain_resolution
+
+build:bookworm64 --cxxopt=-Wno-error=deprecated-declarations
+
+# Extra 11
+# build:bookworm64 --cxxopt=-Wno-error=deprecated-enum-enum-conversion

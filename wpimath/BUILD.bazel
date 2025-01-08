@@ -176,10 +176,6 @@ wpilib_cc_test(
         "src/test/native/cpp/**/*.cpp",
         "src/test/native/cpp/**/*.h",
     ]),
-    tags = [
-        "no-bullseye",
-        "no-raspi",
-    ],
     deps = [
         ":test_headers",
         ":wpimath.static",
