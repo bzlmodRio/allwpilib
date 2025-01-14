@@ -40,6 +40,22 @@ wpilib_cc_library(
     visibility = ["//hal:__subpackages__"],
 )
 
+cc_library(
+    name = "mrc_cc_headers",
+    hdrs = glob(["src/mrc/include/**"]),
+    includes = ["src/mrc/include"],
+    strip_include_prefix = "src/mrc/include",
+    visibility = ["//hal:__subpackages__"],
+)
+
+cc_library(
+    name = "generated_mrc_cc_headers",
+    hdrs = glob(["src/generated/main/native/cpp/mrc/protobuf/**"]),
+    includes = ["src/generated/main/native/cpp/mrc/protobuf"],
+    strip_include_prefix = "src/generated/main/native/cpp/mrc/protobuf",
+    visibility = ["//hal:__subpackages__"],
+)
+
 filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
@@ -98,14 +114,6 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
-wpilib_jni_cc_library(
-    name = "wpiHaljni",
-    srcs = glob(["src/main/native/cpp/jni/**"]),
-    java_dep = ":hal-java",
-    visibility = ["//visibility:public"],
-    wpi_maybe_shared_deps = [
-        ":wpiHal",
-    ],
 )
 
 wpilib_java_jni_library(

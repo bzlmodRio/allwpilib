@@ -53,9 +53,6 @@ model {
                     lib project: ':wpinet', library: 'wpinet', linkage: 'shared'
                     lib project: ':cameraserver', library: 'cameraserver', linkage: 'shared'
                     lib project: ':thirdparty:googletest', library: 'googletest', linkage: 'static'
-                    if (binary.targetPlatform.name == nativeUtils.wpi.platforms.roborio) {
-                        nativeUtils.useRequiredLibrary(binary, 'ni_link_libraries', 'ni_runtime_libraries')
-                    }
                 } else {
                     binary.sources {
                         simCpp(CppSourceSet) {
@@ -98,7 +95,7 @@ model {
         }
         // This is in a separate if statement because of what I would assume is a bug in grade.
         // Will file an issue on their side.
-        if (!project.hasProperty('skiponlyathena')) {
+        if (!project.hasProperty('skiponlyathena') && !project.hasProperty('skiponlysystemcore')) {
             build.dependsOn copyWpilibCTestLibrariesToOutput
         }
     }
