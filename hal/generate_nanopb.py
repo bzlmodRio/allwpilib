@@ -16,7 +16,12 @@ def generate_nanopb(nanopb: Path, output_directory: Path, proto_dir: Path):
     shutil.rmtree(output_directory.absolute(), ignore_errors=True)
     os.makedirs(output_directory.absolute())
 
+    print(output_directory)
+    print("FJDSKLFJ")
+    print(proto_dir)
+
     proto_files = proto_dir.glob("*.proto")
+    print(list(proto_dir.glob("*.proto")))
     for path in proto_files:
         absolute_filename = path.absolute()
         subprocess.run(

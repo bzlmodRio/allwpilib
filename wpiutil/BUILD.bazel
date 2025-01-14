@@ -262,10 +262,7 @@ wpilib_cc_static_and_shared_library(
         ":nanopb-headers",
         ":protobuf-headers",
         ":sigslot-headers",
-    ] + select({
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bzlmodrio-ni//libraries/cpp/ni:shared"],
-        "//conditions:default": [],
-    }),
+    ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
 )

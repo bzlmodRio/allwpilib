@@ -1,5 +1,13 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+# TODO - TEMPORARY OVERRIDE
+http_archive(
+    name = "rules_bzlmodrio_toolchains",
+    integrity = "sha256-45EV1waPl/X8S1LocEDpYD6W3XMsX5W3f/1cLPS/VK8=",
+    strip_prefix = "rules_bzlmodrio_toolchains-696c423fd86e9dd0dfbf17fb151295ddf1a03468",
+    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_toolchains/archive/696c423fd86e9dd0dfbf17fb151295ddf1a03468.tar.gz"],
+)
+
 http_archive(
     name = "build_bazel_apple_support",
     sha256 = "c4bb2b7367c484382300aee75be598b92f847896fb31bbd22f3a2346adf66a80",

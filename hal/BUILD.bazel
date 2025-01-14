@@ -1,4 +1,5 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//hal:generate.bzl", "generate_hal")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
@@ -11,6 +12,11 @@ filegroup(
     srcs = glob(["src/generate/*"]),
 )
 
+filegroup(
+    name = "proto_files",
+    srcs = glob(["src/mrc/proto/**/*.proto"]),
+)
+
 py_binary(
     name = "generate_usage_reporting",
     srcs = ["generate_usage_reporting.py"],
@@ -19,14 +25,33 @@ py_binary(
     visibility = ["//visibility:public"],
 )
 
-generate_hal(
+py_binary(
+    name = "generate_nanopb",
+    srcs = ["generate_nanopb.py"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+)
+
+py_binary(
     name = "generate_hal",
+    srcs = ["generate_hal.py"],
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":generate_nanopb",
+        ":generate_usage_reporting",
+    ],
+)
+
+generate_hal(
+    name = "generate_hal_files",
+    proto_files = ":proto_files",
 )
 
 write_source_files(
     name = "write_hal",
     files = {
-        "src/generated": ":generate_hal",
+        "src/generated": ":generate_hal_files",
     },
     suggested_update_target = "//:write_all",
     visibility = ["//visibility:public"],
@@ -50,7 +75,7 @@ cc_library(
 
 cc_library(
     name = "generated_mrc_cc_headers",
-    hdrs = glob(["src/generated/main/native/cpp/mrc/protobuf/**"]),
+    hdrs = glob(["src/generated/main/native/cpp/mrc/protobuf/*.h"]),
     includes = ["src/generated/main/native/cpp/mrc/protobuf"],
     strip_include_prefix = "src/generated/main/native/cpp/mrc/protobuf",
     visibility = ["//hal:__subpackages__"],
@@ -62,7 +87,7 @@ filegroup(
     visibility = ["//hal:__subpackages__"],
 )
 
-ATHENA_SRCS = glob([
+SYSTEMCORE_SRCS = glob([
     "src/main/native/athena/*.cpp",
     "src/main/native/athena/*.h",
     "src/main/native/athena/cpp/*.cpp",
@@ -74,7 +99,7 @@ ATHENA_SRCS = glob([
     "src/main/native/athena/mockdata/*.cpp",
 ])
 
-ATHENA_DEPS = ["@bzlmodrio-ni//libraries/cpp/ni:shared"]
+SYSTEMCORE_DEPS = []
 
 SIM_SRCS = glob([
     "src/main/native/sim/*.cpp",
@@ -86,14 +111,14 @@ SIM_SRCS = glob([
 SIM_DEPS = []
 
 HAL_DEPS = select({
-    "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ATHENA_DEPS,
+    "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": SYSTEMCORE_DEPS,
     "//conditions:default": SIM_DEPS,
 })
 
 filegroup(
     name = "platform-srcs",
     srcs = select({
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ATHENA_SRCS,
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": SYSTEMCORE_SRCS,
         "//conditions:default": SIM_SRCS,
     }),
 )
@@ -103,10 +128,14 @@ wpilib_cc_static_and_shared_library(
     srcs = ["platform-srcs"] + glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
-    ),
+    ) + glob(["src/generated/main/native/cpp/mrc/protobuf/*.cpp"]),
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = ["src/main/native/include"],
-    standard_deps = ["//hal:generated_cc_headers"] + HAL_DEPS,
+    standard_deps = [
+        ":mrc_cc_headers",
+        ":generated_cc_headers",
+        ":generated_mrc_cc_headers",
+    ] + HAL_DEPS,
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     wpi_maybe_shared_deps = [
@@ -114,6 +143,14 @@ wpilib_cc_static_and_shared_library(
     ],
 )
 
+wpilib_jni_cc_library(
+    name = "wpiHaljni",
+    srcs = glob(["src/main/native/cpp/jni/**"]),
+    java_dep = ":hal-java",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        ":wpiHal",
+    ],
 )
 
 wpilib_java_jni_library(
@@ -133,6 +170,7 @@ wpilib_cc_test(
         "src/test/native/**/*.cpp",
         "src/test/native/**/*.h",
     ]),
+    tags = ["no-systemcore"],
     deps = [
         ":wpiHal.static",
         "//thirdparty/googletest:googletest.static",

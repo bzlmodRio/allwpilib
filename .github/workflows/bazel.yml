@@ -27,6 +27,9 @@ jobs:
           - {  name: "Windows (linuxarm64)",        os: windows-2022, action: "build", config: "--config=linuxarm64 --noenable_bzlmod",  }
           - {  name: "Windows (linuxarm64 bzlmod)", os: windows-2022, action: "build", config: "--config=linuxarm64 --enable_bzlmod",    }
 
+          - {  name: "Windows (systemcore)",        os: windows-2022, action: "build", config: "--config=systemcore --noenable_bzlmod",  }
+          - {  name: "Windows (systemcore bzlmod)", os: windows-2022, action: "build", config: "--config=systemcore --enable_bzlmod",    }
+
     name: "Build ${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     steps:
@@ -77,6 +80,9 @@ jobs:
           - { name: "Mac (linuxarm64)",        os: macos-14,   action: "build", config: "--config=linuxarm64 --noenable_bzlmod",      }
           - { name: "Mac (linuxarm64 bzlmod)", os: macos-14,   action: "build", config: "--config=linuxarm64 --enable_bzlmod" }
 
+          - { name: "Mac (systemcore)",        os: macos-14,   action: "build", config: "--config=systemcore --noenable_bzlmod",      }
+          - { name: "Mac (systemcore bzlmod)", os: macos-14,   action: "build", config: "--config=systemcore --enable_bzlmod" }
+
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     steps:
@@ -123,6 +129,9 @@ jobs:
 
           - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (linuxarm64)",        config: "--config=linuxarm64 --noenable_bzlmod",      }
           - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (linuxarm64 bzlmod)", config: "--config=linuxarm64 --enable_bzlmod" }
+
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (systemcore)",        config: "--config=systemcore --noenable_bzlmod",      }
+          - { container: "wpilib/ubuntu-base:22.04", action: "build", artifact-name: "Linux (systemcore bzlmod)", config: "--config=systemcore --enable_bzlmod" }
     runs-on: ubuntu-22.04
     name: "Build - ${{ matrix.artifact-name }}"
     container: ${{ matrix.container }}

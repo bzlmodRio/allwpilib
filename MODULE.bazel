@@ -49,6 +49,14 @@ archive_override(
 #     path = "C:/Users/PJ/git/bzlmodrio/monorepo/rules/rules_bzlmodrio_toolchains",
 # )
 
+# TODO - TEMPORARY OVERRIDE
+archive_override(
+    module_name = "rules_bzlmodrio_toolchains",
+    integrity = "sha256-45EV1waPl/X8S1LocEDpYD6W3XMsX5W3f/1cLPS/VK8=",
+    strip_prefix = "rules_bzlmodrio_toolchains-696c423fd86e9dd0dfbf17fb151295ddf1a03468",
+    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_toolchains/archive/696c423fd86e9dd0dfbf17fb151295ddf1a03468.tar.gz"],
+)
+
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [
