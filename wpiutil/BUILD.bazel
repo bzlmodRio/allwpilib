@@ -215,8 +215,8 @@ wpilib_cc_library(
 
 generate_resources(
     name = "generate-resources",
-    namespace = "dlt",
-    prefix = "DLT",
+    namespace = "wpi",
+    prefix = "WPI",
     resource_files = glob(["src/main/native/resources/*"]),
 )
 
@@ -353,7 +353,7 @@ wpilib_java_binary(
 
 py_binary(
     name = "datalog",
-    srcs = ["datalog.py"],
+    srcs = ["examples/printlog/datalog.py"],
     tags = ["manual"],
 )
 
