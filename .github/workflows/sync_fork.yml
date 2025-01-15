@@ -18,3 +18,12 @@ jobs:
           base: main
           head: main
           auto_merge: false
+          
+      - uses: tgymnich/fork-sync@v1.8
+        with:
+          token: ${{ secrets.AUTO_UPDATE_KEY }}
+          owner: bazelRio
+          base: 2027
+          head: 2027
+          auto_merge: false
+        if: ${{ always() }}
