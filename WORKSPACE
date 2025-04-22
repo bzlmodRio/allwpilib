@@ -90,6 +90,17 @@ http_archive(
     urls = ["https://github.com/bzlmodrio/bzlmodrio-opencv/archive/515c8a17dbbdecf1970a04a41131b77eeb33027e.tar.gz"],
 )
 
+http_archive(
+    name = "bzlmodrio-ni",
+    sha256 = "a80fbc71bf0f05393d34e4270ea3a815a409fc0f98c68b3efb89267fdeb316cc",
+    strip_prefix = "bzlmodRio-ni-304ea4f8438ee6e9151ca17df8a8d6c7b3baa939",
+    urls = ["https://github.com/bzlmodrio/bzlmodrio-ni/archive/304ea4f8438ee6e9151ca17df8a8d6c7b3baa939.tar.gz"],
+)
+# local_repository(
+#     name = "bzlmodrio-ni",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-ni",
+# )
+
 load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_dependencies")
 
 download_dependencies(

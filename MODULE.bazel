@@ -14,7 +14,7 @@ bazel_dep(name = "rules_python", version = "0.40.0")
 bazel_dep(name = "bzlmodrio-libssh", version = "2024.0.105-1")
 bazel_dep(name = "bzlmodrio-ni", version = "2025.2.0")
 bazel_dep(name = "bzlmodrio-opencv", version = "2025.4.10.0-3")
-bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr1")
+bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr2")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.8.1-1")
 bazel_dep(name = "protobuf", version = "29.0")
@@ -38,6 +38,13 @@ archive_override(
     integrity = "sha256-qEoQi9VDx4hKQv+6nohJQfykR6+CA3T/dWg2CFSmM38=",
     strip_prefix = "bzlmodRio-opencv-515c8a17dbbdecf1970a04a41131b77eeb33027e",
     urls = ["https://github.com/bzlmodrio/bzlmodrio-opencv/archive/515c8a17dbbdecf1970a04a41131b77eeb33027e.tar.gz"],
+)
+
+archive_override(
+    module_name = "bzlmodrio-ni",
+    integrity = "sha256-qA+8cb8PBTk9NOQnDqOoFaQJ/A+Yxos++4kmf96zFsw=",
+    strip_prefix = "bzlmodRio-ni-304ea4f8438ee6e9151ca17df8a8d6c7b3baa939",
+    urls = ["https://github.com/bzlmodrio/bzlmodrio-ni/archive/304ea4f8438ee6e9151ca17df8a8d6c7b3baa939.tar.gz"],
 )
 
 # git_override(
@@ -64,6 +71,11 @@ archive_override(
 # local_path_override(
 #     module_name = "bzlmodrio-libssh",
 #     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-libssh",
+# )
+
+# local_path_override(
+#     module_name = "bzlmodrio-ni",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-ni",
 # )
 
 
