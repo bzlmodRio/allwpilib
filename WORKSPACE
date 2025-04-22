@@ -1,5 +1,27 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
+
+http_archive(
+    name = "rules_cc",
+    urls = ["https://github.com/bazelbuild/rules_cc/releases/download/0.0.17/rules_cc-0.0.17.tar.gz"],
+    sha256 = "abc605dd850f813bb37004b77db20106a19311a96b2da1c92b789da529d28fe1",
+    strip_prefix = "rules_cc-0.0.17",
+)
+
+http_archive(
+    name = "rules_java",
+    urls = ["https://github.com/bazelbuild/rules_java/releases/download/8.11.0/rules_java-8.11.0.tar.gz",],
+    sha256 = "d31b6c69e479ffa45460b64dc9c7792a431cac721ef8d5219fc9f603fa2ff877",
+)
+
+load("@rules_java//java:rules_java_deps.bzl", "rules_java_dependencies")
+rules_java_dependencies()
+
+# note that the following line is what is minimally required from protobuf for the java rules
+# consider using the protobuf_deps() public API from @com_google_protobuf//:protobuf_deps.bzl
+load("@com_google_protobuf//bazel/private:proto_bazel_features.bzl", "proto_bazel_features")  # buildifier: disable=bzl-visibility
+proto_bazel_features(name = "proto_bazel_features")
+
 http_archive(
     name = "build_bazel_apple_support",
     sha256 = "c4bb2b7367c484382300aee75be598b92f847896fb31bbd22f3a2346adf66a80",
@@ -56,9 +78,16 @@ http_archive(
 # )
 http_archive(
     name = "bzlmodRio",
-    sha256 = "6f9ceb5da448ca8dd676b30bfdc6cb078f149001906f6bb0dc57d74dbc0bf6c6",
-    strip_prefix = "bzlmodRio-e4abbfba36d1ca3bb8af50a68296388a848999ba",
-    url = "https://github.com/bzlmodRio/bzlmodRio/archive/e4abbfba36d1ca3bb8af50a68296388a848999ba.tar.gz",
+    sha256 = "f157e74bac16a1f48affb6fd5732afcfdb3838f5366df4a5b559ca1bb6190032",
+    strip_prefix = "bzlmodRio-05d4fe3a29210c009c4a6ff9384952c2c774bb98",
+    url = "https://github.com/bzlmodRio/bzlmodRio/archive/05d4fe3a29210c009c4a6ff9384952c2c774bb98.tar.gz",
+)
+
+http_archive(
+    name = "bzlmodrio-opencv",
+    sha256 = "a84a108bd543c7884a42ffba9e884941fca447af820374ff7568360854a6337f",
+    strip_prefix = "bzlmodRio-opencv-515c8a17dbbdecf1970a04a41131b77eeb33027e",
+    urls = ["https://github.com/bzlmodrio/bzlmodrio-opencv/archive/515c8a17dbbdecf1970a04a41131b77eeb33027e.tar.gz"],
 )
 
 load("@bzlmodRio//private/non_bzlmod:download_dependencies.bzl", "download_dependencies")
@@ -77,7 +106,7 @@ download_dependencies(
     rules_checkstyle_version = None,
     rules_pmd_version = None,
     rules_spotless_version = None,
-    rules_toolchains_version = "2025-1.bcr1",
+    rules_toolchains_version = "2025-1.bcr2",
     rules_wpi_styleguide_version = None,
     rules_wpiformat_version = None,
     studica_version = None,
@@ -113,9 +142,9 @@ aspect_bazel_lib_dependencies()
 
 http_archive(
     name = "bzlmodrio-libssh",
-    sha256 = "6087424b77f7ee453a4090510d304e09c8d4725041632b34faf3d8f76cd5aeb4",
-    strip_prefix = "bzlmodRio-libssh-8bb529e686069e9b198c0f55302d150df66da5d3",
-    urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8bb529e686069e9b198c0f55302d150df66da5d3.tar.gz"],
+    sha256 = "79f7194e82879af044599883cb3fbf13afe4baf03df6da977d5beaed788fd678",
+    strip_prefix = "bzlmodRio-libssh-fc9ad9a0e143c5955cb08f409b7fae53fe6a2b40",
+    urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/fc9ad9a0e143c5955cb08f409b7fae53fe6a2b40.tar.gz"],
 )
 
 load("@bzlmodrio-libssh//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_libssh_cpp_dependencies")
