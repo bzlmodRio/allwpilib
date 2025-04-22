@@ -28,9 +28,16 @@ archive_override(
 
 archive_override(
     module_name = "bzlmodrio-libssh",
-    integrity = "sha256-YIdCS3f37kU6QJBRDTBOCcjUclBBYys0+vPY92zVrrQ=",
-    strip_prefix = "bzlmodRio-libssh-8bb529e686069e9b198c0f55302d150df66da5d3",
-    urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8bb529e686069e9b198c0f55302d150df66da5d3.tar.gz"],
+    integrity = "sha256-efcZToKHmvBEWZiDyz+/E6/kuvA99tqXfVvq7XiP1ng=",
+    strip_prefix = "bzlmodRio-libssh-fc9ad9a0e143c5955cb08f409b7fae53fe6a2b40",
+    urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/fc9ad9a0e143c5955cb08f409b7fae53fe6a2b40.tar.gz"],
+)
+
+archive_override(
+    module_name = "bzlmodrio-opencv",
+    integrity = "sha256-qEoQi9VDx4hKQv+6nohJQfykR6+CA3T/dWg2CFSmM38=",
+    strip_prefix = "bzlmodRio-opencv-515c8a17dbbdecf1970a04a41131b77eeb33027e",
+    urls = ["https://github.com/bzlmodrio/bzlmodrio-opencv/archive/515c8a17dbbdecf1970a04a41131b77eeb33027e.tar.gz"],
 )
 
 # git_override(
@@ -48,6 +55,17 @@ archive_override(
 #     module_name = "rules_bzlmodrio_toolchains",
 #     path = "C:/Users/PJ/git/bzlmodrio/monorepo/rules/rules_bzlmodrio_toolchains",
 # )
+
+# local_path_override(
+#     module_name = "bzlmodrio-opencv",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-opencv",
+# )
+
+# local_path_override(
+#     module_name = "bzlmodrio-libssh",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-libssh",
+# )
+
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
