@@ -78,7 +78,6 @@ archive_override(
 #     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-ni",
 # )
 
-
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
 maven.install(
     artifacts = [

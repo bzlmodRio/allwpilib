@@ -5,14 +5,14 @@ def build_examples(halsim_deps = []):
     for folder in EXAMPLE_FOLDERS:
         wpilib_cc_library(
             name = folder + "-examples-headers",
-            hdrs = native.glob(["src/main/cpp/examples/" + folder + "/include/**/*.h"], allow_empty=True),
+            hdrs = native.glob(["src/main/cpp/examples/" + folder + "/include/**/*.h"], allow_empty = True),
             strip_include_prefix = "src/main/cpp/examples/" + folder + "/include",
             tags = ["wpi-example"],
         )
 
         wpilib_cc_binary(
             name = folder + "-example",
-            srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"], allow_empty=True),
+            srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"], allow_empty = True),
             deps = [
                 "//wpilibNewCommands:wpilibNewCommands.shared",
                 "//apriltag:apriltag.shared",
@@ -56,7 +56,7 @@ def build_tests():
         wpilib_cc_test(
             name = folder + "-test",
             size = "small",
-            srcs = native.glob([example_test_folder + "/**/*.cpp", example_src_folder + "/cpp/**/*.cpp", example_src_folder + "/c/**/*.c"], allow_empty=True),
+            srcs = native.glob([example_test_folder + "/**/*.cpp", example_src_folder + "/cpp/**/*.cpp", example_src_folder + "/c/**/*.c"], allow_empty = True),
             deps = [
                 "//wpilibNewCommands:wpilibNewCommands.static",
                 ":{}-examples-headers".format(folder),
