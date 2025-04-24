@@ -19,7 +19,7 @@ jobs:
           head: main
           pr_title: "Fork Sync: Update main branch"
           auto_merge: false
-          
+
       - uses: tgymnich/fork-sync@v1.8
         with:
           token: ${{ secrets.AUTO_UPDATE_KEY }}
