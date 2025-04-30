@@ -52,28 +52,28 @@ cc_library(
     ),
     hdrs = glob(["src/main/native/include/**/*"]),
     defines = ["WPILIB_EXPORTS"],
+    implementation_deps = [
+        "//wpimath:wpimath.static",
+    ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
         ":thirdparty-apriltag",
         "//wpiutil:wpiutil.static",
     ],
-    implementation_deps = [
-        "//wpimath:wpimath.static",
-    ]
 )
 
 wpilib_jni_cc_library(
     name = "apriltagjni",
     srcs = glob(["src/main/native/cpp/jni/**"]),
+    implementation_deps = [
+        "//wpimath:wpimath.static",
+    ],
     java_dep = ":apriltag-java",
     visibility = ["//visibility:public"],
     deps = [
         ":apriltag.static",
     ],
-    implementation_deps = [
-        "//wpimath:wpimath.static",
-    ]
 )
 
 wpilib_jni_java_library(
@@ -102,8 +102,8 @@ cc_test(
     ],
     deps = [
         ":apriltag.static",
-        "//wpimath:wpimath.static",
         "//thirdparty/googletest:googletest.static",
+        "//wpimath:wpimath.static",
     ],
 )
 
