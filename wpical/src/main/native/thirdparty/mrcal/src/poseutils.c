@@ -9,6 +9,8 @@
 // Apparently I need this in MSVC to get constants
 #define _USE_MATH_DEFINES
 
+#pragma GCC diagnostic ignored "-Wpedantic"
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>

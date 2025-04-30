@@ -190,3 +190,23 @@ load(
 )
 
 apple_support_dependencies()
+
+
+# local_repository(
+#     name = "bzlmodrio-ceres",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-ceres"
+# )
+
+http_archive(
+    name = "bzlmodrio-ceres",
+    integrity = "sha256-GorSE3rq4TeIBjA6IwQaPYIXbQaRpliI1/gK01cKvjE=",
+    strip_prefix = "bzlmodRio-ceres-50d624890665f2eb535775db770dd6be76b13edf",
+    urls = ["https://github.com/bzlmodrio/bzlmodRio-ceres/archive/50d624890665f2eb535775db770dd6be76b13edf.tar.gz"],
+)
+
+
+
+
+load("@bzlmodrio-ceres//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_ceres_cpp_dependencies")
+
+setup_legacy_bzlmodrio_ceres_cpp_dependencies()

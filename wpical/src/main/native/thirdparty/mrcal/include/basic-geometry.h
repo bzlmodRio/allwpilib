@@ -8,6 +8,8 @@
 
 #pragma once
 
+#pragma GCC diagnostic ignored "-Wpedantic"
+
 // A 2D point or vector
 //
 // The individual elements can be accessed via .x and .y OR the vector can be

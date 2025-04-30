@@ -4,6 +4,9 @@
 
 #include "fieldcalibration.h"
 
+
+#pragma GCC diagnostic ignored "-Wpedantic"
+
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
