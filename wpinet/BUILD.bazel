@@ -124,10 +124,12 @@ wpilib_cc_static_and_shared_library(
         ":tcpsockets-srcs",
     ] + ["native-srcs"],
     hdrs = glob(["src/main/native/include/**/*"]),
+    implementation_deps = [
+        ":private_includes",
+    ],
     includes = ["src/main/native/include"],
     standard_deps = [
         ":libuv-headers",
-        ":private_includes",
         ":tcpsockets-headers",
     ],
     strip_include_prefix = "src/main/native/include",
@@ -169,6 +171,7 @@ wpilib_cc_test(
     ]),
     tags = ["no-asan"],
     deps = [
+        ":private_includes",
         ":wpinet.static",
         "//thirdparty/googletest:googletest.static",
         "//wpiutil:wpiutil-testlib",
