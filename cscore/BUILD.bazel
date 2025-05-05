@@ -51,7 +51,6 @@ wpilib_objc_library(
         "CoreVideo",
         "IOKit",
     ],
-    tags = ["manual"],
     deps = [
         "//wpinet:wpinet.static",
         "//wpiutil:wpiutil.static",
