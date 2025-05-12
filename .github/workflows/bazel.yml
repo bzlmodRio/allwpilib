@@ -60,6 +60,7 @@ jobs:
           - { name: "Linux (roborio)", os: ubuntu-22.04,   action: "build", config: "--config=roborio",  }
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
