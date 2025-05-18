@@ -22,6 +22,20 @@ wpilib_cc_binary(
         ":generate-version",
     ],
     defines = ["LIBSSH_STATIC"],
+    linkopts = select({
+        "@bazel_tools//src/conditions:darwin": [
+            "-framework",
+            "Kerberos",
+        ],
+        "@bazel_tools//src/conditions:linux_x86_64": [],
+        "@bazel_tools//src/conditions:windows": [
+            "-DEFAULTLIB:ws2_32.lib",
+            "-DEFAULTLIB:advapi32.lib",
+            "-DEFAULTLIB:crypt32.lib",
+            "-DEFAULTLIB:user32.lib",
+        ],
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_cross_compiler": [],
+    }),
     tags = [
         "no-roborio",
         "wpi-cpp-gui",

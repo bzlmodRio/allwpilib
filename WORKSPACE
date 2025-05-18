@@ -1,4 +1,4 @@
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # Rules Python
 http_archive(
@@ -123,6 +123,7 @@ maven_artifacts = [
 maven_install(
     name = "maven",
     artifacts = maven_artifacts,
+    maven_install_json = "//:maven_install.json",
     repositories = [
         "https://repo1.maven.org/maven2",
         "https://frcmaven.wpi.edu/artifactory/release/",

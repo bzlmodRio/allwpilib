@@ -17,7 +17,7 @@ bazel_dep(name = "bzlmodrio-opencv", version = "2025.4.10.0-3.bcr2")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr2")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.8.1-1")
-bazel_dep(name = "protobuf", version = "29.0-rc2", repo_name="com_google_protobuf")
+bazel_dep(name = "protobuf", version = "29.0-rc2", repo_name = "com_google_protobuf")
 
 archive_override(
     module_name = "rules_bzlmodrio_jdk",
@@ -71,10 +71,10 @@ maven.install(
         "com.google.auto.service:auto-service:1.1.1",
         "com.google.testing.compile:compile-testing:0.21.0",
     ],
+    lock_file = ":maven_install.json",
     repositories = [
         "https://repo1.maven.org/maven2",
     ],
-    # lock_file = "@//shared/bazel/deps:maven_install.json",
 )
 use_repo(
     maven,
