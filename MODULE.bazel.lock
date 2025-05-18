@@ -40,8 +40,8 @@
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/buildozer/7.1.2/source.json": "c9028a501d2db85793a6996205c8de120944f50a0d570438fcae0457a5f9d1f8",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2025.2.0/MODULE.bazel": "fd025736011d827a3a690bb584a1e4e1748f66fd6c235cc9b597b734ae10db1a",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-ni/2025.2.0/source.json": "e6d857af816f6302f506f00da0544fab8d857b4399226139d5c2cb1af8d1a8f5",
-    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-opencv/2025.4.10.0-3/MODULE.bazel": "c0d38bd480a3dea8d31632634c485ad2f0a0ccb1961ad88c6fcf523e462b96b7",
-    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-opencv/2025.4.10.0-3/source.json": "7fe07bc2e22514997ae841ac597efdc623d6f3a558835e1fbe331d775a431163",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-opencv/2025.4.10.0-3.bcr2/MODULE.bazel": "17db4a9075fb5e69f6159b5f35fcccf9854ad377fcab59673db1d96aac4777e7",
+    "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/bzlmodrio-opencv/2025.4.10.0-3.bcr2/source.json": "410a4fef0e8c0885a2200cc11b6a566252f3ae47b92291e135dda45f8bd684d6",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/google_benchmark/1.8.2/MODULE.bazel": "a70cf1bba851000ba93b58ae2f6d76490a9feb74192e57ab8e8ff13c34ec50cb",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/googletest/1.11.0/MODULE.bazel": "3a83f095183f66345ca86aa13c58b59f9f94a2f81999c093d4eeaa2d262d12f4",
     "https://raw.githubusercontent.com/pjreiniger/bazel-central-registry/bzlmodrio/modules/googletest/1.14.0.bcr.1/MODULE.bazel": "22c31a561553727960057361aa33bf20fb2e98584bc4fec007906e27053f80c6",
@@ -151,51 +151,6 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
-    "//shared/bazel/deps:quickbuf_protoc.bzl%setup_quickbuf_protoc": {
-      "general": {
-        "bzlTransitiveDigest": "4mXqQXekVxN7aGmO7/Op+/5zF4epec8O0U7wsieDmj4=",
-        "usagesDigest": "xdR8//ZNNxhiiMTip2/rlHFce34RWxL0pP37baxPen4=",
-        "recordedFileInputs": {},
-        "recordedDirentsInputs": {},
-        "envVariables": {},
-        "generatedRepoSpecs": {
-          "quickbuffer_protoc_osx": {
-            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-            "ruleClassName": "http_file",
-            "attributes": {
-              "url": "https://repo1.maven.org/maven2/us/hebi/quickbuf/protoc-gen-quickbuf/1.3.2/protoc-gen-quickbuf-1.3.2-osx-x86_64.exe   ",
-              "sha256": "ea307c2b69664ae7e7c69db4cddf5803187e5a34bceffd09a21652f0f16044f7",
-              "executable": true
-            }
-          },
-          "quickbuffer_protoc_windows": {
-            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-            "ruleClassName": "http_file",
-            "attributes": {
-              "url": "https://repo1.maven.org/maven2/us/hebi/quickbuf/protoc-gen-quickbuf/1.3.2/protoc-gen-quickbuf-1.3.2-windows-x86_64.exe ",
-              "sha256": "27dc1f29764a62b5e6a813a4bcd63e81bbdc3394da760a44acae1025b4a89f1d",
-              "executable": true
-            }
-          },
-          "quickbuffer_protoc_linux": {
-            "bzlFile": "@@bazel_tools//tools/build_defs/repo:http.bzl",
-            "ruleClassName": "http_file",
-            "attributes": {
-              "url": "https://repo1.maven.org/maven2/us/hebi/quickbuf/protoc-gen-quickbuf/1.3.2/protoc-gen-quickbuf-1.3.2-linux-x86_64.exe",
-              "sha256": "f9a041bccaa7040db523666ef1b5fe9f6f94e70a82c88951f18f58aadd9c50b5",
-              "executable": true
-            }
-          }
-        },
-        "recordedRepoMappingEntries": [
-          [
-            "",
-            "bazel_tools",
-            "bazel_tools"
-          ]
-        ]
-      }
-    },
     "@@apple_support~//crosstool:setup.bzl%apple_cc_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "ltCGFbl/LQQZXn/LEMXfKX7pGwyqNiOCHcmiQW0tmjM=",
@@ -856,7 +811,7 @@
     "@@bzlmodrio-opencv~//:maven_cpp_deps.bzl%setup_bzlmodrio_opencv_cpp_dependencies": {
       "general": {
         "bzlTransitiveDigest": "kmiXrZrHq7vGj8WmcQNpi8WxZtKfNjwaTpmlC1p3Q0g=",
-        "usagesDigest": "w+mjymWxdX4z5AaDY13a+5EF5TE13JPGobGrAI2iI5A=",
+        "usagesDigest": "MlO4EDMDZUi9yF7FUkIgxeUqZWErfXk/WGre00DpGzg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -1288,7 +1243,7 @@
     "@@bzlmodrio-opencv~//:maven_java_deps.bzl%setup_bzlmodrio_opencv_java_dependencies": {
       "general": {
         "bzlTransitiveDigest": "2ZwamkH+VmDdy0ue/dFtUt2+KSm4F7hFiMHm4FMd8N4=",
-        "usagesDigest": "QdnInpMXrv6ybICR8ROKbvPq62Dj8KWSbVqzox+Q1AU=",
+        "usagesDigest": "k0ArYr4aBzrc0X8XAVkCUXj0ZZfTcglENLAQo5Ne0Gk=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},

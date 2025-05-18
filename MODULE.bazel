@@ -13,11 +13,11 @@ bazel_dep(name = "rules_jvm_external", version = "6.3")
 bazel_dep(name = "rules_python", version = "0.40.0")
 bazel_dep(name = "bzlmodrio-libssh", version = "2024.0.105-1")
 bazel_dep(name = "bzlmodrio-ni", version = "2025.2.0")
-bazel_dep(name = "bzlmodrio-opencv", version = "2025.4.10.0-3")
+bazel_dep(name = "bzlmodrio-opencv", version = "2025.4.10.0-3.bcr2")
 bazel_dep(name = "rules_bzlmodrio_toolchains", version = "2025-1.bcr2")
 bazel_dep(name = "rules_bazelrio", version = "0.0.13")
 bazel_dep(name = "rules_bzlmodrio_jdk", version = "17.0.8.1-1")
-bazel_dep(name = "protobuf", version = "29.0-rc2")
+bazel_dep(name = "protobuf", version = "29.0-rc2", repo_name="com_google_protobuf")
 
 archive_override(
     module_name = "rules_bzlmodrio_jdk",
@@ -28,9 +28,9 @@ archive_override(
 
 archive_override(
     module_name = "bzlmodrio-libssh",
-    integrity = "sha256-YIdCS3f37kU6QJBRDTBOCcjUclBBYys0+vPY92zVrrQ=",
-    strip_prefix = "bzlmodRio-libssh-8bb529e686069e9b198c0f55302d150df66da5d3",
-    urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8bb529e686069e9b198c0f55302d150df66da5d3.tar.gz"],
+    integrity = "sha256-ZcrvglVGF0A6Fseei8rGVT1A7KPiMZfmMnW7oi231bU=",
+    strip_prefix = "bzlmodRio-libssh-8405fbd5eb4e42b495f08f6ccf6fbbe5ced28bb7",
+    urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8405fbd5eb4e42b495f08f6ccf6fbbe5ced28bb7.tar.gz"],
 )
 
 # git_override(
@@ -81,7 +81,7 @@ use_repo(
     "maven",
 )
 
-setup_quickbuf_protoc = use_extension("//shared/bazel/deps:quickbuf_protoc.bzl", "setup_quickbuf_protoc")
+setup_quickbuf_protoc = use_extension("//shared/bazel:setup_quickbuf_protoc.bzl", "setup_quickbuf_protoc")
 use_repo(
     setup_quickbuf_protoc,
     "quickbuffer_protoc_linux",

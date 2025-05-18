@@ -220,17 +220,12 @@ load("@bzlmodrio-opencv//:maven_java_deps.bzl", "setup_legacy_bzlmodrio_opencv_j
 
 setup_legacy_bzlmodrio_opencv_java_dependencies()
 
-# http_archive(
-#     name = "bzlmodrio-libssh",
-#     sha256 = "6087424b77f7ee453a4090510d304e09c8d4725041632b34faf3d8f76cd5aeb4",
-#     strip_prefix = "bzlmodRio-libssh-8bb529e686069e9b198c0f55302d150df66da5d3",
-#     urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8bb529e686069e9b198c0f55302d150df66da5d3.tar.gz"],
-# )
-
-# local_repository(
-#     name = "bzlmodrio-libssh",
-#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-libssh",
-# )
+http_archive(
+    name = "bzlmodrio-libssh",
+    sha256 = "65caef82554617403a16c79e8bcac6553d40eca3e23197e63275bba22db7d5b5",
+    strip_prefix = "bzlmodRio-libssh-8405fbd5eb4e42b495f08f6ccf6fbbe5ced28bb7",
+    urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8405fbd5eb4e42b495f08f6ccf6fbbe5ced28bb7.tar.gz"],
+)
 
 load("@bzlmodrio-libssh//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_libssh_cpp_dependencies")
 
@@ -250,28 +245,9 @@ load(
 apple_support_dependencies()
 
 # Setup quickbuf compiler
-QUICKBUF_VERSION = "1.3.2"
+load("//shared/bazel:setup_quickbuf_protoc.bzl", "setup_non_bzlmod_quickbuf_protoc")
 
-http_file(
-    name = "quickbuffer_protoc_linux",
-    executable = True,
-    sha256 = "f9a041bccaa7040db523666ef1b5fe9f6f94e70a82c88951f18f58aadd9c50b5",
-    url = "https://repo1.maven.org/maven2/us/hebi/quickbuf/protoc-gen-quickbuf/" + QUICKBUF_VERSION + "/protoc-gen-quickbuf-" + QUICKBUF_VERSION + "-linux-x86_64.exe",
-)
-
-http_file(
-    name = "quickbuffer_protoc_osx",
-    executable = True,
-    sha256 = "ea307c2b69664ae7e7c69db4cddf5803187e5a34bceffd09a21652f0f16044f7",
-    url = "https://repo1.maven.org/maven2/us/hebi/quickbuf/protoc-gen-quickbuf/" + QUICKBUF_VERSION + "/protoc-gen-quickbuf-" + QUICKBUF_VERSION + "-osx-x86_64.exe   ",
-)
-
-http_file(
-    name = "quickbuffer_protoc_windows",
-    executable = True,
-    sha256 = "27dc1f29764a62b5e6a813a4bcd63e81bbdc3394da760a44acae1025b4a89f1d",
-    url = "https://repo1.maven.org/maven2/us/hebi/quickbuf/protoc-gen-quickbuf/" + QUICKBUF_VERSION + "/protoc-gen-quickbuf-" + QUICKBUF_VERSION + "-windows-x86_64.exe ",
-)
+setup_non_bzlmod_quickbuf_protoc()
 
 # Setup rules_proto
 http_archive(
