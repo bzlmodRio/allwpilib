@@ -1,11 +1,10 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules/gen:gen-resources.bzl", "generate_resources")
 
-cc_library(
+wpilib_cc_library(
     name = "thirdparty-apriltag",
     srcs = glob(["src/main/native/thirdparty/apriltag/src/**"]),
     hdrs = glob(["src/main/native/thirdparty/apriltag/include/**"]),
@@ -44,20 +43,23 @@ generate_resources(
     visibility = ["//visibility:public"],
 )
 
-cc_library(
-    name = "apriltag.static",
+wpilib_cc_static_and_shared_library(
+    name = "apriltag",
     srcs = [":generate-resources"] + glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
     ),
     hdrs = glob(["src/main/native/include/**/*"]),
     defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
+    standard_deps = [
+        ":thirdparty-apriltag",
+    ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
-    deps = [
-        ":thirdparty-apriltag",
-        "//wpimath:wpimath.static",
-        "//wpiutil:wpiutil.static",
+    wpi_maybe_shared_deps = [
+        "//wpiutil:wpiutil",
+        "//wpimath:wpimath",
     ],
 )
 
@@ -66,8 +68,8 @@ wpilib_jni_cc_library(
     srcs = glob(["src/main/native/cpp/jni/**"]),
     java_dep = ":apriltag-java",
     visibility = ["//visibility:public"],
-    deps = [
-        ":apriltag.static",
+    wpi_maybe_shared_deps = [
+        ":apriltag",
     ],
 )
 
@@ -88,7 +90,7 @@ wpilib_jni_java_library(
     ],
 )
 
-cc_test(
+wpilib_cc_test(
     name = "apriltag-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
@@ -96,13 +98,14 @@ cc_test(
         "no-asan",
     ],
     deps = [
-        ":apriltag.static",
+        ":apriltag.shared",
         "//thirdparty/googletest:googletest.static",
     ],
 )
 
 wpilib_java_junit5_test(
     name = "apriltag-java-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     resource_strip_prefix = "apriltag/src/test/resources",
     resources = glob(["src/test/resources/**"]),
@@ -115,15 +118,15 @@ wpilib_java_junit5_test(
     ],
 )
 
-cc_binary(
+wpilib_cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":apriltag.static",
+        ":apriltag.shared",
     ],
 )
 
-java_binary(
+wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/apriltag/DevMain.java"],
     main_class = "edu.wpi.first.apriltag.DevMain",

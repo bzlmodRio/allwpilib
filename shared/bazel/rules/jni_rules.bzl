@@ -1,6 +1,6 @@
 load("@bazel_tools//tools/cpp:toolchain_utils.bzl", "find_cpp_toolchain")
-load("@rules_cc//cc:defs.bzl", "cc_library")
-load("@rules_java//java:defs.bzl", "java_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_shared_library")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
 
 def _jni_headers_impl(ctx):
     include_dir = ctx.actions.declare_directory(ctx.attr.name + ".h")
@@ -63,6 +63,40 @@ _jni_headers = rule(
     toolchains = ["@bazel_tools//tools/cpp:toolchain_type"],
 )
 
+def _merge_default_infos(ctx, infos):
+    return DefaultInfo(
+        files = depset(transitive = [info.files for info in infos]),
+        runfiles = ctx.runfiles(
+            transitive_files = depset(
+                transitive = [info.default_runfiles.files for info in infos] + [info.data_runfiles.files for info in infos],
+            ),
+        ),
+    )
+
+def _merge_java_infos_impl(ctx):
+    return [
+        _merge_default_infos(ctx, [lib[DefaultInfo] for lib in ctx.attr.libs + ctx.attr.native_libs]),
+        java_common.merge([lib[JavaInfo] for lib in ctx.attr.libs]),
+        cc_common.merge_cc_infos(direct_cc_infos = [lib[CcInfo] for lib in ctx.attr.native_libs]),
+        coverage_common.instrumented_files_info(
+            ctx,
+            dependency_attributes = ["libs"],
+        ),
+    ]
+
+merge_java_infos = rule(
+    implementation = _merge_java_infos_impl,
+    attrs = {
+        "libs": attr.label_list(
+            providers = [JavaInfo],
+        ),
+        "native_libs": attr.label_list(
+            providers = [CcInfo],
+        ),
+    },
+    provides = [JavaInfo],
+)
+
 def wpilib_jni_java_library(
         name,
         native_libs = [],
@@ -70,10 +104,14 @@ def wpilib_jni_java_library(
     tags = java_library_args.pop("tags", default = None)
     visibility = java_library_args.pop("visibility", default = None)
     testonly = java_library_args.pop("testonly", default = None)
+
+    original_name = name + ".intermediate_java"
     headers_name = name + ".hdrs"
-    java_library(
-        name = name,
-        visibility = visibility,
+
+    wpilib_java_library(
+        name = original_name,
+        # tags = ["manual"],
+        visibility = ["//visibility:private"],
         testonly = testonly,
         **java_library_args
     )
@@ -83,19 +121,31 @@ def wpilib_jni_java_library(
         name = headers_name,
         tags = ["manual"],
         jni = jni,
-        lib = ":" + name,
+        lib = ":" + original_name,
+        testonly = testonly,
+        visibility = visibility,
+    )
+
+    merge_java_infos(
+        name = name,
+        libs = [":" + original_name],
+        native_libs = [x + ".shared" for x in native_libs],
+        tags = tags,
         testonly = testonly,
         visibility = visibility,
     )
 
 def wpilib_jni_cc_library(
         name,
-        deps = [],
+        standard_deps = [],
+        wpi_maybe_shared_deps = [],
         java_dep = None,
         **kwargs):
+    deps = standard_deps + [x + ".shared" for x in wpi_maybe_shared_deps]
+
     jni = "@rules_bzlmodrio_toolchains//jni"
-    cc_library(
-        name = name + ".static",
+    wpilib_cc_shared_library(
+        name = name,
         deps = [jni, java_dep + ".hdrs"] + deps,
         **kwargs
     )

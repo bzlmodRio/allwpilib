@@ -1,9 +1,8 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_static_and_shared_library", "wpilib_cc_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//wpimath:generate.bzl", "generate_wpimath")
 
@@ -90,7 +89,7 @@ filegroup(
     visibility = ["//wpimath:__subpackages__"],
 )
 
-cc_library(
+wpilib_cc_library(
     name = "eigen-headers",
     hdrs = glob([
         "src/main/native/thirdparty/eigen/include/**",
@@ -100,7 +99,7 @@ cc_library(
     visibility = ["//wpimath:__subpackages__"],
 )
 
-cc_library(
+wpilib_cc_library(
     name = "gcem",
     hdrs = glob([
         "src/main/native/thirdparty/gcem/include/**",
@@ -110,7 +109,7 @@ cc_library(
     visibility = ["//wpimath:__subpackages__"],
 )
 
-cc_library(
+wpilib_cc_library(
     name = "sleipnir-headers",
     hdrs = glob([
         "src/main/native/thirdparty/sleipnir/include/**/*.hpp",
@@ -126,7 +125,7 @@ filegroup(
     visibility = ["//wpimath:__subpackages__"],
 )
 
-cc_library(
+wpilib_cc_library(
     name = "nanopb-generated-headers",
     hdrs = glob(["src/generated/main/native/cpp/**/*.h"]),
     includes = ["src/generated/main/native/cpp"],
@@ -134,8 +133,8 @@ cc_library(
     visibility = ["//wpiutil:__subpackages__"],
 )
 
-cc_library(
-    name = "wpimath.static",
+wpilib_cc_static_and_shared_library(
+    name = "wpimath",
     srcs = glob(
         [
             "src/main/native/cpp/**",
@@ -145,18 +144,21 @@ cc_library(
     ) + [":sleipnir-srcs"],
     hdrs = glob(["src/main/native/include/**"]),
     defines = ["WPILIB_EXPORTS"],
+    export_symbols = False,
     includes = [
         "src/main/native/include",
         "src/main/native/thirdparty/sleipnir/src",
     ],
-    strip_include_prefix = "src/main/native/include",
-    visibility = ["//visibility:public"],
-    deps = [
+    standard_deps = [
         ":eigen-headers",
+        ":sleipnir-headers",
         ":gcem",
         ":nanopb-generated-headers",
-        ":sleipnir-headers",
-        "//wpiutil:wpiutil.static",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    wpi_maybe_shared_deps = [
+        "//wpiutil:wpiutil",
     ],
 )
 
@@ -165,8 +167,8 @@ wpilib_jni_cc_library(
     srcs = glob(["src/main/native/cpp/jni/**"]),
     java_dep = ":wpimath-java",
     visibility = ["//visibility:public"],
-    deps = [
-        ":wpimath.static",
+    wpi_maybe_shared_deps = [
+        ":wpimath",
     ],
 )
 
@@ -188,7 +190,7 @@ wpilib_jni_java_library(
     ],
 )
 
-cc_library(
+wpilib_cc_library(
     name = "test_headers",
     hdrs = glob([
         "src/test/native/include/**",
@@ -196,17 +198,13 @@ cc_library(
     strip_include_prefix = "src/test/native/include",
 )
 
-cc_test(
+wpilib_cc_test(
     name = "wpimath-cpp-test",
     size = "small",
     srcs = glob([
         "src/test/native/cpp/**/*.cpp",
         "src/test/native/cpp/**/*.h",
     ]),
-    tags = [
-        "no-bullseye",
-        "no-raspi",
-    ],
     deps = [
         ":test_headers",
         ":wpimath.static",
@@ -216,6 +214,7 @@ cc_test(
 
 wpilib_java_junit5_test(
     name = "wpimath-java-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
         ":wpimath-java",
@@ -227,7 +226,7 @@ wpilib_java_junit5_test(
     ],
 )
 
-cc_binary(
+wpilib_cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
@@ -235,7 +234,7 @@ cc_binary(
     ],
 )
 
-java_binary(
+wpilib_java_binary(
     name = "DevMain-Java",
     srcs = ["src/dev/java/edu/wpi/first/math/DevMain.java"],
     main_class = "edu.wpi.first.math.DevMain",

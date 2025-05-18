@@ -23,6 +23,7 @@ generatedFileExclude {
   fieldImages/src/main/native/resources/
   apriltag/src/test/resources/
   wpilibc/src/generated/
+  MODULE.bazel.lock
 }
 
 repoRootNameOverride {

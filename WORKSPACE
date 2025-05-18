@@ -208,8 +208,8 @@ setup_legacy_bzlmodrio_ni_cpp_dependencies()
 
 http_archive(
     name = "bzlmodrio-opencv",
-    sha256 = "ba3f4910ce9cc0e08abff732aeb5835b1bcfd864ca5296edeadcf2935f7e81b9",
-    url = "https://github.com/wpilibsuite/bzlmodRio-opencv/releases/download/2025.4.10.0-3.bcr1/bzlmodRio-opencv-2025.4.10.0-3.bcr1.tar.gz",
+    sha256 = "6e8544fae07ed5b4fedc146f6ad083d0d8947e3efb5332a20abc46601a52a1b5",
+    url = "https://github.com/wpilibsuite/bzlmodRio-opencv/releases/download/2025.4.10.0-3.bcr2/bzlmodRio-opencv-2025.4.10.0-3.bcr2.tar.gz",
 )
 
 load("@bzlmodrio-opencv//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_opencv_cpp_dependencies")
@@ -219,6 +219,22 @@ setup_legacy_bzlmodrio_opencv_cpp_dependencies()
 load("@bzlmodrio-opencv//:maven_java_deps.bzl", "setup_legacy_bzlmodrio_opencv_java_dependencies")
 
 setup_legacy_bzlmodrio_opencv_java_dependencies()
+
+# http_archive(
+#     name = "bzlmodrio-libssh",
+#     sha256 = "6087424b77f7ee453a4090510d304e09c8d4725041632b34faf3d8f76cd5aeb4",
+#     strip_prefix = "bzlmodRio-libssh-8bb529e686069e9b198c0f55302d150df66da5d3",
+#     urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8bb529e686069e9b198c0f55302d150df66da5d3.tar.gz"],
+# )
+
+local_repository(
+    name = "bzlmodrio-libssh",
+    path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-libssh",
+)
+
+load("@bzlmodrio-libssh//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_libssh_cpp_dependencies")
+
+setup_legacy_bzlmodrio_libssh_cpp_dependencies()
 
 http_archive(
     name = "build_bazel_apple_support",

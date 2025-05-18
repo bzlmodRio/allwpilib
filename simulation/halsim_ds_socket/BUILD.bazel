@@ -1,14 +1,15 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_test")
 
-cc_library(
+wpilib_cc_library(
     name = "headers",
     hdrs = glob(["src/main/native/include/**"]),
     includes = ["src/main/native/include"],
 )
 
-cc_library(
+wpilib_cc_shared_library(
     name = "halsim_ds_socket",
     srcs = glob(["src/main/native/cpp/**"]),
+    features = ["windows_export_all_symbols"],
     target_compatible_with = select({
         "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
         "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
@@ -17,28 +18,25 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//hal:wpiHal.static",
-        "//wpinet:wpinet.static",
+        "//hal:wpiHal.shared",
+        "//wpinet:wpinet.shared",
     ],
 )
 
-cc_test(
+wpilib_cc_test(
     name = "halsim_ds_socket-test",
     size = "small",
-    srcs = glob([
-        "src/test/native/**/*.cpp",
-        "src/test/native/**/*.h",
-    ]),
+    srcs = glob(["src/test/native/**/*.cpp"]),
     deps = [
-        "//simulation/halsim_ds_socket",
+        "//simulation/halsim_ds_socket:halsim_ds_socket.shared",
         "//thirdparty/googletest:googletest.static",
     ],
 )
 
-cc_binary(
+wpilib_cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":halsim_ds_socket",
+        ":halsim_ds_socket.shared",
     ],
 )
