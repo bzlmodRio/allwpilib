@@ -227,10 +227,10 @@ setup_legacy_bzlmodrio_opencv_java_dependencies()
 #     urls = ["https://github.com/bzlmodrio/bzlmodRio-libssh/archive/8bb529e686069e9b198c0f55302d150df66da5d3.tar.gz"],
 # )
 
-local_repository(
-    name = "bzlmodrio-libssh",
-    path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-libssh",
-)
+# local_repository(
+#     name = "bzlmodrio-libssh",
+#     path = "/home/pjreiniger/git/bzlmodRio/monorepo/libraries/bzlmodRio-libssh",
+# )
 
 load("@bzlmodrio-libssh//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_libssh_cpp_dependencies")
 
