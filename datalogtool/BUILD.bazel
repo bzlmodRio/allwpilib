@@ -37,6 +37,7 @@ wpilib_cc_binary(
             "-DEFAULTLIB:advapi32.lib",
             "-DEFAULTLIB:crypt32.lib",
             "-DEFAULTLIB:user32.lib",
+            "-SUBSYSTEM:WINDOWS",
         ],
         "@rules_bzlmodrio_toolchains//constraints/combined:is_cross_compiler": [],
     }),
@@ -44,6 +45,10 @@ wpilib_cc_binary(
         "no-roborio",
         "wpi-cpp-gui",
     ],
+    target_compatible_with = select({
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
     deps = [
         "//datalog:datalog.static",
         "//glass:libglass",
