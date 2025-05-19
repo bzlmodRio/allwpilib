@@ -164,8 +164,9 @@ load_toolchains()
 #
 http_archive(
     name = "rules_bzlmodrio_jdk",
-    sha256 = "81869fe9860e39b17e4a9bc1d33c1ca2faede7e31d9538ed0712406f753a2163",
-    url = "https://github.com/wpilibsuite/rules_bzlmodRio_jdk/releases/download/17.0.12-7/rules_bzlmodRio_jdk-17.0.12-7.tar.gz",
+    integrity = "sha256-SrikyrF2v2lENdqn9aFC//d0TkIE620lR60yXTrWFTs=",
+    strip_prefix = "rules_bzlmodrio_jdk-4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773",
+    urls = ["https://github.com/wpilibsuite/rules_bzlmodRio_jdk/archive/4ecd4cbc97dfbfe2ceefa627de1228e2f2ca5773.tar.gz"],
 )
 
 load("@rules_bzlmodrio_jdk//:maven_deps.bzl", "setup_legacy_setup_jdk_dependencies")
