@@ -130,6 +130,10 @@ maven_install(
     ],
 )
 
+load("@maven//:defs.bzl", "pinned_maven_install")
+
+pinned_maven_install()
+
 # Setup aspect lib
 http_archive(
     name = "aspect_bazel_lib",

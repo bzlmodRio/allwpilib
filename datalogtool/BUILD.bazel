@@ -29,6 +29,10 @@ wpilib_cc_binary(
         ],
         "@bazel_tools//src/conditions:linux_x86_64": [],
         "@bazel_tools//src/conditions:windows": [
+            "-DEFAULTLIB:Gdi32.lib",
+            "-DEFAULTLIB:Shell32.lib",
+            "-DEFAULTLIB:d3d11.lib",
+            "-DEFAULTLIB:d3dcompiler.lib",
             "-DEFAULTLIB:ws2_32.lib",
             "-DEFAULTLIB:advapi32.lib",
             "-DEFAULTLIB:crypt32.lib",
