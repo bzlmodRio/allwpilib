@@ -93,5 +93,66 @@
     ],
     "foldername": "AnalogInput",
     "gradlebase": "cpp"
+  },
+  {
+    "name": "AnalogPotentiometer",
+    "description": "Snippets of Analog Potentiometer for frc-docs.",
+    "tags": [
+      "Hardware",
+      "Analog"
+    ],
+    "foldername": "AnalogPotentiometer",
+    "gradlebase": "cpp"
+  },
+  {
+    "name": "AnalogAccelerometer",
+    "description": "Snippets of Analog Accelerometer for frc-docs.",
+    "tags": [
+      "Hardware",
+      "Analog",
+      "Accelerometer"
+    ],
+    "foldername": "AnalogAccelerometer",
+    "gradlebase": "cpp"
+  },
+  {
+    "name": "ADXLAccelerometers",
+    "description": "Snippets of ADXL 345 and 362 Accelerometers for frc-docs.",
+    "tags": [
+      "Hardware",
+      "Accelerometer"
+    ],
+    "foldername": "ADXLAccelerometers",
+    "gradlebase": "cpp"
+  },
+  {
+    "name": "BuiltInAccelerometer",
+    "description": "Snippets of BuiltIn Accelerometer for frc-docs.",
+    "tags": [
+      "Hardware",
+      "Accelerometer"
+    ],
+    "foldername": "BuiltInAccelerometer",
+    "gradlebase": "cpp"
+  },
+  {
+    "name": "AccelerometerCollisionDetection",
+    "description": "Snippets of Accelerometer collision detection for frc-docs.",
+    "tags": [
+      "Hardware",
+      "Accelerometer"
+    ],
+    "foldername": "AccelerometerCollision",
+    "gradlebase": "cpp"
+  },
+  {
+    "name": "AccelerometerFilter",
+    "description": "Snippets of filterning Accelerometer for frc-docs.",
+    "tags": [
+      "Hardware",
+      "Accelerometer"
+    ],
+    "foldername": "AccelerometerFilter",
+    "gradlebase": "cpp"
   }
 ]
