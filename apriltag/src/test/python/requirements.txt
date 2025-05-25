@@ -1,2 +1,0 @@
-pytest
-opencv-python~=4.6
