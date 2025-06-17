@@ -122,7 +122,7 @@ wpilib_cc_library(
         exclude = ["src/main/native/cpp/jni/**"],
     ),
     hdrs = glob(["src/main/native/include/**"]),
-    defines = [
+    local_defines = [
         "WPILIB_EXPORTS",
         "SLEIPNIR_EXPORTS",
     ],

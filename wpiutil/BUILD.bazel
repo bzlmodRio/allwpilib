@@ -165,6 +165,9 @@ wpilib_cc_library(
         ":nanopb",
         ":protobuf",
     ],
+    copts = [
+        "/D_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR",
+    ],
     visibility = ["//visibility:public"],
     deps = select({
         "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bzlmodrio-ni//libraries/cpp/ni:shared"],

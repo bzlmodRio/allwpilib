@@ -74,6 +74,7 @@ wpilib_cc_library(
 
 wpilib_cc_shared_library(
     name = "apriltag",
+    auto_export_windows_symbols = False,
     dynamic_deps = [
         "//wpimath:wpimath",
         "//wpiutil:wpiutil",
