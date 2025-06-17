@@ -1,6 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
 load("//shared/bazel/rules:halsim_library.bzl", "wpilib_halsim_extension")
-
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_halsim_extension(

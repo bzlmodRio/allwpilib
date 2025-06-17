@@ -1,5 +1,4 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
-
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_cc_library(
