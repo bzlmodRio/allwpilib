@@ -2,7 +2,17 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 
+pkg_java_files(name = "romi-java-srcs")
+
+pkg_zip(
+    name = "libromi-java-sources",
+    srcs = [":romi-java-srcs"],
+    out = "libromi-java-sources.jar",
+    tags = ["manual"],
+)
 wpilib_cc_library(
     name = "romiVendordep",
     srcs = glob([
@@ -90,6 +100,8 @@ bundle_library_artifacts(
     cc_hdr_pkg = ":romiVendordep-hdrs-zip",
     cc_src_pkg = ":romiVendordep-srcs-zip",
     cc_static_library_pkg = ":static/romiVendordep-static-zip",
+    cc_shared_library_pkg = ":shared/romiVendordep-shared-zip",
     group_id = "edu.wpi.first.romiVendordep",
     library_base_name = "romiVendordep",
+    java_pkg = "libromi-java-sources",
 )

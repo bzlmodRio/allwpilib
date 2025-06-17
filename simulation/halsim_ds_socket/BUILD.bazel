@@ -90,6 +90,7 @@ bundle_library_artifacts(
     cc_hdr_pkg = ":halsim_ds_socket-hdrs-zip",
     cc_src_pkg = ":halsim_ds_socket-srcs-zip",
     cc_static_library_pkg = ":static/halsim_ds_socket-static-zip",
+    cc_shared_library_pkg = ":shared/halsim_ds_socket-shared-zip",
     group_id = "edu.wpi.first.halsim",
     library_base_name = "halsim_ds_socket",
 )

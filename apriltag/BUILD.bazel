@@ -108,6 +108,7 @@ wpilib_jni_cc_library(
 
 wpilib_cc_shared_library(
     name = "apriltagjni",
+    auto_export_windows_symbols = False,
     dynamic_deps = [
         ":apriltag",
         "//wpimath:wpimath",
@@ -149,6 +150,7 @@ pkg_zip(
         ":resources",
     ],
     out = "libapriltag-java-sources.jar",
+    tags = ["manual"],
 )
 
 cc_test(

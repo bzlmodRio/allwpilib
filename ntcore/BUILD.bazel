@@ -140,6 +140,7 @@ wpilib_jni_cc_library(
 
 wpilib_cc_shared_library(
     name = "ntcorejni",
+    auto_export_windows_symbols = False,
     dynamic_deps = [
         ":ntcore",
         "//wpiutil:wpiutil",
@@ -166,6 +167,7 @@ pkg_zip(
     name = "libntcore-java-sources",
     srcs = [":ntcore-java-srcs"],
     out = "libntcore-java-sources.jar",
+    tags = ["manual"],
 )
 
 cc_test(

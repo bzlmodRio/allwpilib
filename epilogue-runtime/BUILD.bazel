@@ -1,5 +1,8 @@
 load("@rules_java//java:defs.bzl", "java_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 
 java_library(
     name = "epilogue-java",
@@ -13,6 +16,15 @@ java_library(
     ],
 )
 
+pkg_java_files(name = "epilogue-runtime-java-srcs")
+
+pkg_zip(
+    name = "libepilogue-runtime-java-sources",
+    srcs = [":epilogue-runtime-java-srcs"],
+    out = "libepilogue-runtime-java-sources.jar",
+    tags = ["manual"],
+)
+
 wpilib_java_junit5_test(
     name = "epilogue-test",
     srcs = glob(["src/test/java/**/*.java"]),
@@ -20,4 +32,11 @@ wpilib_java_junit5_test(
         ":epilogue-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    group_id = "edu.wpi.first.epilogue",
+    library_base_name = "epilogue-runtime",
+    java_pkg = "libepilogue-runtime-java-sources",
 )

@@ -493,6 +493,7 @@ pkg_zip(
         "library-pkg",
         "//:license_pkg_files",
     ],
+    tags = ["manual"],
 )
 
 genrule(
@@ -513,12 +514,14 @@ genrule(
         artifact_name = "imguiSuite-cpp",
         group_id = "edu.wpi.first.thirdparty.imguiSuite",
         suffix = "-sources",
-    ) + generate_maven_info_cmd(
-        artifact = ":library-zip",
-        artifact_name = "imguiSuite-cpp",
-        group_id = "edu.wpi.first.thirdparty.imguiSuite",
-        suffix = "-linuxx86-64static",
-    ),
+    ) 
+    # + generate_maven_info_cmd(
+    #     artifact = ":library-zip",
+    #     artifact_name = "imguiSuite-cpp",
+    #     group_id = "edu.wpi.first.thirdparty.imguiSuite",
+    #     suffix = "-linuxx86-64static",
+    # )
+    ,
     tags = ["manual"],
     tools = ["//shared/bazel/rules/publishing:generate_maven_bundle"],
     visibility = ["//visibility:public"],

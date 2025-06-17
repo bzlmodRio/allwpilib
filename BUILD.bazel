@@ -24,6 +24,7 @@ wpilib_publish(
         "//wpimath:publishing_bundle",
         "//cameraserver:publishing_bundle",
         "//wpilibc:publishing_bundle",
+        "//wpilibj:publishing_bundle",
         "//wpilibNewCommands:publishing_bundle",
         "//apriltag:publishing_bundle",
         "//datalog:publishing_bundle",
@@ -46,6 +47,9 @@ wpilib_publish(
         "//wpigui:publishing_bundle",
         "//thirdparty/imgui_suite:publishing_bundle",
         "//thirdparty/googletest:publishing_bundle",
+        "//epilogue-runtime:publishing_bundle",
+        "//epilogue-processor:publishing_bundle",
+        "//wpiunits:publishing_bundle",
     ],
 )
 

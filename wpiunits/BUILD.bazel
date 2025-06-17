@@ -6,6 +6,7 @@ load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
 load("//wpiunits:generate_wpiunits.bzl", "generate_wpiunits")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 py_binary(
     name = "generate_units",
@@ -45,6 +46,7 @@ pkg_zip(
     name = "libwpiunits-java-sources",
     srcs = [":wpiunits-java-srcs"],
     out = "libwpiunits-java-sources.jar",
+    tags = ["manual"],
 )
 
 wpilib_java_junit5_test(
@@ -62,4 +64,11 @@ java_binary(
     deps = [
         ":wpiunits-java",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    group_id = "edu.wpi.first.wpiunits",
+    library_base_name = "wpiunits",
+    java_pkg = "libwpiunits-java-sources",
 )

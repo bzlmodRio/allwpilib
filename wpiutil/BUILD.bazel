@@ -212,10 +212,11 @@ wpilib_jni_cc_library(
     ],
 )
 
-wpilib_cc_static_library(
-    name = "static/wpiutiljni",
-    static_deps = [
-        ":static/wpiutil",
+wpilib_cc_shared_library(
+    name = "wpiutiljni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        ":wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -242,6 +243,7 @@ pkg_zip(
     name = "libwpiutil-java-sources",
     srcs = [":wpiutil-java-srcs"],
     out = "libwpiutil-java-sources.jar",
+    tags = ["manual"],
 )
 
 cc_library(

@@ -10,9 +10,17 @@ wpilib_cc_library(
     ]),
     include_license_files = True,
     includes = ["src/main/native/include"],
-    linkopts = [
-        "-lm",
-    ],
+    linkopts = select({
+        "@bazel_tools//src/conditions:windows": [
+            "-DEFAULTLIB:user32.lib",
+            "-DEFAULTLIB:gdi32.lib",
+            "-DEFAULTLIB:shell32.lib",
+        ],
+    }),
+    linkstatic = True,
+    # linkopts = [
+    #     "-lm",
+    # ],
     tags = [
         "wpi-cpp-gui",
     ],
@@ -39,6 +47,9 @@ wpilib_cc_library(
     ],
     include_license_files = True,
     includes = ["src/main/native/include"],
+    # linkopts = [
+    #     "-lm",
+    # ],
     tags = [
         "wpi-cpp-gui",
     ],
@@ -56,22 +67,14 @@ wpilib_cc_library(
 
 wpilib_cc_shared_library(
     name = "shared/halsim_gui",
-    auto_export_windows_symbols = False,
     dynamic_deps = [
         "//hal:wpiHal",
         "//wpimath:wpimath",
         "//datalog:datalog",
         "//ntcore:ntcore",
-        "//wpinet:wpinet",
-        "//wpiutil:wpiutil",
-    ],
-    static_deps = [
-        "//wpigui:static/wpigui",
     ],
     visibility = ["//visibility:public"],
-    deps = [
-        ":halsim_gui",
-    ],
+    deps = [":halsim_gui"],
 )
 
 wpilib_cc_static_library(

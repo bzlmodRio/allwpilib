@@ -116,6 +116,7 @@ pkg_zip(
     name = "libwpilibNewCommands-java-sources",
     srcs = [":wpilibNewCommands-java-srcs"],
     out = "libwpilibNewCommands-java-sources.jar",
+    tags = ["manual"],
 )
 
 cc_test(
@@ -176,6 +177,8 @@ bundle_library_artifacts(
     cc_hdr_pkg = ":wpilibNewCommands-hdrs-zip",
     cc_src_pkg = ":wpilibNewCommands-srcs-zip",
     cc_static_library_pkg = ":static/wpilibNewCommands-static-zip",
+    cc_shared_library_pkg = ":shared/wpilibNewCommands-shared-zip",
     group_id = "edu.wpi.first.wpilibNewCommands",
     library_base_name = "wpilibNewCommands",
+    java_pkg = "libwpilibNewCommands-java-sources",
 )

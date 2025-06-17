@@ -1,4 +1,5 @@
 load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 
 def generate_maven_info_cmd(
         artifact,
@@ -17,6 +18,7 @@ def bundle_library_artifacts(
         cc_hdr_pkg = None,
         cc_src_pkg = None,
         cc_static_library_pkg = None,
+        cc_shared_library_pkg = None,
         java_pkg = None,
         jni_pkg = None,
         add_cc_suffix = True):
@@ -40,7 +42,8 @@ def bundle_library_artifacts(
     maybe_cc_suffix = "-cpp" if add_cc_suffix else ""
 
     # TODO(pjreiniger) Make this cross platform
-    platform = "linuxx86-64"
+    # platform = "linuxx86-64"
+    platform = "windowsx86-64"
 
     if cc_hdr_pkg:
         srcs.append(cc_hdr_pkg)
@@ -54,9 +57,18 @@ def bundle_library_artifacts(
         srcs.append(cc_static_library_pkg)
         cmd += generate_maven_info_cmd(cc_static_library_pkg, group_id, library_base_name + maybe_cc_suffix, "-" + platform + "static")
 
+    if cc_shared_library_pkg:
+        srcs.append(cc_shared_library_pkg)
+        cmd += generate_maven_info_cmd(cc_shared_library_pkg, group_id, library_base_name + maybe_cc_suffix, "-" + platform)
+
     if jni_pkg:
-        srcs.append(jni_pkg)
-        cmd += generate_maven_info_cmd(jni_pkg, group_id, library_base_name + "-jni", "-" + platform)
+        fail()
+        # srcs.append(jni_pkg)
+        # cmd += "$(locations {}),{},{},{} ".format(jni_pkg, group_id, library_base_name + "-cpp", "jni-" + platform) # generate_maven_info_cmd()
+
+    if java_pkg:
+        srcs.append(java_pkg)
+        cmd += generate_maven_info_cmd(java_pkg, group_id, library_base_name + "-java", suffix="-sources")
 
     output_file = name + "-maven-info.json"
 
@@ -80,14 +92,26 @@ def bundle_default_jni_library(
     Due to the standard layout and naming convention of the JNI libraries, this function provides
     syntactic sugar to bundle all of the pieces relevant to a C++ / Java / JNI library to maven.
     """
+    pkg_zip(
+        name = "{}-shared-with-jni-zip".format(library_base_name),
+        srcs = [
+            ":{}-shared.pkg".format(library_base_name),
+            ":{}jni-shared.pkg".format(library_base_name)
+        ],
+        out = "{}-shared-with-jni.zip".format(library_base_name),
+        tags = ["manual"],
+    )
+
     bundle_library_artifacts(
         name = "publishing_bundle",
         group_id = group_id,
         library_base_name = library_base_name,
-        cc_hdr_pkg = ":{}-hdrs-zip".format(library_base_name),
-        cc_src_pkg = ":{}-srcs-zip".format(library_base_name),
+        cc_hdr_pkg = ":_{}-hdrs-zip".format(library_base_name),
+        cc_src_pkg = ":_{}-srcs-zip".format(library_base_name),
         cc_static_library_pkg = ":static/{}-static-zip".format(library_base_name),
-        jni_pkg = ":{}jni-zip".format(library_base_name),
+        cc_shared_library_pkg = ":{}-shared-with-jni-zip".format(library_base_name),
+        # jni_pkg = ":{}jni-shared-zip".format(library_base_name),
+        java_pkg = ":lib{}-java-sources".format(library_base_name),
     )
 
 def wpilib_publish(
@@ -111,4 +135,5 @@ def wpilib_publish(
         args = ["--bundles "] + ["$(location " + x + ") " for x in bundles],
         data = bundles,
         deps = ["@rules_python//python/runfiles"],
+        tags = ["no-remote"],
     )

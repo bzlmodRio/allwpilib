@@ -2,6 +2,17 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
+
+pkg_java_files(name = "xrp-java-srcs")
+
+pkg_zip(
+    name = "libxrp-java-sources",
+    srcs = [":xrp-java-srcs"],
+    out = "libxrp-java-sources.jar",
+    tags = ["manual"],
+)
 
 wpilib_cc_library(
     name = "_xrpVendordep",
@@ -88,9 +99,11 @@ java_binary(
 
 bundle_library_artifacts(
     name = "publishing_bundle",
-    cc_hdr_pkg = ":xrpVendordep-hdrs-zip",
-    cc_src_pkg = ":xrpVendordep-srcs-zip",
+    cc_hdr_pkg = ":_xrpVendordep-hdrs-zip",
+    cc_src_pkg = ":_xrpVendordep-srcs-zip",
     cc_static_library_pkg = ":static/xrpVendordep-static-zip",
+    cc_shared_library_pkg = ":shared/xrpVendordep-shared-zip",
     group_id = "edu.wpi.first.xrpVendordep",
     library_base_name = "xrpVendordep",
+    java_pkg = "libxrp-java-sources",
 )

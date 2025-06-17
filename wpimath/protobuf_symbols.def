@@ -1,74 +1,109 @@
-LIBRARY wpimath
 EXPORTS
-	?msg_descriptor@_wpi_proto_ProtobufArmFeedforward@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufChassisSpeeds@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufCubicHermiteSpline@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufDCMotor@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveFeedforward@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveKinematics@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelPositions@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelSpeeds@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelVoltages@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufElevatorFeedforward@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufEllipse2d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufLinearSystem@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufMatrix@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufMecanumDriveKinematics@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufMecanumDriveWheelPositions@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufMecanumDriveWheelSpeeds@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufPose2d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufPose3d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufQuaternion@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufQuinticHermiteSpline@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufRectangle2d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufRotation2d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufRotation3d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufSimpleMotorFeedforward@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufSwerveDriveKinematics@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufSwerveModulePosition@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufSwerveModuleState@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufTrajectory@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufTrajectoryState@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufTransform2d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufTransform3d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufTranslation2d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufTranslation3d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufTwist2d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufTwist3d@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_descriptor@_wpi_proto_ProtobufVector@@SAPEBUpb_msgdesc_s@@XZ
-	?msg_name@_wpi_proto_ProtobufArmFeedforward@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufChassisSpeeds@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufCubicHermiteSpline@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufDCMotor@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufDifferentialDriveFeedforward@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufDifferentialDriveKinematics@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufDifferentialDriveWheelPositions@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufDifferentialDriveWheelSpeeds@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufDifferentialDriveWheelVoltages@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufElevatorFeedforward@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufEllipse2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufLinearSystem@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufMatrix@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufMecanumDriveKinematics@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufMecanumDriveWheelPositions@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufMecanumDriveWheelSpeeds@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufPose2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufPose3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufQuaternion@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufQuinticHermiteSpline@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufRectangle2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufRotation2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufRotation3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufSimpleMotorFeedforward@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufSwerveDriveKinematics@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufSwerveModulePosition@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufSwerveModuleState@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufTrajectory@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufTrajectoryState@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufTransform2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufTransform3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufTranslation2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufTranslation3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufTwist2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufTwist3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
-	?msg_name@_wpi_proto_ProtobufVector@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?file_descriptor@_wpi_proto_ProtobufArmFeedforward@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufChassisSpeeds@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufCubicHermiteSpline@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufDCMotor@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufDifferentialDriveFeedforward@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufDifferentialDriveKinematics@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelPositions@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelSpeeds@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelVoltages@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufElevatorFeedforward@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufEllipse2d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufLinearSystem@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufMatrix@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufMecanumDriveKinematics@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufMecanumDriveWheelPositions@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufMecanumDriveWheelSpeeds@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufPose2d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufPose3d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufQuaternion@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufQuinticHermiteSpline@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufRectangle2d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufRotation2d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufRotation3d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufSimpleMotorFeedforward@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufSwerveDriveKinematics@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufSwerveModulePosition@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufSwerveModuleState@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufTrajectory@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufTrajectoryState@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufTransform2d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufTransform3d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufTranslation2d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufTranslation3d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufTwist2d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufTwist3d@@SA?AUpb_filedesc_s@@XZ
+?file_descriptor@_wpi_proto_ProtobufVector@@SA?AUpb_filedesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufArmFeedforward@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufChassisSpeeds@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufCubicHermiteSpline@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufDCMotor@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveFeedforward@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveKinematics@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelPositions@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelSpeeds@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufDifferentialDriveWheelVoltages@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufElevatorFeedforward@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufEllipse2d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufLinearSystem@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufMatrix@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufMecanumDriveKinematics@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufMecanumDriveWheelPositions@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufMecanumDriveWheelSpeeds@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufPose2d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufPose3d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufQuaternion@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufQuinticHermiteSpline@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufRectangle2d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufRotation2d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufRotation3d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufSimpleMotorFeedforward@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufSwerveDriveKinematics@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufSwerveModulePosition@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufSwerveModuleState@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufTrajectory@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufTrajectoryState@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufTransform2d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufTransform3d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufTranslation2d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufTranslation3d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufTwist2d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufTwist3d@@SAPEBUpb_msgdesc_s@@XZ
+?msg_descriptor@_wpi_proto_ProtobufVector@@SAPEBUpb_msgdesc_s@@XZ
+?msg_name@_wpi_proto_ProtobufArmFeedforward@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufChassisSpeeds@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufCubicHermiteSpline@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufDCMotor@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufDifferentialDriveFeedforward@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufDifferentialDriveKinematics@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufDifferentialDriveWheelPositions@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufDifferentialDriveWheelSpeeds@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufDifferentialDriveWheelVoltages@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufElevatorFeedforward@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufEllipse2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufLinearSystem@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufMatrix@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufMecanumDriveKinematics@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufMecanumDriveWheelPositions@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufMecanumDriveWheelSpeeds@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufPose2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufPose3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufQuaternion@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufQuinticHermiteSpline@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufRectangle2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufRotation2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufRotation3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufSimpleMotorFeedforward@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufSwerveDriveKinematics@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufSwerveModulePosition@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufSwerveModuleState@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufTrajectory@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufTrajectoryState@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufTransform2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufTransform3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufTranslation2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufTranslation3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufTwist2d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufTwist3d@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ
+?msg_name@_wpi_proto_ProtobufVector@@SA?AV?$basic_string_view@DU?$char_traits@D@std@@@std@@XZ

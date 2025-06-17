@@ -81,6 +81,7 @@ bundle_library_artifacts(
     cc_hdr_pkg = ":halsim_xrp-hdrs-zip",
     cc_src_pkg = ":halsim_xrp-srcs-zip",
     cc_static_library_pkg = ":static/halsim_xrp-static-zip",
+    cc_shared_library_pkg = ":shared/halsim_xrp-shared-zip",
     group_id = "edu.wpi.first.halsim",
     library_base_name = "halsim_xrp",
 )

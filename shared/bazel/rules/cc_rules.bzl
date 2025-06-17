@@ -133,7 +133,7 @@ def wpilib_cc_library(
         pkg_zip(
             name = name + "-srcs-zip",
             srcs = maybe_license_pkg + extra_src_pkg_files + [name + "-srcs-pkg"] + [lib + "-srcs-pkg" for lib in third_party_libraries],
-            tags = ["no-remote"],
+            tags = ["no-remote", "manual"],
         )
 
     if hdrs_pkg_root:
@@ -146,7 +146,7 @@ def wpilib_cc_library(
         pkg_zip(
             name = name + "-hdrs-zip",
             srcs = extra_hdr_pkg_files + maybe_license_pkg + [name + "-hdrs-pkg"] + [lib + "-hdrs-pkg" for lib in third_party_libraries + third_party_header_only_libraries],
-            tags = ["no-remote"],
+            tags = ["no-remote", "manual"],
         )
 
 def wpilib_cc_shared_library(
@@ -168,7 +168,6 @@ def wpilib_cc_shared_library(
     if auto_export_windows_symbols:
         features.append("windows_export_all_symbols")
 
-    print(name, dynamic_deps)
     native.cc_shared_library(
         name = name,
         dynamic_deps = dynamic_deps,
@@ -179,6 +178,20 @@ def wpilib_cc_shared_library(
         win_def_file = win_def_file,
         **kwargs
     )
+    
+    pkg_files(
+        name = name + "-shared.pkg",
+        srcs = [":" + name],
+        tags = ["manual"],
+        prefix = "windows/x86-64/shared",  # TODO(pjreiniger) Make cross platform
+    )
+    
+    pkg_zip(
+        name = name + "-shared-zip",
+        srcs = [name + "-shared.pkg"],
+        tags = ["no-remote", "manual"],
+    )
+
 
 CcStaticLibraryInfo = provider(
     "Information about a cc static library.",
@@ -371,8 +384,15 @@ def wpilib_cc_static_library(
         **kwargs
     )
 
+    pkg_files(
+        name = name + "-static.pkg",
+        srcs = [":" + name],
+        tags = ["manual"],
+        prefix = "windows/x86-64/static",  # TODO(pjreiniger) Make cross platform
+    )
+
     pkg_zip(
         name = name + "-static-zip",
-        srcs = [name],
-        tags = ["no-remote"],
+        srcs = [name + "-static.pkg"],
+        tags = ["no-remote", "manual"],
     )

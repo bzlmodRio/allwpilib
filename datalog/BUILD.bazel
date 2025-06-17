@@ -5,6 +5,8 @@ load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
+load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 
 wpilib_cc_library(
     name = "_datalog",
@@ -55,6 +57,7 @@ wpilib_jni_cc_library(
 
 wpilib_cc_shared_library(
     name = "datalogjni",
+    auto_export_windows_symbols = False,
     dynamic_deps = [
         ":datalog",
         "//wpiutil:wpiutil",
@@ -72,6 +75,15 @@ wpilib_jni_java_library(
         "//wpiutil:wpiutil-java",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
+)
+
+pkg_java_files(name = "datalog-java-srcs")
+
+pkg_zip(
+    name = "libdatalog-java-sources",
+    srcs = [":datalog-java-srcs"],
+    out = "libdatalog-java-sources.jar",
+    tags = ["manual"],
 )
 
 py_binary(

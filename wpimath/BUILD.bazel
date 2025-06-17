@@ -184,6 +184,7 @@ wpilib_jni_cc_library(
 
 wpilib_cc_shared_library(
     name = "wpimathjni",
+    auto_export_windows_symbols = False,
     dynamic_deps = [
         ":wpimath",
         "//wpiutil:wpiutil",
@@ -218,6 +219,7 @@ pkg_zip(
     name = "libwpimath-java-sources",
     srcs = [":wpimath-java-srcs"],
     out = "libwpimath-java-sources.jar",
+    tags = ["manual"],
 )
 
 cc_library(
