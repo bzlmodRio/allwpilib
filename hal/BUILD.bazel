@@ -7,6 +7,7 @@ load("//hal:generate.bzl", "generate_hal")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 filegroup(
     name = "proto_files",
@@ -182,4 +183,14 @@ java_binary(
     main_class = "edu.wpi.first.hal.DevMain",
     deps = [
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":wpiHal-hdrs-zip",
+    cc_src_pkg = ":wpiHal-srcs-zip",
+    cc_static_library_pkg = ":static/wpiHal-static-zip",
+    group_id = "edu.wpi.first.hal",
+    jni_pkg = ":wpiHaljni-zip",
+    library_base_name = "hal",
 )

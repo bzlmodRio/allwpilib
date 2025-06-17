@@ -1,4 +1,4 @@
-load("@rules_cc//cc:action_names.bzl", "CPP_LINK_STATIC_LIBRARY_ACTION_NAME", "OBJ_COPY_ACTION_NAME", "STRIP_ACTION_NAME")
+load("@rules_cc//cc:action_names.bzl", "CPP_LINK_STATIC_LIBRARY_ACTION_NAME")
 load("@rules_cc//cc:defs.bzl", "CcInfo", "cc_library")
 load("@rules_cc//cc:find_cc_toolchain.bzl", "CC_TOOLCHAIN_ATTRS", "find_cpp_toolchain", "use_cc_toolchain")
 load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
@@ -339,3 +339,10 @@ def wpilib_cc_static_library(
         static_lib_name = static_lib_name,
         **kwargs
     )
+    
+    pkg_zip(
+        name = name + "-static-zip",
+        srcs = [name],
+        tags = ["no-remote"],
+    )
+

@@ -27,6 +27,16 @@ def _package_type(package_type):
         tags = ["no-remote"],
     )
 
+    native.genrule(
+        name = package_type + "-publshing-bundle",
+        srcs = [":" + package_type + "-zip"],
+        outs = [package_type + "-maven-info.json"],
+        cmd = "$(locations //shared/bazel/rules/publishing:generate_maven_bundle) --output_file=$(OUTS) --maven_infos $(locations :" + package_type + "-zip),edu.wpi.first.wpilibj," + package_type + ", ",
+        tools = ["//shared/bazel/rules/publishing:generate_maven_bundle"],
+        visibility = ["//visibility:public"],
+        tags = ["manual", "no-remote"],
+    )
+
 def build_examples(halsim_deps):
     _package_type("examples")
 
