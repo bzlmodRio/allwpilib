@@ -11,7 +11,7 @@ pkg_zip(
     name = "libromi-java-sources",
     srcs = [":romi-java-srcs"],
     out = "libromi-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 wpilib_cc_library(
     name = "romiVendordep",

@@ -99,7 +99,7 @@ def bundle_default_jni_library(
             ":{}jni-shared.pkg".format(library_base_name)
         ],
         out = "{}-shared-with-jni.zip".format(library_base_name),
-        tags = ["manual"],
+        tags = ["no-remote", "manual"],
     )
 
     bundle_library_artifacts(

@@ -214,7 +214,7 @@ pkg_zip(
     name = "libwpinet-java-sources",
     srcs = [":wpinet-java-srcs"],
     out = "libwpinet-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 cc_test(

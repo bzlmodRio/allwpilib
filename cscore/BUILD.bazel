@@ -144,7 +144,7 @@ pkg_zip(
     name = "libcscore-java-sources",
     srcs = [":cscore-java-srcs"],
     out = "libcscore-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 cc_test(

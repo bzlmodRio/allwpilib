@@ -116,7 +116,7 @@ pkg_zip(
     name = "libwpilibNewCommands-java-sources",
     srcs = [":wpilibNewCommands-java-srcs"],
     out = "libwpilibNewCommands-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 cc_test(

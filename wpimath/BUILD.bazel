@@ -219,7 +219,7 @@ pkg_zip(
     name = "libwpimath-java-sources",
     srcs = [":wpimath-java-srcs"],
     out = "libwpimath-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 cc_library(

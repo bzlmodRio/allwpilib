@@ -11,7 +11,7 @@ pkg_zip(
     name = "libxrp-java-sources",
     srcs = [":xrp-java-srcs"],
     out = "libxrp-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 wpilib_cc_library(

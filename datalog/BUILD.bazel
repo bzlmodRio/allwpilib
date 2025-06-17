@@ -83,7 +83,7 @@ pkg_zip(
     name = "libdatalog-java-sources",
     srcs = [":datalog-java-srcs"],
     out = "libdatalog-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 py_binary(

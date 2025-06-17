@@ -36,7 +36,7 @@ pkg_zip(
         ":resources",
     ],
     out = "libepilogue-processor-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 java_plugin(

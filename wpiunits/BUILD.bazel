@@ -46,7 +46,7 @@ pkg_zip(
     name = "libwpiunits-java-sources",
     srcs = [":wpiunits-java-srcs"],
     out = "libwpiunits-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 wpilib_java_junit5_test(

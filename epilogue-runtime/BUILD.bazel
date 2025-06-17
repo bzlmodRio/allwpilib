@@ -22,7 +22,7 @@ pkg_zip(
     name = "libepilogue-runtime-java-sources",
     srcs = [":epilogue-runtime-java-srcs"],
     out = "libepilogue-runtime-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 wpilib_java_junit5_test(

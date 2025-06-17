@@ -70,7 +70,7 @@ pkg_zip(
         ":resources",
     ],
     out = "libfieldImages-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 wpilib_java_junit5_test(

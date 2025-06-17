@@ -493,7 +493,7 @@ pkg_zip(
         "library-pkg",
         "//:license_pkg_files",
     ],
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 genrule(

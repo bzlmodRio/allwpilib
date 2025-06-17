@@ -195,7 +195,7 @@ pkg_zip(
     name = "libwpihal-java-sources",
     srcs = [":wpihal-java-srcs"],
     out = "libwpihal-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 cc_test(
@@ -242,7 +242,7 @@ pkg_zip(
         ":wpiHaljni-shared.pkg",
     ],
     out = "wpihal-shared-with-jni.zip",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 bundle_library_artifacts(

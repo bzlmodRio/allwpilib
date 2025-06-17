@@ -113,7 +113,7 @@ pkg_zip(
         ":java-srcs",
     ],
     out = "libwpilibj-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 wpilib_java_junit5_test(

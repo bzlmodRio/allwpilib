@@ -243,7 +243,7 @@ pkg_zip(
     name = "libwpiutil-java-sources",
     srcs = [":wpiutil-java-srcs"],
     out = "libwpiutil-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 cc_library(

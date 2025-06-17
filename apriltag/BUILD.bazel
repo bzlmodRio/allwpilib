@@ -150,7 +150,7 @@ pkg_zip(
         ":resources",
     ],
     out = "libapriltag-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 cc_test(
