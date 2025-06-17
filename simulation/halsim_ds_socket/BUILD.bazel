@@ -1,5 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 
 cc_library(
     name = "headers",
@@ -19,8 +19,8 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//hal:wpiHal",
-        "//wpinet",
+        "//hal:_wpiHal",
+        "//wpinet:_wpinet",
     ],
 )
 
@@ -39,9 +39,20 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//hal:wpiHal",
-        "//wpinet",
+        "//hal:_wpiHal",
+        "//wpinet:_wpinet",
     ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/halsim_ds_socket",
+    dynamic_deps = [
+        "//hal:wpiHal",
+        "//wpinet:wpinet",
+        "//wpiutil:wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":halsim_ds_socket"],
 )
 
 wpilib_cc_static_library(

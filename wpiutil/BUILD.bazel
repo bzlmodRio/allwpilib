@@ -4,7 +4,7 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
@@ -137,7 +137,7 @@ filegroup(
 )
 
 wpilib_cc_library(
-    name = "wpiutil",
+    name = "_wpiutil",
     srcs = glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
@@ -171,11 +171,19 @@ wpilib_cc_library(
     }),
 )
 
+wpilib_cc_shared_library(
+    name = "wpiutil",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":_wpiutil",
+    ],
+)
+
 wpilib_cc_static_library(
     name = "static/wpiutil",
     visibility = ["//visibility:public"],
     deps = [
-        ":wpiutil",
+        ":_wpiutil",
     ],
 )
 
@@ -194,12 +202,12 @@ cc_library(
 )
 
 wpilib_jni_cc_library(
-    name = "wpiutiljni",
+    name = "_wpiutiljni",
     srcs = glob(["src/main/native/cpp/jni/**"]),
     java_dep = ":wpiutil-java",
     visibility = ["//visibility:public"],
     deps = [
-        ":wpiutil",
+        ":_wpiutil",
     ],
 )
 
@@ -210,7 +218,7 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":wpiutiljni",
+        ":_wpiutiljni",
     ],
 )
 
@@ -256,11 +264,14 @@ cc_test(
         "src/test/native/cpp/**",
         "src/generated/test/native/cpp/*",
     ]),
+    dynamic_deps = [
+        ":wpiutil",
+    ],
     linkstatic = True,
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
     deps = [
+        ":_wpiutil",
         ":nanopb-test-headers",
-        ":wpiutil",
         ":wpiutil-testlib",
         "//thirdparty/googletest",
     ],
@@ -277,8 +288,11 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
+    dynamic_deps = [
         ":wpiutil",
+    ],
+    deps = [
+        ":_wpiutil",
     ],
 )
 

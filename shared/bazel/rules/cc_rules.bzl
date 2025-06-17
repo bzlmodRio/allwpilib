@@ -1,4 +1,4 @@
-load("@rules_cc//cc:action_names.bzl", "CPP_LINK_STATIC_LIBRARY_ACTION_NAME", "OBJ_COPY_ACTION_NAME", "STRIP_ACTION_NAME")
+load("@rules_cc//cc:action_names.bzl", "CPP_LINK_STATIC_LIBRARY_ACTION_NAME")
 load("@rules_cc//cc:defs.bzl", "CcInfo", "cc_library")
 load("@rules_cc//cc:find_cc_toolchain.bzl", "CC_TOOLCHAIN_ATTRS", "find_cpp_toolchain", "use_cc_toolchain")
 load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
@@ -148,6 +148,37 @@ def wpilib_cc_library(
             srcs = extra_hdr_pkg_files + maybe_license_pkg + [name + "-hdrs-pkg"] + [lib + "-hdrs-pkg" for lib in third_party_libraries + third_party_header_only_libraries],
             tags = ["no-remote"],
         )
+
+def wpilib_cc_shared_library(
+        name,
+        dynamic_deps = None,
+        user_link_flags = None,
+        visibility = None,
+        additional_linker_inputs = None,
+        deps = None,
+        auto_export_windows_symbols = True,
+        win_def_file = None,
+        **kwargs):
+    folder, lib = _folder_prefix(name)
+
+    if additional_linker_inputs:
+        fail()
+
+    features = []
+    if auto_export_windows_symbols:
+        features.append("windows_export_all_symbols")
+
+    print(name, dynamic_deps)
+    native.cc_shared_library(
+        name = name,
+        dynamic_deps = dynamic_deps,
+        additional_linker_inputs = additional_linker_inputs,
+        visibility = visibility,
+        deps = deps,
+        features = features,
+        win_def_file = win_def_file,
+        **kwargs
+    )
 
 CcStaticLibraryInfo = provider(
     "Information about a cc static library.",

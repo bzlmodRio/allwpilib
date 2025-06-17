@@ -1,4 +1,4 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 
 wpilib_cc_library(
     name = "halsim_ws_core",
@@ -13,9 +13,22 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
+        "//hal:_wpiHal",
+        "//wpinet:_wpinet",
+        "//wpiutil:_wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/halsim_ws_core",
+    dynamic_deps = [
         "//hal:wpiHal",
-        "//wpinet",
-        "//wpiutil",
+        "//wpinet:wpinet",
+        "//wpiutil:wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":halsim_ws_core",
     ],
 )
 

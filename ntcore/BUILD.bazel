@@ -5,7 +5,7 @@ load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//ntcore:generate_ntcore.bzl", "generate_ntcore")
-load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
@@ -76,7 +76,7 @@ cc_library(
 )
 
 wpilib_cc_library(
-    name = "ntcore",
+    name = "_ntcore",
     srcs = glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
@@ -95,9 +95,22 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//datalog",
-        "//wpinet",
-        "//wpiutil",
+        "//datalog:_datalog",
+        "//wpinet:_wpinet",
+        "//wpiutil:_wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "ntcore",
+    dynamic_deps = [
+        "//datalog:datalog",
+        "//wpinet:wpinet",
+        "//wpiutil:wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":_ntcore",
     ],
 )
 
@@ -110,18 +123,28 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":ntcore",
+        ":_ntcore",
     ],
 )
 
 wpilib_jni_cc_library(
-    name = "ntcorejni",
+    name = "_ntcorejni",
     srcs = glob(["src/main/native/cpp/jni/**"]) + [":generated_jni"],
     java_dep = ":ntcore-java",
     visibility = ["//visibility:public"],
     deps = [
-        ":ntcore",
+        ":_ntcore",
     ],
+)
+
+wpilib_cc_shared_library(
+    name = "ntcorejni",
+    dynamic_deps = [
+        ":ntcore",
+        "//wpiutil:wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":_ntcorejni"],
 )
 
 wpilib_jni_java_library(
@@ -151,13 +174,16 @@ cc_test(
         "src/test/native/**/*.cpp",
         "src/test/native/**/*.h",
     ]),
+    dynamic_deps = [
+        ":ntcore",
+    ],
     tags = [
         "exclusive",
         "no-asan",
         "no-tsan",
     ],
     deps = [
-        ":ntcore",
+        ":_ntcore",
         "//thirdparty/googletest",
         "//wpiutil:wpiutil-testlib",
     ],
@@ -177,7 +203,7 @@ cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":ntcore",
+        ":_ntcore",
     ],
 )
 
