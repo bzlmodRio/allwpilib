@@ -370,3 +370,10 @@ def wpilib_cc_static_library(
         static_lib_name = static_lib_name,
         **kwargs
     )
+    
+    pkg_zip(
+        name = name + "-static-zip",
+        srcs = [name],
+        tags = ["no-remote"],
+    )
+

@@ -2,6 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 WIN_SRCS = glob(["src/main/native/directx11/**/*.cpp"])
 
@@ -79,4 +80,13 @@ wpilib_cc_static_library(
     deps = [
         ":wpigui",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":wpigui-hdrs-zip",
+    cc_src_pkg = ":wpigui-srcs-zip",
+    cc_static_library_pkg = ":static/wpigui-static-zip",
+    group_id = "edu.wpi.first.wpigui",
+    library_base_name = "wpigui",
 )

@@ -4,6 +4,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_zip")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
+load("//shared/bazel/rules/publishing:publishing.bzl", "generate_maven_info_cmd")
 
 cc_library(
     name = "gl3w",
@@ -423,6 +424,7 @@ pkg_zip(
         "//:license_pkg_files",
     ],
     tags = [
+        "manual",
         "no-remote",
     ],
 )
@@ -475,6 +477,49 @@ pkg_zip(
         "//:license_pkg_files",
     ],
     tags = [
+        "manual",
         "no-remote",
     ],
+)
+
+pkg_files(
+    name = "library-pkg",
+    srcs = [":imgui_suite"],
+)
+
+pkg_zip(
+    name = "library-zip",
+    srcs = [
+        "library-pkg",
+        "//:license_pkg_files",
+    ],
+)
+
+genrule(
+    name = "publishing_bundle",
+    srcs = [
+        "imgui-suite-hdrs",
+        "imgui-suite-srcs",
+        "library-zip",
+    ],
+    outs = ["imgui-suite-maven-info.json"],
+    cmd = "$(locations //shared/bazel/rules/publishing:generate_maven_bundle) --output_file=$(OUTS) --maven_infos " + generate_maven_info_cmd(
+        artifact = ":imgui-suite-hdrs",
+        artifact_name = "imguiSuite-cpp",
+        group_id = "edu.wpi.first.thirdparty.imguiSuite",
+        suffix = "-headers",
+    ) + generate_maven_info_cmd(
+        artifact = ":imgui-suite-srcs",
+        artifact_name = "imguiSuite-cpp",
+        group_id = "edu.wpi.first.thirdparty.imguiSuite",
+        suffix = "-sources",
+    ) + generate_maven_info_cmd(
+        artifact = ":library-zip",
+        artifact_name = "imguiSuite-cpp",
+        group_id = "edu.wpi.first.thirdparty.imguiSuite",
+        suffix = "-linuxx86-64static",
+    ),
+    tags = ["manual"],
+    tools = ["//shared/bazel/rules/publishing:generate_maven_bundle"],
+    visibility = ["//visibility:public"],
 )

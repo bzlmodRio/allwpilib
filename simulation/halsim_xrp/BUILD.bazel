@@ -1,6 +1,8 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+
 wpilib_cc_library(
     name = "halsim_xrp",
     srcs = glob([
@@ -72,4 +74,14 @@ wpilib_cc_static_library(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    add_cc_suffix = False,
+    cc_hdr_pkg = ":halsim_xrp-hdrs-zip",
+    cc_src_pkg = ":halsim_xrp-srcs-zip",
+    cc_static_library_pkg = ":static/halsim_xrp-static-zip",
+    group_id = "edu.wpi.first.halsim",
+    library_base_name = "halsim_xrp",
 )

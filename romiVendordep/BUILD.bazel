@@ -1,6 +1,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_cc_library(
     name = "romiVendordep",
@@ -82,4 +83,13 @@ java_binary(
         "//ntcore:ntcore-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":romiVendordep-hdrs-zip",
+    cc_src_pkg = ":romiVendordep-srcs-zip",
+    cc_static_library_pkg = ":static/romiVendordep-static-zip",
+    group_id = "edu.wpi.first.romiVendordep",
+    library_base_name = "romiVendordep",
 )
