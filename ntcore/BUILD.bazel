@@ -179,6 +179,7 @@ cc_test(
     ]),
     dynamic_deps = [
         ":ntcore",
+        "//wpiutil:wpiutil",
     ],
     tags = [
         "exclusive",

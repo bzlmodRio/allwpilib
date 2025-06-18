@@ -60,7 +60,7 @@ wpilib_cc_library(
         exclude = ["src/main/native/cpp/jni/**"],
     ),
     hdrs = glob(["src/main/native/include/**/*"]),
-    defines = ["WPILIB_EXPORTS"],
+    local_defines = ["WPILIB_EXPORTS"],
     extra_hdr_pkg_files = [":thirdparty-apriltag-src-pkg"],
     extra_src_pkg_files = [":apriltag-java-jni-hdrs-pkg"],
     strip_include_prefix = "src/main/native/include",

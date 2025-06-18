@@ -204,6 +204,7 @@ cc_test(
     srcs = glob(["src/test/native/**/*.cpp"]),
     dynamic_deps = [
         ":wpiHal",
+        "//wpiutil:wpiutil",
     ],
     deps = [
         ":_wpiHal",

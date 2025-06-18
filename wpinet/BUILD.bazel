@@ -226,6 +226,7 @@ cc_test(
     ]),
     dynamic_deps = [
         ":wpinet",
+        "//wpiutil:wpiutil",
     ],
     tags = ["no-asan"],
     deps = [
