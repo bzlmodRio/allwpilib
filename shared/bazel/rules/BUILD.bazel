@@ -9,7 +9,7 @@ write_file(
         "Manifest-Version: 1.0",
         "\r\n",
     ],
-    newline = "windows"
+    newline = "windows",
 )
 
 pkg_files(

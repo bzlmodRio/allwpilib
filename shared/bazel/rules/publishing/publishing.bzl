@@ -80,6 +80,9 @@ def bundle_library_artifacts(
 
     cmd += " --debug_suffix=" + select({
         "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": "debug",
+        "@rules_bzlmodrio_toolchains//conditions:osx_debug": "debug",
+        "@rules_bzlmodrio_toolchains//conditions:windows_debug": "debug",
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug": "debug",
         "//conditions:default": " ",
     })
 

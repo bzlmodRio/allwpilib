@@ -181,4 +181,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: Maven
-          path: combiner/products/build/allOutputs
+          path: combiner/products/build/allOutputs/edu
