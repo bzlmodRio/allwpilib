@@ -201,7 +201,7 @@ def wpilib_cc_shared_library(
             "@bazel_tools//src/conditions:darwin": "osx/x86-64/shared",
             "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/shared",
             "@bazel_tools//src/conditions:windows": "windows/x86-64/shared",
-            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "systemcore/x86-64/shared",
+            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore/shared",
         }),
         renames = renames,
     )
@@ -411,7 +411,7 @@ def wpilib_cc_static_library(
             "@bazel_tools//src/conditions:darwin": "osx/x86-64/static",
             "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/static",
             "@bazel_tools//src/conditions:windows": "windows/x86-64/static",
-            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "systecore/x86-64/shared",
+            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore/shared",
         }),
     )
 

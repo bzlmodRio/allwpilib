@@ -75,7 +75,7 @@ def bundle_library_artifacts(
         "@bazel_tools//src/conditions:darwin": "osxx86-64",
         "@bazel_tools//src/conditions:linux_x86_64": "linuxx86-64",
         "@bazel_tools//src/conditions:windows": "windowsx86-64",
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "systemcore",
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linuxsystemcore",
     })
 
     cmd += " --debug_suffix=" + select({
