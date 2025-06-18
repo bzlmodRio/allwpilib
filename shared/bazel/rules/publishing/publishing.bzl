@@ -1,5 +1,5 @@
-load("@rules_python//python:defs.bzl", "py_binary")
 load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
+load("@rules_python//python:defs.bzl", "py_binary")
 
 def generate_maven_info_cmd(
         artifact,
@@ -67,16 +67,16 @@ def bundle_library_artifacts(
 
     if java_pkg:
         srcs.append(java_pkg)
-        cmd += generate_maven_info_cmd(java_pkg, group_id, library_base_name + "-java", suffix="-sources")
+        cmd += generate_maven_info_cmd(java_pkg, group_id, library_base_name + "-java", suffix = "-sources")
 
     output_file = name + "-maven-info.json"
 
     cmd += " --platform=" + select({
-        "@bazel_tools//src/conditions:windows": "windowsx86-64",
-        "@bazel_tools//src/conditions:linux_x86_64": "linuxx86-64",
         "@bazel_tools//src/conditions:darwin": "osxx86-64",
+        "@bazel_tools//src/conditions:linux_x86_64": "linuxx86-64",
+        "@bazel_tools//src/conditions:windows": "windowsx86-64",
     })
-    
+
     cmd += " --debug_suffix=" + select({
         "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": "debug",
         "//conditions:default": " ",
@@ -107,7 +107,7 @@ def bundle_default_jni_library(
         srcs = [
             "//:license_pkg_files",
             ":{}-shared.pkg".format(library_base_name),
-            ":{}jni-shared.pkg".format(library_base_name)
+            ":{}jni-shared.pkg".format(library_base_name),
         ],
         out = "{}-shared-with-jni.zip".format(library_base_name),
         tags = ["no-remote", "manual"],

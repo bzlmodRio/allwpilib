@@ -122,16 +122,16 @@ wpilib_cc_library(
         exclude = ["src/main/native/cpp/jni/**"],
     ),
     hdrs = glob(["src/main/native/include/**"]),
-    local_defines = [
-        "WPILIB_EXPORTS",
-        "SLEIPNIR_EXPORTS",
-    ],
     extra_src_pkg_files = [
         ":wpimath-java-jni-hdrs-pkg",
     ],
     includes = [
         "src/main/native/include",
         "src/main/native/thirdparty/sleipnir/src",
+    ],
+    local_defines = [
+        "WPILIB_EXPORTS",
+        "SLEIPNIR_EXPORTS",
     ],
     strip_include_prefix = "src/main/native/include",
     third_party_header_only_libraries = [
@@ -219,7 +219,10 @@ pkg_zip(
     name = "libwpimath-java-sources",
     srcs = [":wpimath-java-srcs"],
     out = "libwpimath-java-sources.jar",
-    tags = ["no-remote", "manual"],
+    tags = [
+        "manual",
+        "no-remote",
+    ],
 )
 
 cc_library(

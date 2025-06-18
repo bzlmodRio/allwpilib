@@ -147,6 +147,10 @@ wpilib_cc_library(
         ":native-srcs",
     ],
     hdrs = glob(["src/main/native/include/**/*"]),
+    copts = select({
+        "@bazel_tools//src/conditions:windows": ["/D_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR"],
+        "//conditions:default": [],
+    }),
     extra_src_pkg_files = [":wpiutil-java-jni-hdrs-pkg"],
     includes = ["src/main/native/include"],
     strip_include_prefix = "src/main/native/include",
@@ -165,10 +169,6 @@ wpilib_cc_library(
         ":nanopb",
         ":protobuf",
     ],
-    copts = select({
-        "@bazel_tools//src/conditions:windows": ["/D_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR"],
-        "//conditions:default": [],
-    }),
     visibility = ["//visibility:public"],
     deps = select({
         "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@bzlmodrio-ni//libraries/cpp/ni:shared"],
@@ -247,7 +247,10 @@ pkg_zip(
     name = "libwpiutil-java-sources",
     srcs = [":wpiutil-java-srcs"],
     out = "libwpiutil-java-sources.jar",
-    tags = ["no-remote", "manual"],
+    tags = [
+        "manual",
+        "no-remote",
+    ],
 )
 
 cc_library(

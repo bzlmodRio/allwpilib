@@ -180,9 +180,9 @@ cc_binary(
 bundle_library_artifacts(
     name = "publishing_bundle",
     cc_hdr_pkg = ":_wpilibc-hdrs-zip",
+    cc_shared_library_pkg = ":wpilibc-shared-zip",
     cc_src_pkg = ":_wpilibc-srcs-zip",
     cc_static_library_pkg = ":static/wpilibc-static-zip",
-    cc_shared_library_pkg = ":wpilibc-shared-zip",
     group_id = "edu.wpi.first.wpilibc",
     library_base_name = "wpilibc",
 )

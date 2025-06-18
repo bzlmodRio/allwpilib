@@ -182,7 +182,7 @@ def wpilib_cc_shared_library(
         }),
         **kwargs
     )
-    
+
     renames = {}
     if "jni" not in name:
         renames = select({
@@ -197,19 +197,18 @@ def wpilib_cc_shared_library(
         srcs = [":" + name],
         tags = ["manual"],
         prefix = select({
-            "@bazel_tools//src/conditions:windows": "windows/x86-64/shared",
-            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/shared",
             "@bazel_tools//src/conditions:darwin": "osx/x86-64/shared",
+            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/shared",
+            "@bazel_tools//src/conditions:windows": "windows/x86-64/shared",
         }),
         renames = renames,
     )
-    
+
     pkg_zip(
         name = name + "-shared-zip",
         srcs = ["//:license_pkg_files", name + "-shared.pkg"],
         tags = ["no-remote", "manual"],
     )
-
 
 CcStaticLibraryInfo = provider(
     "Information about a cc static library.",
@@ -407,10 +406,10 @@ def wpilib_cc_static_library(
         srcs = [":" + name],
         tags = ["manual"],
         prefix = select({
-            "@bazel_tools//src/conditions:windows": "windows/x86-64/static",
-            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/static",
             "@bazel_tools//src/conditions:darwin": "osx/x86-64/static",
-        })
+            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/static",
+            "@bazel_tools//src/conditions:windows": "windows/x86-64/static",
+        }),
     )
 
     pkg_zip(

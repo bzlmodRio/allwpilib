@@ -70,7 +70,10 @@ pkg_zip(
         ":resources",
     ],
     out = "libfieldImages-java-sources.jar",
-    tags = ["no-remote", "manual"],
+    tags = [
+        "manual",
+        "no-remote",
+    ],
 )
 
 wpilib_java_junit5_test(
@@ -84,10 +87,10 @@ wpilib_java_junit5_test(
 bundle_library_artifacts(
     name = "publishing_bundle",
     cc_hdr_pkg = ":fieldImages-hdrs-zip",
+    cc_shared_library_pkg = ":shared/fieldImages-shared-zip",
     cc_src_pkg = ":fieldImages-srcs-zip",
     cc_static_library_pkg = ":static/fieldImages-static-zip",
-    cc_shared_library_pkg = ":shared/fieldImages-shared-zip",
     group_id = "edu.wpi.first.fieldImages",
+    java_pkg = "libfieldImages-java-sources",
     library_base_name = "fieldImages",
-    java_pkg = "libfieldImages-java-sources"
 )

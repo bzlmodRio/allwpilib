@@ -51,9 +51,9 @@ bundle_library_artifacts(
     name = "publishing_bundle",
     add_cc_suffix = False,
     cc_hdr_pkg = ":halsim_ws_core-hdrs-zip",
+    cc_shared_library_pkg = ":shared/halsim_ws_core-shared-zip",
     cc_src_pkg = ":halsim_ws_core-srcs-zip",
     cc_static_library_pkg = ":static/halsim_ws_core-static-zip",
-    cc_shared_library_pkg = ":shared/halsim_ws_core-shared-zip",
     group_id = "edu.wpi.first.halsim",
     library_base_name = "halsim_ws_core",
 )

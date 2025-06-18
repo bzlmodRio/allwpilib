@@ -60,9 +60,9 @@ wpilib_cc_library(
         exclude = ["src/main/native/cpp/jni/**"],
     ),
     hdrs = glob(["src/main/native/include/**/*"]),
-    local_defines = ["WPILIB_EXPORTS"],
     extra_hdr_pkg_files = [":thirdparty-apriltag-src-pkg"],
     extra_src_pkg_files = [":apriltag-java-jni-hdrs-pkg"],
+    local_defines = ["WPILIB_EXPORTS"],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
@@ -151,7 +151,10 @@ pkg_zip(
         ":resources",
     ],
     out = "libapriltag-java-sources.jar",
-    tags = ["no-remote", "manual"],
+    tags = [
+        "manual",
+        "no-remote",
+    ],
 )
 
 cc_test(
