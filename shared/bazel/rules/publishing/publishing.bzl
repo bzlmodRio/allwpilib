@@ -147,5 +147,5 @@ def wpilib_publish(
         args = ["--bundles "] + ["$(location " + x + ") " for x in bundles],
         data = bundles,
         deps = ["@rules_python//python/runfiles"],
-        tags = ["no-remote"],
+        tags = ["no-remote", "manual"],
     )

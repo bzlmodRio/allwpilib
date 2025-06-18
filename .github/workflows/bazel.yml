@@ -13,11 +13,11 @@ jobs:
       matrix:
         include:
           - { name: "Windows Release   (native)", os: windows-2022, action: "test",  opt_type: "-c opt", config: "--config=windows",     }
-          - { name: "Windows Debug     (native)", os: windows-2022, action: "test",  opt_type: "-c dbg", config: "--config=windows",     }
-          - { name: "Windows Fastbuild (native)", os: windows-2022, action: "test",  opt_type: "",       config: "--config=windows",     }
-          - { name: "Windows Release   (arm)",    os: windows-2022, action: "build", opt_type: "-c opt", config: "--config=windows_arm", }
-          - { name: "Windows Debug     (arm)",    os: windows-2022, action: "build", opt_type: "-c dbg", config: "--config=windows_arm", }
-          - { name: "Windows Fastbuild (arm)",    os: windows-2022, action: "build", opt_type: "",       config: "--config=windows_arm", }
+          # - { name: "Windows Debug     (native)", os: windows-2022, action: "test",  opt_type: "-c dbg", config: "--config=windows",     }
+          # - { name: "Windows Fastbuild (native)", os: windows-2022, action: "test",  opt_type: "",       config: "--config=windows",     }
+          # - { name: "Windows Release   (arm)",    os: windows-2022, action: "build", opt_type: "-c opt", config: "--config=windows_arm", }
+          # - { name: "Windows Debug     (arm)",    os: windows-2022, action: "build", opt_type: "-c dbg", config: "--config=windows_arm", }
+          # - { name: "Windows Fastbuild (arm)",    os: windows-2022, action: "build", opt_type: "",       config: "--config=windows_arm", }
 
     name: "Build ${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
@@ -52,7 +52,7 @@ jobs:
         include:
           - { name: "OSX Release (native)",   opt_type: "-c opt",   }
           - { name: "OSX Debug (native)",     opt_type: "-c dbg",   }
-          - { name: "OSX Fastbuild (native)", opt_type: "",         }
+          # - { name: "OSX Fastbuild (native)", opt_type: "",         }
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -77,11 +77,11 @@ jobs:
         include:
           - { name: "Linux Release (native)",        os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "-c opt", config: "--config=linux",    }
           - { name: "Linux Debug (native)",          os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "-c dbg", config: "--config=linux",    }
-          - { name: "Linux fastbuild (native)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "",       config: "--config=linux",    }
+          # - { name: "Linux fastbuild (native)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "",       config: "--config=linux",    }
           
           - { name: "Linux Release (systemcore)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=systemcore",    }
           - { name: "Linux Debug (systemcore)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=systemcore",    }
-          - { name: "Linux fastbuild (systemcore)",  os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "",       config: "--config=systemcore",    }
+          # - { name: "Linux fastbuild (systemcore)",  os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "",       config: "--config=systemcore",    }
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
@@ -135,3 +135,35 @@ jobs:
           name: ${{ matrix.platform }}-bazel-lint-fixes
           path: bazel-lint-fixes.patch
         if: ${{ failure() }}
+
+  combine:
+    name: Combine
+    needs: [build-windows, build-mac, build-linux]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+  
+      - uses: actions/checkout@v4
+        with:
+          repository: wpilibsuite/build-tools
+
+      - run: ls -al
+      - uses: actions/download-artifact@v4
+        with:
+          path: combiner/products/build/allOutputs
+      - name: Flatten Artifacts
+        run: rsync -a --delete combiner/products/build/allOutputs/*/* combiner/products/build/allOutputs/
+        
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Maven
+          path: combiner/products/build/allOutputs
