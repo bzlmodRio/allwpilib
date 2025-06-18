@@ -36,11 +36,11 @@ jobs:
           token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: bazel ${{ matrix.action }}
-        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --verbose_failures
+        run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ... ${{ matrix.opt_type }} --config=ci ${{ matrix.config }} --verbose_failures
         shell: bash
 
       - name: Publish
-        run: bazel --output_user_root=C:\\bazelroot run //:publish   --config=ci ${{ matrix.config }} --verbose_failures
+        run: bazel --output_user_root=C:\\bazelroot run //:publish ${{ matrix.opt_type }} --config=ci ${{ matrix.config }} --verbose_failures
         shell: bash
 
   build-mac:
@@ -76,10 +76,11 @@ jobs:
       matrix:
         include:
           - { name: "Linux Release (native)",        os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "-c opt", config: "--config=linux",    }
-          - { name: "Linux Release (systemcore)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=systemcore",    }
           - { name: "Linux Debug (native)",          os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "-c dbg", config: "--config=linux",    }
-          - { name: "Linux Debug (systemcore)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=systemcore",    }
           - { name: "Linux fastbuild (native)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "",       config: "--config=linux",    }
+          
+          - { name: "Linux Release (systemcore)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=systemcore",    }
+          - { name: "Linux Debug (systemcore)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=systemcore",    }
           - { name: "Linux fastbuild (systemcore)",  os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "",       config: "--config=systemcore",    }
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
