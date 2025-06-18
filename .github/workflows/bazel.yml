@@ -42,6 +42,11 @@ jobs:
       - name: Publish
         run: bazel --output_user_root=C:\\bazelroot run //:publish ${{ matrix.opt_type }} --config=ci ${{ matrix.config }} --verbose_failures
         shell: bash
+  
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: build/bazel_maven
 
   build-mac:
     name: "Mac"
@@ -69,6 +74,11 @@ jobs:
       - name: publish
         run: bazel run //:publish   --config=ci ${{ matrix.opt_type }} --config=macos --nojava_header_compilation --verbose_failures
         shell: bash
+  
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: build/bazel_maven
 
   build-linux:
     strategy:
@@ -100,6 +110,11 @@ jobs:
 
       - name: bazel publish (release)
         run: bazel run //:publish --config=ci ${{ matrix.opt_type }} ${{ matrix.config }} -k --verbose_failures
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: build/bazel_maven
 
   buildifier:
     name: "buildifier"
