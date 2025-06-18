@@ -33,8 +33,12 @@ def write_pom(output_file, group_id, artifact_id, version):
   <modelVersion>4.0.0</modelVersion>
   <groupId>{group_id}</groupId>
   <artifactId>{artifact_id}</artifactId>
-  <version>{version}</version>
-  <packaging>pom</packaging>
+  <version>{version}</version>"""
+
+    if "-java" not in artifact_id:
+        contents += "\n  <packaging>pom</packaging>"
+  
+    contents += """
 </project>
 """
 

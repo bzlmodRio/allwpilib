@@ -7,8 +7,9 @@ write_file(
     out = "MANIFEST.MF",
     content = [
         "Manifest-Version: 1.0",
-        "",
+        "\r\n",
     ],
+    newline = "windows"
 )
 
 pkg_files(
