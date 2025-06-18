@@ -176,19 +176,37 @@ def wpilib_cc_shared_library(
         deps = deps,
         features = features,
         win_def_file = win_def_file,
+        user_link_flags = (user_link_flags or []) + select({
+            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": ["-Wl,-soname,lib" + lib + "d.so"],
+            "//conditions:default": [],
+        }),
         **kwargs
     )
     
+    renames = {}
+    if "jni" not in name:
+        renames = select({
+            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": {
+                ":" + name: "lib" + lib + "d.so",
+            },
+            "//conditions:default": {},
+        })
+
     pkg_files(
         name = name + "-shared.pkg",
         srcs = [":" + name],
         tags = ["manual"],
-        prefix = "windows/x86-64/shared",  # TODO(pjreiniger) Make cross platform
+        prefix = select({
+            "@bazel_tools//src/conditions:windows": "windows/x86-64/shared",
+            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/shared",
+            "@bazel_tools//src/conditions:darwin": "osx/x86-64/shared",
+        }),
+        renames = renames,
     )
     
     pkg_zip(
         name = name + "-shared-zip",
-        srcs = [name + "-shared.pkg"],
+        srcs = ["//:license_pkg_files", name + "-shared.pkg"],
         tags = ["no-remote", "manual"],
     )
 
@@ -388,11 +406,15 @@ def wpilib_cc_static_library(
         name = name + "-static.pkg",
         srcs = [":" + name],
         tags = ["manual"],
-        prefix = "windows/x86-64/static",  # TODO(pjreiniger) Make cross platform
+        prefix = select({
+            "@bazel_tools//src/conditions:windows": "windows/x86-64/static",
+            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/static",
+            "@bazel_tools//src/conditions:darwin": "osx/x86-64/static",
+        })
     )
 
     pkg_zip(
         name = name + "-static-zip",
-        srcs = [name + "-static.pkg"],
+        srcs = ["//:license_pkg_files", name + "-static.pkg"],
         tags = ["no-remote", "manual"],
     )

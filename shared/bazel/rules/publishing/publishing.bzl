@@ -41,9 +41,8 @@ def bundle_library_artifacts(
     cmd = "$(locations //shared/bazel/rules/publishing:generate_maven_bundle) --output_file=$(OUTS) --maven_infos "
     maybe_cc_suffix = "-cpp" if add_cc_suffix else ""
 
-    # TODO(pjreiniger) Make this cross platform
-    # platform = "linuxx86-64"
-    platform = "windowsx86-64"
+    dbg_suffix = "##DEBUG##"
+    platform = "##PLATFORM##"
 
     if cc_hdr_pkg:
         srcs.append(cc_hdr_pkg)
@@ -55,11 +54,11 @@ def bundle_library_artifacts(
 
     if cc_static_library_pkg:
         srcs.append(cc_static_library_pkg)
-        cmd += generate_maven_info_cmd(cc_static_library_pkg, group_id, library_base_name + maybe_cc_suffix, "-" + platform + "static")
+        cmd += generate_maven_info_cmd(cc_static_library_pkg, group_id, library_base_name + maybe_cc_suffix, "-" + platform + "static" + dbg_suffix)
 
     if cc_shared_library_pkg:
         srcs.append(cc_shared_library_pkg)
-        cmd += generate_maven_info_cmd(cc_shared_library_pkg, group_id, library_base_name + maybe_cc_suffix, "-" + platform)
+        cmd += generate_maven_info_cmd(cc_shared_library_pkg, group_id, library_base_name + maybe_cc_suffix, "-" + platform + dbg_suffix)
 
     if jni_pkg:
         fail()
@@ -71,6 +70,17 @@ def bundle_library_artifacts(
         cmd += generate_maven_info_cmd(java_pkg, group_id, library_base_name + "-java", suffix="-sources")
 
     output_file = name + "-maven-info.json"
+
+    cmd += " --platform=" + select({
+        "@bazel_tools//src/conditions:windows": "windowsx86-64",
+        "@bazel_tools//src/conditions:linux_x86_64": "linuxx86-64",
+        "@bazel_tools//src/conditions:darwin": "osxx86-64",
+    })
+    
+    cmd += " --debug_suffix=" + select({
+        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": "debug",
+        "//conditions:default": " ",
+    })
 
     native.genrule(
         name = name,
@@ -95,6 +105,7 @@ def bundle_default_jni_library(
     pkg_zip(
         name = "{}-shared-with-jni-zip".format(library_base_name),
         srcs = [
+            "//:license_pkg_files",
             ":{}-shared.pkg".format(library_base_name),
             ":{}jni-shared.pkg".format(library_base_name)
         ],
