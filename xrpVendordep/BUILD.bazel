@@ -74,6 +74,13 @@ cc_test(
     srcs = glob(["src/test/native/cpp/**"]),
     dynamic_deps = [
         ":shared/xrpVendordep",
+        "//datalog:datalog",
+        "//ntcore:ntcore",
+        "//hal:wpiHal",
+        "//wpimath:wpimath",
+        "//wpinet:wpinet",
+        "//wpilibc:wpilibc",
+        "//wpiutil:wpiutil",
     ],
     deps = [
         ":_xrpVendordep",

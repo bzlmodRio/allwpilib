@@ -182,6 +182,8 @@ cc_test(
     ]),
     dynamic_deps = [
         ":ntcore",
+        "//datalog:datalog",
+        "//wpinet:wpinet",
         "//wpiutil:wpiutil",
     ],
     tags = [

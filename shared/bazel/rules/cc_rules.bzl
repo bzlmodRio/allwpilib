@@ -176,21 +176,22 @@ def wpilib_cc_shared_library(
         deps = deps,
         features = features,
         win_def_file = win_def_file,
-        user_link_flags = (user_link_flags or []) + select({
-            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": ["-Wl,-soname,lib" + lib + "d.so"],
-            "//conditions:default": [],
-        }),
+        user_link_flags = user_link_flags,
+        # user_link_flags = (user_link_flags or []) + select({
+        #     "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": ["-Wl,-soname,lib" + lib + "d.so"],
+        #     "//conditions:default": [],
+        # }),
         **kwargs
     )
 
     renames = {}
-    if "jni" not in name:
-        renames = select({
-            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": {
-                ":" + name: "lib" + lib + "d.so",
-            },
-            "//conditions:default": {},
-        })
+    # if "jni" not in name:
+    #     renames = select({
+    #         "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": {
+    #             ":" + name: "lib" + lib + "d.so",
+    #         },
+    #         "//conditions:default": {},
+    #     })
 
     pkg_files(
         name = name + "-shared.pkg",

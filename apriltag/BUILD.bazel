@@ -163,6 +163,8 @@ cc_test(
     srcs = glob(["src/test/native/cpp/**"]),
     dynamic_deps = [
         ":apriltag",
+        "//wpimath:wpimath",
+        "//wpiutil:wpiutil",
     ],
     tags = [
         "no-asan",

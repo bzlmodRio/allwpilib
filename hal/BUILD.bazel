@@ -166,8 +166,8 @@ wpilib_cc_shared_library(
         "//wpiutil:wpiutil",
     ] + select({
         "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": [
-            "//ntcore:static/ntcore",
-            "//wpinet:static/wpinet",
+            "//ntcore:ntcore",
+            "//wpinet:wpinet",
         ],
         "//conditions:default": [],
     }),
@@ -208,7 +208,14 @@ cc_test(
     dynamic_deps = [
         ":wpiHal",
         "//wpiutil:wpiutil",
-    ],
+    ] + select({
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": [
+            "//datalog:datalog",
+            "//ntcore:ntcore",
+            "//wpinet:wpinet",
+        ],
+        "//conditions:default": [],
+    }),
     deps = [
         ":_wpiHal",
         "//thirdparty/googletest",

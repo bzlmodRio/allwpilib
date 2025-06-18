@@ -152,9 +152,11 @@ cc_test(
     srcs = glob(["src/test/native/cpp/**"]),
     dynamic_deps = [
         ":wpilibc",
+        "//datalog:datalog",
         "//ntcore:ntcore",
         "//hal:wpiHal",
         "//wpimath:wpimath",
+        "//wpinet:wpinet",
         "//wpiutil:wpiutil",
     ],
     tags = [
