@@ -12,8 +12,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: "Windows (native)",             os: windows-2022, action: "test",  config: "--config=windows",     }
-          - { name: "Windows (arm)",                os: windows-2022, action: "build", config: "--config=windows_arm", }
+          - { name: "Windows Release   (native)", os: windows-2022, action: "test",  opt_type: "-c opt", config: "--config=windows",     }
+          - { name: "Windows Debug     (native)", os: windows-2022, action: "test",  opt_type: "-c dbg", config: "--config=windows",     }
+          - { name: "Windows Fastbuild (native)", os: windows-2022, action: "test",  opt_type: "",       config: "--config=windows",     }
+          - { name: "Windows Release   (arm)",    os: windows-2022, action: "build", opt_type: "-c opt", config: "--config=windows_arm", }
+          - { name: "Windows Debug     (arm)",    os: windows-2022, action: "build", opt_type: "-c dbg", config: "--config=windows_arm", }
+          - { name: "Windows Fastbuild (arm)",    os: windows-2022, action: "build", opt_type: "",       config: "--config=windows_arm", }
 
     name: "Build ${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
@@ -42,6 +46,13 @@ jobs:
   build-mac:
     name: "Mac"
     runs-on: macos-14
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: "OSX Release (native)",   opt_type: "-c opt",   }
+          - { name: "OSX Debug (native)",     opt_type: "-c dbg",   }
+          - { name: "OSX Fastbuild (native)", opt_type: "",         }
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
@@ -52,11 +63,11 @@ jobs:
           token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: bazel test (release)
-        run: bazel test -k ...   --config=ci -c opt --config=macos --nojava_header_compilation --verbose_failures
+        run: bazel test -k ...   --config=ci ${{ matrix.opt_type }} --config=macos --nojava_header_compilation --verbose_failures
         shell: bash
 
       - name: publish
-        run: bazel run //:publish   --config=ci -c opt --config=macos --nojava_header_compilation --verbose_failures
+        run: bazel run //:publish   --config=ci ${{ matrix.opt_type }} --config=macos --nojava_header_compilation --verbose_failures
         shell: bash
 
   build-linux:
@@ -64,8 +75,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: "Linux (native)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   config: "--config=linux",    }
-          - { name: "Linux (systemcore)",  os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  config: "--config=systemcore",    }
+          - { name: "Linux Release (native)",        os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "-c opt", config: "--config=linux",    }
+          - { name: "Linux Release (systemcore)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=systemcore",    }
+          - { name: "Linux Debug (native)",          os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "-c dbg", config: "--config=linux",    }
+          - { name: "Linux Debug (systemcore)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=systemcore",    }
+          - { name: "Linux fastbuild (native)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "",       config: "--config=linux",    }
+          - { name: "Linux fastbuild (systemcore)",  os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "",       config: "--config=systemcore",    }
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
@@ -80,10 +95,10 @@ jobs:
           token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: bazel ${{ matrix.action }} (release)
-        run: bazel ${{ matrix.action }} ... --config=ci -c opt ${{ matrix.config }} -k --verbose_failures
+        run: bazel ${{ matrix.action }} ... --config=ci ${{ matrix.opt_type }} ${{ matrix.config }} -k --verbose_failures
 
       - name: bazel publish (release)
-        run: bazel run //:publish --config=ci -c opt ${{ matrix.config }} -k --verbose_failures
+        run: bazel run //:publish --config=ci ${{ matrix.opt_type }} ${{ matrix.config }} -k --verbose_failures
 
   buildifier:
     name: "buildifier"

@@ -86,15 +86,15 @@ wpilib_cc_library(
     }),
 )
 
-wpilib_cc_shared_library(
-    name = "cscore",
-    dynamic_deps = [
-        "//wpinet:wpinet",
-        "//wpiutil:wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":_cscore"],
-)
+# wpilib_cc_shared_library(
+#     name = "cscore",
+#     dynamic_deps = [
+#         "//wpinet:wpinet",
+#         "//wpiutil:wpiutil",
+#     ],
+#     visibility = ["//visibility:public"],
+#     deps = [":_cscore"],
+# )
 
 wpilib_cc_static_library(
     name = "static/cscore",
@@ -116,16 +116,16 @@ wpilib_jni_cc_library(
     ],
 )
 
-wpilib_cc_shared_library(
-    name = "cscorejni",
-    auto_export_windows_symbols = False,
-    dynamic_deps = [
-        ":cscore",
-        "//wpiutil:wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":_cscorejni"],
-)
+# wpilib_cc_shared_library(
+#     name = "cscorejni",
+#     auto_export_windows_symbols = False,
+#     dynamic_deps = [
+#         ":cscore",
+#         "//wpiutil:wpiutil",
+#     ],
+#     visibility = ["//visibility:public"],
+#     deps = [":_cscorejni"],
+# )
 
 wpilib_jni_java_library(
     name = "cscore-java",
@@ -211,8 +211,8 @@ java_binary(
     "usbviewer",
 ]]
 
-bundle_default_jni_library(
-    name = "publishing_bundle",
-    group_id = "edu.wpi.first.cscore",
-    library_base_name = "cscore",
-)
+# bundle_default_jni_library(
+#     name = "publishing_bundle",
+#     group_id = "edu.wpi.first.cscore",
+#     library_base_name = "cscore",
+# )

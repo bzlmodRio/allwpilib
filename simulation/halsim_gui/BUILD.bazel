@@ -65,17 +65,17 @@ wpilib_cc_library(
     ],
 )
 
-wpilib_cc_shared_library(
-    name = "shared/halsim_gui",
-    dynamic_deps = [
-        "//hal:wpiHal",
-        "//wpimath:wpimath",
-        "//datalog:datalog",
-        "//ntcore:ntcore",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":halsim_gui"],
-)
+# wpilib_cc_shared_library(
+#     name = "shared/halsim_gui",
+#     dynamic_deps = [
+#         "//hal:wpiHal",
+#         "//wpimath:wpimath",
+#         "//datalog:datalog",
+#         "//ntcore:ntcore",
+#     ],
+#     visibility = ["//visibility:public"],
+#     deps = [":halsim_gui"],
+# )
 
 wpilib_cc_static_library(
     name = "static/halsim_gui",

@@ -167,7 +167,7 @@ pkg_zip(
     name = "libntcore-java-sources",
     srcs = [":ntcore-java-srcs"],
     out = "libntcore-java-sources.jar",
-    tags = ["manual"],
+    tags = ["no-remote", "manual"],
 )
 
 cc_test(

@@ -20,7 +20,7 @@ wpilib_publish(
         "//datalog:publishing_bundle",
         "//ntcore:publishing_bundle",
         "//hal:publishing_bundle",
-        "//cscore:publishing_bundle",
+        # "//cscore:publishing_bundle",
         "//fieldImages:publishing_bundle",
         "//wpigui:publishing_bundle",
         "//cameraserver:publishing_bundle",
