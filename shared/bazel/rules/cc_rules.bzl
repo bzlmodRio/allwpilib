@@ -185,13 +185,31 @@ def wpilib_cc_shared_library(
     )
 
     renames = {}
-    # if "jni" not in name:
-    #     renames = select({
-    #         "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": {
-    #             ":" + name: "lib" + lib + "d.so",
-    #         },
-    #         "//conditions:default": {},
-    #     })
+    if "jni" not in name:
+        renames = select({
+            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": {
+                ":" + name: "lib" + lib + "d.so",
+            },
+            "@rules_bzlmodrio_toolchains//conditions:osx_debug": {
+                ":" + name: "lib" + lib + "d.dylib",
+            },
+            "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": {
+                ":" + name: "lib" + lib + "d.dll",
+            },
+            "@rules_bzlmodrio_toolchains//conditions:windows_debug": {
+                ":" + name: "lib" + lib + "d.dll",
+            },
+            "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug": {
+                ":" + name: "lib" + lib + "d.so",
+            },
+            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug": {
+                ":" + name: "lib" + lib + "d.so",
+            },
+            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug": {
+                ":" + name: "lib" + lib + "d.so",
+            },
+            "//conditions:default": {},
+        })
 
     pkg_files(
         name = name + "-shared.pkg",
@@ -200,7 +218,7 @@ def wpilib_cc_shared_library(
         prefix = select({
             "@bazel_tools//src/conditions:darwin": "osx/x86-64/shared",
             "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/shared",
-            "@bazel_tools//src/conditions:windows": "windows/x86-64/shared",
+            "@rules_bzlmodrio_toolchains//conditions:windows": "windows/x86-64/shared",
             "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windows/arm64/shared",
             "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linux/arm64/shared",
             "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32/shared",
