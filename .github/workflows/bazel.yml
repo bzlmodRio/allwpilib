@@ -15,8 +15,8 @@ jobs:
           - { name: "Windows Release   (native)", os: windows-2022, action: "test",  opt_type: "-c opt", config: "--config=windows",     }
           # - { name: "Windows Debug     (native)", os: windows-2022, action: "test",  opt_type: "-c dbg", config: "--config=windows",     }
           # - { name: "Windows Fastbuild (native)", os: windows-2022, action: "test",  opt_type: "",       config: "--config=windows",     }
-          # - { name: "Windows Release   (arm)",    os: windows-2022, action: "build", opt_type: "-c opt", config: "--config=windows_arm", }
-          # - { name: "Windows Debug     (arm)",    os: windows-2022, action: "build", opt_type: "-c dbg", config: "--config=windows_arm", }
+          - { name: "Windows Release   (arm)",    os: windows-2022, action: "build", opt_type: "-c opt", config: "--config=windows_arm", }
+          - { name: "Windows Debug     (arm)",    os: windows-2022, action: "build", opt_type: "-c dbg", config: "--config=windows_arm", }
           # - { name: "Windows Fastbuild (arm)",    os: windows-2022, action: "build", opt_type: "",       config: "--config=windows_arm", }
 
     name: "Build ${{ matrix.name }}"

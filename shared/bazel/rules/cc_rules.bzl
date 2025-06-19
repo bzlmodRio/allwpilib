@@ -201,9 +201,10 @@ def wpilib_cc_shared_library(
             "@bazel_tools//src/conditions:darwin": "osx/x86-64/shared",
             "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/shared",
             "@bazel_tools//src/conditions:windows": "windows/x86-64/shared",
-            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore/shared",
-            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32/shared",
+            "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windows/arm64/shared",
             "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linux/arm64/shared",
+            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32/shared",
+            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore/shared",
         }),
         renames = renames,
     )
@@ -413,9 +414,10 @@ def wpilib_cc_static_library(
             "@bazel_tools//src/conditions:darwin": "osx/x86-64/static",
             "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/static",
             "@bazel_tools//src/conditions:windows": "windows/x86-64/static",
-            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore/static",
-            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32/static",
+            "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windows/arm64/static",
             "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linux/arm64/static",
+            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32/static",
+            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore/static",
         }),
     )
 
