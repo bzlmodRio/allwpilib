@@ -45,6 +45,6 @@ build:windows --linkopt=/DEPENDENTLOADFLAG:0x1100
 ################################
 build:windows_arm --config=windows_common
 
-build:windows_arm --cpu=arm64_windows
+build:windows_arm --cpu=x64_arm64_windows
 
 build:windows_arm --linkopt=/IGNORE:4099
