@@ -24,6 +24,8 @@ import %workspace%/shared/bazel/compiler_flags/roborio_flags.rc
 import %workspace%/shared/bazel/compiler_flags/systemcore_flags.rc
 import %workspace%/shared/bazel/compiler_flags/windows_flags.rc
 import %workspace%/shared/bazel/compiler_flags/coverage_flags.rc
+import %workspace%/shared/bazel/compiler_flags/bookworm64_flags.rc
+import %workspace%/shared/bazel/compiler_flags/raspi_bookworm_flags.rc
 
 # Alias toolchain names to what wpilibsuite uses for CI/Artifact naming
 build:athena --config=roborio

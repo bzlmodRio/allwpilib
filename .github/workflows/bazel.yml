@@ -92,6 +92,12 @@ jobs:
           - { name: "Linux Release (systemcore)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=systemcore",    }
           - { name: "Linux Debug (systemcore)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=systemcore",    }
           # - { name: "Linux fastbuild (systemcore)",  os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "",       config: "--config=systemcore",    }
+          
+          - { name: "Linux Release (linuxarm32)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=linuxarm32",      }
+          - { name: "Linux Debug (linuxarm32)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=linuxarm32",      }
+
+          - { name: "Linux Release (linuxarm64)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=linuxarm64",      }
+          - { name: "Linux Debug (linuxarm64)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=linuxarm64",      }
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
