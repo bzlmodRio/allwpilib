@@ -4,6 +4,7 @@ load("@rules_cc//cc:find_cc_toolchain.bzl", "CC_TOOLCHAIN_ATTRS", "find_cpp_tool
 load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
+load("//shared/bazel/rules/publishing:publishing.bzl", "generate_maven_info_cmd", "get_platform_suffix_cmd")
 
 def _folder_prefix(name):
     if "/" in name:
@@ -215,15 +216,7 @@ def wpilib_cc_shared_library(
         name = name + "-shared.pkg",
         srcs = [":" + name],
         tags = ["manual"],
-        prefix = select({
-            "@bazel_tools//src/conditions:darwin": "osx/x86-64/shared",
-            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/shared",
-            "@rules_bzlmodrio_toolchains//conditions:windows": "windows/x86-64/shared",
-            "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windows/arm64/shared",
-            "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linux/arm64/shared",
-            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32/shared",
-            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore/shared",
-        }),
+        prefix = get_platform_prefix("/shared"),
         renames = renames,
     )
 
@@ -407,6 +400,19 @@ attribute to choose a custom name."""),
     fragments = ["cpp"],
 )
 
+
+def get_platform_prefix(optional_suffix = ""):
+    return select({
+            "@bazel_tools//src/conditions:darwin": "osx/x86-64" + optional_suffix,
+            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64" + optional_suffix,
+            "@bazel_tools//src/conditions:windows": "windows/x86-64" + optional_suffix,
+            "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windows/arm64" + optional_suffix,
+            "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linux/arm64" + optional_suffix,
+            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32" + optional_suffix,
+            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore" + optional_suffix,
+        })
+
+
 def wpilib_cc_static_library(
         name,
         static_lib_name = None,
@@ -428,19 +434,57 @@ def wpilib_cc_static_library(
         name = name + "-static.pkg",
         srcs = [":" + name],
         tags = ["manual"],
-        prefix = select({
-            "@bazel_tools//src/conditions:darwin": "osx/x86-64/static",
-            "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64/static",
-            "@bazel_tools//src/conditions:windows": "windows/x86-64/static",
-            "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windows/arm64/static",
-            "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linux/arm64/static",
-            "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32/static",
-            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore/static",
-        }),
+        prefix = get_platform_prefix("/static")
     )
 
     pkg_zip(
         name = name + "-static-zip",
         srcs = ["//:license_pkg_files", name + "-static.pkg"],
         tags = ["no-remote", "manual"],
+    )
+
+
+def wpilib_cc_binary_tool(
+    name,
+    maven_group_id,
+    maven_artifact_name,
+    **kwargs):
+    native.cc_binary(
+        name = name,
+        **kwargs
+    )
+    
+    pkg_files(
+        name = name + "-pkg",
+        srcs = [name],
+        prefix = get_platform_prefix()
+    )
+
+    pkg_zip(
+        name = name + "-zip",
+        srcs = [
+            name + "-pkg",
+            "//:license_pkg_files",
+        ],
+        tags = [
+            "manual",
+            "no-remote",
+        ],
+    )
+    
+    native.genrule(
+        name = name + "-publishing_bundle",
+        srcs = [
+            name + "-zip",
+        ],
+        outs = [name + "-maven-info.json"],
+        cmd = "$(locations //shared/bazel/rules/publishing:generate_maven_bundle) --output_file=$(OUTS) --maven_infos " + generate_maven_info_cmd(
+            artifact = name + "-zip",
+            artifact_name = maven_artifact_name,
+            group_id = maven_group_id,
+            suffix = "-##PLATFORM##",
+        ) + get_platform_suffix_cmd(),
+        # tags = ["manual"],
+        tools = ["//shared/bazel/rules/publishing:generate_maven_bundle"],
+        visibility = ["//visibility:public"],
     )

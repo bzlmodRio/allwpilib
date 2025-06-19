@@ -11,6 +11,33 @@ def generate_maven_info_cmd(
     """
     return "$(locations {}),{},{},{} ".format(artifact, group_id, artifact_name, suffix)
 
+
+def get_platform_suffix_cmd():
+    return " --platform=" + select({
+        "@bazel_tools//src/conditions:darwin": "osxuniversal",
+        "@bazel_tools//src/conditions:linux_x86_64": "linuxx86-64",
+        "@rules_bzlmodrio_toolchains//conditions:windows": "windowsx86-64",
+        "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windowsarm64",
+        "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": "windowsarm64",
+        "@rules_bzlmodrio_toolchains//conditions:windows_debug": "windowsx86-64",
+        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linuxarm64",
+        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linuxarm32",
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linuxsystemcore",
+    })
+
+
+def get_debug_suffix_cmd():
+    return " --debug_suffix=" + select({
+        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": "debug",
+        "@rules_bzlmodrio_toolchains//conditions:osx_debug": "debug",
+        "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": "debug",
+        "@rules_bzlmodrio_toolchains//conditions:windows_debug": "debug",
+        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug": "debug",
+        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug": "debug",
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug": "debug",
+        "//conditions:default": " ",
+    })
+
 def bundle_library_artifacts(
         name,
         group_id,
@@ -71,28 +98,8 @@ def bundle_library_artifacts(
 
     output_file = name + "-maven-info.json"
 
-    cmd += " --platform=" + select({
-        "@bazel_tools//src/conditions:darwin": "osxuniversal",
-        "@bazel_tools//src/conditions:linux_x86_64": "linuxx86-64",
-        "@rules_bzlmodrio_toolchains//conditions:windows": "windowsx86-64",
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windowsarm64",
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": "windowsarm64",
-        "@rules_bzlmodrio_toolchains//conditions:windows_debug": "windowsx86-64",
-        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linuxarm64",
-        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linuxarm32",
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linuxsystemcore",
-    })
-
-    cmd += " --debug_suffix=" + select({
-        "@rules_bzlmodrio_toolchains//conditions:linux_x86_64_debug": "debug",
-        "@rules_bzlmodrio_toolchains//conditions:osx_debug": "debug",
-        "@rules_bzlmodrio_toolchains//conditions:windows_arm64_debug": "debug",
-        "@rules_bzlmodrio_toolchains//conditions:windows_debug": "debug",
-        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64_debug": "debug",
-        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32_debug": "debug",
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore_debug": "debug",
-        "//conditions:default": " ",
-    })
+    cmd += get_platform_suffix_cmd()
+    cmd += get_debug_suffix_cmd()
 
     native.genrule(
         name = name,

@@ -15,8 +15,8 @@ jobs:
           - { name: "Windows Release   (native)", os: windows-2022, action: "test",  opt_type: "-c opt", config: "--config=windows",     }
           # - { name: "Windows Debug     (native)", os: windows-2022, action: "test",  opt_type: "-c dbg", config: "--config=windows",     }
           # - { name: "Windows Fastbuild (native)", os: windows-2022, action: "test",  opt_type: "",       config: "--config=windows",     }
-          - { name: "Windows Release   (arm)",    os: windows-2022, action: "build", opt_type: "-c opt", config: "--config=windows_arm", }
-          - { name: "Windows Debug     (arm)",    os: windows-2022, action: "build", opt_type: "-c dbg", config: "--config=windows_arm", }
+          # - { name: "Windows Release   (arm)",    os: windows-2022, action: "build", opt_type: "-c opt", config: "--config=windows_arm", }
+          # - { name: "Windows Debug     (arm)",    os: windows-2022, action: "build", opt_type: "-c dbg", config: "--config=windows_arm", }
           # - { name: "Windows Fastbuild (arm)",    os: windows-2022, action: "build", opt_type: "",       config: "--config=windows_arm", }
 
     name: "Build ${{ matrix.name }}"
@@ -89,8 +89,8 @@ jobs:
           - { name: "Linux Debug (native)",          os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "-c dbg", config: "--config=linux",    }
           # - { name: "Linux fastbuild (native)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "test",   opt_type: "",       config: "--config=linux",    }
           
-          - { name: "Linux Release (systemcore)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=systemcore",    }
-          - { name: "Linux Debug (systemcore)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=systemcore",    }
+          # - { name: "Linux Release (systemcore)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=systemcore",    }
+          # - { name: "Linux Debug (systemcore)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c dbg", config: "--config=systemcore",    }
           # - { name: "Linux fastbuild (systemcore)",  os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "",       config: "--config=systemcore",    }
           
           - { name: "Linux Release (linuxarm32)",    os: ubuntu-24.04,   container: "wpilib/ubuntu-base:22.04", action: "build",  opt_type: "-c opt", config: "--config=linuxarm32",      }

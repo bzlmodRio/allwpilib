@@ -1,0 +1,17 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary_tool")
+
+
+wpilib_cc_binary_tool(
+    name = "processstarter",
+    srcs = select({
+        "@bazel_tools//src/conditions:windows": ["src/main/native/windows/main.cpp"],
+        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": ["src/main/native/linux/main.cpp"],
+    }),
+    target_compatible_with = select({
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
+        "@bazel_tools//src/conditions:darwin": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    maven_group_id = "edu.wpi.first.tools",
+    maven_artifact_name = "processstarter",
+)
