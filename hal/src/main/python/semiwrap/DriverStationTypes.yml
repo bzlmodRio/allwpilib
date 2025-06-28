@@ -33,6 +33,7 @@ classes:
   HAL_JoystickDescriptor:
     attributes:
       isXbox:
+      isGamepad:
       type:
       name:
       axisCount:

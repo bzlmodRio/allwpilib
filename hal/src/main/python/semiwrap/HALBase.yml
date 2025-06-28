@@ -33,6 +33,7 @@ functions:
         WPI_FreeString(&s);
         return ss;
       }
+  HAL_GetCommsDisableCount:
   HAL_GetTeamNumber:
   HAL_GetRuntimeType:
   HAL_GetFPGAButton:

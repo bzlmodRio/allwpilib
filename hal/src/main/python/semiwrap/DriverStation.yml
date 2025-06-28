@@ -16,6 +16,7 @@ functions:
   HAL_GetAllJoystickData:
   HAL_GetJoystickDescriptor:
   HAL_GetJoystickIsXbox:
+  HAL_GetJoystickIsGamepad:
   HAL_GetJoystickType:
   HAL_GetJoystickName:
     param_override:

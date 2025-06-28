@@ -10,6 +10,7 @@ classes:
           std::shared_ptr<DigitalSource>:
       GetFrequency:
       GetPeriod:
+      SetEdgeConfiguration:
       GetEdgesPerRevolution:
       SetEdgesPerRevolution:
       GetRevolutionsPerSecond:

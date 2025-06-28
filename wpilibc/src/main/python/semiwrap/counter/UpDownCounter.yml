@@ -11,6 +11,7 @@ classes:
       GetCount:
       SetReverseDirection:
       Reset:
+      SetEdgeConfiguration:
       SetUpEdgeConfiguration:
       SetDownEdgeConfiguration:
       InitSendable:

@@ -13,6 +13,7 @@ classes:
       Compressor:
         overloads:
           int, PneumaticsModuleType:
+          int, int, PneumaticsModuleType:
           PneumaticsModuleType:
       Start:
       Stop:

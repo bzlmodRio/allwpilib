@@ -13,3 +13,4 @@ functions:
   HAL_SetAddressableLEDSyncTime:
   HAL_StartAddressableLEDOutput:
   HAL_StopAddressableLEDOutput:
+  HAL_SetAddressableLEDColorOrder:

@@ -72,5 +72,6 @@ classes:
       Update:
       ForeachLiveWindow:
         ignore: true
+      EnsureInitialized:
   wpi::SendableRegistry::CallbackData:
     ignore: true

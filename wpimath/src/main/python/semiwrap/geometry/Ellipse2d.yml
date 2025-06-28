@@ -26,6 +26,7 @@ classes:
       Contains:
       Distance:
       FindNearestPoint:
+      Nearest:
       operator==:
 
 inline_code: |-

@@ -21,6 +21,8 @@ classes:
       GetGearbox:
       GetGearing:
       GetJ:
+      SetAngle:
+      SetAngularVelocity:
 
 inline_code: |
   cls_DCMotorSim

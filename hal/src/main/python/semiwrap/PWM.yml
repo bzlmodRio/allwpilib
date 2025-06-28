@@ -28,3 +28,5 @@ functions:
   HAL_SetPWMAlwaysHighMode:
   HAL_GetPWMLoopTiming:
   HAL_GetPWMCycleStartTime:
+  HAL_SetPWMSimDevice:
+  HAL_SetPWMOutputPeriod:

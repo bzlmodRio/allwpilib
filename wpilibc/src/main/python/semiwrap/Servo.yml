@@ -15,3 +15,4 @@ classes:
       GetMaxAngle:
       GetMinAngle:
       InitSendable:
+      GetChannel:

@@ -13,6 +13,8 @@ classes:
             # param_override:
             #   maxVelocity:
             #     default: 9_mps
+          units::second_t:
+          const wpi::array<double, 3>&, const wpi::array<double, 2>&, units::second_t:
       AtReference:
       SetTolerance:
       Calculate:

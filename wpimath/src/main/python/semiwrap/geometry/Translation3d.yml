@@ -18,6 +18,12 @@ classes:
           units::meter_t, const Rotation3d&:
           const Eigen::Vector3d&:
           const Translation2d&:
+      RotateAround:
+      Nearest:
+        overloads:
+          std::span<const Translation3d> [const]:
+          std::initializer_list<Translation3d> [const]:
+            ignore: true
       Distance:
       X:
       Y:

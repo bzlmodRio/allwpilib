@@ -12,6 +12,7 @@ classes:
         overloads:
           '':
           int:
+          int, int:
       GetCompressor:
       DisableCompressor:
       EnableCompressorDigital:
@@ -44,6 +45,7 @@ classes:
       GetSolenoidsVoltage:
       GetAnalogVoltage:
       GetPressure:
+      ReportUsage:
   frc::PneumaticHub::Version:
     attributes:
       FirmwareMajor:

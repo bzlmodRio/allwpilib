@@ -25,6 +25,7 @@ classes:
     force_type_casters:
     - std::function
     attributes:
+      kDefaultPort:
       kDefaultPort3:
       kDefaultPort4:
     enums:
@@ -126,6 +127,7 @@ classes:
             self->StartServer(persist_filename, listen_address, port);
           }
       StopServer:
+      StartClient:
       StartClient3:
         cpp_code: |
           [](NetworkTableInstance * self, std::string_view identity) {

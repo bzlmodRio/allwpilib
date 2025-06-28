@@ -33,4 +33,7 @@ classes:
       RegisterZeroLatchCallback:
       GetZeroLatch:
       SetZeroLatch:
+      RegisterOutputPeriodCallback:
+      GetOutputPeriod:
+      SetOutputPeriod:
       ResetData:

@@ -25,6 +25,7 @@ classes:
       Translation:
       Rotation:
       RotateBy:
+      RotateAround:
       TransformBy:
       RelativeTo:
       Exp:

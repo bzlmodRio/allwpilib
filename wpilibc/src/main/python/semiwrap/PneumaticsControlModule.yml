@@ -12,6 +12,7 @@ classes:
         overloads:
           '':
           int:
+          int, int:
       GetCompressor:
       DisableCompressor:
       EnableCompressorDigital:
@@ -45,3 +46,4 @@ classes:
       MakeSolenoid:
       MakeDoubleSolenoid:
       MakeCompressor:
+      ReportUsage:
