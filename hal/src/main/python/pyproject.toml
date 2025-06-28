@@ -18,6 +18,7 @@ authors = [
 license = "BSD-3-Clause"
 dependencies = [
     "robotpy-native-wpihal==2027.0.0a1.dev0",
+    "robotpy-ntcore==2027.0.0a1.dev0",
     "robotpy-wpiutil==2027.0.0a1.dev0",
 ]
 
