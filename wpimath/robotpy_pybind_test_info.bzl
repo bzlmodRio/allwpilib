@@ -90,6 +90,14 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
 
 def define_pybind_library(name):
     native.filegroup(
+        name = "{}.generated_files".format(name),
+        srcs = [
+            "wpimath_test.generated_files",
+        ],
+        tags = ["manual"],
+    )
+
+    native.filegroup(
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/test/python/cpp/wpimath_test/wpimath_test.pc",

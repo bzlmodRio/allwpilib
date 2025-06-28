@@ -18,7 +18,7 @@ def _wrapper_dep():
     return ["//shared/bazel/rules/robotpy:wrapper"]
 
 def _semiwrap_caster():
-    return "//shared/bazel/rules/robotpy/semiwrap_casters"
+    return "//shared/bazel/rules/robotpy:semiwrap_casters_files"
 
 def _local_include_root(project_import, include_subpackage):
     # return "$(location " + project_import + ")/site-packages/native/" + include_subpackage + "/include"
@@ -77,7 +77,7 @@ def resolve_casters(
     cmd = _wrapper() + " semiwrap.cmd.resolve_casters "
     cmd += " $(OUTS)"
 
-    cmd += _location_helper(_semiwrap_caster())
+    cmd += _location_helper(_semiwrap_caster()) + "/semiwrap/semiwrap.pybind11.json"
 
     resolved_caster_files = []
 

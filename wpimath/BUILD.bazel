@@ -402,7 +402,7 @@ wpimath_test_extension(
 )
 
 define_test_pybind_library(
-    name = "wpimath_test",
+    name = "robotpy-wpimath-test",
 )
 
 robotpy_py_test(
@@ -418,7 +418,7 @@ robotpy_py_test(
     ),
     deps = [
         ":robotpy-wpimath",
-        ":wpimath_test",
+        ":robotpy-wpimath-test",
         requirement("pytest"),
     ],
 )
