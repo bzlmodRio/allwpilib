@@ -171,6 +171,7 @@ def define_pybind_library(name):
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/main/python/robotpy_apriltag/apriltag.pc",
+            ":src/main/python/robotpy_apriltag/_apriltag",
         ],
         tags = ["manual"],
     )
@@ -188,7 +189,6 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/robotpy_apriltag/_apriltag",
             ":apriltag.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

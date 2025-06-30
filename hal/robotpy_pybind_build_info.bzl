@@ -581,6 +581,8 @@ def define_pybind_library(name):
         srcs = [
             "src/main/python/hal/simulation/hal_simulation.pc",
             "src/main/python/hal/wpihal.pc",
+            ":src/main/python/hal/simulation/_simulation",
+            ":src/main/python/hal/_wpiHal",
         ],
         tags = ["manual"],
     )
@@ -599,8 +601,6 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/hal/simulation/_simulation",
-            ":src/main/python/hal/_wpiHal",
             ":hal_simulation.trampoline_hdr_files",
             ":wpihal.trampoline_hdr_files",
         ],

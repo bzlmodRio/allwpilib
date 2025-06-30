@@ -174,6 +174,7 @@ def define_pybind_library(name):
             "src/main/python/wpiutil/wpiutil.pc",
             "src/main/python/wpiutil/wpiutil-casters.pc",
             "src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+            ":src/main/python/wpiutil/_wpiutil",
         ],
         tags = ["manual"],
     )
@@ -191,7 +192,6 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpiutil/_wpiutil",
             ":wpiutil.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

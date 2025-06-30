@@ -166,6 +166,7 @@ def define_pybind_library(name):
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/main/python/wpilog/wpilog.pc",
+            ":src/main/python/wpilog/_wpilog",
         ],
         tags = ["manual"],
     )
@@ -183,7 +184,6 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpilog/_wpilog",
             ":wpilog.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

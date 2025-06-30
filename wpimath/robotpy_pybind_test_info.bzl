@@ -101,6 +101,7 @@ def define_pybind_library(name):
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/test/python/cpp/wpimath_test/wpimath_test.pc",
+            ":src/test/python/cpp/wpimath_test/_wpimath_test",
         ],
         tags = ["manual"],
     )
@@ -118,7 +119,6 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
-            ":src/test/python/cpp/wpimath_test/_wpimath_test",
             ":wpimath_test.trampoline_hdr_files",
         ],
         imports = ["src/test/python/cpp"],
