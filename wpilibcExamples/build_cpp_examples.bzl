@@ -49,6 +49,7 @@ def build_examples(halsim_deps = []):
             ],
             dynamic_deps = [
                 "//apriltag:shared/apriltag",
+                "//cscore:shared/cscore",
                 "//datalog:shared/datalog",
                 "//hal:shared/wpiHal",
                 "//ntcore:shared/ntcore",
