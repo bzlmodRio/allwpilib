@@ -189,13 +189,13 @@ cc_test(
     name = "hal-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/**/*.cpp"]),
-    deps = [
-        ":wpiHal_base",
-        "//thirdparty/googletest",
-    ],
     dynamic_deps = [
         ":shared/wpiHal",
         "//wpiutil:shared/wpiutil",
+    ],
+    deps = [
+        ":wpiHal_base",
+        "//thirdparty/googletest",
     ],
 )
 
@@ -210,12 +210,12 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpiHal_base",
-    ],
     dynamic_deps = [
         ":shared/wpiHal",
         "//wpiutil:shared/wpiutil",
+    ],
+    deps = [
+        ":wpiHal_base",
     ],
 )
 

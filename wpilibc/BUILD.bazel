@@ -156,6 +156,13 @@ cc_test(
     name = "wpilibc-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
+    dynamic_deps = [
+        ":shared/wpilibc",
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpimath:shared/wpimath",
+        "//wpiutil:shared/wpiutil",
+    ],
     tags = [
         "no-asan",
         "no-tsan",
@@ -166,24 +173,17 @@ cc_test(
         ":wpilibc_base",
         "//thirdparty/googletest",
     ],
-    dynamic_deps = [
-        ":shared/wpilibc",
-        "//hal:shared/wpiHal",
-        "//ntcore:shared/ntcore",
-        "//wpimath:shared/wpimath",
-        "//wpiutil:shared/wpiutil",
-    ],
 )
 
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpilibc_base",
-    ],
     dynamic_deps = [
         ":shared/wpilibc",
         "//hal:shared/wpiHal",
         "//wpiutil:shared/wpiutil",
+    ],
+    deps = [
+        ":wpilibc_base",
     ],
 )

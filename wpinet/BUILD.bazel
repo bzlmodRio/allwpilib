@@ -217,15 +217,15 @@ cc_test(
         "src/test/native/**/*.cpp",
         "src/test/native/**/*.h",
     ]),
+    dynamic_deps = [
+        ":shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     tags = ["no-asan"],
     deps = [
         ":wpinet_base",
         "//thirdparty/googletest",
         "//wpiutil:wpiutil-testlib",
-    ],
-    dynamic_deps = [
-        ":shared/wpinet",
-        "//wpiutil:shared/wpiutil",
     ],
 )
 
@@ -240,12 +240,12 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpinet_base",
-    ],
     dynamic_deps = [
         ":shared/wpinet",
         "//wpiutil:shared/wpiutil",
+    ],
+    deps = [
+        ":wpinet_base",
     ],
 )
 

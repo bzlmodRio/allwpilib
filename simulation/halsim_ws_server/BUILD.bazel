@@ -102,8 +102,4 @@ cc_binary(
     deps = [
         ":halsim_ws_server_base",
     ],
-    dynamic_deps = [
-        # "//simulation/halsim_ws_core:shared/halsim_ws_core",
-        # ":shared/halsim_ws_server",
-    ]
 )

@@ -161,15 +161,15 @@ cc_test(
     name = "apriltag-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
+    dynamic_deps = [
+        ":shared/apriltag",
+    ],
     tags = [
         "no-asan",
     ],
     deps = [
         ":apriltag_base",
         "//thirdparty/googletest",
-    ],
-    dynamic_deps = [
-        ":shared/apriltag",
     ],
 )
 
@@ -190,11 +190,11 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":apriltag_base",
-    ],
     dynamic_deps = [
         ":shared/apriltag",
+    ],
+    deps = [
+        ":apriltag_base",
     ],
 )
 

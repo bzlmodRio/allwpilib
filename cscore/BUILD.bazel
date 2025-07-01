@@ -1,6 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library", "wpilib_cc_shared_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
@@ -133,13 +133,13 @@ cc_test(
     name = "cscore-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/**"]),
+    dynamic_deps = [
+        ":shared/cscore",
+    ],
     deps = [
         ":cscore_base",
         "//thirdparty/googletest",
     ],
-    dynamic_deps = [
-        ":shared/cscore",
-    ]
 )
 
 wpilib_java_junit5_test(

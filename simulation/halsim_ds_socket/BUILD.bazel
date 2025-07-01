@@ -74,24 +74,24 @@ cc_test(
     name = "halsim_ds_socket-test",
     size = "small",
     srcs = glob(["src/test/native/**/*.cpp"]),
-    deps = [
-        ":halsim_ds_socket_base",
-        "//thirdparty/googletest",
-    ],
     dynamic_deps = [
         ":shared/halsim_ds_socket",
         "//hal:shared/wpiHal",
+    ],
+    deps = [
+        ":halsim_ds_socket_base",
+        "//thirdparty/googletest",
     ],
 )
 
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":halsim_ds_socket_base",
-    ],
     dynamic_deps = [
         ":shared/halsim_ds_socket",
         "//hal:shared/wpiHal",
+    ],
+    deps = [
+        ":halsim_ds_socket_base",
     ],
 )

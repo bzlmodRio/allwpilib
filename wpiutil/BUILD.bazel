@@ -279,16 +279,16 @@ cc_test(
         "src/test/native/cpp/**",
         "src/generated/test/native/cpp/*",
     ]),
+    dynamic_deps = [
+        ":shared/wpiutil",
+    ],
     linkstatic = True,
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
     deps = [
         ":nanopb-test-headers",
-        ":wpiutil_base",
         ":wpiutil-testlib",
+        ":wpiutil_base",
         "//thirdparty/googletest",
-    ],
-    dynamic_deps = [
-        ":shared/wpiutil",
     ],
 )
 
@@ -303,11 +303,11 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpiutil_base",
-    ],
     dynamic_deps = [
         ":shared/wpiutil",
+    ],
+    deps = [
+        ":wpiutil_base",
     ],
 )
 

@@ -129,14 +129,6 @@ cc_test(
         "src/test/native/**/*.cpp",
         "src/test/native/**/*.h",
     ]),
-    tags = [
-        "no-tsan",
-        "no-ubsan",
-    ],
-    deps = [
-        ":wpilibNewCommands_base",
-        "//thirdparty/googletest",
-    ],
     dynamic_deps = [
         ":shared/wpilibNewCommands",
         "//hal:shared/wpiHal",
@@ -145,6 +137,14 @@ cc_test(
         "//wpimath:shared/wpimath",
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
+    ],
+    tags = [
+        "no-tsan",
+        "no-ubsan",
+    ],
+    deps = [
+        ":wpilibNewCommands_base",
+        "//thirdparty/googletest",
     ],
 )
 
@@ -168,11 +168,11 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpilibNewCommands_base",
-    ],
     dynamic_deps = [
         ":shared/wpilibNewCommands",
+    ],
+    deps = [
+        ":wpilibNewCommands_base",
     ],
 )
 

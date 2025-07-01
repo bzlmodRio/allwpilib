@@ -61,23 +61,23 @@ cc_test(
     name = "xrp-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
+    dynamic_deps = [
+        ":shared/xrpVendordep",
+    ],
     deps = [
         ":xrpVendordep_base",
         "//thirdparty/googletest",
-    ],
-    dynamic_deps = [
-        ":shared/xrpVendordep",
     ],
 )
 
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        "//wpiutil:wpiutil_base",
-    ],
     dynamic_deps = [
         ":shared/xrpVendordep",
+    ],
+    deps = [
+        "//wpiutil:wpiutil_base",
     ],
 )
 

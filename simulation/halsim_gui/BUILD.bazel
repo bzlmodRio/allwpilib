@@ -1,5 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library", "wpilib_cc_shared_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 
 wpilib_cc_library(
     name = "halsim_gui_base",
@@ -78,9 +78,6 @@ wpilib_cc_shared_library(
         "//wpimath:shared/wpimath",
         "//ntcore:shared/ntcore",
     ],
-    deps = [
-        ":halsim_gui_base",
-    ],
     user_link_flags = select({
         "@bazel_tools//src/conditions:windows": [
             "-DEFAULTLIB:user32.lib",
@@ -89,6 +86,9 @@ wpilib_cc_shared_library(
         ],
         "//conditions:default": [],
     }),
+    deps = [
+        ":halsim_gui_base",
+    ],
 )
 
 alias(
@@ -101,6 +101,10 @@ cc_test(
     name = "halsim_gui-test",
     size = "small",
     srcs = glob(["src/test/native/**/*.cpp"]),
+    dynamic_deps = [
+        ":shared/halsim_gui",
+        "//hal:shared/wpiHal",
+    ],
     tags = [
         "no-asan",
         "wpi-cpp-gui",
@@ -109,22 +113,18 @@ cc_test(
         ":halsim_gui_base",
         "//thirdparty/googletest",
     ],
-    dynamic_deps = [
-        ":shared/halsim_gui",
-        "//hal:shared/wpiHal",
-    ]
 )
 
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
+    dynamic_deps = [
+        ":shared/halsim_gui",
+    ],
     tags = [
         "wpi-cpp-gui",
     ],
     deps = [
         ":halsim_gui_base",
     ],
-    dynamic_deps = [
-        ":shared/halsim_gui",
-    ]
 )

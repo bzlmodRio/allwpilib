@@ -120,6 +120,10 @@ cc_test(
     name = "datalog-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/**/*.cpp"]),
+    dynamic_deps = [
+        ":shared/datalog",
+        "//wpiutil:shared/wpiutil",
+    ],
     tags = [
         "exclusive",
         "no-asan",
@@ -129,10 +133,6 @@ cc_test(
         ":datalog_base",
         "//thirdparty/googletest",
         "//wpiutil:wpiutil-testlib",
-    ],
-    dynamic_deps = [
-        ":shared/datalog",
-        "//wpiutil:shared/wpiutil",
     ],
 )
 

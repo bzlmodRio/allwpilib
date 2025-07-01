@@ -261,12 +261,12 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpimath_base",
-    ],
     dynamic_deps = [
         ":shared/wpimath",
         "//wpiutil:shared/wpiutil",
+    ],
+    deps = [
+        ":wpimath_base",
     ],
 )
 

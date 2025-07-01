@@ -64,23 +64,23 @@ cc_test(
     name = "romi-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
+    dynamic_deps = [
+        ":shared/romiVendordep",
+    ],
     deps = [
         ":romiVendordep_base",
         "//thirdparty/googletest",
-    ],
-    dynamic_deps = [
-        ":shared/romiVendordep",
     ],
 )
 
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":romiVendordep_base",
-    ],
     dynamic_deps = [
         ":shared/romiVendordep",
+    ],
+    deps = [
+        ":romiVendordep_base",
     ],
 )
 
