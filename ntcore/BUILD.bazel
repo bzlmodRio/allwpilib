@@ -183,6 +183,8 @@ cc_test(
     ]),
     dynamic_deps = [
         ":shared/ntcore",
+        "//datalog:shared/datalog",
+        "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
     tags = [
@@ -212,6 +214,8 @@ cc_binary(
     srcs = ["src/dev/native/cpp/main.cpp"],
     dynamic_deps = [
         ":shared/ntcore",
+        "//datalog:shared/datalog",
+        "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
     deps = [
