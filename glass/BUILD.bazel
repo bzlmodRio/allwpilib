@@ -18,8 +18,8 @@ wpilib_cc_library(
     deps = [
         "//fieldImages",
         "//wpigui",
-        "//wpimath",
-        "//wpiutil",
+        "//wpimath:wpimath_base",
+        "//wpiutil:wpiutil_base",
     ],
 )
 
@@ -51,7 +51,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":libglass",
-        "//ntcore",
+        "//ntcore:ntcore_base",
     ],
 )
 

@@ -76,7 +76,7 @@ third_party_cc_lib_helper(
 )
 
 wpilib_cc_library(
-    name = "wpilibc",
+    name = "wpilibc_base",
     srcs = [
         ":generate-version",
     ] + glob([
@@ -95,20 +95,20 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//cameraserver:cameraserver-headers",
-        "//cscore:cscore-headers",
-        "//datalog",
-        "//hal:wpiHal",
-        "//ntcore",
-        "//ntcore:ntcore-headers",
-        "//wpimath",
-        "//wpinet",
-        "//wpiutil",
+        "//cameraserver:cameraserver_base-headers",
+        "//cscore:cscore_base-headers",
+        "//datalog:datalog_base",
+        "//hal:wpiHal_base",
+        "//ntcore:ntcore_base",
+        "//ntcore:ntcore_base-headers",
+        "//wpimath:wpimath_base",
+        "//wpinet:wpinet_base",
+        "//wpiutil:wpiutil_base",
     ],
 )
 
 wpilib_cc_shared_library(
-    name = "shared/wpilibc",
+    name = "wpilibc",
     dynamic_deps = [
         "//datalog:shared/datalog",
         "//hal:shared/wpiHal",
@@ -119,8 +119,14 @@ wpilib_cc_shared_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":wpilibc",
+        ":wpilibc_base",
     ],
+)
+
+alias(
+    name = "shared/wpilibc",
+    actual = ":wpilibc",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
@@ -135,7 +141,7 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":wpilibc",
+        ":wpilibc_base",
     ],
 )
 
@@ -157,8 +163,11 @@ cc_test(
     ],
     deps = [
         ":test-headers",
-        ":wpilibc",
+        ":wpilibc_base",
         "//thirdparty/googletest",
+    ],
+    dynamic_deps = [
+        ":shared/wpilibc",
     ],
 )
 
@@ -166,6 +175,9 @@ cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":wpilibc",
+        ":wpilibc_base",
+    ],
+    dynamic_deps = [
+        ":shared/wpilibc",
     ],
 )

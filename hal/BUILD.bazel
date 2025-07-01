@@ -77,7 +77,7 @@ pkg_files(
 )
 
 wpilib_cc_library(
-    name = "wpiHal",
+    name = "wpiHal_base",
     srcs = [":platform-srcs"] + glob(
         [
             "src/main/native/cpp/**",
@@ -99,11 +99,11 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":generated_mrc_cc_headers",
-        "//wpiutil",
+        "//wpiutil:wpiutil_base",
     ] + select({
         "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": [
-            "//ntcore",
-            "//wpinet",
+            "//ntcore:ntcore_base",
+            "//wpinet:wpinet_base",
         ],
         "//conditions:default": [
             "//ntcore:ntcore_c_headers",
@@ -112,7 +112,7 @@ wpilib_cc_library(
 )
 
 wpilib_cc_shared_library(
-    name = "shared/wpiHal",
+    name = "wpiHal",
     dynamic_deps = [
         "//wpiutil:shared/wpiutil",
     ] + select({
@@ -122,10 +122,15 @@ wpilib_cc_shared_library(
         ],
         "//conditions:default": [],
     }),
-    visibility = ["//visibility:public"],
     deps = [
-        ":wpiHal",
+        ":wpiHal_base",
     ],
+)
+
+alias(
+    name = "shared/wpiHal",
+    actual = ":wpiHal",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
@@ -141,7 +146,7 @@ wpilib_cc_static_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        ":wpiHal",
+        ":wpiHal_base",
     ],
 )
 
@@ -151,7 +156,7 @@ wpilib_jni_cc_library(
     java_dep = ":hal-java",
     visibility = ["//visibility:public"],
     deps = [
-        ":wpiHal",
+        ":wpiHal_base",
     ],
 )
 
@@ -185,8 +190,11 @@ cc_test(
     size = "small",
     srcs = glob(["src/test/native/**/*.cpp"]),
     deps = [
-        ":wpiHal",
+        ":wpiHal_base",
         "//thirdparty/googletest",
+    ],
+    dynamic_deps = [
+        ":shared/wpiHal",
     ],
 )
 
@@ -202,7 +210,10 @@ cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":wpiHal",
+        ":wpiHal_base",
+    ],
+    dynamic_deps = [
+        ":shared/wpiHal",
     ],
 )
 

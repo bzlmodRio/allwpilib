@@ -40,12 +40,18 @@ def build_examples(halsim_deps = []):
             name = folder + "-example",
             srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"], allow_empty = True),
             deps = [
-                "//wpilibNewCommands",
-                "//apriltag",
-                "//romiVendordep",
-                "//xrpVendordep",
-                "//cameraserver",
+                "//wpilibNewCommands:wpilibNewCommands_base",
+                "//apriltag:apriltag_base",
+                "//romiVendordep:romiVendordep_base",
+                "//xrpVendordep:xrpVendordep_base",
+                "//cameraserver:cameraserver_base",
                 ":{}-examples-headers".format(folder),
+            ],
+            dynamic_deps = [
+                "//wpilibNewCommands:shared/wpilibNewCommands",
+                "//apriltag:shared/apriltag",
+                "//romiVendordep:shared/romiVendordep",
+                "//xrpVendordep:shared/xrpVendordep",
             ],
             tags = ["wpi-example"],
         )
@@ -59,7 +65,7 @@ def build_commands():
             srcs = native.glob(["src/main/cpp/commands/" + folder + "/**/*.cpp"]),
             hdrs = native.glob(["src/main/cpp/commands/" + folder + "/**/*.h"]),
             deps = [
-                "//wpilibNewCommands",
+                "//wpilibNewCommands:wpilibNewCommands_base",
             ],
             strip_include_prefix = "src/main/cpp/commands/" + folder,
             tags = ["wpi-example"],
@@ -74,7 +80,7 @@ def build_snippets():
             srcs = native.glob(["src/main/cpp/snippets/" + folder + "/**/*.cpp"]),
             hdrs = native.glob(["src/main/cpp/snippets/" + folder + "/**/*.h"], allow_empty = True),
             deps = [
-                "//wpilibNewCommands",
+                "//wpilibNewCommands:wpilibNewCommands_base",
             ],
             strip_include_prefix = "src/main/cpp/snippets/" + folder + "/include",
             tags = ["wpi-example"],
@@ -89,7 +95,7 @@ def build_templates():
             srcs = native.glob(["src/main/cpp/templates/" + folder + "/**/*.cpp"]),
             hdrs = native.glob(["src/main/cpp/templates/" + folder + "/**/*.h"]),
             deps = [
-                "//wpilibNewCommands",
+                "//wpilibNewCommands:wpilibNewCommands_base",
             ],
             strip_include_prefix = "src/main/cpp/templates/" + folder + "/include",
             tags = ["wpi-example"],
@@ -104,9 +110,15 @@ def build_tests():
             size = "small",
             srcs = native.glob([example_test_folder + "/**/*.cpp", example_src_folder + "/cpp/**/*.cpp", example_src_folder + "/c/**/*.c"], allow_empty = True),
             deps = [
-                "//wpilibNewCommands",
+                "//wpilibNewCommands:wpilibNewCommands_base",
                 ":{}-examples-headers".format(folder),
                 "//thirdparty/googletest",
+            ],
+            dynamic_deps = [
+                "//wpilibNewCommands:shared/wpilibNewCommands",
+                "//apriltag:shared/apriltag",
+                "//romiVendordep:shared/romiVendordep",
+                "//xrpVendordep:shared/xrpVendordep",
             ],
             defines = ["RUNNING_FRC_TESTS=1"],
             tags = ["wpi-example", "no-tsan", "no-asan", "no-ubsan", "exclusive"],

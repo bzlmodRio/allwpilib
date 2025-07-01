@@ -76,7 +76,7 @@ cc_library(
 )
 
 wpilib_cc_library(
-    name = "ntcore",
+    name = "ntcore_base",
     srcs = glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
@@ -95,14 +95,14 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//datalog",
-        "//wpinet",
-        "//wpiutil",
+        "//datalog:datalog_base",
+        "//wpinet:wpinet_base",
+        "//wpiutil:wpiutil_base",
     ],
 )
 
 wpilib_cc_shared_library(
-    name = "shared/ntcore",
+    name = "ntcore",
     dynamic_deps = [
         "//datalog:shared/datalog",
         "//wpinet:shared/wpinet",
@@ -110,8 +110,14 @@ wpilib_cc_shared_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":ntcore",
+        ":ntcore_base",
     ],
+)
+
+alias(
+    name = "shared/ntcore",
+    actual = ":ntcore",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
@@ -123,7 +129,7 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":ntcore",
+        ":ntcore_base",
     ],
 )
 
@@ -133,7 +139,7 @@ wpilib_jni_cc_library(
     java_dep = ":ntcore-java",
     visibility = ["//visibility:public"],
     deps = [
-        ":ntcore",
+        ":ntcore_base",
     ],
 )
 
@@ -181,9 +187,12 @@ cc_test(
         "no-tsan",
     ],
     deps = [
-        ":ntcore",
+        ":ntcore_base",
         "//thirdparty/googletest",
         "//wpiutil:wpiutil-testlib",
+    ],
+    dynamic_deps = [
+        ":shared/ntcore",
     ],
 )
 
@@ -201,7 +210,10 @@ cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":ntcore",
+        ":ntcore_base",
+    ],
+    dynamic_deps = [
+        ":shared/ntcore",
     ],
 )
 

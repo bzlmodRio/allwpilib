@@ -1,8 +1,8 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library", "wpilib_cc_shared_library")
 
 wpilib_cc_library(
-    name = "halsim_gui",
+    name = "halsim_gui_base",
     srcs = glob([
         "src/main/native/cpp/*",
         "src/main/native/include/*.h",
@@ -23,7 +23,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//glass:libglassnt",
-        "//hal:wpiHal",
+        "//hal:wpiHal_base",
     ],
 )
 
@@ -52,7 +52,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//glass:libglassnt",
-        "//hal:wpiHal",
+        "//hal:wpiHal_base",
     ],
 )
 
@@ -71,6 +71,32 @@ wpilib_cc_static_library(
     ],
 )
 
+wpilib_cc_shared_library(
+    name = "halsim_gui",
+    dynamic_deps = [
+        "//hal:shared/wpiHal",
+        "//wpimath:shared/wpimath",
+        "//ntcore:shared/ntcore",
+    ],
+    deps = [
+        ":halsim_gui_base",
+    ],
+    user_link_flags = select({
+        "@bazel_tools//src/conditions:windows": [
+            "-DEFAULTLIB:user32.lib",
+            "-DEFAULTLIB:gdi32.lib",
+            "-DEFAULTLIB:shell32.lib",
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+alias(
+    name = "shared/halsim_gui",
+    actual = ":halsim_gui",
+    visibility = ["//visibility:public"],
+)
+
 cc_test(
     name = "halsim_gui-test",
     size = "small",
@@ -80,9 +106,12 @@ cc_test(
         "wpi-cpp-gui",
     ],
     deps = [
-        ":halsim_gui",
+        ":halsim_gui_base",
         "//thirdparty/googletest",
     ],
+    dynamic_deps = [
+        ":shared/halsim_gui",
+    ]
 )
 
 cc_binary(
@@ -92,6 +121,9 @@ cc_binary(
         "wpi-cpp-gui",
     ],
     deps = [
-        ":halsim_gui",
+        ":halsim_gui_base",
     ],
+    dynamic_deps = [
+        ":shared/halsim_gui",
+    ]
 )

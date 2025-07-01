@@ -8,7 +8,7 @@ wpilib_halsim_extension(
         "src/main/native/include/*.h",
     ]),
     deps = [
-        "//simulation/halsim_ws_core",
+        "//simulation/halsim_ws_core:halsim_ws_core_base",
     ],
 )
 

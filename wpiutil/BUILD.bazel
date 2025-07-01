@@ -137,7 +137,7 @@ filegroup(
 )
 
 wpilib_cc_library(
-    name = "wpiutil",
+    name = "wpiutil_base",
     srcs = glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
@@ -172,18 +172,23 @@ wpilib_cc_library(
 )
 
 wpilib_cc_shared_library(
-    name = "shared/wpiutil",
-    visibility = ["//visibility:public"],
+    name = "wpiutil",
     deps = [
-        ":wpiutil",
+        ":wpiutil_base",
     ],
+)
+
+alias(
+    name = "shared/wpiutil",
+    actual = ":wpiutil",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
     name = "static/wpiutil",
     visibility = ["//visibility:public"],
     deps = [
-        ":wpiutil",
+        ":wpiutil_base",
     ],
 )
 
@@ -207,7 +212,7 @@ wpilib_jni_cc_library(
     java_dep = ":wpiutil-java",
     visibility = ["//visibility:public"],
     deps = [
-        ":wpiutil",
+        ":wpiutil_base",
     ],
 )
 
@@ -278,9 +283,12 @@ cc_test(
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
     deps = [
         ":nanopb-test-headers",
-        ":wpiutil",
+        ":wpiutil_base",
         ":wpiutil-testlib",
         "//thirdparty/googletest",
+    ],
+    dynamic_deps = [
+        ":shared/wpiutil",
     ],
 )
 
@@ -296,7 +304,10 @@ cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":wpiutil",
+        ":wpiutil_base",
+    ],
+    dynamic_deps = [
+        ":shared/wpiutil",
     ],
 )
 

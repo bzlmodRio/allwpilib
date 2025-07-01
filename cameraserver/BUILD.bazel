@@ -3,7 +3,7 @@ load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
 
 wpilib_cc_library(
-    name = "cameraserver",
+    name = "cameraserver_base",
     srcs = glob(["src/main/native/cpp/**"]),
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = [
@@ -13,8 +13,8 @@ wpilib_cc_library(
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
-        "//cscore",
-        "//ntcore",
+        "//cscore:cscore_base",
+        "//ntcore:ntcore_base",
     ],
 )
 
@@ -25,7 +25,7 @@ wpilib_cc_static_library(
         "//ntcore:static/ntcore",
     ],
     visibility = ["//visibility:public"],
-    deps = [":cameraserver"],
+    deps = [":cameraserver_base"],
 )
 
 java_library(
@@ -48,7 +48,7 @@ cc_test(
     size = "small",
     srcs = glob(["src/test/native/**"]),
     deps = [
-        ":cameraserver",
+        ":cameraserver_base",
         "//thirdparty/googletest",
     ],
 )
@@ -57,7 +57,7 @@ cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":cameraserver",
+        ":cameraserver_base",
     ],
 )
 

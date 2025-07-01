@@ -112,7 +112,7 @@ cc_library(
 )
 
 wpilib_cc_library(
-    name = "wpimath",
+    name = "wpimath_base",
     srcs = glob(
         [
             "src/main/native/cpp/**",
@@ -143,7 +143,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":nanopb-generated-headers",
-        "//wpiutil",
+        "//wpiutil:wpiutil_base",
     ],
 )
 
@@ -155,7 +155,7 @@ wpilib_cc_shared_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":wpimath",
+        ":wpimath_base",
     ],
 )
 
@@ -166,7 +166,7 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":wpimath",
+        ":wpimath_base",
     ],
 )
 
@@ -176,7 +176,7 @@ wpilib_jni_cc_library(
     java_dep = ":wpimath-java",
     visibility = ["//visibility:public"],
     deps = [
-        ":wpimath",
+        ":wpimath_base",
     ],
 )
 
@@ -240,7 +240,7 @@ cc_test(
     ],
     deps = [
         ":test_headers",
-        ":wpimath",
+        ":wpimath_base",
         "//thirdparty/googletest",
     ],
 )
@@ -262,7 +262,10 @@ cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":wpimath",
+        ":wpimath_base",
+    ],
+    dynamic_deps = [
+        ":shared/wpimath",
     ],
 )
 
