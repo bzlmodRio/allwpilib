@@ -51,6 +51,18 @@ jobs:
         run: bazel test -k ...   --config=ci -c opt --config=macos --nojava_header_compilation --verbose_failures
         shell: bash
 
+      - name: Debug
+        run: cat bazel-out/darwin_arm64-opt/bin/simulation/halsim_gui/libhalsim_gui.dylib-0.params
+        if: ${{ failure() }}
+
+      - name: Debug
+        run: cat bazel-out/darwin_arm64-opt/bin/wpilibcExamples/HttpCamera-example-0.params
+        if: ${{ failure() }}
+
+      - name: Debug
+        run: cat bazel-out/darwin_arm64-opt/bin/cscore/libcscore.dylib-0.params
+        if: ${{ failure() }}
+
   build-linux:
     strategy:
       fail-fast: false
