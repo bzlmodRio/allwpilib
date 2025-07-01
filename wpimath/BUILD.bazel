@@ -266,6 +266,7 @@ cc_binary(
     ],
     dynamic_deps = [
         ":shared/wpimath",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 

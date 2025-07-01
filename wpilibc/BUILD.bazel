@@ -168,6 +168,10 @@ cc_test(
     ],
     dynamic_deps = [
         ":shared/wpilibc",
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpimath:shared/wpimath",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 
@@ -179,5 +183,7 @@ cc_binary(
     ],
     dynamic_deps = [
         ":shared/wpilibc",
+        "//hal:shared/wpiHal",
+        "//wpiutil:shared/wpiutil",
     ],
 )

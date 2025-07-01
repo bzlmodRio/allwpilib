@@ -225,6 +225,7 @@ cc_test(
     ],
     dynamic_deps = [
         ":shared/wpinet",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 
@@ -244,6 +245,7 @@ cc_binary(
     ],
     dynamic_deps = [
         ":shared/wpinet",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 

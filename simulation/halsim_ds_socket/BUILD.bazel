@@ -80,6 +80,7 @@ cc_test(
     ],
     dynamic_deps = [
         ":shared/halsim_ds_socket",
+        "//hal:shared/wpiHal",
     ],
 )
 
@@ -91,5 +92,6 @@ cc_binary(
     ],
     dynamic_deps = [
         ":shared/halsim_ds_socket",
+        "//hal:shared/wpiHal",
     ],
 )

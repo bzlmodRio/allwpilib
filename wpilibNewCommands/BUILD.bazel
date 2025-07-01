@@ -139,6 +139,12 @@ cc_test(
     ],
     dynamic_deps = [
         ":shared/wpilibNewCommands",
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpilibc:shared/wpilibc",
+        "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 

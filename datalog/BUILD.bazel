@@ -132,6 +132,7 @@ cc_test(
     ],
     dynamic_deps = [
         ":shared/datalog",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 

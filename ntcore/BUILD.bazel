@@ -193,6 +193,7 @@ cc_test(
     ],
     dynamic_deps = [
         ":shared/ntcore",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 
@@ -214,6 +215,7 @@ cc_binary(
     ],
     dynamic_deps = [
         ":shared/ntcore",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 

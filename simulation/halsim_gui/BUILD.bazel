@@ -111,6 +111,7 @@ cc_test(
     ],
     dynamic_deps = [
         ":shared/halsim_gui",
+        "//hal:shared/wpiHal",
     ]
 )
 
