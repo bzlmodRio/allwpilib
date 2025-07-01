@@ -131,6 +131,7 @@ cc_test(
     ]),
     dynamic_deps = [
         ":shared/wpilibNewCommands",
+        "//datalog:shared/datalog",
         "//hal:shared/wpiHal",
         "//ntcore:shared/ntcore",
         "//wpilibc:shared/wpilibc",
@@ -170,6 +171,13 @@ cc_binary(
     srcs = ["src/dev/native/cpp/main.cpp"],
     dynamic_deps = [
         ":shared/wpilibNewCommands",
+        "//datalog:shared/datalog",
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpilibc:shared/wpilibc",
+        "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
     ],
     deps = [
         ":wpilibNewCommands_base",

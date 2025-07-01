@@ -158,9 +158,11 @@ cc_test(
     srcs = glob(["src/test/native/cpp/**"]),
     dynamic_deps = [
         ":shared/wpilibc",
+        "//datalog:shared/datalog",
         "//hal:shared/wpiHal",
         "//ntcore:shared/ntcore",
         "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
     tags = [
@@ -180,7 +182,11 @@ cc_binary(
     srcs = ["src/dev/native/cpp/main.cpp"],
     dynamic_deps = [
         ":shared/wpilibc",
+        "//datalog:shared/datalog",
         "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
     deps = [
