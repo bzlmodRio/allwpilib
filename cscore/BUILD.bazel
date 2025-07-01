@@ -97,19 +97,19 @@ wpilib_cc_static_library(
 # https://github.com/bazelbuild/bazel/issues/21893
 wpilib_cc_shared_library(
     name = "cscore",
-    dynamic_deps = [
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
-    ],
-    deps = [":cscore_base"],
     additional_linker_inputs = select({
         "@bazel_tools//src/conditions:darwin": [":cscore-mac"],
         "//conditions:default": [],
     }),
+    dynamic_deps = [
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     user_link_flags = select({
         "@bazel_tools//src/conditions:darwin": ["-Wl,-force_load,$(location :cscore-mac)"],
         "//conditions:default": [],
     }),
+    deps = [":cscore_base"],
 )
 
 alias(
