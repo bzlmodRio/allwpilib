@@ -89,7 +89,7 @@ wpilib_cc_shared_library(
             "-DEFAULTLIB:gdi32.lib",
             "-DEFAULTLIB:shell32.lib",
         ],
-        "@bazel_tools//src/conditions:darwin": ["-l$(location //thirdparty/imgui_suite:glfw_src_darwin)", "-l$(location //thirdparty/imgui_suite:imgui_src_darwin)"],
+        "@bazel_tools//src/conditions:darwin": ["-Wl,-force_load,$(location //thirdparty/imgui_suite:glfw_src_darwin)", "-Wl,-force_load,$(location //thirdparty/imgui_suite:imgui_src_darwin)"],
         "//conditions:default": [],
     }),
     deps = [

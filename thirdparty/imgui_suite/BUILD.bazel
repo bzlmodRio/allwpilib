@@ -196,6 +196,7 @@ wpilib_objc_library(
     deps = [
         ":glfw_hdrs",
     ],
+    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -310,6 +311,7 @@ wpilib_objc_library(
     deps = [
         ":glfw",
     ],
+    visibility = ["//visibility:public"],
 )
 
 cc_library(

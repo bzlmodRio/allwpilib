@@ -107,7 +107,7 @@ wpilib_cc_shared_library(
         "//conditions:default": [],
     }),
     user_link_flags = select({
-        "@bazel_tools//src/conditions:darwin": ["-l$(location :cscore-mac)"],
+        "@bazel_tools//src/conditions:darwin": ["-Wl,-force_load,$(location :cscore-mac)"],
         "//conditions:default": [],
     }),
 )
