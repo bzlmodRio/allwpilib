@@ -93,14 +93,21 @@ wpilib_cc_static_library(
     deps = [":cscore_base"],
 )
 
+# Bazel does not pull transative objc libraries in
+# https://github.com/bazelbuild/bazel/issues/21893
 wpilib_cc_shared_library(
     name = "cscore",
     dynamic_deps = [
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
-    deps = [":cscore_base"] + select({
+    deps = [":cscore_base"],
+    additional_linker_inputs = select({
         "@bazel_tools//src/conditions:darwin": [":cscore-mac"],
+        "//conditions:default": [],
+    }),
+    user_link_flags = select({
+        "@bazel_tools//src/conditions:darwin": ["$(location :cscore-mac)"],
         "//conditions:default": [],
     }),
 )
