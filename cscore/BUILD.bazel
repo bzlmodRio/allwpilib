@@ -132,6 +132,9 @@ wpilib_cc_shared_library(
         "//conditions:default": [],
     }),
     deps = [":cscore_base"],
+    exports_filter = [
+        "@bzlmodrio-opencv//:__subpackages__ "
+    ]
 )
 
 alias(
@@ -190,6 +193,9 @@ cc_binary(
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
         ":cscore_base",
+    ],
+    dynamic_deps = [
+        ":shared/cscore",
     ],
 )
 
