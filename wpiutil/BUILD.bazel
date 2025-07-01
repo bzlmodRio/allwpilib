@@ -128,22 +128,6 @@ filegroup(
 )
 
 wpilib_cc_library(
-    name = "memory-headers",
-    hdrs = glob([
-        "src/main/native/thirdparty/memory/include/**/*.hpp",
-    ]),
-    includes = ["src/main/native/thirdparty/memory/include"],
-    strip_include_prefix = "src/main/native/thirdparty/memory/include",
-    visibility = ["//wpiutil:__subpackages__"],
-)
-
-filegroup(
-    name = "memory-srcs",
-    srcs = glob(["src/main/native/thirdparty/memory/src/**"]),
-    visibility = ["//wpiutil:__subpackages__"],
-)
-
-wpilib_cc_library(
     name = "mpack-headers",
     hdrs = glob([
         "src/main/native/thirdparty/mpack/include/**/*.h",
@@ -229,7 +213,6 @@ wpilib_cc_static_and_shared_library(
         ":fmtlib-srcs",
         ":generate-resources",
         ":llvm-srcs",
-        ":memory-srcs",
         ":mpack-srcs",
         ":nanopb-srcs",
         ":native-srcs",
@@ -244,7 +227,6 @@ wpilib_cc_static_and_shared_library(
         ":fmtlib-headers",
         ":json-headers",
         ":llvm-headers",
-        ":memory-headers",
         ":mpack-headers",
         ":nanopb-headers",
         ":protobuf-headers",
