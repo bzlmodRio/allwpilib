@@ -99,7 +99,10 @@ wpilib_cc_shared_library(
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
-    deps = [":cscore_base"],
+    deps = [":cscore_base"] + select({
+        "@bazel_tools//src/conditions:darwin": [":cscore-mac"],
+        "//conditions:default": [],
+    }),
 )
 
 alias(
