@@ -153,11 +153,11 @@ wpilib_cc_shared_library(
     dynamic_deps = [
         "//wpiutil:shared/wpiutil",
     ],
+    # TODO(pj) Generate this automatically
+    win_def_file = ":bazel_windows_protobuf_symbols.def",
     deps = [
         ":wpimath_base",
     ],
-    # TODO(pj) Generate this automatically
-    win_def_file = ":bazel_windows_protobuf_symbols.def",
 )
 
 alias(
@@ -241,6 +241,10 @@ cc_test(
         "src/test/native/cpp/**/*.cpp",
         "src/test/native/cpp/**/*.h",
     ]),
+    dynamic_deps = [
+        ":shared/wpimath",
+        "//wpiutil:shared/wpiutil",
+    ],
     tags = [
         "no-bullseye",
         "no-raspi",
@@ -250,10 +254,6 @@ cc_test(
         ":wpimath_base",
         "//thirdparty/googletest",
     ],
-    dynamic_deps = [
-        ":shared/wpimath",
-        "//wpiutil:shared/wpiutil",
-    ]
 )
 
 wpilib_java_junit5_test(

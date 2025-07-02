@@ -105,6 +105,9 @@ wpilib_cc_shared_library(
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
+    exports_filter = [
+        "@bzlmodrio-opencv//:__subpackages__ ",
+    ],
     user_link_flags = select({
         "@bazel_tools//src/conditions:darwin": [
             "-Wl,-force_load,$(location :cscore-mac)",
@@ -132,9 +135,6 @@ wpilib_cc_shared_library(
         "//conditions:default": [],
     }),
     deps = [":cscore_base"],
-    exports_filter = [
-        "@bzlmodrio-opencv//:__subpackages__ "
-    ]
 )
 
 alias(
@@ -191,13 +191,13 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":cscore_base",
-    ],
     dynamic_deps = [
         ":shared/cscore",
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
+    ],
+    deps = [
+        ":cscore_base",
     ],
 )
 

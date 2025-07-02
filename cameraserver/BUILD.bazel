@@ -62,29 +62,29 @@ cc_test(
     name = "cameraserver-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/**"]),
-    deps = [
-        ":cameraserver_base",
-        "//thirdparty/googletest",
-    ],
     dynamic_deps = [
         ":shared/cameraserver",
         "//cscore:shared/cscore",
         "//ntcore:shared/ntcore",
         "//wpiutil:shared/wpiutil",
+    ],
+    deps = [
+        ":cameraserver_base",
+        "//thirdparty/googletest",
     ],
 )
 
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":cameraserver_base",
-    ],
     dynamic_deps = [
         ":shared/cameraserver",
         "//cscore:shared/cscore",
         "//ntcore:shared/ntcore",
         "//wpiutil:shared/wpiutil",
+    ],
+    deps = [
+        ":cameraserver_base",
     ],
 )
 

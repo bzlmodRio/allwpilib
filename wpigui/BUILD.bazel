@@ -27,11 +27,11 @@ wpilib_objc_library(
         "CoreVideo",
         "QuartzCore",
     ],
+    visibility = ["//visibility:public"],
     deps = [
         ":headers",
         "//thirdparty/imgui_suite",
     ],
-    visibility = ["//visibility:public"],
 )
 
 pkg_files(

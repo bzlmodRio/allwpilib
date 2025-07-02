@@ -1,6 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_shared_library")
 load("//shared/bazel/rules:halsim_library.bzl", "wpilib_halsim_extension")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 
 wpilib_halsim_extension(
     name = "halsim_ws_client_base",
@@ -29,10 +29,10 @@ alias(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
+    dynamic_deps = [
+        ":shared/halsim_ws_client",
+    ],
     deps = [
         ":halsim_ws_client_base",
     ],
-    dynamic_deps = [
-        ":shared/halsim_ws_client",
-    ]
 )
