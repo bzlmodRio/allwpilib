@@ -4,6 +4,8 @@ load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_shared_and_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 
 wpilib_shared_and_static_library(
     name = "datalog",
@@ -54,6 +56,8 @@ wpilib_jni_java_library(
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
+
+zip_java_srcs(name = "datalog")
 
 py_binary(
     name = "datalog_example",
@@ -116,4 +120,10 @@ wpilib_java_junit5_test(
         ":datalog-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+bundle_default_jni_library(
+    name = "publishing_bundle",
+    group_id = "edu.wpi.first.datalog",
+    library_base_name = "datalog",
 )

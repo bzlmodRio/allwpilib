@@ -2,11 +2,14 @@ load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//hal:generate.bzl", "generate_hal")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_shared_and_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 filegroup(
     name = "proto_files",
@@ -120,8 +123,8 @@ wpilib_shared_and_static_library(
         "//wpiutil",
     ] + select({
         "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": [
-            "//ntcore",
-            "//wpinet",
+            "//ntcore:ntcore_base",
+            "//wpinet:wpinet_base",
         ],
         "//conditions:default": [
             "//ntcore:ntcore_c_headers",
@@ -155,6 +158,8 @@ wpilib_jni_java_library(
     ],
 )
 
+zip_java_srcs(name = "wpihal")
+
 cc_test(
     name = "hal-cpp-test",
     size = "small",
@@ -187,4 +192,28 @@ java_binary(
     main_class = "edu.wpi.first.hal.DevMain",
     deps = [
     ],
+)
+
+pkg_zip(
+    name = "wpihal-shared-with-jni-zip",
+    srcs = [
+        ":shared/wpiHaljni-shared.pkg",
+        ":shared/wpiHal-shared.pkg",
+    ],
+    out = "wpihal-shared-with-jni.zip",
+    tags = [
+        "manual",
+        "no-remote",
+    ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":wpiHal-hdrs-zip",
+    cc_shared_library_pkg = ":wpihal-shared-with-jni-zip",
+    cc_src_pkg = ":wpiHal-srcs-zip",
+    cc_static_library_pkg = ":static/wpiHal-static-zip",
+    group_id = "edu.wpi.first.hal",
+    java_pkg = "libwpihal-java-sources",
+    library_base_name = "hal",
 )

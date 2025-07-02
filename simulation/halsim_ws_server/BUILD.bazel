@@ -1,5 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("//shared/bazel/rules:halsim_library.bzl", "wpilib_halsim_extension")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 cc_library(
     name = "headers",
@@ -57,4 +58,15 @@ cc_binary(
     deps = [
         ":halsim_ws_server",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    add_cc_suffix = False,
+    cc_hdr_pkg = ":halsim_ws_server-hdrs-zip",
+    cc_shared_library_pkg = ":shared/halsim_ws_server-shared-zip",
+    cc_src_pkg = ":halsim_ws_server-srcs-zip",
+    cc_static_library_pkg = ":static/halsim_ws_server-static-zip",
+    group_id = "edu.wpi.first.halsim",
+    library_base_name = "halsim_ws_server",
 )
