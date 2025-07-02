@@ -79,6 +79,9 @@ cc_binary(
     ],
     dynamic_deps = [
         ":shared/cameraserver",
+        "//cscore:shared/cscore",
+        "//ntcore:shared/ntcore",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 

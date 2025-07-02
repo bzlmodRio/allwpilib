@@ -196,6 +196,8 @@ cc_binary(
     ],
     dynamic_deps = [
         ":shared/cscore",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
     ],
 )
 

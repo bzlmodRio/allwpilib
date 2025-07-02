@@ -148,15 +148,22 @@ wpilib_cc_library(
 )
 
 wpilib_cc_shared_library(
-    name = "shared/wpimath",
+    name = "wpimath",
     auto_export_windows_symbols = False,
     dynamic_deps = [
         "//wpiutil:shared/wpiutil",
     ],
-    visibility = ["//visibility:public"],
     deps = [
         ":wpimath_base",
     ],
+    # TODO(pj) Generate this automatically
+    win_def_file = ":bazel_windows_protobuf_symbols.def",
+)
+
+alias(
+    name = "shared/wpimath",
+    actual = ":wpimath",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
@@ -243,6 +250,10 @@ cc_test(
         ":wpimath_base",
         "//thirdparty/googletest",
     ],
+    dynamic_deps = [
+        ":shared/wpimath",
+        "//wpiutil:shared/wpiutil",
+    ]
 )
 
 wpilib_java_junit5_test(
