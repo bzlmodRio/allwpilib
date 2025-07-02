@@ -1,4 +1,3 @@
-
 """
 This provides helper functions to build shared libraries that depend on wpigui.
 
@@ -16,7 +15,6 @@ def get_wpigui_additional_linker_inputs():
         ],
         "//conditions:default": [],
     })
-
 
 def get_wpigui_user_link_flags():
     return select({

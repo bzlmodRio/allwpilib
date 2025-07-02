@@ -2,14 +2,12 @@ load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
-load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//hal:generate.bzl", "generate_hal")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_shared_and_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
-load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 
 filegroup(
@@ -194,7 +192,6 @@ java_binary(
     deps = [
     ],
 )
-
 
 bundle_default_jni_library(
     name = "publishing_bundle",

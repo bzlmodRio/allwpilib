@@ -31,7 +31,6 @@ wpilib_shared_and_static_library(
     ],
 )
 
-
 bundle_library_artifacts(
     name = "publishing_bundle",
     add_cc_suffix = False,

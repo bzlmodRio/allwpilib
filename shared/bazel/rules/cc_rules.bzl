@@ -146,7 +146,7 @@ def wpilib_cc_library(
 
         pkg_zip(
             name = name + "-hdrs-zip",
-            srcs = maybe_third_party_notices_pkg +extra_hdr_pkg_files + ["//:license_pkg_files"] + [name + "-hdrs-pkg"] + [lib + "-hdrs-pkg" for lib in third_party_libraries + third_party_header_only_libraries],
+            srcs = maybe_third_party_notices_pkg + extra_hdr_pkg_files + ["//:license_pkg_files"] + [name + "-hdrs-pkg"] + [lib + "-hdrs-pkg" for lib in third_party_libraries + third_party_header_only_libraries],
             tags = ["no-remote", "manual"],
         )
 

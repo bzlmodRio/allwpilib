@@ -1,6 +1,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_shared_and_static_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_shared_and_static_library(
@@ -40,7 +41,6 @@ java_library(
     ],
 )
 
-load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 zip_java_srcs(name = "romi")
 
 cc_test(

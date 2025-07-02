@@ -1,6 +1,4 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
-load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 load("//shared/bazel/rules:halsim_library.bzl", "wpilib_halsim_extension")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 load("//wpigui:shared_library_util.bzl", "get_wpigui_additional_linker_inputs", "get_wpigui_user_link_flags")
@@ -11,10 +9,19 @@ wpilib_halsim_extension(
         "src/main/native/cpp/*",
         "src/main/native/include/*.h",
     ]),
-    init_extension_name = "HALSIM_InitExtension_GUI",
     includes = ["src/main/native/include"],
+    init_extension_name = "HALSIM_InitExtension_GUI",
     linkopts = [
         "-lm",
+    ],
+    shared_library_additional_linker_inputs = get_wpigui_additional_linker_inputs(),
+    shared_library_user_link_flags = get_wpigui_user_link_flags(),
+    static_deps = [
+        "//hal:static/wpiHal",
+        "//wpimath:static/wpimath",
+        "//datalog:static/datalog",
+        "//ntcore:static/ntcore",
+        "//glass:static/glassnt",
     ],
     tags = [
         "wpi-cpp-gui",
@@ -24,15 +31,6 @@ wpilib_halsim_extension(
         "//glass:libglassnt",
         "//hal:wpiHal",
     ],
-    static_deps = [
-        "//hal:static/wpiHal",
-        "//wpimath:static/wpimath",
-        "//datalog:static/datalog",
-        "//ntcore:static/ntcore",
-        "//glass:static/glassnt",
-    ],
-    shared_library_additional_linker_inputs = get_wpigui_additional_linker_inputs(),
-    shared_library_user_link_flags = get_wpigui_user_link_flags(),
 )
 
 cc_test(
