@@ -65,7 +65,9 @@ cc_test(
     dynamic_deps = [
         ":shared/cameraserver",
         "//cscore:shared/cscore",
+        "//datalog:shared/datalog",
         "//ntcore:shared/ntcore",
+        "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
     deps = [
@@ -79,8 +81,10 @@ cc_binary(
     srcs = ["src/dev/native/cpp/main.cpp"],
     dynamic_deps = [
         ":shared/cameraserver",
+        "//datalog:shared/datalog",
         "//cscore:shared/cscore",
         "//ntcore:shared/ntcore",
+        "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
     deps = [
