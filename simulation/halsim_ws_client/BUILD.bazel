@@ -1,21 +1,56 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_shared_library")
 load("//shared/bazel/rules:halsim_library.bzl", "wpilib_halsim_extension")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_halsim_extension(
-    name = "halsim_ws_client",
+    name = "halsim_ws_client_base",
     srcs = glob([
         "src/main/native/cpp/*.cpp",
         "src/main/native/include/*.h",
     ]),
     deps = [
-        "//simulation/halsim_ws_core",
+        "//simulation/halsim_ws_core:halsim_ws_core_base",
     ],
+)
+
+wpilib_cc_shared_library(
+    name = "halsim_ws_client",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        "//hal:shared/wpiHal",
+    ],
+    deps = [
+        ":halsim_ws_client_base",
+    ],
+)
+
+alias(
+    name = "shared/halsim_ws_client",
+    actual = ":halsim_ws_client",
+    visibility = ["//visibility:public"],
 )
 
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":halsim_ws_client",
+    dynamic_deps = [
+        ":shared/halsim_ws_client",
+        "//hal:shared/wpiHal",
+        "//wpiutil:shared/wpiutil",
     ],
+    deps = [
+        ":halsim_ws_client_base",
+    ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    add_cc_suffix = False,
+    cc_hdr_pkg = ":halsim_ws_client_base-hdrs-zip",
+    cc_shared_library_pkg = ":halsim_ws_client-shared-zip",
+    cc_src_pkg = ":halsim_ws_client_base-srcs-zip",
+    # cc_static_library_pkg = ":static/halsim_ws_client-static-zip",
+    group_id = "edu.wpi.first.halsim",
+    library_base_name = "halsim_ws_client",
 )

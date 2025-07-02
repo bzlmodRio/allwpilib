@@ -8,6 +8,7 @@ load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_c
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 load("//wpimath:generate.bzl", "generate_wpimath")
 
 filegroup(
@@ -112,7 +113,7 @@ cc_library(
 )
 
 wpilib_cc_library(
-    name = "wpimath",
+    name = "wpimath_base",
     srcs = glob(
         [
             "src/main/native/cpp/**",
@@ -143,20 +144,27 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":nanopb-generated-headers",
-        "//wpiutil",
+        "//wpiutil:wpiutil_base",
     ],
 )
 
 wpilib_cc_shared_library(
-    name = "shared/wpimath",
+    name = "wpimath",
     auto_export_windows_symbols = False,
     dynamic_deps = [
         "//wpiutil:shared/wpiutil",
     ],
-    visibility = ["//visibility:public"],
+    # TODO(pj) Generate this automatically
+    win_def_file = ":bazel_windows_protobuf_symbols.def",
     deps = [
-        ":wpimath",
+        ":wpimath_base",
     ],
+)
+
+alias(
+    name = "shared/wpimath",
+    actual = ":wpimath",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
@@ -166,7 +174,7 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":wpimath",
+        ":wpimath_base",
     ],
 )
 
@@ -176,7 +184,7 @@ wpilib_jni_cc_library(
     java_dep = ":wpimath-java",
     visibility = ["//visibility:public"],
     deps = [
-        ":wpimath",
+        ":wpimath_base",
     ],
 )
 
@@ -217,6 +225,10 @@ pkg_zip(
     name = "libwpimath-java-sources",
     srcs = [":wpimath-java-srcs"],
     out = "libwpimath-java-sources.jar",
+    tags = [
+        "manual",
+        "no-remote",
+    ],
 )
 
 cc_library(
@@ -234,13 +246,17 @@ cc_test(
         "src/test/native/cpp/**/*.cpp",
         "src/test/native/cpp/**/*.h",
     ]),
+    dynamic_deps = [
+        ":shared/wpimath",
+        "//wpiutil:shared/wpiutil",
+    ],
     tags = [
         "no-bullseye",
         "no-raspi",
     ],
     deps = [
         ":test_headers",
-        ":wpimath",
+        ":wpimath_base",
         "//thirdparty/googletest",
     ],
 )
@@ -261,8 +277,12 @@ wpilib_java_junit5_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
+    dynamic_deps = [
+        ":shared/wpimath",
+        "//wpiutil:shared/wpiutil",
+    ],
     deps = [
-        ":wpimath",
+        ":wpimath_base",
     ],
 )
 
@@ -282,4 +302,10 @@ py_binary(
         "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
         "//conditions:default": [],
     }),
+)
+
+bundle_default_jni_library(
+    name = "publishing_bundle",
+    group_id = "edu.wpi.first.wpimath",
+    library_base_name = "wpimath",
 )

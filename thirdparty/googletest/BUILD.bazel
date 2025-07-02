@@ -1,4 +1,5 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_cc_library(
     name = "googletest",
@@ -22,4 +23,13 @@ wpilib_cc_static_library(
     deps = [
         ":googletest",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":googletest-hdrs-zip",
+    cc_src_pkg = ":googletest-srcs-zip",
+    cc_static_library_pkg = ":static/googletest-static-zip",
+    group_id = "edu.wpi.first.thirdparty.googletest",
+    library_base_name = "googletest",
 )

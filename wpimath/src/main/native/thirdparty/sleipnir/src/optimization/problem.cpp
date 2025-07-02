@@ -329,9 +329,9 @@ void Problem::print_exit_conditions([[maybe_unused]] const Options& options) {
   if (!m_iteration_callbacks.empty()) {
     slp::println("  ↳ iteration callback requested stop");
   }
-  if (std::isfinite(options.max_iterations)) {
-    slp::println("  ↳ executed {} iterations", options.max_iterations);
-  }
+  // if (std::isfinite(options.max_iterations)) {
+  //   slp::println("  ↳ executed {} iterations", options.max_iterations);
+  // }
   if (std::isfinite(options.timeout.count())) {
     slp::println("  ↳ {} elapsed", options.timeout.count());
   }

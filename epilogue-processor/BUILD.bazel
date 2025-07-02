@@ -3,6 +3,7 @@ load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 java_library(
     name = "processor-java",
@@ -33,6 +34,10 @@ pkg_zip(
         ":resources",
     ],
     out = "libepilogue-processor-java-sources.jar",
+    tags = [
+        "manual",
+        "no-remote",
+    ],
 )
 
 java_plugin(
@@ -54,4 +59,11 @@ wpilib_java_junit5_test(
         ":processor-java",
         "@maven//:com_google_testing_compile_compile_testing",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    group_id = "edu.wpi.first.epilogue",
+    java_pkg = "libepilogue-processor-java-sources",
+    library_base_name = "epilogue-processor",
 )

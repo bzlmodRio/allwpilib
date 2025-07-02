@@ -27,9 +27,9 @@ cc_library(
     hdrs = glob(["src/main/native/include/**"]),
     strip_include_prefix = "src/main/native/include",
     deps = [
-        "//datalog",
+        "//datalog:datalog_base",
         "//glass:libglass",
-        "//wpinet",
+        "//wpinet:wpinet_base",
     ],
 )
 

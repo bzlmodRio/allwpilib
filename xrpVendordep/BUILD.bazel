@@ -1,9 +1,24 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+
+pkg_java_files(name = "xrp-java-srcs")
+
+pkg_zip(
+    name = "libxrp-java-sources",
+    srcs = [":xrp-java-srcs"],
+    out = "libxrp-java-sources.jar",
+    tags = [
+        "manual",
+        "no-remote",
+    ],
+)
 
 wpilib_cc_library(
-    name = "xrpVendordep",
+    name = "xrpVendordep_base",
     srcs = glob([
         "src/main/native/cpp/**",
     ]),
@@ -11,14 +26,14 @@ wpilib_cc_library(
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
-        "//ntcore",
-        "//wpilibc",
-        "//wpinet",
+        "//ntcore:ntcore_base",
+        "//wpilibc:wpilibc_base",
+        "//wpinet:wpinet_base",
     ],
 )
 
 wpilib_cc_shared_library(
-    name = "shared/xrpVendordep",
+    name = "xrpVendordep",
     dynamic_deps = [
         "//hal:shared/wpiHal",
         "//ntcore:shared/ntcore",
@@ -26,8 +41,13 @@ wpilib_cc_shared_library(
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
+    deps = [":xrpVendordep_base"],
+)
+
+alias(
+    name = "shared/xrpVendordep",
+    actual = ":xrpVendordep",
     visibility = ["//visibility:public"],
-    deps = [":xrpVendordep"],
 )
 
 wpilib_cc_static_library(
@@ -38,7 +58,7 @@ wpilib_cc_static_library(
         "//wpinet:static/wpinet",
     ],
     visibility = ["//visibility:public"],
-    deps = [":xrpVendordep"],
+    deps = [":xrpVendordep_base"],
 )
 
 java_library(
@@ -56,8 +76,18 @@ cc_test(
     name = "xrp-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
+    dynamic_deps = [
+        ":shared/xrpVendordep",
+        "//datalog:shared/datalog",
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpilibc:shared/wpilibc",
+        "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     deps = [
-        ":xrpVendordep",
+        ":xrpVendordep_base",
         "//thirdparty/googletest",
     ],
 )
@@ -65,8 +95,17 @@ cc_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
+    dynamic_deps = [
+        ":shared/xrpVendordep",
+        "//datalog:shared/datalog",
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpilibc:shared/wpilibc",
+        "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
+    ],
     deps = [
-        "//wpiutil",
+        "//wpiutil:wpiutil_base",
     ],
 )
 
@@ -79,4 +118,15 @@ java_binary(
         "//ntcore:ntcore-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":xrpVendordep_base-hdrs-zip",
+    cc_shared_library_pkg = ":xrpVendordep-shared-zip",
+    cc_src_pkg = ":xrpVendordep_base-srcs-zip",
+    cc_static_library_pkg = ":static/xrpVendordep-static-zip",
+    group_id = "edu.wpi.first.xrpVendordep",
+    java_pkg = "libxrp-java-sources",
+    library_base_name = "xrpVendordep",
 )

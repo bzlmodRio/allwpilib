@@ -1,9 +1,10 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_cc_library(
-    name = "cameraserver",
+    name = "cameraserver_base",
     srcs = glob(["src/main/native/cpp/**"]),
     hdrs = glob(["src/main/native/include/**/*"]),
     includes = [
@@ -13,8 +14,9 @@ wpilib_cc_library(
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
-        "//cscore",
-        "//ntcore",
+        "//cscore:cscore_base",
+        "//ntcore:ntcore_base",
+        "@bzlmodrio-opencv//libraries/cpp/opencv:static",
     ],
 )
 
@@ -25,7 +27,21 @@ wpilib_cc_static_library(
         "//ntcore:static/ntcore",
     ],
     visibility = ["//visibility:public"],
-    deps = [":cameraserver"],
+    deps = [":cameraserver_base"],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/cameraserver",
+    dynamic_deps = [
+        "//cscore:shared/cscore",
+        "//ntcore:shared/ntcore",
+        "//wpiutil:shared/wpiutil",
+    ],
+    static_deps = [
+        "@bzlmodrio-opencv//libraries/cpp/opencv",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":cameraserver_base"],
 )
 
 java_library(
@@ -47,8 +63,16 @@ cc_test(
     name = "cameraserver-cpp-test",
     size = "small",
     srcs = glob(["src/test/native/**"]),
+    dynamic_deps = [
+        ":shared/cameraserver",
+        "//cscore:shared/cscore",
+        "//datalog:shared/datalog",
+        "//ntcore:shared/ntcore",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     deps = [
-        ":cameraserver",
+        ":cameraserver_base",
         "//thirdparty/googletest",
     ],
 )
@@ -56,8 +80,16 @@ cc_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
+    dynamic_deps = [
+        ":shared/cameraserver",
+        "//datalog:shared/datalog",
+        "//cscore:shared/cscore",
+        "//ntcore:shared/ntcore",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     deps = [
-        ":cameraserver",
+        ":cameraserver_base",
     ],
 )
 
@@ -67,4 +99,15 @@ java_binary(
     main_class = "edu.wpi.first.cameraserver.DevMain",
     deps = [
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":cameraserver_base-hdrs-zip",
+    cc_shared_library_pkg = ":shared/cameraserver-shared-zip",
+    cc_src_pkg = ":cameraserver_base-srcs-zip",
+    cc_static_library_pkg = ":static/cameraserver-static-zip",
+    group_id = "edu.wpi.first.cameraserver",
+    # java_pkg = "libcameraserver-java-sources",
+    library_base_name = "cameraserver",
 )

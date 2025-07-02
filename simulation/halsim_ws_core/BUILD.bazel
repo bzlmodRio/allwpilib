@@ -1,7 +1,8 @@
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_cc_library(
-    name = "halsim_ws_core",
+    name = "halsim_ws_core_base",
     srcs = glob(["src/main/native/cpp/*.cpp"]),
     hdrs = glob(["src/main/native/include/*.h"]),
     include_license_files = True,
@@ -13,24 +14,29 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//hal:wpiHal",
-        "//wpinet",
-        "//wpiutil",
+        "//hal:wpiHal_base",
+        "//wpinet:wpinet_base",
+        "//wpiutil:wpiutil_base",
     ],
 )
 
 wpilib_cc_shared_library(
-    name = "shared/halsim_ws_core",
+    name = "halsim_ws_core",
     auto_export_windows_symbols = False,
     dynamic_deps = [
         "//hal:shared/wpiHal",
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
-    visibility = ["//visibility:public"],
     deps = [
-        ":halsim_ws_core",
+        ":halsim_ws_core_base",
     ],
+)
+
+alias(
+    name = "shared/halsim_ws_core",
+    actual = ":halsim_ws_core",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
@@ -42,6 +48,17 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":halsim_ws_core",
+        ":halsim_ws_core_base",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    add_cc_suffix = False,
+    cc_hdr_pkg = ":halsim_ws_core_base-hdrs-zip",
+    cc_shared_library_pkg = ":halsim_ws_core-shared-zip",
+    cc_src_pkg = ":halsim_ws_core_base-srcs-zip",
+    cc_static_library_pkg = ":static/halsim_ws_core-static-zip",
+    group_id = "edu.wpi.first.halsim",
+    library_base_name = "halsim_ws_core",
 )

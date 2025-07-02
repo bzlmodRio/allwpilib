@@ -1,4 +1,5 @@
 load("@rules_cc//cc:action_names.bzl", "CPP_LINK_STATIC_LIBRARY_ACTION_NAME")
+load("@rules_cc//cc:cc_shared_library.bzl", "cc_shared_library")
 load("@rules_cc//cc:defs.bzl", "CcInfo", "cc_library")
 load("@rules_cc//cc:find_cc_toolchain.bzl", "CC_TOOLCHAIN_ATTRS", "find_cpp_toolchain", "use_cc_toolchain")
 load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
@@ -44,6 +45,7 @@ def third_party_cc_lib_helper(
         visibility = visibility,
     )
 
+    print(name + "-hdrs-pkg")
     pkg_files(
         name = name + "-hdrs-pkg",
         srcs = native.glob([include_root + "/**"]),
@@ -133,7 +135,7 @@ def wpilib_cc_library(
         pkg_zip(
             name = name + "-srcs-zip",
             srcs = maybe_license_pkg + extra_src_pkg_files + [name + "-srcs-pkg"] + [lib + "-srcs-pkg" for lib in third_party_libraries],
-            tags = ["no-remote"],
+            tags = ["no-remote", "manual"],
         )
 
     if hdrs_pkg_root:
@@ -146,7 +148,7 @@ def wpilib_cc_library(
         pkg_zip(
             name = name + "-hdrs-zip",
             srcs = extra_hdr_pkg_files + maybe_license_pkg + [name + "-hdrs-pkg"] + [lib + "-hdrs-pkg" for lib in third_party_libraries + third_party_header_only_libraries],
-            tags = ["no-remote"],
+            tags = ["no-remote", "manual"],
         )
 
 def wpilib_cc_shared_library(
@@ -156,8 +158,7 @@ def wpilib_cc_shared_library(
     features = []
     if auto_export_windows_symbols:
         features.append("windows_export_all_symbols")
-
-    native.cc_shared_library(
+    cc_shared_library(
         name = name,
         features = features,
         **kwargs
@@ -167,6 +168,7 @@ def wpilib_cc_shared_library(
         name = name + "-shared.pkg",
         srcs = [":" + name],
         tags = ["manual"],
+        prefix = get_platform_prefix("/shared"),
     )
 
     pkg_zip(
@@ -358,6 +360,17 @@ attribute to choose a custom name."""),
     fragments = ["cpp"],
 )
 
+def get_platform_prefix(optional_suffix = ""):
+    return select({
+        "@bazel_tools//src/conditions:darwin": "osx/x86-64" + optional_suffix,
+        "@bazel_tools//src/conditions:linux_x86_64": "linux/x86-64" + optional_suffix,
+        "@bazel_tools//src/conditions:windows": "windows/x86-64" + optional_suffix,
+        "@rules_bzlmodrio_toolchains//conditions:windows_arm64": "windows/arm64" + optional_suffix,
+        "@rules_bzlmodrio_toolchains//constraints/is_bookworm64:bookworm64": "linux/arm64" + optional_suffix,
+        "@rules_bzlmodrio_toolchains//constraints/is_raspibookworm32:raspibookworm32": "linux/arm32" + optional_suffix,
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": "linux/systemcore" + optional_suffix,
+    })
+
 def wpilib_cc_static_library(
         name,
         static_lib_name = None,
@@ -379,6 +392,7 @@ def wpilib_cc_static_library(
         name = name + "-static.pkg",
         srcs = [":" + name],
         tags = ["manual"],
+        prefix = get_platform_prefix("/static"),
     )
 
     pkg_zip(

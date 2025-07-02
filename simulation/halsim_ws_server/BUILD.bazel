@@ -1,5 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 cc_library(
     name = "headers",
@@ -8,7 +9,7 @@ cc_library(
 )
 
 wpilib_cc_library(
-    name = "halsim_ws_server",
+    name = "halsim_ws_server_base",
     srcs = glob(["src/main/native/cpp/**"]),
     include_license_files = True,
     target_compatible_with = select({
@@ -19,7 +20,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//simulation/halsim_ws_core",
+        "//simulation/halsim_ws_core:halsim_ws_core_base",
     ],
 )
 
@@ -38,22 +39,27 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//simulation/halsim_ws_core",
+        "//simulation/halsim_ws_core:halsim_ws_core_base",
     ],
 )
 
 wpilib_cc_shared_library(
-    name = "shared/halsim_ws_server",
+    name = "halsim_ws_server",
     auto_export_windows_symbols = False,
     dynamic_deps = [
         "//hal:shared/wpiHal",
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
-    visibility = ["//visibility:public"],
     deps = [
-        ":halsim_ws_server",
+        ":halsim_ws_server_base",
     ],
+)
+
+alias(
+    name = "shared/halsim_ws_server",
+    actual = ":halsim_ws_server",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
@@ -85,7 +91,7 @@ cc_test(
         "no-asan",
     ],
     deps = [
-        ":halsim_ws_server",
+        ":halsim_ws_server_base",
         ":test_headers",
         "//thirdparty/googletest",
     ],
@@ -95,6 +101,17 @@ cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
     deps = [
-        ":halsim_ws_server",
+        ":halsim_ws_server_base",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    add_cc_suffix = False,
+    cc_hdr_pkg = ":halsim_ws_server_base-hdrs-zip",
+    cc_shared_library_pkg = ":halsim_ws_server-shared-zip",
+    cc_src_pkg = ":halsim_ws_server_base-srcs-zip",
+    cc_static_library_pkg = ":static/halsim_ws_server-static-zip",
+    group_id = "edu.wpi.first.halsim",
+    library_base_name = "halsim_ws_server",
 )

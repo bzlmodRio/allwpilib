@@ -23,7 +23,17 @@ def _package_type(package_type):
     pkg_zip(
         name = package_type + "-zip",
         srcs = pkgs,
-        tags = ["no-remote"],
+        tags = ["manual", "no-remote"],
+    )
+
+    native.genrule(
+        name = package_type + "-publshing-bundle",
+        srcs = [":" + package_type + "-zip"],
+        outs = [package_type + "-maven-info.json"],
+        cmd = "$(locations //shared/bazel/rules/publishing:generate_maven_bundle) --output_file=$(OUTS) --maven_infos $(locations :" + package_type + "-zip),edu.wpi.first.wpilibc," + package_type + ", ",
+        tools = ["//shared/bazel/rules/publishing:generate_maven_bundle"],
+        visibility = ["//visibility:public"],
+        tags = ["manual", "no-remote"],
     )
 
 def build_examples(halsim_deps = []):
@@ -40,12 +50,26 @@ def build_examples(halsim_deps = []):
             name = folder + "-example",
             srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"], allow_empty = True),
             deps = [
-                "//wpilibNewCommands",
-                "//apriltag",
-                "//romiVendordep",
-                "//xrpVendordep",
-                "//cameraserver",
+                "//wpilibNewCommands:wpilibNewCommands_base",
+                "//apriltag:apriltag_base",
+                "//romiVendordep:romiVendordep_base",
+                "//xrpVendordep:xrpVendordep_base",
+                "//cameraserver:cameraserver_base",
                 ":{}-examples-headers".format(folder),
+            ],
+            dynamic_deps = [
+                "//apriltag:shared/apriltag",
+                "//cscore:shared/cscore",
+                "//datalog:shared/datalog",
+                "//hal:shared/wpiHal",
+                "//ntcore:shared/ntcore",
+                "//romiVendordep:shared/romiVendordep",
+                "//wpilibc:shared/wpilibc",
+                "//wpilibNewCommands:shared/wpilibNewCommands",
+                "//wpimath:shared/wpimath",
+                "//wpinet:shared/wpinet",
+                "//wpiutil:shared/wpiutil",
+                "//xrpVendordep:shared/xrpVendordep",
             ],
             tags = ["wpi-example"],
         )
@@ -59,7 +83,7 @@ def build_commands():
             srcs = native.glob(["src/main/cpp/commands/" + folder + "/**/*.cpp"]),
             hdrs = native.glob(["src/main/cpp/commands/" + folder + "/**/*.h"]),
             deps = [
-                "//wpilibNewCommands",
+                "//wpilibNewCommands:wpilibNewCommands_base",
             ],
             strip_include_prefix = "src/main/cpp/commands/" + folder,
             tags = ["wpi-example"],
@@ -74,7 +98,7 @@ def build_snippets():
             srcs = native.glob(["src/main/cpp/snippets/" + folder + "/**/*.cpp"]),
             hdrs = native.glob(["src/main/cpp/snippets/" + folder + "/**/*.h"], allow_empty = True),
             deps = [
-                "//wpilibNewCommands",
+                "//wpilibNewCommands:wpilibNewCommands_base",
             ],
             strip_include_prefix = "src/main/cpp/snippets/" + folder + "/include",
             tags = ["wpi-example"],
@@ -89,7 +113,7 @@ def build_templates():
             srcs = native.glob(["src/main/cpp/templates/" + folder + "/**/*.cpp"]),
             hdrs = native.glob(["src/main/cpp/templates/" + folder + "/**/*.h"]),
             deps = [
-                "//wpilibNewCommands",
+                "//wpilibNewCommands:wpilibNewCommands_base",
             ],
             strip_include_prefix = "src/main/cpp/templates/" + folder + "/include",
             tags = ["wpi-example"],
@@ -104,9 +128,22 @@ def build_tests():
             size = "small",
             srcs = native.glob([example_test_folder + "/**/*.cpp", example_src_folder + "/cpp/**/*.cpp", example_src_folder + "/c/**/*.c"], allow_empty = True),
             deps = [
-                "//wpilibNewCommands",
+                "//wpilibNewCommands:wpilibNewCommands_base",
                 ":{}-examples-headers".format(folder),
                 "//thirdparty/googletest",
+            ],
+            dynamic_deps = [
+                "//apriltag:shared/apriltag",
+                "//datalog:shared/datalog",
+                "//hal:shared/wpiHal",
+                "//ntcore:shared/ntcore",
+                "//romiVendordep:shared/romiVendordep",
+                "//wpilibc:shared/wpilibc",
+                "//wpilibNewCommands:shared/wpilibNewCommands",
+                "//wpimath:shared/wpimath",
+                "//wpinet:shared/wpinet",
+                "//wpiutil:shared/wpiutil",
+                "//xrpVendordep:shared/xrpVendordep",
             ],
             defines = ["RUNNING_FRC_TESTS=1"],
             tags = ["wpi-example", "no-tsan", "no-asan", "no-ubsan", "exclusive"],

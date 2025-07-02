@@ -1,9 +1,24 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "pkg_java_files")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+
+pkg_java_files(name = "romi-java-srcs")
+
+pkg_zip(
+    name = "libromi-java-sources",
+    srcs = [":romi-java-srcs"],
+    out = "libromi-java-sources.jar",
+    tags = [
+        "manual",
+        "no-remote",
+    ],
+)
 
 wpilib_cc_library(
-    name = "romiVendordep",
+    name = "romiVendordep_base",
     srcs = glob([
         "src/main/native/cpp/**",
     ]),
@@ -11,14 +26,14 @@ wpilib_cc_library(
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
-        "//ntcore",
-        "//wpilibc",
-        "//wpinet",
+        "//ntcore:ntcore_base",
+        "//wpilibc:wpilibc_base",
+        "//wpinet:wpinet_base",
     ],
 )
 
 wpilib_cc_shared_library(
-    name = "shared/romiVendordep",
+    name = "romiVendordep",
     dynamic_deps = [
         "//hal:shared/wpiHal",
         "//ntcore:shared/ntcore",
@@ -26,10 +41,15 @@ wpilib_cc_shared_library(
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
     ],
-    visibility = ["//visibility:public"],
     deps = [
-        ":romiVendordep",
+        ":romiVendordep_base",
     ],
+)
+
+alias(
+    name = "shared/romiVendordep",
+    actual = ":romiVendordep",
+    visibility = ["//visibility:public"],
 )
 
 wpilib_cc_static_library(
@@ -41,7 +61,7 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":romiVendordep",
+        ":romiVendordep_base",
     ],
 )
 
@@ -59,8 +79,18 @@ cc_test(
     name = "romi-test",
     size = "small",
     srcs = glob(["src/test/native/cpp/**"]),
+    dynamic_deps = [
+        ":shared/romiVendordep",
+        "//datalog:shared/datalog",
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpilibc:shared/wpilibc",
+        "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     deps = [
-        ":romiVendordep",
+        ":romiVendordep_base",
         "//thirdparty/googletest",
     ],
 )
@@ -68,8 +98,18 @@ cc_test(
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
+    dynamic_deps = [
+        ":shared/romiVendordep",
+        "//datalog:shared/datalog",
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpilibc:shared/wpilibc",
+        "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     deps = [
-        ":romiVendordep",
+        ":romiVendordep_base",
     ],
 )
 
@@ -82,4 +122,15 @@ java_binary(
         "//ntcore:ntcore-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":romiVendordep_base-hdrs-zip",
+    cc_shared_library_pkg = ":romiVendordep-shared-zip",
+    cc_src_pkg = ":romiVendordep_base-srcs-zip",
+    cc_static_library_pkg = ":static/romiVendordep-static-zip",
+    group_id = "edu.wpi.first.romiVendordep",
+    java_pkg = "libromi-java-sources",
+    library_base_name = "romiVendordep",
 )
