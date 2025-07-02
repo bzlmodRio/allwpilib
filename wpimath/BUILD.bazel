@@ -9,6 +9,7 @@ load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 load("//wpimath:generate.bzl", "generate_wpimath")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
 
 filegroup(
     name = "templates",
@@ -111,6 +112,12 @@ cc_library(
     strip_include_prefix = "src/generated/main/native/cpp",
 )
 
+pkg_files(
+    name = "protobuf_hdr_pkg",
+    srcs = glob(["src/generated/main/native/cpp/wpimath/protobuf/*.npb.h"]),
+    strip_prefix = "src/generated/main/native/cpp/",
+)
+
 wpilib_shared_and_static_library(
     name = "wpimath",
     srcs = glob(
@@ -125,6 +132,7 @@ wpilib_shared_and_static_library(
     dynamic_deps = [
         "//wpiutil:shared/wpiutil",
     ],
+    extra_hdr_pkg_files = [":protobuf_hdr_pkg"],
     extra_src_pkg_files = [
         ":wpimath-java-jni-hdrs-pkg",
     ],

@@ -74,7 +74,7 @@ def wpilib_cc_library(
         third_party_header_only_libraries = [],
         extra_src_pkg_files = [],
         extra_hdr_pkg_files = [],
-        include_license_files = False,
+        include_third_party_notices = False,
         srcs_pkg_root = "src/main/native/cpp",
         hdrs_pkg_root = "src/main/native/include",
         strip_include_prefix = None,
@@ -104,7 +104,7 @@ def wpilib_cc_library(
         include_license_files: If the header / source / library zip files should automatically includes the license files. This is used to maintain
                 consistency with the gradle publishing, as not all of them export the license files.
     """
-    maybe_license_pkg = ["//:license_pkg_files"] if include_license_files else []
+    maybe_third_party_notices_pkg = ["//:third_party_notices_pkg_files"] if include_third_party_notices else []
 
     cc_library(
         name = name + "-headers",
@@ -133,7 +133,7 @@ def wpilib_cc_library(
 
         pkg_zip(
             name = name + "-srcs-zip",
-            srcs = maybe_license_pkg + extra_src_pkg_files + [name + "-srcs-pkg"] + [lib + "-srcs-pkg" for lib in third_party_libraries],
+            srcs = maybe_third_party_notices_pkg + extra_src_pkg_files + [name + "-srcs-pkg", "//:license_pkg_files"] + [lib + "-srcs-pkg" for lib in third_party_libraries],
             tags = ["no-remote", "manual"],
         )
 
@@ -146,7 +146,7 @@ def wpilib_cc_library(
 
         pkg_zip(
             name = name + "-hdrs-zip",
-            srcs = extra_hdr_pkg_files + maybe_license_pkg + [name + "-hdrs-pkg"] + [lib + "-hdrs-pkg" for lib in third_party_libraries + third_party_header_only_libraries],
+            srcs = maybe_third_party_notices_pkg +extra_hdr_pkg_files + ["//:license_pkg_files"] + [name + "-hdrs-pkg"] + [lib + "-hdrs-pkg" for lib in third_party_libraries + third_party_header_only_libraries],
             tags = ["no-remote", "manual"],
         )
 
@@ -172,7 +172,7 @@ def wpilib_cc_shared_library(
 
     pkg_zip(
         name = name + "-shared-zip",
-        srcs = ["//:license_pkg_files", name + "-shared.pkg"],
+        srcs = ["//:license_pkg_files", "//:third_party_notices_pkg_files", name + "-shared.pkg"],
         tags = ["no-remote", "manual"],
     )
 
@@ -390,13 +390,12 @@ def wpilib_cc_static_library(
     pkg_files(
         name = name + "-static.pkg",
         srcs = [":" + name],
-        tags = ["manual"],
         prefix = get_platform_prefix("/static"),
     )
 
     pkg_zip(
         name = name + "-static-zip",
-        srcs = ["//:license_pkg_files", name + "-static.pkg"],
+        srcs = ["//:license_pkg_files", "//:third_party_notices_pkg_files", name + "-static.pkg"],
         tags = ["no-remote", "manual"],
     )
 

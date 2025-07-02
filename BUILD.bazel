@@ -5,10 +5,13 @@ load("//shared/bazel/rules/publishing:publishing.bzl", "wpilib_publish")
 
 pkg_files(
     name = "license_pkg_files",
-    srcs = [
-        "LICENSE.md",
-        "ThirdPartyNotices.txt",
-    ],
+    srcs = ["LICENSE.md"],
+    visibility = ["//visibility:public"],
+)
+
+pkg_files(
+    name = "third_party_notices_pkg_files",
+    srcs = ["ThirdPartyNotices.txt"],
     visibility = ["//visibility:public"],
 )
 
@@ -20,10 +23,10 @@ wpilib_publish(
         "//datalog:publishing_bundle",
         "//ntcore:publishing_bundle",
         "//hal:publishing_bundle",
-        # "//cscore:publishing_bundle",
+        "//cscore:publishing_bundle",
         "//fieldImages:publishing_bundle",
         "//wpigui:publishing_bundle",
-        # "//cameraserver:publishing_bundle",
+        "//cameraserver:publishing_bundle",
         "//thirdparty/imgui_suite:publishing_bundle",
         "//thirdparty/googletest:publishing_bundle",
         "//epilogue-runtime:publishing_bundle",
@@ -45,9 +48,9 @@ wpilib_publish(
         "//glass:libglass_publishing_bundle",
         "//glass:libglassnt_publishing_bundle",
         "//simulation/halsim_ds_socket:publishing_bundle",
-        # "//simulation/halsim_gui:publishing_bundle",
+        "//simulation/halsim_gui:publishing_bundle",
         "//simulation/halsim_ws_client:publishing_bundle",
-        # "//simulation/halsim_ws_core:publishing_bundle",
+        "//simulation/halsim_ws_core:publishing_bundle",
         "//simulation/halsim_ws_server:publishing_bundle",
         "//simulation/halsim_xrp:publishing_bundle",
     ],

@@ -10,6 +10,7 @@ load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 
 filegroup(
     name = "proto_files",
@@ -158,7 +159,7 @@ wpilib_jni_java_library(
     ],
 )
 
-zip_java_srcs(name = "wpihal")
+zip_java_srcs(name = "wpiHal")
 
 cc_test(
     name = "hal-cpp-test",
@@ -194,26 +195,10 @@ java_binary(
     ],
 )
 
-pkg_zip(
-    name = "wpihal-shared-with-jni-zip",
-    srcs = [
-        ":shared/wpiHaljni-shared.pkg",
-        ":shared/wpiHal-shared.pkg",
-    ],
-    out = "wpihal-shared-with-jni.zip",
-    tags = [
-        "manual",
-        "no-remote",
-    ],
-)
 
-bundle_library_artifacts(
+bundle_default_jni_library(
     name = "publishing_bundle",
-    cc_hdr_pkg = ":wpiHal-hdrs-zip",
-    cc_shared_library_pkg = ":wpihal-shared-with-jni-zip",
-    cc_src_pkg = ":wpiHal-srcs-zip",
-    cc_static_library_pkg = ":static/wpiHal-static-zip",
     group_id = "edu.wpi.first.hal",
-    java_pkg = "libwpihal-java-sources",
     library_base_name = "hal",
+    library_name = "wpiHal",
 )

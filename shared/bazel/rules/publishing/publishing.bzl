@@ -112,21 +112,26 @@ def bundle_library_artifacts(
 def bundle_default_jni_library(
         name,
         library_base_name,
-        group_id):
+        group_id,
+        library_name = None):
     """
     Helper function to help bundle files for a standard allwpilib JNI library.
 
     Due to the standard layout and naming convention of the JNI libraries, this function provides
     syntactic sugar to bundle all of the pieces relevant to a C++ / Java / JNI library to maven.
     """
+    if library_name == None:
+        library_name = library_base_name
+
     pkg_zip(
-        name = "{}-shared-with-jni-zip".format(library_base_name),
+        name = "{}-shared-with-jni-zip".format(library_name),
         srcs = [
             "//:license_pkg_files",
-            ":shared/{}-shared.pkg".format(library_base_name),
-            ":shared/{}jni-shared.pkg".format(library_base_name),
+            "//:third_party_notices_pkg_files",
+            ":shared/{}-shared.pkg".format(library_name),
+            ":shared/{}jni-shared.pkg".format(library_name),
         ],
-        out = "{}-shared-with-jni.zip".format(library_base_name),
+        out = "{}-shared-with-jni.zip".format(library_name),
         tags = ["no-remote", "manual"],
     )
 
@@ -134,11 +139,11 @@ def bundle_default_jni_library(
         name = "publishing_bundle",
         group_id = group_id,
         library_base_name = library_base_name,
-        cc_hdr_pkg = ":{}-hdrs-zip".format(library_base_name),
-        cc_src_pkg = ":{}-srcs-zip".format(library_base_name),
-        cc_static_library_pkg = ":static/{}-static-zip".format(library_base_name),
-        cc_shared_library_pkg = ":{}-shared-with-jni-zip".format(library_base_name),
-        java_pkg = ":lib{}-java-sources".format(library_base_name),
+        cc_hdr_pkg = ":{}-hdrs-zip".format(library_name),
+        cc_src_pkg = ":{}-srcs-zip".format(library_name),
+        cc_static_library_pkg = ":static/{}-static-zip".format(library_name),
+        cc_shared_library_pkg = ":{}-shared-with-jni-zip".format(library_name),
+        java_pkg = ":lib{}-java-sources".format(library_name),
     )
 
 def wpilib_publish(

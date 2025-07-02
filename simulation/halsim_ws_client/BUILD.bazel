@@ -42,7 +42,7 @@ bundle_library_artifacts(
     cc_hdr_pkg = ":halsim_ws_client-hdrs-zip",
     cc_shared_library_pkg = ":shared/halsim_ws_client-shared-zip",
     cc_src_pkg = ":halsim_ws_client-srcs-zip",
-    # cc_static_library_pkg = ":static/halsim_ws_client-static-zip",
+    cc_static_library_pkg = ":static/halsim_ws_client-static-zip",
     group_id = "edu.wpi.first.halsim",
     library_base_name = "halsim_ws_client",
 )
