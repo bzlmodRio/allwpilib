@@ -84,6 +84,9 @@ wpilib_shared_and_static_library(
         "@bazel_tools//src/conditions:darwin": [":cscore-mac"],
         "//conditions:default": [],
     }),
+    shared_library_exports_filter = [
+        "@bzlmodrio-opencv//:__subpackages__ ",
+    ],
     shared_library_user_link_flags = select({
         "@bazel_tools//src/conditions:darwin": [
             "-Wl,-force_load,$(location :cscore-mac)",

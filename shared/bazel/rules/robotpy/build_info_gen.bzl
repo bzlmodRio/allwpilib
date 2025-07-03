@@ -1,4 +1,5 @@
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party_dirs = []):
     """
@@ -21,6 +22,7 @@ def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party
         outs = ["{}-generated_build_info.bzl".format(name)],
         cmd = cmd,
         tags = ["robotpy"],
+        target_compatible_with = robotpy_compatibility_select(),
     )
 
     write_source_files(
@@ -31,6 +33,7 @@ def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party
         visibility = ["//visibility:public"],
         suggested_update_target = "//:write_robotpy_generated_native_files",
         tags = ["robotpy"],
+        target_compatible_with = robotpy_compatibility_select(),
     )
 
 def generate_robotpy_pybind_build_info(
@@ -76,6 +79,7 @@ def generate_robotpy_pybind_build_info(
         outs = ["{}-generated_build_info.bzl".format(name)],
         cmd = cmd,
         tags = ["robotpy"],
+        target_compatible_with = robotpy_compatibility_select(),
     )
 
     write_source_files(
@@ -86,4 +90,5 @@ def generate_robotpy_pybind_build_info(
         suggested_update_target = "//:write_robotpy_generated_pybind_files",
         visibility = ["//visibility:public"],
         tags = ["robotpy"],
+        target_compatible_with = robotpy_compatibility_select(),
     )

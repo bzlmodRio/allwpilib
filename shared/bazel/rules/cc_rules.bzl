@@ -405,6 +405,7 @@ def wpilib_shared_and_static_library(
         static_deps = [],
         visibility = None,
         auto_export_windows_symbols = True,
+        shared_library_exports_filter = [],
         shared_library_additional_linker_inputs = [],
         shared_library_user_link_flags = [],
         **kwargs):
@@ -437,6 +438,7 @@ def wpilib_shared_and_static_library(
         auto_export_windows_symbols = auto_export_windows_symbols,
         additional_linker_inputs = shared_library_additional_linker_inputs,
         user_link_flags = shared_library_user_link_flags,
+        exports_filter = shared_library_exports_filter,
     )
 
     wpilib_cc_static_library(
