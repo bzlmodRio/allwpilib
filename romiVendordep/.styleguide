@@ -12,6 +12,11 @@ repoRootNameOverride {
   wpilib
 }
 
+modifiableFileExclude {
+  src/main/python/
+  src/test/python/
+}
+
 includeOtherLibs {
   ^cameraserver/
   ^cscore
