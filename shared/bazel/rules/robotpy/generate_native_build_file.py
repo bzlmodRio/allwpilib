@@ -17,7 +17,7 @@ def main():
 
     with open(args.project_cfg, "rb") as fp:
         raw_config = tomli.load(fp)
-    
+
     def double_quotes(data):
         if data:
             return json.dumps(data)
@@ -27,7 +27,7 @@ def main():
         base_project = library.replace("robotpy-native-", "")
         wpilib_project = "hal" if base_project == "wpihal" else base_project
         return f"//{wpilib_project}:native/{base_project}/{library}.pc"
-        
+
     def get_python_dep(library):
         base_project = library.replace("robotpy-native-", "")
         wpilib_project = "hal" if base_project == "wpihal" else base_project

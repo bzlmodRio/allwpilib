@@ -30,7 +30,7 @@ jobs:
         uses: ./.github/actions/setup-build-buddy
         with:
           token: ${{ secrets.BUILDBUDDY_API_KEY }}
-  
+
       - name: bazel ${{ matrix.action }}
         run: bazel --output_user_root=C:\\bazelroot ${{ matrix.action }} -k ...   --config=ci ${{ matrix.config }} --verbose_failures || true
         shell: bash

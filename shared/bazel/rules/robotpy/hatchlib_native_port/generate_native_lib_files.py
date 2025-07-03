@@ -315,7 +315,7 @@ def main():
     pkgcfgs = [pathlib.Path(x) for x in sys.argv[4:]]
 
     hack_pkgconfig(pkgcfgs)
-    
+
     with open(pyproject_toml, 'rb') as fp:
         raw_config = tomli.load(fp)
 

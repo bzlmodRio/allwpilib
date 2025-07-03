@@ -37,7 +37,7 @@ def write_pom(output_file, group_id, artifact_id, version):
 
     if "-java" not in artifact_id:
         contents += "\n  <packaging>pom</packaging>"
-  
+
     contents += """
 </project>
 """

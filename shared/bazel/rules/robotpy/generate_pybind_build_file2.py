@@ -66,7 +66,7 @@ class HeaderToDatConfig:
 
         include_root = str(args[3])
         if "native" in include_root:
-            
+
             root_dir = pathlib.Path(include_root[:include_root.find("__main__/") + len("__main__/")])
             base_include_root = pathlib.Path(*args[3].relative_to(root_dir).parts[3:])
             base_include_file = args[2].relative_to(include_root)
@@ -89,7 +89,7 @@ class HeaderToDatConfig:
 
         self.templates = []
         self.trampolines = []
-        
+
         args = args[8:]
         assert(0 == len(args))
 
@@ -109,15 +109,15 @@ class ResolveCastersConfig:
             else:
                 relevant_parts = dep_path.parts[3:]
                 caster_deps.add(f"//{relevant_parts[0]}:" + "/".join(relevant_parts[1:]))
-       
+
         self.caster_deps = sorted(caster_deps)
-    
+
 class GenLibInitPyConfig:
     def __init__(self, item: BuildTarget):
         self.output_file = item.args[0].name
         self.modules = item.args[1:]
         self.install_path = item.install_path
-    
+
 class GenPkgConfConfig:
     def __init__(self, item: BuildTarget):
         self.module_pkg_name = item.args[0]
@@ -130,7 +130,7 @@ class GenPkgConfConfig:
         assert(0 == len(item.args[6:]))
 
         self.install_path = item.install_path
-    
+
 class GenModInitHpp:
     def __init__(self, item: BuildTarget):
         self.lib_name = item.args[0]
@@ -142,7 +142,7 @@ class GenModInitHpp:
             idx += 1
 
         assert(0 == len(item.args[idx:]))
-    
+
 
 class PublishCastersConfig:
     def __init__(self, projectcfg, item: BuildTarget):
@@ -176,7 +176,7 @@ class BazelExtensionModule:
 
         self.pkgcache = PkgconfCache()
 
-        all_dependencies = set() 
+        all_dependencies = set()
 
 
         for d in extension_module.depends:
@@ -189,7 +189,7 @@ class BazelExtensionModule:
         dynamic_dependencies = set()
         for dep_name in all_dependencies:
             if "native" in dep_name:
-                
+
                 transative_deps = set()
                 self._get_transative_native_dependencies(dep_name, transative_deps)
                 for d in transative_deps:
@@ -265,7 +265,7 @@ class BazelExtensionModule:
                 continue
             else:
                 raise Exception("Unknown command", source.command)
-            
+
         return generation_data
 
 def generate_pybind_build_file(pkgcfgs: List[pathlib.Path], project_dir: pathlib.Path, package_root_file: str, stripped_include_prefix:str, yml_prefix: Union[str, None], output_file: pathlib.Path):
@@ -275,7 +275,7 @@ def generate_pybind_build_file(pkgcfgs: List[pathlib.Path], project_dir: pathlib
 
     extension_modules = []
     entry_points = collections.defaultdict(list)
-    
+
     pyproject = PyProject(project_dir / "pyproject.toml")
     projectcfg = pyproject.project
 
@@ -309,7 +309,7 @@ def generate_pybind_build_file(pkgcfgs: List[pathlib.Path], project_dir: pathlib
 
     with open(project_dir / "pyproject.toml", "rb") as fp:
         raw_config = tomli.load(fp)
-    
+
     try:
         top_level_name = raw_config["tool"]["hatch"]["build"]["targets"]["wheel"]["packages"]
     except KeyError:
@@ -355,10 +355,10 @@ def generate_pybind_build_file(pkgcfgs: List[pathlib.Path], project_dir: pathlib
     env.filters['get_caster_library_includes'] = dummy
     env.filters['get_caster_library_headers'] = dummy
     template = env.from_string(template_contents)
-    
+
     with open(output_file, "w") as f:
         f.write(template.render(
-            extension_modules=extension_modules, 
+            extension_modules=extension_modules,
             top_level_name = top_level_name,
             publish_casters_targets = publish_casters_targets,
             python_deps = sorted(python_deps),
@@ -381,7 +381,7 @@ def main():
     args = parser.parse_args()
 
     generate_pybind_build_file(args.pkgcfgs, args.project_file.parent, args.package_root_file, args.stripped_include_prefix, args.yml_prefix, args.output_file)
-    
+
 
 if __name__ == "__main__":
     main()

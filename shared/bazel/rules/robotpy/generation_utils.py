@@ -4,14 +4,14 @@ def fixup_root_package_name(name):
     if name == "wpihal":
         return "hal"
     if name == "wpilib":
-        return "wpilibc" 
+        return "wpilibc"
     if name == "wpilog":
-        return "datalog" 
+        return "datalog"
     return name
-        
+
 def fixup_native_lib_name(name):
     return name
-        
+
 def fixup_shared_lib_name(name):
     if name == "wpihal":
         return "wpiHal"
