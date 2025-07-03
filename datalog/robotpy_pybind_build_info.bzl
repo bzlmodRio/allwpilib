@@ -1,3 +1,5 @@
+# THIS FILE IS AUTO GENERATED
+
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
 
@@ -154,6 +156,7 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
     )
 
 def define_pybind_library(name):
+    # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
         srcs = [
@@ -163,6 +166,7 @@ def define_pybind_library(name):
         visibility = ["//visibility:public"],
     )
 
+    # Files that will be included in the wheel as data deps
     native.filegroup(
         name = "{}.generated_data_files".format(name),
         srcs = [
@@ -171,6 +175,7 @@ def define_pybind_library(name):
         tags = ["manual"],
     )
 
+    # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpilog/**"], exclude = ["src/main/python/wpilog/**/*.py"], allow_empty = True),

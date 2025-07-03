@@ -1,6 +1,7 @@
 # THIS FILE IS AUTO GENERATED
-{%- if publish_casters_targets -%}load("@rules_cc//cc:cc_library.bzl", "cc_library")
-{% endif -%}
+{% if publish_casters_targets %}
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+{%- endif %}
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", {% if publish_casters_targets %}"publish_casters", {% endif %}"resolve_casters", "run_header_gen")
 {% for extension_module in extension_modules%}
@@ -210,3 +211,4 @@ def define_pybind_library(name):
         },
         visibility = ["//visibility:public"],
     )
+

@@ -1,3 +1,5 @@
+# THIS FILE IS AUTO GENERATED
+
 load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "native_wrappery_library")
 
