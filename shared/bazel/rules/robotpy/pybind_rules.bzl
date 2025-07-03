@@ -20,7 +20,7 @@ def create_pybind_library(
     Function to create a pybind C++ extension library that has been defined by a semiwrap config
 
     Outputs:
-        <name>_pybind_library - A pybind_library that functions like a header-only cc_library. It will include all 
+        <name>_pybind_library - A pybind_library that functions like a header-only cc_library. It will include all
                                 of the extra_hdrs, resolve the include paths, and add a dependency on the semiwrap headrs
         <install_path + extension_name> - A pybind_extension that wraps the pybind_library and compiles all the source files.
 
@@ -93,7 +93,7 @@ def robotpy_library(
         strip_path_prefixes,
         data = [],
         python_tag = "cp310",  # TODO(pj) Select based on python version
-        abi = "cp310", # TODO(pj) Select based on python version
+        abi = "cp310",  # TODO(pj) Select based on python version
         summary = None,
         project_urls = None,
         author_email = None,
@@ -136,7 +136,7 @@ def robotpy_library(
 
 def copy_native_file(name, library, base_path):
     """
-    Copies a compiled shared library into a naming format that can be used by robotpy rules. The libraries are named 
+    Copies a compiled shared library into a naming format that can be used by robotpy rules. The libraries are named
     differently on OSX / Linux / Windows and this creates a handy alias to for easier use downstream
     """
     copy_file(
