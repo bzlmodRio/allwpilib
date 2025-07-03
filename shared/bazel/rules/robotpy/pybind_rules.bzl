@@ -2,6 +2,7 @@ load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
 load("@rules_python//python:defs.bzl", "py_library")
 load("@rules_python//python:packaging.bzl", "py_wheel")
+load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 def create_pybind_library(
         name,
@@ -13,7 +14,6 @@ def create_pybind_library(
         deps = [],
         dynamic_deps = [],
         semiwrap_header = [],
-        copts = [],
         includes = [],
         local_defines = []):
     """
@@ -36,22 +36,16 @@ def create_pybind_library(
         includes - see cc_library#includes. Used during the creating of the pybind_library
         local_defines - see cc_library#local_defines. Used during the compilation of the extension
     """
-    if copts:
-        print(copts)
-        fail()
-
     pybind_library(
         name = "{}_pybind_library".format(name),
         hdrs = extra_hdrs,
-        target_compatible_with = select({
-            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
-            "//conditions:default": [],
-        }),
+        target_compatible_with = robotpy_compatibility_select(),
         deps = deps + [
             "//shared/bazel/rules/robotpy:semiwrap_headers",
         ],
         includes = includes,
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )
 
     extension_name = extension_name or "_{}".format(name)
@@ -60,7 +54,7 @@ def create_pybind_library(
         srcs = extra_srcs + generated_srcs,
         deps = [":{}_pybind_library".format(name)] + semiwrap_header,
         dynamic_deps = dynamic_deps,
-        copts = copts + select({
+        copts = select({
             "@bazel_tools//src/conditions:darwin": [
                 "-Wno-deprecated-declarations",
                 "-Wno-overloaded-virtual",
@@ -81,11 +75,9 @@ def create_pybind_library(
             "@bazel_tools//src/conditions:windows": [
             ],
         }),
-        target_compatible_with = select({
-            "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
-            "//conditions:default": [],
-        }),
+        target_compatible_with = robotpy_compatibility_select(),
         local_defines = local_defines,
+        tags = ["robotpy"],
     )
 
 def robotpy_library(
@@ -110,6 +102,7 @@ def robotpy_library(
     py_library(
         name = name,
         data = data,
+        tags = ["robotpy"],
         **kwargs
     )
 
@@ -132,6 +125,7 @@ def robotpy_library(
         deps = data + [":{}".format(name)],
         strip_path_prefixes = strip_path_prefixes,
         entry_points = entry_points,
+        tags = ["robotpy"],
     )
 
 def copy_native_file(name, library, base_path):
@@ -171,6 +165,7 @@ def copy_native_file(name, library, base_path):
             "//conditions:default": name + ".linux_copy_lib",
         }),
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )
 
 def _folder_prefix(name):
@@ -214,6 +209,7 @@ def native_wrappery_library(
         cmd = cmd,
         tools = ["//shared/bazel/rules/robotpy/hatchlib_native_port:generate_native_lib_files"] + pc_deps,
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )
 
     prefix, libname = _folder_prefix(native_shared_library)
@@ -236,6 +232,7 @@ def native_wrappery_library(
         deps = deps,
         imports = ["."],
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )
 
     py_wheel(
@@ -249,7 +246,7 @@ def native_wrappery_library(
         abi = abi,
         python_tag = python_tag,
         stamp = 1,
-        version = "2027.0.0a1.dev0",  # TODO
+        version = "2027.0.0a1.dev0",  # TODO(pj)
         summary = summary,
         requires = requires,
         project_urls = project_urls,
@@ -257,4 +254,5 @@ def native_wrappery_library(
         deps = [name, ":{}.copy_lib".format(libname), headers, name + ".pc_wrapper"],
         strip_path_prefixes = strip_path_prefixes,
         entry_points = entry_points,
+        tags = ["robotpy"],
     )

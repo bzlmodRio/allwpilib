@@ -127,8 +127,8 @@ wpilib_shared_and_static_library(
         "//wpiutil",
     ] + select({
         "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": [
-            "//ntcore:ntcore_base",
-            "//wpinet:wpinet_base",
+            "//ntcore",
+            "//wpinet",
         ],
         "//conditions:default": [
             "//ntcore:ntcore_c_headers",

@@ -1,6 +1,5 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
-# PUBLISH_CASTERS_DIR = "generated/publish_casters/"
 RESOLVE_CASTERS_DIR = "generated/resolve_casters/"
 HEADER_DAT_DIR = "generated/header_to_dat/"
 DAT_TO_CC_DIR = "generated/dat_to_cc/"
@@ -41,6 +40,7 @@ def publish_casters(
         cmd = cmd,
         tools = _wrapper_dep() + typecasters_srcs + [package_root],
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )
 
 def resolve_casters(
@@ -77,6 +77,7 @@ def resolve_casters(
         outs = [RESOLVE_CASTERS_DIR + casters_pkl_file, RESOLVE_CASTERS_DIR + dep_file],
         cmd = cmd,
         tools = _wrapper_dep() + [_semiwrap_caster()],
+        tags = ["robotpy"],
     )
 
 def gen_libinit(
@@ -95,6 +96,7 @@ def gen_libinit(
         outs = [output_file],
         cmd = cmd,
         tools = _wrapper_dep(),
+        tags = ["robotpy"],
     )
 
 def gen_pkgconf(
@@ -124,6 +126,7 @@ def gen_pkgconf(
         cmd = cmd,
         tools = _wrapper_dep() + [project_file],
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )
 
 def header_to_dat(
@@ -164,6 +167,7 @@ def header_to_dat(
         outs = [HEADER_DAT_DIR + class_name + ".dat", HEADER_DAT_DIR + class_name + ".d"],
         cmd = cmd,
         tools = _wrapper_dep() + [yml_file],
+        tags = ["robotpy"],
     )
 
 def dat_to_cc(
@@ -178,6 +182,7 @@ def dat_to_cc(
         outs = [DAT_TO_CC_DIR + class_name + ".cpp"],
         cmd = cmd,
         tools = _wrapper_dep() + [dat_file],
+        tags = ["robotpy"],
     )
 
 def dat_to_tmpl_cpp(name, base_class_name, specialization, tmp_class_name):
@@ -190,6 +195,7 @@ def dat_to_tmpl_cpp(name, base_class_name, specialization, tmp_class_name):
         outs = [DAT_TO_TMPL_CC_DIR + tmp_class_name + ".cpp"],
         cmd = cmd,
         tools = _wrapper_dep() + [HEADER_DAT_DIR + base_class_name + ".dat"],
+        tags = ["robotpy"],
     )
 
 def dat_to_tmpl_hpp(name, class_name):
@@ -203,6 +209,7 @@ def dat_to_tmpl_hpp(name, class_name):
         outs = [DAT_TO_TMPL_HDR_DIR + class_name + "_tmpl.hpp"],
         cmd = cmd,
         tools = _wrapper_dep() + [dat_file],
+        tags = ["robotpy"],
     )
 
 def dat_to_trampoline(name, dat_file, class_name, output_file):
@@ -217,6 +224,7 @@ def dat_to_trampoline(name, dat_file, class_name, output_file):
         outs = [output_file],
         cmd = cmd,
         tools = _wrapper_dep() + [HEADER_DAT_DIR + dat_file],
+        tags = ["robotpy"],
     )
 
 def gen_modinit_hpp(
@@ -237,11 +245,13 @@ def gen_modinit_hpp(
         outs = [GEN_MODINIT_HDR_DIR + output_file],
         cmd = cmd,
         tools = _wrapper_dep() + input_dats,
+        tags = ["robotpy"],
     )
     cc_library(
         name = name,
         hdrs = [GEN_MODINIT_HDR_DIR + output_file],
         strip_include_prefix = GEN_MODINIT_HDR_DIR,
+        tags = ["robotpy"],
     )
 
 def run_header_gen(name, casters_pickle, trampoline_subpath, header_gen_config, deps = [], generation_defines = [], local_native_libraries = [], header_to_dat_deps = [], yml_prefix = "src/main/python/"):
@@ -307,27 +317,29 @@ def run_header_gen(name, casters_pickle, trampoline_subpath, header_gen_config, 
         name = name + ".tmpl_hdrs",
         hdrs = tmpl_hdrs,
         strip_include_prefix = DAT_TO_TMPL_HDR_DIR,
+        tags = ["robotpy"],
     )
     cc_library(
         name = name + ".trampoline_hdrs",
         hdrs = trampoline_hdrs,
         strip_include_prefix = trampoline_subpath,
+        tags = ["robotpy"],
     )
 
     native.filegroup(
         name = name + ".generated_srcs",
         srcs = generated_cc_files,
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     native.filegroup(
         name = name + ".trampoline_hdr_files",
         srcs = trampoline_hdrs,
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     native.filegroup(
         name = name + ".header_gen_files",
         srcs = tmpl_hdrs + trampoline_hdrs + generated_cc_files,
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )

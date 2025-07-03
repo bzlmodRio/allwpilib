@@ -140,7 +140,7 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             "wpiutil.gen_pkgconf",
             "wpiutil.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def publish_library_casters():
@@ -159,6 +159,7 @@ def publish_library_casters():
         hdrs = native.glob(["src/main/python/wpiutil/src/type_casters/*.h", "src/main/python/wpiutil/src/wpistruct/*.h"]),
         includes = ["src/main/python/wpiutil/src/type_casters", "src/main/python/wpiutil/src/wpistruct"],
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )
 
 def define_pybind_library(name):
@@ -168,7 +169,7 @@ def define_pybind_library(name):
         srcs = [
             "wpiutil.generated_files",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
 
@@ -180,14 +181,14 @@ def define_pybind_library(name):
             "src/main/python/wpiutil/wpiutil-casters.pc",
             "src/main/python/wpiutil/wpiutil-casters.pybind11.json",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpiutil/**"], exclude = ["src/main/python/wpiutil/**/*.py"], allow_empty = True),
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     robotpy_library(

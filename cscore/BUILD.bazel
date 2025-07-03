@@ -77,6 +77,39 @@ wpilib_shared_and_static_library(
         "src/main/native/cpp",
         "src/main/native/include",
     ],
+    # Bazel does not pull transative objc libraries in for cc_shared_libraries, so you must add these functions to get them to link properly
+    #
+    # https://github.com/bazelbuild/bazel/issues/21893
+    shared_library_additional_linker_inputs = select({
+        "@bazel_tools//src/conditions:darwin": [":cscore-mac"],
+        "//conditions:default": [],
+    }),
+    shared_library_user_link_flags = select({
+        "@bazel_tools//src/conditions:darwin": [
+            "-Wl,-force_load,$(location :cscore-mac)",
+            "-framework",
+            "Metal",
+            "-framework",
+            "MetalKit",
+            "-framework",
+            "Cocoa",
+            "-framework",
+            "IOKit",
+            "-framework",
+            "CoreFoundation",
+            "-framework",
+            "AVFoundation",
+            "-framework",
+            "Foundation",
+            "-framework",
+            "CoreMedia",
+            "-framework",
+            "CoreVideo",
+            "-framework",
+            "QuartzCore",
+        ],
+        "//conditions:default": [],
+    }),
     static_deps = [
         "//wpinet:static/wpinet",
         "//wpiutil:static/wpiutil",

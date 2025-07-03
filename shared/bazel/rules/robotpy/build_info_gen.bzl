@@ -20,6 +20,7 @@ def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party
         srcs = [pyproject_toml],
         outs = ["{}-generated_build_info.bzl".format(name)],
         cmd = cmd,
+        tags = ["robotpy"],
     )
 
     write_source_files(
@@ -29,6 +30,7 @@ def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party
         },
         visibility = ["//visibility:public"],
         suggested_update_target = "//:write_robotpy_generated_native_files",
+        tags = ["robotpy"],
     )
 
 def generate_robotpy_pybind_build_info(
@@ -73,6 +75,7 @@ def generate_robotpy_pybind_build_info(
         srcs = [pyproject_toml, package_root_file] + yaml_files + pkgcfgs + additional_srcs + ["//shared/bazel/rules/robotpy:jinja_templates"],
         outs = ["{}-generated_build_info.bzl".format(name)],
         cmd = cmd,
+        tags = ["robotpy"],
     )
 
     write_source_files(
@@ -82,4 +85,5 @@ def generate_robotpy_pybind_build_info(
         },
         suggested_update_target = "//:write_robotpy_generated_pybind_files",
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )

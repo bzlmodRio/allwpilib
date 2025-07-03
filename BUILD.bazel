@@ -3,6 +3,7 @@ load("@rules_java//java:java_binary.bzl", "java_binary")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("//shared/bazel/rules/publishing:publishing.bzl", "wpilib_publish")
+load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 pkg_files(
     name = "license_pkg_files",
@@ -115,7 +116,11 @@ write_source_files(
         "//wpimath:robotpy-native-wpimath-generator.generate_build_info",
         "//wpiutil:robotpy-native-wpiutil-generator.generate_build_info",
     ],
-    tags = ["pregeneration"],
+    tags = [
+        "pregeneration",
+        "robotpy",
+    ],
+    target_compatible_with = robotpy_compatibility_select(),
 )
 
 write_source_files(
@@ -131,7 +136,11 @@ write_source_files(
         "//wpimath:robotpy-wpimath_test-generator.generate_build_info",
         "//wpiutil:robotpy-wpiutil-generator.generate_build_info",
     ],
-    tags = ["pregeneration"],
+    tags = [
+        "pregeneration",
+        "robotpy",
+    ],
+    target_compatible_with = robotpy_compatibility_select(),
 )
 
 write_source_files(
@@ -139,10 +148,15 @@ write_source_files(
     additional_update_targets = [
         ":write_pregenerated_sources",
         ":write_robotpy_generated_native_files",
+        ":write_robotpy_generated_pybind_files",
     ],
-    tags = ["pregeneration"],
+    tags = [
+        "pregeneration",
+        "robotpy",
+    ],
 )
 
+# Helper easily run the semiwrap parsing tools on all of the robotpy projects.
 filegroup(
     name = "robotpy_generated_files",
     srcs = [
@@ -156,4 +170,6 @@ filegroup(
         "//wpinet:robotpy-wpinet.generated_files",
         "//wpiutil:robotpy-wpiutil.generated_files",
     ],
+    tags = ["manual"],
+    target_compatible_with = robotpy_compatibility_select(),
 )
