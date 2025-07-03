@@ -574,6 +574,7 @@ def define_pybind_library(name):
             "wpihal.generated_files",
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
@@ -581,8 +582,6 @@ def define_pybind_library(name):
         srcs = [
             "src/main/python/hal/simulation/hal_simulation.pc",
             "src/main/python/hal/wpihal.pc",
-            ":src/main/python/hal/simulation/_simulation",
-            ":src/main/python/hal/_wpiHal",
         ],
         tags = ["manual"],
     )
@@ -590,6 +589,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/hal/**"], exclude = ["src/main/python/hal/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(
@@ -601,6 +601,8 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
+            ":src/main/python/hal/simulation/_simulation",
+            ":src/main/python/hal/_wpiHal",
             ":hal_simulation.trampoline_hdr_files",
             ":wpihal.trampoline_hdr_files",
         ],

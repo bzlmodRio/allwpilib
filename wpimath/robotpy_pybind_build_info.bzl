@@ -1693,6 +1693,7 @@ def define_pybind_library(name):
             "wpimath_controls.generated_files",
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
@@ -1707,13 +1708,6 @@ def define_pybind_library(name):
             "src/main/python/wpimath/_controls/wpimath_controls.pc",
             "src/main/python/wpimath/wpimath-casters.pc",
             "src/main/python/wpimath/wpimath-casters.pybind11.json",
-            ":src/main/python/wpimath/_wpimath",
-            ":src/main/python/wpimath/filter/_filter",
-            ":src/main/python/wpimath/geometry/_geometry",
-            ":src/main/python/wpimath/interpolation/_interpolation",
-            ":src/main/python/wpimath/kinematics/_kinematics",
-            ":src/main/python/wpimath/spline/_spline",
-            ":src/main/python/wpimath/_controls/_controls",
         ],
         tags = ["manual"],
     )
@@ -1721,6 +1715,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpimath/**"], exclude = ["src/main/python/wpimath/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(
@@ -1737,6 +1732,13 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
+            ":src/main/python/wpimath/_wpimath",
+            ":src/main/python/wpimath/filter/_filter",
+            ":src/main/python/wpimath/geometry/_geometry",
+            ":src/main/python/wpimath/interpolation/_interpolation",
+            ":src/main/python/wpimath/kinematics/_kinematics",
+            ":src/main/python/wpimath/spline/_spline",
+            ":src/main/python/wpimath/_controls/_controls",
             ":wpimath.trampoline_hdr_files",
             ":wpimath_filter.trampoline_hdr_files",
             ":wpimath_geometry.trampoline_hdr_files",

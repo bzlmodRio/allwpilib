@@ -108,6 +108,7 @@ def define_pybind_library(name):
             "wpinet.generated_files",
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
@@ -121,6 +122,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpinet/**"], exclude = ["src/main/python/wpinet/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(

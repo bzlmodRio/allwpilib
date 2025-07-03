@@ -7,6 +7,8 @@ enums:
     value_prefix: HAL_AllianceStationID
   HAL_MatchType:
     value_prefix: HAL_kMatchType
+  HAL_JoystickPOV:
+    value_prefix: HAL_JoystickPOV
 classes:
   HAL_ControlWord:
     attributes:
@@ -26,6 +28,8 @@ classes:
     attributes:
       count:
       povs:
+        # TODO
+        ignore: True
   HAL_JoystickButtons:
     attributes:
       buttons:

@@ -148,6 +148,7 @@ def define_pybind_library(name):
             {%- endfor %}
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
@@ -160,9 +161,6 @@ def define_pybind_library(name):
             "{{stripped_include_prefix}}/{{caster_info.install_path}}/{{caster_info.pc_output}}",
             "{{stripped_include_prefix}}/{{caster_info.install_path}}/{{caster_info.json_output}}",
             {%- endfor %}
-            {%- for em in extension_modules %}
-            ":{{stripped_include_prefix}}/{{em.install_path}}/{{em.gen_modinit.lib_name}}",
-            {%- endfor %}
         ],
         tags = ["manual"],
     )
@@ -170,6 +168,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["{{stripped_include_prefix}}/{{top_level_name}}/**"], exclude = ["{{stripped_include_prefix}}/{{top_level_name}}/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(
@@ -182,6 +181,9 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
+        {%- for em in extension_modules %}
+            ":{{stripped_include_prefix}}/{{em.install_path}}/{{em.gen_modinit.lib_name}}",
+        {%- endfor %}
         {%- for em in extension_modules %}
             ":{{em.name}}.trampoline_hdr_files",
         {%- endfor %}

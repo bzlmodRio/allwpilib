@@ -12,6 +12,8 @@ classes:
         overloads:
           int, int:
           int:
+          int, DriverStation::POVDirection:
+          DriverStation::POVDirection:
       SetAxisCount:
       SetPOVCount:
       SetButtonCount:

@@ -10,10 +10,12 @@ classes:
     enums:
       Alliance:
       MatchType:
+      POVDirection:
     methods:
       GetStickButton:
       GetStickButtonPressed:
       GetStickButtonReleased:
+      GetAngle:
       GetStickAxis:
       GetStickPOV:
       GetStickButtons:

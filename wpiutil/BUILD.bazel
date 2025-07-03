@@ -286,7 +286,6 @@ generate_robotpy_native_wrapper_build_info(
         "fmtlib",
         "json",
         "llvm",
-        "memory",
         "mpack",
         "nanopb",
         "protobuf",

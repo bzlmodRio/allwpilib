@@ -95,13 +95,13 @@ def define_pybind_library(name):
             "wpimath_test.generated_files",
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/test/python/cpp/wpimath_test/wpimath_test.pc",
-            ":src/test/python/cpp/wpimath_test/_wpimath_test",
         ],
         tags = ["manual"],
     )
@@ -109,6 +109,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/test/python/cpp/wpimath_test/**"], exclude = ["src/test/python/cpp/wpimath_test/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(
@@ -119,6 +120,7 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
+            ":src/test/python/cpp/wpimath_test/_wpimath_test",
             ":wpimath_test.trampoline_hdr_files",
         ],
         imports = ["src/test/python/cpp"],

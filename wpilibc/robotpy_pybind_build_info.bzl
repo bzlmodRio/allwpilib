@@ -1965,6 +1965,7 @@ def define_pybind_library(name):
             "wpilib_simulation.generated_files",
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
@@ -1976,12 +1977,6 @@ def define_pybind_library(name):
             "src/main/python/wpilib/counter/wpilib_counter.pc",
             "src/main/python/wpilib/drive/wpilib_drive.pc",
             "src/main/python/wpilib/simulation/wpilib_simulation.pc",
-            ":src/main/python/wpilib/event/_event",
-            ":src/main/python/wpilib/interfaces/_interfaces",
-            ":src/main/python/wpilib/_wpilib",
-            ":src/main/python/wpilib/counter/_counter",
-            ":src/main/python/wpilib/drive/_drive",
-            ":src/main/python/wpilib/simulation/_simulation",
         ],
         tags = ["manual"],
     )
@@ -1989,6 +1984,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpilib/**"], exclude = ["src/main/python/wpilib/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(
@@ -2004,6 +2000,12 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
+            ":src/main/python/wpilib/event/_event",
+            ":src/main/python/wpilib/interfaces/_interfaces",
+            ":src/main/python/wpilib/_wpilib",
+            ":src/main/python/wpilib/counter/_counter",
+            ":src/main/python/wpilib/drive/_drive",
+            ":src/main/python/wpilib/simulation/_simulation",
             ":wpilib_event.trampoline_hdr_files",
             ":wpilib_interfaces.trampoline_hdr_files",
             ":wpilib.trampoline_hdr_files",

@@ -19,6 +19,8 @@ classes:
         overloads:
           int, EventLoop* [const]:
           int, int, EventLoop* [const]:
+          DriverStation::POVDirection, EventLoop* [const]:
+          int, DriverStation::POVDirection, EventLoop* [const]:
       POVUp:
       POVUpRight:
       POVRight:

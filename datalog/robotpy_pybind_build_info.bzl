@@ -160,13 +160,13 @@ def define_pybind_library(name):
             "wpilog.generated_files",
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/main/python/wpilog/wpilog.pc",
-            ":src/main/python/wpilog/_wpilog",
         ],
         tags = ["manual"],
     )
@@ -174,6 +174,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpilog/**"], exclude = ["src/main/python/wpilog/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(
@@ -184,6 +185,7 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
+            ":src/main/python/wpilog/_wpilog",
             ":wpilog.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

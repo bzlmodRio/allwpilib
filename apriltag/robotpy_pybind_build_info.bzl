@@ -165,13 +165,13 @@ def define_pybind_library(name):
             "apriltag.generated_files",
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/main/python/robotpy_apriltag/apriltag.pc",
-            ":src/main/python/robotpy_apriltag/_apriltag",
         ],
         tags = ["manual"],
     )
@@ -179,6 +179,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/robotpy_apriltag/**"], exclude = ["src/main/python/robotpy_apriltag/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(
@@ -189,6 +190,7 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
+            ":src/main/python/robotpy_apriltag/_apriltag",
             ":apriltag.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

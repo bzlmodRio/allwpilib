@@ -435,13 +435,13 @@ def define_pybind_library(name):
             "ntcore.generated_files",
         ],
         tags = ["manual"],
+        visibility = ["//visibility:public"],
     )
 
     native.filegroup(
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/main/python/ntcore/ntcore.pc",
-            ":src/main/python/ntcore/_ntcore",
         ],
         tags = ["manual"],
     )
@@ -449,6 +449,7 @@ def define_pybind_library(name):
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/ntcore/**"], exclude = ["src/main/python/ntcore/**/*.py"], allow_empty = True),
+        tags = ["manual"],
     )
 
     robotpy_library(
@@ -459,6 +460,7 @@ def define_pybind_library(name):
         data = [
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
+            ":src/main/python/ntcore/_ntcore",
             ":ntcore.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

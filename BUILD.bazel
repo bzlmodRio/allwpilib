@@ -142,3 +142,18 @@ write_source_files(
     ],
     tags = ["pregeneration"],
 )
+
+filegroup(
+    name = "robotpy_generated_files",
+    srcs = [
+        "//apriltag:robotpy-apriltag.generated_files",
+        "//datalog:robotpy-wpilog.generated_files",
+        "//hal:robotpy-hal.generated_files",
+        "//ntcore:pyntcore.generated_files",
+        "//wpilibc:robotpy-wpilib.generated_files",
+        "//wpimath:robotpy-wpimath.generated_files",
+        "//wpimath:robotpy-wpimath-test.generated_files",
+        "//wpinet:robotpy-wpinet.generated_files",
+        "//wpiutil:robotpy-wpiutil.generated_files",
+    ],
+)
