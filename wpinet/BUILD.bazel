@@ -1,12 +1,13 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
-load("@rules_cc//cc:cc_shared_library.bzl", "cc_shared_library")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
-load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_shared_and_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/gen:gen-resources.bzl", "generate_resources")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//wpinet:robotpy_native_build_info.bzl", "define_native_wrapper")
@@ -121,7 +122,7 @@ cc_library(
     strip_include_prefix = "src/main/native/cpp",
 )
 
-wpilib_cc_library(
+wpilib_shared_and_static_library(
     name = "wpinet",
     srcs = glob(
         ["src/main/native/cpp/**"],
@@ -130,6 +131,9 @@ wpilib_cc_library(
         ":libuv-srcs",
     ] + ["native-srcs"],
     hdrs = glob(["src/main/native/include/**/*"]),
+    dynamic_deps = [
+        "//wpiutil:shared/wpiutil",
+    ],
     extra_hdr_pkg_files = [":thirdparty-libuv-hdr-pkg"],
     extra_src_pkg_files = [
         ":wpinet-java-jni-hdrs-pkg",
@@ -143,6 +147,9 @@ wpilib_cc_library(
         ],
         "//conditions:default": [],
     }),
+    static_deps = [
+        "//wpiutil:static/wpiutil",
+    ],
     strip_include_prefix = "src/main/native/include",
     third_party_libraries = [
         ":tcpsockets",
@@ -155,40 +162,16 @@ wpilib_cc_library(
     ],
 )
 
-wpilib_cc_static_library(
-    name = "static/wpinet",
-    static_deps = [
-        "//wpiutil:static/wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":wpinet",
-    ],
-)
-
-cc_shared_library(
-    name = "shared/wpinet",
-    dynamic_deps = [
-        "//wpiutil:shared/wpiutil",
-    ],
-    user_link_flags = select({
-        "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": [
-            "-Xlinker",
-            "-rpath",
-            "$ORIGIN/../../../../wpiutil/native/wpiutil/lib",
-        ],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-    deps = [":wpinet"],
-)
-
 wpilib_jni_cc_library(
     name = "wpinetjni",
     srcs = glob([
         "src/main/native/cpp/jni/**",
         "src/main/native/cpp/**/*.h",
     ]),
+    dynamic_deps = [
+        ":shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     java_dep = ":wpinet-java",
     visibility = ["//visibility:public"],
     deps = [
@@ -205,6 +188,8 @@ wpilib_jni_java_library(
         "//wpiutil:wpiutil-java",
     ],
 )
+
+zip_java_srcs(name = "wpinet")
 
 cc_test(
     name = "wpinet-cpp-test",
@@ -289,6 +274,12 @@ cc_binary(
     deps = [
         ":wpinet",
     ],
+)
+
+bundle_default_jni_library(
+    name = "publishing_bundle",
+    group_id = "edu.wpi.first.wpinet",
+    library_base_name = "wpinet",
 )
 
 generate_robotpy_native_wrapper_build_info(

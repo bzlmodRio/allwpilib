@@ -1,13 +1,27 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_shared_and_static_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
-wpilib_cc_library(
+wpilib_shared_and_static_library(
     name = "xrpVendordep",
     srcs = glob([
         "src/main/native/cpp/**",
     ]),
     hdrs = glob(["src/main/native/include/**"]),
+    dynamic_deps = [
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpilibc:shared/wpilibc",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
+    static_deps = [
+        "//ntcore:static/ntcore",
+        "//wpilibc:static/wpilibc",
+        "//wpinet:static/wpinet",
+    ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
@@ -15,17 +29,6 @@ wpilib_cc_library(
         "//wpilibc",
         "//wpinet",
     ],
-)
-
-wpilib_cc_static_library(
-    name = "static/xrpVendordep",
-    static_deps = [
-        "//ntcore:static/ntcore",
-        "//wpilibc:static/wpilibc",
-        "//wpinet:static/wpinet",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":xrpVendordep"],
 )
 
 java_library(
@@ -38,6 +41,8 @@ java_library(
         "//wpimath:wpimath-java",
     ],
 )
+
+zip_java_srcs(name = "xrp")
 
 cc_test(
     name = "xrp-cpp-test",
@@ -66,4 +71,15 @@ java_binary(
         "//ntcore:ntcore-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":xrpVendordep-hdrs-zip",
+    cc_shared_library_pkg = ":shared/xrpVendordep-shared-zip",
+    cc_src_pkg = ":xrpVendordep-srcs-zip",
+    cc_static_library_pkg = ":static/xrpVendordep-static-zip",
+    group_id = "edu.wpi.first.xrpVendordep",
+    java_pkg = "libxrp-java-sources",
+    library_base_name = "xrpVendordep",
 )

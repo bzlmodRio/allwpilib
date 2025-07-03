@@ -1,9 +1,11 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_shared_and_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 
 WIN_SRCS = glob([
     "src/main/native/windows/**/*.cpp",
@@ -57,19 +59,27 @@ wpilib_objc_library(
     ],
 )
 
-wpilib_cc_library(
+wpilib_shared_and_static_library(
     name = "cscore",
     srcs = [":native-srcs"] + glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
     ),
     hdrs = glob(["src/main/native/include/**/*"]),
+    dynamic_deps = [
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
     extra_src_pkg_files = [
         ":cscore-java-jni-hdrs-pkg",
     ],
     includes = [
         "src/main/native/cpp",
         "src/main/native/include",
+    ],
+    static_deps = [
+        "//wpinet:static/wpinet",
+        "//wpiutil:static/wpiutil",
     ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
@@ -83,19 +93,13 @@ wpilib_cc_library(
     }),
 )
 
-wpilib_cc_static_library(
-    name = "static/cscore",
-    static_deps = [
-        "//wpinet:static/wpinet",
-        "//wpiutil:static/wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":cscore"],
-)
-
 wpilib_jni_cc_library(
     name = "cscorejni",
     srcs = glob(["src/main/native/cpp/jni/**"]),
+    dynamic_deps = [
+        ":shared/cscore",
+        "//wpiutil:shared/wpiutil",
+    ],
     java_dep = ":cscore-java",
     visibility = ["//visibility:public"],
     deps = [
@@ -113,6 +117,8 @@ wpilib_jni_java_library(
         "@bzlmodrio-opencv//libraries/java/opencv",
     ],
 )
+
+zip_java_srcs(name = "cscore")
 
 cc_test(
     name = "cscore-cpp-test",
@@ -171,3 +177,9 @@ java_binary(
     "usbstream",
     "usbviewer",
 ]]
+
+bundle_default_jni_library(
+    name = "publishing_bundle",
+    group_id = "edu.wpi.first.cscore",
+    library_base_name = "cscore",
+)

@@ -1,5 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:halsim_library.bzl", "wpilib_halsim_extension")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 cc_library(
     name = "headers",
@@ -7,51 +8,25 @@ cc_library(
     includes = ["src/main/native/include"],
 )
 
-wpilib_cc_library(
+wpilib_halsim_extension(
     name = "halsim_ds_socket",
     srcs = glob(["src/main/native/cpp/**"]),
-    include_license_files = True,
-    target_compatible_with = select({
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-    deps = [
-        ":headers",
-        "//hal:wpiHal",
-        "//wpinet",
+    dynamic_deps = [
+        "//hal:shared/wpiHal",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
     ],
-)
-
-wpilib_cc_library(
-    name = "halsim_ds_socket_static",
-    srcs = glob(["src/main/native/cpp/**"]),
-    copts = [
-        "-DHALSIM_InitExtension=HALSIM_InitExtension_DS_SOCKET",
-    ],
-    include_license_files = True,
-    target_compatible_with = select({
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-    deps = [
-        ":headers",
-        "//hal:wpiHal",
-        "//wpinet",
-    ],
-)
-
-wpilib_cc_static_library(
-    name = "static/halsim_ds_socket",
+    init_extension_name = "HALSIM_InitExtension_DS_SOCKET",
     static_deps = [
         "//hal:static/wpiHal",
         "//wpinet:static/wpinet",
     ],
     visibility = ["//visibility:public"],
-    deps = [":halsim_ds_socket_static"],
+    deps = [
+        ":headers",
+        "//hal:wpiHal",
+        "//wpinet",
+    ],
 )
 
 cc_test(
@@ -70,4 +45,15 @@ cc_binary(
     deps = [
         ":halsim_ds_socket",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    add_cc_suffix = False,
+    cc_hdr_pkg = ":halsim_ds_socket-hdrs-zip",
+    cc_shared_library_pkg = ":shared/halsim_ds_socket-shared-zip",
+    cc_src_pkg = ":halsim_ds_socket-srcs-zip",
+    cc_static_library_pkg = ":static/halsim_ds_socket-static-zip",
+    group_id = "edu.wpi.first.halsim",
+    library_base_name = "halsim_ds_socket",
 )

@@ -1,32 +1,33 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_shared_and_static_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
-wpilib_cc_library(
+wpilib_shared_and_static_library(
     name = "romiVendordep",
     srcs = glob([
         "src/main/native/cpp/**",
     ]),
     hdrs = glob(["src/main/native/include/**"]),
+    dynamic_deps = [
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//wpilibc:shared/wpilibc",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
+    static_deps = [
+        "//ntcore:static/ntcore",
+        "//wpilibc:static/wpilibc",
+        "//wpinet:static/wpinet",
+    ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
         "//ntcore",
         "//wpilibc",
         "//wpinet",
-    ],
-)
-
-wpilib_cc_static_library(
-    name = "static/romiVendordep",
-    static_deps = [
-        "//ntcore:static/ntcore",
-        "//wpilibc:static/wpilibc",
-        "//wpinet:static/wpinet",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":romiVendordep",
     ],
 )
 
@@ -39,6 +40,8 @@ java_library(
         "//wpilibj:wpilibj-java",
     ],
 )
+
+zip_java_srcs(name = "romi")
 
 cc_test(
     name = "romi-test",
@@ -67,4 +70,15 @@ java_binary(
         "//ntcore:ntcore-java",
         "//wpiutil:wpiutil-java",
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":romiVendordep-hdrs-zip",
+    cc_shared_library_pkg = ":shared/romiVendordep-shared-zip",
+    cc_src_pkg = ":romiVendordep-srcs-zip",
+    cc_static_library_pkg = ":static/romiVendordep-static-zip",
+    group_id = "edu.wpi.first.romiVendordep",
+    java_pkg = "libromi-java-sources",
+    library_base_name = "romiVendordep",
 )

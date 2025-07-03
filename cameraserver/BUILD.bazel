@@ -1,8 +1,10 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_shared_and_static_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
-wpilib_cc_library(
+wpilib_shared_and_static_library(
     name = "cameraserver",
     srcs = glob(["src/main/native/cpp/**"]),
     hdrs = glob(["src/main/native/include/**/*"]),
@@ -10,22 +12,16 @@ wpilib_cc_library(
         "cpp",
         "src/main/native/include",
     ],
+    static_deps = [
+        "//cscore:static/cscore",
+        "//ntcore:static/ntcore",
+    ],
     strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
     deps = [
         "//cscore",
         "//ntcore",
     ],
-)
-
-wpilib_cc_static_library(
-    name = "static/cameraserver",
-    static_deps = [
-        "//cscore:static/cscore",
-        "//ntcore:static/ntcore",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":cameraserver"],
 )
 
 java_library(
@@ -42,6 +38,8 @@ java_library(
         "@bzlmodrio-opencv//libraries/java/opencv",
     ],
 )
+
+zip_java_srcs(name = "cameraserver")
 
 cc_test(
     name = "cameraserver-cpp-test",
@@ -67,4 +65,15 @@ java_binary(
     main_class = "edu.wpi.first.cameraserver.DevMain",
     deps = [
     ],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    cc_hdr_pkg = ":cameraserver-hdrs-zip",
+    cc_shared_library_pkg = ":shared/cameraserver-shared-zip",
+    cc_src_pkg = ":cameraserver-srcs-zip",
+    cc_static_library_pkg = ":static/cameraserver-static-zip",
+    group_id = "edu.wpi.first.cameraserver",
+    java_pkg = "libcameraserver-java-sources",
+    library_base_name = "cameraserver",
 )

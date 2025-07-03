@@ -69,7 +69,7 @@ cc_library(
 whl_filegroup(
     name = "semiwrap_casters_files",
     pattern = "semiwrap/semiwrap.pybind11.json",
-    whl = whl_requirement("semiwrap"),
-    visibility = ["//visibility:public"],
     runfiles = True,
+    visibility = ["//visibility:public"],
+    whl = whl_requirement("semiwrap"),
 )

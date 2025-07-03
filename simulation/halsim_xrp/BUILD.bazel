@@ -1,51 +1,20 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:halsim_library.bzl", "wpilib_halsim_extension")
+load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
-wpilib_cc_library(
+wpilib_halsim_extension(
     name = "halsim_xrp",
     srcs = glob([
         "src/main/native/cpp/*",
         "src/main/native/include/*.h",
     ]),
-    include_license_files = True,
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        "//wpinet:shared/wpinet",
+        "//hal:shared/wpiHal",
+    ],
     includes = ["src/main/native/include"],
-    target_compatible_with = select({
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-    deps = [
-        "//simulation/halsim_ws_core",
-        "//wpinet",
-    ],
-)
-
-wpilib_cc_library(
-    name = "halsim_xrp_static",
-    srcs = glob([
-        "src/main/native/cpp/*",
-        "src/main/native/include/*.h",
-    ]),
-    copts = [
-        "-DHALSIM_InitExtension=HALSIM_InitExtension_XRP",
-    ],
-    include_license_files = True,
-    includes = ["src/main/native/include"],
-    target_compatible_with = select({
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
-    visibility = ["//visibility:public"],
-    deps = [
-        "//simulation/halsim_ws_core",
-        "//wpinet",
-    ],
-)
-
-wpilib_cc_static_library(
-    name = "static/halsim_xrp",
+    init_extension_name = "HALSIM_InitExtension_XRP",
     static_deps = [
         "//wpinet:static/wpinet",
         "//hal:static/wpiHal",
@@ -53,11 +22,23 @@ wpilib_cc_static_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        ":halsim_xrp_static",
+        "//simulation/halsim_ws_core",
+        "//wpinet",
     ],
 )
 
 cc_binary(
     name = "DevMain-Cpp",
     srcs = ["src/dev/native/cpp/main.cpp"],
+)
+
+bundle_library_artifacts(
+    name = "publishing_bundle",
+    add_cc_suffix = False,
+    cc_hdr_pkg = ":halsim_xrp-hdrs-zip",
+    cc_shared_library_pkg = ":shared/halsim_xrp-shared-zip",
+    cc_src_pkg = ":halsim_xrp-srcs-zip",
+    cc_static_library_pkg = ":static/halsim_xrp-static-zip",
+    group_id = "edu.wpi.first.halsim",
+    library_base_name = "halsim_xrp",
 )
