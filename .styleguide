@@ -15,6 +15,13 @@ modifiableFileExclude {
   \.patch$
   gradlew
   BUILD.bazel
+  
+  apriltag/src/main/python/
+  apriltag/src/test/python/
+  datalog/src/main/python/
+  datalog/src/test/python/
+  wpilibc/src/main/python/
+  wpilibc/src/test/python/
 }
 
 generatedFileExclude {
