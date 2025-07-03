@@ -27,7 +27,11 @@ from semiwrap.makeplan import (
 
 from shared.bazel.rules.robotpy.generation_utils import fixup_root_package_name, fixup_native_lib_name, fixup_shared_lib_name, fixup_python_dep_name
 
-def hack_pkgconfig(pkgcfgs):
+def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
+    """
+    This will place the given files in the PKG_CONFIG_PATH in such a way that will trick
+    semiwrap into thinking the libraries have been installed
+    """
 
     pkg_config_paths = os.environ.get("PKG_CONFIG_PATH", "").split(os.pathsep)
 

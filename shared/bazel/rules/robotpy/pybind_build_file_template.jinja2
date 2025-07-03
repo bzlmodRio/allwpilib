@@ -1,3 +1,4 @@
+# THIS FILE IS AUTO GENERATED
 {%- if publish_casters_targets -%}load("@rules_cc//cc:cc_library.bzl", "cc_library")
 {% endif -%}
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
@@ -140,6 +141,7 @@ def publish_library_casters():
     )
 {% endfor %}
 def define_pybind_library(name):
+    # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
         srcs = [
@@ -151,6 +153,7 @@ def define_pybind_library(name):
         visibility = ["//visibility:public"],
     )
 
+    # Files that will be included in the wheel as data deps
     native.filegroup(
         name = "{}.generated_data_files".format(name),
         srcs = [
@@ -165,6 +168,7 @@ def define_pybind_library(name):
         tags = ["manual"],
     )
 
+    # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["{{stripped_include_prefix}}/{{top_level_name}}/**"], exclude = ["{{stripped_include_prefix}}/{{top_level_name}}/**/*.py"], allow_empty = True),

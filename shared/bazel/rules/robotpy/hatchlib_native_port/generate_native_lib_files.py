@@ -36,9 +36,6 @@ class NativelibHook:
 
     def _get_pkg_from_path(self, path: pathlib.Path) -> str:
         rel = path.relative_to(self.root_pth)
-        # raise
-        # # TODO: this seems right? is it?
-        # dist_pth = self.build_config.get_distribution_path(str(rel))
         return str(rel).replace("/", ".").replace("\\", ".")
 
     def _generate_pcfile(
@@ -161,9 +158,6 @@ class NativelibHook:
         assert pcfg.shared_libraries is not None
         for lib in pcfg.shared_libraries:
             lib_path = libdir / self._make_shared_lib_fname(lib)
-            # raise
-            # if not lib_path.exists():
-            #     raise FileNotFoundError(f"shared library not found: {lib_path}")
             lib_paths.append(lib_path)
 
         if pcfg.requires:
@@ -172,7 +166,6 @@ class NativelibHook:
             requires = []
 
         _write_libinit_py(self.output_libinit, lib_paths, requires)
-        # build_data["artifacts"].append(libinit_py_rel.as_posix())
 
     def _make_shared_lib_fname(self, lib: str):
         if is_windows:

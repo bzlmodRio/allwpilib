@@ -1,6 +1,9 @@
 load("@rules_python_pytest//python_pytest:defs.bzl", "py_pytest_test")
 
 def robotpy_py_test(name, tests, extra_sources = [], **kwargs):
+    """
+    Helper function which splits a collection of tests into individually runnable test targets
+    """
     for test_file in tests:
         py_pytest_test(
             name = test_file[:-3],

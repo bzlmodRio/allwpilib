@@ -53,7 +53,9 @@ def main():
             ))
 
 
-BUILD_FILE_TEMPLATE = """load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
+BUILD_FILE_TEMPLATE = """# THIS FILE IS AUTO GENERATED
+
+load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "native_wrappery_library")
 
 def define_native_wrapper(name, pyproject_toml = None):

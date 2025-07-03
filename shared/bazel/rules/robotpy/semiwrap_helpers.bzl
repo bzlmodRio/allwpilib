@@ -20,34 +20,6 @@ def _wrapper_dep():
 def _semiwrap_caster():
     return "//shared/bazel/rules/robotpy:semiwrap_casters_files"
 
-def _local_include_root(project_import, include_subpackage):
-    # return "$(location " + project_import + ")/site-packages/native/" + include_subpackage + "/include"
-    # TODO
-    output = "$(location " + project_import + ")"
-    output += "/native/"
-    if "wpiutil" in project_import:
-        output += "wpiutil/include"
-    elif "wpinet" in project_import:
-        output += "wpinet/include"
-    elif "wpihal" in project_import:
-        output += "wpihal/include"
-    elif "ntcore" in project_import:
-        output += "ntcore/include"
-    elif "wpimath" in project_import:
-        output += "wpimath/include"
-    elif "wpilib" in project_import:
-        output += "wpilib/include"
-    elif "xrp" in project_import:
-        output += "xrp/include"
-    elif "romi" in project_import:
-        output += "romi/include"
-    elif "apriltag" in project_import:
-        output += "apriltag/include"
-    else:
-        fail(project_import)
-    return output
-    # return ("//subprojects/robotpy-native-" + base_library_name + ":header_files", "//subprojects/robotpy-native-" + base_library_name + ":" + base_library_name)
-
 def publish_casters(
         name,
         project_config,
@@ -56,6 +28,9 @@ def publish_casters(
         output_pc,
         typecasters_srcs,
         package_root):
+    """
+    Sugar wrapper for the semiwrap.cmd.publish_casters tool
+    """
     cmd = _wrapper() + " semiwrap.cmd.publish_casters"
     cmd += " $(SRCS) " + caster_name + " $(OUTS)"
 
@@ -74,6 +49,9 @@ def resolve_casters(
         dep_file,
         caster_files = [],
         caster_deps = []):
+    """
+    Sugar wrapper for the semiwrap.cmd.resolve_casters tool
+    """
     cmd = _wrapper() + " semiwrap.cmd.resolve_casters "
     cmd += " $(OUTS)"
 
@@ -105,6 +83,9 @@ def gen_libinit(
         name,
         output_file,
         modules):
+    """
+    Sugar wrapper for the semiwrap.cmd.gen_libinit tool
+    """
     cmd = _wrapper() + " semiwrap.cmd.gen_libinit "
     cmd += " $(OUTS) "
     cmd += " ".join(modules)
@@ -125,6 +106,9 @@ def gen_pkgconf(
         libinit_py,
         install_path,
         package_root):
+    """
+    Sugar wrapper for the semiwrap.cmd.gen_pkgconf tool
+    """
     cmd = _wrapper() + " semiwrap.cmd.gen_pkgconf "
     cmd += " " + module_pkg_name + " " + pkg_name
     cmd += _location_helper(project_file)
@@ -153,14 +137,16 @@ def header_to_dat(
         header_to_dat_deps = [],
         extra_defines = [],
         deps = []):
+    """
+    Sugar wrapper for the semiwrap.cmd.header2dat tool
+    """
     cmd = _wrapper() + " semiwrap.cmd.header2dat "
-    cmd += "--cpp 202002L "  # TODO
+    cmd += "--cpp 202002L "  # TODO(pj) - This is the option when I ran on linux. Does its value really matter?
     cmd += class_name
     cmd += _location_helper(yml_file)
 
     cmd += " -I " + include_root
 
-    # TODO TEMP
     for inc in generation_includes:
         cmd += " -I " + inc
     for d in extra_defines:
@@ -170,7 +156,7 @@ def header_to_dat(
     cmd += " " + include_root
     cmd += _location_helper(RESOLVE_CASTERS_DIR + casters_pickle)
     cmd += " $(OUTS)"
-    cmd += " bogus c++20 ccache c++ -- -std=c++20"  # TODO
+    cmd += " bogus c++20 ccache c++ -- -std=c++20"  # TODO(pj) Does it matter what these values are?
 
     native.genrule(
         name = name + "." + class_name,
@@ -258,19 +244,13 @@ def gen_modinit_hpp(
         strip_include_prefix = GEN_MODINIT_HDR_DIR,
     )
 
-def run_header_gen(name, casters_pickle, trampoline_subpath, header_gen_config, deps = [], generation_includes = [], generation_defines = [], local_native_libraries = [], header_to_dat_deps = [], yml_prefix = "src/main/python/"):
-    generation_includes = list(generation_includes)
-    if generation_includes:
-        fail()
+def run_header_gen(name, casters_pickle, trampoline_subpath, header_gen_config, deps = [], generation_defines = [], local_native_libraries = [], header_to_dat_deps = [], yml_prefix = "src/main/python/"):
+    generation_includes = []
     header_to_dat_deps = list(header_to_dat_deps)
-
-    # if generation_includes and "cscore" not in name:
-    #     fail()
 
     for dep in local_native_libraries:
         header_to_dat_deps.append(dep)
         generation_includes.append("$(execpath " + dep + ")")
-        # generation_includes.append(_local_include_root(project_label, include_subpackage))
 
     for header_gen in header_gen_config:
         header_to_dat(
