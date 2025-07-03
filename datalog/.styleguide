@@ -12,7 +12,7 @@ licenseUpdateExclude {
 
 modifiableFileExclude {
   examples/printlog/datalog\.py$
-  
+
   src/main/python/
   src/test/python/
 }

@@ -18,6 +18,10 @@ modifiableFileExclude {
 
   apriltag/src/main/python/
   apriltag/src/test/python/
+  simulation/halsim_ds_socket/src/main/python/
+  simulation/halsim_ds_socket/src/test/python/
+  simulation/halsim_gui/src/main/python/
+  simulation/halsim_gui/src/test/python/
   wpilibc/src/main/python/
   wpilibc/src/test/python/
   xrpVendordep/src/main/python/
