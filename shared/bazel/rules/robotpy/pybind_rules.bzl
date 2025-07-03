@@ -71,6 +71,7 @@ def create_pybind_library(
                 "-Wno-unused-but-set-variable",
                 "-Wno-unused-variable",
                 "-Wno-pessimizing-move",
+                "-Wno-overloaded-virtual",
             ],
             "@bazel_tools//src/conditions:windows": [
             ],

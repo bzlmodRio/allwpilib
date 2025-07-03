@@ -216,7 +216,7 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
             "hal_simulation.gen_pkgconf",
             "hal_simulation.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -565,7 +565,7 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             "wpihal.gen_pkgconf",
             "wpihal.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def define_pybind_library(name):
@@ -576,7 +576,7 @@ def define_pybind_library(name):
             "hal_simulation.generated_files",
             "wpihal.generated_files",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
 
@@ -587,14 +587,14 @@ def define_pybind_library(name):
             "src/main/python/hal/simulation/hal_simulation.pc",
             "src/main/python/hal/wpihal.pc",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/hal/**"], exclude = ["src/main/python/hal/**/*.py"], allow_empty = True),
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     robotpy_library(

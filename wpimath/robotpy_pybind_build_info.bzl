@@ -98,7 +98,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             "wpimath.gen_pkgconf",
             "wpimath.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpimath_filter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -226,7 +226,7 @@ def wpimath_filter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
             "wpimath_filter.gen_pkgconf",
             "wpimath_filter.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpimath_geometry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -458,7 +458,7 @@ def wpimath_geometry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = 
             "wpimath_geometry.gen_pkgconf",
             "wpimath_geometry.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpimath_interpolation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -559,7 +559,7 @@ def wpimath_interpolation_extension(srcs = [], header_to_dat_deps = [], extra_hd
             "wpimath_interpolation.gen_pkgconf",
             "wpimath_interpolation.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpimath_kinematics_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -868,7 +868,7 @@ def wpimath_kinematics_extension(srcs = [], header_to_dat_deps = [], extra_hdrs 
             "wpimath_kinematics.gen_pkgconf",
             "wpimath_kinematics.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpimath_spline_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -1005,7 +1005,7 @@ def wpimath_spline_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
             "wpimath_spline.gen_pkgconf",
             "wpimath_spline.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpimath_controls_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -1661,7 +1661,7 @@ def wpimath_controls_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = 
             "wpimath_controls.gen_pkgconf",
             "wpimath_controls.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def publish_library_casters():
@@ -1680,6 +1680,7 @@ def publish_library_casters():
         hdrs = native.glob(["src/main/python/wpimath/_impl/src/*.h", "src/main/python/wpimath/_impl/src/type_casters/*.h"]),
         includes = ["src/main/python/wpimath/_impl/src", "src/main/python/wpimath/_impl/src/type_casters"],
         visibility = ["//visibility:public"],
+        tags = ["robotpy"],
     )
 
 def define_pybind_library(name):
@@ -1695,7 +1696,7 @@ def define_pybind_library(name):
             "wpimath_spline.generated_files",
             "wpimath_controls.generated_files",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
 
@@ -1713,14 +1714,14 @@ def define_pybind_library(name):
             "src/main/python/wpimath/wpimath-casters.pc",
             "src/main/python/wpimath/wpimath-casters.pybind11.json",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpimath/**"], exclude = ["src/main/python/wpimath/**/*.py"], allow_empty = True),
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     robotpy_library(

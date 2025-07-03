@@ -115,7 +115,7 @@ def wpilib_event_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
             "wpilib_event.gen_pkgconf",
             "wpilib_event.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpilib_interfaces_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -232,7 +232,7 @@ def wpilib_interfaces_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
             "wpilib_interfaces.gen_pkgconf",
             "wpilib_interfaces.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -1202,7 +1202,7 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             "wpilib.gen_pkgconf",
             "wpilib.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpilib_counter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -1330,7 +1330,7 @@ def wpilib_counter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
             "wpilib_counter.gen_pkgconf",
             "wpilib_counter.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpilib_drive_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -1462,7 +1462,7 @@ def wpilib_drive_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
             "wpilib_drive.gen_pkgconf",
             "wpilib_drive.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
@@ -1952,7 +1952,7 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
             "wpilib_simulation.gen_pkgconf",
             "wpilib_simulation.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def define_pybind_library(name):
@@ -1967,7 +1967,7 @@ def define_pybind_library(name):
             "wpilib_drive.generated_files",
             "wpilib_simulation.generated_files",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
 
@@ -1982,14 +1982,14 @@ def define_pybind_library(name):
             "src/main/python/wpilib/drive/wpilib_drive.pc",
             "src/main/python/wpilib/simulation/wpilib_simulation.pc",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpilib/**"], exclude = ["src/main/python/wpilib/**/*.py"], allow_empty = True),
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     robotpy_library(

@@ -87,7 +87,7 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
             "wpimath_test.gen_pkgconf",
             "wpimath_test.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def define_pybind_library(name):
@@ -97,7 +97,7 @@ def define_pybind_library(name):
         srcs = [
             "wpimath_test.generated_files",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
 
@@ -107,14 +107,14 @@ def define_pybind_library(name):
         srcs = [
             "src/test/python/cpp/wpimath_test/wpimath_test.pc",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/test/python/cpp/wpimath_test/**"], exclude = ["src/test/python/cpp/wpimath_test/**/*.py"], allow_empty = True),
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     robotpy_library(

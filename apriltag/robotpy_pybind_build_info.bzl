@@ -157,7 +157,7 @@ def apriltag_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
             "apriltag.gen_pkgconf",
             "apriltag.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def define_pybind_library(name):
@@ -167,7 +167,7 @@ def define_pybind_library(name):
         srcs = [
             "apriltag.generated_files",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
 
@@ -177,14 +177,14 @@ def define_pybind_library(name):
         srcs = [
             "src/main/python/robotpy_apriltag/apriltag.pc",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/robotpy_apriltag/**"], exclude = ["src/main/python/robotpy_apriltag/**/*.py"], allow_empty = True),
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     robotpy_library(

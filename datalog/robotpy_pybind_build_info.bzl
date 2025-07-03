@@ -152,7 +152,7 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             "wpilog.gen_pkgconf",
             "wpilog.gen_lib_init",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
 def define_pybind_library(name):
@@ -162,7 +162,7 @@ def define_pybind_library(name):
         srcs = [
             "wpilog.generated_files",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
 
@@ -172,14 +172,14 @@ def define_pybind_library(name):
         srcs = [
             "src/main/python/wpilog/wpilog.pc",
         ],
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
         srcs = native.glob(["src/main/python/wpilog/**"], exclude = ["src/main/python/wpilog/**/*.py"], allow_empty = True),
-        tags = ["manual"],
+        tags = ["manual", "robotpy"],
     )
 
     robotpy_library(
