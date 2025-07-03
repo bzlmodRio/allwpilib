@@ -1,11 +1,14 @@
-import sys
 import argparse
-import tomli
 import json
-from jinja2 import Environment, PackageLoader, select_autoescape
-from jinja2 import Environment, BaseLoader
 
-from shared.bazel.rules.robotpy.generation_utils import fixup_root_package_name, fixup_native_lib_name, fixup_shared_lib_name, fixup_python_dep_name
+import tomli
+from jinja2 import BaseLoader, Environment
+
+from shared.bazel.rules.robotpy.generation_utils import (
+    fixup_python_dep_name,
+    fixup_root_package_name,
+    fixup_shared_lib_name,
+)
 
 
 def main():
@@ -34,23 +37,25 @@ def main():
         return f"//{fixup_root_package_name(wpilib_project)}:{fixup_python_dep_name(library)}"
 
     env = Environment(loader=BaseLoader)
-    env.filters['double_quotes'] = double_quotes
-    env.filters['get_pc_dep'] = get_pc_dep
-    env.filters['get_python_dep'] = get_python_dep
+    env.filters["double_quotes"] = double_quotes
+    env.filters["get_pc_dep"] = get_pc_dep
+    env.filters["get_python_dep"] = get_python_dep
     template = env.from_string(BUILD_FILE_TEMPLATE)
 
     nativelib_config = raw_config["tool"]["hatch"]["build"]["hooks"]["nativelib"]
     project_name = nativelib_config["pcfile"][0]["name"]
     root_package = fixup_root_package_name(project_name)
     shared_library_name = fixup_shared_lib_name(project_name)
-    with open(args.output_file, 'w') as f:
-        f.write(template.render(
-            raw_project_config = raw_config["project"],
-            nativelib_config = nativelib_config,
-            root_package=root_package,
-            shared_library_name=shared_library_name,
-            third_party_dirs=args.third_party_dirs or [],
-            ))
+    with open(args.output_file, "w") as f:
+        f.write(
+            template.render(
+                raw_project_config=raw_config["project"],
+                nativelib_config=nativelib_config,
+                root_package=root_package,
+                shared_library_name=shared_library_name,
+                third_party_dirs=args.third_party_dirs or [],
+            )
+        )
 
 
 BUILD_FILE_TEMPLATE = """# THIS FILE IS AUTO GENERATED

@@ -1,5 +1,3 @@
-
-
 def fixup_root_package_name(name):
     if name == "wpihal":
         return "hal"
@@ -9,8 +7,10 @@ def fixup_root_package_name(name):
         return "datalog"
     return name
 
+
 def fixup_native_lib_name(name):
     return name
+
 
 def fixup_shared_lib_name(name):
     if name == "wpihal":
@@ -20,6 +20,7 @@ def fixup_shared_lib_name(name):
     if name == "wpilib":
         return "wpilibc"
     return name
+
 
 def fixup_python_dep_name(name):
     if name == "robotpy-datalog":

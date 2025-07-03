@@ -2,15 +2,15 @@ import functools
 import os
 import pathlib
 import platform
+import sys
 import typing as T
-from packaging.markers import Marker
+
 import pkgconf
+import tomli
+from packaging.markers import Marker
 
 from shared.bazel.rules.robotpy.hatchlib_native_port.config import PcFileConfig
 from shared.bazel.rules.robotpy.hatchlib_native_port.validate import parse_input
-
-import sys
-import tomli
 
 # Port of https://github.com/robotpy/hatch-nativelib/blob/main/src/hatch_nativelib/plugin.py
 
@@ -32,7 +32,7 @@ class NativelibHook:
 
     def initialize(self):
         for pcfg in self._pcfiles:
-            pcfile = self._generate_pcfile(pcfg, {})
+            self._generate_pcfile(pcfg, {})
 
     def _get_pkg_from_path(self, path: pathlib.Path) -> str:
         rel = path.relative_to(self.root_pth)
@@ -147,7 +147,7 @@ class NativelibHook:
         build_data: T.Dict[str, T.Any],
     ):
         libinit_py_rel = pcfg.get_init_module_path()
-        libinit_py = self.root_pth / libinit_py_rel
+        self.root_pth / libinit_py_rel
 
         libdir = prefix_path
         if pcfg.libdir:
@@ -307,7 +307,6 @@ def hack_pkgconfig(pkgcfgs):
     os.environ["PKG_CONFIG_PATH"] = os.pathsep.join(pkg_config_paths)
 
 
-
 def main():
     pyproject_toml = sys.argv[1]
     libinit_file = pathlib.Path(sys.argv[2])
@@ -316,7 +315,7 @@ def main():
 
     hack_pkgconfig(pkgcfgs)
 
-    with open(pyproject_toml, 'rb') as fp:
+    with open(pyproject_toml, "rb") as fp:
         raw_config = tomli.load(fp)
 
     nativelib_cfg = raw_config["tool"]["hatch"]["build"]["hooks"]["nativelib"]

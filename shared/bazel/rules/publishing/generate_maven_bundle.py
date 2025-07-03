@@ -19,10 +19,18 @@ def main():
         artifact, maven_base, artifact_name, suffix = maven_info.split(",")
         json_data.append(
             dict(
-                artifact=artifact.replace("##PLATFORM##", args.platform).replace("##DEBUG##", args.debug_suffix),
-                maven_base=maven_base.replace("##PLATFORM##", args.platform).replace("##DEBUG##", args.debug_suffix),
-                artifact_name=artifact_name.replace("##PLATFORM##", args.platform).replace("##DEBUG##", args.debug_suffix),
-                suffix=suffix.replace("##PLATFORM##", args.platform).replace("##DEBUG##", args.debug_suffix),
+                artifact=artifact.replace("##PLATFORM##", args.platform).replace(
+                    "##DEBUG##", args.debug_suffix
+                ),
+                maven_base=maven_base.replace("##PLATFORM##", args.platform).replace(
+                    "##DEBUG##", args.debug_suffix
+                ),
+                artifact_name=artifact_name.replace(
+                    "##PLATFORM##", args.platform
+                ).replace("##DEBUG##", args.debug_suffix),
+                suffix=suffix.replace("##PLATFORM##", args.platform).replace(
+                    "##DEBUG##", args.debug_suffix
+                ),
             )
         )
 
