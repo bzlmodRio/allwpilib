@@ -1,4 +1,5 @@
-url = "https://github.com/robotpy/mostrobotpy.git"
+mostrobotpy_url = "https://github.com/robotpy/mostrobotpy.git"
+allwpilib_url = "git@github.com:bzlmodRio/allwpilib.git"
 
 PROJECTS = [
     struct(
@@ -59,8 +60,8 @@ def get_robotpy_to_allwpilib_info():
     for project_info in PROJECTS:
         origin_files += glob([
             "subprojects/" + project_info.robotpy_name + "/**",
-        ], exclude = ["**/meson.build", "**/.gitignore"])
-        origin_files.append("subprojects/" + project_info.native_robotpy_name + "/pyproject.toml")
+            "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml"
+        ], exclude = ["**/meson.build", "**/.gitignore", "**/requirements.txt"])
 
         destination_files += glob([
             project_info.wpilib_name + "/src/main/python/**",
@@ -69,26 +70,32 @@ def get_robotpy_to_allwpilib_info():
 
         if project_info.has_tests:
             transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/tests", project_info.wpilib_name + "/src/test/python"))
-        transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/pyproject.toml", "subprojects/" + project_info.robotpy_name + "/pybind-pyproject.toml"))
         transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/pyproject.toml", "subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml"))
         transformations.append(core.move("subprojects/" + project_info.robotpy_name, project_info.wpilib_name + "/src/main/python"))
         transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml", project_info.wpilib_name + "/src/main/python/native-pyproject.toml"))
 
-    print(origin_files)
     return origin_files, destination_files, transformations
 
 origin_files, destination_files, transformations = get_robotpy_to_allwpilib_info()
 
 core.workflow(
-    name = "default",
+    name = "mostrobotpy_to_allwpilib",
     origin = git.origin(
-        url = url,
+        url = mostrobotpy_url,
         ref = "initial-2027",
     ),
-    destination = git.destination(
-        url = "file:///home/pjreiniger/git/allwpilib",
-        fetch = "test_copybara",
-        push = "test_copybara",
+    # destination = git.destination(
+    #     url = "file:///home/pjreiniger/git/allwpilib",
+    #     fetch = "test_copybara",
+    #     push = "test_copybara",
+    # ),
+    destination = git.github_pr_destination(
+        url = allwpilib_url,
+        destination_ref = "mvp_robotpy",
+        pr_branch = "mostrobotpy_to_allwpilib",
+        title = "[copybara] Sync mostrobotpy",
+        body = "",
+        integrates = [],
     ),
     destination_files = destination_files,
     origin_files = origin_files,
