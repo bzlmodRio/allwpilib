@@ -66,7 +66,6 @@ cc_test(
     size = "small",
     srcs = glob([
         "src/test/native/**/*.cpp",
-        "src/test/native/**/*.h",
     ]),
     deps = [
         ":wpiHal.static",

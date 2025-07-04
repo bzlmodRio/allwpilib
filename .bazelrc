@@ -39,7 +39,7 @@ test:no_example --test_tag_filters=-wpi-example --build_tag_filters=-wpi-example
 build:base_remote --remote_timeout=3600
 
 # Additional suggestions from buildbuddy for speed
-build:base_remote --experimental_remote_cache_compression
+build:base_remote --remote_cache_compression
 build:base_remote --experimental_remote_cache_compression_threshold=100
 build:base_remote --noslim_profile
 build:base_remote --experimental_profile_include_target_label
