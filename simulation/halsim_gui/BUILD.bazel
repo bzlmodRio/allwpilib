@@ -61,7 +61,6 @@ wpilib_cc_static_library(
     static_deps = [
         "//hal:static/wpiHal",
         "//wpimath:static/wpimath",
-        "//datalog:static/datalog",
         "//ntcore:static/ntcore",
         "//glass:static/glassnt",
     ],

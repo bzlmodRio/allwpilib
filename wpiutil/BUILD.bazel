@@ -294,7 +294,7 @@ cc_binary(
     name = "printlog",
     srcs = ["examples/printlog/printlog.cpp"],
     deps = [
-        ":wpiutil.static",
+        ":wpiutil",
     ],
 )
 
@@ -302,7 +302,7 @@ cc_binary(
     name = "writelog",
     srcs = ["examples/writelog/writelog.cpp"],
     deps = [
-        ":wpiutil.static",
+        ":wpiutil",
     ],
 )
 

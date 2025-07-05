@@ -96,14 +96,28 @@ wpilib_cc_library(
     ],
     includes = ["src/main/native/include"],
     strip_include_prefix = "src/main/native/include",
-    third_party_header_only_libraries = [
-        ":mrc",
-    ],
     visibility = ["//visibility:public"],
     deps = [
         ":generated_cc_headers",
-        "//wpiutil:wpiutil.static",
+        "//wpiutil",
     ] + HAL_DEPS,
+)
+
+wpilib_cc_static_library(
+    name = "static/wpiHal",
+    static_deps = [
+        "//wpiutil:static/wpiutil",
+    ] + select({
+        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": [
+            "//ntcore:static/ntcore",
+            "//wpinet:static/wpinet",
+        ],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal",
+    ],
 )
 
 wpilib_jni_cc_library(

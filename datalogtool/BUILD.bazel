@@ -50,7 +50,6 @@ cc_binary(
         "//conditions:default": [],
     }),
     deps = [
-        "//datalog",
         "//glass:libglass",
         "@bzlmodrio-libssh//libraries/cpp/libssh",
     ],

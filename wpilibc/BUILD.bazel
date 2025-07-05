@@ -97,7 +97,6 @@ wpilib_cc_library(
     deps = [
         "//cameraserver:cameraserver-headers",
         "//cscore:cscore-headers",
-        "//datalog",
         "//hal:wpiHal",
         "//ntcore",
         "//ntcore:ntcore-headers",
@@ -110,7 +109,6 @@ wpilib_cc_library(
 wpilib_cc_static_library(
     name = "static/wpilibc",
     static_deps = [
-        "//datalog:static/datalog",
         "//hal:static/wpiHal",
         "//ntcore:static/ntcore",
         "//wpimath:static/wpimath",

@@ -95,7 +95,6 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//datalog",
         "//wpinet",
         "//wpiutil",
     ],
@@ -104,7 +103,6 @@ wpilib_cc_library(
 wpilib_cc_static_library(
     name = "static/ntcore",
     static_deps = [
-        "//datalog:static/datalog",
         "//wpinet:static/wpinet",
         "//wpiutil:static/wpiutil",
     ],
