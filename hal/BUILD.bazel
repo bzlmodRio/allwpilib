@@ -11,25 +11,16 @@ filegroup(
     srcs = glob(["src/generate/*"]),
 )
 
-filegroup(
-    name = "proto_files",
-    srcs = glob(["src/mrc/proto/**/*.proto"]),
-)
-
 py_binary(
-    name = "generate_nanopb",
-    srcs = ["generate_nanopb.py"],
-    target_compatible_with = select({
-        "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
-        "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
+    name = "generate_usage_reporting",
+    srcs = ["generate_usage_reporting.py"],
+    data = [":templates"],
+    tags = ["manual"],
     visibility = ["//visibility:public"],
 )
 
 generate_hal(
     name = "generate_hal_files",
-    proto_files = ":proto_files",
 )
 
 write_source_files(
