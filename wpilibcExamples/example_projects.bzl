@@ -5,6 +5,7 @@ EXAMPLE_FOLDERS = [
     "ArcadeDriveXboxController",
     "ArmSimulation",
     "CANPDP",
+    "DMA",
     "DifferentialDriveBot",
     "DifferentialDrivePoseEstimator",
     "DigitalCommunication",
@@ -38,8 +39,10 @@ EXAMPLE_FOLDERS = [
     "PotentiometerPID",
     "QuickVision",
     "RapidReactCommandBot",
+    "Relay",
     "RomiReference",
     "SelectCommand",
+    "ShuffleBoard",
     "SimpleDifferentialDriveSimulation",
     "Solenoid",
     "StateSpaceArm",
@@ -52,6 +55,8 @@ EXAMPLE_FOLDERS = [
     "SysIdRoutine",
     "TankDrive",
     "TankDriveXboxController",
+    "Ultrasonic",
+    "UltrasonicPID",
     "UnitTest",
     "XRPReference",
 ]
@@ -68,8 +73,21 @@ COMMANDS_V2_FOLDERS = [
 ]
 
 SNIPPETS_FOLDERS = [
+    "ADXLAccelerometers",
+    "AccelerometerCollision",
+    "AccelerometerFilter",
+    "AnalogAccelerometer",
+    "AnalogEncoder",
+    "AnalogInput",
+    "AnalogPotentiometer",
+    "AnalogTrigger",
+    "BuiltInAccelerometer",
+    "DigitalInput",
     "DutyCycleEncoder",
     "Encoder",
+    "EncoderDrive",
+    "EncoderHoming",
+    "LimitSwitch",
 ]
 
 TEMPLATES_FOLDERS = [

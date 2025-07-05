@@ -8,6 +8,7 @@ EXAMPLES_FOLDERS = [
     "differentialdrivebot",
     "differentialdriveposeestimator",
     "digitalcommunication",
+    "dma",
     "drivedistanceoffboard",
     "dutycycleencoder",
     "dutycycleinput",
@@ -37,8 +38,10 @@ EXAMPLES_FOLDERS = [
     "potentiometerpid",
     "quickvision",
     "rapidreactcommandbot",
+    "relay",
     "romireference",
     "selectcommand",
+    "shuffleboard",
     "simpledifferentialdrivesimulation",
     "solenoid",
     "statespacearm",
@@ -51,6 +54,8 @@ EXAMPLES_FOLDERS = [
     "sysidroutine",
     "tankdrive",
     "tankdrivexboxcontroller",
+    "ultrasonic",
+    "ultrasonicpid",
     "unittest",
     "xrpreference",
 ]
@@ -67,8 +72,21 @@ COMMANDS_V2_FOLDERS = [
 ]
 
 SNIPPETS_FOLDERS = [
+    "accelerometercollision",
+    "accelerometerfilter",
+    "adxlaccelerometers",
+    "analogaccelerometer",
+    "analogencoder",
+    "analoginput",
+    "analogpotentiometer",
+    "analogtrigger",
+    "builtinaccelerometer",
+    "digitalinput",
     "dutycycleencoder",
     "encoder",
+    "encoderdrive",
+    "encoderhoming",
+    "limitswitch",
 ]
 
 TEMPLATES_FOLDERS = [
