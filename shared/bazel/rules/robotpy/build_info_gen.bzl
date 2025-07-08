@@ -59,7 +59,7 @@ def generate_robotpy_pybind_build_info(
         yml_prefix - Optional. Used in the event that the yml files are in a non-standard location
     """
 
-    cmd = "$(location //shared/bazel/rules/robotpy:generate_pybind_build_file2) --project_file=$(location " + pyproject_toml + ") --output_file=$(OUTS)"
+    cmd = "$(location //shared/bazel/rules/robotpy:generate_pybind_build_file) --project_file=$(location " + pyproject_toml + ") --output_file=$(OUTS)"
 
     cmd += " --package_root_file=" + package_root_file
     if stripped_include_prefix:
@@ -74,7 +74,7 @@ def generate_robotpy_pybind_build_info(
 
     native.genrule(
         name = "{}.gen_build_info".format(name),
-        tools = ["//shared/bazel/rules/robotpy:generate_pybind_build_file2"],
+        tools = ["//shared/bazel/rules/robotpy:generate_pybind_build_file"],
         srcs = [pyproject_toml, package_root_file] + yaml_files + pkgcfgs + additional_srcs + ["//shared/bazel/rules/robotpy:jinja_templates"],
         outs = ["{}-generated_build_info.bzl".format(name)],
         cmd = cmd,

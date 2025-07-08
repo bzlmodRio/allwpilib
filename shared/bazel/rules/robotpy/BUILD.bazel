@@ -31,8 +31,8 @@ filegroup(
 )
 
 py_binary(
-    name = "generate_pybind_build_file2",
-    srcs = ["generate_pybind_build_file2.py"],
+    name = "generate_pybind_build_file",
+    srcs = ["generate_pybind_build_file.py"],
     data = [
         ":jinja_templates",
     ],
