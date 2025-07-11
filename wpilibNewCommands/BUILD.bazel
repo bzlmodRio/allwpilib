@@ -162,3 +162,23 @@ bundle_library_artifacts(
     java_pkg = "libwpilibNewCommands-java-sources",
     library_base_name = "wpilibNewCommands",
 )
+
+py_library(
+    name = "robotpy-commands-v2",
+    srcs = glob(["src/main/python/**"]),
+    tags = ["robotpy"],
+    deps = [],
+)
+
+robotpy_py_test(
+    "python_tests",
+    extra_sources = ["src/test/python/conftest.py"],
+    tests = glob(
+        ["src/test/python/**/*.py"],
+        exclude = ["src/test/python/conftest.py"],
+    ),
+    deps = [
+        ":robotpy-commands-v2",
+        requirement("pytest"),
+    ],
+)
