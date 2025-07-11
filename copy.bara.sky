@@ -1,7 +1,12 @@
-mostrobotpy_url = "https://github.com/robotpy/mostrobotpy.git"
-allwpilib_url = "git@github.com:bzlmodRio/allwpilib.git"
+# mostrobotpy_url = "https://github.com/robotpy/mostrobotpy.git"
+# allwpilib_url = "git@github.com:bzlmodRio/allwpilib.git"
+robotpy_commands_url = "https://github.com/robotpy/robotpy-commands-v2"
 
-PROJECTS = [
+mostrobotpy_url = "file:///home/pjreiniger/git/robotpy/robotpy_monorepo/mostrobotpy"
+allwpilib_url = "file:///home/pjreiniger/git/allwpilib"
+
+
+MOSTROBOTPY_PROJECTS = [
     struct(
         wpilib_name = "wpiutil",
         robotpy_name = "robotpy-wpiutil",
@@ -52,16 +57,16 @@ PROJECTS = [
     ),
 ]
 
-def get_robotpy_to_allwpilib_info():
+def define_mostrobotpy_to_allwpilib():
     origin_files = []
     destination_files = []
     transformations = []
 
-    for project_info in PROJECTS:
+    for project_info in MOSTROBOTPY_PROJECTS:
         origin_files += glob([
             "subprojects/" + project_info.robotpy_name + "/**",
             "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml"
-        ], exclude = ["**/meson.build", "**/.gitignore", "**/requirements.txt"])
+        ], exclude = ["**/meson.build", "**/.gitignore", "**/requirements.txt", "**/run_tests.py"])
 
         destination_files += glob([
             project_info.wpilib_name + "/src/main/python/**",
@@ -74,31 +79,109 @@ def get_robotpy_to_allwpilib_info():
         transformations.append(core.move("subprojects/" + project_info.robotpy_name, project_info.wpilib_name + "/src/main/python"))
         transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml", project_info.wpilib_name + "/src/main/python/native-pyproject.toml"))
 
-    return origin_files, destination_files, transformations
+    core.workflow(
+        name = "mostrobotpy_to_allwpilib",
+        origin = git.origin(
+            url = mostrobotpy_url,
+            ref = "initial-2027",
+        ),
+        destination = git.destination(
+            url = allwpilib_url,
+            fetch = "test_copybara",
+            push = "test_copybara",
+        ),
+        # destination = git.github_pr_destination(
+        #     url = allwpilib_url,
+        #     destination_ref = "mvp_robotpy",
+        #     pr_branch = "mostrobotpy_to_allwpilib",
+        #     title = "[copybara] Sync mostrobotpy",
+        #     body = "",
+        #     integrates = [],
+        # ),
+        destination_files = destination_files,
+        origin_files = origin_files,
+        authoring = authoring.pass_thru("Default email <default@default.com>"),
+        transformations = transformations,
+    )
 
-origin_files, destination_files, transformations = get_robotpy_to_allwpilib_info()
 
-core.workflow(
-    name = "mostrobotpy_to_allwpilib",
-    origin = git.origin(
-        url = mostrobotpy_url,
-        ref = "initial-2027",
-    ),
-    # destination = git.destination(
-    #     url = "file:///home/pjreiniger/git/allwpilib",
-    #     fetch = "test_copybara",
-    #     push = "test_copybara",
-    # ),
-    destination = git.github_pr_destination(
-        url = allwpilib_url,
-        destination_ref = "mvp_robotpy",
-        pr_branch = "mostrobotpy_to_allwpilib",
-        title = "[copybara] Sync mostrobotpy",
-        body = "",
-        integrates = [],
-    ),
-    destination_files = destination_files,
-    origin_files = origin_files,
-    authoring = authoring.pass_thru("Default email <default@default.com>"),
-    transformations = transformations,
-)
+
+def define_allwpilib_to_mostrobotpy():
+    origin_files = []
+    destination_files = glob(["**"])
+    transformations = []
+
+    for project_info in MOSTROBOTPY_PROJECTS:
+        origin_files += glob([
+            project_info.wpilib_name + "/src/main/python/**",
+            project_info.wpilib_name + "/src/test/python/**",
+        ], exclude = [])
+
+        if project_info.has_tests:
+            transformations.append(core.move(project_info.wpilib_name + "/src/test/python", "subprojects/" + project_info.robotpy_name + "/tests"))
+        transformations.append(core.move(project_info.wpilib_name + "/src/main/python", "subprojects/" + project_info.robotpy_name))
+        transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/native-pyproject.toml", "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml"))
+        
+    core.workflow(
+        name = "allwpilib_to_mostrobotpy",
+        origin = git.origin(
+            url = allwpilib_url,
+            ref = "bzl_2027_robotpy",
+        ),
+        destination = git.destination(
+            url = mostrobotpy_url,
+            fetch = "test_copybara",
+            push = "test_copybara",
+        ),
+        # destination = git.github_pr_destination(
+        #     url = allwpilib_url,
+        #     destination_ref = "mvp_robotpy",
+        #     pr_branch = "mostrobotpy_to_allwpilib",
+        #     title = "[copybara] Sync mostrobotpy",
+        #     body = "",
+        #     integrates = [],
+        # ),
+        destination_files = destination_files,
+        origin_files = origin_files,
+        authoring = authoring.pass_thru("Default email <default@default.com>"),
+        transformations = transformations,
+    )
+
+
+def define_robotpy_commands_to_allwpilib():
+    origin_files = glob([
+            "commands2/**", 
+            "tests/**"
+        ], exclude=["**/run_tests.py", "**/requirements.txt"])
+    destination_files = glob([
+        "wpilibNewCommands/src/main/python/**",
+        "wpilibNewCommands/src/test/python/**",
+    ], exclude = [])
+    transformations = [
+        core.move("tests", "wpilibNewCommands/src/test/python"),
+        core.move("commands2", "wpilibNewCommands/src/main/python/commands2"),
+    ]
+
+    core.workflow(
+        name = "robotpy_commands_to_allwpilib",
+        origin = git.origin(
+            url = robotpy_commands_url,
+            ref = "main",
+        ),
+        destination = git.destination(
+            url = allwpilib_url,
+            fetch = "test_copybara2",
+            push = "test_copybara2",
+        ),
+        destination_files = destination_files,
+        origin_files = origin_files,
+        authoring = authoring.pass_thru("Default email <default@default.com>"),
+        transformations = transformations,
+    )
+
+
+define_mostrobotpy_to_allwpilib()
+define_allwpilib_to_mostrobotpy()
+define_robotpy_commands_to_allwpilib()
+
+# # bazel run //:copybara -- migrate /home/pjreiniger/git/allwpilib/copy.bara.sky
