@@ -1,6 +1,7 @@
 # mostrobotpy_url = "https://github.com/robotpy/mostrobotpy.git"
 # allwpilib_url = "git@github.com:bzlmodRio/allwpilib.git"
 robotpy_commands_url = "https://github.com/robotpy/robotpy-commands-v2"
+robotpy_examples_url = "https://github.com/robotpy/examples"
 
 mostrobotpy_url = "file:///home/pjreiniger/git/robotpy/robotpy_monorepo/mostrobotpy"
 allwpilib_url = "file:///home/pjreiniger/git/allwpilib"
@@ -180,8 +181,45 @@ def define_robotpy_commands_to_allwpilib():
     )
 
 
+def define_robotpy_examples_to_allwpilib():
+    origin_files = glob(["**"], exclude=[
+        ".github/**",
+        ".gitignore",
+        ".pre-commit-config.yaml",
+        "CONTRIBUTING.md",
+        "README.md",
+        "check_header.py",
+        "run_tests.sh",
+    ])
+    destination_files = glob([
+        "robotpyExamples/**",
+    ], exclude = [])
+    transformations = [
+        core.move("", "robotpyExamples"),
+    ]
+
+    core.workflow(
+        name = "robotpy_examples_to_allwpilib",
+        origin = git.origin(
+            url = robotpy_examples_url,
+            ref = "main",
+        ),
+        destination = git.destination(
+            url = allwpilib_url,
+            fetch = "test_copybara3",
+            push = "test_copybara3",
+        ),
+        destination_files = destination_files,
+        origin_files = origin_files,
+        authoring = authoring.pass_thru("Default email <default@default.com>"),
+        transformations = transformations,
+    )
+
 define_mostrobotpy_to_allwpilib()
 define_allwpilib_to_mostrobotpy()
+
 define_robotpy_commands_to_allwpilib()
+
+define_robotpy_examples_to_allwpilib()
 
 # # bazel run //:copybara -- migrate /home/pjreiniger/git/allwpilib/copy.bara.sky
