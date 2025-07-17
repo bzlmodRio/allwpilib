@@ -258,3 +258,5 @@ bazel_auth.rc
 
 # Meson
 .meson-subproject*
+
+.venv

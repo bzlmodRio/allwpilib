@@ -5,3 +5,5 @@ semiwrap==0.1.2
 pytest
 numpy
 opencv-python~=4.6
+robotpy-cli~=2024.0b
+pyfrc==2025.1.0

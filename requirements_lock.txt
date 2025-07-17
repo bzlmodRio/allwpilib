@@ -12,6 +12,14 @@ exceptiongroup==1.3.0 \
     --hash=sha256:4d111e6e0c13d0644cad6ddaa7ed0261a0b36971f6d23e7ec9b4b9097da78a10 \
     --hash=sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88
     # via pytest
+flexcache==0.3 \
+    --hash=sha256:18743bd5a0621bfe2cf8d519e4c3bfdf57a269c15d1ced3fb4b64e0ff4600656 \
+    --hash=sha256:d43c9fea82336af6e0115e308d9d33a185390b8346a017564611f1466dcd2e32
+    # via pint
+flexparser==0.4 \
+    --hash=sha256:266d98905595be2ccc5da964fe0a2c3526fbbffdc45b65b3146d75db992ef6b2 \
+    --hash=sha256:3738b456192dcb3e15620f324c447721023c0293f6af9955b481e91d00179846
+    # via pint
 grpcio==1.73.1 \
     --hash=sha256:052e28fe9c41357da42250a91926a3e2f74c046575c070b69659467ca5aa976b \
     --hash=sha256:07f08705a5505c9b5b0cbcbabafb96462b5a15b7236bbf6bbcc6b0b91e1cbd7e \
@@ -271,6 +279,10 @@ pcpp==1.30 \
     --hash=sha256:05fe08292b6da57f385001c891a87f40d6aa7f46787b03e8ba326d20a3297c6e \
     --hash=sha256:5af9fbce55f136d7931ae915fae03c34030a3b36c496e72d9636cedc8e2543a1
     # via cxxheaderparser
+pint==0.24.4 \
+    --hash=sha256:35275439b574837a6cd3020a5a4a73645eb125ce4152a73a2f126bf164b91b80 \
+    --hash=sha256:aa54926c8772159fcf65f82cc0d34de6768c151b32ad1deb0331291c38fe7659
+    # via pyfrc
 pkgconf==2.4.3.post1 \
     --hash=sha256:101bed059939c26b04dfba1226a9c0ebf1f08b9bee98354797c2d887a08a2d7a \
     --hash=sha256:1f334bd2eaf2cb07feb09be439b62ecca1ac2a0aaa447587d5a31029bb43bf69 \
@@ -288,6 +300,10 @@ pkgconf==2.4.3.post1 \
     --hash=sha256:defe70c329df7d7992b64a105e78d97f154727b595271fd97a70f3ce33b05478 \
     --hash=sha256:ec31ce85eab01f7a41d2c86a43827556fe8238f7c5b51ccca42bfd01762d84ca
     # via semiwrap
+platformdirs==4.3.8 \
+    --hash=sha256:3d512d96e16bcb959a814c9f348431070822a6496326a4be0911c40b5a74c2bc \
+    --hash=sha256:ff7059bb7eb1179e2685604f4aaf157cfd9535242bd23742eadc3c13542139b4
+    # via pint
 pluggy==1.6.0 \
     --hash=sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3 \
     --hash=sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746
@@ -311,6 +327,10 @@ pybind11-stubgen==2.5.4 \
     --hash=sha256:8625f25da48cf96eea24ba7cae673b5f49b45847b6ef01eead60c4eb762fe5c5 \
     --hash=sha256:b6bd44a6d4ba55cef80bd8af92f1f8195b1c6bb0f7bd2f6d785c9530ce6bcae9
     # via semiwrap
+pyfrc==2025.1.0 \
+    --hash=sha256:773e474a083e8b1c9abcf462a1e86a3744121c8199f888677df4b50b6f9f979b \
+    --hash=sha256:8b417592410dc885b90cb59d2fa08d57d31226bb79f5981e4ae0d866ee6580b7
+    # via -r requirements.txt
 pygments==2.19.2 \
     --hash=sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887 \
     --hash=sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b
@@ -318,7 +338,14 @@ pygments==2.19.2 \
 pytest==8.4.1 \
     --hash=sha256:539c70ba6fcead8e78eebbf1115e8b589e7565830d7d006a8723f19ac8a0afb7 \
     --hash=sha256:7c67fd69174877359ed9371ec3af8a3d2b04741818c51e5e99cc1742251fa93c
-    # via -r requirements.txt
+    # via
+    #   -r requirements.txt
+    #   pyfrc
+    #   pytest-reraise
+pytest-reraise==2.1.2 \
+    --hash=sha256:5ab59bd0e2028be095289e6dfc9e36cc0b56936465278f3223e81bea0f2d1c70 \
+    --hash=sha256:c22430d33b2cc18905959d7af28978e371113fcc6ef67b5fec95efcd80b88c16
+    # via pyfrc
 pyyaml==6.0.2 \
     --hash=sha256:01179a4a8559ab5de078078f37e5c1a30d76bb88519906844fd7bdea1b7729ff \
     --hash=sha256:0833f8694549e586547b576dcfaba4a6b55b9e96098b36cdc7ebefe667dfed48 \
@@ -374,6 +401,13 @@ pyyaml==6.0.2 \
     --hash=sha256:f753120cb8181e736c57ef7636e83f31b9c0d1722c516f7e86cf15b7aa57ff12 \
     --hash=sha256:ff3824dc5261f50c9b0dfb3be22b4567a6f938ccce4587b38952d85fd9e9afe4
     # via semiwrap
+robotpy-cli==2024.0.0 \
+    --hash=sha256:9284035fa67058b33593b1846e13501eda0861fb9d9adce4bd01b101c9f1f26e \
+    --hash=sha256:e6519f06856eb0a7ef5f25a57bfc8dcb20635cef84706fb37c0b602d59e33f39
+    # via
+    #   -r requirements.txt
+    #   pyfrc
+    #   wpilib
 semiwrap==0.1.2 \
     --hash=sha256:0d3421ba43f6f974da5d0e5d2e792812a3b3e4f2273e61e876dd91d571cd246d \
     --hash=sha256:1db5a27c36196e18c45c6672f056c7953b17d1d23d9e262607f3c00a15ec4d2e
@@ -416,6 +450,7 @@ tomli==2.2.1 \
     --hash=sha256:ece47d672db52ac607a3d9599a9d48dcb2f2f735c6c2d1f34130085bb12b112a \
     --hash=sha256:f4039b9cbc3048b2416cc57ab3bda989a6fcf9b36cf8937f01a6e731b64f80d7
     # via
+    #   pyfrc
     #   pytest
     #   semiwrap
 tomli-w==1.2.0 \
@@ -431,6 +466,9 @@ typing-extensions==4.13.2 \
     --hash=sha256:e6c81219bd689f51865d9e372991c540bda33a0379d5573cddb9a3a23f7caaef
     # via
     #   exceptiongroup
+    #   flexcache
+    #   flexparser
+    #   pint
     #   semiwrap
 validobj==1.3 \
     --hash=sha256:0ddb2e73693763e2014620327486f9e458fcf1d016ce286a146111dc8493e298 \
