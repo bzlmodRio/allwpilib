@@ -68,6 +68,7 @@ def architectures_pkg_zip(
             zip_name = name + "-" + compilation_mode + "-arch-" + shortname
             pkg_zip(
                 name = zip_name,
+                tags = ["manual"],
                 **kwargs
             )
 
@@ -78,6 +79,7 @@ def architectures_pkg_zip(
                 target_platform = platform,
                 compilation_mode = compilation_mode,
                 target_compatible_with = architectures_target_compatible_with[shortname],
+                tags = ["manual"],
             )
 
 def platform_prefix(t):

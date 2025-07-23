@@ -1,4 +1,33 @@
-load("@rules_java//java:defs.bzl", "java_binary")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+
+def wpilib_java_library(
+        name,
+        maven_group_id = None,
+        maven_artifact_name = None,
+        tags = [],
+        **kwargs):
+    tags = list(tags) if tags else []
+
+    if maven_artifact_name and maven_group_id:
+        maven_coordinates = "{}:{}:$(WPILIB_VERSION)".format(maven_group_id, maven_artifact_name)
+    else:
+        maven_coordinates = ""
+        fail()
+    tags.append("maven_coordinates=" + maven_coordinates)
+
+    java_library(
+        name = name,
+        tags = tags,
+        **kwargs
+    )
+
+    # wpilib_maven_export(
+    #     name = "{}_publish".format(name),
+    #     classifier_artifacts = {"sources": ":lib{}-sources.jar".format(name)},
+    #     lib_name = name,
+    #     maven_coordinates = maven_coordinates,
+    #     visibility = ["//visibility:public"],
+    # )
 
 def wpilib_java_junit5_test(
         name,

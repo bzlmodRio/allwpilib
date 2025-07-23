@@ -51,7 +51,7 @@ def build_examples(halsim_deps):
                 "//romiVendordep:romiVendordep-java",
                 "//xrpVendordep:xrpVendordep-java",
                 "//wpiunits:wpiunits-java",
-                "//epilogue-runtime:epilogue-java",
+                "//epilogue-runtime:epilogue-runtime",
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
             tags = ["wpi-example"],

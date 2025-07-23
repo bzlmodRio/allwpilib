@@ -177,7 +177,7 @@ def wpilib_cc_shared_library(
     )
 
     pkg_files(
-        name = folder + "/lib" + lib + "-shared-files",
+        name = folder + "/lib" + lib + "-shared.pkg",
         srcs = select({
             "@rules_bzlmodrio_toolchains//conditions:osx": [universal_name],
             "//conditions:default": [
@@ -188,12 +188,6 @@ def wpilib_cc_shared_library(
             "@rules_bzlmodrio_toolchains//conditions:osx": "universal",
             "//conditions:default": folder,
         }),
-    )
-
-    pkg_zip(
-        name = name + "-shared-zip",
-        srcs = ["//:license_pkg_files", "//:third_party_notices_pkg_files", name + "-shared.pkg"],
-        tags = ["no-remote", "manual"],
     )
 
 CcStaticLibraryInfo = provider(
@@ -399,12 +393,6 @@ def wpilib_cc_static_library(
     pkg_files(
         name = name + "-static.pkg",
         srcs = [":" + name],
-    )
-
-    pkg_zip(
-        name = name + "-static-zip",
-        srcs = ["//:license_pkg_files", "//:third_party_notices_pkg_files", name + "-static.pkg"],
-        tags = ["no-remote", "manual"],
     )
 
 def wpilib_shared_and_static_library(
