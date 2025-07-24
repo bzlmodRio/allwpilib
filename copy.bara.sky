@@ -1,9 +1,9 @@
-# mostrobotpy_url = "https://github.com/robotpy/mostrobotpy.git"
+mostrobotpy_url = "https://github.com/robotpy/mostrobotpy.git"
 # allwpilib_url = "git@github.com:bzlmodRio/allwpilib.git"
 robotpy_commands_url = "https://github.com/robotpy/robotpy-commands-v2"
 robotpy_examples_url = "https://github.com/robotpy/examples"
 
-mostrobotpy_url = "file:///home/pjreiniger/git/robotpy/robotpy_monorepo/mostrobotpy"
+# mostrobotpy_url = "file:///home/pjreiniger/git/robotpy/robotpy_monorepo/mostrobotpy"
 allwpilib_url = "file:///home/pjreiniger/git/allwpilib"
 
 
@@ -84,7 +84,7 @@ def define_mostrobotpy_to_allwpilib():
         name = "mostrobotpy_to_allwpilib",
         origin = git.origin(
             url = mostrobotpy_url,
-            ref = "initial-2027",
+            ref = "2027",
         ),
         destination = git.destination(
             url = allwpilib_url,
