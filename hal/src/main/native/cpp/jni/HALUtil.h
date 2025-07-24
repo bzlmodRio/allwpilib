@@ -46,6 +46,7 @@ void ThrowNullPointerException(JNIEnv* env, std::string_view msg);
 void ThrowCANStreamOverflowException(JNIEnv* env, jobjectArray messages,
                                      jint length);
 void ThrowIllegalArgumentException(JNIEnv* env, std::string_view msg);
+void ThrowIndexOutOfBoundsException(JNIEnv* env, std::string_view msg);
 void ThrowBoundaryException(JNIEnv* env, double value, double lower,
                             double upper);
 
@@ -67,7 +68,7 @@ jbyteArray SetCANReceiveMessageObject(JNIEnv* env, jobject canData,
                                       uint64_t timestamp);
 
 jbyteArray SetCANStreamObject(JNIEnv* env, jobject canStreamData,
-                              int32_t length, uint32_t messageId,
+                              int32_t length, int32_t flags, uint32_t messageId,
                               uint64_t timestamp);
 
 jobject CreateHALValue(JNIEnv* env, const HAL_Value& value);
