@@ -629,7 +629,7 @@ def define_pybind_library(name):
         summary = "Binary wrapper for FRC HAL",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-native-wpihal==2027.0.0a2", "robotpy-wpiutil==2027.0.0a2"],
+        requires = ["pyntcore==2027.0.0a2", "robotpy-native-wpihal==2027.0.0a2", "robotpy-wpiutil==2027.0.0a2"],
         entry_points = {
             "pkg_config": ["hal_simulation = hal.simulation", "wpihal = hal"],
         },
