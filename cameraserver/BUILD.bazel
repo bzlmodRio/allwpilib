@@ -2,7 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
-load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_shared_static_only_project")
 
 wpilib_cc_library(
     name = "cameraserver",
@@ -73,8 +73,39 @@ java_binary(
     ],
 )
 
-package_minimal_cc_project(
+# TODO shared
+package_default_cc_shared_static_only_project(
     name = "cameraserver",
+    classifier_artifacts = {
+        "headers": ":cameraserver-hdrs-zip",
+        # "linuxsystemcore": ":cameraserver_shared_zip-opt-systemcore",
+        # "linuxsystemcoredebug": ":cameraserver_shared_zip-dbg-systemcore",
+        # "linuxsystemcorestatic": ":cameraserver_static_zip-opt-systemcore",
+        # "linuxsystemcorestaticdebug": ":cameraserver_static_zip-dbg-systemcore",
+        "sources": ":cameraserver-srcs-zip",
+    },
+    linux_artifacts = {
+        # "linuxx86-64": ":cameraserver_shared_zip-opt-linux-x86-64",
+        # "linuxx86-64debug": ":cameraserver_shared_zip-dbg-linux-x86-64",
+        "linuxx86-64static": ":cameraserver_static_zip-opt-linux-x86-64",
+        "linuxx86-64staticdebug": ":cameraserver_static_zip-dbg-linux-x86-64",
+    },
     maven_artifact_name = "cameraserver-cpp",
     maven_group_id = "edu.wpi.first.cameraserver",
+    osx_artifacts = {
+        # "osxuniversal": ":cameraserver_shared_zip-opt-osxuniversal",
+        # "osxuniversaldebug": ":cameraserver_shared_zip-dbg-osxuniversal",
+        "osxuniversalstatic": ":cameraserver_static_zip-opt-osxuniversal",
+        "osxuniversalstaticdebug": ":cameraserver_static_zip-dbg-osxuniversal",
+    },
+    windows_artifacts = {
+        # "windowsarm64": ":cameraserver_shared_zip-opt-windows-arm64",
+        # "windowsarm64debug": ":cameraserver_shared_zip-dbg-windows-arm64",
+        "windowsarm64static": ":cameraserver_static_zip-opt-windows-arm64",
+        "windowsarm64staticdebug": ":cameraserver_static_zip-dbg-windows-arm64",
+        # "windowsx86-64": ":cameraserver_shared_zip-opt-windows-x86-64",
+        # "windowsx86-64debug": ":cameraserver_shared_zip-dbg-windows-x86-64",
+        "windowsx86-64static": ":cameraserver_static_zip-opt-windows-x86-64",
+        "windowsx86-64staticdebug": ":cameraserver_static_zip-dbg-windows-x86-64",
+    },
 )

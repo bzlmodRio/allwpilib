@@ -4,7 +4,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_zip")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
-load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
+load("//shared/bazel/rules:publishing.bzl", "architectures_pkg_zip", "platform_prefix", "wpilib_maven_export")
 
 cc_library(
     name = "gl3w",
@@ -479,11 +479,55 @@ pkg_zip(
     ],
     tags = [
         "manual",
+        "no-remote",
     ],
 )
 
-package_minimal_cc_project(
-    name = "imgui",
-    maven_artifact_name = "imguiSuite-cpp",
-    maven_group_id = "edu.wpi.first.thirdparty.imguiSuite",
+pkg_files(
+    name = "imguiSuite-static-files",
+    srcs = [
+        "static/imguiSuite",
+    ],
+    prefix = platform_prefix("static"),
+    strip_prefix = "static",
+)
+
+architectures_pkg_zip(
+    name = "imguiSuite_static_zip",
+    srcs = [
+        ":imguiSuite-static-files",
+        "//:license_pkg_files",
+    ],
+)
+
+wpilib_maven_export(
+    name = "imgui-cpp_publish",
+    classifier_artifacts = {
+        "headers": "imgui-hdrs-zip",
+        "sources": "imgui-srcs-zip",
+    },
+    linux_artifacts = {
+        # "linuxx86-64": ":wpiutil_shared_zip-opt-linux-x86-64",
+        # "linuxx86-64debug": ":wpiutil_shared_zip-dbg-linux-x86-64",
+        "linuxx86-64static": ":imguiSuite_static_zip-opt-linux-x86-64",
+        "linuxx86-64staticdebug": ":imguiSuite_static_zip-dbg-linux-x86-64",
+    },
+    maven_coordinates = "edu.wpi.first.thirdparty.imguiSuite:imguiSuite-cpp:$(WPILIB_VERSION)",
+    visibility = ["//visibility:public"],
+    osx_artifacts = {
+        # "osxuniversal": ":imguiSuite_shared_zip-opt-osxuniversal",
+        # "osxuniversaldebug": ":imguiSuite_shared_zip-dbg-osxuniversal",
+        "osxuniversalstatic": ":imguiSuite_static_zip-opt-osxuniversal",
+        "osxuniversalstaticdebug": ":imguiSuite_static_zip-dbg-osxuniversal",
+    },
+    windows_artifacts = {
+        # "windowsarm64": ":imguiSuite_shared_zip-opt-windows-arm64",
+        # "windowsarm64debug": ":imguiSuite_shared_zip-dbg-windows-arm64",
+        "windowsarm64static": ":imguiSuite_static_zip-opt-windows-arm64",
+        "windowsarm64staticdebug": ":imguiSuite_static_zip-dbg-windows-arm64",
+        # "windowsx86-64": ":imguiSuite_shared_zip-opt-windows-x86-64",
+        # "windowsx86-64debug": ":imguiSuite_shared_zip-dbg-windows-x86-64",
+        "windowsx86-64static": ":imguiSuite_static_zip-opt-windows-x86-64",
+        "windowsx86-64staticdebug": ":imguiSuite_static_zip-dbg-windows-x86-64",
+    },
 )

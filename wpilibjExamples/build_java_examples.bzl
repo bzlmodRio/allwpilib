@@ -2,6 +2,7 @@ load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 load("//wpilibjExamples:example_projects.bzl", "COMMANDS_V2_FOLDERS", "EXAMPLES_FOLDERS", "SNIPPETS_FOLDERS", "TEMPLATES_FOLDERS", "TEST_FOLDERS")
 
 def _package_type(package_type):
@@ -24,7 +25,16 @@ def _package_type(package_type):
     pkg_zip(
         name = package_type + "-zip",
         srcs = pkgs,
-        tags = ["manual"],
+        tags = ["no-remote", "manual"],
+        visibility = ["//visibility:public"],
+    )
+
+    # TODO
+    wpilib_maven_export(
+        name = "{}_publish".format(package_type),
+        target = ":{}-zip".format(package_type),
+        maven_coordinates = "edu.wpi.first.wpilibj:{}:$(WPILIB_VERSION)".format(package_type),
+        visibility = ["//visibility:public"],
     )
 
 def build_examples(halsim_deps):

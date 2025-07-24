@@ -2,7 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
-load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
+load("//shared/bazel/rules:publishing.bzl", "architectures_pkg_zip", "platform_prefix", "wpilib_maven_export")
 
 WIN_SRCS = glob(["src/main/native/directx11/**/*.cpp"])
 
@@ -83,8 +83,53 @@ wpilib_cc_static_library(
     ],
 )
 
-package_minimal_cc_project(
-    name = "wpigui",
-    maven_artifact_name = "wpigui-cpp",
-    maven_group_id = "edu.wpi.first.wpigui",
+
+pkg_files(
+    name = "wpigui-static-files",
+    srcs = [
+        "static/wpigui",
+    ],
+    prefix = platform_prefix("static"),
+    strip_prefix = "static",
 )
+
+architectures_pkg_zip(
+    name = "wpigui_static_zip",
+    srcs = [
+        ":wpigui-static-files",
+        "//:license_pkg_files",
+    ],
+)
+
+wpilib_maven_export(
+    name = "wpigui-cpp_publish",
+    classifier_artifacts = {
+        "headers": "wpigui-hdrs-zip",
+        "sources": "wpigui-srcs-zip",
+    },
+    linux_artifacts = {
+        # "linuxx86-64": ":wpiutil_shared_zip-opt-linux-x86-64",
+        # "linuxx86-64debug": ":wpiutil_shared_zip-dbg-linux-x86-64",
+        "linuxx86-64static": ":wpigui_static_zip-opt-linux-x86-64",
+        "linuxx86-64staticdebug": ":wpigui_static_zip-dbg-linux-x86-64",
+    },
+    maven_coordinates = "edu.wpi.first.wpigui:wpigui-cpp:$(WPILIB_VERSION)",
+    visibility = ["//visibility:public"],
+    osx_artifacts = {
+        # "osxuniversal": ":wpigui_shared_zip-opt-osxuniversal",
+        # "osxuniversaldebug": ":wpigui_shared_zip-dbg-osxuniversal",
+        "osxuniversalstatic": ":wpigui_static_zip-opt-osxuniversal",
+        "osxuniversalstaticdebug": ":wpigui_static_zip-dbg-osxuniversal",
+    },
+    windows_artifacts = {
+        # "windowsarm64": ":wpigui_shared_zip-opt-windows-arm64",
+        # "windowsarm64debug": ":wpigui_shared_zip-dbg-windows-arm64",
+        "windowsarm64static": ":wpigui_static_zip-opt-windows-arm64",
+        "windowsarm64staticdebug": ":wpigui_static_zip-dbg-windows-arm64",
+        # "windowsx86-64": ":wpigui_shared_zip-opt-windows-x86-64",
+        # "windowsx86-64debug": ":wpigui_shared_zip-dbg-windows-x86-64",
+        "windowsx86-64static": ":wpigui_static_zip-opt-windows-x86-64",
+        "windowsx86-64staticdebug": ":wpigui_static_zip-dbg-windows-x86-64",
+    },
+)
+

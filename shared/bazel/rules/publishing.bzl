@@ -102,10 +102,14 @@ def _wpilib_maven_export_impl(
         osx_artifacts,
         windows_artifacts,
         lib_name = None,
-        visibility = None):
+        visibility = None,
+        target = None):
     """Implementation of wpilib_maven_export."""
     all_artifacts = {}
     all_artifacts.update(classifier_artifacts)
+
+    if target == "":
+        target = None
 
     if HOST_OS == "linux":
         all_artifacts.update(linux_artifacts)
@@ -129,7 +133,9 @@ def _wpilib_maven_export_impl(
         maven_coordinates = maven_coordinates,
         classifier_artifacts = filtered_artifacts,
         lib_name = lib_name,
+        target = target,
         visibility = visibility,
+        tags = ["manual"],
     )
 
 wpilib_maven_export = macro(
@@ -140,6 +146,8 @@ wpilib_maven_export = macro(
         "linux_artifacts": attr.string_keyed_label_dict(default = {}, configurable = False),
         "maven_coordinates": attr.string(mandatory = True, configurable = False),
         "osx_artifacts": attr.string_keyed_label_dict(default = {}, configurable = False),
+        # TODO
+        "target": attr.string(configurable = False),
         "windows_artifacts": attr.string_keyed_label_dict(default = {}, configurable = False),
     },
     doc = "A symbolic macro that wraps maven_export for wpilib.",

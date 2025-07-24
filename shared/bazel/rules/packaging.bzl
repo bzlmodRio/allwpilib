@@ -44,7 +44,11 @@ def zip_java_srcs(name, extra_pkgs = []):
 def package_default_jni_project(
         name,
         maven_group_id,
-        maven_artifact_name):
+        maven_artifact_name,
+        classifier_artifacts = None,
+        linux_artifacts = None,
+        osx_artifacts = None,
+        windows_artifacts = None):
     """
     Packages a the C++ libraries for a project that has a JNI component.
 
@@ -52,6 +56,38 @@ def package_default_jni_project(
     that it is built for all native platforms plus systemcore. It runs the
     per-platform transitions and bundles them all into a single maven_export target.
     """
+
+    classifier_artifacts = classifier_artifacts or {
+        "headers": ":{}-hdrs-zip".format(name),
+        # "linuxsystemcore": ":{}_shared_zip-opt-systemcore".format(name),
+        # "linuxsystemcoredebug": ":{}_shared_zip-dbg-systemcore".format(name),
+        # "linuxsystemcorestatic": ":{}_static_zip-opt-systemcore".format(name),
+        # "linuxsystemcorestaticdebug": ":{}_static_zip-dbg-systemcore".format(name),
+        "sources": ":{}-srcs-zip".format(name),
+    }
+    linux_artifacts = linux_artifacts or {
+        "linuxx86-64": ":{}_shared_zip-opt-linux-x86-64".format(name),
+        "linuxx86-64debug": ":{}_shared_zip-dbg-linux-x86-64".format(name),
+        "linuxx86-64static": ":{}_static_zip-opt-linux-x86-64".format(name),
+        "linuxx86-64staticdebug": ":{}_static_zip-dbg-linux-x86-64".format(name),
+    }
+    osx_artifacts = osx_artifacts or {
+        "osxuniversal": ":{}_shared_zip-opt-osxuniversal".format(name),
+        "osxuniversaldebug": ":{}_shared_zip-dbg-osxuniversal".format(name),
+        "osxuniversalstatic": ":{}_static_zip-opt-osxuniversal".format(name),
+        "osxuniversalstaticdebug": ":{}_static_zip-dbg-osxuniversal".format(name),
+    }
+    windows_artifacts = windows_artifacts or {
+        "windowsarm64": ":{}_shared_zip-opt-windows-arm64".format(name),
+        "windowsarm64debug": ":{}_shared_zip-dbg-windows-arm64".format(name),
+        "windowsarm64static": ":{}_static_zip-opt-windows-arm64".format(name),
+        "windowsarm64staticdebug": ":{}_static_zip-dbg-windows-arm64".format(name),
+        "windowsx86-64": ":{}_shared_zip-opt-windows-x86-64".format(name),
+        "windowsx86-64debug": ":{}_shared_zip-dbg-windows-x86-64".format(name),
+        "windowsx86-64static": ":{}_static_zip-opt-windows-x86-64".format(name),
+        "windowsx86-64staticdebug": ":{}_static_zip-dbg-windows-x86-64".format(name),
+    }
+
     pkg_files(
         name = "{}-static-files".format(name),
         srcs = [
@@ -88,70 +124,92 @@ def package_default_jni_project(
 
     wpilib_maven_export(
         name = "{}-cpp_publish".format(name),
-        classifier_artifacts = {
-            "headers": ":{}-hdrs-zip".format(name),
-            "linuxsystemcore": ":{}_shared_zip-opt-systemcore".format(name),
-            "linuxsystemcoredebug": ":{}_shared_zip-dbg-systemcore".format(name),
-            "linuxsystemcorestatic": ":{}_static_zip-opt-systemcore".format(name),
-            "linuxsystemcorestaticdebug": ":{}_static_zip-dbg-systemcore".format(name),
-            "sources": ":{}-srcs-zip".format(name),
-        },
-        linux_artifacts = {
-            "linuxx86-64": ":{}_shared_zip-opt-linux-x86-64".format(name),
-            "linuxx86-64debug": ":{}_shared_zip-dbg-linux-x86-64".format(name),
-            "linuxx86-64static": ":{}_static_zip-opt-linux-x86-64".format(name),
-            "linuxx86-64staticdebug": ":{}_static_zip-dbg-linux-x86-64".format(name),
-        },
+        classifier_artifacts = classifier_artifacts,
+        linux_artifacts = linux_artifacts,
         maven_coordinates = "{}:{}:$(WPILIB_VERSION)".format(maven_group_id, maven_artifact_name),
-        osx_artifacts = {
-            "osxuniversal": ":{}_shared_zip-opt-osxuniversal".format(name),
-            "osxuniversaldebug": ":{}_shared_zip-dbg-osxuniversal".format(name),
-            "osxuniversalstatic": ":{}_static_zip-opt-osxuniversal".format(name),
-            "osxuniversalstaticdebug": ":{}_static_zip-dbg-osxuniversal".format(name),
-        },
+        osx_artifacts = osx_artifacts,
         visibility = ["//visibility:public"],
-        windows_artifacts = {
-            "windowsarm64": ":{}_shared_zip-opt-windows-arm64".format(name),
-            "windowsarm64debug": ":{}_shared_zip-dbg-windows-arm64".format(name),
-            "windowsarm64static": ":{}_static_zip-opt-windows-arm64".format(name),
-            "windowsarm64staticdebug": ":{}_static_zip-dbg-windows-arm64".format(name),
-            "windowsx86-64": ":{}_shared_zip-opt-windows-x86-64".format(name),
-            "windowsx86-64debug": ":{}_shared_zip-dbg-windows-x86-64".format(name),
-            "windowsx86-64static": ":{}_static_zip-opt-windows-x86-64".format(name),
-            "windowsx86-64staticdebug": ":{}_static_zip-dbg-windows-x86-64".format(name),
-        },
+        windows_artifacts = windows_artifacts,
     )
 
-def package_minimal_jni_project(
+def package_default_cc_shared_static_only_project(
         name,
         maven_group_id,
-        maven_artifact_name):
-    wpilib_maven_export(
-        name = "{}-cpp_publish".format(name),
-        classifier_artifacts = {
-            "headers": ":{}-hdrs-zip".format(name),
-            "sources": ":{}-srcs-zip".format(name),
-        },
-        linux_artifacts = {},
-        maven_coordinates = "{}:{}:$(WPILIB_VERSION)".format(maven_group_id, maven_artifact_name),
-        osx_artifacts = {},
-        visibility = ["//visibility:public"],
-        windows_artifacts = {},
+        maven_artifact_name,
+        classifier_artifacts = None,
+        linux_artifacts = None,
+        osx_artifacts = None,
+        windows_artifacts = None):
+    classifier_artifacts = classifier_artifacts or {
+        "headers": ":{}-hdrs-zip".format(name),
+        # "linuxsystemcore": ":{}_shared_zip-opt-systemcore".format(name),
+        # "linuxsystemcoredebug": ":{}_shared_zip-dbg-systemcore".format(name),
+        # "linuxsystemcorestatic": ":{}_static_zip-opt-systemcore".format(name),
+        # "linuxsystemcorestaticdebug": ":{}_static_zip-dbg-systemcore".format(name),
+        "sources": ":{}-srcs-zip".format(name),
+    }
+    linux_artifacts = linux_artifacts or {
+        "linuxx86-64": ":{}_shared_zip-opt-linux-x86-64".format(name),
+        "linuxx86-64debug": ":{}_shared_zip-dbg-linux-x86-64".format(name),
+        "linuxx86-64static": ":{}_static_zip-opt-linux-x86-64".format(name),
+        "linuxx86-64staticdebug": ":{}_static_zip-dbg-linux-x86-64".format(name),
+    }
+    osx_artifacts = osx_artifacts or {
+        "osxuniversal": ":{}_shared_zip-opt-osxuniversal".format(name),
+        "osxuniversaldebug": ":{}_shared_zip-dbg-osxuniversal".format(name),
+        "osxuniversalstatic": ":{}_static_zip-opt-osxuniversal".format(name),
+        "osxuniversalstaticdebug": ":{}_static_zip-dbg-osxuniversal".format(name),
+    }
+    windows_artifacts = windows_artifacts or {
+        "windowsarm64": ":{}_shared_zip-opt-windows-arm64".format(name),
+        "windowsarm64debug": ":{}_shared_zip-dbg-windows-arm64".format(name),
+        "windowsarm64static": ":{}_static_zip-opt-windows-arm64".format(name),
+        "windowsarm64staticdebug": ":{}_static_zip-dbg-windows-arm64".format(name),
+        "windowsx86-64": ":{}_shared_zip-opt-windows-x86-64".format(name),
+        "windowsx86-64debug": ":{}_shared_zip-dbg-windows-x86-64".format(name),
+        "windowsx86-64static": ":{}_static_zip-opt-windows-x86-64".format(name),
+        "windowsx86-64staticdebug": ":{}_static_zip-dbg-windows-x86-64".format(name),
+    }
+
+    pkg_files(
+        name = "{}-static-files".format(name),
+        srcs = [
+            ":static/{}".format(name),
+        ],
+        prefix = platform_prefix("static"),
+        strip_prefix = "static",
     )
 
-def package_minimal_cc_project(
-        name,
-        maven_group_id,
-        maven_artifact_name):
+    pkg_filegroup(
+        name = "{}-shared-files".format(name),
+        srcs = [
+            ":shared/lib{}-shared-files".format(name),
+        ],
+        prefix = platform_prefix("shared"),
+    )
+
+    architectures_pkg_zip(
+        name = "{}_static_zip".format(name),
+        srcs = [
+            ":{}-static-files".format(name),
+            "//:license_pkg_files",
+        ],
+    )
+
+    architectures_pkg_zip(
+        name = "{}_shared_zip".format(name),
+        srcs = [
+            ":{}-shared-files".format(name),
+            "//:license_pkg_files",
+        ],
+    )
+
     wpilib_maven_export(
         name = "{}-cpp_publish".format(name),
-        classifier_artifacts = {
-            "headers": ":{}-hdrs-zip".format(name),
-            "sources": ":{}-srcs-zip".format(name),
-        },
-        linux_artifacts = {},
+        classifier_artifacts = classifier_artifacts,
+        linux_artifacts = linux_artifacts,
         maven_coordinates = "{}:{}:$(WPILIB_VERSION)".format(maven_group_id, maven_artifact_name),
-        osx_artifacts = {},
+        osx_artifacts = osx_artifacts,
         visibility = ["//visibility:public"],
-        windows_artifacts = {},
+        windows_artifacts = windows_artifacts,
     )

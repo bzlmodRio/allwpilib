@@ -1,7 +1,7 @@
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
-load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_shared_and_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_shared_static_only_project")
 
-wpilib_cc_library(
+wpilib_shared_and_static_library(
     name = "googletest",
     srcs = glob(["src/**"]),
     hdrs = glob(["include/**"]),
@@ -11,21 +11,13 @@ wpilib_cc_library(
     srcs_pkg_root = "src",
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
+    # static_lib_name = select({
+    #     "@bazel_tools//src/conditions:windows": "static/googletest.lib",
+    #     "//conditions:default": "static/libgoogletest.a",
+    # }),
 )
 
-wpilib_cc_static_library(
-    name = "static/googletest",
-    static_lib_name = select({
-        "@bazel_tools//src/conditions:windows": "static/googletest.lib",
-        "//conditions:default": "static/libgoogletest.a",
-    }),
-    visibility = ["//visibility:public"],
-    deps = [
-        ":googletest",
-    ],
-)
-
-package_minimal_cc_project(
+package_default_cc_shared_static_only_project(
     name = "googletest",
     maven_artifact_name = "googletest-cpp",
     maven_group_id = "edu.wpi.first.thirdparty.googletest",

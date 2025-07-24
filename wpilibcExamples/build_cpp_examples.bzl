@@ -1,6 +1,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
+load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 load("//wpilibcExamples:example_projects.bzl", "COMMANDS_V2_FOLDERS", "EXAMPLE_FOLDERS", "SNIPPETS_FOLDERS", "TEMPLATES_FOLDERS", "TESTS_FOLDERS")
 
 def _package_type(package_type):
@@ -23,7 +24,16 @@ def _package_type(package_type):
     pkg_zip(
         name = package_type + "-zip",
         srcs = pkgs,
-        tags = ["manual"],
+        tags = ["no-remote", "manual"],
+        visibility = ["//visibility:public"],
+    )
+
+    # TODO
+    wpilib_maven_export(
+        name = "{}_publish".format(package_type),
+        target = ":{}-zip".format(package_type),
+        maven_coordinates = "edu.wpi.first.wpilibc:{}:$(WPILIB_VERSION)".format(package_type),
+        visibility = ["//visibility:public"],
     )
 
 def build_examples(halsim_deps = []):
