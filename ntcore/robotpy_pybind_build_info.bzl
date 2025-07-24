@@ -479,9 +479,10 @@ def define_pybind_library(name):
         summary = "Binary wrappers for the FRC ntcore library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-native-ntcore==2027.0.0a1.dev0", "robotpy-wpiutil==2027.0.0a1.dev0", "robotpy-wpinet==2027.0.0a1.dev0", "robotpy-wpilog==2027.0.0a1.dev0"],
+        requires = ["robotpy-native-ntcore==2027.0.0a2", "robotpy-wpiutil==2027.0.0a2", "robotpy-wpinet==2027.0.0a2", "robotpy-wpilog==2027.0.0a2"],
         entry_points = {
             "pkg_config": ["ntcore = ntcore"],
         },
         visibility = ["//visibility:public"],
     )
+

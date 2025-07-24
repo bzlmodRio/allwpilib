@@ -118,123 +118,6 @@ def wpilib_event_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         tags = ["manual", "robotpy"],
     )
 
-def wpilib_interfaces_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
-    WPILIB_INTERFACES_HEADER_GEN = [
-        struct(
-            class_name = "CounterBase",
-            yml_file = "semiwrap/interfaces/CounterBase.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/frc/CounterBase.h",
-            tmpl_class_names = [],
-            trampolines = [
-                ("frc::CounterBase", "frc__CounterBase.hpp"),
-            ],
-        ),
-        struct(
-            class_name = "GenericHID",
-            yml_file = "semiwrap/interfaces/GenericHID.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/frc/GenericHID.h",
-            tmpl_class_names = [],
-            trampolines = [
-                ("frc::GenericHID", "frc__GenericHID.hpp"),
-            ],
-        ),
-        struct(
-            class_name = "MotorController",
-            yml_file = "semiwrap/interfaces/MotorController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/frc/motorcontrol/MotorController.h",
-            tmpl_class_names = [],
-            trampolines = [
-                ("frc::MotorController", "frc__MotorController.hpp"),
-            ],
-        ),
-    ]
-
-    resolve_casters(
-        name = "wpilib_interfaces.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
-        casters_pkl_file = "wpilib_interfaces.casters.pkl",
-        dep_file = "wpilib_interfaces.casters.d",
-    )
-
-    gen_libinit(
-        name = "wpilib_interfaces.gen_lib_init",
-        output_file = "src/main/python/wpilib/interfaces/_init__interfaces.py",
-        modules = ["native.wpilib._init_robotpy_native_wpilib", "wpilib.event._init__event", "wpimath.geometry._init__geometry"],
-    )
-
-    gen_pkgconf(
-        name = "wpilib_interfaces.gen_pkgconf",
-        libinit_py = "wpilib.interfaces._init__interfaces",
-        module_pkg_name = "wpilib.interfaces._interfaces",
-        output_file = "wpilib_interfaces.pc",
-        pkg_name = "wpilib_interfaces",
-        install_path = "src/main/python/wpilib/interfaces",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpilib/__init__.py",
-    )
-
-    gen_modinit_hpp(
-        name = "wpilib_interfaces.gen_modinit_hpp",
-        input_dats = [x.class_name for x in WPILIB_INTERFACES_HEADER_GEN],
-        libname = "_interfaces",
-        output_file = "semiwrap_init.wpilib.interfaces._interfaces.hpp",
-    )
-
-    run_header_gen(
-        name = "wpilib_interfaces",
-        casters_pickle = "wpilib_interfaces.casters.pkl",
-        header_gen_config = WPILIB_INTERFACES_HEADER_GEN,
-        trampoline_subpath = "src/main/python/wpilib/interfaces",
-        deps = header_to_dat_deps,
-        local_native_libraries = [
-            "//datalog:robotpy-native-datalog.copy_headers",
-            "//hal:robotpy-native-wpihal.copy_headers",
-            "//ntcore:robotpy-native-ntcore.copy_headers",
-            "//wpilibc:robotpy-native-wpilib.copy_headers",
-            "//wpimath:robotpy-native-wpimath.copy_headers",
-            "//wpinet:robotpy-native-wpinet.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
-        ],
-    )
-
-    create_pybind_library(
-        name = "wpilib_interfaces",
-        install_path = "src/main/python/wpilib/interfaces/",
-        extension_name = "_interfaces",
-        generated_srcs = [":wpilib_interfaces.generated_srcs"],
-        semiwrap_header = [":wpilib_interfaces.gen_modinit_hpp"],
-        deps = [
-            ":wpilib_interfaces.tmpl_hdrs",
-            ":wpilib_interfaces.trampoline_hdrs",
-            "//wpilibc:wpilib_event_pybind_library",
-            "//wpilibc:wpilibc",
-            "//wpimath:wpimath",
-            "//wpimath:wpimath_filter_pybind_library",
-            "//wpimath:wpimath_geometry_pybind_library",
-        ],
-        dynamic_deps = [
-            "//wpilibc:shared/wpilibc",
-            "//wpimath:shared/wpimath",
-        ],
-        extra_hdrs = extra_hdrs,
-        extra_srcs = srcs,
-        includes = includes,
-    )
-
-    native.filegroup(
-        name = "wpilib_interfaces.generated_files",
-        srcs = [
-            "wpilib_interfaces.gen_modinit_hpp.gen",
-            "wpilib_interfaces.header_gen_files",
-            "wpilib_interfaces.gen_pkgconf",
-            "wpilib_interfaces.gen_lib_init",
-        ],
-        tags = ["manual", "robotpy"],
-    )
-
 def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPILIB_HEADER_GEN = [
         struct(
@@ -515,6 +398,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             ],
         ),
         struct(
+            class_name = "OnboardIMU",
+            yml_file = "semiwrap/OnboardIMU.yml",
+            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/frc/OnboardIMU.h",
+            tmpl_class_names = [],
+            trampolines = [
+                ("frc::OnboardIMU", "frc__OnboardIMU.hpp"),
+            ],
+        ),
+        struct(
             class_name = "PS4Controller",
             yml_file = "semiwrap/PS4Controller.yml",
             header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
@@ -791,6 +684,36 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
                 ("frc::XboxController", "frc__XboxController.hpp"),
                 ("frc::XboxController::Button", "frc__XboxController__Button.hpp"),
                 ("frc::XboxController::Axis", "frc__XboxController__Axis.hpp"),
+            ],
+        ),
+        struct(
+            class_name = "CounterBase",
+            yml_file = "semiwrap/CounterBase.yml",
+            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/frc/CounterBase.h",
+            tmpl_class_names = [],
+            trampolines = [
+                ("frc::CounterBase", "frc__CounterBase.hpp"),
+            ],
+        ),
+        struct(
+            class_name = "GenericHID",
+            yml_file = "semiwrap/GenericHID.yml",
+            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/frc/GenericHID.h",
+            tmpl_class_names = [],
+            trampolines = [
+                ("frc::GenericHID", "frc__GenericHID.hpp"),
+            ],
+        ),
+        struct(
+            class_name = "MotorController",
+            yml_file = "semiwrap/MotorController.yml",
+            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/frc/motorcontrol/MotorController.h",
+            tmpl_class_names = [],
+            trampolines = [
+                ("frc::MotorController", "frc__MotorController.hpp"),
             ],
         ),
         struct(
@@ -1118,7 +1041,7 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
     gen_libinit(
         name = "wpilib.gen_lib_init",
         output_file = "src/main/python/wpilib/_init__wpilib.py",
-        modules = ["native.wpilib._init_robotpy_native_wpilib", "hal._init__wpiHal", "wpiutil._init__wpiutil", "ntcore._init__ntcore", "wpimath._init__wpimath", "wpimath.geometry._init__geometry", "wpimath._controls._init__controls", "wpilib.interfaces._init__interfaces", "wpilib.event._init__event"],
+        modules = ["native.wpilib._init_robotpy_native_wpilib", "hal._init__wpiHal", "wpiutil._init__wpiutil", "ntcore._init__ntcore", "wpimath._init__wpimath", "wpimath.geometry._init__geometry", "wpimath._controls._init__controls", "wpilib.event._init__event"],
     )
 
     gen_pkgconf(
@@ -1171,7 +1094,6 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             "//ntcore:ntcore",
             "//ntcore:ntcore_pybind_library",
             "//wpilibc:wpilib_event_pybind_library",
-            "//wpilibc:wpilib_interfaces_pybind_library",
             "//wpilibc:wpilibc",
             "//wpimath:wpimath",
             "//wpimath:wpimath_controls_pybind_library",
@@ -1299,7 +1221,6 @@ def wpilib_counter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
             "//ntcore:ntcore",
             "//ntcore:ntcore_pybind_library",
             "//wpilibc:wpilib_event_pybind_library",
-            "//wpilibc:wpilib_interfaces_pybind_library",
             "//wpilibc:wpilib_pybind_library",
             "//wpilibc:wpilibc",
             "//wpimath:wpimath",
@@ -1431,7 +1352,6 @@ def wpilib_drive_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
             "//ntcore:ntcore",
             "//ntcore:ntcore_pybind_library",
             "//wpilibc:wpilib_event_pybind_library",
-            "//wpilibc:wpilib_interfaces_pybind_library",
             "//wpilibc:wpilib_pybind_library",
             "//wpilibc:wpilibc",
             "//wpimath:wpimath",
@@ -1920,7 +1840,6 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
             "//ntcore:ntcore",
             "//ntcore:ntcore_pybind_library",
             "//wpilibc:wpilib_event_pybind_library",
-            "//wpilibc:wpilib_interfaces_pybind_library",
             "//wpilibc:wpilib_pybind_library",
             "//wpilibc:wpilibc",
             "//wpimath:wpimath",
@@ -1961,7 +1880,6 @@ def define_pybind_library(name):
         name = "{}.generated_files".format(name),
         srcs = [
             "wpilib_event.generated_files",
-            "wpilib_interfaces.generated_files",
             "wpilib.generated_files",
             "wpilib_counter.generated_files",
             "wpilib_drive.generated_files",
@@ -1976,7 +1894,6 @@ def define_pybind_library(name):
         name = "{}.generated_data_files".format(name),
         srcs = [
             "src/main/python/wpilib/event/wpilib_event.pc",
-            "src/main/python/wpilib/interfaces/wpilib_interfaces.pc",
             "src/main/python/wpilib/wpilib.pc",
             "src/main/python/wpilib/counter/wpilib_counter.pc",
             "src/main/python/wpilib/drive/wpilib_drive.pc",
@@ -1996,7 +1913,6 @@ def define_pybind_library(name):
         name = name,
         srcs = native.glob(["src/main/python/wpilib/**/*.py"]) + [
             "src/main/python/wpilib/event/_init__event.py",
-            "src/main/python/wpilib/interfaces/_init__interfaces.py",
             "src/main/python/wpilib/_init__wpilib.py",
             "src/main/python/wpilib/counter/_init__counter.py",
             "src/main/python/wpilib/drive/_init__drive.py",
@@ -2006,13 +1922,11 @@ def define_pybind_library(name):
             "{}.generated_data_files".format(name),
             "{}.extra_files".format(name),
             ":src/main/python/wpilib/event/_event",
-            ":src/main/python/wpilib/interfaces/_interfaces",
             ":src/main/python/wpilib/_wpilib",
             ":src/main/python/wpilib/counter/_counter",
             ":src/main/python/wpilib/drive/_drive",
             ":src/main/python/wpilib/simulation/_simulation",
             ":wpilib_event.trampoline_hdr_files",
-            ":wpilib_interfaces.trampoline_hdr_files",
             ":wpilib.trampoline_hdr_files",
             ":wpilib_counter.trampoline_hdr_files",
             ":wpilib_drive.trampoline_hdr_files",
@@ -2030,9 +1944,10 @@ def define_pybind_library(name):
         summary = "Binary wrapper for FRC WPILib",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-native-wpilib==2027.0.0a1.dev0", "robotpy-wpiutil==2027.0.0a1.dev0", "robotpy-wpimath==2027.0.0a1.dev0", "robotpy-hal==2027.0.0a1.dev0", "pyntcore==2027.0.0a1.dev0", "robotpy-cli~=2024.0b"],
+        requires = ["robotpy-native-wpilib==2027.0.0a2", "robotpy-wpiutil==2027.0.0a2", "robotpy-wpimath==2027.0.0a2", "robotpy-hal==2027.0.0a2", "pyntcore==2027.0.0a2", "robotpy-cli~=2024.0b"],
         entry_points = {
-            "pkg_config": ["wpilib_event = wpilib.event", "wpilib_interfaces = wpilib.interfaces", "wpilib = wpilib", "wpilib_counter = wpilib.counter", "wpilib_drive = wpilib.drive", "wpilib_simulation = wpilib.simulation"],
+            "pkg_config": ["wpilib_event = wpilib.event", "wpilib = wpilib", "wpilib_counter = wpilib.counter", "wpilib_drive = wpilib.drive", "wpilib_simulation = wpilib.simulation"],
         },
         visibility = ["//visibility:public"],
     )
+

@@ -243,6 +243,10 @@ hal_simulation_extension(
 
 wpihal_extension(
     srcs = ["src/main/python/hal/src/hal.cpp"],
+    extra_hdrs = ["src/main/python/hal/src/ds_types_fmt.h"],
+    includes = [
+        "src/main/python/hal",
+    ],
 )
 
 define_pybind_library(name = "robotpy-hal")

@@ -9,7 +9,7 @@ load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//wpilibc:generate.bzl", "generate_wpilibc")
 load("//wpilibc:robotpy_native_build_info.bzl", "define_native_wrapper")
-load("//wpilibc:robotpy_pybind_build_info.bzl", "define_pybind_library", "wpilib_counter_extension", "wpilib_drive_extension", "wpilib_event_extension", "wpilib_extension", "wpilib_interfaces_extension", "wpilib_simulation_extension")
+load("//wpilibc:robotpy_pybind_build_info.bzl", "define_pybind_library", "wpilib_counter_extension", "wpilib_drive_extension", "wpilib_event_extension", "wpilib_extension", "wpilib_simulation_extension")
 
 py_binary(
     name = "generate_hids",
@@ -216,10 +216,6 @@ generate_robotpy_pybind_build_info(
 
 wpilib_event_extension(
     srcs = ["src/main/python/wpilib/event/event.cpp"],
-)
-
-wpilib_interfaces_extension(
-    srcs = ["src/main/python/wpilib/interfaces/interfaces.cpp"],
 )
 
 wpilib_extension(

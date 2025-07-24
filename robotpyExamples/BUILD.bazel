@@ -1,5 +1,3 @@
-
-
 # PROJECTS = [
 #     "AddressableLED",
 #     "AprilTagsVision",
@@ -69,7 +67,7 @@
 #     name = "robotpy",
 #     pkg = "@allwpilib_pip_deps//robotpy_cli",
 #     # shebang = "#!/usr/bin/env python3",
-    
+
 #     deps = [
 #         # requirement("wpilib"),
 #         requirement("pyfrc"),

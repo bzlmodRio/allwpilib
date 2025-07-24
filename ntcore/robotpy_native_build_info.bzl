@@ -36,7 +36,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         native_shared_library = "shared/ntcore",
         install_path = "native/ntcore/",
         strip_path_prefixes = ["ntcore"],
-        requires = ["robotpy-native-wpiutil==2027.0.0a1.dev0", "robotpy-native-wpinet==2027.0.0a1.dev0", "robotpy-native-datalog==2027.0.0a1.dev0"],
+        requires = ["robotpy-native-wpiutil==2027.0.0a2", "robotpy-native-wpinet==2027.0.0a2", "robotpy-native-datalog==2027.0.0a2"],
         summary = "WPILib NetworkTables Library",
         entry_points = {
             "pkg_config": [

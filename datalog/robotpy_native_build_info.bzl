@@ -32,7 +32,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         native_shared_library = "shared/datalog",
         install_path = "native/datalog/",
         strip_path_prefixes = ["datalog"],
-        requires = ["robotpy-native-wpiutil==2027.0.0a1.dev0"],
+        requires = ["robotpy-native-wpiutil==2027.0.0a2"],
         summary = "WPILib Utility Library",
         entry_points = {
             "pkg_config": [

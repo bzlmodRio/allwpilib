@@ -40,7 +40,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         native_shared_library = "shared/wpilibc",
         install_path = "native/wpilib/",
         strip_path_prefixes = ["wpilibc"],
-        requires = ["robotpy-native-wpiutil==2027.0.0a1.dev0", "robotpy-native-wpinet==2027.0.0a1.dev0", "robotpy-native-ntcore==2027.0.0a1.dev0", "robotpy-native-wpimath==2027.0.0a1.dev0", "robotpy-native-wpihal==2027.0.0a1.dev0"],
+        requires = ["robotpy-native-wpiutil==2027.0.0a2", "robotpy-native-wpinet==2027.0.0a2", "robotpy-native-ntcore==2027.0.0a2", "robotpy-native-wpimath==2027.0.0a2", "robotpy-native-wpihal==2027.0.0a2"],
         summary = "WPILib Robotics Library",
         entry_points = {
             "pkg_config": [

@@ -2,13 +2,13 @@ load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
-load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_shared_and_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
-load("//wpilibNewCommands:generate.bzl", "generate_wpilib_new_commands")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
+load("//wpilibNewCommands:generate.bzl", "generate_wpilib_new_commands")
 
 py_binary(
     name = "generate_hids",
@@ -175,12 +175,20 @@ py_library(
 
 robotpy_py_test(
     "python_tests",
-    extra_sources = ["src/test/python/conftest.py", "src/test/python/util.py", "src/test/python/compositiontestbase.py"],
+    extra_sources = [
+        "src/test/python/conftest.py",
+        "src/test/python/util.py",
+        "src/test/python/compositiontestbase.py",
+    ],
+    imports = ["src/main/python"],
     tests = glob(
         ["src/test/python/**/*.py"],
-        exclude = ["src/test/python/conftest.py", "src/test/python/util.py", "src/test/python/compositiontestbase.py"],
+        exclude = [
+            "src/test/python/conftest.py",
+            "src/test/python/util.py",
+            "src/test/python/compositiontestbase.py",
+        ],
     ),
-    imports = ["src/main/python"],
     deps = [
         ":robotpy-commands-v2",
         requirement("pytest"),

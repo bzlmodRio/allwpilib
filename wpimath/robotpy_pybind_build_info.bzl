@@ -1762,9 +1762,10 @@ def define_pybind_library(name):
         summary = "Binary wrapper for FRC WPIMath library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-native-wpimath==2027.0.0a1.dev0", "robotpy-wpiutil==2027.0.0a1.dev0"],
+        requires = ["robotpy-native-wpimath==2027.0.0a2", "robotpy-wpiutil==2027.0.0a2"],
         entry_points = {
             "pkg_config": ["wpimath-casters = wpimath", "wpimath = wpimath", "wpimath_filter = wpimath.filter", "wpimath_geometry = wpimath.geometry", "wpimath_interpolation = wpimath.interpolation", "wpimath_kinematics = wpimath.kinematics", "wpimath_spline = wpimath.spline", "wpimath_controls = wpimath._controls"],
         },
         visibility = ["//visibility:public"],
     )
+

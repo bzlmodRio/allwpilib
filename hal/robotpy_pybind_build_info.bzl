@@ -469,6 +469,14 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             ],
         ),
         struct(
+            class_name = "UsageReporting",
+            yml_file = "semiwrap/UsageReporting.yml",
+            header_root = "$(execpath :robotpy-native-wpihal.copy_headers)",
+            header_file = "$(execpath :robotpy-native-wpihal.copy_headers)/hal/UsageReporting.h",
+            tmpl_class_names = [],
+            trampolines = [],
+        ),
+        struct(
             class_name = "Threads",
             yml_file = "semiwrap/Threads.yml",
             header_root = "$(execpath :robotpy-native-wpihal.copy_headers)",
@@ -621,9 +629,10 @@ def define_pybind_library(name):
         summary = "Binary wrapper for FRC HAL",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-native-wpihal==2027.0.0a1.dev0", "robotpy-ntcore==2027.0.0a1.dev0", "robotpy-wpiutil==2027.0.0a1.dev0"],
+        requires = ["robotpy-native-wpihal==2027.0.0a2", "robotpy-wpiutil==2027.0.0a2"],
         entry_points = {
             "pkg_config": ["hal_simulation = hal.simulation", "wpihal = hal"],
         },
         visibility = ["//visibility:public"],
     )
+
