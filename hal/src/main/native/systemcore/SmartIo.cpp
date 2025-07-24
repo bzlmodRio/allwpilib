@@ -8,6 +8,8 @@
 
 #include "HALInitializer.h"
 #include "SystemServerInternal.h"
+#include "hal/AddressableLEDTypes.h"
+#include "hal/Errors.h"
 
 namespace hal {
 
@@ -32,15 +34,20 @@ int32_t SmartIo::InitializeMode(SmartIoMode mode) {
   auto channelString = std::to_string(channel);
   auto subTableString = "/io/" + channelString + "/";
 
-  modePublisher = inst.GetIntegerTopic(subTableString + "type").Publish();
+  modePublisher =
+      inst.GetIntegerTopic(subTableString + "type").Publish(options);
   getSubscriber =
       inst.GetIntegerTopic(subTableString + "valget").Subscribe(0, options);
-  frequencySubscriber =
-      inst.GetIntegerTopic(subTableString + "freqget").Subscribe(0, options);
+  periodGetSubscriber =
+      inst.GetIntegerTopic(subTableString + "periodget").Subscribe(0, options);
   setPublisher =
       inst.GetIntegerTopic(subTableString + "valset").Publish(options);
-  periodPublisher =
+  periodSetPublisher =
       inst.GetIntegerTopic(subTableString + "periodset").Publish(options);
+  ledcountPublisher =
+      inst.GetIntegerTopic(subTableString + "ledcount").Publish(options);
+  ledoffsetPublisher =
+      inst.GetIntegerTopic(subTableString + "ledoffset").Publish(options);
 
   currentMode = mode;
   switch (mode) {
@@ -48,6 +55,10 @@ int32_t SmartIo::InitializeMode(SmartIoMode mode) {
     case SmartIoMode::DigitalOutput:
     case SmartIoMode::PwmOutput:
       setPublisher.Set(0);
+      break;
+    case SmartIoMode::AddressableLED:
+      ledcountPublisher.Set(0);
+      ledoffsetPublisher.Set(0);
       break;
 
     // These don't need to set any value
@@ -107,6 +118,17 @@ int32_t SmartIo::GetPwmInputMicroseconds(uint16_t* microseconds) {
   return 0;
 }
 
+int32_t SmartIo::GetPwmInputPeriodMicroseconds(uint16_t* microseconds) {
+  if (currentMode != SmartIoMode::PwmInput) {
+    return INCOMPATIBLE_STATE;
+  }
+
+  int val = periodGetSubscriber.Get();
+  *microseconds = val;
+
+  return 0;
+}
+
 int32_t SmartIo::SetPwmOutputPeriod(PwmOutputPeriod period) {
   if (currentMode != SmartIoMode::PwmOutput) {
     return INCOMPATIBLE_STATE;
@@ -117,7 +139,7 @@ int32_t SmartIo::SetPwmOutputPeriod(PwmOutputPeriod period) {
     case PwmOutputPeriod::k10ms:
     case PwmOutputPeriod::k5ms:
     case PwmOutputPeriod::k2ms:
-      periodPublisher.Set(static_cast<int>(period));
+      periodSetPublisher.Set(static_cast<int>(period));
       return 0;
 
     default:
@@ -174,6 +196,28 @@ int32_t SmartIo::GetCounter(int32_t* value) {
 
   *value = val;
 
+  return 0;
+}
+
+int32_t SmartIo::SetLedStart(int32_t start) {
+  if (currentMode != SmartIoMode::AddressableLED) {
+    return INCOMPATIBLE_STATE;
+  }
+  if (start < 0 || start >= HAL_kAddressableLEDMaxLength) {
+    return PARAMETER_OUT_OF_RANGE;
+  }
+  ledoffsetPublisher.Set(start);
+  return 0;
+}
+
+int32_t SmartIo::SetLedLength(int32_t length) {
+  if (currentMode != SmartIoMode::AddressableLED) {
+    return INCOMPATIBLE_STATE;
+  }
+  if (length < 0 || length >= HAL_kAddressableLEDMaxLength) {
+    return PARAMETER_OUT_OF_RANGE;
+  }
+  ledcountPublisher.Set(length);
   return 0;
 }
 

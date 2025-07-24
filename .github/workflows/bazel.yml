@@ -64,8 +64,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: "Linux (native)",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:24.04", action: "test",   config: "--config=linux",    }
-          - { name: "Linux (systemcore)",  os: ubuntu-24.04,   container: "wpilib/ubuntu-base:24.04", action: "build",  config: "--config=systemcore",    }
+          - { name: "Linux",      os: ubuntu-24.04,   container: "wpilib/ubuntu-base:24.04", action: "test",   config: "",    }
     name: "${{ matrix.name }}"
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}

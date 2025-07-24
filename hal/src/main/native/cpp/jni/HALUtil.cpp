@@ -40,6 +40,7 @@ static_assert(edu_wpi_first_hal_HALUtil_RUNTIME_SYSTEMCORE ==
 
 static JavaVM* jvm = nullptr;
 static JException illegalArgExCls;
+static JException indexOobExCls;
 static JException boundaryExCls;
 static JException allocationExCls;
 static JException halHandleExCls;
@@ -68,6 +69,7 @@ static const JClassInit classes[] = {
 
 static const JExceptionInit exceptions[] = {
     {"java/lang/IllegalArgumentException", &illegalArgExCls},
+    {"java/lang/IndexOutOfBoundsException", &indexOobExCls},
     {"edu/wpi/first/hal/util/BoundaryException", &boundaryExCls},
     {"edu/wpi/first/hal/util/AllocationException", &allocationExCls},
     {"edu/wpi/first/hal/util/HalHandleException", &halHandleExCls},
@@ -159,6 +161,10 @@ void ThrowIllegalArgumentException(JNIEnv* env, std::string_view msg) {
   illegalArgExCls.Throw(env, msg);
 }
 
+void ThrowIndexOutOfBoundsException(JNIEnv* env, std::string_view msg) {
+  indexOobExCls.Throw(env, msg);
+}
+
 void ThrowBoundaryException(JNIEnv* env, double value, double lower,
                             double upper) {
   static jmethodID getMessage = nullptr;
@@ -235,13 +241,13 @@ jbyteArray SetCANReceiveMessageObject(JNIEnv* env, jobject canData,
 }
 
 jbyteArray SetCANStreamObject(JNIEnv* env, jobject canStreamData,
-                              int32_t length, uint32_t messageId,
+                              int32_t length, int32_t flags, uint32_t messageId,
                               uint64_t timestamp) {
   static jmethodID func =
-      env->GetMethodID(canStreamMessageCls, "setStreamData", "(IIJ)[B");
+      env->GetMethodID(canStreamMessageCls, "setStreamData", "(IIIJ)[B");
 
   jbyteArray retVal = static_cast<jbyteArray>(env->CallObjectMethod(
-      canStreamData, func, static_cast<jint>(length),
+      canStreamData, func, static_cast<jint>(length), static_cast<jint>(flags),
       static_cast<jint>(messageId), static_cast<jlong>(timestamp)));
   return retVal;
 }
