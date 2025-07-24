@@ -485,4 +485,3 @@ def define_pybind_library(name):
         },
         visibility = ["//visibility:public"],
     )
-
