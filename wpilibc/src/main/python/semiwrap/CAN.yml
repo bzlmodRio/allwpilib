@@ -7,9 +7,7 @@ classes:
       CAN:
         overloads:
           int:
-          int, int:
           int, int, int:
-          int, int, int, int:
       WritePacket:
       WritePacketNoError:
       WritePacketRepeating:

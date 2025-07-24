@@ -2,13 +2,16 @@
 strip_prefixes:
 - HAL_
 
+extra_includes:
+- src/ds_types_fmt.h
+
 enums:
   HAL_AllianceStationID:
     value_prefix: HAL_AllianceStationID
-  HAL_MatchType:
-    value_prefix: HAL_kMatchType
   HAL_JoystickPOV:
     value_prefix: HAL_JoystickPOV
+  HAL_MatchType:
+    value_prefix: HAL_kMatchType
 classes:
   HAL_ControlWord:
     attributes:
@@ -28,8 +31,6 @@ classes:
     attributes:
       count:
       povs:
-        # TODO
-        ignore: True
   HAL_JoystickButtons:
     attributes:
       buttons:
@@ -37,7 +38,6 @@ classes:
   HAL_JoystickDescriptor:
     attributes:
       isXbox:
-      isGamepad:
       type:
       name:
       axisCount:

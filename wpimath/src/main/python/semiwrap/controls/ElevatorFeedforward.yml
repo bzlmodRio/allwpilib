@@ -1,10 +1,11 @@
+defaults:
+  subpackage: controller
 
 classes:
   frc::ElevatorFeedforward:
     force_type_casters:
     - units::meters_per_second
     - meters_per_second_squared
-    subpackage: controller
     methods:
       ElevatorFeedforward:
         overloads:
@@ -28,10 +29,6 @@ classes:
       GetKg:
       GetKv:
       GetKa:
-      SetKs:
-      SetKg:
-      SetKv:
-      SetKa:
 
 extra_includes:
 - wpystruct.h

@@ -9,7 +9,6 @@ classes:
       Solenoid:
         overloads:
           int, PneumaticsModuleType, int:
-          int, int, PneumaticsModuleType, int:
           PneumaticsModuleType, int:
       Set:
       Get:

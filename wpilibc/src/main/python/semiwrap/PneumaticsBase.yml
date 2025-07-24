@@ -35,4 +35,3 @@ classes:
       MakeCompressor:
       GetForType:
       GetDefaultForType:
-      ReportUsage:

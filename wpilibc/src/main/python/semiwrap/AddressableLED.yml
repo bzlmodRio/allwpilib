@@ -5,8 +5,6 @@ functions:
 
 classes:
   frc::AddressableLED:
-    enums:
-      ColorOrder:
     methods:
       AddressableLED:
       SetLength:
@@ -19,7 +17,6 @@ classes:
       SetSyncTime:
       Start:
       Stop:
-      SetColorOrder:
   frc::AddressableLED::LEDData:
     force_no_trampoline: true
     base_qualnames:

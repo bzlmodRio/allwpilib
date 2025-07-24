@@ -29,6 +29,3 @@ classes:
             ignore: true
       PWMMotorController:
       InitSendable:
-      SetSpeed:
-      GetSpeed:
-      SetBounds:

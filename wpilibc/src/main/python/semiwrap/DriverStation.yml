@@ -15,14 +15,12 @@ classes:
       GetStickButton:
       GetStickButtonPressed:
       GetStickButtonReleased:
-      GetAngle:
       GetStickAxis:
       GetStickPOV:
       GetStickButtons:
       GetStickAxisCount:
       GetStickPOVCount:
       GetStickButtonCount:
-      GetJoystickIsGamepad:
       GetJoystickIsXbox:
       GetJoystickType:
       GetJoystickName:

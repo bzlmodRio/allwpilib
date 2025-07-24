@@ -10,8 +10,6 @@ classes:
       omega:
     methods:
       ToTwist2d:
-      ToRobotRelative:
-      ToFieldRelative:
       Discretize:
         overloads:
           units::meters_per_second_t, units::meters_per_second_t, units::radians_per_second_t, units::second_t:

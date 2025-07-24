@@ -24,4 +24,3 @@ functions:
   HAL_GetBrownoutVoltage:
   HAL_SetBrownoutVoltage:
   HAL_GetCPUTemp:
-  HAL_ResetUserCurrentFaults:

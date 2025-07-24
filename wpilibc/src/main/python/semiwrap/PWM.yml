@@ -9,7 +9,6 @@ classes:
     - wpi::SendableHelper<PWM>
     enums:
       PeriodMultiplier:
-      OutputPeriod:
     methods:
       PWM:
       SetPulseTime:
@@ -27,8 +26,6 @@ classes:
       SetAlwaysHighMode:
       GetChannel:
       InitSendable:
-      SetOutputPeriod:
-      SetSimDevice:
 
 inline_code: |
   cls_PWM

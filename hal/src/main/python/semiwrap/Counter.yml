@@ -18,7 +18,6 @@ functions:
   HAL_SetCounterDownSourceEdge:
   HAL_ClearCounterDownSource:
   HAL_SetCounterUpDownMode:
-  HAL_SetCounterEdgeConfiguration:
   HAL_SetCounterExternalDirectionMode:
   HAL_SetCounterSemiPeriodMode:
   HAL_SetCounterPulseLengthMode:

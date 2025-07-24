@@ -44,7 +44,6 @@ classes:
       Angle:
       ToMatrix:
       ToRotation2d:
-      ToVector:
 
 inline_code: |
   cls_Rotation3d

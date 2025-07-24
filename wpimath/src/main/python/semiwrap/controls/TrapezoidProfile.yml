@@ -1,3 +1,6 @@
+defaults:
+  subpackage: trajectory
+
 classes:
   frc::TrapezoidProfile:
     force_type_casters:
@@ -48,6 +51,13 @@ classes:
       {
       std::string clsNameCopy = clsName;
 
+      cls_Constraints
+        .def("__repr__", [clsNameCopy](const Constraints &self) {
+          return clsNameCopy + ".Constraints("
+            "maxVelocity=" + std::to_string(self.maxVelocity()) + ", "
+            "maxAcceleration=" + std::to_string(self.maxAcceleration()) + ")";
+        });
+
       cls_State
         .def(
           py::init<Distance_t, Velocity_t>(),
@@ -71,23 +81,10 @@ classes:
             ignore: true
           Velocity_t, Acceleration_t:
             param_override:
-              maxVelocity_:
-                name: maxVelocity
+              maxVelocity:
                 default: '0'
-              maxAcceleration_:
-                name: maxAcceleration
+              maxAcceleration:
                 default: '0'
-    template_inline_code: |
-      {
-      std::string clsNameCopy = clsName;
-
-      cls_Constraints
-        .def("__repr__", [clsNameCopy](const Constraints &self) {
-          return clsNameCopy + ".Constraints("
-            "maxVelocity=" + std::to_string(self.maxVelocity()) + ", "
-            "maxAcceleration=" + std::to_string(self.maxAcceleration()) + ")";
-        });
-      }
   frc::TrapezoidProfile::State:
     force_no_default_constructor: true
     attributes:
@@ -101,14 +98,12 @@ classes:
 
 templates:
   TrapezoidProfile:
-    subpackage: trajectory
     qualname: frc::TrapezoidProfile
     params:
     - units::dimensionless::scalar
 
   # needed for HolonomicDriveController
   TrapezoidProfileRadians:
-    subpackage: trajectory
     qualname: frc::TrapezoidProfile
     params:
     - units::radian

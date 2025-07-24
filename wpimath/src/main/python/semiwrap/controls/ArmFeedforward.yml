@@ -1,6 +1,8 @@
+defaults:
+  subpackage: controller
+
 classes:
   frc::ArmFeedforward:
-    subpackage: controller
     force_type_casters:
     - units::radians_per_second_squared
     typealias:
@@ -28,10 +30,6 @@ classes:
       GetKg:
       GetKv:
       GetKa:
-      SetKs:
-      SetKg:
-      SetKv:
-      SetKa:
 
 extra_includes:
 - wpystruct.h

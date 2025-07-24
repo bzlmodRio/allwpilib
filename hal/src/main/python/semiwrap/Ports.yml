@@ -13,7 +13,6 @@ functions:
   HAL_GetNumPWMHeaders:
   HAL_GetNumDigitalChannels:
   HAL_GetNumPWMChannels:
-  HAL_GetNumCanBuses:
   HAL_GetNumDigitalPWMOutputs:
   HAL_GetNumEncoders:
   HAL_GetNumInterrupts:

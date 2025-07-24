@@ -1,25 +1,24 @@
 [build-system]
 build-backend = "hatchling.build"
 requires = [
-    "semiwrap~=0.1.2",
+    "semiwrap~=0.1.4",
     "hatch-meson~=0.1.0b2",
     "hatchling",
-    "robotpy-native-wpihal==2027.0.0a1.dev0",
-    "robotpy-wpiutil==2027.0.0a1.dev0",
+    "robotpy-native-wpihal==2027.0.0a2",
+    "robotpy-wpiutil==2027.0.0a2",
 ]
 
 [project]
 name = "robotpy-hal"
-version = "2027.0.0a1.dev0"
+version = "2027.0.0a2"
 description = "Binary wrapper for FRC HAL"
 authors = [
     {name = "RobotPy Development Team", email = "robotpy@googlegroups.com"},
 ]
 license = "BSD-3-Clause"
 dependencies = [
-    "robotpy-native-wpihal==2027.0.0a1.dev0",
-    "robotpy-ntcore==2027.0.0a1.dev0",
-    "robotpy-wpiutil==2027.0.0a1.dev0",
+    "robotpy-native-wpihal==2027.0.0a2",
+    "robotpy-wpiutil==2027.0.0a2",
 ]
 
 [project.urls]
@@ -44,8 +43,9 @@ scan_headers_ignore = [
     "hal/DMA.h",
     "hal/Errors.h",
     "hal/HAL.h",
+    "hal/IMU.h",
+    "hal/IMUTypes.h",
     "hal/SystemServer.h",
-    "hal/UsageReporting.h",
     "hal/Types.h",
     "hal/Value.h",
 
@@ -72,6 +72,10 @@ scan_headers_ignore = [
     "hal/simulation/SimCallbackRegistry.h",
     "hal/simulation/SimDataValue.h",
 
+    # TODO: might want this in the future
+    "mrc/*",
+
+    "src/ds_types_fmt.h",
     "sim_cb.h",
     "sim_value_cb.h",
 ]
@@ -104,6 +108,8 @@ Extensions = "hal/Extensions.h"
 HALBase = "hal/HALBase.h"
 I2C = "hal/I2C.h"
 I2CTypes = "hal/I2CTypes.h"
+# IMU = "hal/IMU.h"
+# IMUTypes = "hal/IMUTypes.h"
 Main = "hal/Main.h"
 Notifier = "hal/Notifier.h"
 PWM = "hal/PWM.h"
@@ -113,6 +119,7 @@ PowerDistribution = "hal/PowerDistribution.h"
 REVPH = "hal/REVPH.h"
 SerialPort = "hal/SerialPort.h"
 SimDevice = "hal/SimDevice.h"
+UsageReporting = "hal/UsageReporting.h"
 Threads = "hal/Threads.h"
 # Types = "hal/Types.h"
 # Value = "hal/Value.h"
