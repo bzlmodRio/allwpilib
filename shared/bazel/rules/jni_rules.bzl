@@ -5,6 +5,7 @@ load("@rules_cc//cc/common:cc_info.bzl", "CcInfo")
 load("@rules_java//java/common:java_info.bzl", "JavaInfo")
 load("@rules_pkg//:mappings.bzl", "filter_directory")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_library")
 
 def _jni_headers_impl(ctx):
     include_dir = ctx.actions.declare_directory(ctx.attr.name + ".h")

@@ -437,11 +437,3 @@ wpilib_maven_export(
         "windowsx86-64staticdebug": ":wpiutil_static_zip-dbg-windows-x86-64",
     },
 )
-
-wpilib_maven_export(
-    name = "wpiutil-java_publish",
-    classifier_artifacts = {"sources": ":libwpiutil-java-sources.jar"},
-    lib_name = "wpiutil-java",
-    maven_coordinates = "edu.wpi.first.wpiutil:wpiutil-java:$(WPILIB_VERSION)",
-    visibility = ["//visibility:public"],
-)
