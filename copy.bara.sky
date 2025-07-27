@@ -1,11 +1,11 @@
 mostrobotpy_url = "https://github.com/robotpy/mostrobotpy.git"
+
 # allwpilib_url = "git@github.com:bzlmodRio/allwpilib.git"
 robotpy_commands_url = "https://github.com/robotpy/robotpy-commands-v2"
 robotpy_examples_url = "https://github.com/robotpy/examples"
 
 # mostrobotpy_url = "file:///home/pjreiniger/git/robotpy/robotpy_monorepo/mostrobotpy"
 allwpilib_url = "file:///home/pjreiniger/git/allwpilib"
-
 
 MOSTROBOTPY_PROJECTS = [
     struct(
@@ -66,7 +66,7 @@ def define_mostrobotpy_to_allwpilib():
     for project_info in MOSTROBOTPY_PROJECTS:
         origin_files += glob([
             "subprojects/" + project_info.robotpy_name + "/**",
-            "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml"
+            "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml",
         ], exclude = ["**/meson.build", "**/.gitignore", "**/requirements.txt", "**/run_tests.py"])
 
         destination_files += glob([
@@ -105,8 +105,6 @@ def define_mostrobotpy_to_allwpilib():
         transformations = transformations,
     )
 
-
-
 def define_allwpilib_to_mostrobotpy():
     origin_files = []
     destination_files = glob(["**"])
@@ -122,7 +120,7 @@ def define_allwpilib_to_mostrobotpy():
             transformations.append(core.move(project_info.wpilib_name + "/src/test/python", "subprojects/" + project_info.robotpy_name + "/tests"))
         transformations.append(core.move(project_info.wpilib_name + "/src/main/python", "subprojects/" + project_info.robotpy_name))
         transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/native-pyproject.toml", "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml"))
-        
+
     core.workflow(
         name = "allwpilib_to_mostrobotpy",
         origin = git.origin(
@@ -148,12 +146,11 @@ def define_allwpilib_to_mostrobotpy():
         transformations = transformations,
     )
 
-
 def define_robotpy_commands_to_allwpilib():
     origin_files = glob([
-            "commands2/**", 
-            "tests/**"
-        ], exclude=["**/run_tests.py", "**/requirements.txt"])
+        "commands2/**",
+        "tests/**",
+    ], exclude = ["**/run_tests.py", "**/requirements.txt"])
     destination_files = glob([
         "wpilibNewCommands/src/main/python/**",
         "wpilibNewCommands/src/test/python/**",
@@ -180,9 +177,8 @@ def define_robotpy_commands_to_allwpilib():
         transformations = transformations,
     )
 
-
 def define_robotpy_examples_to_allwpilib():
-    origin_files = glob(["**"], exclude=[
+    origin_files = glob(["**"], exclude = [
         ".github/**",
         ".gitignore",
         ".pre-commit-config.yaml",
