@@ -27,6 +27,8 @@ wpilib_shared_and_static_library(
 java_library(
     name = "cameraserver-java",
     srcs = glob(["src/main/java/**/*.java"]),
+    maven_artifact_name = "cameraserver-java",
+    maven_group_id = "edu.wpi.first.cameraserver",
     visibility = ["//visibility:public"],
     deps = [
         "//cscore:cscore-java",

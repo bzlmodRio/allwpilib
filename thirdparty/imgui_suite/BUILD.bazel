@@ -415,7 +415,7 @@ pkg_files(
 )
 
 pkg_zip(
-    name = "imgui-suite-hdrs",
+    name = "imgui-hdrs-zip",
     srcs = [
         "generated-fonts-hdrs-pkg",
         "generated-gl3w-hdrs-pkg",
@@ -469,7 +469,7 @@ pkg_files(
 )
 
 pkg_zip(
-    name = "imgui-suite-srcs",
+    name = "imgui-srcs-zip",
     srcs = [
         "generated-fonts-srcs-pkg",
         "generated-gl3w-srcs-pkg",

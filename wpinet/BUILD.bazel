@@ -182,6 +182,8 @@ wpilib_jni_cc_library(
 wpilib_jni_java_library(
     name = "wpinet-java",
     srcs = glob(["src/main/java/**/*.java"]),
+    maven_artifact_name = "wpinet-java",
+    maven_group_id = "edu.wpi.first.wpinet",
     native_libs = [":wpinetjni"],
     visibility = ["//visibility:public"],
     deps = [
