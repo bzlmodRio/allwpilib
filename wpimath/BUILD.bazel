@@ -179,30 +179,6 @@ generate_def_windows(
     ],
 )
 
-wpilib_cc_shared_library(
-    name = "shared/wpimath",
-    auto_export_windows_symbols = False,
-    dynamic_deps = [
-        "//wpiutil:shared/wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    win_def_file = ":wpimath_def",
-    deps = [
-        ":wpimath",
-    ],
-)
-
-wpilib_cc_static_library(
-    name = "static/wpimath",
-    static_deps = [
-        "//wpiutil:static/wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":wpimath",
-    ],
-)
-
 wpilib_jni_cc_library(
     name = "wpimathjni",
     srcs = glob(["src/main/native/cpp/jni/**"]),

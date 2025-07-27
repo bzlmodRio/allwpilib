@@ -520,3 +520,53 @@ def generate_def_windows(name, deps = None, **kwargs):
         target_compatible_with = ["@platforms//os:windows"],
         **kwargs
     )
+
+
+def wpilib_shared_and_static_library(
+        name,
+        dynamic_deps = [],
+        static_deps = [],
+        visibility = None,
+        auto_export_windows_symbols = True,
+        shared_library_exports_filter = [],
+        shared_library_additional_linker_inputs = [],
+        shared_library_user_link_flags = [],
+        **kwargs):
+    """
+    Helper for creating a library and a corresponding cc_static_library and cc_shared_library
+
+    Produces the following outputs:
+        - ":<name>"        - standard cc_library
+        - ":shared/<name>" - cc_shared_library
+        - ":static/<name>" - cc_static_library
+
+    Params:
+        dynamic_deps - Dynamic deps used to create the cc_shared_library
+        static_deps  - Static deps used to create the cc_st"atic_library
+        auto_export_windows_symbols - If true, will add the "windows_export_all_symbols" feature to auto-export symbols into the .dll
+        shared_library_additional_linker_inputs - Passthrough for additional_linker_inputs used to create the cc_shared_library
+        shared_library_user_link_flags - Passthrough for user_link_flags used to create the cc_shared_library
+    """
+    wpilib_cc_library(
+        name = name,
+        visibility = visibility,
+        **kwargs
+    )
+
+    wpilib_cc_shared_library(
+        name = "shared/{}".format(name),
+        deps = [":{}".format(name)],
+        dynamic_deps = dynamic_deps,
+        visibility = visibility,
+        auto_export_windows_symbols = auto_export_windows_symbols,
+        additional_linker_inputs = shared_library_additional_linker_inputs,
+        user_link_flags = shared_library_user_link_flags,
+        exports_filter = shared_library_exports_filter,
+    )
+
+    wpilib_cc_static_library(
+        name = "static/{}".format(name),
+        deps = [":{}".format(name)],
+        static_deps = static_deps,
+        visibility = visibility,
+    )

@@ -77,6 +77,15 @@ http_archive(
 )
 
 http_archive(
+    name = "bazel_skylib",
+    sha256 = "51b5105a760b353773f904d2bbc5e664d0987fbaf22265164de65d43e910d8ac",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-skylib/releases/download/1.8.1/bazel-skylib-1.8.1.tar.gz",
+        "https://github.com/bazelbuild/bazel-skylib/releases/download/1.8.1/bazel-skylib-1.8.1.tar.gz",
+    ],
+)
+
+http_archive(
     name = "pybind11_bazel",
     integrity = "sha256-iwRj1wuX2pDS6t6DqiCfhIXisv4y+7CvxSJtZoSAzGw=",
     strip_prefix = "pybind11_bazel-2b6082a4d9d163a52299718113fa41e4b7978db5",
