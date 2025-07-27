@@ -85,8 +85,8 @@ wpilib_shared_and_static_library(
 java_library(
     name = "wpilibNewCommands-java",
     srcs = glob(["src/main/java/**/*.java"]) + [":generated_java"],
-    maven_artifact_name = "wpilibNewCommands-java",
-    maven_group_id = "edu.wpi.first.wpilibNewCommands",
+    # maven_artifact_name = "wpilibNewCommands-java",
+    # maven_group_id = "edu.wpi.first.wpilibNewCommands",
     visibility = ["//visibility:public"],
     deps = [
         "//cscore:cscore-java",

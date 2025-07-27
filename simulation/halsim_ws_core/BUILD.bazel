@@ -42,8 +42,8 @@ bundle_library_artifacts(
     library_base_name = "halsim_ws_core",
 )
 
-package_minimal_cc_project(
-    name = "halsim_ws_core",
-    maven_artifact_name = "halsim_ws_core",
-    maven_group_id = "edu.wpi.first.halsim",
-)
+# package_minimal_cc_project(
+#     name = "halsim_ws_core",
+#     maven_artifact_name = "halsim_ws_core",
+#     maven_group_id = "edu.wpi.first.halsim",
+# )

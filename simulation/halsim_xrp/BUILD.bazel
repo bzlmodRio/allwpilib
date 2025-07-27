@@ -18,7 +18,7 @@ wpilib_halsim_extension(
     static_deps = [
         "//wpinet:static/wpinet",
         "//hal:static/wpiHal",
-        "//simulation/halsim_ws_core:static/halsim_ws_core",
+        # "//simulation/halsim_ws_core:static/halsim_ws_core",
     ],
     visibility = ["//visibility:public"],
     deps = [
