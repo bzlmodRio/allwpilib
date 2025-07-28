@@ -14,6 +14,7 @@ load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_libra
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "create_yaml_files", "scan_headers")
 load("//wpiutil:generate.bzl", "generate_wpiutil")
 load("//wpiutil:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//wpiutil:robotpy_pybind_build_info.bzl", "define_pybind_library", "publish_library_casters", "wpiutil_extension")
@@ -436,4 +437,30 @@ wpilib_maven_export(
         "windowsx86-64static": ":wpiutil_static_zip-opt-windows-x86-64",
         "windowsx86-64staticdebug": ":wpiutil_static_zip-dbg-windows-x86-64",
     },
+)
+
+create_yaml_files(
+    name = "robotpy-create-yaml",
+    directory = "wpiutil/src/main/python",
+    extra_hdrs = glob(["src/main/python/**/*.h"]),
+    package_root_file = "src/main/python/wpiutil/__init__.py",
+    pkgcfgs = ["//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc"],
+    pyproject_toml = "src/main/python/pyproject.toml",
+)
+
+scan_headers(
+    name = "robotpy-scan-headers",
+    directory = "wpiutil/src/main/python",
+    extra_hdrs = glob(["src/main/python/**/*.h"]) + [":robotpy-native-wpiutil.copy_headers"],
+    package_root_file = "src/main/python/wpiutil/__init__.py",
+    pkgcfgs = ["//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc"],
+    pyproject_toml = "src/main/python/pyproject.toml",
+)
+
+create_imports(
+    name = "robotpy-create-imports",
+    base = "wpiutil",
+    compiled = "wpiutil._wpiutil",
+    library = [":robotpy-wpiutil"],
+    output_file = "src/main/python/wpiutil/__init__.py",
 )

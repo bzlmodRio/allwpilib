@@ -4,14 +4,14 @@ load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_shared_and_static_library")
-load("//shared/bazel/rules:cc_rules.bzl", "generate_def_windows", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "generate_def_windows", "third_party_cc_lib_helper", "wpilib_shared_and_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "create_yaml_files", "scan_headers")
 load("//wpimath:generate.bzl", "generate_wpimath")
 load("//wpimath:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//wpimath:robotpy_pybind_build_info.bzl", "define_pybind_library", "publish_library_casters", "wpimath_controls_extension", "wpimath_extension", "wpimath_filter_extension", "wpimath_geometry_extension", "wpimath_interpolation_extension", "wpimath_kinematics_extension", "wpimath_spline_extension")
@@ -428,4 +428,42 @@ robotpy_py_test(
         ":robotpy-wpimath-test",
         requirement("pytest"),
     ],
+)
+
+create_yaml_files(
+    name = "robotpy-create-yaml",
+    directory = "wpimath/src/main/python",
+    extra_hdrs = glob(["src/main/python/**/*.h"]),
+    package_root_file = "src/main/python/wpimath/__init__.py",
+    pkgcfgs = [
+        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+    ],
+    pyproject_toml = "src/main/python/pyproject.toml",
+)
+
+scan_headers(
+    name = "robotpy-scan-headers",
+    directory = "wpimath/src/main/python",
+    extra_hdrs = glob(["src/main/python/**/*.h"]) + [":robotpy-native-wpimath.copy_headers"],
+    package_root_file = "src/main/python/wpimath/__init__.py",
+    pkgcfgs = [
+        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+    ],
+    pyproject_toml = "src/main/python/pyproject.toml",
+)
+
+create_imports(
+    name = "robotpy-create-imports",
+    base = "wpimath",
+    compiled = "wpimath._wpimath",
+    library = [":robotpy-wpimath"],
+    output_file = "src/main/python/wpimath/__init__.py",
 )

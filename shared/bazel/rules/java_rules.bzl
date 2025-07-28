@@ -1,6 +1,5 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
-load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 
 def wpilib_java_library(
         name,

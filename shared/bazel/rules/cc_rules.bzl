@@ -521,7 +521,6 @@ def generate_def_windows(name, deps = None, **kwargs):
         **kwargs
     )
 
-
 def wpilib_shared_and_static_library(
         name,
         dynamic_deps = [],
