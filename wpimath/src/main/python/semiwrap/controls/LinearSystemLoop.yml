@@ -1,3 +1,4 @@
+---
 defaults:
   subpackage: system
 
@@ -52,9 +53,6 @@ classes:
       Correct:
       Predict:
       ClampInput:
-      function<InputVector:
-        ignore: true
-
 templates:
   LinearSystemLoop_1_1_1:
     qualname: frc::LinearSystemLoop

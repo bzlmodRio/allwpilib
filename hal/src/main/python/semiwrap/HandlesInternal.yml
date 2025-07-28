@@ -13,11 +13,6 @@ functions:
   isHandleType:
   isHandleCorrectVersion:
   getHandleTypedIndex:
-  getPortHandleChannel:
-  getPortHandleModule:
-  getPortHandleSPIEnable:
-  createPortHandle:
-  createPortHandleForSPI:
   createHandle:
 classes:
   hal::HandleBase:

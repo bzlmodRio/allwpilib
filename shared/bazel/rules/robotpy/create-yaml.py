@@ -47,7 +47,7 @@ def main():
     try:
         tool_main()
     except SystemExit as e:
-        if e != 0:
+        if e.code != 0:
             raise
         shutil.copytree("semiwrap", args.output_dir)
 

@@ -1,3 +1,4 @@
+---
 
 classes:
   frc::SwerveDriveKinematics:
@@ -10,17 +11,13 @@ classes:
         overloads:
           ModuleTranslations&&...:
             ignore: true
-          Translation2d, Wheels&&...:
-            ignore: true
           const wpi::array<Translation2d, NumModules>&:
             ignore: true
-
       ResetHeadings:
         overloads:
           ModuleHeadings&&...:
             ignore: true
           wpi::array<Rotation2d, NumModules>:
-
       ToSwerveModuleStates:
         doc: |
           Performs inverse kinematics to return the module states from a desired

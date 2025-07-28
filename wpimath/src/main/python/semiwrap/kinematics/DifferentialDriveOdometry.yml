@@ -1,3 +1,4 @@
+---
 
 classes:
   frc::DifferentialDriveOdometry:
@@ -5,5 +6,4 @@ classes:
     methods:
       DifferentialDriveOdometry:
       ResetPosition:
-      GetPose:
       Update:

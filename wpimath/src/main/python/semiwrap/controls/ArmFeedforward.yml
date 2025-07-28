@@ -1,3 +1,4 @@
+---
 defaults:
   subpackage: controller
 
@@ -11,9 +12,6 @@ classes:
     - frc::ArmFeedforward::ka_unit
     methods:
       ArmFeedforward:
-        overloads:
-          '':
-          units::volt_t, units::volt_t, units::unit_t<kv_unit>, units::unit_t<ka_unit>:
       Calculate:
         overloads:
           units::unit_t<Angle>, units::unit_t<Velocity>, units::unit_t<Acceleration> [const]:
@@ -26,11 +24,14 @@ classes:
       MinAchievableVelocity:
       MaxAchievableAcceleration:
       MinAchievableAcceleration:
+      SetKs:
+      SetKg:
+      SetKv:
+      SetKa:
       GetKs:
       GetKg:
       GetKv:
       GetKa:
-
 extra_includes:
 - wpystruct.h
 

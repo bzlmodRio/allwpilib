@@ -1,3 +1,4 @@
+---
 defaults:
   subpackage: estimator
 
@@ -9,10 +10,6 @@ classes:
     - int Outputs
     methods:
       KalmanFilter:
-      K:
-        overloads:
-          '[const]':
-          int, int [const]:
       P:
         overloads:
           '[const]':

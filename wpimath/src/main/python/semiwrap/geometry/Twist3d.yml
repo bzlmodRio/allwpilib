@@ -1,3 +1,4 @@
+---
 extra_includes:
 - wpystruct.h
 
@@ -13,7 +14,6 @@ classes:
       rz:
     methods:
       operator==:
-      operator!=:
       operator*:
 
 inline_code: |-

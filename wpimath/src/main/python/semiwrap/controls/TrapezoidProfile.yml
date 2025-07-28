@@ -1,3 +1,4 @@
+---
 defaults:
   subpackage: trajectory
 
@@ -77,7 +78,7 @@ classes:
     methods:
       Constraints:
         overloads:
-          '':
+          "":
             ignore: true
           Velocity_t, Acceleration_t:
             param_override:
@@ -93,9 +94,6 @@ classes:
     methods:
       operator==:
         cpp_code: py::self == State()
-      operator!=:
-        cpp_code: py::self != State()
-
 templates:
   TrapezoidProfile:
     qualname: frc::TrapezoidProfile

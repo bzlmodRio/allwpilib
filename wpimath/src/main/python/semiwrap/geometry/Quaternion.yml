@@ -1,3 +1,4 @@
+---
 extra_includes:
 - rpy/geometryToString.h
 - wpystruct.h
@@ -12,7 +13,7 @@ classes:
     methods:
       Quaternion:
         overloads:
-          '':
+          "":
           double, double, double, double:
       operator+:
       operator-:
@@ -22,7 +23,6 @@ classes:
           const Quaternion& [const]:
       operator/:
       operator==:
-      operator!=:
       Dot:
       Conjugate:
       Inverse:

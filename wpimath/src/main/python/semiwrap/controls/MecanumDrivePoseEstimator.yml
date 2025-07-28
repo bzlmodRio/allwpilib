@@ -1,3 +1,4 @@
+---
 defaults:
   subpackage: estimator
 
@@ -38,12 +39,3 @@ classes:
             const Pose2d&, const wpi::array<double, 3>&, const wpi::array<double,
             3>&
           :
-      SetVisionMeasurementStdDevs:
-      ResetPosition:
-      GetEstimatedPosition:
-      AddVisionMeasurement:
-        overloads:
-          const Pose2d&, units::second_t:
-          const Pose2d&, units::second_t, const wpi::array<double, 3>&:
-      Update:
-      UpdateWithTime:

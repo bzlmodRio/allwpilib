@@ -1,3 +1,4 @@
+---
 
 classes:
   frc::MecanumDriveWheelPositions:
@@ -8,5 +9,4 @@ classes:
       rearRight:
     methods:
       operator==:
-      operator!=:
       Interpolate:
