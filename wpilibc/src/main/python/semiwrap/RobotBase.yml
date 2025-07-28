@@ -17,7 +17,9 @@ classes:
   frc::RobotBase:
     attributes:
       m_threadId:
+        ignore: true
       connListenerHandle:
+        ignore: true
     methods:
       IsEnabled:
       IsDisabled:
@@ -28,6 +30,7 @@ classes:
       IsTest:
       IsTestEnabled:
       GetThreadId:
+        ignore: true
       StartCompetition:
       EndCompetition:
       GetRuntimeType:

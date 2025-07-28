@@ -4,6 +4,8 @@ extra_includes:
 
 classes:
   frc::ADXL345_I2C:
+    constants:
+    - frc::ADXL345_I2C::Range::kRange_2G
     ignored_bases:
     - wpi::SendableHelper<ADXL345_I2C>
     attributes:

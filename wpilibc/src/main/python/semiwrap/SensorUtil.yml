@@ -2,6 +2,7 @@
 
 classes:
   frc::SensorUtil:
+    nodelete: true
     methods:
       GetDefaultCTREPCMModule:
       GetDefaultREVPHModule:

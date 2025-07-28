@@ -16,6 +16,7 @@ classes:
       m_selected:
       m_haveSelected:
       m_mutex:
+        ignore: true
       m_instance:
       m_previousVal:
       s_instances:

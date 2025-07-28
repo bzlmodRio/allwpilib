@@ -6,6 +6,7 @@ classes:
       RobotInit:
       DriverStationConnected:
       SimulationInit:
+        internal: true
       DisabledInit:
       AutonomousInit:
       TeleopInit:

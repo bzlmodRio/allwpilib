@@ -23,11 +23,20 @@ classes:
       SetGlobalData:
   frc::AddressableLED::LEDData:
     force_no_trampoline: true
+    base_qualnames:
+      HAL_AddressableLEDData: ::HAL_AddressableLEDData
     methods:
       LEDData:
         overloads:
           "":
           int, int, int:
+            param_override:
+              _r:
+                name: r
+              _g:
+                name: g
+              _b:
+                name: b
       SetRGB:
       SetHSV:
       SetLED:

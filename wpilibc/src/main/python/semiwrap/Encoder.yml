@@ -10,6 +10,11 @@ classes:
     - frc::Encoder::EncodingType
     methods:
       Encoder:
+        overloads:
+          int, int, bool, EncodingType:
+            param_override:
+              encodingType:
+                default: frc::Encoder::EncodingType::k4X
       Get:
       Reset:
       GetPeriod:

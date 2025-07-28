@@ -161,6 +161,13 @@ classes:
         overloads:
           "":
           double, double, double:
+            param_override:
+              r:
+                name: red
+              g:
+                name: green
+              b:
+                name: blue
           int, int, int:
           std::string_view:
       operator==:

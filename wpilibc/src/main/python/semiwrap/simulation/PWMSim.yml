@@ -5,6 +5,8 @@ extra_includes:
 
 classes:
   frc::sim::PWMSim:
+    force_type_casters:
+    - std::function
     methods:
       PWMSim:
         overloads:
