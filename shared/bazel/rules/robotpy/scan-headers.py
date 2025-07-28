@@ -42,11 +42,7 @@ def main():
     tool_main = getattr(module, "main")
 
 
-    sys.argv = [""] + ["scan-headers", "--check"]
-
-    for root, _, files in os.walk("."):
-        print(root, files)
-        
+    sys.argv = [""] + ["scan-headers", "--check"]        
     
     try:
         tool_main()

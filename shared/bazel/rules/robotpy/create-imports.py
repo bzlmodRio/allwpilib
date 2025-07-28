@@ -28,23 +28,9 @@ def main():
     parser.add_argument("--base")
     parser.add_argument("--compiled")
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
-    # parser.add_argument("--pyproject", type=pathlib.Path)
-    # parser.add_argument("--directory", type=pathlib.Path)
-    # parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
     args = parser.parse_args()
     
     hack_pkgconfig(args.pkgcfgs)
-
-    # for root, _, files in os.walk("."):
-    #     print(root, files)
-
-    # args.output_dir = args.output_dir.absolute()
-    # if args.output_dir.exists:
-    #     shutil.rmtree(args.output_dir)
-
-    # hack_pkgconfig(args.pkgcfgs)
-
-    # os.chdir(args.directory)
 
     module = importlib.import_module("semiwrap.tool")
     tool_main = getattr(module, "main")
@@ -52,16 +38,12 @@ def main():
 
     sys.argv = [""] + ["create-imports", "--write", args.base, args.compiled]
     
-    print("HelloXXXX")
     try:
         tool_main()
-        print("After")
     except SystemExit as e:
         if e.code != 0:
             raise
-        print("*(*(*(*(*(*(*(*())))))))")
         shutil.copy("xxx.txt", args.output_file)
-    print("***************AT")
 
 
 if __name__ == "__main__":
