@@ -1,3 +1,4 @@
+---
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 
@@ -7,18 +8,9 @@ classes:
     - wpi::SendableHelper<DutyCycle>
     methods:
       DutyCycle:
-        overloads:
-          DigitalSource&:
-            ignore: true
-          DigitalSource*:
-            ignore: true
-          std::shared_ptr<DigitalSource>:
       GetFrequency:
       GetOutput:
       GetHighTime:
-      GetOutputScaleFactor:
-        ignore: true # not in beta 1
-      GetFPGAIndex:
       GetSourceChannel:
       InitSendable:
 

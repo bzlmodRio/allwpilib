@@ -1,3 +1,5 @@
+---
+
 classes:
   frc::CAN:
     attributes:
@@ -6,16 +8,15 @@ classes:
     methods:
       CAN:
         overloads:
-          int:
-          int, int, int:
+          int, int:
+          int, int, int, int:
       WritePacket:
-      WritePacketNoError:
       WritePacketRepeating:
-      WritePacketRepeatingNoError:
       WriteRTRFrame:
+      WritePacketNoError:
+      WritePacketRepeatingNoError:
       WriteRTRFrameNoError:
       StopPacketRepeating:
       ReadPacketNew:
       ReadPacketLatest:
       ReadPacketTimeout:
-      GetTimestampBaseTime:

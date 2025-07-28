@@ -1,3 +1,4 @@
+---
 
 functions:
   format_as:
@@ -5,18 +6,21 @@ functions:
 
 classes:
   frc::AddressableLED:
+    enums:
+      ColorOrder:
     methods:
       AddressableLED:
+      GetChannel:
+      SetColorOrder:
+      SetStart:
+      GetStart:
       SetLength:
       SetData:
         overloads:
           std::span<const LEDData>:
           std::initializer_list<LEDData>:
             ignore: true
-      SetBitTiming:
-      SetSyncTime:
-      Start:
-      Stop:
+      SetGlobalData:
   frc::AddressableLED::LEDData:
     force_no_trampoline: true
     base_qualnames:
@@ -24,7 +28,7 @@ classes:
     methods:
       LEDData:
         overloads:
-          '':
+          "":
           int, int, int:
             param_override:
               _r:
@@ -39,4 +43,3 @@ classes:
         overloads:
           const Color&:
           const Color8Bit&:
-

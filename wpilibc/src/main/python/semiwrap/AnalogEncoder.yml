@@ -1,3 +1,4 @@
+---
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 - frc/AnalogInput.h
@@ -21,15 +22,8 @@ classes:
           AnalogInput*, double, double:
             ignore: true
           std::shared_ptr<AnalogInput>, double, double:
-      Reset:
       Get:
-      GetAbsolutePosition:
-      GetPositionOffset:
-      SetPositionOffset:
-      SetDistancePerRotation:
-      GetDistancePerRotation:
-      GetDistance:
-      GetChannel:
       SetVoltagePercentageRange:
       SetInverted:
+      GetChannel:
       InitSendable:
