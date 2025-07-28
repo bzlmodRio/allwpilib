@@ -433,7 +433,7 @@ robotpy_py_test(
 create_yaml_files(
     name = "robotpy-create-yaml",
     directory = "wpimath/src/main/python",
-    extra_hdrs = glob(["src/main/python/**/*.h"]),
+    extra_hdrs = glob(["src/main/python/**/*.h"]) + [":robotpy-native-wpimath.copy_headers"] + ["//wpiutil:robotpy-native-wpiutil.copy_headers"],
     package_root_file = "src/main/python/wpimath/__init__.py",
     pkgcfgs = [
         "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
@@ -458,4 +458,29 @@ scan_headers(
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
     ],
     pyproject_toml = "src/main/python/pyproject.toml",
+)
+
+
+
+create_yaml_files(
+    name = "robotpy-create-test-yaml",
+    directory = "wpimath/src/test/python/cpp",
+    extra_hdrs = glob(["src/test/python/**/*.h"]),
+    package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
+    pkgcfgs = [
+        "//wpimath:src/main/python/wpimath/wpimath.pc",
+        "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
+        "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
+        "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
+        "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
+        "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
+        "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
+        "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
+        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+    ],
+    pyproject_toml = "src/test/python/cpp/pyproject.toml",
 )

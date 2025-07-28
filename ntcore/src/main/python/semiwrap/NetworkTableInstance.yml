@@ -1,4 +1,4 @@
-
+---
 extra_includes:
 - networktables/BooleanArrayTopic.h
 - networktables/BooleanTopic.h
@@ -25,8 +25,7 @@ classes:
     force_type_casters:
     - std::function
     attributes:
-      kDefaultPort3:
-      kDefaultPort4:
+      kDefaultPort:
     enums:
       NetworkMode:
         arithmetic: true
@@ -36,7 +35,7 @@ classes:
     methods:
       NetworkTableInstance:
         overloads:
-          '':
+          "":
             ignore: true
           NT_Inst:
             ignore: true
@@ -85,13 +84,13 @@ classes:
           }
       GetTopics:
         overloads:
-          '':
+          "":
           std::string_view:
           std::string_view, unsigned int:
           std::string_view, std::span<std::string_view>:
       GetTopicInfo:
         overloads:
-          '':
+          "":
           std::string_view:
           std::string_view, unsigned int:
           std::string_view, std::span<std::string_view>:
@@ -126,20 +125,7 @@ classes:
             self->StartServer(persist_filename, listen_address, port);
           }
       StopServer:
-      StartClient3:
-        cpp_code: |
-          [](NetworkTableInstance * self, std::string_view identity) {
-            pyntcore::onInstanceStart(self);
-            py::gil_scoped_release release;
-            self->StartClient3(identity);
-          }
-      StartClient4:
-        cpp_code: |
-          [](NetworkTableInstance * self, std::string_view identity) {
-            pyntcore::onInstanceStart(self);
-            py::gil_scoped_release release;
-            self->StartClient4(identity);
-          }
+      StartClient:
       StopClient:
       SetServer:
         overloads:
@@ -170,7 +156,6 @@ classes:
       AddStructSchema:
         ignore: true
       operator==:
-      operator!=:
     inline_code: |
       .def("configPythonLogging", [](NetworkTableInstance * self, 
         NetworkTableInstance::LogLevel minLevel, NetworkTableInstance::LogLevel maxLevel, py::str logName) {
