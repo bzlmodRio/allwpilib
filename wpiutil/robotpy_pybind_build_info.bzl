@@ -3,6 +3,7 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
 
 def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIUTIL_HEADER_GEN = [
@@ -130,6 +131,14 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
+    )
+
+    create_imports(
+        name = "robotpy-create-wpiutil-imports",
+        base = "wpiutil",
+        compiled = "wpiutil._wpiutil",
+        library = [":robotpy-wpiutil"],
+        output_file = "src/main/python/wpiutil/__init__.py",
     )
 
     native.filegroup(

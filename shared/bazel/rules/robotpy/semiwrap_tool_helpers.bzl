@@ -69,9 +69,10 @@ def scan_headers(name, directory, pyproject_toml, package_root_file, extra_hdrs,
         ] + pkgcfg_args,
         data = extra_hdrs + pkgcfgs + [pyproject_toml, package_root_file],
         main = "shared/bazel/rules/robotpy/scan-headers.py",
+        size="small"
     )
 
-def create_imports(name, library, output_file, base, compiled = None, pkgcfgs = []):
+def create_imports(name, library, output_file, base, compiled = None):
     py_binary(
         name = name,
         srcs = [
@@ -88,15 +89,10 @@ def create_imports(name, library, output_file, base, compiled = None, pkgcfgs = 
     cmd = "$(location " + name + ") --output_file=$(OUTS) --base=" + base
     if compiled:
         cmd += " --compiled=" + compiled
-    if pkgcfgs:
-        cmd += " --pkgcfgs"
-        for f in pkgcfgs:
-            cmd += " $(location " + f + ")"
 
     native.genrule(
         name = name + ".gen",
         tools = [name],
-        srcs = pkgcfgs,
         outs = ["{}-create_imports.py".format(name)],
         cmd = cmd,
         tags = ["robotpy", "manual"],

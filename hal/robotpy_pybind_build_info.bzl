@@ -2,6 +2,7 @@
 
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
 
 def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     HAL_SIMULATION_HEADER_GEN = [
@@ -206,6 +207,14 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
+    )
+
+    create_imports(
+        name = "robotpy-create-hal_simulation-imports",
+        base = "hal.simulation",
+        compiled = "hal.simulation._simulation",
+        library = [":robotpy-hal"],
+        output_file = "src/main/python/hal/simulation/__init__.py",
     )
 
     native.filegroup(
@@ -563,6 +572,14 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
+    )
+
+    create_imports(
+        name = "robotpy-create-wpihal-imports",
+        base = "hal",
+        compiled = "hal._wpiHal",
+        library = [":robotpy-hal"],
+        output_file = "src/main/python/hal/__init__.py",
     )
 
     native.filegroup(

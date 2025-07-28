@@ -183,6 +183,7 @@ class BazelExtensionModule:
         self.name = extension_module.name
         self.package_name = extension_module.package_name
         self.install_path = extension_module.install_path
+        self.package_base = str(self.install_path).replace("/", ".")
 
         self.generation_data = self._extract_header_generation(extension_module.sources)
         self.resolve_casters = ResolveCastersConfig(

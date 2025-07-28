@@ -3,7 +3,7 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "create_yaml_files", "scan_headers")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
 
 def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIMATH_HEADER_GEN = [
@@ -109,7 +109,6 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         ],
         tags = ["manual", "robotpy"],
     )
-
 
 def wpimath_filter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIMATH_FILTER_HEADER_GEN = [
@@ -234,17 +233,6 @@ def wpimath_filter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         compiled = "wpimath.filter._filter",
         library = [":robotpy-wpimath"],
         output_file = "src/main/python/wpimath/filter/__init__.py",
-        pkgcfgs = [
-            "//wpimath:src/main/python/wpimath/wpimath.pc",
-            "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-            "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-            "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-            "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-            "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        ]
     )
 
     native.filegroup(
@@ -485,17 +473,6 @@ def wpimath_geometry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = 
         compiled = "wpimath.geometry._geometry",
         library = [":robotpy-wpimath"],
         output_file = "src/main/python/wpimath/geometry/__init__.py",
-        pkgcfgs = [
-            "//wpimath:src/main/python/wpimath/wpimath.pc",
-            "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-            "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-            "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-            "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-            "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        ]
     )
 
     native.filegroup(
@@ -598,24 +575,13 @@ def wpimath_interpolation_extension(srcs = [], header_to_dat_deps = [], extra_hd
         extra_srcs = srcs,
         includes = includes,
     )
-    
+
     create_imports(
         name = "robotpy-create-wpimath_interpolation-imports",
         base = "wpimath.interpolation",
         compiled = "wpimath.interpolation._interpolation",
         library = [":robotpy-wpimath"],
         output_file = "src/main/python/wpimath/interpolation/__init__.py",
-        pkgcfgs = [
-            "//wpimath:src/main/python/wpimath/wpimath.pc",
-            "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-            "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-            "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-            "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-            "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        ]
     )
 
     native.filegroup(
@@ -933,17 +899,6 @@ def wpimath_kinematics_extension(srcs = [], header_to_dat_deps = [], extra_hdrs 
         compiled = "wpimath.kinematics._kinematics",
         library = [":robotpy-wpimath"],
         output_file = "src/main/python/wpimath/kinematics/__init__.py",
-        pkgcfgs = [
-            "//wpimath:src/main/python/wpimath/wpimath.pc",
-            "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-            "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-            "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-            "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-            "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        ]
     )
 
     native.filegroup(
@@ -1089,17 +1044,6 @@ def wpimath_spline_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         compiled = "wpimath.spline._spline",
         library = [":robotpy-wpimath"],
         output_file = "src/main/python/wpimath/spline/__init__.py",
-        pkgcfgs = [
-            "//wpimath:src/main/python/wpimath/wpimath.pc",
-            "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-            "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-            "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-            "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-            "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        ]
     )
 
     native.filegroup(
@@ -1764,17 +1708,6 @@ def wpimath_controls_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = 
         compiled = "wpimath._controls._controls.controller",
         library = [":robotpy-wpimath"],
         output_file = "src/main/python/wpimath/controller/__init__.py",
-        pkgcfgs = [
-            "//wpimath:src/main/python/wpimath/wpimath.pc",
-            "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-            "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-            "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-            "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-            "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-            "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        ]
     )
 
     native.filegroup(

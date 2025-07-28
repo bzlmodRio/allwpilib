@@ -2,6 +2,7 @@
 
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
 
 def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIMATH_TEST_HEADER_GEN = [
@@ -79,6 +80,14 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         includes = includes,
     )
 
+    create_imports(
+        name = "robotpy-create-wpimath_test-imports",
+        base = "wpimath_test",
+        # compiled = "wpimath_test._wpimath_test",
+        library = [":robotpy-wpimath-test"],
+        output_file = "src/test/python/cpp/wpimath_test/__init__.py",
+    )
+
     native.filegroup(
         name = "wpimath_test.generated_files",
         srcs = [
@@ -130,6 +139,7 @@ def define_pybind_library(name):
         ],
         imports = ["src/test/python/cpp"],
         deps = [
+            ":robotpy-wpimath",
         ],
         strip_path_prefixes = ["wpimath_test/src/test/python/cpp/"],
         summary = "Test project for verifying robotpy-build behavior",

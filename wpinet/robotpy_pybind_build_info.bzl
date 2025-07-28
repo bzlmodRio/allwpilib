@@ -2,6 +2,7 @@
 
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
 
 def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPINET_HEADER_GEN = [
@@ -90,6 +91,14 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
+    )
+
+    create_imports(
+        name = "robotpy-create-wpinet-imports",
+        base = "wpinet",
+        compiled = "wpinet._wpinet",
+        library = [":robotpy-wpinet"],
+        output_file = "src/main/python/wpinet/__init__.py",
     )
 
     native.filegroup(
