@@ -25,10 +25,6 @@ classes:
       GetPeriod:
       PrintWatchdogEpochs:
       IterativeRobotBase:
-        overloads:
-          double:
-            ignore: true
-          units::second_t:
       LoopFunc:
     doc: |
       IterativeRobotBase implements a specific type of robot program framework,

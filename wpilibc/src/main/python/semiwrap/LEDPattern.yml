@@ -2,8 +2,6 @@
 
 classes:
   frc::LEDPattern:
-    attributes:
-      kOff:
     enums:
       GradientType:
     methods:

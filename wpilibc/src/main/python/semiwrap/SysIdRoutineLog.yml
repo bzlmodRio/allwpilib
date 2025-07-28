@@ -1,3 +1,4 @@
+---
 defaults:
   subpackage: sysid
 
@@ -15,8 +16,6 @@ classes:
       StateEnumToString:
   frc::sysid::SysIdRoutineLog::MotorLog:
     methods:
-      MotorLog:
-        ignore: true
       value:
       voltage:
       position:

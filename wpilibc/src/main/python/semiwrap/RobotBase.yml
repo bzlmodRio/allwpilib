@@ -16,13 +16,8 @@ functions:
 classes:
   frc::RobotBase:
     attributes:
-      m_ds:
-        rename: ds
-        access: readonly
       m_threadId:
-        ignore: true
       connListenerHandle:
-        ignore: true
     methods:
       IsEnabled:
       IsDisabled:

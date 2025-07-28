@@ -1,3 +1,4 @@
+---
 
 classes:
   frc::sim::DCMotorSim:
@@ -5,19 +6,16 @@ classes:
     - frc::DCMotor
     methods:
       DCMotorSim:
-        overloads:
-          const LinearSystem<2, 1, 2>&, const DCMotor&, const std::array<double, 2>&:
-            param_override:
-              plant:
-                x_type: frc::LinearSystem<2,1,2>
       SetState:
+      SetAngle:
+      SetAngularVelocity:
       GetAngularPosition:
       GetAngularVelocity:
-      GetCurrentDraw:
-      SetInputVoltage:
       GetAngularAcceleration:
       GetTorque:
+      GetCurrentDraw:
       GetInputVoltage:
+      SetInputVoltage:
       GetGearbox:
       GetGearing:
       GetJ:

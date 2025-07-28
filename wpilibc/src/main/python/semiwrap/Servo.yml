@@ -1,3 +1,4 @@
+---
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 
@@ -8,10 +9,8 @@ classes:
     methods:
       Servo:
       Set:
-      SetOffline:
       Get:
       SetAngle:
       GetAngle:
-      GetMaxAngle:
-      GetMinAngle:
+      GetChannel:
       InitSendable:

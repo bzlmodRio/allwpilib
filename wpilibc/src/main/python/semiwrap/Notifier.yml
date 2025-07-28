@@ -5,8 +5,6 @@ classes:
     rename: Notifier
     methods:
       PyNotifier:
-        overloads:
-          std::function<void ( )>:
       SetName:
       SetCallback:
       StartSingle:

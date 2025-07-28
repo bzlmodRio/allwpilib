@@ -1,3 +1,4 @@
+---
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 - frc/motorcontrol/MotorController.h
@@ -6,9 +7,6 @@ classes:
   frc::DifferentialDrive:
     ignored_bases:
     - wpi::SendableHelper<DifferentialDrive>
-    attributes:
-      kDefaultQuickStopThreshold:
-      kDefaultQuickStopAlpha:
     methods:
       DifferentialDrive:
         overloads:
@@ -23,10 +21,6 @@ classes:
       ArcadeDriveIK:
       CurvatureDriveIK:
       TankDriveIK:
-      SetQuickStopThreshold:
-      SetQuickStopAlpha:
-      IsRightSideInverted:
-      SetRightSideInverted:
       StopMotor:
       GetDescription:
       InitSendable:

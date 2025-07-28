@@ -1,6 +1,4 @@
 ---
-enums:
-  RadioLEDState:
 
 classes:
   frc::CANStatus:

@@ -1,3 +1,5 @@
+---
+
 classes:
   frc::sim::DriverStationSim:
     force_type_casters:
@@ -39,7 +41,7 @@ classes:
       SetJoystickAxisCount:
       SetJoystickPOVCount:
       SetJoystickButtonCount:
-      SetJoystickIsXbox:
+      SetJoystickIsGamepad:
       SetJoystickType:
       SetJoystickName:
       SetJoystickAxisType:

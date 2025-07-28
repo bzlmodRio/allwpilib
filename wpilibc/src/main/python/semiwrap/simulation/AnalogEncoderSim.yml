@@ -1,3 +1,4 @@
+---
 extra_includes:
 - frc/AnalogEncoder.h
 
@@ -7,9 +8,5 @@ classes:
     - std::function
     methods:
       AnalogEncoderSim:
-      SetPosition:
-      SetTurns:
-      GetTurns:
-      GetPosition:
       Set:
       Get:

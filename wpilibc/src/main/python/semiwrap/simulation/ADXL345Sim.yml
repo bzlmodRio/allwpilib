@@ -1,4 +1,4 @@
-
+---
 extra_includes:
 - frc/ADXL345_I2C.h
 
@@ -6,8 +6,6 @@ classes:
   frc::sim::ADXL345Sim:
     methods:
       ADXL345Sim:
-        overloads:
-          const ADXL345_I2C&:
       SetX:
       SetY:
       SetZ:

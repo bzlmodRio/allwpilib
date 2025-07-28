@@ -1,3 +1,5 @@
+---
+
 classes:
   frc::sim::FlywheelSim:
     typealias:
@@ -6,23 +8,14 @@ classes:
       O>
     methods:
       FlywheelSim:
-        overloads:
-          const LinearSystem<1, 1, 1>&, const DCMotor&, double, const std::array<double, 1>&:
-            param_override:
-              measurementStdDevs:
-                default: std::array<double, 1>{0.0}
-          const DCMotor&, double, units::kilogram_square_meter_t, const std::array<double, 1>&:
-            param_override:
-              measurementStdDevs:
-                default: std::array<double, 1>{0.0}
       SetState:
-      GetAngularVelocity:
-      GetCurrentDraw:
-      SetInputVoltage:
       SetVelocity:
+      GetAngularVelocity:
       GetAngularAcceleration:
       GetTorque:
+      GetCurrentDraw:
       GetInputVoltage:
+      SetInputVoltage:
       Gearbox:
       Gearing:
       J:

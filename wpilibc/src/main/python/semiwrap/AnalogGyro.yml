@@ -1,3 +1,4 @@
+---
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 - frc/AnalogInput.h
@@ -6,13 +7,6 @@ classes:
   frc::AnalogGyro:
     ignored_bases:
     - wpi::SendableHelper<AnalogGyro>
-    attributes:
-      kOversampleBits:
-      kAverageBits:
-      kSamplesPerSecond:
-      kCalibrationSampleTime:
-      kDefaultVoltsPerDegreePerSecond:
-      m_analog:
     methods:
       AnalogGyro:
         overloads:

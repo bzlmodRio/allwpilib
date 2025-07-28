@@ -18,13 +18,6 @@ classes:
         overloads:
           "":
           int, int, int:
-            param_override:
-              r:
-                name: red
-              g:
-                name: green
-              b:
-                name: blue
           const Color&:
           std::string_view:
       operator==:
