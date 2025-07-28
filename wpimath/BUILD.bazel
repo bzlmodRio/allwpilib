@@ -459,11 +459,3 @@ scan_headers(
     ],
     pyproject_toml = "src/main/python/pyproject.toml",
 )
-
-create_imports(
-    name = "robotpy-create-imports",
-    base = "wpimath",
-    compiled = "wpimath._wpimath",
-    library = [":robotpy-wpimath"],
-    output_file = "src/main/python/wpimath/__init__.py",
-)
