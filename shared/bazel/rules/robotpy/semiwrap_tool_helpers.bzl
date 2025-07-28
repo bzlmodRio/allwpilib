@@ -4,7 +4,7 @@ load("@rules_python//python:defs.bzl", "py_binary", "py_test")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 def __create_yaml_files_impl(ctx):
-    output_dir = ctx.actions.declare_directory("_gen_create_yaml")
+    output_dir = ctx.actions.declare_directory(ctx.attr.gen_dir)
 
     args = ctx.actions.args()
     args.add("--output_dir=" + output_dir.path)
@@ -30,6 +30,7 @@ __create_yaml_files = rule(
         "package_root_file": attr.label(mandatory = True, allow_files = True),
         "pkgcfgs": attr.label_list(allow_files = True),
         "pyproject_toml": attr.label(mandatory = True, allow_files = True),
+        "gen_dir": attr.string(default="_gen_create_yaml"),
         "_tool": attr.label(
             default = Label("//shared/bazel/rules/robotpy:create-yaml"),
             cfg = "exec",

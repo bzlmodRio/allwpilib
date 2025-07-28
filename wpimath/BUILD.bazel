@@ -465,6 +465,7 @@ scan_headers(
 create_yaml_files(
     name = "robotpy-create-test-yaml",
     directory = "wpimath/src/test/python/cpp",
+    gen_dir = "_gen_test_yaml",
     extra_hdrs = glob(["src/test/python/**/*.h"]),
     package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
     pkgcfgs = [
