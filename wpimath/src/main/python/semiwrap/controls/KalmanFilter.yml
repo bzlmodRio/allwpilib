@@ -9,10 +9,6 @@ classes:
     - int Outputs
     methods:
       KalmanFilter:
-      K:
-        overloads:
-          '[const]':
-          int, int [const]:
       P:
         overloads:
           '[const]':
@@ -32,7 +28,6 @@ classes:
         overloads:
           const InputVector&, const OutputVector&:
           const InputVector&, const OutputVector&, const Matrixd<Outputs, Outputs>&:
-
 templates:
   KalmanFilter_1_1_1:
     qualname: frc::KalmanFilter

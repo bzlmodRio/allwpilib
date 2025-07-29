@@ -256,7 +256,6 @@ robotpy_py_test(
     ],
 )
 
-
 create_yaml_files(
     name = "robotpy-create-yaml",
     directory = "ntcore/src/main/python",
@@ -266,27 +265,16 @@ create_yaml_files(
         "//datalog:src/main/python/wpilog/wpilog.pc",
         "//ntcore:src/main/python/ntcore/ntcore.pc",
         "//wpinet:src/main/python/wpinet/wpinet.pc",
-        "//hal:src/main/python/hal/wpihal.pc",
         "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
-        "//wpimath:src/main/python/wpimath/wpimath.pc",
-        "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-        "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-        "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-        "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-        "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-        "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-        "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
-        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
-        "//hal:native/wpihal/robotpy-native-wpihal.pc",
         "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
         "//datalog:native/datalog/robotpy-native-datalog.pc",
         "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
         "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
     ],
     pyproject_toml = "src/main/python/pyproject.toml",
+    yaml_files = glob(["src/main/python/semiwrap/**"]),
 )
 
 scan_headers(

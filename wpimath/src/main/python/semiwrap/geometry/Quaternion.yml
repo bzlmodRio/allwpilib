@@ -22,7 +22,6 @@ classes:
           const Quaternion& [const]:
       operator/:
       operator==:
-      operator!=:
       Dot:
       Conjugate:
       Inverse:
@@ -43,7 +42,6 @@ classes:
       Z:
       ToRotationVector:
       FromRotationVector:
-
 inline_code: |
   cls_Quaternion
     .def("__repr__", py::overload_cast<const Quaternion&>(&rpy::toString));

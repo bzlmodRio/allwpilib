@@ -11,7 +11,7 @@ load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "create_yaml_files", "scan_headers")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
 load("//wpimath:generate.bzl", "generate_wpimath")
 load("//wpimath:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//wpimath:robotpy_pybind_build_info.bzl", "define_pybind_library", "publish_library_casters", "wpimath_controls_extension", "wpimath_extension", "wpimath_filter_extension", "wpimath_geometry_extension", "wpimath_interpolation_extension", "wpimath_kinematics_extension", "wpimath_spline_extension")
@@ -443,6 +443,7 @@ create_yaml_files(
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
     ],
     pyproject_toml = "src/main/python/pyproject.toml",
+    yaml_files = glob(["src/main/python/semiwrap/**"]),
 )
 
 scan_headers(
@@ -460,13 +461,11 @@ scan_headers(
     pyproject_toml = "src/main/python/pyproject.toml",
 )
 
-
-
 create_yaml_files(
     name = "robotpy-create-test-yaml",
     directory = "wpimath/src/test/python/cpp",
-    gen_dir = "_gen_test_yaml",
     extra_hdrs = glob(["src/test/python/**/*.h"]),
+    gen_dir = "_gen_test_yaml",
     package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
     pkgcfgs = [
         "//wpimath:src/main/python/wpimath/wpimath.pc",
@@ -484,4 +483,5 @@ create_yaml_files(
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
     ],
     pyproject_toml = "src/test/python/cpp/pyproject.toml",
+    yaml_files = glob(["src/test/python/cpp/semiwrap/**"]),
 )

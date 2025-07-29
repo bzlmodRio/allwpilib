@@ -17,8 +17,6 @@ classes:
           const Ellipse2d&, const Constraint&:
       MaxVelocity:
       MinMaxAcceleration:
-      IsPoseInRegion:
-
     template_inline_code: |
       cls_EllipticalRegionConstraint
         .def_static("fromFeet", [](const Translation2d& center, units::foot_t xWidth,

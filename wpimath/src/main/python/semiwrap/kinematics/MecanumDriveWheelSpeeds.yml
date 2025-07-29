@@ -10,7 +10,6 @@ classes:
       rearLeft:
       rearRight:
     methods:
-      Normalize:
       Desaturate:
       operator+:
       operator-:
@@ -19,7 +18,6 @@ classes:
           '[const]':
       operator*:
       operator/:
-
 inline_code: |
   cls_MecanumDriveWheelSpeeds
     .def(

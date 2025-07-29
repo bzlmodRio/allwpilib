@@ -5,5 +5,4 @@ classes:
     methods:
       DifferentialDriveOdometry:
       ResetPosition:
-      GetPose:
       Update:

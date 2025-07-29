@@ -9,7 +9,6 @@ classes:
       MecanumDriveKinematicsConstraint:
       MaxVelocity:
       MinMaxAcceleration:
-
 inline_code: |-
   cls_MecanumDriveKinematicsConstraint
     .def_static("fromFps", [](const frc::MecanumDriveKinematics& kinematics,

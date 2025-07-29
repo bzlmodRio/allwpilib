@@ -13,9 +13,7 @@ classes:
       rz:
     methods:
       operator==:
-      operator!=:
       operator*:
-
 inline_code: |-
   cls_Twist3d
     .def(

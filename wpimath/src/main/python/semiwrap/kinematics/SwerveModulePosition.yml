@@ -1,4 +1,3 @@
-
 extra_includes:
 - wpystruct.h
 
@@ -9,8 +8,8 @@ classes:
       distance:
       angle:
     methods:
-      Interpolate:
       operator==:
+      Interpolate:
     inline_code: |
       .def(
         py::init<
@@ -30,6 +29,5 @@ classes:
         return "SwerveModulePosition(distance=" + std::to_string(ss.distance()) + ", "
                                     "angle=" + std::to_string(ss.angle.Radians()()) + ")";
       })
-
 inline_code: |
   SetupWPyStruct<frc::SwerveModulePosition>(cls_SwerveModulePosition);

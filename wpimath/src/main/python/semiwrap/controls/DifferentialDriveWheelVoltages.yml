@@ -2,16 +2,15 @@ defaults:
   subpackage: controller
 
 
+extra_includes:
+- wpystruct.h
+
 classes:
   frc::DifferentialDriveWheelVoltages:
     force_no_default_constructor: true
     attributes:
       left:
       right:
-
-extra_includes:
-- wpystruct.h
-
 inline_code: |
   cls_DifferentialDriveWheelVoltages
     .def(py::init<units::volt_t, units::volt_t>(),

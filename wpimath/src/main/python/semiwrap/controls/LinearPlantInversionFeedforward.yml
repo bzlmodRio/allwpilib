@@ -28,7 +28,6 @@ classes:
         overloads:
           const StateVector&:
           const StateVector&, const StateVector&:
-
 templates:
   LinearPlantInversionFeedforward_1_1:
     qualname: frc::LinearPlantInversionFeedforward

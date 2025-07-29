@@ -1,10 +1,6 @@
----
 extra_includes:
-  - "frc/geometry/Pose3d.h"
+- frc/geometry/Pose3d.h
 
-functions:
-  TimeInterpolatableBuffer:
-    ignore: true  # constructor specialization
 classes:
   frc::TimeInterpolatableBuffer:
     template_params:
@@ -19,7 +15,7 @@ classes:
       Sample:
       GetInternalBuffer:
         overloads:
-          "":
+          '':
           '[const]':
             ignore: true
 

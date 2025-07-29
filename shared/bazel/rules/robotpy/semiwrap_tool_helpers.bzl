@@ -26,14 +26,14 @@ def __create_yaml_files_impl(ctx):
 __create_yaml_files = rule(
     implementation = __create_yaml_files_impl,
     attrs = {
+        "backup_dir": attr.string(default = "_gen_create_yaml_original"),
         "directory": attr.string(mandatory = True),
         "extra_hdrs": attr.label_list(allow_files = True),
+        "gen_dir": attr.string(default = "_gen_create_yaml"),
         "package_root_file": attr.label(mandatory = True, allow_files = True),
         "pkgcfgs": attr.label_list(allow_files = True),
         "pyproject_toml": attr.label(mandatory = True, allow_files = True),
-        "gen_dir": attr.string(default="_gen_create_yaml"),
-        "backup_dir": attr.string(default="_gen_create_yaml_original"),
-        "yaml_files": attr.label_list(allow_files=True),
+        "yaml_files": attr.label_list(mandatory = True, allow_files = True),
         "_tool": attr.label(
             default = Label("//shared/bazel/rules/robotpy:create-yaml"),
             cfg = "exec",
@@ -73,7 +73,7 @@ def scan_headers(name, directory, pyproject_toml, package_root_file, extra_hdrs,
         ] + pkgcfg_args,
         data = extra_hdrs + pkgcfgs + [pyproject_toml, package_root_file],
         main = "shared/bazel/rules/robotpy/scan-headers.py",
-        size="small"
+        size = "small",
     )
 
 def create_imports(name, library, output_file, base, compiled = None):

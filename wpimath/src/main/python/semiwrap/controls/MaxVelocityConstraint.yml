@@ -9,7 +9,6 @@ classes:
       MaxVelocityConstraint:
       MaxVelocity:
       MinMaxAcceleration:
-
 inline_code: |-
   cls_MaxVelocityConstraint
     .def_static("fromFps", [](units::feet_per_second_t maxVelocity) {

@@ -279,6 +279,7 @@ create_yaml_files(
         "//apriltag:native/apriltag/robotpy-native-apriltag.pc",
     ],
     pyproject_toml = "src/main/python/pyproject.toml",
+    yaml_files = glob(["src/main/python/semiwrap/**"]),
 )
 
 scan_headers(

@@ -289,6 +289,7 @@ create_yaml_files(
         "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
     ],
     pyproject_toml = "src/main/python/pyproject.toml",
+    yaml_files = glob(["src/main/python/semiwrap/**"]),
 )
 
 scan_headers(
