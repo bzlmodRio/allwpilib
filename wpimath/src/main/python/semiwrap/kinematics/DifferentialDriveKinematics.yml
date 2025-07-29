@@ -1,11 +1,8 @@
-
 extra_includes:
 - wpystruct.h
 
 classes:
   frc::DifferentialDriveKinematics:
-    attributes:
-      trackWidth:
     methods:
       DifferentialDriveKinematics:
       ToChassisSpeeds:

@@ -38,10 +38,8 @@ classes:
       X:
       Y:
       operator+:
-      operator+=:
       operator-:
       operator==:
-      operator!=:
       operator*:
       operator/:
 

@@ -1,16 +1,12 @@
-
 classes:
   frc::LEDPattern:
-    attributes:
-      kOff:
     enums:
       GradientType:
     methods:
-      "Off":
+      Off:
       LEDPattern:
       ApplyTo:
         overloads:
-          std::span<frc::AddressableLED::LEDData>, LEDWriterFn [const]:
           std::span<frc::AddressableLED::LEDData> [const]:
       Reversed:
       OffsetBy:

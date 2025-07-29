@@ -9,9 +9,6 @@ classes:
       SetRawButton:
       SetRawAxis:
       SetPOV:
-        overloads:
-          int, int:
-          int:
       SetAxisCount:
       SetPOVCount:
       SetButtonCount:

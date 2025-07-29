@@ -34,7 +34,6 @@ classes:
       operator*:
       operator/:
       operator==:
-      operator!=:
       Nearest:
         overloads:
           std::span<const Translation3d> [const]:

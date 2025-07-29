@@ -34,7 +34,6 @@ classes:
       operator*:
       operator/:
       operator==:
-      operator!=:
       RotateBy:
       GetQuaternion:
       X:
