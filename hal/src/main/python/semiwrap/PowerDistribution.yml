@@ -1,4 +1,3 @@
----
 strip_prefixes:
 - HAL_
 
@@ -101,4 +100,6 @@ classes:
       brownout:
       canWarning:
       canBusOff:
+      hardwareFault:
+      firmwareFault:
       hasReset:
