@@ -23,6 +23,8 @@ classes:
   nt::NetworkTableInstance:
     force_type_casters:
     - std::function
+    attributes:
+      kDefaultPort:
     enums:
       NetworkMode:
         arithmetic: true
@@ -177,5 +179,3 @@ classes:
         }
         pyntcore::onInstancePostReset(self);
       })
-    attributes:
-      kDefaultPort:

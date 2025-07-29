@@ -39,6 +39,7 @@ def merge_data(generated_directory, backup_directory, output_directory):
     yaml_ = YAML()
     yaml_.default_flow_style = False
     yaml_.preserve_quotes = True
+    yaml_.width = 4096  # or some other big enough value to prevent line-wrap
 
 
 

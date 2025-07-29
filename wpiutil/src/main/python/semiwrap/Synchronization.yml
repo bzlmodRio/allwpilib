@@ -15,7 +15,7 @@ functions:
   ReleaseSemaphore:
     param_override:
       prevCount:
-        default: '0'
+        default: "0"
   WaitForObject:
     overloads:
       WPI_Handle:
