@@ -18,12 +18,6 @@ classes:
       CalculateProfileTiming:
         overloads:
           const State&, const State& [const]:
-  frc::ExponentialProfile::ProfileTiming:
-    attributes:
-      inflectionTime:
-      totalTime:
-    methods:
-      IsFinished:
   frc::ExponentialProfile::Constraints:
     attributes:
       maxInput:
@@ -44,6 +38,7 @@ classes:
       .def_static("fromCharacteristics", [](Input_t maxInput, kV_t kv, kA_t ka) {
           return typename frc::ExponentialProfile<Distance, Input>::Constraints(maxInput, kv, ka);
         }, py::arg("maxInput"), py::arg("kV"), py::arg("kA"))
+
   frc::ExponentialProfile::State:
     force_no_default_constructor: true
     attributes:
@@ -53,6 +48,13 @@ classes:
       operator==:
     inline_code: |
       .def(py::init<Distance_t, Velocity_t>())
+  frc::ExponentialProfile::ProfileTiming:
+    attributes:
+      inflectionTime:
+      totalTime:
+    methods:
+      IsFinished:
+
 templates:
   ExponentialProfileMeterVolts:
     qualname: frc::ExponentialProfile

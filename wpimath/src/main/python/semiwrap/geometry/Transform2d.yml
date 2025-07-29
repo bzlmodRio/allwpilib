@@ -28,8 +28,10 @@ classes:
       Inverse:
       operator*:
       operator/:
-      operator+:
       operator==:
+      operator!=:
+      operator+:
+
 inline_code: |
   cls_Transform2d
     .def_static("fromFeet", [](units::foot_t x, units::foot_t y, units::radian_t angle){

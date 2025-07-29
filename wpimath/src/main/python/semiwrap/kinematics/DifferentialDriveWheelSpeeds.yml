@@ -8,6 +8,7 @@ classes:
       left:
       right:
     methods:
+      Normalize:
       Desaturate:
       operator+:
       operator-:
@@ -16,6 +17,8 @@ classes:
           '[const]':
       operator*:
       operator/:
+
+
 inline_code: |
   cls_DifferentialDriveWheelSpeeds
     .def(
@@ -48,3 +51,4 @@ inline_code: |
   ;
 
   SetupWPyStruct<frc::DifferentialDriveWheelSpeeds>(cls_DifferentialDriveWheelSpeeds);
+

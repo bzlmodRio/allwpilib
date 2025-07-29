@@ -6,6 +6,7 @@ classes:
     - size_t NumModules
     methods:
       SwerveDriveOdometry3d:
+
 templates:
   SwerveDrive2Odometry3d:
     qualname: frc::SwerveDriveOdometry3d

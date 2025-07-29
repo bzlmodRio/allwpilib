@@ -17,6 +17,8 @@ classes:
             NumModules>&, const Pose3d&, const wpi::array<double, 4>&, const wpi::array<double,
             4>&
           :
+
+
 templates:
   SwerveDrive2PoseEstimator3d:
     qualname: frc::SwerveDrivePoseEstimator3d

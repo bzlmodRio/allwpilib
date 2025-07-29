@@ -29,6 +29,7 @@ classes:
           const Pose2d&, units::second_t, const wpi::array<double, 3>&:
       Update:
       UpdateWithTime:
+
 templates:
   DifferentialDrivePoseEstimatorBase:
     qualname: frc::PoseEstimator

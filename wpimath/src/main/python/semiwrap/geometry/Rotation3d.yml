@@ -34,6 +34,7 @@ classes:
       operator*:
       operator/:
       operator==:
+      operator!=:
       RotateBy:
       GetQuaternion:
       X:
@@ -42,8 +43,8 @@ classes:
       Axis:
       Angle:
       ToMatrix:
-      ToVector:
       ToRotation2d:
+
 inline_code: |
   cls_Rotation3d
     .def_static("fromDegrees", [](units::degree_t roll, units::degree_t pitch, units::degree_t yaw) {

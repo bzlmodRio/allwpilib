@@ -1,3 +1,4 @@
+
 extra_includes:
 - wpystruct.h
 
@@ -45,5 +46,6 @@ classes:
       GetRearLeft:
       GetRearRight:
       Interpolate:
+
 inline_code: |
   SetupWPyStruct<frc::MecanumDriveKinematics>(cls_MecanumDriveKinematics);

@@ -8,4 +8,5 @@ classes:
       rearRight:
     methods:
       operator==:
+      operator!=:
       Interpolate:

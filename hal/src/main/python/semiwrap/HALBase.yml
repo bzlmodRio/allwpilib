@@ -1,10 +1,11 @@
+---
+
 strip_prefixes:
 - HAL_
 
 enums:
   HAL_RuntimeType:
 functions:
-  HAL_GetLastError:
   HAL_GetErrorMessage:
   HAL_GetFPGAVersion:
   HAL_GetFPGARevision:
@@ -34,9 +35,11 @@ functions:
       }
   HAL_GetTeamNumber:
   HAL_GetRuntimeType:
+  HAL_GetFPGAButton:
   HAL_GetSystemActive:
   HAL_GetBrownedOut:
-  HAL_GetCommsDisableCount:
+  HAL_GetPort:
+  HAL_GetPortWithModule:
   HAL_GetFPGATime:
   HAL_ExpandFPGATime:
   HAL_GetRSLState:
@@ -45,3 +48,4 @@ functions:
   HAL_Shutdown:
   HAL_SimPeriodicBefore:
   HAL_SimPeriodicAfter:
+  HAL_GetLastError:

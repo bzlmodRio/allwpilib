@@ -6,4 +6,5 @@ classes:
       right:
     methods:
       operator==:
+      operator!=:
       Interpolate:

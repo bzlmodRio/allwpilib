@@ -14,8 +14,6 @@ classes:
         overloads:
           units::meters_per_second_t, units::meters_per_second_t, units::radians_per_second_t, units::second_t:
           const ChassisSpeeds&, units::second_t:
-      ToRobotRelative:
-      ToFieldRelative:
       operator+:
       operator-:
         overloads:
@@ -24,6 +22,7 @@ classes:
       operator*:
       operator/:
       operator==:
+
 inline_code: |
   cls_ChassisSpeeds
     .def(

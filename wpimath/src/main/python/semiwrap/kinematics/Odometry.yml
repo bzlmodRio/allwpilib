@@ -1,3 +1,4 @@
+
 extra_includes:
 - frc/kinematics/DifferentialDriveWheelPositions.h
 - frc/kinematics/DifferentialDriveWheelSpeeds.h
@@ -18,6 +19,7 @@ classes:
       ResetRotation:
       GetPose:
       Update:
+
 templates:
   DifferentialDriveOdometryBase:
     qualname: frc::Odometry

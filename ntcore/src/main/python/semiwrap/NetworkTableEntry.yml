@@ -8,6 +8,9 @@ inline_code: |
   #include <src/NetworkTableEntry.cpp.inl>
 classes:
   nt::NetworkTableEntry:
+    enums:
+      Flags:
+        arithmetic: true
     methods:
       NetworkTableEntry:
         overloads:
@@ -21,6 +24,7 @@ classes:
       Exists:
       GetName:
       GetType:
+      GetFlags:
       GetLastChange:
       GetValue:
       GetBoolean:
@@ -85,12 +89,16 @@ classes:
       SetFloatArray:
       SetDoubleArray:
       SetStringArray:
+      SetFlags:
+      ClearFlags:
       SetPersistent:
       ClearPersistent:
       IsPersistent:
       Unpublish:
+      Delete:
       GetTopic:
       operator==:
+      operator!=:
     inline_code: |
       .def("__repr__", [](NetworkTableEntry self) {
         return py::str("<NetworkTableEntry {!r}>").format(self.GetName());

@@ -11,6 +11,7 @@ classes:
     methods:
       SimulatedAnnealing:
       Solve:
+
 templates:
   SimulatedAnnealing:
     qualname: frc::SimulatedAnnealing
