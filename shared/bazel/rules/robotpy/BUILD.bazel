@@ -13,6 +13,8 @@ py_binary(
     srcs = ["create-yaml.py"],
     deps = [
         requirement("semiwrap"),
+        requirement("dictdiffer"),
+        requirement("ruyaml"),
     ],
 )
 

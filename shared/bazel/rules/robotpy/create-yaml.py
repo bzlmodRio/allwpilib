@@ -4,7 +4,10 @@ import sys
 import pathlib
 import argparse
 import shutil
+import yaml
+import dictdiffer 
 from typing import List
+from ruyaml import YAML
 
 
 def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
@@ -37,7 +40,43 @@ def merge_data(generated_directory, backup_directory, output_directory):
 
     print(generated_files)
     print(backup_files)
-    print(backup_files.difference(generated_files))
+    common_files = backup_files.intersection(generated_files)
+    for f in common_files:
+        generated = YAML(typ='safe').load(generated_directory / f)
+        original = YAML(typ='safe').load(backup_directory / f)
+        print("\n\n")
+        print(f)
+        # print(generated)
+        # print(original)
+        diffs = dictdiffer.diff(generated, original)
+        for diff in diffs:
+            action = diff[0]
+            if action == "change":
+                changes = diff[2][1]
+                print("CHANGES: ", changes)
+                # if 'no_release_gil' in diff[2][0]:
+                generated = dictdiffer.patch([diff], generated)
+                # print(diff[2])
+            elif action == "add":
+                additions = diff[2]
+                print("ADDITIONS: ", additions)
+                generated = dictdiffer.patch([diff], generated)
+            else:
+                print(action)
+        # print(list(result))
+        
+        output_file = output_directory / f
+        output_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(output_file, 'w') as f:
+            YAML().dump(generated, f)
+        
+    # for f in backup_files.intersection(generated_files):
+    #     output_file = output_directory / f
+    #     output_file.parent.mkdir(parents=True, exist_ok=True)
+    #     shutil.copy(generated_directory / f, output_file)
+# backup_directory
+    # for f in backup_files.difference(generated_files):
+        
 
 def main():
     parser = argparse.ArgumentParser()

@@ -5,3 +5,5 @@ semiwrap==0.1.4
 pytest
 numpy
 opencv-python~=4.6
+dictdiffer
+ruyaml
