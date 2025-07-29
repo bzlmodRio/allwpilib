@@ -48,3 +48,4 @@ classes:
       SetMatchNumber:
       SetReplayNumber:
       ResetData:
+      SetJoystickIsGamepad:

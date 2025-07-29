@@ -167,6 +167,7 @@ write_source_files(
         "//wpilibc:write_robotpy-create-yaml",
         "//wpinet:write_robotpy-create-yaml",
         "//wpimath:write_robotpy-create-yaml",
+        "//wpimath:write_robotpy-create-test-yaml",
         "//wpiutil:write_robotpy-create-yaml",
     ],
     tags = [

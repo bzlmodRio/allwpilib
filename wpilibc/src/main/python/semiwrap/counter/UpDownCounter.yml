@@ -10,3 +10,4 @@ classes:
       GetCount:
       Reset:
       InitSendable:
+      SetEdgeConfiguration:

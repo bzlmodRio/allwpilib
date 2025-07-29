@@ -54,61 +54,57 @@ def merge_data(generated_directory, backup_directory, output_directory):
         print(f)
         # print(generated)
         # print(original)
-        diffs = dictdiffer.diff(generated, original)
+        diffs = dictdiffer.diff(original, generated)
+
+        additions = []
+
         for diff in diffs:
+            # print(diff)
             action = diff[0]
             if action == "change":
-                changes = diff[2][1]
-                print("CHANGES: ", changes) 
-                # if 'no_release_gil' in diff[2][0]:
-                generated = dictdiffer.patch([diff], generated)
-                # print(diff[2])
+                # print(diff)
+                # changes = [1]
+                print("CHANGES: ", diff) 
+                print(diff[0])
+                print(diff[1])
+                print(diff[2])
+                print(len(diff[2]))
+                print("------------------------")
+                assert 2 == len(diff[2])
+                if diff[2][1] == None:
+                    continue
+                else:
+                    print("!!!!!!!!!!!!!!!")
             elif action == "add":
-                additions = diff[2]
-                print("ADDITIONS: ", additions)
+                additions.append(diff)
+            elif action == "remove":
+                removals = diff[2]
+                # print("REMOVALS: ")
                 
-                for addition in additions:
-                    print("  ", addition)
-                    modified_diff = [(diff[0], diff[1], [addition])]
-                    if addition[0] == "defaults":
-                        temp = dictdiffer.patch(modified_diff, generated)
-                        generated = dict(defaults=temp["defaults"], **generated)
-                    elif addition[0] == "extra_includes":
-                        temp = dictdiffer.patch(modified_diff, generated)
-                        old = dict(generated)
-                        defaults = old.pop("defaults", {})
-                        generated = dict(defaults=defaults, extra_includes=temp["extra_includes"], **old)
-                        if defaults == {}:
-                            del generated["defaults"]
-                    elif addition[0] == "strip_prefixes":
-                        temp = dictdiffer.patch(modified_diff, generated)
-                        old = dict(generated)
-                        defaults = old.pop("defaults", {})
-                        extra_includes = old.pop("extra_includes", {})
-                        generated = dict(defaults=defaults, extra_includes=extra_includes, strip_prefixes=temp["strip_prefixes"], **old)
-                        if defaults == {}:
-                            del generated["defaults"]
-                        if extra_includes == {}:
-                            del generated["extra_includes"]
-                    elif addition[0] in ["nodelete", "inline_code", "template_params", "base_qualnames", "templates", "force_type_casters", "typealias"]:
-                        generated = dictdiffer.patch(modified_diff, generated)
-                        # print(addition)
-                        # temp = dictdiffer.patch(modified_diff, generated)
-                        # print(modified_diff)
-                        # print(dictdiffer.utils.dot_lookup(temp, modified_diff[0][1]))
-                        # generated = dict(defaults=temp["nodelete"], **generated)
-                    else:
-                        print("  -- Ignored")
+                for removal in removals:
+                    # print("  ", removal)
+                    modified_diff = [(diff[0], diff[1], [removal])]
+                    # print(modified_diff)
+                    if removal[0] not in ["defaults", "extra_includes", "nodelete", "template_params", "force_no_trampoline", "ignore", "templates", "typealias", "inline_code", "base_qualnames", "force_type_casters", "force_no_default_constructor", "subpackage", "is_polymorphic", "template_inline_code", "ignored_bases", "doc", "rename", "constants", "strip_prefixes"]:
+                        original = dictdiffer.patch(modified_diff, original)
+                    # else:
+                    #     print("  --Ignoring removal")
+
             else:
                 print(action)
         # print(list(result))
+
+        if not original.get("defaults", {}).get("ignore", False):
+            print(additions)
+            print("Got additions")
+            original = dictdiffer.patch(additions, original)
         
         output_file = output_directory / f
         output_file.parent.mkdir(parents=True, exist_ok=True)
         with open(output_file, 'w') as f:
             yaml = YAML()
             yaml.default_flow_style = False
-            yaml.dump(generated, f)
+            yaml.dump(original, f)
         
     # for f in backup_files.intersection(generated_files):
     #     output_file = output_directory / f

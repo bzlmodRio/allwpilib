@@ -8,3 +8,7 @@ classes:
           type:
             default: frc::Debouncer::DebounceType::kRising
       Calculate:
+      SetDebounceTime:
+      GetDebounceTime:
+      SetDebounceType:
+      GetDebounceType:

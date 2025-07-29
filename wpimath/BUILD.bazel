@@ -484,4 +484,5 @@ create_yaml_files(
     ],
     pyproject_toml = "src/test/python/cpp/pyproject.toml",
     yaml_files = glob(["src/test/python/cpp/semiwrap/**"]),
+    yaml_output_directory = "src/test/python/cpp/semiwrap",
 )

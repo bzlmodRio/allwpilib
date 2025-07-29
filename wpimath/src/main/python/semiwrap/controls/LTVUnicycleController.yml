@@ -5,6 +5,9 @@ classes:
   frc::LTVUnicycleController:
     methods:
       LTVUnicycleController:
+        overloads:
+          units::second_t:
+          const wpi::array<double, 3>&, const wpi::array<double, 2>&, units::second_t:
       AtReference:
       SetTolerance:
       Calculate:

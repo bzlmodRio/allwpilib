@@ -16,3 +16,4 @@ classes:
       GetStopped:
       SetMaxPeriod:
       InitSendable:
+      SetEdgeConfiguration:

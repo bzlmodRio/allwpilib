@@ -12,6 +12,13 @@ classes:
           std::span<const LEDData>:
           std::initializer_list<LEDData>:
             ignore: true
+      GetChannel:
+      SetColorOrder:
+      SetStart:
+      GetStart:
+      SetGlobalData:
+    enums:
+      ColorOrder:
   frc::AddressableLED::LEDData:
     force_no_trampoline: true
     base_qualnames:

@@ -24,6 +24,7 @@ classes:
       Contains:
       Distance:
       operator==:
+      Nearest:
 
 inline_code: |-
   cls_Rectangle2d

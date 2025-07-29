@@ -11,6 +11,9 @@ classes:
       ModuleType:
     methods:
       PowerDistribution:
+        overloads:
+          int:
+          int, int, ModuleType:
       GetVoltage:
       GetTemperature:
       GetCurrent:

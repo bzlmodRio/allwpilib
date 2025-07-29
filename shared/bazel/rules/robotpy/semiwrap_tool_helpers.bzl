@@ -42,13 +42,13 @@ __create_yaml_files = rule(
     },
 )
 
-def create_yaml_files(name, **kwargs):
+def create_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", **kwargs):
     __create_yaml_files(name = name, **kwargs)
 
     write_source_files(
         name = "write_{}".format(name),
         files = {
-            "src/main/python/semiwrap": ":" + name,
+            yaml_output_directory: ":" + name,
         },
         suggested_update_target = "//:write_all",
         tags = ["robotpy", "noremote"],

@@ -25,6 +25,7 @@ classes:
       Contains:
       Distance:
       operator==:
+      Nearest:
 
 inline_code: |-
   cls_Ellipse2d

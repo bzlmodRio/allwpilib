@@ -5,6 +5,9 @@ classes:
       kTeamDeviceType:
     methods:
       CAN:
+        overloads:
+          int, int:
+          int, int, int, int:
       WritePacket:
       WritePacketNoError:
       WritePacketRepeating:

@@ -19,6 +19,9 @@ classes:
       GetRawAxis:
       GetPOV:
       POV:
+        overloads:
+          DriverStation::POVDirection, EventLoop* [const]:
+          int, DriverStation::POVDirection, EventLoop* [const]:
       POVUp:
       POVUpRight:
       POVRight:

@@ -9,6 +9,9 @@ classes:
       SetRawButton:
       SetRawAxis:
       SetPOV:
+        overloads:
+          int, DriverStation::POVDirection:
+          DriverStation::POVDirection:
       SetAxisCount:
       SetPOVCount:
       SetButtonCount:
