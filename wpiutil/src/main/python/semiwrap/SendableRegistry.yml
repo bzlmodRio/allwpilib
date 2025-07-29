@@ -51,3 +51,4 @@ classes:
       GetSendable:
       Publish:
       Update:
+      EnsureInitialized:
