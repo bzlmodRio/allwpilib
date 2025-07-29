@@ -1,10 +1,9 @@
-
-extra_includes:
-- src/nt_type_caster.h
-
 defaults:
   ignore: true
   report_ignored_missing: false
+
+extra_includes:
+- src/nt_type_caster.h
 
 classes:
   nt::Timestamped:

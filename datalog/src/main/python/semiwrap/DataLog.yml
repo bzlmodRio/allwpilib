@@ -1,7 +1,4 @@
----
-# defaults:
-#   ignore: true
-#   report_ignored_missing: false
+
 enums:
   ControlRecordType:
 classes:
@@ -13,8 +10,6 @@ classes:
       m_msglog:
         ignore: true
     methods:
-      DataLog:
-        ignore: true
       Flush:
       Pause:
       Resume:
@@ -63,6 +58,8 @@ classes:
           int, std::span<const std::string_view>, int64_t:
           int, std::span<const struct WPI_String>, int64_t:
             ignore: true
+      DataLog:
+        ignore: true
       StartFile:
       FlushBufs:
         ignore: true
@@ -75,11 +72,6 @@ classes:
     methods:
       SetMetadata:
       Finish:
-      DataLogEntry:
-        overloads:
-          "":
-            ignore: true
-          DataLog&, std::string_view, std::string_view, std::string_view, int64_t:
   wpi::log::DataLogValueEntryImpl:
     template_params:
     - T
@@ -94,7 +86,7 @@ classes:
       GetLastValue:
       DataLogValueEntryImpl:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, std::string_view, std::string_view, int64_t:
   wpi::log::RawLogEntry:
@@ -104,7 +96,7 @@ classes:
     methods:
       RawLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -118,7 +110,7 @@ classes:
     methods:
       BooleanLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -131,7 +123,7 @@ classes:
     methods:
       IntegerLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -144,7 +136,7 @@ classes:
     methods:
       FloatLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -157,7 +149,7 @@ classes:
     methods:
       DoubleLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -170,7 +162,7 @@ classes:
     methods:
       StringLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -184,7 +176,7 @@ classes:
     methods:
       BooleanArrayLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -216,7 +208,7 @@ classes:
     methods:
       IntegerArrayLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -237,7 +229,7 @@ classes:
     methods:
       FloatArrayLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -258,7 +250,7 @@ classes:
     methods:
       DoubleArrayLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -279,7 +271,7 @@ classes:
     methods:
       StringArrayLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
@@ -305,7 +297,7 @@ classes:
     methods:
       StructLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, I..., int64_t:
             param_override:
@@ -326,6 +318,9 @@ classes:
                 return std::make_shared<StructLogEntry<WPyStruct, WPyStructInfo>>(log, name, metadata, info, timestamp);
               }
       Append:
+      Update:
+      HasLastValue:
+      GetLastValue:
   wpi::log::StructArrayLogEntry:
     force_no_trampoline: true
     template_params:
@@ -334,7 +329,7 @@ classes:
     methods:
       StructArrayLogEntry:
         overloads:
-          "":
+          '':
             ignore: true
           DataLog&, std::string_view, I..., int64_t:
             param_override:
@@ -359,16 +354,22 @@ classes:
           U&&, int64_t:
             ignore: true
           std::span<const T>, int64_t:
+      Update:
+      HasLastValue:
+      GetLastValue:
   wpi::log::ProtobufLogEntry:
     force_no_trampoline: true
     ignore: true
     methods:
       ProtobufLogEntry:
         overloads:
-          "":
+          '':
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
       Append:
+      Update:
+      HasLastValue:
+      GetLastValue:
 
 templates:
   StructLogEntry:

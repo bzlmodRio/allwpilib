@@ -1,4 +1,3 @@
-
 extra_includes:
 - networktables/BooleanArrayTopic.h
 - networktables/BooleanTopic.h
@@ -174,6 +173,5 @@ classes:
           std::string_view, int, TableEventListener:
       AddSubTableListener:
       RemoveListener:
-
 inline_code: |
   #include <src/NetworkTable.cpp.inl>
