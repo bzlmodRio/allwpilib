@@ -5,7 +5,7 @@ classes:
   wpi::Sendable:
     methods:
       InitSendable:
-        virtual_xform: |
+        virtual_xform: |-
           [&](py::function fn) {
             auto builderHandle = py::cast(builder, py::return_value_policy::reference);
             fn(builderHandle);

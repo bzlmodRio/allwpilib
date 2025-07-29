@@ -182,7 +182,7 @@ classes:
       CreateInt:
       CreateLong:
 
-inline_code: |
+inline_code: |2
 
   cls_SimValue
     .def_property_readonly("value", [](const hal::SimValue &self) -> py::object {

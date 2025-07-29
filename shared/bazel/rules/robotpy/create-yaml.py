@@ -38,10 +38,6 @@ def merge_data(generated_directory, backup_directory, output_directory):
         for f in files:
             backup_files.add((pathlib.Path(root) / f).relative_to(backup_directory))
 
-    
-
-    print(generated_files)
-    print(backup_files)
     common_files = backup_files.intersection(generated_files)
     for f in common_files:
         # generated = YAML(typ='safe').load(generated_directory / f)
@@ -50,69 +46,54 @@ def merge_data(generated_directory, backup_directory, output_directory):
             generated = ruyaml.load(xxx, ruyaml.RoundTripLoader)
         with open(backup_directory / f, 'r') as xxx:
             original = ruyaml.load(xxx, ruyaml.RoundTripLoader)
-        print("\n\n")
-        print(f)
-        # print(generated)
-        # print(original)
         diffs = dictdiffer.diff(original, generated)
 
         additions = []
 
         for diff in diffs:
-            # print(diff)
             action = diff[0]
             if action == "change":
-                # print(diff)
-                # changes = [1]
-                print("CHANGES: ", diff) 
-                print(diff[0])
-                print(diff[1])
-                print(diff[2])
-                print(len(diff[2]))
-                print("------------------------")
                 assert 2 == len(diff[2])
                 if diff[2][1] == None:
                     continue
                 else:
-                    print("!!!!!!!!!!!!!!!")
+                    raise
             elif action == "add":
                 additions.append(diff)
             elif action == "remove":
                 removals = diff[2]
-                # print("REMOVALS: ")
-                
                 for removal in removals:
-                    # print("  ", removal)
                     modified_diff = [(diff[0], diff[1], [removal])]
-                    # print(modified_diff)
                     if removal[0] not in ["defaults", "extra_includes", "nodelete", "template_params", "force_no_trampoline", "ignore", "templates", "typealias", "inline_code", "base_qualnames", "force_type_casters", "force_no_default_constructor", "subpackage", "is_polymorphic", "template_inline_code", "ignored_bases", "doc", "rename", "constants", "strip_prefixes"]:
                         original = dictdiffer.patch(modified_diff, original)
-                    # else:
-                    #     print("  --Ignoring removal")
 
             else:
                 print(action)
-        # print(list(result))
+                raise
 
         if not original.get("defaults", {}).get("ignore", False):
-            print(additions)
-            print("Got additions")
-            original = dictdiffer.patch(additions, original)
+            for addition in additions:
+                original_contents = (dictdiffer.utils.dot_lookup(original, addition[1]))
+                if original_contents.get("ignore", False):
+                    continue
+                original = dictdiffer.patch(additions, original)
         
         output_file = output_directory / f
         output_file.parent.mkdir(parents=True, exist_ok=True)
+
         with open(output_file, 'w') as f:
             yaml = YAML()
             yaml.default_flow_style = False
             yaml.dump(original, f)
+            # print(ruyaml.dump(original, f, Dumper=ruyaml.RoundTripDumper, version=(1,2)), end='')
+
         
-    # for f in backup_files.intersection(generated_files):
-    #     output_file = output_directory / f
-    #     output_file.parent.mkdir(parents=True, exist_ok=True)
-    #     shutil.copy(generated_directory / f, output_file)
-# backup_directory
-    # for f in backup_files.difference(generated_files):
+        with open(output_file, 'r') as f:
+            contents = f.read()
         
+        contents = contents.replace(" Off:", ' "Off":')
+        with open(output_file, 'w') as f:
+            f.write(contents)
 
 def main():
     parser = argparse.ArgumentParser()
@@ -134,8 +115,6 @@ def main():
     hack_pkgconfig(args.pkgcfgs)
 
     os.chdir(args.directory)
-    for root, _, files in os.walk("."):
-        print(root, files)
     shutil.move("semiwrap", backup_dir)
 
     module = importlib.import_module("semiwrap.tool")
@@ -154,7 +133,6 @@ def main():
     print('after')
 
     merge_data(pathlib.Path("semiwrap"), backup_dir, args.output_dir)
-    # shutil.copytree("semiwrap", args.output_dir)
 
 
 if __name__ == "__main__":
