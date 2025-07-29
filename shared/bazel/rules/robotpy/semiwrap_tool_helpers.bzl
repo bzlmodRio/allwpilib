@@ -8,13 +8,14 @@ def __create_yaml_files_impl(ctx):
 
     args = ctx.actions.args()
     args.add("--output_dir=" + output_dir.path)
+    args.add("--backup_dir=" + ctx.attr.backup_dir)
     args.add("--directory=" + ctx.attr.directory)
     args.add("--pkgcfgs")
     for f in ctx.files.pkgcfgs:
         args.add(str(f.path))
 
     ctx.actions.run(
-        inputs = ctx.files.package_root_file + ctx.files.pyproject_toml + ctx.files.pkgcfgs + ctx.files.extra_hdrs,
+        inputs = ctx.files.package_root_file + ctx.files.pyproject_toml + ctx.files.pkgcfgs + ctx.files.extra_hdrs + ctx.files.yaml_files,
         outputs = [output_dir],
         executable = ctx.executable._tool,
         arguments = [args],
@@ -31,6 +32,8 @@ __create_yaml_files = rule(
         "pkgcfgs": attr.label_list(allow_files = True),
         "pyproject_toml": attr.label(mandatory = True, allow_files = True),
         "gen_dir": attr.string(default="_gen_create_yaml"),
+        "backup_dir": attr.string(default="_gen_create_yaml_original"),
+        "yaml_files": attr.label_list(allow_files=True),
         "_tool": attr.label(
             default = Label("//shared/bazel/rules/robotpy:create-yaml"),
             cfg = "exec",
