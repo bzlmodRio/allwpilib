@@ -6,8 +6,10 @@ import argparse
 import shutil
 import yaml
 import dictdiffer 
+import dictdiffer.utils
 from typing import List
 from ruyaml import YAML
+import ruyaml
 
 
 def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
@@ -42,8 +44,12 @@ def merge_data(generated_directory, backup_directory, output_directory):
     print(backup_files)
     common_files = backup_files.intersection(generated_files)
     for f in common_files:
-        generated = YAML(typ='safe').load(generated_directory / f)
-        original = YAML(typ='safe').load(backup_directory / f)
+        # generated = YAML(typ='safe').load(generated_directory / f)
+        # original = YAML(typ='safe').load(backup_directory / f)
+        with open(generated_directory / f, 'r') as xxx:
+            generated = ruyaml.load(xxx, ruyaml.RoundTripLoader)
+        with open(backup_directory / f, 'r') as xxx:
+            original = ruyaml.load(xxx, ruyaml.RoundTripLoader)
         print("\n\n")
         print(f)
         # print(generated)
@@ -53,14 +59,36 @@ def merge_data(generated_directory, backup_directory, output_directory):
             action = diff[0]
             if action == "change":
                 changes = diff[2][1]
-                print("CHANGES: ", changes)
+                print("CHANGES: ", changes) 
                 # if 'no_release_gil' in diff[2][0]:
                 generated = dictdiffer.patch([diff], generated)
                 # print(diff[2])
             elif action == "add":
                 additions = diff[2]
                 print("ADDITIONS: ", additions)
-                generated = dictdiffer.patch([diff], generated)
+                
+                for addition in additions:
+                    print("  ", addition)
+                    modified_diff = [(diff[0], diff[1], [addition])]
+                    if addition[0] == "defaults":
+                        temp = dictdiffer.patch(modified_diff, generated)
+                        generated = dict(defaults=temp["defaults"], **generated)
+                    elif addition[0] == "extra_includes":
+                        temp = dictdiffer.patch(modified_diff, generated)
+                        old = dict(generated)
+                        defaults = old.pop("defaults", {})
+                        generated = dict(defaults=defaults, extra_includes=temp["extra_includes"], **old)
+                        if defaults == {}:
+                            del generated["defaults"]
+                    elif addition[0] in ["nodelete"]:
+                        generated = dictdiffer.patch(modified_diff, generated)
+                        # print(addition)
+                        # temp = dictdiffer.patch(modified_diff, generated)
+                        # print(modified_diff)
+                        # print(dictdiffer.utils.dot_lookup(temp, modified_diff[0][1]))
+                        # generated = dict(defaults=temp["nodelete"], **generated)
+                    else:
+                        print("  -- Ignored")
             else:
                 print(action)
         # print(list(result))
@@ -68,7 +96,9 @@ def merge_data(generated_directory, backup_directory, output_directory):
         output_file = output_directory / f
         output_file.parent.mkdir(parents=True, exist_ok=True)
         with open(output_file, 'w') as f:
-            YAML().dump(generated, f)
+            yaml = YAML()
+            yaml.default_flow_style = False
+            yaml.dump(generated, f)
         
     # for f in backup_files.intersection(generated_files):
     #     output_file = output_directory / f
