@@ -351,6 +351,7 @@ create_yaml_files(
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
     ],
     pyproject_toml = "src/main/python/pyproject.toml",
+    yaml_files = glob(["src/main/python/semiwrap/**"]),
 )
 
 scan_headers(

@@ -80,7 +80,17 @@ def merge_data(generated_directory, backup_directory, output_directory):
                         generated = dict(defaults=defaults, extra_includes=temp["extra_includes"], **old)
                         if defaults == {}:
                             del generated["defaults"]
-                    elif addition[0] in ["nodelete"]:
+                    elif addition[0] == "strip_prefixes":
+                        temp = dictdiffer.patch(modified_diff, generated)
+                        old = dict(generated)
+                        defaults = old.pop("defaults", {})
+                        extra_includes = old.pop("extra_includes", {})
+                        generated = dict(defaults=defaults, extra_includes=extra_includes, strip_prefixes=temp["strip_prefixes"], **old)
+                        if defaults == {}:
+                            del generated["defaults"]
+                        if extra_includes == {}:
+                            del generated["extra_includes"]
+                    elif addition[0] in ["nodelete", "inline_code", "template_params", "base_qualnames", "templates", "force_type_casters", "typealias"]:
                         generated = dictdiffer.patch(modified_diff, generated)
                         # print(addition)
                         # temp = dictdiffer.patch(modified_diff, generated)

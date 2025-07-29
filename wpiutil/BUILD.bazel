@@ -446,7 +446,7 @@ create_yaml_files(
     package_root_file = "src/main/python/wpiutil/__init__.py",
     pkgcfgs = ["//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc"],
     pyproject_toml = "src/main/python/pyproject.toml",
-    yaml_files = glob(["src/main/python/semiwrap/**"])
+    yaml_files = glob(["src/main/python/semiwrap/**"]),
 )
 
 scan_headers(
