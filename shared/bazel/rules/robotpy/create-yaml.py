@@ -4,12 +4,10 @@ import sys
 import pathlib
 import argparse
 import shutil
-import yaml
 import dictdiffer 
 import dictdiffer.utils
 from typing import List
-from ruyaml import YAML
-import ruyaml
+from ruamel.yaml import YAML
 
 
 def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
@@ -38,14 +36,20 @@ def merge_data(generated_directory, backup_directory, output_directory):
         for f in files:
             backup_files.add((pathlib.Path(root) / f).relative_to(backup_directory))
 
+    yaml_ = YAML()
+    yaml_.default_flow_style = False
+    yaml_.preserve_quotes = True
+
+
+
     common_files = backup_files.intersection(generated_files)
     for f in common_files:
-        # generated = YAML(typ='safe').load(generated_directory / f)
-        # original = YAML(typ='safe').load(backup_directory / f)
-        with open(generated_directory / f, 'r') as xxx:
-            generated = ruyaml.load(xxx, ruyaml.RoundTripLoader)
-        with open(backup_directory / f, 'r') as xxx:
-            original = ruyaml.load(xxx, ruyaml.RoundTripLoader)
+        generated = yaml_.load(generated_directory / f)
+        original = yaml_.load(backup_directory / f)
+        # with open(generated_directory / f, 'r') as xxx:
+        #     generated = yaml_.load(xxx)
+        # with open(backup_directory / f, 'r') as xxx:
+        #     original = yaml_.load(xxx)
         diffs = dictdiffer.diff(original, generated)
 
         additions = []
@@ -82,9 +86,7 @@ def merge_data(generated_directory, backup_directory, output_directory):
         output_file.parent.mkdir(parents=True, exist_ok=True)
 
         with open(output_file, 'w') as f:
-            yaml = YAML()
-            yaml.default_flow_style = False
-            yaml.dump(original, f)
+            yaml_.dump(original, f)
             # print(ruyaml.dump(original, f, Dumper=ruyaml.RoundTripDumper, version=(1,2)), end='')
 
         

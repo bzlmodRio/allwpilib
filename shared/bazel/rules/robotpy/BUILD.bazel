@@ -14,7 +14,7 @@ py_binary(
     deps = [
         requirement("semiwrap"),
         requirement("dictdiffer"),
-        requirement("ruyaml"),
+        requirement("ruamel.yaml"),
     ],
 )
 
