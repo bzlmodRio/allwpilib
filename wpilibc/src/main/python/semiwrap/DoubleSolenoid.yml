@@ -1,4 +1,3 @@
----
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 
@@ -11,8 +10,8 @@ classes:
     methods:
       DoubleSolenoid:
         overloads:
-          int, int, PneumaticsModuleType, int, int:
           int, PneumaticsModuleType, int, int:
+          PneumaticsModuleType, int, int:
       Set:
       Get:
       Toggle:

@@ -1,11 +1,10 @@
----
 
 classes:
   frc::internal::DriverStationModeThread:
     rename: _DriverStationModeThread
     methods:
       DriverStationModeThread:
-      InDisabled:
       InAutonomous:
+      InDisabled:
       InTeleop:
       InTest:

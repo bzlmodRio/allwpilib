@@ -1,4 +1,3 @@
----
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 
@@ -15,6 +14,9 @@ classes:
       m_defaultChoice:
       m_selected:
       m_haveSelected:
+      m_instancePubs:
+      m_activePubs:
+      m_activeEntries:
       m_mutex:
         ignore: true
       m_instance:

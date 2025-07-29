@@ -1,4 +1,3 @@
----
 defaults:
   subpackage: trajectory
 
@@ -23,3 +22,4 @@ classes:
         - [CubicHermiteSpline]
         - [QuinticHermiteSpline]
       SetErrorHandler:
+

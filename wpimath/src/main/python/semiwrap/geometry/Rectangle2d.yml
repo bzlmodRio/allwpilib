@@ -1,4 +1,4 @@
----
+
 extra_includes:
 - rpy/geometryToString.h
 - wpystruct.h
@@ -24,8 +24,9 @@ classes:
       Intersects:
       Contains:
       Distance:
-      Nearest:
+      FindNearestPoint:
       operator==:
+
 inline_code: |-
   cls_Rectangle2d
     .def_static("fromFeet", [](const Pose2d& center, units::foot_t xWidth, units::foot_t yWidth) {

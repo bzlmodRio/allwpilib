@@ -1,4 +1,3 @@
----
 
 classes:
   nt::StructSubscriber:
@@ -8,7 +7,7 @@ classes:
     methods:
       StructSubscriber:
         overloads:
-          "":
+          '':
             ignore: true
           NT_Subscriber, T, I...:
             ignore: true
@@ -17,7 +16,7 @@ classes:
           '[const]':
           const T& [const]:
       GetInto:
-            ignore: true
+        ignore: true
       GetAtomic:
         overloads:
           '[const]':
@@ -43,7 +42,7 @@ classes:
     methods:
       StructPublisher:
         overloads:
-          "":
+          '':
             ignore: true
           NT_Publisher, I...:
             ignore: true
@@ -72,12 +71,12 @@ classes:
     methods:
       StructEntry:
         overloads:
-          "":
+          '':
             ignore: true
           NT_Entry, T, const I&...:
             ignore: true
       GetHandle:
-            ignore: true
+        ignore: true
       GetTopic:
       Unpublish:
     inline_code: |
@@ -99,7 +98,7 @@ classes:
     methods:
       StructTopic:
         overloads:
-          "":
+          '':
             ignore: true
           NT_Topic, I...:
             ignore: true

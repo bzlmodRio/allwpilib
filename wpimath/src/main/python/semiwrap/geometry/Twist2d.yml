@@ -1,4 +1,3 @@
----
 extra_includes:
 - wpystruct.h
 
@@ -11,6 +10,7 @@ classes:
       dtheta:
     methods:
       operator==:
+      operator!=:
       operator*:
 
 inline_code: |

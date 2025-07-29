@@ -1,4 +1,3 @@
----
 
 classes:
   nt::NetworkTableListener:
@@ -7,7 +6,7 @@ classes:
     methods:
       NetworkTableListener:
         overloads:
-          "":
+          '':
       CreateListener:
         overloads:
           NetworkTableInstance, std::span<const std::string_view>, unsigned int, ListenerCallback:
@@ -36,7 +35,7 @@ classes:
     methods:
       NetworkTableListenerPoller:
         overloads:
-          "":
+          '':
           NetworkTableInstance:
       GetHandle:
       AddListener:

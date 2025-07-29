@@ -1,4 +1,3 @@
----
 defaults:
   subpackage: interfaces
 
@@ -21,8 +20,8 @@ classes:
       GetPOV:
       POV:
         overloads:
-          DriverStation::POVDirection, EventLoop* [const]:
-          int, DriverStation::POVDirection, EventLoop* [const]:
+          int, EventLoop* [const]:
+          int, int, EventLoop* [const]:
       POVUp:
       POVUpRight:
       POVRight:

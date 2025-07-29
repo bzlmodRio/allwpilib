@@ -1,17 +1,17 @@
----
 
 classes:
   frc::LEDPattern:
+    attributes:
+      kOff:
     enums:
       GradientType:
     methods:
+      "Off":
       LEDPattern:
       ApplyTo:
         overloads:
-          LEDReader, std::function<void (int, frc::Color)> [const]:
-          std::span<frc::AddressableLED::LEDData>, std::function<void (int, frc::Color)> [const]:
+          std::span<frc::AddressableLED::LEDData>, LEDWriterFn [const]:
           std::span<frc::AddressableLED::LEDData> [const]:
-      MapIndex:
       Reversed:
       OffsetBy:
       ScrollAtRelativeSpeed:
@@ -26,7 +26,6 @@ classes:
       Blend:
       Mask:
       AtBrightness:
-      'Off':
       Solid:
       ProgressMaskLayer:
       Steps:

@@ -1,4 +1,3 @@
----
 extra_includes:
 - frc/DutyCycle.h
 
@@ -11,6 +10,7 @@ classes:
         overloads:
           const DutyCycle&:
       CreateForChannel:
+      CreateForIndex:
       RegisterInitializedCallback:
       GetInitialized:
       SetInitialized:

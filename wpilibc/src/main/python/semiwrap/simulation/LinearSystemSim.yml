@@ -1,5 +1,3 @@
----
-
 classes:
   frc::sim::LinearSystemSim:
     typealias:
@@ -13,8 +11,8 @@ classes:
     attributes:
       m_plant:
       m_x:
-      m_u:
       m_y:
+      m_u:
       m_measurementStdDevs:
     methods:
       LinearSystemSim:
@@ -35,6 +33,7 @@ classes:
           '[const]':
           int [const]:
       SetState:
+      GetCurrentDraw:
       UpdateX:
       ClampInput:
 

@@ -1,4 +1,3 @@
----
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 
@@ -16,4 +15,6 @@ classes:
       GetAcceleration:
       SetSensitivity:
       SetZero:
+      PIDGet:
+        rename: pidGet
       InitSendable:

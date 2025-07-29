@@ -6,13 +6,14 @@ strip_prefixes:
 functions:
   HAL_CAN_SendMessage:
   HAL_CAN_ReceiveMessage:
-  HAL_CAN_GetCANStatus:
   HAL_CAN_OpenStreamSession:
   HAL_CAN_CloseStreamSession:
   HAL_CAN_ReadStreamSession:
     ignore: true # TODO: an array of messages
+  HAL_CAN_GetCANStatus:
 classes:
   HAL_CANStreamMessage:
     attributes:
       messageId:
+      timeStamp:
       message:

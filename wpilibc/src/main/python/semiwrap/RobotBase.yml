@@ -1,4 +1,3 @@
----
 extra_includes:
 - frc/DriverStation.h
 - rpy/ControlWord.h
@@ -7,28 +6,35 @@ functions:
   # TODO
   RunHALInitialization:
     ignore: true
-  ResetMotorSafety:
-    ignore: true
   RunRobot:
     ignore: true
   StartRobot:
     ignore: true
+  ResetMotorSafety:
+    ignore: true
 classes:
   frc::RobotBase:
     attributes:
+      m_ds:
+        rename: ds
+        access: readonly
       m_threadId:
         ignore: true
       connListenerHandle:
         ignore: true
+      m_dashboardDetected:
     methods:
       IsEnabled:
       IsDisabled:
       IsAutonomous:
       IsAutonomousEnabled:
+      IsOperatorControl:
       IsTeleop:
+      IsOperatorControlEnabled:
       IsTeleopEnabled:
       IsTest:
       IsTestEnabled:
+      IsNewDataAvailable:
       GetThreadId:
         ignore: true
       StartCompetition:

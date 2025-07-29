@@ -1,10 +1,10 @@
----
 
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 - frc/Compressor.h
 - frc/Solenoid.h
 - frc/DoubleSolenoid.h
+
 
 classes:
   frc::PneumaticsBase:
@@ -33,6 +33,5 @@ classes:
       MakeSolenoid:
       MakeDoubleSolenoid:
       MakeCompressor:
-      ReportUsage:
       GetForType:
       GetDefaultForType:

@@ -1,4 +1,3 @@
----
 defaults:
   subpackage: controller
 
@@ -23,7 +22,7 @@ classes:
       Reset:
         overloads:
           const StateVector&:
-          "":
+          '':
       Calculate:
         overloads:
           const StateVector&:

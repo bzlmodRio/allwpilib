@@ -1,4 +1,3 @@
----
 extra_includes:
 - frc/PWM.h
 - frc/motorcontrol/PWMMotorController.h
@@ -11,6 +10,7 @@ classes:
       PWMSim:
         overloads:
           const PWM&:
+          const PWMMotorController&:
           int:
       RegisterInitializedCallback:
       GetInitialized:
@@ -18,7 +18,19 @@ classes:
       RegisterPulseMicrosecondCallback:
       GetPulseMicrosecond:
       SetPulseMicrosecond:
-      RegisterOutputPeriodCallback:
-      GetOutputPeriod:
-      SetOutputPeriod:
+      RegisterRawValueCallback:
+      GetRawValue:
+      SetRawValue:
+      RegisterSpeedCallback:
+      GetSpeed:
+      SetSpeed:
+      RegisterPositionCallback:
+      GetPosition:
+      SetPosition:
+      RegisterPeriodScaleCallback:
+      GetPeriodScale:
+      SetPeriodScale:
+      RegisterZeroLatchCallback:
+      GetZeroLatch:
+      SetZeroLatch:
       ResetData:

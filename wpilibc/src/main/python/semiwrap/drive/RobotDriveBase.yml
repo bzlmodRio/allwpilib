@@ -1,4 +1,3 @@
----
 extra_includes:
 - frc/motorcontrol/MotorController.h
 - wpi/SmallString.h
@@ -6,10 +5,10 @@ extra_includes:
 classes:
   frc::RobotDriveBase:
     attributes:
-      kDefaultDeadband:
-      kDefaultMaxOutput:
       m_deadband:
       m_maxOutput:
+      kDefaultDeadband:
+      kDefaultMaxOutput:
     enums:
       MotorType:
     methods:
@@ -19,4 +18,5 @@ classes:
       FeedWatchdog:
       StopMotor:
       GetDescription:
+      ApplyDeadband:
       Desaturate:

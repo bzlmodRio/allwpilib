@@ -1,4 +1,3 @@
----
 defaults:
   subpackage: trajectory
 
@@ -17,16 +16,17 @@ classes:
     methods:
       Trajectory:
         overloads:
-          "":
+          '':
           const std::vector<State>&:
       TotalTime:
       States:
       Sample:
       TransformBy:
       RelativeTo:
-      operator+:
       InitialPose:
+      operator+:
       operator==:
+      operator!=:
   frc::Trajectory::State:
     force_no_default_constructor: true
     attributes:
@@ -37,6 +37,7 @@ classes:
       curvature:
     methods:
       operator==:
+      operator!=:
       Interpolate:
 
 inline_code: |

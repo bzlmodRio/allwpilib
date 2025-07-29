@@ -1,5 +1,3 @@
----
-
 classes:
   frc::sim::GenericHIDSim:
     methods:
@@ -12,8 +10,8 @@ classes:
       SetRawAxis:
       SetPOV:
         overloads:
-          int, DriverStation::POVDirection:
-          DriverStation::POVDirection:
+          int, int:
+          int:
       SetAxisCount:
       SetPOVCount:
       SetButtonCount:

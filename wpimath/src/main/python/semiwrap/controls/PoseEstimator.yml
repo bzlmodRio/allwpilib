@@ -1,4 +1,3 @@
----
 defaults:
   subpackage: estimator
 
@@ -8,6 +7,7 @@ extra_includes:
 - frc/kinematics/MecanumDriveWheelPositions.h
 - frc/kinematics/MecanumDriveWheelSpeeds.h
 - frc/kinematics/SwerveDriveKinematics.h
+
 
 classes:
   frc::PoseEstimator:

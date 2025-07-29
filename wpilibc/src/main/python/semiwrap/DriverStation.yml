@@ -1,4 +1,4 @@
----
+
 extra_includes:
 - rpy/ControlWord.h
 - wpi/datalog/DataLog.h
@@ -12,7 +12,6 @@ classes:
       MatchType:
       POVDirection:
     methods:
-      GetAngle:
       GetStickButton:
       GetStickButtonPressed:
       GetStickButtonReleased:
@@ -22,7 +21,7 @@ classes:
       GetStickAxisCount:
       GetStickPOVCount:
       GetStickButtonCount:
-      GetJoystickIsGamepad:
+      GetJoystickIsXbox:
       GetJoystickType:
       GetJoystickName:
       GetJoystickAxisType:

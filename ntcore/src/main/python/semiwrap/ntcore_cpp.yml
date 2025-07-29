@@ -1,4 +1,4 @@
----
+
 defaults:
   ignore: true
   report_ignored_missing: false
@@ -7,6 +7,8 @@ extra_includes:
 - pybind11/stl.h
 - networktables/Topic.h
 
+attributes:
+  kDefaultPubSubOptions:
 functions:
   RemoveListener:
     internal: true
@@ -47,15 +49,17 @@ classes:
       kTimeSync:
   nt::TopicInfo:
     attributes:
-      topic:
-        ignore: true
       name:
-      type:
-        ignore: true
       type_str:
       properties:
+      topic:
+        ignore: true
+      type:
+        ignore: true
     methods:
       GetProperties:
+      swap:
+        ignore: true
     inline_code: |
       .def_property_readonly("topic", [](const TopicInfo &self) {
         return std::make_shared<nt::Topic>(self.topic);
@@ -74,6 +78,9 @@ classes:
       remote_port:
       last_update:
       protocol_version:
+    methods:
+      swap:
+        ignore: true
     inline_code: |
       .def("__repr__", [](const ConnectionInfo &self) -> py::str {
         return py::str("<ConnectionInfo id={} addr={}:{} last_update={} protocol={}>")
@@ -90,7 +97,7 @@ classes:
     methods:
       ValueEventData:
         overloads:
-          "":
+          '':
             ignore: true
           NT_Topic, NT_Handle, Value:
             ignore: true
@@ -112,7 +119,7 @@ classes:
     methods:
       LogMessage:
         overloads:
-          "":
+          '':
             ignore: true
           unsigned int, std::string_view, unsigned int, std::string_view:
             ignore: true
@@ -124,7 +131,7 @@ classes:
     methods:
       TimeSyncEventData:
         overloads:
-          "":
+          '':
             ignore: true
           int64_t, int64_t, bool:
   nt::Event:
@@ -136,7 +143,7 @@ classes:
     methods:
       Event:
         overloads:
-          "":
+          '':
             ignore: true
           NT_Listener, unsigned int, ConnectionInfo:
             ignore: true
@@ -158,31 +165,31 @@ classes:
         overloads:
           '[const]':
             ignore: true
-          "":
+          '':
             ignore: true
       GetTopicInfo:
         overloads:
           '[const]':
             ignore: true
-          "":
+          '':
             ignore: true
       GetValueEventData:
         overloads:
           '[const]':
             ignore: true
-          "":
+          '':
             ignore: true
       GetLogMessage:
         overloads:
           '[const]':
             ignore: true
-          "":
+          '':
             ignore: true
       GetTimeSyncEventData:
         overloads:
           '[const]':
             ignore: true
-          "":
+          '':
             ignore: true
     inline_code: |
       .def_property_readonly("data", [](nt::Event *self){

@@ -1,4 +1,3 @@
----
 extra_includes:
 - frc/AddressableLED.h
 
@@ -9,19 +8,22 @@ classes:
     methods:
       AddressableLEDSim:
         overloads:
-          int:
+          '':
           const AddressableLED&:
+      CreateForChannel:
+      CreateForIndex:
       RegisterInitializedCallback:
       GetInitialized:
       SetInitialized:
-      RegisterStartCallback:
-      GetStart:
-      SetStart:
+      RegisterOutputPortCallback:
+      GetOutputPort:
+      SetOutputPort:
       RegisterLengthCallback:
       GetLength:
       SetLength:
+      RegisterRunningCallback:
+      GetRunning:
+      SetRunning:
+      RegisterDataCallback:
       GetData:
       SetData:
-      RegisterDataCallback:
-      GetGlobalData:
-      SetGlobalData:

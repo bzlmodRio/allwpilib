@@ -1,4 +1,4 @@
----
+
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 
@@ -29,6 +29,3 @@ classes:
             ignore: true
       PWMMotorController:
       InitSendable:
-      SetSpeed:
-      GetSpeed:
-      SetBounds:

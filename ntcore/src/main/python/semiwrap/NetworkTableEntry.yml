@@ -1,4 +1,3 @@
----
 extra_includes:
 - networktables/NetworkTableInstance.h
 - networktables/Topic.h
@@ -15,7 +14,7 @@ classes:
     methods:
       NetworkTableEntry:
         overloads:
-          "":
+          '':
             ignore: true
           NT_Entry:
             ignore: true
@@ -25,6 +24,7 @@ classes:
       Exists:
       GetName:
       GetType:
+      GetFlags:
       GetLastChange:
       GetValue:
       GetBoolean:
@@ -89,12 +89,16 @@ classes:
       SetFloatArray:
       SetDoubleArray:
       SetStringArray:
+      SetFlags:
+      ClearFlags:
       SetPersistent:
       ClearPersistent:
       IsPersistent:
       Unpublish:
+      Delete:
       GetTopic:
       operator==:
+      operator!=:
     inline_code: |
       .def("__repr__", [](NetworkTableEntry self) {
         return py::str("<NetworkTableEntry {!r}>").format(self.GetName());

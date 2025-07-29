@@ -1,4 +1,3 @@
----
 defaults:
   subpackage: controller
 
@@ -9,8 +8,13 @@ classes:
     - meters_per_second_squared
     methods:
       ElevatorFeedforward:
+        overloads:
+          '':
+          units::volt_t, units::volt_t, units::unit_t<kv_unit>, units::unit_t<ka_unit>:
       Calculate:
         overloads:
+          units::unit_t<Velocity>, units::unit_t<Acceleration>:
+            ignore: true
           units::unit_t<Velocity>, units::unit_t<Acceleration> [const]:
             ignore: true
           units::unit_t<Velocity>, units::unit_t<Velocity>, units::second_t [const]:
@@ -21,10 +25,6 @@ classes:
       MinAchievableVelocity:
       MaxAchievableAcceleration:
       MinAchievableAcceleration:
-      SetKs:
-      SetKg:
-      SetKv:
-      SetKa:
       GetKs:
       GetKg:
       GetKv:

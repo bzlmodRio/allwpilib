@@ -1,4 +1,3 @@
----
 
 classes:
   frc::SwerveDriveOdometry:
@@ -7,6 +6,9 @@ classes:
     - size_t NumModules
     methods:
       SwerveDriveOdometry:
+      ResetPosition:
+      GetPose:
+      Update:
 templates:
   SwerveDrive2Odometry:
     qualname: frc::SwerveDriveOdometry

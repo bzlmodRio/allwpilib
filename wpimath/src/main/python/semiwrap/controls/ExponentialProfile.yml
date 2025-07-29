@@ -1,4 +1,3 @@
----
 defaults:
   subpackage: trajectory
 
@@ -19,12 +18,6 @@ classes:
       CalculateProfileTiming:
         overloads:
           const State&, const State& [const]:
-  frc::ExponentialProfile::ProfileTiming:
-    attributes:
-      inflectionTime:
-      totalTime:
-    methods:
-      IsFinished:
   frc::ExponentialProfile::Constraints:
     attributes:
       maxInput:
@@ -55,6 +48,13 @@ classes:
       operator==:
     inline_code: |
       .def(py::init<Distance_t, Velocity_t>())
+  frc::ExponentialProfile::ProfileTiming:
+    attributes:
+      inflectionTime:
+      totalTime:
+    methods:
+      IsFinished:
+
 templates:
   ExponentialProfileMeterVolts:
     qualname: frc::ExponentialProfile
