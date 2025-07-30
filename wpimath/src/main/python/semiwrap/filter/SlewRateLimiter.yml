@@ -1,3 +1,4 @@
+
 classes:
   frc::SlewRateLimiter:
     template_params:
@@ -10,6 +11,7 @@ classes:
         overloads:
           Rate_t, Rate_t, Unit_t:
           Rate_t:
+          Rate_t, Unit_t:
       Calculate:
       LastValue:
       Reset:

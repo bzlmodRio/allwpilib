@@ -22,4 +22,19 @@ classes:
       RegisterVoltageCallback:
       GetVoltage:
       SetVoltage:
+      RegisterAccumulatorInitializedCallback:
+      GetAccumulatorInitialized:
+      SetAccumulatorInitialized:
+      RegisterAccumulatorValueCallback:
+      GetAccumulatorValue:
+      SetAccumulatorValue:
+      RegisterAccumulatorCountCallback:
+      GetAccumulatorCount:
+      SetAccumulatorCount:
+      RegisterAccumulatorCenterCallback:
+      GetAccumulatorCenter:
+      SetAccumulatorCenter:
+      RegisterAccumulatorDeadbandCallback:
+      GetAccumulatorDeadband:
+      SetAccumulatorDeadband:
       ResetData:

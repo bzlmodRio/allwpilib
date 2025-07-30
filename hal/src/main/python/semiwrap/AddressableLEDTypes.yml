@@ -1,3 +1,5 @@
+---
+
 strip_prefixes:
 - HAL_
 
@@ -7,7 +9,5 @@ classes:
       b:
       g:
       r:
-enums:
-  HAL_AddressableLEDColorOrder:
-functions:
-  format_as:
+      padding:
+        ignore: true

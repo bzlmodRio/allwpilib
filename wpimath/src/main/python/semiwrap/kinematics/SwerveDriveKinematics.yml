@@ -1,3 +1,4 @@
+
 classes:
   frc::SwerveDriveKinematics:
     force_type_casters:
@@ -8,6 +9,8 @@ classes:
       SwerveDriveKinematics:
         overloads:
           ModuleTranslations&&...:
+            ignore: true
+          Translation2d, Wheels&&...:
             ignore: true
           const wpi::array<Translation2d, NumModules>&:
             ignore: true

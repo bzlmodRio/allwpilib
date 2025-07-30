@@ -18,4 +18,5 @@ classes:
       FeedWatchdog:
       StopMotor:
       GetDescription:
+      ApplyDeadband:
       Desaturate:

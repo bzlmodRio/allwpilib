@@ -22,8 +22,6 @@ classes:
       operator*:
       operator/:
       operator==:
-      ToRobotRelative:
-      ToFieldRelative:
 
 inline_code: |
   cls_ChassisSpeeds

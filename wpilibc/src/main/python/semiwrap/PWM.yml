@@ -7,17 +7,25 @@ classes:
   frc::PWM:
     ignored_bases:
     - wpi::SendableHelper<PWM>
+    enums:
+      PeriodMultiplier:
     methods:
       PWM:
       SetPulseTime:
       GetPulseTime:
+      SetPosition:
+      GetPosition:
+      SetSpeed:
+      GetSpeed:
       SetDisabled:
+      SetPeriodMultiplier:
+      SetZeroLatch:
+      EnableDeadbandElimination:
+      SetBounds:
+      GetBounds:
+      SetAlwaysHighMode:
       GetChannel:
       InitSendable:
-      SetOutputPeriod:
-      SetSimDevice:
-    enums:
-      OutputPeriod:
 
 inline_code: |
   cls_PWM

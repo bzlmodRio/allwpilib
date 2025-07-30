@@ -27,6 +27,10 @@ classes:
       heading.
     template_params:
     - size_t NumModules
+    attributes:
+      States:
+      Inputs:
+      Outputs:
     methods:
       SwerveDrivePoseEstimator:
         overloads:
@@ -35,6 +39,15 @@ classes:
             NumModules>&, const Pose2d&, const wpi::array<double, 3>&, const wpi::array<double,
             3>&
           :
+      ResetPosition:
+      GetEstimatedPosition:
+      SetVisionMeasurementStdDevs:
+      AddVisionMeasurement:
+        overloads:
+          const Pose2d&, units::second_t:
+          const Pose2d&, units::second_t, const wpi::array<double, 3>&:
+      Update:
+      UpdateWithTime:
 
 templates:
   SwerveDrive2PoseEstimator:

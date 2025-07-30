@@ -29,6 +29,7 @@ classes:
       operator*:
       operator/:
       operator==:
+      operator!=:
       operator+:
 
 inline_code: |

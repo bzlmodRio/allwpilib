@@ -1,8 +1,11 @@
+
 extra_includes:
 - wpystruct.h
 
 classes:
   frc::DifferentialDriveKinematics:
+    attributes:
+      trackWidth:
     methods:
       DifferentialDriveKinematics:
       ToChassisSpeeds:
@@ -12,8 +15,6 @@ classes:
           const units::meter_t, const units::meter_t [const]:
           const DifferentialDriveWheelPositions&, const DifferentialDriveWheelPositions& [const]:
       Interpolate:
-    attributes:
-      trackwidth:
 
 inline_code: |
   SetupWPyStruct<frc::DifferentialDriveKinematics>(cls_DifferentialDriveKinematics);

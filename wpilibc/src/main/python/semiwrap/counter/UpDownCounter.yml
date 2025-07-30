@@ -1,3 +1,4 @@
+
 classes:
   frc::UpDownCounter:
     ignored_bases:
@@ -8,6 +9,8 @@ classes:
           DigitalSource&, DigitalSource&:
           std::shared_ptr<DigitalSource>, std::shared_ptr<DigitalSource>:
       GetCount:
+      SetReverseDirection:
       Reset:
+      SetUpEdgeConfiguration:
+      SetDownEdgeConfiguration:
       InitSendable:
-      SetEdgeConfiguration:

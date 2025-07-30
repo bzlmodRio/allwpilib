@@ -1,3 +1,5 @@
+---
+
 strip_prefixes:
 - HAL_
 
@@ -6,7 +8,6 @@ enums:
     value_prefix: HAL_CAN_Dev
   HAL_CANManufacturer:
     value_prefix: HAL_CAN_Man
-  HAL_CANFlags:
 classes:
   HAL_CANMessage:
     attributes:

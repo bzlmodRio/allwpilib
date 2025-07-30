@@ -30,10 +30,6 @@ classes:
       GetKg:
       GetKv:
       GetKa:
-      SetKs:
-      SetKg:
-      SetKv:
-      SetKa:
 
 extra_includes:
 - wpystruct.h

@@ -1,6 +1,10 @@
+---
+
 strip_prefixes:
 - HAL_
 
+attributes:
+  InvalidHandleIndex:
 enums:
   HAL_HandleEnum:
 functions:
@@ -9,6 +13,11 @@ functions:
   isHandleType:
   isHandleCorrectVersion:
   getHandleTypedIndex:
+  getPortHandleChannel:
+  getPortHandleModule:
+  getPortHandleSPIEnable:
+  createPortHandle:
+  createPortHandleForSPI:
   createHandle:
 classes:
   hal::HandleBase:

@@ -33,6 +33,7 @@ classes:
           '[const]':
           int [const]:
       SetState:
+      GetCurrentDraw:
       UpdateX:
       ClampInput:
 

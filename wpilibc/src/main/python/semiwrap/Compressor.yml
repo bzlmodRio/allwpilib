@@ -1,3 +1,4 @@
+
 extra_includes:
 - wpi/sendable/SendableBuilder.h
 - frc/Compressor.h
@@ -12,7 +13,10 @@ classes:
       Compressor:
         overloads:
           int, PneumaticsModuleType:
-          int, int, PneumaticsModuleType:
+          PneumaticsModuleType:
+      Start:
+      Stop:
+      Enabled:
       IsEnabled:
       GetPressureSwitchValue:
       GetCurrent:

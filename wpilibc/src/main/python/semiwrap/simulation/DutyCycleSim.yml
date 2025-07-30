@@ -10,6 +10,7 @@ classes:
         overloads:
           const DutyCycle&:
       CreateForChannel:
+      CreateForIndex:
       RegisterInitializedCallback:
       GetInitialized:
       SetInitialized:

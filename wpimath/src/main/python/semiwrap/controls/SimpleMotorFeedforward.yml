@@ -25,6 +25,8 @@ classes:
           units::volt_t, units::unit_t<kv_unit>, units::unit_t<ka_unit>:
       Calculate:
         overloads:
+          units::unit_t<Velocity>, units::unit_t<Acceleration> [const]:
+            ignore: true
           units::unit_t<Velocity> [const]:
           units::unit_t<Velocity>, units::unit_t<Velocity> [const]:
       MaxAchievableVelocity:
@@ -35,9 +37,6 @@ classes:
       GetKv:
       GetKa:
       GetDt:
-      SetKs:
-      SetKv:
-      SetKa:
 
 templates:
   # Unfortunately this is broken because calculate requires an SI unit

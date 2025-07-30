@@ -1,3 +1,4 @@
+
 extra_includes:
 - pybind11_typing.h
 
@@ -90,6 +91,8 @@ classes:
           '':
             ignore: true
           void*, const private_init&:
+            ignore: true
+          AprilTagDetector::Results&&:
             ignore: true
     inline_code: |
       // use the keepalive to keep the array of results around until

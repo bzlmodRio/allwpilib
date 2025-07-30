@@ -13,6 +13,7 @@ classes:
       rz:
     methods:
       operator==:
+      operator!=:
       operator*:
 
 inline_code: |-

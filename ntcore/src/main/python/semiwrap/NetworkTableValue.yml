@@ -1,3 +1,4 @@
+
 extra_includes:
 - networktables/NetworkTableType.h
 - src/py2value.h
@@ -170,6 +171,7 @@ classes:
           std::initializer_list<std::string>, int64_t:
             ignore: true
           std::vector<std::string>&&, int64_t:
+      operator==:
     inline_code: |-
       .def_static("makeValue", [](py::handle value) {
           return pyntcore::py2ntvalue(value);

@@ -10,6 +10,7 @@ classes:
       rearLeft:
       rearRight:
     methods:
+      Normalize:
       Desaturate:
       operator+:
       operator-:

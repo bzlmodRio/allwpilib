@@ -15,4 +15,6 @@ classes:
       GetAcceleration:
       SetSensitivity:
       SetZero:
+      PIDGet:
+        rename: pidGet
       InitSendable:

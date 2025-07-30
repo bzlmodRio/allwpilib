@@ -1,5 +1,7 @@
 classes:
   frc::IterativeRobotBase:
+    attributes:
+      m_period:
     methods:
       RobotInit:
       DriverStationConnected:
@@ -27,6 +29,8 @@ classes:
       TeleopExit:
       TestExit:
       SetNetworkTablesFlushEnabled:
+      EnableLiveWindowInTest:
+      IsLiveWindowEnabledInTest:
       GetPeriod:
       PrintWatchdogEpochs:
     doc: |

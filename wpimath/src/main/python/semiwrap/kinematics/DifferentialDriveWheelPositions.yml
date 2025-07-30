@@ -1,3 +1,4 @@
+
 classes:
   frc::DifferentialDriveWheelPositions:
     attributes:
@@ -5,4 +6,5 @@ classes:
       right:
     methods:
       operator==:
+      operator!=:
       Interpolate:

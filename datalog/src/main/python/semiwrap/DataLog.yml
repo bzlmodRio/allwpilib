@@ -1,3 +1,4 @@
+---
 # defaults:
 #   ignore: true
 #   report_ignored_missing: false
@@ -74,6 +75,11 @@ classes:
     methods:
       SetMetadata:
       Finish:
+      DataLogEntry:
+        overloads:
+          "":
+            ignore: true
+          DataLog&, std::string_view, std::string_view, std::string_view, int64_t:
   wpi::log::DataLogValueEntryImpl:
     template_params:
     - T
@@ -320,9 +326,6 @@ classes:
                 return std::make_shared<StructLogEntry<WPyStruct, WPyStructInfo>>(log, name, metadata, info, timestamp);
               }
       Append:
-      Update:
-      HasLastValue:
-      GetLastValue:
   wpi::log::StructArrayLogEntry:
     force_no_trampoline: true
     template_params:
@@ -356,9 +359,6 @@ classes:
           U&&, int64_t:
             ignore: true
           std::span<const T>, int64_t:
-      Update:
-      HasLastValue:
-      GetLastValue:
   wpi::log::ProtobufLogEntry:
     force_no_trampoline: true
     ignore: true
@@ -369,9 +369,6 @@ classes:
           DataLog&, std::string_view, int64_t:
           DataLog&, std::string_view, std::string_view, int64_t:
       Append:
-      Update:
-      HasLastValue:
-      GetLastValue:
 
 templates:
   StructLogEntry:

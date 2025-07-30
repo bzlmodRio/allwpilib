@@ -2,9 +2,12 @@ classes:
   frc::RobotState:
     nodelete: true
     methods:
+      RobotState:
+        ignore: true
       IsDisabled:
       IsEnabled:
       IsEStopped:
+      IsOperatorControl:
       IsTeleop:
       IsAutonomous:
       IsTest:

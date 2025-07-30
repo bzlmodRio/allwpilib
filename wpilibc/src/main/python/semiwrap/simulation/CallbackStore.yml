@@ -24,3 +24,7 @@ classes:
           int32_t, int32_t, int32_t, ConstBufferCallback, CancelCallbackChannelFunc:
             ignore: true
       SetUid:
+      CallbackStoreThunk:
+        ignore: true
+      ConstBufferCallbackStoreThunk:
+        ignore: true

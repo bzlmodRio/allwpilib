@@ -28,6 +28,7 @@ classes:
       operator+:
       operator-:
       operator==:
+      operator!=:
       Translation:
       X:
       Y:

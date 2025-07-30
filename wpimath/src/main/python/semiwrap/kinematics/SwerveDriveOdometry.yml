@@ -1,3 +1,4 @@
+
 classes:
   frc::SwerveDriveOdometry:
     force_no_trampoline: true
@@ -5,6 +6,9 @@ classes:
     - size_t NumModules
     methods:
       SwerveDriveOdometry:
+      ResetPosition:
+      GetPose:
+      Update:
 templates:
   SwerveDrive2Odometry:
     qualname: frc::SwerveDriveOdometry

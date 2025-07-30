@@ -7,5 +7,9 @@ classes:
     - std::function
     methods:
       AnalogEncoderSim:
+      SetPosition:
+      SetTurns:
+      GetTurns:
+      GetPosition:
       Set:
       Get:
