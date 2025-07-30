@@ -8,23 +8,15 @@ classes:
     ignored_bases:
     - wpi::SendableHelper<PWM>
     enums:
-      PeriodMultiplier:
+      OutputPeriod:
     methods:
       PWM:
       SetPulseTime:
       GetPulseTime:
-      SetPosition:
-      GetPosition:
-      SetSpeed:
-      GetSpeed:
       SetDisabled:
-      SetPeriodMultiplier:
-      SetZeroLatch:
-      EnableDeadbandElimination:
-      SetBounds:
-      GetBounds:
-      SetAlwaysHighMode:
+      SetOutputPeriod:
       GetChannel:
+      SetSimDevice:
       InitSendable:
 
 inline_code: |

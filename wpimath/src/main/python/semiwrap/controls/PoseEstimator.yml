@@ -8,7 +8,6 @@ extra_includes:
 - frc/kinematics/MecanumDriveWheelSpeeds.h
 - frc/kinematics/SwerveDriveKinematics.h
 
-
 classes:
   frc::PoseEstimator:
     template_params:

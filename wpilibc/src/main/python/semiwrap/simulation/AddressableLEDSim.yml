@@ -8,22 +8,19 @@ classes:
     methods:
       AddressableLEDSim:
         overloads:
-          '':
+          int:
           const AddressableLED&:
-      CreateForChannel:
-      CreateForIndex:
       RegisterInitializedCallback:
       GetInitialized:
       SetInitialized:
-      RegisterOutputPortCallback:
-      GetOutputPort:
-      SetOutputPort:
+      RegisterStartCallback:
+      GetStart:
+      SetStart:
       RegisterLengthCallback:
       GetLength:
       SetLength:
-      RegisterRunningCallback:
-      GetRunning:
-      SetRunning:
-      RegisterDataCallback:
       GetData:
       SetData:
+      RegisterDataCallback:
+      GetGlobalData:
+      SetGlobalData:

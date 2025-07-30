@@ -20,15 +20,14 @@ classes:
           '':
           Translation3d, Rotation3d:
           units::meter_t, units::meter_t, units::meter_t, Rotation3d:
-          const Pose2d&:
-            keepalive: []
           const Eigen::Matrix4d&:
             rename: fromMatrix
+            keepalive: []
+          const Pose2d&:
             keepalive: []
       operator+:
       operator-:
       operator==:
-      operator!=:
       Translation:
       X:
       Y:
@@ -37,9 +36,9 @@ classes:
       operator*:
       operator/:
       RotateBy:
-      RotateAround:
       TransformBy:
       RelativeTo:
+      RotateAround:
       Exp:
       Log:
       ToMatrix:

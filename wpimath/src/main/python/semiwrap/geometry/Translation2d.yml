@@ -25,24 +25,19 @@ classes:
       Angle:
       RotateBy:
       RotateAround:
+      operator+:
+      operator-:
+        overloads:
+          const Translation2d& [const]:
+          '[const]':
+      operator*:
+      operator/:
+      operator==:
       Nearest:
         overloads:
           std::span<const Translation2d> [const]:
           std::initializer_list<Translation2d> [const]:
             ignore: true
-      operator+:
-      operator+=:
-      operator-:
-        overloads:
-          const Translation2d& [const]:
-          '[const]':
-      operator-=:
-      operator*:
-      operator*=:
-      operator/:
-      operator==:
-      operator!=:
-      operator/=:
 
 inline_code: |
   cls_Translation2d

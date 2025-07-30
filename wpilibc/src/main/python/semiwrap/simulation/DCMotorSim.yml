@@ -1,4 +1,3 @@
-
 classes:
   frc::sim::DCMotorSim:
     typealias:
@@ -11,13 +10,15 @@ classes:
               plant:
                 x_type: frc::LinearSystem<2,1,2>
       SetState:
+      SetAngle:
+      SetAngularVelocity:
       GetAngularPosition:
       GetAngularVelocity:
-      GetCurrentDraw:
-      SetInputVoltage:
       GetAngularAcceleration:
       GetTorque:
+      GetCurrentDraw:
       GetInputVoltage:
+      SetInputVoltage:
       GetGearbox:
       GetGearing:
       GetJ:

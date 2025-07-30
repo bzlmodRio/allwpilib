@@ -39,7 +39,7 @@ classes:
       SetJoystickAxisCount:
       SetJoystickPOVCount:
       SetJoystickButtonCount:
-      SetJoystickIsXbox:
+      SetJoystickIsGamepad:
       SetJoystickType:
       SetJoystickName:
       SetJoystickAxisType:

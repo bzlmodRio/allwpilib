@@ -1,4 +1,3 @@
-
 extra_includes:
 - frc/XboxController.h
 
@@ -18,17 +17,17 @@ classes:
       SetRightY:
       SetLeftTriggerAxis:
       SetRightTriggerAxis:
-      SetLeftBumper:
-        ignore: true
-      SetRightBumper:
-        ignore: true
-      SetLeftStickButton:
-      SetRightStickButton:
       SetAButton:
       SetBButton:
       SetXButton:
       SetYButton:
-      SetBackButton:
-      SetStartButton:
       SetLeftBumperButton:
       SetRightBumperButton:
+      SetBackButton:
+      SetStartButton:
+      SetLeftStickButton:
+      SetRightStickButton:
+      SetLeftBumper:
+        ignore: true
+      SetRightBumper:
+        ignore: true

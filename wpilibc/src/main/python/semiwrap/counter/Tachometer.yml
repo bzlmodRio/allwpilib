@@ -1,13 +1,10 @@
-
 classes:
   frc::Tachometer:
     ignored_bases:
     - wpi::SendableHelper<Tachometer>
     methods:
       Tachometer:
-        overloads:
-          DigitalSource&:
-          std::shared_ptr<DigitalSource>:
+      SetEdgeConfiguration:
       GetFrequency:
       GetPeriod:
       GetEdgesPerRevolution:
@@ -15,8 +12,5 @@ classes:
       GetRevolutionsPerSecond:
       GetRevolutionsPerMinute:
       GetStopped:
-      GetSamplesToAverage:
-      SetSamplesToAverage:
       SetMaxPeriod:
-      SetUpdateWhenEmpty:
       InitSendable:

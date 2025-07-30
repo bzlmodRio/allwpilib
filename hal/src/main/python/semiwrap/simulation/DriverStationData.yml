@@ -1,5 +1,3 @@
----
-
 strip_prefixes:
 - HALSIM_
 
@@ -83,7 +81,7 @@ functions:
   HALSIM_SetJoystickPOVCount:
   HALSIM_SetJoystickButtonCount:
   HALSIM_GetJoystickCounts:
-  HALSIM_SetJoystickIsXbox:
+  HALSIM_SetJoystickIsGamepad:
   HALSIM_SetJoystickType:
   HALSIM_SetJoystickName:
     cpp_code: |

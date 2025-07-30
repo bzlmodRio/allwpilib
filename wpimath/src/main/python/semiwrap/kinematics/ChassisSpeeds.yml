@@ -11,9 +11,8 @@ classes:
     methods:
       ToTwist2d:
       Discretize:
-        overloads:
-          units::meters_per_second_t, units::meters_per_second_t, units::radians_per_second_t, units::second_t:
-          const ChassisSpeeds&, units::second_t:
+      ToRobotRelative:
+      ToFieldRelative:
       operator+:
       operator-:
         overloads:

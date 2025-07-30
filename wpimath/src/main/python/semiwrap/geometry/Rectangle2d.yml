@@ -1,4 +1,3 @@
-
 extra_includes:
 - rpy/geometryToString.h
 - wpystruct.h
@@ -24,7 +23,7 @@ classes:
       Intersects:
       Contains:
       Distance:
-      FindNearestPoint:
+      Nearest:
       operator==:
 
 inline_code: |-

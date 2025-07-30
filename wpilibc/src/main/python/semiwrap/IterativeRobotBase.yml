@@ -1,38 +1,30 @@
 classes:
   frc::IterativeRobotBase:
-    attributes:
-      m_period:
     methods:
       RobotInit:
       DriverStationConnected:
+      SimulationInit:
+        internal: true
       DisabledInit:
       AutonomousInit:
       TeleopInit:
       TestInit:
       RobotPeriodic:
+      SimulationPeriodic:
+        internal: true
       DisabledPeriodic:
       AutonomousPeriodic:
       TeleopPeriodic:
       TestPeriodic:
-      IterativeRobotBase:
-        overloads:
-          double:
-            ignore: true
-          units::second_t:
-      LoopFunc:
-      SimulationInit:
-        internal: true
-      SimulationPeriodic:
-        internal: true
       DisabledExit:
       AutonomousExit:
       TeleopExit:
       TestExit:
       SetNetworkTablesFlushEnabled:
-      EnableLiveWindowInTest:
-      IsLiveWindowEnabledInTest:
       GetPeriod:
       PrintWatchdogEpochs:
+      IterativeRobotBase:
+      LoopFunc:
     doc: |
       IterativeRobotBase implements a specific type of robot program framework,
       extending the RobotBase class.
