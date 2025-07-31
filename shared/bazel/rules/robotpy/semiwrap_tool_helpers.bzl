@@ -51,7 +51,7 @@ def create_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", 
             yaml_output_directory: ":" + name,
         },
         suggested_update_target = "//:write_all",
-        tags = ["robotpy", "noremote"],
+        tags = ["robotpy", "noremote", "manual"],
         visibility = ["//visibility:public"],
         diff_test = False,  # These are often hand tweaked
     )
@@ -74,6 +74,7 @@ def scan_headers(name, directory, pyproject_toml, package_root_file, extra_hdrs,
         data = extra_hdrs + pkgcfgs + [pyproject_toml, package_root_file],
         main = "shared/bazel/rules/robotpy/scan-headers.py",
         size = "small",
+        tags = ["manual"]
     )
 
 def create_imports(name, library, output_file, base, compiled = None):
