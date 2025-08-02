@@ -1,13 +1,23 @@
+load("@bzlmodrio-opencv//libraries/cpp/opencv:libraries.bzl", "opencv_shared_libraries")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_shared_and_static_library")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+load("@rules_java//java:defs.bzl", "java_binary")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
 
 wpilib_shared_and_static_library(
     name = "cameraserver",
     srcs = glob(["src/main/native/cpp/**"]),
     hdrs = glob(["src/main/native/include/**/*"]),
+    dynamic_deps = [
+        "//cscore:shared/cscore",
+        "//ntcore:shared/ntcore",
+        "//wpiutil:shared/wpiutil",
+    ] + opencv_shared_libraries,
     includes = [
         "cpp",
         "src/main/native/include",
@@ -29,6 +39,7 @@ filegroup(
     srcs = glob(["src/main/native/include/**/*"]),
     visibility = ["//visibility:public"],
 )
+
 
 java_library(
     name = "cameraserver-java",

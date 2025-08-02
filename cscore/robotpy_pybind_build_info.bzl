@@ -7,21 +7,21 @@ load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
 
 def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     CSCORE_HEADER_GEN = [
-        # struct(
-        #     class_name = "CameraServer",
-        #     yml_file = "semiwrap/CameraServer.yml",
-        #     header_root = "cscore/src/main/python/../../../../cameraserver/src/main/native/include",
-        #     header_file = "cscore/src/main/python/../../../../cameraserver/src/main/native/include/cameraserver/CameraServer.h",
-        #     tmpl_class_names = [],
-        #     trampolines = [
-        #         ("frc::CameraServer", "frc__CameraServer.hpp"),
-        #     ],
-        # ),
+        struct(
+            class_name = "CameraServer",
+            yml_file = "semiwrap/CameraServer.yml",
+            header_root = "$(execpath :cscore.copy_headers)",
+            header_file = "$(execpath :cscore.copy_headers)/cameraserver/CameraServer.h",
+            tmpl_class_names = [],
+            trampolines = [
+                ("frc::CameraServer", "frc__CameraServer.hpp"),
+            ],
+        ),
         struct(
             class_name = "cscore_cpp",
             yml_file = "semiwrap/cscore_cpp.yml",
-            header_root = "cscore/src/main/python/../native/include",
-            header_file = "cscore/src/main/python/../native/include/cscore_cpp.h",
+            header_root = "$(execpath :cscore.copy_headers)",
+            header_file = "$(execpath :cscore.copy_headers)/cscore_cpp.h",
             tmpl_class_names = [],
             trampolines = [
                 ("cs::UsbCameraInfo", "cs__UsbCameraInfo.hpp"),
@@ -32,8 +32,8 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "cscore_oo",
             yml_file = "semiwrap/cscore_oo.yml",
-            header_root = "cscore/src/main/python/../native/include",
-            header_file = "cscore/src/main/python/../native/include/cscore_oo.h",
+            header_root = "$(execpath :cscore.copy_headers)",
+            header_file = "$(execpath :cscore.copy_headers)/cscore_oo.h",
             tmpl_class_names = [],
             trampolines = [
                 ("cs::VideoProperty", "cs__VideoProperty.hpp"),
@@ -53,8 +53,8 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "cscore_cv",
             yml_file = "semiwrap/cscore_cv.yml",
-            header_root = "cscore/src/main/python/../native/include",
-            header_file = "cscore/src/main/python/../native/include/cscore_cv.h",
+            header_root = "$(execpath :cscore.copy_headers)",
+            header_file = "$(execpath :cscore.copy_headers)/cscore_cv.h",
             tmpl_class_names = [],
             trampolines = [
                 ("cs::CvSource", "cs__CvSource.hpp"),
@@ -64,8 +64,8 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "cscore_runloop",
             yml_file = "semiwrap/cscore_runloop.yml",
-            header_root = "cscore/src/main/python/../native/include",
-            header_file = "cscore/src/main/python/../native/include/cscore_runloop.h",
+            header_root = "$(execpath :cscore.copy_headers)",
+            header_file = "$(execpath :cscore.copy_headers)/cscore_runloop.h",
             tmpl_class_names = [],
             trampolines = [],
         ),
@@ -109,6 +109,7 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         trampoline_subpath = "src/main/python/cscore",
         deps = header_to_dat_deps,
         local_native_libraries = [
+            ":cscore.copy_headers",
         ],
     )
 
@@ -121,6 +122,7 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         deps = [
             ":cscore.tmpl_hdrs",
             ":cscore.trampoline_hdrs",
+            "//cameraserver:cameraserver",
             "//cscore:cscore",
             "//cscore:cscore-casters",
             "//ntcore:ntcore",
@@ -131,7 +133,7 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             "//wpiutil:wpiutil_pybind_library",
         ],
         dynamic_deps = [
-            "//cscore:shared/cscore",
+            # "//cscore:shared/cscore",
             "//ntcore:shared/ntcore",
             "//wpinet:shared/wpinet",
             "//wpiutil:shared/wpiutil",

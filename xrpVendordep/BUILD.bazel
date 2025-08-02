@@ -12,11 +12,12 @@ wpilib_shared_and_static_library(
     ]),
     hdrs = glob(["src/main/native/include/**"]),
     dynamic_deps = [
-        "//hal:shared/wpiHal",
         "//ntcore:shared/ntcore",
         "//wpilibc:shared/wpilibc",
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
+        "//wpimath:shared/wpimath",
+        "//hal:shared/wpiHal",
     ],
     static_deps = [
         "//ntcore:static/ntcore",

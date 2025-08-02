@@ -14,6 +14,7 @@ load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_libra
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
 
 generate_ntcore(
     name = "generate_ntcore",

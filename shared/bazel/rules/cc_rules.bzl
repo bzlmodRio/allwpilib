@@ -400,7 +400,8 @@ def wpilib_cc_shared_library(
     _split_debug_symbols(
         name = name + "-symbolsplit",
         copy = select({
-            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64": False,
+            "@rules_bzlmodrio_toolchains//conditions:linux_arm64": False,
+            "@rules_bzlmodrio_toolchains//conditions:linux_x86_64": True,
             "//conditions:default": True,
         }),
         use_debug_name = select({
@@ -628,7 +629,7 @@ def wpilib_cc_static_library(
         static_lib_name = select({
             "//shared/bazel/rules:compilation_mode_dbg": folder + "/lib" + lib + "d.a",
             "//shared/bazel/rules:compilation_mode_windows_dbg": folder + "/" + lib + ".lib",
-            "@bazel_tools//src/conditions:windows": folder + "/" + lib + ".lib",
+            "@platforms//os:windows": folder + "/" + lib + ".lib",
             "//conditions:default": folder + "/lib" + lib + ".a",
         })
 
