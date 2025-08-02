@@ -22,7 +22,7 @@ wpilib_halsim_extension(
         "//hal:static/wpiHal",
         "//wpinet:static/wpinet",
         "//wpiutil:static/wpiutil",
-        "//simulation/halsim_ws_core:static/halsim_ws_core",
+        # "//simulation/halsim_ws_core:static/halsim_ws_core",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -58,15 +58,4 @@ cc_binary(
     deps = [
         ":halsim_ws_server",
     ],
-)
-
-bundle_library_artifacts(
-    name = "publishing_bundle",
-    add_cc_suffix = False,
-    cc_hdr_pkg = ":halsim_ws_server-hdrs-zip",
-    cc_shared_library_pkg = ":shared/halsim_ws_server-shared-zip",
-    cc_src_pkg = ":halsim_ws_server-srcs-zip",
-    cc_static_library_pkg = ":static/halsim_ws_server-static-zip",
-    group_id = "edu.wpi.first.halsim",
-    library_base_name = "halsim_ws_server",
 )

@@ -6,15 +6,13 @@ load("@rules_python//python:defs.bzl", "py_binary")
 load("//ntcore:generate_ntcore.bzl", "generate_ntcore")
 load("//ntcore:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//ntcore:robotpy_pybind_build_info.bzl", "define_pybind_library", "ntcore_extension")
-load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_shared_and_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
-load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
-load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
-load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
 
 generate_ntcore(
     name = "generate_ntcore",
@@ -81,29 +79,19 @@ cc_library(
     visibility = ["//visibility:public"],
 )
 
-wpilib_shared_and_static_library(
+wpilib_cc_library(
     name = "ntcore",
     srcs = glob(
         ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
     ),
     hdrs = glob(["src/main/native/include/**/*"]),
-    dynamic_deps = [
-        "//datalog:shared/datalog",
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
-    ],
     extra_src_pkg_files = [
         ":ntcore-java-jni-hdrs-pkg",
     ],
     includes = [
         "src/main/native/cpp",
         "src/main/native/include",
-    ],
-    static_deps = [
-        "//datalog:static/datalog",
-        "//wpinet:static/wpinet",
-        "//wpiutil:static/wpiutil",
     ],
     strip_include_prefix = "src/main/native/include",
     third_party_libraries = [
@@ -117,18 +105,52 @@ wpilib_shared_and_static_library(
     ],
 )
 
+wpilib_cc_shared_library(
+    name = "shared/ntcore",
+    dynamic_deps = [
+        "//datalog:shared/datalog",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ntcore",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/ntcore",
+    static_deps = [
+        "//datalog:static/datalog",
+        "//wpinet:static/wpinet",
+        "//wpiutil:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ntcore",
+    ],
+)
+
 wpilib_jni_cc_library(
     name = "ntcorejni",
     srcs = glob(["src/main/native/cpp/jni/**"]) + [":generated_jni"],
-    dynamic_deps = [
-        ":shared/ntcore",
-        "//wpiutil:shared/wpiutil",
-    ],
     java_dep = ":ntcore-java",
     visibility = ["//visibility:public"],
     deps = [
         ":ntcore",
     ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/ntcorejni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        ":shared/ntcore",
+        "//wpiutil:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":ntcorejni"],
 )
 
 wpilib_jni_java_library(
@@ -144,8 +166,6 @@ wpilib_jni_java_library(
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
-
-zip_java_srcs(name = "ntcore")
 
 cc_test(
     name = "ntcore-cpp-test",
@@ -194,10 +214,10 @@ java_binary(
     ],
 )
 
-bundle_default_jni_library(
-    name = "publishing_bundle",
-    group_id = "edu.wpi.first.ntcore",
-    library_base_name = "ntcore",
+package_default_jni_project(
+    name = "ntcore",
+    maven_artifact_name = "ntcore-cpp",
+    maven_group_id = "edu.wpi.first.ntcore",
 )
 
 generate_robotpy_native_wrapper_build_info(

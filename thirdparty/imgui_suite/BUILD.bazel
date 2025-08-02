@@ -4,7 +4,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_zip")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
-load("//shared/bazel/rules/publishing:publishing.bzl", "generate_maven_info_cmd")
+load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
 
 cc_library(
     name = "gl3w",
@@ -428,11 +428,9 @@ pkg_zip(
         "implot-hdrs-pkg",
         "stb-hdrs-pkg",
         "//:license_pkg_files",
-        "//:third_party_notices_pkg_files",
     ],
     tags = [
         "manual",
-        "no-remote",
     ],
 )
 
@@ -482,16 +480,14 @@ pkg_zip(
         "implot-srcs-pkg",
         "stb-srcs-pkg",
         "//:license_pkg_files",
-        "//:third_party_notices_pkg_files",
     ],
     tags = [
         "manual",
-        "no-remote",
     ],
 )
 
-# package_minimal_cc_project(
-#     name = "imguiSuite",
-#     maven_artifact_name = "imguiSuite-cpp",
-#     maven_group_id = "edu.wpi.first.thirdparty.imguiSuite",
-# )
+package_minimal_cc_project(
+    name = "imguiSuite",
+    maven_artifact_name = "imguiSuite-cpp",
+    maven_group_id = "edu.wpi.first.thirdparty.imguiSuite",
+)

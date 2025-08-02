@@ -1,15 +1,13 @@
+load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
 load("@bzlmodrio-opencv//libraries/cpp/opencv:libraries.bzl", "opencv_shared_libraries")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_shared_and_static_library")
+load("//cscore:robotpy_pybind_build_info.bzl", "cscore_extension", "define_pybind_library", "publish_library_casters")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
-load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
-load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
-load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
-load("//cscore:robotpy_pybind_build_info.bzl", "define_pybind_library", "cscore_extension", "publish_library_casters")
+load("//shared/bazel/rules:packaging.bzl", "package_minimal_jni_project")
 
 WIN_SRCS = glob([
     "src/main/native/windows/**/*.cpp",
@@ -63,6 +61,32 @@ wpilib_objc_library(
     ],
 )
 
+wpilib_cc_library(
+    name = "cscore",
+    srcs = [":native-srcs"] + glob(
+        ["src/main/native/cpp/**"],
+        exclude = ["src/main/native/cpp/jni/**"],
+    ),
+    hdrs = glob(["src/main/native/include/**/*"]),
+    extra_src_pkg_files = [
+        ":cscore-java-jni-hdrs-pkg",
+    ],
+    includes = [
+        "src/main/native/cpp",
+        "src/main/native/include",
+    ],
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpinet",
+        "//wpiutil",
+        "@bzlmodrio-opencv//libraries/cpp/opencv",
+    ] + select({
+        "@platforms//os:osx": [":cscore-mac"],
+        "//conditions:default": [],
+    }),
+)
+
 sdk_framework_flags = [
     "-framework",
     "Metal",
@@ -86,115 +110,41 @@ sdk_framework_flags = [
     "QuartzCore",
 ]
 
-wpilib_shared_and_static_library(
-    name = "cscore",
-    srcs = [":native-srcs"] + glob(
-        ["src/main/native/cpp/**"],
-        exclude = ["src/main/native/cpp/jni/**"],
-    ),
-    hdrs = glob(["src/main/native/include/**/*"]),
+wpilib_cc_shared_library(
+    name = "shared/cscore",
+    additional_linker_inputs = select({
+        "@platforms//os:osx": [":cscore-mac"],
+        "//conditions:default": [],
+    }),
     dynamic_deps = [
         "//wpinet:shared/wpinet",
         "//wpiutil:shared/wpiutil",
-    ],
-    extra_src_pkg_files = [
-        ":cscore-java-jni-hdrs-pkg",
-    ],
-    includes = [
-        "src/main/native/cpp",
-        "src/main/native/include",
-    ],
-    # Bazel does not pull transative objc libraries in for cc_shared_libraries, so you must add these functions to get them to link properly
-    #
-    # https://github.com/bazelbuild/bazel/issues/21893
-    shared_library_additional_linker_inputs = select({
-        "@bazel_tools//src/conditions:darwin": [":cscore-mac"],
-        "//conditions:default": [],
-    }),
-    shared_library_exports_filter = [
-        "@bzlmodrio-opencv//:__subpackages__ ",
-    ],
-    shared_library_user_link_flags = select({
-        "@bazel_tools//src/conditions:darwin": [
+    ] + opencv_shared_libraries,
+    user_link_flags = select({
+        "@platforms//os:osx": [
             "-Wl,-force_load,$(location :cscore-mac)",
-            "-framework",
-            "Metal",
-            "-framework",
-            "MetalKit",
-            "-framework",
-            "Cocoa",
-            "-framework",
-            "IOKit",
-            "-framework",
-            "CoreFoundation",
-            "-framework",
-            "AVFoundation",
-            "-framework",
-            "Foundation",
-            "-framework",
-            "CoreMedia",
-            "-framework",
-            "CoreVideo",
-            "-framework",
-            "QuartzCore",
-        ],
+        ] + sdk_framework_flags,
         "//conditions:default": [],
     }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cscore",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/cscore",
     static_deps = [
         "//wpinet:static/wpinet",
         "//wpiutil:static/wpiutil",
     ],
-    strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
-    deps = [
-        "//wpinet",
-        "//wpiutil",
-        "@bzlmodrio-opencv//libraries/cpp/opencv",
-    ] + select({
-        "@platforms//os:osx": [":cscore-mac"],
-        "//conditions:default": [],
-    }),
+    deps = [":cscore"],
 )
-
-# wpilib_cc_shared_library(
-#     name = "shared/cscore",
-#     additional_linker_inputs = select({
-#         "@platforms//os:osx": [":cscore-mac"],
-#         "//conditions:default": [],
-#     }),
-#     dynamic_deps = [
-#         "//wpinet:shared/wpinet",
-#         "//wpiutil:shared/wpiutil",
-#     ] + opencv_shared_libraries,
-#     user_link_flags = select({
-#         "@platforms//os:osx": [
-#             "-Wl,-force_load,$(location :cscore-mac)",
-#         ] + sdk_framework_flags,
-#         "//conditions:default": [],
-#     }),
-#     visibility = ["//visibility:public"],
-#     deps = [
-#         ":cscore",
-#     ],
-# )
-
-# wpilib_cc_static_library(
-#     name = "static/cscore",
-#     static_deps = [
-#         "//wpinet:static/wpinet",
-#         "//wpiutil:static/wpiutil",
-#     ],
-#     visibility = ["//visibility:public"],
-#     deps = [":cscore"],
-# )
 
 wpilib_jni_cc_library(
     name = "cscorejni",
     srcs = glob(["src/main/native/cpp/jni/**"]),
-    dynamic_deps = [
-        ":shared/cscore",
-        "//wpiutil:shared/wpiutil",
-    ],
     java_dep = ":cscore-java",
     visibility = ["//visibility:public"],
     deps = [
@@ -202,16 +152,16 @@ wpilib_jni_cc_library(
     ],
 )
 
-# wpilib_cc_shared_library(
-#     name = "shared/cscorejni",
-#     dynamic_deps = [
-#         ":shared/cscore",
-#         "//wpiutil:shared/wpiutil",
-#     ],
-#     use_debug_name = False,
-#     visibility = ["//visibility:public"],
-#     deps = [":cscorejni"],
-# )
+wpilib_cc_shared_library(
+    name = "shared/cscorejni",
+    dynamic_deps = [
+        ":shared/cscore",
+        "//wpiutil:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":cscorejni"],
+)
 
 wpilib_cc_shared_library(
     name = "shared/cscorejnicvstatic",
@@ -262,8 +212,6 @@ wpilib_jni_java_library(
         "@bzlmodrio-opencv//libraries/java/opencv",
     ],
 )
-
-zip_java_srcs(name = "cscore")
 
 cc_test(
     name = "cscore-cpp-test",
@@ -324,34 +272,39 @@ java_binary(
     "usbviewer",
 ]]
 
-bundle_default_jni_library(
-    name = "publishing_bundle",
-    group_id = "edu.wpi.first.cscore",
-    library_base_name = "cscore",
+package_minimal_jni_project(
+    name = "cscore",
+    maven_artifact_name = "cscore-cpp",
+    maven_group_id = "edu.wpi.first.cscore",
 )
 
+alias(
+    name = "cscorejnicvstatic-hdrs-zip",
+    actual = "cscore-hdrs-zip",
+)
+
+alias(
+    name = "cscorejnicvstatic-srcs-zip",
+    actual = "cscore-srcs-zip",
+)
 
 filegroup(
     name = "headers",
     srcs = glob(["src/main/native/include/**/*"]),
 )
 
-
-load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
-
 copy_to_directory(
     name = "cscore.copy_headers",
     srcs = glob(["src/main/native/include/**"]) + ["//cameraserver:headers"],
     out = "src/main/python/lib/include",
-    root_paths = ["src/main/native/include/"],
     replace_prefixes = {
-        "cscore/src/main/native/include": "",
         "cameraserver/src/main/native/include": "",
+        "cscore/src/main/native/include": "",
     },
+    root_paths = ["src/main/native/include/"],
     verbose = True,
     visibility = ["//visibility:public"],
 )
-
 
 # generate_robotpy_pybind_build_info(
 #     name = "robotpy-cscore-generator",

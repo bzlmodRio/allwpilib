@@ -1,6 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_python//python:defs.bzl", "py_binary", "py_test")
+load("@rules_python//python:defs.bzl", "py_test")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 def __create_yaml_files_impl(ctx):
@@ -74,7 +74,7 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
     )
 
 def create_imports(name, library = None, project_file = None, update_init = []):
-    py_binary(
+    native.py_binary(
         name = name,
         srcs = [
             "//shared/bazel/rules/robotpy:create-imports.py",
@@ -95,6 +95,7 @@ def create_imports(name, library = None, project_file = None, update_init = []):
             tools = [name],
             outs = ["{}-create_imports{}.py".format(name, i)],
             cmd = cmd,
+            # tags = ["robotpy", "manual"],
             target_compatible_with = robotpy_compatibility_select(),
         )
 
@@ -103,6 +104,7 @@ def create_imports(name, library = None, project_file = None, update_init = []):
             files = {
                 "src/main/python/{}/__init__.py".format(parts[0].replace(".", "/")): "{}-create_imports{}.py".format(name, i),
             },
+            # tags = ["robotpy", "manual"],
             visibility = ["//visibility:public"],
             target_compatible_with = robotpy_compatibility_select(),
         )

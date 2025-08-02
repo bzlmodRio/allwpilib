@@ -28,7 +28,7 @@ wpilib_halsim_extension(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//glass:libglassnt",
+        "//glass:glassnt",
         "//hal:wpiHal",
     ],
 )

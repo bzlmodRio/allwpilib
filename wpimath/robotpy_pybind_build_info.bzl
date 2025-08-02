@@ -1086,16 +1086,6 @@ def wpimath_controls_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = 
             ],
         ),
         struct(
-            class_name = "HolonomicDriveController",
-            yml_file = "semiwrap/controls/HolonomicDriveController.yml",
-            header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/frc/controller/HolonomicDriveController.h",
-            tmpl_class_names = [],
-            trampolines = [
-                ("frc::HolonomicDriveController", "frc__HolonomicDriveController.hpp"),
-            ],
-        ),
-        struct(
             class_name = "ImplicitModelFollower",
             yml_file = "semiwrap/controls/ImplicitModelFollower.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",

@@ -1,5 +1,6 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
+load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 
 def wpilib_java_library(
         name,
@@ -21,13 +22,13 @@ def wpilib_java_library(
 
     zip_java_srcs(name = name, extra_pkgs = extra_source_pkgs)
 
-    # wpilib_maven_export(
-    #     name = "{}_publish".format(name),
-    #     classifier_artifacts = {"sources": ":lib{}-sources.jar".format(name)},
-    #     lib_name = name,
-    #     maven_coordinates = maven_coordinates,
-    #     visibility = ["//visibility:public"],
-    # )
+    wpilib_maven_export(
+        name = "{}_publish".format(name),
+        classifier_artifacts = {"sources": ":lib{}-sources.jar".format(name)},
+        lib_name = name,
+        maven_coordinates = maven_coordinates,
+        visibility = ["//visibility:public"],
+    )
 
 def wpilib_java_junit5_test(
         name,

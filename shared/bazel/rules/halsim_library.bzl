@@ -18,7 +18,7 @@ def wpilib_halsim_extension(
     wpilib_cc_library(
         name = name,
         srcs = srcs,
-        include_third_party_notices = True,
+        # include_third_party_notices = True,
         target_compatible_with = select({
             "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
             "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
@@ -35,7 +35,7 @@ def wpilib_halsim_extension(
         copts = [
             "-DHALSIM_InitExtension=" + init_extension_name,
         ],
-        include_third_party_notices = True,
+        # include_third_party_notices = True,
         target_compatible_with = select({
             "@rules_bzlmodrio_toolchains//constraints/is_roborio:roborio": ["@platforms//:incompatible"],
             "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],

@@ -1,16 +1,26 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_shared_and_static_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
-load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
-load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
+load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
 
-wpilib_shared_and_static_library(
+wpilib_cc_library(
     name = "xrpVendordep",
     srcs = glob([
         "src/main/native/cpp/**",
     ]),
     hdrs = glob(["src/main/native/include/**"]),
+    strip_include_prefix = "src/main/native/include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore",
+        "//wpilibc",
+        "//wpinet",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/xrpVendordep",
     dynamic_deps = [
         "//ntcore:shared/ntcore",
         "//wpilibc:shared/wpilibc",
@@ -19,18 +29,19 @@ wpilib_shared_and_static_library(
         "//wpimath:shared/wpimath",
         "//hal:shared/wpiHal",
     ],
+    visibility = ["//visibility:public"],
+    deps = [":xrpVendordep"],
+)
+
+wpilib_cc_static_library(
+    name = "static/xrpVendordep",
     static_deps = [
         "//ntcore:static/ntcore",
         "//wpilibc:static/wpilibc",
         "//wpinet:static/wpinet",
     ],
-    strip_include_prefix = "src/main/native/include",
     visibility = ["//visibility:public"],
-    deps = [
-        "//ntcore",
-        "//wpilibc",
-        "//wpinet",
-    ],
+    deps = [":xrpVendordep"],
 )
 
 wpilib_java_library(
@@ -45,8 +56,6 @@ wpilib_java_library(
         "//wpimath:wpimath-java",
     ],
 )
-
-zip_java_srcs(name = "xrp")
 
 cc_test(
     name = "xrp-cpp-test",
@@ -77,13 +86,8 @@ java_binary(
     ],
 )
 
-bundle_library_artifacts(
-    name = "publishing_bundle",
-    cc_hdr_pkg = ":xrpVendordep-hdrs-zip",
-    cc_shared_library_pkg = ":shared/xrpVendordep-shared-zip",
-    cc_src_pkg = ":xrpVendordep-srcs-zip",
-    cc_static_library_pkg = ":static/xrpVendordep-static-zip",
-    group_id = "edu.wpi.first.xrpVendordep",
-    java_pkg = "libxrp-java-sources",
-    library_base_name = "xrpVendordep",
+package_minimal_cc_project(
+    name = "xrpVendordep",
+    maven_artifact_name = "xrpVendordep-cpp",
+    maven_group_id = "edu.wpi.first.xrpVendordep",
 )

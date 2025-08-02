@@ -21,7 +21,7 @@ wpilib_halsim_extension(
         "//hal:static/wpiHal",
         "//wpinet:static/wpinet",
         "//wpiutil:static/wpiutil",
-        "//simulation/halsim_ws_core:static/halsim_ws_core",
+        # "//simulation/halsim_ws_core:static/halsim_ws_core",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -29,62 +29,63 @@ wpilib_halsim_extension(
     ],
 )
 
-wpilib_halsim_extension(
-    name = "halsim_ws_client_static",
-    srcs = glob([
-        "src/main/native/cpp/*.cpp",
-        "src/main/native/include/*.h",
-    ]),
-    copts = [
-        "-DHALSIM_InitExtension=HALSIM_InitExtension_WS_CLIENT",
-    ],
-    deps = [
-        "//simulation/halsim_ws_core",
-    ],
-)
+# wpilib_halsim_extension(
+#     name = "halsim_ws_client_static",
+#     init_extension_name = "fjdlks",
+#     srcs = glob([
+#         "src/main/native/cpp/*.cpp",
+#         "src/main/native/include/*.h",
+#     ]),
+#     copts = [
+#         "-DHALSIM_InitExtension=HALSIM_InitExtension_WS_CLIENT",
+#     ],
+#     deps = [
+#         "//simulation/halsim_ws_core",
+#     ],
+# )
 
-wpilib_cc_shared_library(
-    name = "shared/halsim_ws_client",
-    dynamic_deps = [
-        "//hal:shared/wpiHal",
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":halsim_ws_client",
-    ],
-)
+# wpilib_cc_shared_library(
+#     name = "shared/halsim_ws_client",
+#     dynamic_deps = [
+#         "//hal:shared/wpiHal",
+#         "//wpinet:shared/wpinet",
+#         "//wpiutil:shared/wpiutil",
+#     ],
+#     visibility = ["//visibility:public"],
+#     deps = [
+#         ":halsim_ws_client",
+#     ],
+# )
 
-wpilib_cc_static_library(
-    name = "static/halsim_ws_client",
-    static_deps = [
-        "//hal:static/wpiHal",
-        "//wpinet:static/wpinet",
-        "//wpiutil:static/wpiutil",
-        "//simulation/halsim_ws_core:static/halsim_ws_core",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":halsim_ws_client_static",
-    ],
-)
+# wpilib_cc_static_library(
+#     name = "static/halsim_ws_client",
+#     static_deps = [
+#         "//hal:static/wpiHal",
+#         "//wpinet:static/wpinet",
+#         "//wpiutil:static/wpiutil",
+#         "//simulation/halsim_ws_core:static/halsim_ws_core",
+#     ],
+#     visibility = ["//visibility:public"],
+#     deps = [
+#         ":halsim_ws_client_static",
+#     ],
+# )
 
-cc_binary(
-    name = "DevMain-Cpp",
-    srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":halsim_ws_client",
-    ],
-)
+# cc_binary(
+#     name = "DevMain-Cpp",
+#     srcs = ["src/dev/native/cpp/main.cpp"],
+#     deps = [
+#         ":halsim_ws_client",
+#     ],
+# )
 
-bundle_library_artifacts(
-    name = "publishing_bundle",
-    add_cc_suffix = False,
-    cc_hdr_pkg = ":halsim_ws_client-hdrs-zip",
-    cc_shared_library_pkg = ":shared/halsim_ws_client-shared-zip",
-    cc_src_pkg = ":halsim_ws_client-srcs-zip",
-    cc_static_library_pkg = ":static/halsim_ws_client-static-zip",
-    group_id = "edu.wpi.first.halsim",
-    library_base_name = "halsim_ws_client",
-)
+# bundle_library_artifacts(
+#     name = "publishing_bundle",
+#     add_cc_suffix = False,
+#     cc_hdr_pkg = ":halsim_ws_client-hdrs-zip",
+#     cc_shared_library_pkg = ":shared/halsim_ws_client-shared-zip",
+#     cc_src_pkg = ":halsim_ws_client-srcs-zip",
+#     cc_static_library_pkg = ":static/halsim_ws_client-static-zip",
+#     group_id = "edu.wpi.first.halsim",
+#     library_base_name = "halsim_ws_client",
+# )
