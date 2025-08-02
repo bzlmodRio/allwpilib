@@ -384,10 +384,13 @@ def generate_pybind_build_file(
     def target_from_python_dep(python_dep):
         if python_dep == "pyntcore":
             return "//ntcore:pyntcore"
+        elif "wpilib" == python_dep:
+            return "//wpilibc:robotpy-wpilib"
         elif "native" in python_dep:
             base_library = re.search("robotpy-native-(.*)", python_dep)[1]
             return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
         else:
+            print(python_dep)
             base_library = re.search("robotpy-(.*)", python_dep)[1]
             return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
 

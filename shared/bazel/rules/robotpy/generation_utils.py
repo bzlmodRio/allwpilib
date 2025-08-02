@@ -5,6 +5,10 @@ def fixup_root_package_name(name):
         return "wpilibc"
     if name == "wpilog":
         return "datalog"
+    if name == "xrp":
+        return "xrpVendordep"
+    if name == "romi":
+        return "romiVendordep"
     return name
 
 
@@ -19,6 +23,10 @@ def fixup_shared_lib_name(name):
         return "wpiHal"
     if name == "wpilib":
         return "wpilibc"
+    if name == "xrp":
+        return "xrpVendordep"
+    if name == "romi":
+        return "romiVendordep"
     return name
 
 
