@@ -99,7 +99,9 @@ name = "cscore"
 
 depends = ["wpiutil", "wpinet", "ntcore", "cscore-casters"]
 includes = [
-    "lib/include"
+    "lib/include",
+    "../native/include",
+    "../../../../cameraserver/src/main/native/include/",
 ]
 
 [tool.semiwrap.extension_modules."cscore._cscore".headers]

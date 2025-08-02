@@ -26,12 +26,13 @@ namespace cvnp
 
     static std::string align_center(const std::string& s)
     {
-        int nb_spaces = s.size() < sColumnWidth ? sColumnWidth - s.size() : 0;
-        int nb_spaces_left = nb_spaces / 2;
-        int nb_spaces_right = sColumnWidth - s.size() - nb_spaces_left;
-        if (nb_spaces_right < 0)
-            nb_spaces_right = 0;
-        return std::string((size_t)nb_spaces_left, ' ') + s + std::string( (size_t)nb_spaces_right, ' ');
+        // int nb_spaces = s.size() < sColumnWidth ? sColumnWidth - s.size() : 0;
+        // int nb_spaces_left = nb_spaces / 2;
+        // int nb_spaces_right = sColumnWidth - s.size() - nb_spaces_left;
+        // if (nb_spaces_right < 0)
+        //     nb_spaces_right = 0;
+        // return std::string((size_t)nb_spaces_left, ' ') + s + std::string( (size_t)nb_spaces_right, ' ');
+        return "";
     }
     static std::string align_center(const int v)
     {

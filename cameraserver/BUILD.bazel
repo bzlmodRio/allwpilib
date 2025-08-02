@@ -24,6 +24,12 @@ wpilib_shared_and_static_library(
     ],
 )
 
+filegroup(
+    name = "headers",
+    srcs = glob(["src/main/native/include/**/*"]),
+    visibility = ["//visibility:public"],
+)
+
 java_library(
     name = "cameraserver-java",
     srcs = glob(["src/main/java/**/*.java"]),

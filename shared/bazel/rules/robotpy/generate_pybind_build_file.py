@@ -67,11 +67,12 @@ class HeaderToDatConfig:
         self.defines = defines
 
         include_root = str(args[3])
-        if "native" in include_root:
+        if "native" in include_root and "cscore" not in include_root:
 
             root_dir = pathlib.Path(
                 include_root[: include_root.find("__main__/") + len("__main__/")]
             )
+            print(include_root)
             base_include_root = pathlib.Path(*args[3].relative_to(root_dir).parts[3:])
             base_include_file = args[2].relative_to(include_root)
             base_library = re.search("native/(.*?)/", include_root).groups(1)[0]

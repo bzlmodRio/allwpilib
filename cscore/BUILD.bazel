@@ -7,6 +7,7 @@ load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_default_jni_library")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
+load("//cscore:robotpy_pybind_build_info.bzl", "define_pybind_library", "cscore_extension", "publish_library_casters")
 
 WIN_SRCS = glob([
     "src/main/native/windows/**/*.cpp",
@@ -224,17 +225,40 @@ bundle_default_jni_library(
 )
 
 
+filegroup(
+    name = "headers",
+    srcs = glob(["src/main/native/include/**/*"]),
+)
+
 
 generate_robotpy_pybind_build_info(
     name = "robotpy-cscore-generator",
-    additional_srcs = [":robotpy-native-cscore.copy_headers"],
-    package_root_file = "src/main/python/wpilog/__init__.py",
+    # additional_srcs = [":robotpy-native-cscore.copy_headers"],
+    additional_srcs = ["//cameraserver:headers", ":headers"],
+    package_root_file = "src/main/python/cscore/__init__.py",
     pkgcfgs = [
-        # "//datalog:native/datalog/robotpy-native-datalog.pc",
-        # "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-        # "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
-        # "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
-        # "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+        "//datalog:native/datalog/robotpy-native-datalog.pc",
+        "//datalog:src/main/python/wpilog/wpilog.pc",
+        "//ntcore:src/main/python/ntcore/ntcore.pc",
+        "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+        "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
+        "//wpinet:src/main/python/wpinet/wpinet.pc",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
     ],
     yaml_files = glob(["src/main/python/semiwrap/*.yml"]),
+)
+
+publish_library_casters()
+
+cscore_extension(
+    srcs = glob(["src/main/python/cscore/**/*.cpp"]),
+    extra_hdrs = glob(["src/main/native/include/**/*"]),
+    header_to_dat_deps = [":headers"],
+)
+
+define_pybind_library(
+    name = "robotpy-cscore",
 )

@@ -83,7 +83,7 @@ def create_imports(name, library = None, project_file = None, update_init = []):
             requirement("semiwrap"),
         ],
         main = "shared/bazel/rules/robotpy/create-imports.py",
-        tags = ["robotpy", "manual"],
+        # tags = ["robotpy", "manual"],
         legacy_create_init = 0,
     )
 
