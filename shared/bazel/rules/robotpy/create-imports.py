@@ -1,10 +1,10 @@
+import argparse
 import importlib
 import os
-import sys
 import pathlib
-import argparse
-import shutil
+import sys
 from typing import List
+
 
 def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
     """
@@ -28,7 +28,7 @@ def main():
     parser.add_argument("--to_update")
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
     args = parser.parse_args()
-    
+
     hack_pkgconfig(args.pkgcfgs)
 
     module = importlib.import_module("semiwrap.tool")
@@ -40,9 +40,14 @@ def main():
         base = args.to_update
         compiled = None
 
+    sys.argv = [""] + [
+        "create-imports",
+        "--write",
+        base,
+        compiled,
+        f"--override_output_file={args.output_file}",
+    ]
 
-    sys.argv = [""] + ["create-imports", "--write", base, compiled, f"--override_output_file={args.output_file}"]
-    
     try:
         tool_main()
     except SystemExit as e:

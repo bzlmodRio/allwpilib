@@ -1,6 +1,5 @@
-
-import shutil
 import os
+import shutil
 
 test_directory = "/home/pjreiniger/git/temp/robotpy_gen_test"
 
@@ -13,7 +12,7 @@ for project in [
     "wpimath",
     "wpinet",
     "wpiutil",
-    ]:
+]:
 
     python_dir = test_directory + f"/{project}/src/main/python"
     gen_dir = test_directory + f"/{project}/generated"

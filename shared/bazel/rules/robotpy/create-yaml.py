@@ -1,13 +1,9 @@
+import argparse
 import importlib
 import os
-import sys
 import pathlib
-import argparse
-import shutil
-import dictdiffer 
-import dictdiffer.utils
+import sys
 from typing import List
-from ruamel.yaml import YAML
 
 
 def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
@@ -37,14 +33,19 @@ def main():
     module = importlib.import_module("semiwrap.tool")
     tool_main = getattr(module, "main")
 
-    sys.argv = [""] + ["update-yaml", "--write", "-v", f"--project_file={args.pyproject}", f"--output_directory={args.output_dir}"]
-    
+    sys.argv = [""] + [
+        "update-yaml",
+        "--write",
+        "-v",
+        f"--project_file={args.pyproject}",
+        f"--output_directory={args.output_dir}",
+    ]
+
     try:
         tool_main()
     except SystemExit as e:
         if e.code != 0:
             raise
-        pass
 
 
 if __name__ == "__main__":

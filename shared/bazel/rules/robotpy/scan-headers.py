@@ -1,9 +1,8 @@
+import argparse
 import importlib
 import os
-import sys
 import pathlib
-import argparse
-import shutil
+import sys
 from typing import List
 
 
@@ -33,14 +32,15 @@ def main():
     module = importlib.import_module("semiwrap.tool")
     tool_main = getattr(module, "main")
 
+    sys.argv = [""] + ["scan-headers", "--check", f"--pyproject_toml={args.pyproject}"]
 
-    sys.argv = [""] + ["scan-headers", "--check", f"--pyproject_toml={args.pyproject}"]        
-    
     try:
         tool_main()
     except SystemExit as e:
         if e != 0:
-            print("scan-headers has detected an unaccounted for change. See text above and add it to the projects pyproject.toml file")
+            print(
+                "scan-headers has detected an unaccounted for change. See text above and add it to the projects pyproject.toml file"
+            )
             raise
 
 

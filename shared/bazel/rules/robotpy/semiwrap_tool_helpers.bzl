@@ -1,6 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_python//python:defs.bzl", "py_test")
+load("@rules_python//python:defs.bzl", "py_binary", "py_test")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 def __create_yaml_files_impl(ctx):
@@ -74,7 +74,7 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
     )
 
 def create_imports(name, library = None, project_file = None, update_init = []):
-    native.py_binary(
+    py_binary(
         name = name,
         srcs = [
             "//shared/bazel/rules/robotpy:create-imports.py",

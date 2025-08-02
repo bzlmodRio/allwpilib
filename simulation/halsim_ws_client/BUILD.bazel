@@ -1,7 +1,4 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:halsim_library.bzl", "wpilib_halsim_extension")
-load("//shared/bazel/rules/publishing:publishing.bzl", "bundle_library_artifacts")
 
 wpilib_halsim_extension(
     name = "halsim_ws_client",

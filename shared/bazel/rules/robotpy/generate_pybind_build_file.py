@@ -419,8 +419,9 @@ def generate_pybind_build_file(
                 raw_project_config=raw_config["project"],
                 entry_points=entry_points,
                 project_file=project_file,
-                update_init=raw_config.get("tool", {}).get("semiwrap", {}).get("update_init", [])
-                
+                update_init=raw_config.get("tool", {})
+                .get("semiwrap", {})
+                .get("update_init", []),
             )
             + "\n"
         )
