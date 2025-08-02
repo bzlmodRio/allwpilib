@@ -3,6 +3,11 @@ load("@rules_java//java:defs.bzl", "java_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
 load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
+load("//romiVendordep:robotpy_native_build_info.bzl", "define_native_wrapper")
+load("//romiVendordep:robotpy_pybind_build_info.bzl", "define_pybind_library", "romi_extension")
+load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 
 wpilib_cc_library(
     name = "romiVendordep",
@@ -92,4 +97,75 @@ package_minimal_cc_project(
     name = "romiVendordep",
     maven_artifact_name = "romiVendordep-cpp",
     maven_group_id = "edu.wpi.first.romiVendordep",
+)
+
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-xrp-generator",
+    pyproject_toml = "src/main/python/native-pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-romi",
+    pyproject_toml = "src/main/python/native-pyproject.toml",
+)
+
+
+
+generate_robotpy_pybind_build_info(
+    name = "robotpy-romi-generator",
+    additional_srcs = [":robotpy-native-romi.copy_headers"],
+    package_root_file = "src/main/python/romi/__init__.py",
+    pkgcfgs = [
+        "//datalog:native/datalog/robotpy-native-datalog.pc",
+        "//datalog:src/main/python/wpilog/wpilog.pc",
+        "//hal:native/wpihal/robotpy-native-wpihal.pc",
+        "//hal:src/main/python/hal/wpihal.pc",
+        "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+        "//ntcore:src/main/python/ntcore/ntcore.pc",
+        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+        "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
+        "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
+        "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
+        "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
+        "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
+        "//wpimath:src/main/python/wpimath/wpimath.pc",
+        "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
+        "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
+        "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
+        "//wpilibc:src/main/python/wpilib/wpilib.pc",
+        "//wpilibc:src/main/python/wpilib/event/wpilib_event.pc",
+        "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
+        "//wpinet:src/main/python/wpinet/wpinet.pc",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+        "//romiVendordep:native/romi/robotpy-native-romi.pc",
+    ],
+    yaml_files = glob(["src/main/python/semiwrap/**/*.yml"]),
+)
+
+
+romi_extension(
+    srcs = ["src/main/python/romi/src/main.cpp"],
+)
+
+
+define_pybind_library(name = "robotpy-romi")
+
+robotpy_py_test(
+    "python_tests",
+    extra_sources = ["src/test/python/conftest.py"],
+    tests = glob(
+        ["src/test/python/**/*.py"],
+        exclude = [
+            "src/test/python/conftest.py",
+            "src/test/python/run_tests.py",
+        ],
+    ),
+    deps = [
+        ":robotpy-romi",
+        requirement("pytest"),
+    ],
 )
