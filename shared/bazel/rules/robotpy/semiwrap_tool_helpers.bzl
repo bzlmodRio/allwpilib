@@ -8,8 +8,7 @@ def __create_yaml_files_impl(ctx):
 
     args = ctx.actions.args()
     args.add("--output_dir=" + output_dir.path)
-    args.add("--backup_dir=" + ctx.attr.backup_dir)
-    args.add("--directory=" + ctx.attr.directory)
+    args.add("--pyproject=" + ctx.files.pyproject_toml[0].path)
     args.add("--pkgcfgs")
     for f in ctx.files.pkgcfgs:
         args.add(str(f.path))
@@ -26,8 +25,6 @@ def __create_yaml_files_impl(ctx):
 __create_yaml_files = rule(
     implementation = __create_yaml_files_impl,
     attrs = {
-        "backup_dir": attr.string(default = "_gen_create_yaml_original"),
-        "directory": attr.string(mandatory = True),
         "extra_hdrs": attr.label_list(allow_files = True),
         "gen_dir": attr.string(default = "_gen_create_yaml"),
         "package_root_file": attr.label(mandatory = True, allow_files = True),
@@ -51,12 +48,11 @@ def create_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", 
             yaml_output_directory: ":" + name,
         },
         suggested_update_target = "//:write_all",
-        tags = ["robotpy", "noremote", "manual"],
+        # tags = ["robotpy", "noremote", "manual"],
         visibility = ["//visibility:public"],
-        diff_test = False,  # These are often hand tweaked
     )
 
-def scan_headers(name, directory, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
+def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
     pkgcfg_args = ["--pkgcfgs"]
     for pkgcfg in pkgcfgs:
         pkgcfg_args.append(" $(location " + pkgcfg + ")")
@@ -69,15 +65,15 @@ def scan_headers(name, directory, pyproject_toml, package_root_file, extra_hdrs,
             requirement("semiwrap"),
         ],
         args = [
-            "--directory=" + directory,
+            "--pyproject=$(location " + pyproject_toml + ")",
         ] + pkgcfg_args,
         data = extra_hdrs + pkgcfgs + [pyproject_toml, package_root_file],
         main = "shared/bazel/rules/robotpy/scan-headers.py",
         size = "small",
-        tags = ["manual"]
+        # tags = ["manual"],
     )
 
-def create_imports(name, library, output_file, base, compiled = None):
+def create_imports(name, library=None, project_file=None, update_init=[]):
     py_binary(
         name = name,
         srcs = [
@@ -91,24 +87,23 @@ def create_imports(name, library, output_file, base, compiled = None):
         legacy_create_init = 0,
     )
 
-    cmd = "$(location " + name + ") --output_file=$(OUTS) --base=" + base
-    if compiled:
-        cmd += " --compiled=" + compiled
 
-    native.genrule(
-        name = name + ".gen",
-        tools = [name],
-        outs = ["{}-create_imports.py".format(name)],
-        cmd = cmd,
-        tags = ["robotpy", "manual"],
-        target_compatible_with = robotpy_compatibility_select(),
-    )
+    for i, init_file in enumerate(update_init):
+        parts = init_file.split(" ", 1)
+        cmd = "$(location " + name + ") --output_file=$(OUTS) --to_update='" + init_file + "'"
+        native.genrule(
+            name = "{}{}.gen".format(name, i),
+            tools = [name],
+            outs = ["{}-create_imports{}.py".format(name, i)],
+            cmd = cmd,
+            target_compatible_with = robotpy_compatibility_select(),
+        )
 
-    write_source_files(
-        name = "{}.generate_build_info4".format(name),
-        files = {
-            output_file: "{}-create_imports.py".format(name),
-        },
-        visibility = ["//visibility:public"],
-        target_compatible_with = robotpy_compatibility_select(),
-    )
+        write_source_files(
+            name = "{}.gen{}".format(name, i),
+            files = {
+                "src/main/python/{}/__init__.py".format(parts[0].replace(".", "/")): "{}-create_imports{}.py".format(name, i),
+            },
+            visibility = ["//visibility:public"],
+            target_compatible_with = robotpy_compatibility_select(),
+        )

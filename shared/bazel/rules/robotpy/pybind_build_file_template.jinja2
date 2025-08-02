@@ -4,7 +4,7 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 {%- endif %}
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", {% if publish_casters_targets %}"publish_casters", {% endif %}"resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "create_yaml_files", "scan_headers")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
 {% for extension_module in extension_modules%}
 def {{extension_module.name}}_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     {{extension_module.name|upper}}_HEADER_GEN = [
@@ -112,14 +112,6 @@ def {{extension_module.name}}_extension(srcs = [], header_to_dat_deps = [], extr
         {%- endif %}
     )
 
-    create_imports(
-        name = "robotpy-create-{{extension_module.name}}-imports",
-        base = "{{extension_module.package_base}}",
-        compiled = "{{extension_module.package_name}}",
-        library = [":robotpy-wpimath"],
-        output_file = "{{stripped_include_prefix}}/{{extension_module.install_path}}/__init__.py",
-    )
-
     native.filegroup(
         name = "{{extension_module.name}}.generated_files",
         srcs = [
@@ -220,4 +212,11 @@ def define_pybind_library(name):
             {%- endfor %}
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "{{ project_file }}",
+        library = [name],
+        update_init = {{ update_init }},
     )

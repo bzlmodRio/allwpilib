@@ -91,5 +91,4 @@ def generate_robotpy_pybind_build_info(
         visibility = ["//visibility:public"],
         tags = ["robotpy"],
         target_compatible_with = robotpy_compatibility_select(),
-        diff_test = False,
     )

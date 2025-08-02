@@ -145,14 +145,6 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpilog-imports",
-        base = "wpilog",
-        compiled = "wpilog._wpilog",
-        library = [":robotpy-wpilog"],
-        output_file = "src/main/python/wpilog/__init__.py",
-    )
-
     native.filegroup(
         name = "wpilog.generated_files",
         srcs = [
@@ -216,4 +208,11 @@ def define_pybind_library(name):
             "pkg_config": ["wpilog = wpilog"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "datalog/src/main/python/pyproject.toml",
+        library = [name],
+        update_init = ['wpilog'],
     )

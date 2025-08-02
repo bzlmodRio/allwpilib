@@ -340,7 +340,6 @@ robotpy_py_test(
 
 create_yaml_files(
     name = "robotpy-create-yaml",
-    directory = "wpinet/src/main/python",
     extra_hdrs = [],
     package_root_file = "src/main/python/wpinet/__init__.py",
     pkgcfgs = [
@@ -356,7 +355,6 @@ create_yaml_files(
 
 scan_headers(
     name = "robotpy-scan-headers",
-    directory = "wpinet/src/main/python",
     extra_hdrs = [] + [":robotpy-native-wpinet.copy_headers"],
     package_root_file = "src/main/python/wpinet/__init__.py",
     pkgcfgs = [

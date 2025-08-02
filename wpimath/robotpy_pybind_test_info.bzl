@@ -80,14 +80,6 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpimath_test-imports",
-        base = "wpimath_test",
-        # compiled = "wpimath_test._wpimath_test",
-        library = [":robotpy-wpimath-test"],
-        output_file = "src/test/python/cpp/wpimath_test/__init__.py",
-    )
-
     native.filegroup(
         name = "wpimath_test.generated_files",
         srcs = [
@@ -139,7 +131,6 @@ def define_pybind_library(name):
         ],
         imports = ["src/test/python/cpp"],
         deps = [
-            ":robotpy-wpimath",
         ],
         strip_path_prefixes = ["wpimath_test/src/test/python/cpp/"],
         summary = "Test project for verifying robotpy-build behavior",
@@ -150,4 +141,11 @@ def define_pybind_library(name):
             "pkg_config": ["wpimath_test = wpimath_test"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "wpimath/src/test/python/cpp/pyproject.toml",
+        library = [name],
+        update_init = [],
     )

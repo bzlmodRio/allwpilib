@@ -300,12 +300,13 @@ class BazelExtensionModule:
 
 def generate_pybind_build_file(
     pkgcfgs: List[pathlib.Path],
-    project_dir: pathlib.Path,
+    project_file: pathlib.Path,
     package_root_file: str,
     stripped_include_prefix: str,
     yml_prefix: Union[str, None],
     output_file: pathlib.Path,
 ):
+    project_dir = project_file.parent
     plan = makeplan(project_dir)
 
     hack_pkgconfig(pkgcfgs)
@@ -313,7 +314,7 @@ def generate_pybind_build_file(
     extension_modules = []
     entry_points = collections.defaultdict(list)
 
-    pyproject = PyProject(project_dir / "pyproject.toml")
+    pyproject = PyProject(project_file)
     projectcfg = pyproject.project
 
     # Cache built up for an extension module. Gets reset when an ExtensionModule is encountered
@@ -358,7 +359,7 @@ def generate_pybind_build_file(
         else:
             raise Exception(f"Unknown item {type(item)}")
 
-    with open(project_dir / "pyproject.toml", "rb") as fp:
+    with open(project_file, "rb") as fp:
         raw_config = tomli.load(fp)
 
     try:
@@ -413,6 +414,9 @@ def generate_pybind_build_file(
                 package_root_file=package_root_file,
                 raw_project_config=raw_config["project"],
                 entry_points=entry_points,
+                project_file=project_file,
+                update_init=raw_config.get("tool", {}).get("semiwrap", {}).get("update_init", [])
+                
             )
             + "\n"
         )
@@ -433,7 +437,7 @@ def main():
 
     generate_pybind_build_file(
         args.pkgcfgs,
-        args.project_file.parent,
+        args.project_file,
         args.package_root_file,
         args.stripped_include_prefix,
         args.yml_prefix,

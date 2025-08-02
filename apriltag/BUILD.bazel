@@ -251,7 +251,6 @@ robotpy_py_test(
 
 create_yaml_files(
     name = "robotpy-create-yaml",
-    directory = "apriltag/src/main/python",
     package_root_file = "src/main/python/robotpy_apriltag/__init__.py",
     pkgcfgs = [
         "//datalog:src/main/python/wpilog/wpilog.pc",
@@ -284,7 +283,6 @@ create_yaml_files(
 
 scan_headers(
     name = "robotpy-scan-headers",
-    directory = "apriltag/src/main/python",
     extra_hdrs = [":robotpy-native-apriltag.copy_headers"],
     package_root_file = "src/main/python/robotpy_apriltag/__init__.py",
     pkgcfgs = [

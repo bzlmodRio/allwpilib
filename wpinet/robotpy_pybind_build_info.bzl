@@ -93,14 +93,6 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpinet-imports",
-        base = "wpinet",
-        compiled = "wpinet._wpinet",
-        library = [":robotpy-wpinet"],
-        output_file = "src/main/python/wpinet/__init__.py",
-    )
-
     native.filegroup(
         name = "wpinet.generated_files",
         srcs = [
@@ -164,4 +156,11 @@ def define_pybind_library(name):
             "pkg_config": ["wpinet = wpinet"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "wpinet/src/main/python/pyproject.toml",
+        library = [name],
+        update_init = ['wpinet'],
     )

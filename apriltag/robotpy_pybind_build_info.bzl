@@ -150,14 +150,6 @@ def apriltag_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-apriltag-imports",
-        base = "robotpy_apriltag",
-        compiled = "robotpy_apriltag._apriltag",
-        library = [":robotpy-apriltag"],
-        output_file = "src/main/python/robotpy_apriltag/__init__.py",
-    )
-
     native.filegroup(
         name = "apriltag.generated_files",
         srcs = [
@@ -222,4 +214,11 @@ def define_pybind_library(name):
             "pkg_config": ["apriltag = robotpy_apriltag"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "apriltag/src/main/python/pyproject.toml",
+        library = [name],
+        update_init = ['robotpy_apriltag robotpy_apriltag._apriltag'],
     )

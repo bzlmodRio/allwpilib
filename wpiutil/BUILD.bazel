@@ -441,7 +441,6 @@ wpilib_maven_export(
 
 create_yaml_files(
     name = "robotpy-create-yaml",
-    directory = "wpiutil/src/main/python",
     extra_hdrs = glob(["src/main/python/**/*.h"]),
     package_root_file = "src/main/python/wpiutil/__init__.py",
     pkgcfgs = ["//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc"],
@@ -451,7 +450,6 @@ create_yaml_files(
 
 scan_headers(
     name = "robotpy-scan-headers",
-    directory = "wpiutil/src/main/python",
     extra_hdrs = glob(["src/main/python/**/*.h"]) + [":robotpy-native-wpiutil.copy_headers"],
     package_root_file = "src/main/python/wpiutil/__init__.py",
     pkgcfgs = ["//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc"],

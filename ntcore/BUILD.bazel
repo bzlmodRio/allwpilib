@@ -258,7 +258,6 @@ robotpy_py_test(
 
 create_yaml_files(
     name = "robotpy-create-yaml",
-    directory = "ntcore/src/main/python",
     extra_hdrs = glob(["src/main/python/**/*.h"]) + [":robotpy-native-ntcore.copy_headers"] + ["//wpiutil:robotpy-native-wpiutil.copy_headers"],
     package_root_file = "src/main/python/ntcore/__init__.py",
     pkgcfgs = [
@@ -279,7 +278,6 @@ create_yaml_files(
 
 scan_headers(
     name = "robotpy-scan-headers",
-    directory = "ntcore/src/main/python",
     extra_hdrs = glob(["src/main/python/**/*.h"]) + [":robotpy-native-ntcore.copy_headers"],
     package_root_file = "src/main/python/ntcore/__init__.py",
     pkgcfgs = [

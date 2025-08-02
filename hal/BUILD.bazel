@@ -272,7 +272,6 @@ robotpy_py_test(
 
 create_yaml_files(
     name = "robotpy-create-yaml",
-    directory = "hal/src/main/python",
     extra_hdrs = glob(["src/main/python/**/*.h"]),
     package_root_file = "src/main/python/hal/__init__.py",
     pkgcfgs = [
@@ -294,7 +293,6 @@ create_yaml_files(
 
 scan_headers(
     name = "robotpy-scan-headers",
-    directory = "hal/src/main/python",
     extra_hdrs = glob(["src/main/python/**/*.h"]) + [":robotpy-native-wpihal.copy_headers"],
     package_root_file = "src/main/python/hal/__init__.py",
     pkgcfgs = [

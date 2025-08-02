@@ -209,14 +209,6 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-hal_simulation-imports",
-        base = "hal.simulation",
-        compiled = "hal.simulation._simulation",
-        library = [":robotpy-hal"],
-        output_file = "src/main/python/hal/simulation/__init__.py",
-    )
-
     native.filegroup(
         name = "hal_simulation.generated_files",
         srcs = [
@@ -574,14 +566,6 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpihal-imports",
-        base = "hal",
-        compiled = "hal._wpiHal",
-        library = [":robotpy-hal"],
-        output_file = "src/main/python/hal/__init__.py",
-    )
-
     native.filegroup(
         name = "wpihal.generated_files",
         srcs = [
@@ -651,4 +635,11 @@ def define_pybind_library(name):
             "pkg_config": ["hal_simulation = hal.simulation", "wpihal = hal"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "hal/src/main/python/pyproject.toml",
+        library = [name],
+        update_init = [],
     )

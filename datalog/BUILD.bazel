@@ -187,7 +187,6 @@ robotpy_py_test(
 
 create_yaml_files(
     name = "robotpy-create-yaml",
-    directory = "datalog/src/main/python",
     package_root_file = "src/main/python/wpilog/__init__.py",
     pkgcfgs = [
         "//datalog:native/datalog/robotpy-native-datalog.pc",
@@ -202,7 +201,6 @@ create_yaml_files(
 
 scan_headers(
     name = "robotpy-scan-headers",
-    directory = "datalog/src/main/python",
     extra_hdrs = [":robotpy-native-datalog.copy_headers"],
     package_root_file = "src/main/python/wpilog/__init__.py",
     pkgcfgs = [

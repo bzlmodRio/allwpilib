@@ -91,14 +91,6 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpimath-imports",
-        base = "wpimath",
-        compiled = "wpimath._wpimath",
-        library = [":robotpy-wpimath"],
-        output_file = "src/main/python/wpimath/__init__.py",
-    )
-
     native.filegroup(
         name = "wpimath.generated_files",
         srcs = [
@@ -225,14 +217,6 @@ def wpimath_filter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
-    )
-
-    create_imports(
-        name = "robotpy-create-wpimath_filter-imports",
-        base = "wpimath.filter",
-        compiled = "wpimath.filter._filter",
-        library = [":robotpy-wpimath"],
-        output_file = "src/main/python/wpimath/filter/__init__.py",
     )
 
     native.filegroup(
@@ -467,14 +451,6 @@ def wpimath_geometry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = 
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpimath_geometry-imports",
-        base = "wpimath.geometry",
-        compiled = "wpimath.geometry._geometry",
-        library = [":robotpy-wpimath"],
-        output_file = "src/main/python/wpimath/geometry/__init__.py",
-    )
-
     native.filegroup(
         name = "wpimath_geometry.generated_files",
         srcs = [
@@ -574,14 +550,6 @@ def wpimath_interpolation_extension(srcs = [], header_to_dat_deps = [], extra_hd
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
-    )
-
-    create_imports(
-        name = "robotpy-create-wpimath_interpolation-imports",
-        base = "wpimath.interpolation",
-        compiled = "wpimath.interpolation._interpolation",
-        library = [":robotpy-wpimath"],
-        output_file = "src/main/python/wpimath/interpolation/__init__.py",
     )
 
     native.filegroup(
@@ -893,14 +861,6 @@ def wpimath_kinematics_extension(srcs = [], header_to_dat_deps = [], extra_hdrs 
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpimath_kinematics-imports",
-        base = "wpimath.kinematics",
-        compiled = "wpimath.kinematics._kinematics",
-        library = [":robotpy-wpimath"],
-        output_file = "src/main/python/wpimath/kinematics/__init__.py",
-    )
-
     native.filegroup(
         name = "wpimath_kinematics.generated_files",
         srcs = [
@@ -1036,14 +996,6 @@ def wpimath_spline_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
-    )
-
-    create_imports(
-        name = "robotpy-create-wpimath_spline-imports",
-        base = "wpimath.spline",
-        compiled = "wpimath.spline._spline",
-        library = [":robotpy-wpimath"],
-        output_file = "src/main/python/wpimath/spline/__init__.py",
     )
 
     native.filegroup(
@@ -1469,9 +1421,9 @@ def wpimath_controls_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = 
             ],
             trampolines = [
                 ("frc::ExponentialProfile", "frc__ExponentialProfile.hpp"),
+                ("frc::ExponentialProfile::ProfileTiming", "frc__ExponentialProfile__ProfileTiming.hpp"),
                 ("frc::ExponentialProfile::Constraints", "frc__ExponentialProfile__Constraints.hpp"),
                 ("frc::ExponentialProfile::State", "frc__ExponentialProfile__State.hpp"),
-                ("frc::ExponentialProfile::ProfileTiming", "frc__ExponentialProfile__ProfileTiming.hpp"),
             ],
         ),
         struct(
@@ -1702,14 +1654,6 @@ def wpimath_controls_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = 
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpimath_controls-imports",
-        base = "wpimath.controller",
-        compiled = "wpimath._controls._controls.controller",
-        library = [":robotpy-wpimath"],
-        output_file = "src/main/python/wpimath/controller/__init__.py",
-    )
-
     native.filegroup(
         name = "wpimath_controls.generated_files",
         srcs = [
@@ -1824,4 +1768,11 @@ def define_pybind_library(name):
             "pkg_config": ["wpimath-casters = wpimath", "wpimath = wpimath", "wpimath_filter = wpimath.filter", "wpimath_geometry = wpimath.geometry", "wpimath_interpolation = wpimath.interpolation", "wpimath_kinematics = wpimath.kinematics", "wpimath_spline = wpimath.spline", "wpimath_controls = wpimath._controls"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "wpimath/src/main/python/pyproject.toml",
+        library = [name],
+        update_init = ['wpimath', 'wpimath.controller wpimath._controls._controls.controller', 'wpimath.estimator wpimath._controls._controls.estimator', 'wpimath.filter', 'wpimath.geometry', 'wpimath.optimization wpimath._controls._controls.optimization', 'wpimath.path wpimath._controls._controls.path', 'wpimath.spline', 'wpimath.system wpimath._controls._controls.system', 'wpimath.trajectory wpimath._controls._controls.trajectory', 'wpimath.trajectory.constraint wpimath._controls._controls.constraint'],
     )

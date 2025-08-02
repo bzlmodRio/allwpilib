@@ -24,25 +24,17 @@ def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output_dir", type=pathlib.Path)
     parser.add_argument("--pyproject", type=pathlib.Path)
-    parser.add_argument("--directory", required=True, type=pathlib.Path)
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
     args = parser.parse_args()
 
-    # args.output_dir = args.output_dir.absolute()
-    # if args.output_dir.exists:
-    #     shutil.rmtree(args.output_dir)
-
     hack_pkgconfig(args.pkgcfgs)
-
-    os.chdir(args.directory)
 
     module = importlib.import_module("semiwrap.tool")
     tool_main = getattr(module, "main")
 
 
-    sys.argv = [""] + ["scan-headers", "--check"]        
+    sys.argv = [""] + ["scan-headers", "--check", f"--pyproject_toml={args.pyproject}"]        
     
     try:
         tool_main()

@@ -133,14 +133,6 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpiutil-imports",
-        base = "wpiutil",
-        compiled = "wpiutil._wpiutil",
-        library = [":robotpy-wpiutil"],
-        output_file = "src/main/python/wpiutil/__init__.py",
-    )
-
     native.filegroup(
         name = "wpiutil.generated_files",
         srcs = [
@@ -224,4 +216,11 @@ def define_pybind_library(name):
             "pkg_config": ["wpiutil-casters = wpiutil", "wpiutil = wpiutil"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "wpiutil/src/main/python/pyproject.toml",
+        library = [name],
+        update_init = ['wpiutil', 'wpiutil.sync wpiutil._wpiutil.sync', 'wpiutil.wpistruct wpiutil._wpiutil.wpistruct'],
     )

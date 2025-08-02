@@ -25,8 +25,7 @@ def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output_file", type=pathlib.Path)
-    parser.add_argument("--base")
-    parser.add_argument("--compiled")
+    parser.add_argument("--to_update")
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
     args = parser.parse_args()
     
@@ -35,15 +34,20 @@ def main():
     module = importlib.import_module("semiwrap.tool")
     tool_main = getattr(module, "main")
 
+    if " " in args.to_update:
+        base, compiled = args.to_update.split(" ", 1)
+    else:
+        base = args.to_update
+        compiled = None
 
-    sys.argv = [""] + ["create-imports", "--write", args.base, args.compiled]
+
+    sys.argv = [""] + ["create-imports", "--write", base, compiled, f"--override_output_file={args.output_file}"]
     
     try:
         tool_main()
     except SystemExit as e:
         if e.code != 0:
             raise
-        shutil.copy("xxx.txt", args.output_file)
 
 
 if __name__ == "__main__":

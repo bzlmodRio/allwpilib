@@ -276,7 +276,6 @@ robotpy_py_test(
 
 create_yaml_files(
     name = "robotpy-create-yaml",
-    directory = "wpilibc/src/main/python",
     extra_hdrs = glob(["src/main/python/**/*.h"]),
     package_root_file = "src/main/python/wpilib/__init__.py",
     pkgcfgs = [
@@ -309,7 +308,6 @@ create_yaml_files(
 
 scan_headers(
     name = "robotpy-scan-headers",
-    directory = "wpilibc/src/main/python",
     extra_hdrs = glob(["src/main/python/**/*.h"]) + [":robotpy-native-wpilib.copy_headers"],
     package_root_file = "src/main/python/wpilib/__init__.py",
     pkgcfgs = [

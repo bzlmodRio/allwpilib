@@ -108,14 +108,6 @@ def wpilib_event_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpilib_event-imports",
-        base = "wpilib.event",
-        compiled = "wpilib.event._event",
-        library = [":robotpy-wpilib"],
-        output_file = "src/main/python/wpilib/event/__init__.py",
-    )
-
     native.filegroup(
         name = "wpilib_event.generated_files",
         srcs = [
@@ -1125,14 +1117,6 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         local_defines = ["DYNAMIC_CAMERA_SERVER=1"],
     )
 
-    create_imports(
-        name = "robotpy-create-wpilib-imports",
-        base = "wpilib",
-        compiled = "wpilib._wpilib",
-        library = [":robotpy-wpilib"],
-        output_file = "src/main/python/wpilib/__init__.py",
-    )
-
     native.filegroup(
         name = "wpilib.generated_files",
         srcs = [
@@ -1258,14 +1242,6 @@ def wpilib_counter_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
-    )
-
-    create_imports(
-        name = "robotpy-create-wpilib_counter-imports",
-        base = "wpilib.counter",
-        compiled = "wpilib.counter._counter",
-        library = [":robotpy-wpilib"],
-        output_file = "src/main/python/wpilib/counter/__init__.py",
     )
 
     native.filegroup(
@@ -1397,14 +1373,6 @@ def wpilib_drive_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
         includes = includes,
-    )
-
-    create_imports(
-        name = "robotpy-create-wpilib_drive-imports",
-        base = "wpilib.drive",
-        compiled = "wpilib.drive._drive",
-        library = [":robotpy-wpilib"],
-        output_file = "src/main/python/wpilib/drive/__init__.py",
     )
 
     native.filegroup(
@@ -1896,14 +1864,6 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         includes = includes,
     )
 
-    create_imports(
-        name = "robotpy-create-wpilib_simulation-imports",
-        base = "wpilib.simulation",
-        compiled = "wpilib.simulation._simulation",
-        library = [":robotpy-wpilib"],
-        output_file = "src/main/python/wpilib/simulation/__init__.py",
-    )
-
     native.filegroup(
         name = "wpilib_simulation.generated_files",
         srcs = [
@@ -1990,4 +1950,11 @@ def define_pybind_library(name):
             "pkg_config": ["wpilib_event = wpilib.event", "wpilib = wpilib", "wpilib_counter = wpilib.counter", "wpilib_drive = wpilib.drive", "wpilib_simulation = wpilib.simulation"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "wpilibc/src/main/python/pyproject.toml",
+        library = [name],
+        update_init = ['wpilib', 'wpilib.counter', 'wpilib.drive', 'wpilib.event', 'wpilib.interfaces wpilib._wpilib.interfaces', 'wpilib.simulation', 'wpilib.sysid wpilib._wpilib.sysid'],
     )
