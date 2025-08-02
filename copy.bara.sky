@@ -56,6 +56,24 @@ MOSTROBOTPY_PROJECTS = [
         native_robotpy_name = "robotpy-native-wpilib",
         has_tests = True,
     ),
+    struct(
+        wpilib_name = "cscore",
+        robotpy_name = "robotpy-cscore",
+        native_robotpy_name = None,
+        has_tests = True,
+    ),
+    struct(
+        wpilib_name = "xrpVendordep",
+        robotpy_name = "robotpy-xrp",
+        native_robotpy_name = None,
+        has_tests = True,
+    ),
+    struct(
+        wpilib_name = "romiVendordep",
+        robotpy_name = "robotpy-romi",
+        native_robotpy_name = None,
+        has_tests = True,
+    ),
 ]
 
 def define_mostrobotpy_to_allwpilib():
@@ -63,11 +81,17 @@ def define_mostrobotpy_to_allwpilib():
     destination_files = []
     transformations = []
 
+    EXCLUDES = ["**/meson.build", "**/.gitignore", "**/requirements.txt", "**/run_tests.py", "**/.gittrack", "**/.gittrackexclude"]
+
     for project_info in MOSTROBOTPY_PROJECTS:
         origin_files += glob([
             "subprojects/" + project_info.robotpy_name + "/**",
-            "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml",
-        ], exclude = ["**/meson.build", "**/.gitignore", "**/requirements.txt", "**/run_tests.py"])
+        ], exclude = EXCLUDES)
+
+        if project_info.native_robotpy_name:
+            origin_files += glob([
+                "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml",
+            ], exclude = EXCLUDES)
 
         destination_files += glob([
             project_info.wpilib_name + "/src/main/python/**",
@@ -76,9 +100,11 @@ def define_mostrobotpy_to_allwpilib():
 
         if project_info.has_tests:
             transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/tests", project_info.wpilib_name + "/src/test/python"))
-        transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/pyproject.toml", "subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml"))
+        if project_info.native_robotpy_name:
+            transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/pyproject.toml", "subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml"))
         transformations.append(core.move("subprojects/" + project_info.robotpy_name, project_info.wpilib_name + "/src/main/python"))
-        transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml", project_info.wpilib_name + "/src/main/python/native-pyproject.toml"))
+        if project_info.native_robotpy_name:
+            transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml", project_info.wpilib_name + "/src/main/python/native-pyproject.toml"))
 
     core.workflow(
         name = "mostrobotpy_to_allwpilib",
@@ -212,7 +238,7 @@ def define_robotpy_examples_to_allwpilib():
     )
 
 define_mostrobotpy_to_allwpilib()
-define_allwpilib_to_mostrobotpy()
+# define_allwpilib_to_mostrobotpy()
 
 define_robotpy_commands_to_allwpilib()
 
