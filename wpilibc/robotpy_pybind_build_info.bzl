@@ -1956,5 +1956,5 @@ def define_pybind_library(name):
         name = "{}-create-imports".format(name),
         # project_file = "wpilibc/src/main/python/pyproject.toml",
         library = [name],
-        update_init = ['wpilib', 'wpilib.counter', 'wpilib.drive', 'wpilib.event', 'wpilib.interfaces wpilib._wpilib.interfaces', 'wpilib.simulation', 'wpilib.sysid wpilib._wpilib.sysid'],
+        update_init = ["wpilib", "wpilib.counter", "wpilib.drive", "wpilib.event", "wpilib.interfaces wpilib._wpilib.interfaces", "wpilib.simulation", "wpilib.sysid wpilib._wpilib.sysid"],
     )

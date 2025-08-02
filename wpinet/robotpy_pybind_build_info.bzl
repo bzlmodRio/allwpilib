@@ -162,5 +162,5 @@ def define_pybind_library(name):
         name = "{}-create-imports".format(name),
         # project_file = "wpinet/src/main/python/pyproject.toml",
         library = [name],
-        update_init = ['wpinet'],
+        update_init = ["wpinet"],
     )

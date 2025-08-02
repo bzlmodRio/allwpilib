@@ -218,5 +218,5 @@ def define_pybind_library(name):
         name = "{}-create-imports".format(name),
         # project_file = "{{ project_file }}",
         library = [name],
-        update_init = {{ update_init }},
+        update_init = {{ update_init | jsonify }},
     )

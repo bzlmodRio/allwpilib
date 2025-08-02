@@ -222,5 +222,5 @@ def define_pybind_library(name):
         name = "{}-create-imports".format(name),
         # project_file = "wpiutil/src/main/python/pyproject.toml",
         library = [name],
-        update_init = ['wpiutil', 'wpiutil.sync wpiutil._wpiutil.sync', 'wpiutil.wpistruct wpiutil._wpiutil.wpistruct'],
+        update_init = ["wpiutil", "wpiutil.sync wpiutil._wpiutil.sync", "wpiutil.wpistruct wpiutil._wpiutil.wpistruct"],
     )

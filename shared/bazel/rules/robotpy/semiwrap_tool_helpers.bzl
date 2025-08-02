@@ -73,7 +73,7 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
         # tags = ["manual"],
     )
 
-def create_imports(name, library=None, project_file=None, update_init=[]):
+def create_imports(name, library = None, project_file = None, update_init = []):
     py_binary(
         name = name,
         srcs = [
@@ -86,7 +86,6 @@ def create_imports(name, library=None, project_file=None, update_init=[]):
         tags = ["robotpy", "manual"],
         legacy_create_init = 0,
     )
-
 
     for i, init_file in enumerate(update_init):
         parts = init_file.split(" ", 1)

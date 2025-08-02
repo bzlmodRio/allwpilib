@@ -214,5 +214,5 @@ def define_pybind_library(name):
         name = "{}-create-imports".format(name),
         # project_file = "datalog/src/main/python/pyproject.toml",
         library = [name],
-        update_init = ['wpilog'],
+        update_init = ["wpilog"],
     )

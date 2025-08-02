@@ -220,5 +220,5 @@ def define_pybind_library(name):
         name = "{}-create-imports".format(name),
         # project_file = "apriltag/src/main/python/pyproject.toml",
         library = [name],
-        update_init = ['robotpy_apriltag robotpy_apriltag._apriltag'],
+        update_init = ["robotpy_apriltag robotpy_apriltag._apriltag"],
     )

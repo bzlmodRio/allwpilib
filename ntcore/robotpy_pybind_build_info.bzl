@@ -491,5 +491,5 @@ def define_pybind_library(name):
         name = "{}-create-imports".format(name),
         # project_file = "ntcore/src/main/python/pyproject.toml",
         library = [name],
-        update_init = ['ntcore', 'ntcore.meta ntcore._ntcore.meta'],
+        update_init = ["ntcore", "ntcore.meta ntcore._ntcore.meta"],
     )

@@ -1774,5 +1774,5 @@ def define_pybind_library(name):
         name = "{}-create-imports".format(name),
         # project_file = "wpimath/src/main/python/pyproject.toml",
         library = [name],
-        update_init = ['wpimath', 'wpimath.controller wpimath._controls._controls.controller', 'wpimath.estimator wpimath._controls._controls.estimator', 'wpimath.filter', 'wpimath.geometry', 'wpimath.optimization wpimath._controls._controls.optimization', 'wpimath.path wpimath._controls._controls.path', 'wpimath.spline', 'wpimath.system wpimath._controls._controls.system', 'wpimath.trajectory wpimath._controls._controls.trajectory', 'wpimath.trajectory.constraint wpimath._controls._controls.constraint'],
+        update_init = ["wpimath", "wpimath.controller wpimath._controls._controls.controller", "wpimath.estimator wpimath._controls._controls.estimator", "wpimath.filter", "wpimath.geometry", "wpimath.optimization wpimath._controls._controls.optimization", "wpimath.path wpimath._controls._controls.path", "wpimath.spline", "wpimath.system wpimath._controls._controls.system", "wpimath.trajectory wpimath._controls._controls.trajectory", "wpimath.trajectory.constraint wpimath._controls._controls.constraint"],
     )
