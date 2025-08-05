@@ -100,8 +100,6 @@ name = "cscore"
 depends = ["wpiutil", "wpinet", "ntcore", "cscore-casters"]
 includes = [
     "../../../../bazel-out/k8-opt/bin/cscore/src/main/python/lib/include",
-    # "../native/include",
-    # "../../../../cameraserver/src/main/native/include/",
 ]
 
 [tool.semiwrap.extension_modules."cscore._cscore".headers]

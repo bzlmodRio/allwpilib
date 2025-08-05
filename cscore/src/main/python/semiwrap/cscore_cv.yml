@@ -1,27 +1,7 @@
-
 extra_includes:
 - opencv2/core/core.hpp
 - cvnp/cvnp.h
 
-functions:
-  CS_PutSourceFrame:
-    ignore: true
-  CS_GrabSinkFrame:
-    ignore: true
-  CS_GrabSinkFrameTimeout:
-    ignore: true
-  CS_GrabSinkFrameCpp:
-    ignore: true
-  CS_GrabSinkFrameTimeoutCpp:
-    ignore: true
-  CS_PutSourceFrameCpp:
-    ignore: true
-  PutSourceFrame:
-    ignore: true
-  GrabSinkFrame:
-    ignore: true
-  GrabSinkFrameTimeout:
-    ignore: true
 classes:
   cs::CvSource:
     doc: A source for user code to provide OpenCV images as video frames.
@@ -34,6 +14,9 @@ classes:
           std::string_view, const VideoMode&:
           std::string_view, VideoMode::PixelFormat, int, int, int:
       PutFrame:
+        overloads:
+          cv::Mat&:
+          cv::Mat&, VideoMode::PixelFormat, bool:
   cs::CvSink:
     doc: A sink for user code to accept video frames as OpenCV images.
     force_no_trampoline: true
@@ -42,9 +25,7 @@ classes:
         overloads:
           "":
             ignore: true
-          std::string_view:
-          std::string_view, std::function<void (uint64_t time)>:
-            ignore: true
+          std::string_view, VideoMode::PixelFormat:
       GrabFrame:
         cpp_code: |
           [](cs::CvSink &self, cv::Mat& image, double timeout) -> std::tuple<uint64_t, cv::Mat> {
@@ -61,3 +42,6 @@ classes:
           }
       LastFrameTime:
       LastFrameTimeSource:
+      GrabFrameDirect:
+      GrabFrameNoTimeoutDirect:
+      GrabFrameDirectLastTime:

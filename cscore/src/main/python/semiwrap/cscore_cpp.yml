@@ -1,4 +1,3 @@
-
 functions:
   GetPropertyKind:
     ignore: true
@@ -261,7 +260,6 @@ classes:
           "":
           PixelFormat, int, int, int:
       operator==:
-      operator!=:
       CompareWithoutFps:
     inline_code: |
       .def_readwrite("pixelFormat", &VideoMode::pixelFormat)

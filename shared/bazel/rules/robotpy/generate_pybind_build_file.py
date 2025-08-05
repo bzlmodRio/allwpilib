@@ -67,7 +67,7 @@ class HeaderToDatConfig:
         self.defines = defines
 
         include_root = str(args[3])
-        if "native" in include_root and "cscore" not in include_root:
+        if "native" in include_root:
 
             root_dir = pathlib.Path(
                 include_root[: include_root.find("__main__/") + len("__main__/")]
@@ -79,6 +79,9 @@ class HeaderToDatConfig:
 
             self.include_file = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)/{base_include_file}"
             self.include_root = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)"
+        elif "cscore" in include_root:
+            self.include_file = "$(execpath :cscore.copy_headers)/" + str(args[2].relative_to(include_root))
+            self.include_root = "$(execpath :cscore.copy_headers)"
         else:
             root_dir = pathlib.Path(
                 include_root[: include_root.find("__main__/") + len("__main__/")]
