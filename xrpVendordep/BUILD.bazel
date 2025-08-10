@@ -155,7 +155,7 @@ xrp_extension(
     srcs = ["src/main/python/xrp/src/main.cpp"],
 )
 
-define_pybind_library(name = "robotpy-xrp")
+define_pybind_library(name = "robotpy-xrp", pkgcfgs = PKG_CONFIG_DEPS)
 
 robotpy_py_test(
     "python_tests",
@@ -173,19 +173,3 @@ robotpy_py_test(
     ],
 )
 
-
-# create_yaml_files(
-#     name = "robotpy-create-yaml",
-#     package_root_file = "src/main/python/xrp/__init__.py",
-#     pkgcfgs = PKG_CONFIG_DEPS,
-#     pyproject_toml = "src/main/python/pyproject.toml",
-#     yaml_files = glob(["src/main/python/semiwrap/**"]),
-# )
-
-# scan_headers(
-#     name = "robotpy-scan-headers",
-#     extra_hdrs = [],
-#     package_root_file = "src/main/python/xrp/__init__.py",
-#     pkgcfgs = PKG_CONFIG_DEPS,
-#     pyproject_toml = "src/main/python/pyproject.toml",
-# )

@@ -157,7 +157,7 @@ romi_extension(
     srcs = ["src/main/python/romi/src/main.cpp"],
 )
 
-define_pybind_library(name = "robotpy-romi")
+define_pybind_library(name = "robotpy-romi", pkgcfgs = PKG_CONFIG_DEPS)
 
 robotpy_py_test(
     "python_tests",

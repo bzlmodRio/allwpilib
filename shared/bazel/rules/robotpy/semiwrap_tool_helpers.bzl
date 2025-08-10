@@ -83,7 +83,6 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
     )
 
 def create_imports(name, library = None, project_file = None, update_init = []):
-    return
     py_binary(
         name = name,
         srcs = [
