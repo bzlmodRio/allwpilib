@@ -186,6 +186,7 @@ def define_pybind_library(name, pkgcfgs=[]):
     
     update_yaml_files(
         name = "{}-update-yaml".format(name),
+        yaml_output_directory = "src/main/python/semiwrap",
         extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
         package_root_file = "src/main/python/romi/__init__.py",
         pkgcfgs = pkgcfgs,

@@ -223,17 +223,18 @@ def define_pybind_library(name, pkgcfgs=[]):
     
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        yaml_output_directory = "{{ stripped_include_prefix }}/semiwrap",
+        extra_hdrs = native.glob(["{{stripped_include_prefix}}/**/*.h"], allow_empty=True),
         package_root_file = "{{package_root_file}}",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "{{ stripped_include_prefix }}/pyproject.toml",
+        yaml_files = native.glob(["{{stripped_include_prefix}}/semiwrap/**"]),
     )
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        extra_hdrs = native.glob(["{{stripped_include_prefix}}/**/*.h"], allow_empty=True),
         package_root_file = "{{package_root_file}}",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "{{ stripped_include_prefix }}/pyproject.toml",
     )
