@@ -10,6 +10,14 @@ load("//xrpVendordep:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//xrpVendordep:robotpy_pybind_build_info.bzl", "define_pybind_library", "xrp_extension")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
 
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "src/main/native/include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
 wpilib_cc_library(
     name = "xrpVendordep",
     srcs = glob([

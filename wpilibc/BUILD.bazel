@@ -13,6 +13,15 @@ load("//wpilibc:generate.bzl", "generate_wpilibc")
 load("//wpilibc:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//wpilibc:robotpy_pybind_build_info.bzl", "define_pybind_library", "wpilib_counter_extension", "wpilib_drive_extension", "wpilib_event_extension", "wpilib_extension", "wpilib_simulation_extension")
 
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "src/generated/main/native/include/**/*",
+        "src/main/native/include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
 py_binary(
     name = "generate_hids",
     srcs = ["generate_hids.py"],

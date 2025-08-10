@@ -6,6 +6,7 @@ load("@rules_cc//cc:find_cc_toolchain.bzl", "CC_TOOLCHAIN_ATTRS", "find_cpp_tool
 load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
+load("//shared/bazel/rules/gen:defs.bzl", "gen_versionscript")
 
 # Copied from bazel since it isn't exposed publicly that I can find.
 # https://github.com/bazelbuild/bazel/blob/cc4e3b25a89cd8294406d9489ece706cfcc019bd/src/main/starlark/builtins_bzl/common/cc/cc_helper.bzl#L272
@@ -188,6 +189,7 @@ def third_party_cc_lib_helper(
         include_root,
         src_root = None,
         src_excludes = [],
+        defines = [],
         visibility = None):
     """
     Helper for src / headers pairs that aren't directly compiled, but rather pulled into a bigger library.
@@ -211,6 +213,7 @@ def third_party_cc_lib_helper(
             include_root + "/**",
         ]),
         includes = [include_root],
+        defines = defines,
         strip_include_prefix = include_root,
         visibility = visibility,
     )
@@ -291,6 +294,7 @@ def wpilib_cc_library(
         srcs = srcs + [lib + "-srcs" for lib in third_party_libraries],
         deps = deps + [lib + "-headers" for lib in third_party_libraries + third_party_header_only_libraries],
         strip_include_prefix = strip_include_prefix,
+        linkopts = linkopts,
         **kwargs
     )
 
@@ -328,6 +332,8 @@ def wpilib_cc_shared_library(
         use_debug_name = True,
         features = None,
         win_def_file = None,
+        symbols = None,
+        additional_linker_inputs = None,
         **kwargs):
     """Builds a cc_shared_library with some wpilib conventions applied.
 
@@ -341,6 +347,7 @@ def wpilib_cc_shared_library(
       user_link_flags: User link flags to add to the linking process.  Note:
                        this gets augmented with extra flags to produce libfoo.so
                        or libfood.so if in debug mode.
+      additional_linker_inputs: Additional inputs to provide to the linking process.
       use_debug_name: If true, (default): when in debug mode, produce
                       libfood.so, otherwise produce libfoo.so.  This matches the
                       wpilib convention for debug library naming.  JNI libraries
@@ -349,12 +356,40 @@ def wpilib_cc_shared_library(
       win_def_file: The .def file used to specify symbols used in linking on
                     Windows.  This is selected automatically such that it is
                     only used on Windows.
+      symbols: The symbols to export in the shared library.
     """
 
     folder, lib = _folder_prefix(name)
 
     if not features:
         features = []
+
+    if symbols:
+        if win_def_file:
+            fail("Can't specify symbols and win_def_file")
+
+        exports_target = name + "_exports"
+        gen_versionscript(
+            name = exports_target,
+            src = symbols,
+            lib_name = lib,
+            format = select({
+                "@platforms//os:linux": "linux",
+                "@platforms//os:osx": "osx",
+                "@platforms//os:windows": "windows",
+            }),
+        )
+
+        additional_linker_inputs = (additional_linker_inputs or []) + select({
+            "@platforms//os:windows": [],
+            "//conditions:default": [exports_target],
+        })
+        user_link_flags = (user_link_flags or []) + select({
+            "@platforms//os:linux": ["-Wl,--version-script,$(location " + exports_target + ")"],
+            "@platforms//os:osx": ["-Wl,-exported_symbols_list,$(location " + exports_target + ")"],
+            "@platforms//os:windows": [],
+        })
+        win_def_file = exports_target
 
     if auto_export_windows_symbols:
         features.append("windows_export_all_symbols")
@@ -379,6 +414,7 @@ def wpilib_cc_shared_library(
         user_link_flags = user_link_flags,
         features = features,
         visibility = visibility,
+        additional_linker_inputs = additional_linker_inputs,
         # Only include a .def file on windows.  This makes it so we can mark
         # the .def file as only compatible with windows.
         win_def_file = select({

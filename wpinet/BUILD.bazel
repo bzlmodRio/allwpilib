@@ -13,6 +13,16 @@ load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_file
 load("//wpinet:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//wpinet:robotpy_pybind_build_info.bzl", "define_pybind_library", "wpinet_extension")
 
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "src/main/native/include/**/*",
+        "src/main/native/thirdparty/libuv/include/**/*",
+        "src/main/native/thirdparty/tcpsockets/include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
 WIN_UV_SRCS = glob([
     "src/main/native/thirdparty/libuv/src/win/*.cpp",
     "src/main/native/thirdparty/libuv/src/win/*.h",

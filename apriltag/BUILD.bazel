@@ -14,6 +14,15 @@ load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
 
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "src/main/native/include/**/*",
+        "src/main/native/thirdparty/apriltag/include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
 pkg_files(
     name = "thirdparty-apriltag-src-pkg",
     srcs = glob(["src/main/native/thirdparty/apriltag/include/**"]),

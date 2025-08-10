@@ -16,6 +16,15 @@ load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
 
 filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "src/main/native/include/**/*.h",
+        "src/mrc/include/**/*.h",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
     name = "proto_files",
     srcs = glob(["src/mrc/proto/**/*.proto"]),
 )

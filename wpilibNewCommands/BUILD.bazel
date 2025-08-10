@@ -9,6 +9,15 @@ load("//shared/bazel/rules:packaging.bzl", "package_minimal_cc_project")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//wpilibNewCommands:generate.bzl", "generate_wpilib_new_commands")
 
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "src/generated/main/native/include/**/*",
+        "src/main/native/include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
 py_binary(
     name = "generate_hids",
     srcs = ["generate_hids.py"],

@@ -12,6 +12,14 @@ load("//shared/bazel/rules:packaging.bzl", "package_minimal_jni_project")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
 
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "src/main/native/include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
 WIN_SRCS = glob([
     "src/main/native/windows/**/*.cpp",
     "src/main/native/windows/**/*.h",
