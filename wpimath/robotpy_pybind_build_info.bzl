@@ -3,7 +3,7 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files", "scan_headers")
 
 def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIMATH_HEADER_GEN = [
@@ -1674,7 +1674,7 @@ def publish_library_casters():
         tags = ["robotpy"],
     )
 
-def define_pybind_library(name):
+def define_pybind_library(name, pkgcfgs=[]):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -1765,4 +1765,21 @@ def define_pybind_library(name):
         # project_file = "wpimath/src/main/python/pyproject.toml",
         library = [name],
         update_init = ["wpimath", "wpimath.controller wpimath._controls._controls.controller", "wpimath.estimator wpimath._controls._controls.estimator", "wpimath.filter", "wpimath.geometry", "wpimath.optimization wpimath._controls._controls.optimization", "wpimath.path wpimath._controls._controls.path", "wpimath.spline", "wpimath.system wpimath._controls._controls.system", "wpimath.trajectory wpimath._controls._controls.trajectory", "wpimath.trajectory.constraint wpimath._controls._controls.constraint"],
+    )
+    
+    update_yaml_files(
+        name = "robotpy-update-yaml",
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        package_root_file = "src/main/python/wpimath/__init__.py",
+        pkgcfgs = pkgcfgs,
+        pyproject_toml = "src/main/python/pyproject.toml",
+        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+    )
+
+    scan_headers(
+        name = "robotpy-scan-headers",
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        package_root_file = "src/main/python/wpimath/__init__.py",
+        pkgcfgs = pkgcfgs,
+        pyproject_toml = "src/main/python/pyproject.toml",
     )

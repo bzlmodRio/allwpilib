@@ -10,12 +10,10 @@ exports_files([
 ])
 
 py_binary(
-    name = "create-yaml",
-    srcs = ["create-yaml.py"],
+    name = "update-yaml",
+    srcs = ["update-yaml.py"],
     deps = [
         requirement("semiwrap"),
-        requirement("dictdiffer"),
-        requirement("ruamel.yaml"),
     ],
 )
 

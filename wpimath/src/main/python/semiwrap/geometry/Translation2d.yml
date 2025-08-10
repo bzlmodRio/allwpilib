@@ -39,6 +39,10 @@ classes:
           std::initializer_list<Translation2d> [const]:
             ignore: true
 
+      SquaredDistance:
+      SquaredNorm:
+      Dot:
+      Cross:
 inline_code: |
   cls_Translation2d
     .def_static("fromFeet", [](units::foot_t x, units::foot_t y){

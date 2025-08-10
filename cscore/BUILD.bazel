@@ -10,7 +10,6 @@ load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
 load("//shared/bazel/rules:packaging.bzl", "package_minimal_jni_project")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
 
 filegroup(
     name = "doxygen-files",
@@ -362,21 +361,5 @@ cscore_extension(
 
 define_pybind_library(
     name = "robotpy-cscore",
-)
-
-create_yaml_files(
-    name = "robotpy-create-yaml",
-    package_root_file = "src/main/python/cscore/__init__.py",
-    extra_hdrs = glob(["src/main/native/include/**/*"]) + ["cscore.copy_headers"] + ["//cameraserver:headers", ":headers"],
     pkgcfgs = PKG_CONFIG_DEPS,
-    pyproject_toml = "src/main/python/pyproject.toml",
-    yaml_files = glob(["src/main/python/semiwrap/**"]),
 )
-
-# scan_headers(
-#     name = "robotpy-scan-headers",
-#     extra_hdrs = glob(["src/main/native/include/**/*"]) + ["cscore.copy_headers"] + ["//cameraserver:headers", ":headers"],
-#     package_root_file = "src/main/python/cscore/__init__.py",
-#     pkgcfgs = PKG_CONFIG_DEPS,
-#     pyproject_toml = "src/main/python/pyproject.toml",
-# )

@@ -3,7 +3,7 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files", "scan_headers")
 
 def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIUTIL_HEADER_GEN = [
@@ -163,7 +163,7 @@ def publish_library_casters():
         tags = ["robotpy"],
     )
 
-def define_pybind_library(name):
+def define_pybind_library(name, pkgcfgs=[]):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -223,4 +223,21 @@ def define_pybind_library(name):
         # project_file = "wpiutil/src/main/python/pyproject.toml",
         library = [name],
         update_init = ["wpiutil", "wpiutil.sync wpiutil._wpiutil.sync", "wpiutil.wpistruct wpiutil._wpiutil.wpistruct"],
+    )
+    
+    update_yaml_files(
+        name = "robotpy-update-yaml",
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        package_root_file = "src/main/python/wpiutil/__init__.py",
+        pkgcfgs = pkgcfgs,
+        pyproject_toml = "src/main/python/pyproject.toml",
+        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+    )
+
+    scan_headers(
+        name = "robotpy-scan-headers",
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        package_root_file = "src/main/python/wpiutil/__init__.py",
+        pkgcfgs = pkgcfgs,
+        pyproject_toml = "src/main/python/pyproject.toml",
     )

@@ -2,7 +2,7 @@
 
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files", "scan_headers")
 
 def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIMATH_TEST_HEADER_GEN = [
@@ -91,7 +91,7 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name):
+def define_pybind_library(name, pkgcfgs=[]):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -149,3 +149,20 @@ def define_pybind_library(name):
         library = [name],
         update_init = [],
     )
+    
+    # update_yaml_files(
+    #     name = "{}-update-yaml".format(name),
+    #     extra_hdrs = native.glob(["src/test/python/**/*.h"], allow_empty=True),
+    #     package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
+    #     pkgcfgs = pkgcfgs,
+    #     pyproject_toml = "src/test/python/cpp/pyproject.toml",
+    #     yaml_files = native.glob(["src/test/python/cpp/semiwrap/**"]),
+    # )
+
+    # scan_headers(
+    #     name = "{}-scan-headers".format(name),
+    #     extra_hdrs = native.glob(["src/test/python/**/*.h"], allow_empty=True),
+    #     package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
+    #     pkgcfgs = pkgcfgs,
+    #     pyproject_toml = "src/test/python/cpp/pyproject.toml",
+    # )

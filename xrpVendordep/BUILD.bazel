@@ -8,7 +8,6 @@ load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//xrpVendordep:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//xrpVendordep:robotpy_pybind_build_info.bzl", "define_pybind_library", "xrp_extension")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_yaml_files", "scan_headers")
 
 filegroup(
     name = "doxygen-files",
@@ -175,18 +174,18 @@ robotpy_py_test(
 )
 
 
-create_yaml_files(
-    name = "robotpy-create-yaml",
-    package_root_file = "src/main/python/xrp/__init__.py",
-    pkgcfgs = PKG_CONFIG_DEPS,
-    pyproject_toml = "src/main/python/pyproject.toml",
-    yaml_files = glob(["src/main/python/semiwrap/**"]),
-)
+# create_yaml_files(
+#     name = "robotpy-create-yaml",
+#     package_root_file = "src/main/python/xrp/__init__.py",
+#     pkgcfgs = PKG_CONFIG_DEPS,
+#     pyproject_toml = "src/main/python/pyproject.toml",
+#     yaml_files = glob(["src/main/python/semiwrap/**"]),
+# )
 
-scan_headers(
-    name = "robotpy-scan-headers",
-    extra_hdrs = [],
-    package_root_file = "src/main/python/xrp/__init__.py",
-    pkgcfgs = PKG_CONFIG_DEPS,
-    pyproject_toml = "src/main/python/pyproject.toml",
-)
+# scan_headers(
+#     name = "robotpy-scan-headers",
+#     extra_hdrs = [],
+#     package_root_file = "src/main/python/xrp/__init__.py",
+#     pkgcfgs = PKG_CONFIG_DEPS,
+#     pyproject_toml = "src/main/python/pyproject.toml",
+# )
