@@ -229,11 +229,7 @@ define_native_wrapper(
     pyproject_toml = "src/main/python/native-pyproject.toml",
 )
 
-generate_robotpy_pybind_build_info(
-    name = "robotpy-apriltag-generator",
-    additional_srcs = [":robotpy-native-apriltag.copy_headers"],
-    package_root_file = "src/main/python/robotpy_apriltag/__init__.py",
-    pkgcfgs = [
+PYBIND_PKGCFG_DEPS = [
         "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
@@ -243,7 +239,13 @@ generate_robotpy_pybind_build_info(
         "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
         "//apriltag:native/apriltag/robotpy-native-apriltag.pc",
         "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-    ],
+]
+
+generate_robotpy_pybind_build_info(
+    name = "robotpy-apriltag-generator",
+    additional_srcs = [":robotpy-native-apriltag.copy_headers"],
+    package_root_file = "src/main/python/robotpy_apriltag/__init__.py",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
     yaml_files = glob(["src/main/python/semiwrap/*.yml"]),
 )
 
@@ -254,7 +256,7 @@ apriltag_extension(
     ],
 )
 
-define_pybind_library(name = "robotpy-apriltag")
+define_pybind_library(name = "robotpy-apriltag", pkgcfgs = PYBIND_PKGCFG_DEPS)
 
 robotpy_py_test(
     "python_tests",

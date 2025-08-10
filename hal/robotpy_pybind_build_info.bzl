@@ -645,7 +645,7 @@ def define_pybind_library(name, pkgcfgs=[]):
     )
     
     update_yaml_files(
-        name = "robotpy-update-yaml",
+        name = "{}-update-yaml".format(name),
         extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
         package_root_file = "src/main/python/hal/__init__.py",
         pkgcfgs = pkgcfgs,
@@ -654,7 +654,7 @@ def define_pybind_library(name, pkgcfgs=[]):
     )
 
     scan_headers(
-        name = "robotpy-scan-headers",
+        name = "{}-scan-headers".format(name),
         extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
         package_root_file = "src/main/python/hal/__init__.py",
         pkgcfgs = pkgcfgs,

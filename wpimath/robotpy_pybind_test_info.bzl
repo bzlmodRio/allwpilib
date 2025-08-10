@@ -150,19 +150,19 @@ def define_pybind_library(name, pkgcfgs=[]):
         update_init = [],
     )
     
-    # update_yaml_files(
-    #     name = "{}-update-yaml".format(name),
-    #     extra_hdrs = native.glob(["src/test/python/**/*.h"], allow_empty=True),
-    #     package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
-    #     pkgcfgs = pkgcfgs,
-    #     pyproject_toml = "src/test/python/cpp/pyproject.toml",
-    #     yaml_files = native.glob(["src/test/python/cpp/semiwrap/**"]),
-    # )
+    update_yaml_files(
+        name = "{}-update-yaml".format(name),
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
+        pkgcfgs = pkgcfgs,
+        pyproject_toml = "src/main/python/pyproject.toml",
+        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+    )
 
-    # scan_headers(
-    #     name = "{}-scan-headers".format(name),
-    #     extra_hdrs = native.glob(["src/test/python/**/*.h"], allow_empty=True),
-    #     package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
-    #     pkgcfgs = pkgcfgs,
-    #     pyproject_toml = "src/test/python/cpp/pyproject.toml",
-    # )
+    scan_headers(
+        name = "{}-scan-headers".format(name),
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
+        pkgcfgs = pkgcfgs,
+        pyproject_toml = "src/main/python/pyproject.toml",
+    )

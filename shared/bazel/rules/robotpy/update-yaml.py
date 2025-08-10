@@ -53,16 +53,5 @@ def main():
         if e.code != 0:
             raise
 
-    # print("Original")
-    # for root, _, files in os.walk(args.pyproject.parent / "semiwrap"):
-    #     print(root, files)
-    if (args.output_dir / "semiwrap2").exists():
-        os.unlink(args.output_dir / "semiwrap2")
-
-    import tempfile
-    # with tempfile.TemporaryDirectory() as gendir:
-    #     shutil.move(args.output_dir / "semiwrap/semiwrap", pathlib.Path(gendir))
-    #     shutil.move(pathlib.Path(gendir) / "semiwrap", args.output_dir)
-
 if __name__ == "__main__":
     main()
