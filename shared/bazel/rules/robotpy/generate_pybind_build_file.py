@@ -27,21 +27,9 @@ from shared.bazel.rules.robotpy.generation_utils import (
     fixup_root_package_name,
     fixup_shared_lib_name,
 )
+from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
 
 
-def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
-    """
-    This will place the given files in the PKG_CONFIG_PATH in such a way that will trick
-    semiwrap into thinking the libraries have been installed
-    """
-
-    pkg_config_paths = os.environ.get("PKG_CONFIG_PATH", "").split(os.pathsep)
-
-    if pkgcfgs:
-        for pc in pkgcfgs:
-            pkg_config_paths.append(str(pc.parent))
-
-    os.environ["PKG_CONFIG_PATH"] = os.pathsep.join(pkg_config_paths)
 
 
 class HeaderToDatConfig:
@@ -72,7 +60,6 @@ class HeaderToDatConfig:
             root_dir = pathlib.Path(
                 include_root[: include_root.find("__main__/") + len("__main__/")]
             )
-            print(include_root)
             base_include_root = pathlib.Path(*args[3].relative_to(root_dir).parts[3:])
             base_include_file = args[2].relative_to(include_root)
             base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
@@ -220,7 +207,7 @@ class BazelExtensionModule:
                 self._get_transative_native_dependencies(dep_name, transative_deps)
                 for d in transative_deps:
                     base_library = fixup_root_package_name(
-                        re.search("robotpy-native-(.*)", d)[1]
+                        d.replace("robotpy-native-", "")
                     )
                     native_wrapper_dependencies.add(
                         f"//{base_library}:{fixup_native_lib_name(d)}.copy_headers"
@@ -385,16 +372,11 @@ def generate_pybind_build_file(
         return json.dumps(item)
 
     def target_from_python_dep(python_dep):
-        if python_dep == "pyntcore":
-            return "//ntcore:pyntcore"
-        elif "wpilib" == python_dep:
-            return "//wpilibc:robotpy-wpilib"
-        elif "native" in python_dep:
-            base_library = re.search("robotpy-native-(.*)", python_dep)[1]
+        if "native" in python_dep:
+            base_library = python_dep.replace("robotpy-native-", "")
             return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
         else:
-            print(python_dep)
-            base_library = re.search("robotpy-(.*)", python_dep)[1]
+            base_library = python_dep.replace("robotpy-", "")
             return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
 
     python_deps = []

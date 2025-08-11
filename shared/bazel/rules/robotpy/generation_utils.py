@@ -9,6 +9,8 @@ def fixup_root_package_name(name):
         return "xrpVendordep"
     if name == "romi":
         return "romiVendordep"
+    if name == "pyntcore":
+        return "ntcore"
     return name
 
 
@@ -35,4 +37,6 @@ def fixup_python_dep_name(name):
         return "robotpy-wpilog"
     if name == "robotpy-ntcore":
         return "pyntcore"
+    if name == "wpilib":
+        return "robotpy-wpilib"
     return name

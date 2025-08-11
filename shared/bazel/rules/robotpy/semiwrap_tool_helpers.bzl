@@ -68,16 +68,19 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
     py_test(
         name = name,
         srcs = [
-            "//shared/bazel/rules/robotpy:scan-headers.py",
+            "//shared/bazel/rules/robotpy:wrapper.py",
         ],
         deps = [
+            "//shared/bazel/rules/robotpy:hack_pkgcfgs",
             requirement("semiwrap"),
         ],
         args = [
+            "semiwrap.tool",
+            "scan-headers",
             "--pyproject=$(location " + pyproject_toml + ")",
         ] + pkgcfg_args,
         data = extra_hdrs + pkgcfgs + [pyproject_toml, package_root_file],
-        main = "shared/bazel/rules/robotpy/scan-headers.py",
+        main = "shared/bazel/rules/robotpy/wrapper.py",
         size = "small",
         # tags = ["manual"],
     )
@@ -86,19 +89,20 @@ def create_imports(name, library = None, project_file = None, update_init = []):
     py_binary(
         name = name,
         srcs = [
-            "//shared/bazel/rules/robotpy:create-imports.py",
+            "//shared/bazel/rules/robotpy:wrapper.py",
         ],
         deps = library + [
+            "//shared/bazel/rules/robotpy:hack_pkgcfgs",
             requirement("semiwrap"),
         ],
-        main = "shared/bazel/rules/robotpy/create-imports.py",
+        main = "shared/bazel/rules/robotpy/wrapper.py",
         # tags = ["robotpy", "manual"],
         legacy_create_init = 0,
     )
 
     for i, init_file in enumerate(update_init):
         parts = init_file.split(" ", 1)
-        cmd = "$(location " + name + ") --output_file=$(OUTS) --to_update='" + init_file + "'"
+        cmd = "$(location " + name + ") semiwrap.tool create-imports --write --override_output_file=$(OUTS) " + init_file
         native.genrule(
             name = "{}{}.gen".format(name, i),
             tools = [name],

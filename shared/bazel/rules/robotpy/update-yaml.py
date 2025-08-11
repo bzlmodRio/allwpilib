@@ -5,21 +5,7 @@ import pathlib
 import sys
 from typing import List
 import shutil
-
-
-def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
-    """
-    This will place the given files in the PKG_CONFIG_PATH in such a way that will trick
-    semiwrap into thinking the libraries have been installed
-    """
-
-    pkg_config_paths = os.environ.get("PKG_CONFIG_PATH", "").split(os.pathsep)
-
-    if pkgcfgs:
-        for pc in pkgcfgs:
-            pkg_config_paths.append(str(pc.parent.absolute()))
-
-    os.environ["PKG_CONFIG_PATH"] = os.pathsep.join(pkg_config_paths)
+from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
 
 
 def main():
@@ -29,14 +15,15 @@ def main():
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
     args = parser.parse_args()
 
+    args.pyproject = args.pyproject.absolute()
+    args.output_dir = args.output_dir.absolute()
+    args.pkgcfgs = [x.absolute() for x in args.pkgcfgs]
+    os.chdir(args.pyproject.parent)
+
     hack_pkgconfig(args.pkgcfgs)
 
     module = importlib.import_module("semiwrap.tool")
     tool_main = getattr(module, "main")
-
-    args.pyproject = args.pyproject.absolute()
-    args.output_dir = args.output_dir.absolute()
-    os.chdir(args.pyproject.parent)
 
     sys.argv = [""] + [
         "update-yaml",
