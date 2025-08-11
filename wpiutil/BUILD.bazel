@@ -322,12 +322,6 @@ java_binary(
     ],
 )
 
-package_default_jni_project(
-    name = "wpiutil",
-    maven_artifact_name = "wpiutil-cpp",
-    maven_group_id = "edu.wpi.first.wpiutil",
-)
-
 generate_robotpy_native_wrapper_build_info(
     name = "robotpy-native-wpiutil-generator",
     pyproject_toml = "src/main/python/native-pyproject.toml",
@@ -416,5 +410,11 @@ robotpy_py_test(
         ":wpiutil_test",
         requirement("pytest"),
     ],
+)
+
+package_default_jni_project(
+    name = "wpiutil",
+    maven_artifact_name = "wpiutil-cpp",
+    maven_group_id = "edu.wpi.first.wpiutil",
 )
 
