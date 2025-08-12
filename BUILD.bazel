@@ -175,7 +175,7 @@ write_source_files(
 )
 
 write_source_files(
-    name = "write_robotpy_create_yaml_files",
+    name = "write_robotpy_update_yaml_files",
     additional_update_targets = [
         "//apriltag:write_robotpy-apriltag-update-yaml",
         "//datalog:write_robotpy-wpilog-update-yaml",
