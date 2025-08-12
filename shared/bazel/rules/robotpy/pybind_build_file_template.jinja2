@@ -224,7 +224,11 @@ def define_pybind_library(name, pkgcfgs=[]):
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "{{ stripped_include_prefix }}/semiwrap",
-        extra_hdrs = native.glob(["{{stripped_include_prefix}}/**/*.h"], allow_empty=True),
+        extra_hdrs = native.glob(["{{stripped_include_prefix}}/**/*.h"], allow_empty=True) + [
+            {% for d in python_deps %}
+            {%- if "native" in d %}"{{d}}.copy_headers",{%- endif %}
+            {%- endfor %}
+        ],
         package_root_file = "{{package_root_file}}",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "{{ stripped_include_prefix }}/pyproject.toml",
@@ -233,7 +237,11 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["{{stripped_include_prefix}}/**/*.h"], allow_empty=True),
+        extra_hdrs = native.glob(["{{stripped_include_prefix}}/**/*.h"], allow_empty=True) + [
+            {% for d in python_deps %}
+            {%- if "native" in d %}"{{d}}.copy_headers",{%- endif %}
+            {%- endfor %}
+        ],
         package_root_file = "{{package_root_file}}",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "{{ stripped_include_prefix }}/pyproject.toml",

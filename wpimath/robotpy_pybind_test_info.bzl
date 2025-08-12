@@ -153,7 +153,9 @@ def define_pybind_library(name, pkgcfgs=[]):
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "src/test/python/cpp/semiwrap",
-        extra_hdrs = native.glob(["src/test/python/cpp/**/*.h"], allow_empty=True),
+        extra_hdrs = native.glob(["src/test/python/cpp/**/*.h"], allow_empty=True) + [
+            
+        ],
         package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/test/python/cpp/pyproject.toml",
@@ -162,7 +164,9 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["src/test/python/cpp/**/*.h"], allow_empty=True),
+        extra_hdrs = native.glob(["src/test/python/cpp/**/*.h"], allow_empty=True) + [
+            
+        ],
         package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/test/python/cpp/pyproject.toml",

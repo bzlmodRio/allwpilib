@@ -220,7 +220,9 @@ def define_pybind_library(name, pkgcfgs=[]):
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "src/main/python/semiwrap",
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + [
+            "//datalog:robotpy-native-datalog.copy_headers",
+        ],
         package_root_file = "src/main/python/wpilog/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
@@ -229,7 +231,9 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + [
+            "//datalog:robotpy-native-datalog.copy_headers",
+        ],
         package_root_file = "src/main/python/wpilog/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",

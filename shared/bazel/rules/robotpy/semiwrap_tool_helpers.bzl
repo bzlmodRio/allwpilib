@@ -7,8 +7,12 @@ def __create_yaml_files_impl(ctx):
     output_dir = ctx.actions.declare_directory(ctx.attr.gen_dir)
 
     args = ctx.actions.args()
-    args.add("--output_dir=" + output_dir.path)
-    args.add("--pyproject=" + ctx.files.pyproject_toml[0].path)
+    args.add("semiwrap.tool")
+    args.add("update-yaml")
+    args.add("--write")
+    args.add("-v")
+    args.add("--project_file=" + ctx.files.pyproject_toml[0].path)
+    args.add("--override_output_directory=" + output_dir.path)
 
     if ctx.files.pkgcfgs:
         args.add("--pkgcfgs")
@@ -34,7 +38,7 @@ __create_yaml_files = rule(
         "pyproject_toml": attr.label(mandatory = True, allow_files = True),
         "yaml_files": attr.label_list(mandatory = True, allow_files = True),
         "_tool": attr.label(
-            default = Label("//shared/bazel/rules/robotpy:update-yaml"),
+            default = Label("//shared/bazel/rules/robotpy:wrapper"),
             cfg = "exec",
             executable = True,
         ),

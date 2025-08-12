@@ -25,15 +25,6 @@ py_library(
 )
 
 py_binary(
-    name = "update-yaml",
-    srcs = ["update-yaml.py"],
-    deps = [
-        ":hack_pkgcfgs",
-        requirement("semiwrap"),
-    ],
-)
-
-py_binary(
     name = "generate_native_build_file",
     srcs = ["generate_native_build_file.py"],
     visibility = ["//visibility:public"],
