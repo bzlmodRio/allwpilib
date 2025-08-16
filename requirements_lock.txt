@@ -430,8 +430,9 @@ ruamel-yaml-clib==0.2.12 \
     --hash=sha256:fc4b630cd3fa2cf7fce38afa91d7cfe844a9f75d7f0f36393fa98815e911d987 \
     --hash=sha256:fd5415dded15c3822597455bc02bcd66e81ef8b7a48cb71a33628fc9fdde39df
     # via ruamel-yaml
-semiwrap @ file:///home/pjreiniger/git/robotpy/robotpy_monorepo/semiwrap/dist/semiwrap-0.1.6.dev1%2Bg6b4b3c702-py3-none-any.whl \
-    --hash=sha256:9422fcc812bed66784f9677fa4f903ee75b0db24f1515b49742cab335374f016
+semiwrap==0.1.7 \
+    --hash=sha256:30fa32d08c1fc7a44635cd9887f288d8b410f3f86e386ccb1ef09c6ce7f077cd \
+    --hash=sha256:a4a3ec562f2e89f8c49c946a922217519c88f153269b982c7832e86efdb0290b
     # via -r requirements.txt
 sphinxify==0.12 \
     --hash=sha256:3ec299e78babac7d3457f47bf263411b48e10b9c8add18d7159fa0327cc4a061 \
