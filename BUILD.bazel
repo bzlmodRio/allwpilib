@@ -190,6 +190,7 @@ write_source_files(
     tags = [
         "pregeneration",
         "robotpy",
+        "manual",
     ],
     target_compatible_with = robotpy_compatibility_select(),
 )

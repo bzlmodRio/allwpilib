@@ -46,6 +46,7 @@ __update_yaml_files = rule(
 )
 
 def update_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", **kwargs):
+    return
     __update_yaml_files(
         name = name,
         gen_dir = "{}_gen_update_yaml".format(name),
