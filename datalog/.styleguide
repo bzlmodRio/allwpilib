@@ -24,5 +24,6 @@ repoRootNameOverride {
 includeOtherLibs {
   ^fmt/
   ^gtest/
+  ^upb/
   ^wpi/(?!datalog)
 }
