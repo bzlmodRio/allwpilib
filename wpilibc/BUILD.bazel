@@ -215,29 +215,20 @@ define_native_wrapper(
 )
 
 PKG_CONFIG_DEPS = [
-        "//datalog:src/main/python/wpilog/wpilog.pc",
-        "//ntcore:src/main/python/ntcore/ntcore.pc",
-        "//wpinet:src/main/python/wpinet/wpinet.pc",
-        "//hal:src/main/python/hal/wpihal.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
-        "//wpimath:src/main/python/wpimath/wpimath.pc",
-        "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-        "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-        "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-        "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-        "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-        "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-        "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
-        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
-        "//hal:native/wpihal/robotpy-native-wpihal.pc",
-        "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
-        "//datalog:native/datalog/robotpy-native-datalog.pc",
-        "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
-        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-    ]
+    "//datalog:native/datalog/robotpy-native-datalog.pc",
+    "//datalog:robotpy-wpilog.generated_pkgcfg_files",
+    "//hal:native/wpihal/robotpy-native-wpihal.pc",
+    "//hal:robotpy-hal.generated_pkgcfg_files",
+    "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+    "//ntcore:pyntcore.generated_pkgcfg_files",
+    "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
+    "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+    "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
+    "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
+    "//wpinet:robotpy-wpinet.generated_pkgcfg_files",
+    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
+]
 
 generate_robotpy_pybind_build_info(
     name = "robotpy-wpilib-generator",
@@ -292,7 +283,10 @@ wpilib_simulation_extension(
     ]),
 )
 
-define_pybind_library(name = "robotpy-wpilib", pkgcfgs = PKG_CONFIG_DEPS)
+define_pybind_library(
+    name = "robotpy-wpilib",
+    pkgcfgs = PKG_CONFIG_DEPS,
+)
 
 robotpy_py_test(
     "python_tests",

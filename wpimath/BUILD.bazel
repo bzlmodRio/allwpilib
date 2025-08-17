@@ -8,7 +8,6 @@ load("//shared/bazel/rules:cc_rules.bzl", "generate_def_windows", "third_party_c
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
-load("//wpimath:generate.bzl", "generate_wpimath")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//wpimath:generate.bzl", "generate_wpimath")
@@ -337,11 +336,9 @@ define_native_wrapper(
 )
 
 PYBIND_PKGCFG_DEPS = [
-        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+    "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
 ]
 
 generate_robotpy_pybind_build_info(
@@ -413,7 +410,10 @@ wpimath_controls_extension(
     ]),
 )
 
-define_pybind_library(name = "robotpy-wpimath", pkgcfgs = PYBIND_PKGCFG_DEPS)
+define_pybind_library(
+    name = "robotpy-wpimath",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+)
 
 generate_robotpy_pybind_build_info(
     name = "robotpy-wpimath_test-generator",
@@ -421,14 +421,10 @@ generate_robotpy_pybind_build_info(
     generated_file_name = "robotpy_pybind_test_info.bzl",
     package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
     pkgcfgs = [
-        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
         "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-        "//wpimath:src/main/python/wpimath/wpimath.pc",
-        "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-        "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
+        "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
     ],
     pyproject_toml = "src/test/python/cpp/pyproject.toml",
     stripped_include_prefix = "src/test/python/cpp",
@@ -459,7 +455,7 @@ define_test_pybind_library(
         "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
         "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
-    ]
+    ],
 )
 
 robotpy_py_test(

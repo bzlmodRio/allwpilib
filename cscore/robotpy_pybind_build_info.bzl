@@ -3,7 +3,7 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files", "scan_headers")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files")
 
 def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     CSCORE_HEADER_GEN = [
@@ -173,7 +173,7 @@ def publish_library_casters():
         tags = ["robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs=[]):
+def define_pybind_library(name, pkgcfgs = []):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -236,10 +236,10 @@ def define_pybind_library(name, pkgcfgs=[]):
         library = [name],
         update_init = ["cscore"],
     )
-    
+
     update_yaml_files(
         name = "robotpy-update-yaml",
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + ["cscore.copy_headers"] + ["//cameraserver:headers", ":headers"],
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + ["cscore.copy_headers"] + ["//cameraserver:headers", ":headers"],
         package_root_file = "src/main/python/cscore/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",

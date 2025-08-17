@@ -47,9 +47,10 @@ __create_yaml_files = rule(
 
 def update_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", **kwargs):
     __create_yaml_files(
-        name = name, 
-        gen_dir  = "{}_gen_create_yaml".format(name),
-        **kwargs)
+        name = name,
+        gen_dir = "{}_gen_create_yaml".format(name),
+        **kwargs
+    )
 
     write_source_files(
         name = "write_{}".format(name),
@@ -61,11 +62,10 @@ def update_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", 
     )
 
 def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
-
     if pkgcfgs:
         pkgcfg_args = ["--pkgcfgs"]
         for pkgcfg in pkgcfgs:
-            pkgcfg_args.append(" $(location " + pkgcfg + ")")
+            pkgcfg_args.append(" $(locations " + pkgcfg + ")")
     else:
         pkgcfg_args = []
 

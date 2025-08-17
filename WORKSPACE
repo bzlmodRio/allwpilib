@@ -1,5 +1,4 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file", "http_jar")
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
 load("//thirdparty/ceres:repositories.bzl", "ceres_repositories")
 
 ceres_repositories()
@@ -109,7 +108,7 @@ http_archive(
     strip_prefix = "rules_python_pytest-1.1.1",
     url = "https://github.com/caseyduquettesc/rules_python_pytest/releases/download/v1.1.1/rules_python_pytest-v1.1.1.tar.gz",
 )
-    
+
 http_archive(
     name = "rules_doxygen",
     sha256 = "5d154d3d011208510392b5aee8ea23ec61ab858cc1f3382b6eb8c729d3b4b336",
@@ -448,8 +447,6 @@ http_archive(
 load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
 
 rules_pkg_dependencies()
-
-load("@rules_python_pytest//python_pytest:repositories.bzl", "rules_python_pytest_dependencies")
 
 rules_python_pytest_dependencies()
 

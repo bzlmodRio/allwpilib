@@ -2,7 +2,7 @@
 
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files", "scan_headers")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
 def wpilib_event_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPILIB_EVENT_HEADER_GEN = [
@@ -1875,7 +1875,7 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs=[]):
+def define_pybind_library(name, pkgcfgs = []):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -1892,7 +1892,7 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     # Files that will be included in the wheel as data deps
     native.filegroup(
-        name = "{}.generated_data_files".format(name),
+        name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/main/python/wpilib/event/wpilib_event.pc",
             "src/main/python/wpilib/wpilib.pc",
@@ -1901,6 +1901,7 @@ def define_pybind_library(name, pkgcfgs=[]):
             "src/main/python/wpilib/simulation/wpilib_simulation.pc",
         ],
         tags = ["manual", "robotpy"],
+        visibility = ["//visibility:public"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
@@ -1920,7 +1921,7 @@ def define_pybind_library(name, pkgcfgs=[]):
             "src/main/python/wpilib/simulation/_init__simulation.py",
         ],
         data = [
-            "{}.generated_data_files".format(name),
+            "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
             ":src/main/python/wpilib/event/_event",
             ":src/main/python/wpilib/_wpilib",
@@ -1958,11 +1959,11 @@ def define_pybind_library(name, pkgcfgs=[]):
         library = [name],
         update_init = ["wpilib", "wpilib.counter", "wpilib.drive", "wpilib.event", "wpilib.interfaces wpilib._wpilib.interfaces", "wpilib.simulation", "wpilib.sysid wpilib._wpilib.sysid"],
     )
-    
+
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "src/main/python/semiwrap",
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + [
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
             "//wpilibc:robotpy-native-wpilib.copy_headers",
         ],
         package_root_file = "src/main/python/wpilib/__init__.py",
@@ -1973,7 +1974,7 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + [
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
             "//wpilibc:robotpy-native-wpilib.copy_headers",
         ],
         package_root_file = "src/main/python/wpilib/__init__.py",

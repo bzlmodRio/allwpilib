@@ -158,7 +158,7 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     # Files that will be included in the wheel as data deps
     native.filegroup(
-        name = "{}.generated_data_files".format(name),
+        name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             {%- for em in extension_modules %}
             "{{stripped_include_prefix}}/{{em.gen_pkgconf.install_path}}/{{ em.gen_pkgconf.output_file }}",
@@ -169,6 +169,7 @@ def define_pybind_library(name, pkgcfgs=[]):
             {%- endfor %}
         ],
         tags = ["manual", "robotpy"],
+        visibility = ["//visibility:public"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
@@ -186,7 +187,7 @@ def define_pybind_library(name, pkgcfgs=[]):
         {%- endfor %}
         ],
         data = [
-            "{}.generated_data_files".format(name),
+            "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
         {%- for em in extension_modules %}
             ":{{stripped_include_prefix}}/{{em.install_path}}/{{em.gen_modinit.lib_name}}",

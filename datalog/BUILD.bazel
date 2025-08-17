@@ -163,11 +163,9 @@ define_native_wrapper(
 )
 
 PYBIND_PKGCFG_DEPS = [
-        "//datalog:native/datalog/robotpy-native-datalog.pc",
-        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+    "//datalog:native/datalog/robotpy-native-datalog.pc",
+    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
 ]
 
 generate_robotpy_pybind_build_info(
@@ -185,7 +183,10 @@ wpilog_extension(
     ],
 )
 
-define_pybind_library(name = "robotpy-wpilog", pkgcfgs = PYBIND_PKGCFG_DEPS)
+define_pybind_library(
+    name = "robotpy-wpilog",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+)
 
 robotpy_py_test(
     "datalog_tests",

@@ -239,15 +239,13 @@ define_native_wrapper(
 )
 
 PYBIND_PKGCFG_DEPS = [
-        "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
-        "//datalog:src/main/python/wpilog/wpilog.pc",
-        "//datalog:native/datalog/robotpy-native-datalog.pc",
-        "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
-        "//wpinet:src/main/python/wpinet/wpinet.pc",
-        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+    "//datalog:native/datalog/robotpy-native-datalog.pc",
+    "//datalog:robotpy-wpilog.generated_pkgcfg_files",
+    "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+    "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
+    "//wpinet:robotpy-wpinet.generated_pkgcfg_files",
+    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
 ]
 
 generate_robotpy_pybind_build_info(
@@ -269,7 +267,10 @@ ntcore_extension(
     ],
 )
 
-define_pybind_library(name = "pyntcore", pkgcfgs=PYBIND_PKGCFG_DEPS)
+define_pybind_library(
+    name = "pyntcore",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+)
 
 robotpy_py_test(
     "python_tests",

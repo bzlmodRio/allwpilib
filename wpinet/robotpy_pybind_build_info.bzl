@@ -2,7 +2,7 @@
 
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files", "scan_headers")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
 def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPINET_HEADER_GEN = [
@@ -104,7 +104,7 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs=[]):
+def define_pybind_library(name, pkgcfgs = []):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -117,11 +117,12 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     # Files that will be included in the wheel as data deps
     native.filegroup(
-        name = "{}.generated_data_files".format(name),
+        name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/main/python/wpinet/wpinet.pc",
         ],
         tags = ["manual", "robotpy"],
+        visibility = ["//visibility:public"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
@@ -137,7 +138,7 @@ def define_pybind_library(name, pkgcfgs=[]):
             "src/main/python/wpinet/_init__wpinet.py",
         ],
         data = [
-            "{}.generated_data_files".format(name),
+            "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
             ":src/main/python/wpinet/_wpinet",
             ":wpinet.trampoline_hdr_files",
@@ -164,11 +165,11 @@ def define_pybind_library(name, pkgcfgs=[]):
         library = [name],
         update_init = ["wpinet"],
     )
-    
+
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "src/main/python/semiwrap",
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + [
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
             "//wpinet:robotpy-native-wpinet.copy_headers",
         ],
         package_root_file = "src/main/python/wpinet/__init__.py",
@@ -179,7 +180,7 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + [
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
             "//wpinet:robotpy-native-wpinet.copy_headers",
         ],
         package_root_file = "src/main/python/wpinet/__init__.py",

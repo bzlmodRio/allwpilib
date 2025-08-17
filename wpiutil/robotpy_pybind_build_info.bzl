@@ -3,7 +3,7 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files", "scan_headers")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
 def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIUTIL_HEADER_GEN = [
@@ -163,7 +163,7 @@ def publish_library_casters():
         tags = ["robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs=[]):
+def define_pybind_library(name, pkgcfgs = []):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -176,13 +176,14 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     # Files that will be included in the wheel as data deps
     native.filegroup(
-        name = "{}.generated_data_files".format(name),
+        name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/main/python/wpiutil/wpiutil.pc",
             "src/main/python/wpiutil/wpiutil-casters.pc",
             "src/main/python/wpiutil/wpiutil-casters.pybind11.json",
         ],
         tags = ["manual", "robotpy"],
+        visibility = ["//visibility:public"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
@@ -198,7 +199,7 @@ def define_pybind_library(name, pkgcfgs=[]):
             "src/main/python/wpiutil/_init__wpiutil.py",
         ],
         data = [
-            "{}.generated_data_files".format(name),
+            "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
             ":src/main/python/wpiutil/_wpiutil",
             ":wpiutil.trampoline_hdr_files",
@@ -224,11 +225,11 @@ def define_pybind_library(name, pkgcfgs=[]):
         library = [name],
         update_init = ["wpiutil", "wpiutil.sync wpiutil._wpiutil.sync", "wpiutil.wpistruct wpiutil._wpiutil.wpistruct"],
     )
-    
+
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "src/main/python/semiwrap",
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + [
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
         package_root_file = "src/main/python/wpiutil/__init__.py",
@@ -239,7 +240,7 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + [
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
         package_root_file = "src/main/python/wpiutil/__init__.py",
