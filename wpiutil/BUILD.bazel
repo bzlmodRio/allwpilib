@@ -332,8 +332,8 @@ generate_robotpy_native_wrapper_build_info(
         "llvm",
         "mpack",
         "nanopb",
-        "protobuf",
         "sigslot",
+        "upb",
     ],
 )
 

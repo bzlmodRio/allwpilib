@@ -188,9 +188,9 @@ write_source_files(
         "//wpiutil:write_robotpy-wpiutil-update-yaml",
     ],
     tags = [
+        "manual",
         "pregeneration",
         "robotpy",
-        "manual",
     ],
     target_compatible_with = robotpy_compatibility_select(),
 )
