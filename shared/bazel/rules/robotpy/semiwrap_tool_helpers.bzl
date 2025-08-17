@@ -99,6 +99,7 @@ def create_imports(name, library = None, project_file = None, update_init = []):
         deps = library + [
             "//shared/bazel/rules/robotpy:hack_pkgcfgs",
             requirement("semiwrap"),
+            requirement("black"),
         ],
         main = "shared/bazel/rules/robotpy/wrapper.py",
         # tags = ["robotpy", "manual"],
