@@ -442,19 +442,10 @@ wpimath_test_extension(
 define_test_pybind_library(
     name = "robotpy-wpimath-test",
     pkgcfgs = [
-        "//wpimath:src/main/python/wpimath/wpimath.pc",
-        "//wpimath:src/main/python/wpimath/filter/wpimath_filter.pc",
-        "//wpimath:src/main/python/wpimath/geometry/wpimath_geometry.pc",
-        "//wpimath:src/main/python/wpimath/kinematics/wpimath_kinematics.pc",
-        "//wpimath:src/main/python/wpimath/spline/wpimath_spline.pc",
-        "//wpimath:src/main/python/wpimath/_controls/wpimath_controls.pc",
-        "//wpimath:src/main/python/wpimath/wpimath-casters.pc",
-        "//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json",
         "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+        "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
         "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
-        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+        "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
     ],
 )
 

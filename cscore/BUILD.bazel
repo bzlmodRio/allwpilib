@@ -329,15 +329,13 @@ copy_to_directory(
 
 PKG_CONFIG_DEPS = [
     "//datalog:native/datalog/robotpy-native-datalog.pc",
-    "//datalog:src/main/python/wpilog/wpilog.pc",
-    "//ntcore:src/main/python/ntcore/ntcore.pc",
+    "//datalog:robotpy-wpilog.generated_pkgcfg_files",
     "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+    "//ntcore:pyntcore.generated_pkgcfg_files",
     "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
-    "//wpinet:src/main/python/wpinet/wpinet.pc",
+    "//wpinet:robotpy-wpinet.generated_pkgcfg_files",
     "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-    "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
-    "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
-    "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+    "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
 ]
 
 # generate_robotpy_pybind_build_info(

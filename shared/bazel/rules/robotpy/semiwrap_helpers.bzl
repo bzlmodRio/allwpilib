@@ -39,6 +39,7 @@ def publish_casters(
         outs = [output_json, output_pc],
         cmd = cmd,
         tools = _wrapper_dep() + typecasters_srcs + [package_root],
+        visibility = ["//visibility:public"],
         tags = ["robotpy"],
     )
 
