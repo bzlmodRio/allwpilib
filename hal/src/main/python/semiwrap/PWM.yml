@@ -5,7 +5,7 @@ functions:
   HAL_InitializePWMPort:
   HAL_FreePWMPort:
   HAL_CheckPWMChannel:
-  HAL_SetPWMSimDevice:
   HAL_SetPWMPulseTimeMicroseconds:
   HAL_GetPWMPulseTimeMicroseconds:
+  HAL_SetPWMSimDevice:
   HAL_SetPWMOutputPeriod:

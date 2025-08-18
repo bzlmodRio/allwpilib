@@ -26,9 +26,9 @@ classes:
       SetConnectedFrequencyThreshold:
       Get:
       SetDutyCycleRange:
+      GetSourceChannel:
       SetAssumedFrequency:
       SetInverted:
-      GetSourceChannel:
       InitSendable:
 
 inline_code: |

@@ -10,9 +10,9 @@ classes:
       Start:
       Restart:
       Stop:
+      GetFPGATimestamp:
+      GetMatchTime:
       HasElapsed:
       AdvanceIfElapsed:
       IsRunning:
       GetTimestamp:
-      GetFPGATimestamp:
-      GetMatchTime:

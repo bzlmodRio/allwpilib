@@ -23,8 +23,8 @@ classes:
       Sample:
       TransformBy:
       RelativeTo:
-      operator+:
       InitialPose:
+      operator+:
       operator==:
   frc::Trajectory::State:
     force_no_default_constructor: true

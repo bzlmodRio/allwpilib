@@ -88,10 +88,10 @@ functions:
         auto s = wpi::make_string(sv);
         HALSIM_SetRoboRioComments(&s);
       }
+  HALSIM_RegisterRoboRioAllCallbacks:
+    ignore: true
   HALSIM_RegisterRoboRioCPUTempCallback:
     ignore: true
   HALSIM_CancelRoboRioCPUTempCallback:
   HALSIM_GetRoboRioCPUTemp:
   HALSIM_SetRoboRioCPUTemp:
-  HALSIM_RegisterRoboRioAllCallbacks:
-    ignore: true

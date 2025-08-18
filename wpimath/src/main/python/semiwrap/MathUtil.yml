@@ -1,29 +1,7 @@
 functions:
-  ApplyDeadband:
-    param_override:
-      maxMagnitude:
-        default: '1.0'
-    template_impls:
-    - [double]
-  CopySignPow:
-    param_override:
-      maxMagnitude:
-        default: '1.0'
-    template_impls:
-    - [double]
   InputModulus:
     template_impls:
     - [double]
-  IsNear:
-    overloads:
-      T, T, T:
-        ignore: true
-        template_impls:
-        - [double]
-      T, T, T, T, T:
-        ignore: true
-        template_impls:
-        - [double]
   AngleModulus:
   FloorDiv:
     template_impls:
@@ -41,6 +19,28 @@ functions:
       [](int64_t x, int64_t y) -> int64_t {
         return frc::FloorMod(x, y);
       }
+  ApplyDeadband:
+    param_override:
+      maxMagnitude:
+        default: '1.0'
+    template_impls:
+    - [double]
+  CopySignPow:
+    param_override:
+      maxMagnitude:
+        default: '1.0'
+    template_impls:
+    - [double]
+  IsNear:
+    overloads:
+      T, T, T:
+        ignore: true
+        template_impls:
+        - [double]
+      T, T, T, T, T:
+        ignore: true
+        template_impls:
+        - [double]
   SlewRateLimit:
     overloads:
       const Translation2d&, const Translation2d&, units::second_t, units::meters_per_second_t:

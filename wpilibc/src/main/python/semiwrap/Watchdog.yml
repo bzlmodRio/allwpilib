@@ -8,6 +8,10 @@ classes:
             ignore: true
       GetTime:
       SetTimeout:
+        overloads:
+          double:
+            ignore: true
+          units::second_t:
       GetTimeout:
       IsExpired:
       AddEpoch:

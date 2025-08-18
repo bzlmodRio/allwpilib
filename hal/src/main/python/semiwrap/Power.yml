@@ -8,7 +8,7 @@ functions:
   HAL_GetUserActive3V3:
   HAL_GetUserCurrentFaults3V3:
   HAL_SetUserRailEnabled3V3:
-  HAL_ResetUserCurrentFaults:
   HAL_GetBrownoutVoltage:
   HAL_SetBrownoutVoltage:
   HAL_GetCPUTemp:
+  HAL_ResetUserCurrentFaults:

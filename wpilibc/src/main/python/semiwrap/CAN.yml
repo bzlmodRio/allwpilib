@@ -9,10 +9,10 @@ classes:
           int, int:
           int, int, int, int:
       WritePacket:
-      WritePacketRepeating:
-      WriteRTRFrame:
       WritePacketNoError:
+      WritePacketRepeating:
       WritePacketRepeatingNoError:
+      WriteRTRFrame:
       WriteRTRFrameNoError:
       StopPacketRepeating:
       ReadPacketNew:

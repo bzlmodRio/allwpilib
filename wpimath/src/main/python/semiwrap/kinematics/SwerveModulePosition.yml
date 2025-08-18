@@ -8,8 +8,8 @@ classes:
       distance:
       angle:
     methods:
-      operator==:
       Interpolate:
+      operator==:
     inline_code: |
       .def(
         py::init<

@@ -3,7 +3,7 @@ classes:
     rename: _DriverStationModeThread
     methods:
       DriverStationModeThread:
-      InDisabled:
       InAutonomous:
+      InDisabled:
       InTeleop:
       InTest:

@@ -8,18 +8,18 @@ functions:
   HALSIM_CancelPWMInitializedCallback:
   HALSIM_GetPWMInitialized:
   HALSIM_SetPWMInitialized:
-  HALSIM_GetPWMSimDevice:
   HALSIM_RegisterPWMPulseMicrosecondCallback:
     ignore: true
   HALSIM_CancelPWMPulseMicrosecondCallback:
     ignore: true
   HALSIM_GetPWMPulseMicrosecond:
   HALSIM_SetPWMPulseMicrosecond:
+  HALSIM_RegisterPWMAllCallbacks:
+    ignore: true
+  HALSIM_GetPWMSimDevice:
   HALSIM_RegisterPWMOutputPeriodCallback:
     ignore: true
   HALSIM_CancelPWMOutputPeriodCallback:
     ignore: true
   HALSIM_GetPWMOutputPeriod:
   HALSIM_SetPWMOutputPeriod:
-  HALSIM_RegisterPWMAllCallbacks:
-    ignore: true

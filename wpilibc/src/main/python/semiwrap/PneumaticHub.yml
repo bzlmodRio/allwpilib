@@ -33,7 +33,6 @@ classes:
       MakeSolenoid:
       MakeDoubleSolenoid:
       MakeCompressor:
-      ReportUsage:
       GetVersion:
       GetFaults:
       GetStickyFaults:
@@ -44,6 +43,7 @@ classes:
       GetSolenoidsVoltage:
       GetAnalogVoltage:
       GetPressure:
+      ReportUsage:
   frc::PneumaticHub::Version:
     attributes:
       FirmwareMajor:
@@ -86,6 +86,6 @@ classes:
       Brownout:
       CanWarning:
       CanBusOff:
+      HasReset:
       HardwareFault:
       FirmwareFault:
-      HasReset:

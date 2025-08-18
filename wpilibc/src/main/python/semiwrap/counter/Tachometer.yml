@@ -4,7 +4,9 @@ classes:
     - wpi::SendableHelper<Tachometer>
     methods:
       Tachometer:
-      SetEdgeConfiguration:
+        overloads:
+          DigitalSource&:
+          std::shared_ptr<DigitalSource>:
       GetFrequency:
       GetPeriod:
       GetEdgesPerRevolution:
@@ -14,3 +16,4 @@ classes:
       GetStopped:
       SetMaxPeriod:
       InitSendable:
+      SetEdgeConfiguration:

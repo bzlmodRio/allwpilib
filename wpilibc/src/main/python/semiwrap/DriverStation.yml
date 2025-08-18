@@ -11,7 +11,6 @@ classes:
       MatchType:
       POVDirection:
     methods:
-      GetAngle:
       GetStickButton:
       GetStickButtonPressed:
       GetStickButtonReleased:
@@ -21,7 +20,6 @@ classes:
       GetStickAxisCount:
       GetStickPOVCount:
       GetStickButtonCount:
-      GetJoystickIsGamepad:
       GetJoystickType:
       GetJoystickName:
       GetJoystickAxisType:
@@ -53,6 +51,8 @@ classes:
       SilenceJoystickConnectionWarning:
       IsJoystickConnectionWarningSilenced:
       StartDataLog:
+      GetAngle:
+      GetJoystickIsGamepad:
     inline_code: |
       .def("getControlState",
         [](DriverStation *self) -> std::tuple<bool, bool, bool> {

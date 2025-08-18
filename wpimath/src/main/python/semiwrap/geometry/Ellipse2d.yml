@@ -24,8 +24,8 @@ classes:
       Intersects:
       Contains:
       Distance:
-      Nearest:
       operator==:
+      Nearest:
 
 inline_code: |-
   cls_Ellipse2d

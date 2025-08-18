@@ -11,5 +11,5 @@ classes:
       Get:
       SetAngle:
       GetAngle:
-      GetChannel:
       InitSendable:
+      GetChannel:

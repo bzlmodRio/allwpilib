@@ -8,8 +8,8 @@ classes:
     methods:
       PS5Controller:
       GetLeftX:
-      GetLeftY:
       GetRightX:
+      GetLeftY:
       GetRightY:
       GetL2Axis:
       GetR2Axis:
@@ -65,13 +65,13 @@ classes:
       GetPSButtonPressed:
       GetPSButtonReleased:
       PS:
-      GetTouchpadButton:
-      GetTouchpadButtonPressed:
-      GetTouchpadButtonReleased:
-      Touchpad:
       GetTouchpad:
       GetTouchpadPressed:
       GetTouchpadReleased:
+      Touchpad:
+      GetTouchpadButton:
+      GetTouchpadButtonPressed:
+      GetTouchpadButtonReleased:
       InitSendable:
   frc::PS5Controller::Button:
     attributes:

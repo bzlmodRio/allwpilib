@@ -7,7 +7,6 @@ from . import geometry
 from ._wpimath import (
     angleModulus,
     applyDeadband,
-    copySignPow,
     floorDiv,
     floorMod,
     inputModulus,
@@ -18,7 +17,6 @@ from ._wpimath import (
 __all__ = [
     "angleModulus",
     "applyDeadband",
-    "copySignPow",
     "floorDiv",
     "floorMod",
     "inputModulus",

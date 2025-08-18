@@ -17,10 +17,8 @@ classes:
       SetTimeSource:
       GetTime:
       GetFPGATime:
-      GetBatteryVoltage:
       IsSysActive:
       IsBrownedOut:
-      GetCommsDisableCount:
       GetRSLState:
       IsSystemTimeValid:
       GetInputVoltage:
@@ -29,8 +27,10 @@ classes:
       SetEnabled3V3:
       GetEnabled3V3:
       GetFaultCount3V3:
-      ResetRailFaultCounts:
+      GetBatteryVoltage:
       GetBrownoutVoltage:
       SetBrownoutVoltage:
       GetCPUTemp:
       GetCANStatus:
+      GetCommsDisableCount:
+      ResetRailFaultCounts:

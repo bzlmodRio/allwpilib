@@ -9,8 +9,8 @@ classes:
     methods:
       PS4Controller:
       GetLeftX:
-      GetLeftY:
       GetRightX:
+      GetLeftY:
       GetRightY:
       GetL2Axis:
       GetR2Axis:
@@ -66,13 +66,13 @@ classes:
       GetPSButtonPressed:
       GetPSButtonReleased:
       PS:
-      GetTouchpadButton:
-      GetTouchpadButtonPressed:
-      GetTouchpadButtonReleased:
-      Touchpad:
       GetTouchpad:
       GetTouchpadPressed:
       GetTouchpadReleased:
+      Touchpad:
+      GetTouchpadButton:
+      GetTouchpadButtonPressed:
+      GetTouchpadButtonReleased:
       InitSendable:
   frc::PS4Controller::Button:
     attributes:

@@ -2,11 +2,11 @@ classes:
   frc::SensorUtil:
     nodelete: true
     methods:
-      GetDefaultCTREPCMModule:
-      GetDefaultREVPHModule:
       CheckDigitalChannel:
       CheckPWMChannel:
       CheckAnalogInputChannel:
+      GetDefaultCTREPCMModule:
+      GetDefaultREVPHModule:
       GetNumDigitalChannels:
       GetNumAnalogInputs:
       GetNumPwmChannels:

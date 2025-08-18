@@ -17,7 +17,7 @@ classes:
       RegisterPulseMicrosecondCallback:
       GetPulseMicrosecond:
       SetPulseMicrosecond:
+      ResetData:
       RegisterOutputPeriodCallback:
       GetOutputPeriod:
       SetOutputPeriod:
-      ResetData:

@@ -14,11 +14,9 @@ classes:
         overloads:
           int:
           int, int, ModuleType:
-      GetNumChannels:
       GetVoltage:
       GetTemperature:
       GetCurrent:
-      GetAllCurrents:
       GetTotalCurrent:
       GetTotalPower:
       GetTotalEnergy:
@@ -31,6 +29,8 @@ classes:
       GetVersion:
       GetFaults:
       GetStickyFaults:
+      GetNumChannels:
+      GetAllCurrents:
       InitSendable:
   frc::PowerDistribution::Version:
     attributes:
@@ -100,8 +100,8 @@ classes:
       Brownout:
       CanWarning:
       CanBusOff:
+      HasReset:
       HardwareFault:
       FirmwareFault:
-      HasReset:
     methods:
       GetBreakerFault:

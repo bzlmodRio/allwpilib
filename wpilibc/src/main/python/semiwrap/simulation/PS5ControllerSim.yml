@@ -10,8 +10,8 @@ classes:
           const PS5Controller&:
           int:
       SetLeftX:
-      SetLeftY:
       SetRightX:
+      SetLeftY:
       SetRightY:
       SetL2Axis:
       SetR2Axis:
@@ -28,6 +28,6 @@ classes:
       SetL3Button:
       SetR3Button:
       SetPSButton:
-      SetTouchpadButton:
       SetTouchpad:
         ignore: true
+      SetTouchpadButton:

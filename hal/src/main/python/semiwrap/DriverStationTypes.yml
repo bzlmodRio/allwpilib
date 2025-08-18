@@ -7,10 +7,10 @@ extra_includes:
 enums:
   HAL_AllianceStationID:
     value_prefix: HAL_AllianceStationID
-  HAL_MatchType:
-    value_prefix: HAL_kMatchType
   HAL_JoystickPOV:
     value_prefix: HAL_JoystickPOV
+  HAL_MatchType:
+    value_prefix: HAL_kMatchType
 classes:
   HAL_ControlWord:
     attributes:
@@ -36,13 +36,13 @@ classes:
       count:
   HAL_JoystickDescriptor:
     attributes:
-      isGamepad:
       type:
       name:
       axisCount:
       axisTypes:
       buttonCount:
       povCount:
+      isGamepad:
   HAL_MatchInfo:
     attributes:
       eventName:

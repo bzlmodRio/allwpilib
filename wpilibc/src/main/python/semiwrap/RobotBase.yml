@@ -6,11 +6,11 @@ functions:
   # TODO
   RunHALInitialization:
     ignore: true
-  ResetMotorSafety:
-    ignore: true
   RunRobot:
     ignore: true
   StartRobot:
+    ignore: true
+  ResetMotorSafety:
     ignore: true
 classes:
   frc::RobotBase:

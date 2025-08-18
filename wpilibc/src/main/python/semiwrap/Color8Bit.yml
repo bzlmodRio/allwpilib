@@ -26,9 +26,9 @@ classes:
                 name: blue
           const Color&:
           std::string_view:
-      operator==:
       FromHexString:
       HexString:
+      operator==:
 
 inline_code: |
   cls_Color8Bit

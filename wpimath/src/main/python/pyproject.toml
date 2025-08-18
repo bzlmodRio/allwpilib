@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "hatchling.build"
 requires = [
-    "semiwrap~=0.1.4",
+    "semiwrap~=0.1.7",
     "hatch-meson~=0.1.0b2",
     "hatch-robotpy~=0.2.1",
     "hatchling",
@@ -1574,6 +1574,7 @@ DifferentialDriveAccelerationLimiter = "frc/controller/DifferentialDriveAccelera
 DifferentialDriveFeedforward = "frc/controller/DifferentialDriveFeedforward.h"
 DifferentialDriveWheelVoltages = "frc/controller/DifferentialDriveWheelVoltages.h"
 ElevatorFeedforward = "frc/controller/ElevatorFeedforward.h"
+HolonomicDriveController = "frc/controller/HolonomicDriveController.h"
 ImplicitModelFollower = "frc/controller/ImplicitModelFollower.h"
 LTVDifferentialDriveController = "frc/controller/LTVDifferentialDriveController.h"
 LTVUnicycleController = "frc/controller/LTVUnicycleController.h"

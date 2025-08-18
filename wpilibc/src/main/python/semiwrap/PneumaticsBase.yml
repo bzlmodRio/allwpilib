@@ -32,6 +32,6 @@ classes:
       MakeSolenoid:
       MakeDoubleSolenoid:
       MakeCompressor:
-      ReportUsage:
       GetForType:
       GetDefaultForType:
+      ReportUsage:

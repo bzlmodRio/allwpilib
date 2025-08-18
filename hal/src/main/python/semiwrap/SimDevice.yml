@@ -147,8 +147,6 @@ classes:
       GetName:
       CreateValue:
         ignore: true
-      CreateInt:
-      CreateLong:
       CreateDouble:
       CreateEnum:
         overloads:
@@ -181,8 +179,11 @@ classes:
               }
 
       CreateBoolean:
+      CreateInt:
+      CreateLong:
 
-inline_code: |
+inline_code: |2
+
   cls_SimValue
     .def_property_readonly("value", [](const hal::SimValue &self) -> py::object {
         HAL_Value value;

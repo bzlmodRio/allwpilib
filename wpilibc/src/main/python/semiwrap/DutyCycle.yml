@@ -7,6 +7,12 @@ classes:
     - wpi::SendableHelper<DutyCycle>
     methods:
       DutyCycle:
+        overloads:
+          DigitalSource&:
+            ignore: true
+          DigitalSource*:
+            ignore: true
+          std::shared_ptr<DigitalSource>:
       GetFrequency:
       GetOutput:
       GetHighTime:
