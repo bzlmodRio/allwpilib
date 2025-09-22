@@ -74,8 +74,8 @@ index a74b6b00d616828a8e5ab25c1fd15f2528b4d76d..87c890f7659ae9d59ae70557df464aaf
  #endif
  
  #include "llvm/Support/raw_ostream.h"
-+#include "wpi/util/SmallString.h"
-+#include "wpi/util/SmallVector.h"
++#include "wpi/SmallString.h"
++#include "wpi/SmallVector.h"
  #include "llvm/ADT/StringExtras.h"
  #include "llvm/Config/config.h"
  #include "llvm/Support/AutoConvert.h"
