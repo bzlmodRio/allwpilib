@@ -4,7 +4,6 @@
 
 package org.wpilib.networktables;
 
-import org.wpilib.networktables.NetworkTablesJNI;
 import org.wpilib.util.runtime.CombinedRuntimeLoader;
 
 public final class DevMain {
