@@ -10,6 +10,7 @@ import java.util.PriorityQueue;
 import org.wpilib.hardware.hal.DriverStationJNI;
 import org.wpilib.hardware.hal.HAL;
 import org.wpilib.hardware.hal.NotifierJNI;
+import org.wpilib.system.RobotController;
 import org.wpilib.units.measure.Time;
 
 /**

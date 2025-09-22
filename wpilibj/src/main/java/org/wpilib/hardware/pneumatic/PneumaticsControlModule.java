@@ -6,6 +6,7 @@ package org.wpilib.hardware.pneumatic;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.wpilib.SensorUtil;
 import org.wpilib.hardware.hal.CTREPCMJNI;
 import org.wpilib.hardware.hal.HAL;
 import org.wpilib.hardware.hal.PortsJNI;

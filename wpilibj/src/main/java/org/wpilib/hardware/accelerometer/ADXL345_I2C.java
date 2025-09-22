@@ -6,6 +6,7 @@ package org.wpilib.hardware.accelerometer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import org.wpilib.hardware.bus.I2C;
 import org.wpilib.hardware.hal.HAL;
 import org.wpilib.hardware.hal.SimDevice;
 import org.wpilib.hardware.hal.SimDouble;

@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+import org.wpilib.driverstation.DriverStation;
+import org.wpilib.system.RobotController;
 import org.wpilib.units.collections.LongToObjectHashMap;
 import org.wpilib.units.measure.Dimensionless;
 import org.wpilib.units.measure.Distance;

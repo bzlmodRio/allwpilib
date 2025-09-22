@@ -7,6 +7,7 @@ package org.wpilib.system;
 import java.io.Closeable;
 import java.util.PriorityQueue;
 import java.util.concurrent.locks.ReentrantLock;
+import org.wpilib.driverstation.DriverStation;
 import org.wpilib.hardware.hal.NotifierJNI;
 
 /**

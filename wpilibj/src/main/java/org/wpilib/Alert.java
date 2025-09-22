@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import org.wpilib.smartdashboard.SmartDashboard;
+import org.wpilib.system.RobotController;
 import org.wpilib.util.sendable.Sendable;
 import org.wpilib.util.sendable.SendableBuilder;
 

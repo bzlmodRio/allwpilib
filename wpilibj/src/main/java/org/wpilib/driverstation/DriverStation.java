@@ -25,6 +25,7 @@ import org.wpilib.networktables.IntegerPublisher;
 import org.wpilib.networktables.NetworkTableInstance;
 import org.wpilib.networktables.StringPublisher;
 import org.wpilib.networktables.StringTopic;
+import org.wpilib.system.Timer;
 import org.wpilib.util.WPIUtilJNI;
 import org.wpilib.util.concurrent.EventVector;
 

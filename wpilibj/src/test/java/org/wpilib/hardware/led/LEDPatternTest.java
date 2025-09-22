@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.wpilib.system.RobotController;
 import org.wpilib.util.Color;
 import org.wpilib.util.Color8Bit;
 
