@@ -16,9 +16,9 @@ def run_global_replacements(wpiutil_llvm_files: list[Path]):
         content = content.replace("llvm:", "wpi:")
 
         # Fix #includes
-        content = content.replace('include "llvm/ADT', 'include "wpi')
-        content = content.replace('include "llvm/Config', 'include "wpi')
-        content = content.replace('include "llvm/Support', 'include "wpi')
+        content = content.replace('include "llvm/ADT', 'include "wpi/util')
+        content = content.replace('include "llvm/Config', 'include "wpi/util')
+        content = content.replace('include "llvm/Support', 'include "wpi/util')
 
         # Fix uses of span
         content = content.replace("span", "std::span")

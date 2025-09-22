@@ -29,7 +29,7 @@ def generate_hids(output_directory: Path, template_directory: Path, schema_file:
         keep_trailing_newline=True,
     )
     root_path = output_directory / hdr_subdirectory
-    template = env.get_template("hid.h.jinja")
+    template = env.get_template("hid.hpp.jinja")
     for controller in controllers:
         controllerName = f"{controller['ConsoleName']}Controller.h"
         output = template.render(controller)
