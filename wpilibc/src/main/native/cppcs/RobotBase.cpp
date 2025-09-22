@@ -20,7 +20,7 @@
 #include <wpi/ntcore/NetworkTableInstance.hpp>
 #include <wpi/util/print.hpp>
 #include <wpi/util/timestamp.hpp>
-#include <wpi/math/MathShared.hpp>
+#include <wpi/math/util/MathShared.hpp>
 
 #include "wpi/system/WPILibVersion.hpp"
 #include "wpi/driverstation/DriverStation.hpp"
