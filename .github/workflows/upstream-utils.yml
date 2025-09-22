@@ -149,3 +149,11 @@ jobs:
             echo "::error ::upstream_utils check failed. This is usually caused by a bad script or the copied files differing from what the script outputs. You can learn more about using upstream_utils to modify thirdparty libraries at https://github.com/wpilibsuite/allwpilib/blob/main/upstream_utils/README.md"
             exit $git_exit_code
           fi
+      - name: Generate diff
+        run: git diff HEAD > upstream-utils-fixes.patch
+        if: ${{ failure() }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: upstream utils fixes
+          path: upstream-utils-fixes.patch
+        if: ${{ failure() }}
