@@ -1407,7 +1407,7 @@ def run_cc_renames(pp_config: PreprocessedConfig):
 def run_cc_include_fixup(pp_config):
     def cc_replacement_filter(full_file):
         suffix = full_file.split(".")[-1]
-        return suffix in ["cpp", "h", "hpp", "jinja", "mm"]
+        return suffix in ["c", "cpp", "h", "hpp", "jinja", "mm"]
 
     def cc_replacement_impl(contents):
         for old_pkg, new_pkg in pp_config.cc_incude_replacements.items():
