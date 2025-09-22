@@ -1420,12 +1420,8 @@ def run_cc_include_fixup(pp_config):
 
     def cc_replacement_impl(contents):
         for old_pkg, new_pkg in pp_config.cc_incude_replacements.items():
-            contents = contents.replace(
-                f'"{old_pkg}"', f'"{new_pkg}"'
-            )
-            contents = contents.replace(
-                f"<{old_pkg}>", f"<{new_pkg}>"
-            )
+            contents = contents.replace(f'"{old_pkg}"', f'"{new_pkg}"')
+            contents = contents.replace(f"<{old_pkg}>", f"<{new_pkg}>")
 
         return contents
 
