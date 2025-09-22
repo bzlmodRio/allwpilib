@@ -140,7 +140,7 @@ doxygen.sourceSets.main {
         exclude 'wpi/util/mpack.h'
 
         // units
-        exclude 'units/**'
+        exclude 'wpi/units/**'
     }
 
     exclude '*.pb.h'
