@@ -11,8 +11,8 @@ from typing import Dict
 class RawConfig:
 
     PROJECT_RENAMES = [
-        ("wpilibNewCommands/", "command/"),
-        ("fieldImages/", "fields/"),
+        ("command/", "command/"),
+        ("fields/", "fields/"),
         ("datalogtool/", "tools/datalogtool/"),
         ("outlineviewer/", "tools/outlineviewer/"),
         ("processstarter/", "tools/processstarter/"),
@@ -486,9 +486,9 @@ class RawConfig:
     ]
 
     STR_REPLACEMENTS = [
-        ("wpilibNewCommands", "command"),
+        ("command", "command"),
         ("wpilibnewcommands", "command"),
-        ("fieldImages", "fields"),
+        ("fields", "fields"),
         ("fieldimages", "fields"),
         (
             "frc2/command/button/Command{{ ConsoleName }}Controller.h",

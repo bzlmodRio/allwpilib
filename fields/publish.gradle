@@ -51,7 +51,7 @@ addTaskToCopyAllOutputs(cppSourcesZip)
 
 model {
     publishing {
-        def wpilibCTaskList = createComponentZipTasks($.components, ['fieldImages'], cppZipBaseName, Zip, project, includeStandardZipFormat)
+        def wpilibCTaskList = createComponentZipTasks($.components, ['fields'], cppZipBaseName, Zip, project, includeStandardZipFormat)
 
         publications {
             cpp(MavenPublication) {

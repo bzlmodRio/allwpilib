@@ -1,4 +1,4 @@
-project(wpilibNewCommands)
+project(command)
 
 include(SubDirList)
 include(CompileWarnings)
@@ -23,7 +23,7 @@ if(WITH_JAVA)
             wpiutil_jar
             wpilibj_jar
             datalog_jar
-        OUTPUT_NAME wpilibNewCommands
+        OUTPUT_NAME command
         OUTPUT_DIR ${WPILIB_BINARY_DIR}/${java_lib_dest}
     )
     set_property(TARGET wpilibNewCommands_jar PROPERTY FOLDER "java")
@@ -32,7 +32,7 @@ if(WITH_JAVA)
     install_jar_exports(
         TARGETS wpilibNewCommands_jar
         FILE wpilibNewCommands_jar.cmake
-        DESTINATION share/wpilibNewCommands
+        DESTINATION share/command
     )
 endif()
 
@@ -44,7 +44,7 @@ if(WITH_JAVA_SOURCE)
         BASE_DIRECTORIES
             ${CMAKE_CURRENT_SOURCE_DIR}/src/main/java
             ${CMAKE_CURRENT_SOURCE_DIR}/src/generated/main/java
-        OUTPUT_NAME wpilibNewCommands-sources
+        OUTPUT_NAME command-sources
         OUTPUT_DIR ${WPILIB_BINARY_DIR}/${java_lib_dest}
     )
     set_property(TARGET wpilibNewCommands_src_jar PROPERTY FOLDER "java")
@@ -57,28 +57,28 @@ file(
     src/main/native/cpp/*.cpp
     src/generated/main/native/cpp/*.cpp
 )
-add_library(wpilibNewCommands ${wpilibNewCommands_native_src})
-set_target_properties(wpilibNewCommands PROPERTIES DEBUG_POSTFIX "d")
-set_property(TARGET wpilibNewCommands PROPERTY FOLDER "libraries")
+add_library(command ${wpilibNewCommands_native_src})
+set_target_properties(command PROPERTIES DEBUG_POSTFIX "d")
+set_property(TARGET command PROPERTY FOLDER "libraries")
 
-target_compile_features(wpilibNewCommands PUBLIC cxx_std_20)
-wpilib_target_warnings(wpilibNewCommands)
-target_link_libraries(wpilibNewCommands wpilibc)
+target_compile_features(command PUBLIC cxx_std_20)
+wpilib_target_warnings(command)
+target_link_libraries(command wpilibc)
 
 target_include_directories(
-    wpilibNewCommands
+    command
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/main/native/include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/generated/main/native/include>
-        $<INSTALL_INTERFACE:${include_dest}/wpilibNewCommands>
+        $<INSTALL_INTERFACE:${include_dest}/command>
 )
 
-install(TARGETS wpilibNewCommands EXPORT wpilibnewcommands)
-export(TARGETS wpilibNewCommands FILE wpilibnewcommands.cmake NAMESPACE wpilibnewcommands::)
-install(DIRECTORY src/main/native/include/ DESTINATION "${include_dest}/wpilibNewCommands")
+install(TARGETS command EXPORT wpilibnewcommands)
+export(TARGETS command FILE wpilibnewcommands.cmake NAMESPACE wpilibnewcommands::)
+install(DIRECTORY src/main/native/include/ DESTINATION "${include_dest}/command")
 install(
     DIRECTORY src/generated/main/native/include/
-    DESTINATION "${include_dest}/wpilibNewCommands"
+    DESTINATION "${include_dest}/command"
 )
 
 configure_file(
@@ -87,12 +87,12 @@ configure_file(
 )
 install(
     FILES ${WPILIB_BINARY_DIR}/wpilibnewcommands-config.cmake
-    DESTINATION share/wpilibNewCommands
+    DESTINATION share/command
 )
-install(EXPORT wpilibnewcommands DESTINATION share/wpilibNewCommands)
+install(EXPORT wpilibnewcommands DESTINATION share/command)
 
 if(WITH_TESTS)
-    wpilib_add_test(wpilibNewCommands src/test/native/cpp)
+    wpilib_add_test(command src/test/native/cpp)
     target_include_directories(wpilibNewCommands_test PRIVATE src/test/native/include)
-    target_link_libraries(wpilibNewCommands_test wpilibNewCommands googletest)
+    target_link_libraries(wpilibNewCommands_test command googletest)
 endif()
