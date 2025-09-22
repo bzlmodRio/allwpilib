@@ -4,10 +4,9 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
-
-#include "wpi/hardware/pneumatic/DoubleSolenoid.hpp"
-#include "wpi/hardware/pneumatic/PneumaticsControlModule.hpp"
-#include "wpi/hardware/pneumatic/Solenoid.hpp"
+#include <wpi/hardware/pneumatic/DoubleSolenoid.hpp>
+#include <wpi/hardware/pneumatic/PneumaticsControlModule.hpp>
+#include <wpi/hardware/pneumatic/Solenoid.hpp>
 
 namespace frc {
 TEST(SolenoidREVTest, ValidInitialization) {

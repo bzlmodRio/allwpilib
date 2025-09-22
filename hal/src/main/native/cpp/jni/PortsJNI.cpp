@@ -6,9 +6,10 @@
 
 #include <cassert>
 
+#include <wpi/hal/Ports.hpp>
+
 #include "HALUtil.h"
 #include "org_wpilib_hardware_hal_PortsJNI.h"
-#include "wpi/hal/Ports.hpp"
 
 using namespace hal;
 

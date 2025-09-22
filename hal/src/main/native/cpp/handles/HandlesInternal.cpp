@@ -2,10 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/hal/handles/HandlesInternal.hpp"
-
 #include <algorithm>
 
+#include <wpi/hal/handles/HandlesInternal.hpp>
 #include <wpi/util/SmallVector.h>
 #include <wpi/util/mutex.hpp>
 

@@ -9,9 +9,8 @@
 #include <utility>
 #include <vector>
 
+#include <wpi/net/HttpParser.hpp>
 #include <wpi/util/StringExtras.h>
-
-#include "wpi/net/HttpParser.hpp"
 
 namespace wpi {
 

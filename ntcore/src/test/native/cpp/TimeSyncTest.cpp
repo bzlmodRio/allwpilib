@@ -3,9 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/ntcore/NetworkTableInstance.hpp"
-#include "wpi/ntcore/NetworkTableListener.hpp"
+#include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/ntcore/NetworkTableListener.hpp>
 
 class TimeSyncTest : public ::testing::Test {
  public:

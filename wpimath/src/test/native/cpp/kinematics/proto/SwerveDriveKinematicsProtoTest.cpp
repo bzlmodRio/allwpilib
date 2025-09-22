@@ -3,10 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/math/kinematics/SwerveDriveKinematics.hpp>
+#include <wpi/math/kinematics/proto/SwerveDriveKinematicsProto.hpp>
 
 #include "../../ProtoTestBase.h"
-#include "wpi/math/kinematics/SwerveDriveKinematics.hpp"
-#include "wpi/math/kinematics/proto/SwerveDriveKinematicsProto.hpp"
 
 using namespace frc;
 

@@ -3,10 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/math/struct/VectorStruct.hpp>
 
 #include "../StructTestBase.h"
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/struct/VectorStruct.hpp"
 
 using namespace frc;
 

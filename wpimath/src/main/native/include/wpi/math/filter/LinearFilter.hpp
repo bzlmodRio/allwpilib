@@ -13,12 +13,11 @@
 
 #include <Eigen/QR>
 #include <gcem.hpp>
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/math/util/MathShared.hpp>
+#include <wpi/units/time.hpp>
 #include <wpi/util/array.hpp>
 #include <wpi/util/circular_buffer.hpp>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/units/time.hpp"
-#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 

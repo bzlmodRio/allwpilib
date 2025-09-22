@@ -6,11 +6,10 @@
 
 #include <cstddef>
 
+#include <wpi/hal/DriverStationTypes.hpp>
+#include <wpi/hal/Types.hpp>
+#include <wpi/hal/simulation/NotifyListener.hpp>
 #include <wpi/util/string.hpp>
-
-#include "wpi/hal/DriverStationTypes.hpp"
-#include "wpi/hal/Types.hpp"
-#include "wpi/hal/simulation/NotifyListener.hpp"
 
 typedef void (*HAL_JoystickAxesCallback)(const char* name, void* param,
                                          int32_t joystickNum,

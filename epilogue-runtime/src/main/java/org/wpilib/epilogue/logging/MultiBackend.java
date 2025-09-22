@@ -4,10 +4,10 @@
 
 package org.wpilib.epilogue.logging;
 
-import org.wpilib.util.struct.Struct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.wpilib.util.struct.Struct;
 
 /**
  * A backend implementation that delegates to other backends. Helpful for simultaneous logging to

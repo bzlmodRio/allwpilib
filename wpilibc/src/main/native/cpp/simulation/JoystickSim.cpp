@@ -2,10 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/simulation/JoystickSim.hpp"
-
-#include "wpi/driverstation/Joystick.hpp"
-#include "wpi/simulation/GenericHIDSim.hpp"
+#include <wpi/driverstation/Joystick.hpp>
+#include <wpi/simulation/GenericHIDSim.hpp>
+#include <wpi/simulation/JoystickSim.hpp>
 
 using namespace frc;
 using namespace frc::sim;

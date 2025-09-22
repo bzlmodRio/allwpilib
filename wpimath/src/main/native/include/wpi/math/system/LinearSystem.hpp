@@ -10,12 +10,11 @@
 #include <type_traits>
 
 #include <gcem.hpp>
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/math/system/Discretization.hpp>
+#include <wpi/units/time.hpp>
 #include <wpi/util/Algorithm.hpp>
 #include <wpi/util/SmallVector.h>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/system/Discretization.hpp"
-#include "wpi/units/time.hpp"
 
 namespace frc {
 

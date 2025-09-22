@@ -6,9 +6,9 @@ package org.wpilib;
 
 import static org.wpilib.util.ErrorMessages.requireNonNullParam;
 
-import org.wpilib.hardware.hal.NotifierJNI;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
+import org.wpilib.hardware.hal.NotifierJNI;
 
 /**
  * Notifiers run a user-provided callback function on a separate thread.

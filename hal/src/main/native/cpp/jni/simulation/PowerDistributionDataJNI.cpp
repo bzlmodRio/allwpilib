@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/PowerDistributionData.hpp>
+
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_PowerDistributionDataJNI.h"
-#include "wpi/hal/simulation/PowerDistributionData.hpp"
 
 using namespace hal;
 

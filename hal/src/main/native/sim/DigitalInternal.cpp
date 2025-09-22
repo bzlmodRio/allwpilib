@@ -4,10 +4,11 @@
 
 #include "DigitalInternal.h"
 
+#include <wpi/hal/Errors.hpp>
+#include <wpi/hal/handles/DigitalHandleResource.hpp>
+#include <wpi/hal/handles/HandlesInternal.hpp>
+
 #include "PortsInternal.h"
-#include "wpi/hal/Errors.hpp"
-#include "wpi/hal/handles/DigitalHandleResource.hpp"
-#include "wpi/hal/handles/HandlesInternal.hpp"
 
 namespace hal {
 

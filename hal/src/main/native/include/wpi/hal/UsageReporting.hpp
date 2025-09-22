@@ -6,14 +6,14 @@
 
 #include <stdint.h>
 
-#ifdef __cplusplus
-#include <string_view>
-#endif
-
 #include <wpi/util/string.hpp>
 
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+#ifdef __cplusplus
+#include <string_view>
 #endif
 
 /**

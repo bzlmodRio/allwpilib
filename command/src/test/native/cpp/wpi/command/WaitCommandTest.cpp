@@ -3,12 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <wpi/command/Commands.hpp>
-
+#include <wpi/command/WaitCommand.hpp>
+#include <wpi/command/WaitUntilCommand.hpp>
 #include <wpi/simulation/SimHooks.hpp>
 
 #include "CommandTestBase.h"
-#include "wpi/command/WaitCommand.hpp"
-#include "wpi/command/WaitUntilCommand.hpp"
 
 using namespace frc2;
 class WaitCommandTest : public CommandTestBase {};

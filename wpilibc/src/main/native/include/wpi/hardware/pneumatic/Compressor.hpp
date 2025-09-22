@@ -6,14 +6,13 @@
 
 #include <memory>
 
+#include <wpi/SensorUtil.hpp>
 #include <wpi/hal/Types.hpp>
+#include <wpi/hardware/pneumatic/CompressorConfigType.hpp>
+#include <wpi/hardware/pneumatic/PneumaticsBase.hpp>
+#include <wpi/hardware/pneumatic/PneumaticsModuleType.hpp>
 #include <wpi/util/sendable/Sendable.hpp>
 #include <wpi/util/sendable/SendableHelper.hpp>
-
-#include "wpi/hardware/pneumatic/CompressorConfigType.hpp"
-#include "wpi/hardware/pneumatic/PneumaticsBase.hpp"
-#include "wpi/hardware/pneumatic/PneumaticsModuleType.hpp"
-#include "wpi/SensorUtil.hpp"
 
 namespace frc {
 

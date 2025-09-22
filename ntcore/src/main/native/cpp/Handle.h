@@ -4,9 +4,8 @@
 
 #pragma once
 
+#include <wpi/ntcore/ntcore_c.h>
 #include <wpi/util/Synchronization.hpp>
-
-#include "wpi/ntcore/ntcore_c.h"
 
 namespace nt {
 

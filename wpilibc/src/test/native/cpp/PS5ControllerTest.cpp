@@ -5,9 +5,9 @@
 #include "wpi/driverstation/PS5Controller.hpp"  // NOLINT(build/include_order)
 
 #include <gtest/gtest.h>
+#include <wpi/simulation/PS5ControllerSim.hpp>
 
 #include "JoystickTestMacros.h"
-#include "wpi/simulation/PS5ControllerSim.hpp"
 
 using namespace frc;
 

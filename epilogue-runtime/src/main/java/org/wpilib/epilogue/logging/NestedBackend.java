@@ -4,9 +4,9 @@
 
 package org.wpilib.epilogue.logging;
 
-import org.wpilib.util.struct.Struct;
 import java.util.HashMap;
 import java.util.Map;
+import org.wpilib.util.struct.Struct;
 
 /**
  * A backend that logs to an underlying backend, prepending all logged data with a specific prefix.

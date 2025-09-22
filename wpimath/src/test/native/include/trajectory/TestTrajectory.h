@@ -8,9 +8,9 @@
 #include <utility>
 #include <vector>
 
-#include "wpi/math/trajectory/Trajectory.hpp"
-#include "wpi/math/trajectory/TrajectoryGenerator.hpp"
-#include "wpi/math/trajectory/constraint/TrajectoryConstraint.hpp"
+#include <wpi/math/trajectory/Trajectory.hpp>
+#include <wpi/math/trajectory/TrajectoryGenerator.hpp>
+#include <wpi/math/trajectory/constraint/TrajectoryConstraint.hpp>
 
 namespace frc {
 class TestTrajectory {

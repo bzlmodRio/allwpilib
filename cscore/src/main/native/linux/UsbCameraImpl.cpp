@@ -26,6 +26,7 @@
 #include <vector>
 
 #include <fmt/format.h>
+#include <wpi/cscore/cscore_cpp.hpp>
 #include <wpi/util/MemAlloc.h>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/StringExtras.h>
@@ -39,7 +40,6 @@
 #include "Notifier.h"
 #include "Telemetry.h"
 #include "UsbUtil.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 using namespace cs;
 

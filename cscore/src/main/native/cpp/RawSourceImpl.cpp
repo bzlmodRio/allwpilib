@@ -6,11 +6,11 @@
 
 #include <memory>
 
+#include <wpi/cscore/cscore_raw.hpp>
 #include <wpi/util/timestamp.hpp>
 
 #include "Instance.h"
 #include "Notifier.h"
-#include "wpi/cscore/cscore_raw.hpp"
 
 using namespace cs;
 

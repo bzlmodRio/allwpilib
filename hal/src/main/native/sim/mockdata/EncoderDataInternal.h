@@ -7,8 +7,8 @@
 #include <atomic>
 #include <limits>
 
-#include "wpi/hal/simulation/EncoderData.hpp"
-#include "wpi/hal/simulation/SimDataValue.hpp"
+#include <wpi/hal/simulation/EncoderData.hpp>
+#include <wpi/hal/simulation/SimDataValue.hpp>
 
 namespace hal {
 class EncoderData {

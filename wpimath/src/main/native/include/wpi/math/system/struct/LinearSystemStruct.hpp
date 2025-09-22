@@ -5,11 +5,10 @@
 #pragma once
 
 #include <fmt/format.h>
+#include <wpi/math/struct/MatrixStruct.hpp>
+#include <wpi/math/system/LinearSystem.hpp>
 #include <wpi/util/ct_string.hpp>
 #include <wpi/util/struct/Struct.hpp>
-
-#include "wpi/math/struct/MatrixStruct.hpp"
-#include "wpi/math/system/LinearSystem.hpp"
 
 template <int States, int Inputs, int Outputs>
 struct wpi::Struct<frc::LinearSystem<States, Inputs, Outputs>> {

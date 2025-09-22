@@ -5,9 +5,8 @@
 #pragma once
 
 #include <wpi/hal/SimDevice.hpp>
+#include <wpi/hardware/discrete/PWM.hpp>
 #include <wpi/units/angle.hpp>
-
-#include "wpi/hardware/discrete/PWM.hpp"
 
 namespace frc {
 

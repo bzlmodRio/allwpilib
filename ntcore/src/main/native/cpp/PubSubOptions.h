@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "wpi/ntcore/ntcore_cpp.hpp"
+#include <wpi/ntcore/ntcore_cpp.hpp>
 
 namespace nt {
 

@@ -5,11 +5,11 @@
 #include <utility>
 
 #include <wpi/Errors.hpp>
+#include <wpi/command/CommandPtr.hpp>
+#include <wpi/command/CommandScheduler.hpp>
+#include <wpi/command/Commands.hpp>
 
 #include "CommandTestBase.h"
-#include "wpi/command/CommandPtr.hpp"
-#include "wpi/command/CommandScheduler.hpp"
-#include "wpi/command/Commands.hpp"
 
 using namespace frc2;
 class CommandPtrTest : public CommandTestBase {};

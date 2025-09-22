@@ -8,8 +8,8 @@
 #include <memory>
 #include <utility>
 
-#include "wpi/command/Command.hpp"
-#include "wpi/command/CommandPtr.hpp"
+#include <wpi/command/Command.hpp>
+#include <wpi/command/CommandPtr.hpp>
 
 namespace frc2 {
 

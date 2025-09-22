@@ -3,8 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/controller/BangBangController.hpp"
+#include <wpi/math/controller/BangBangController.hpp>
 
 TEST(BangBangToleranceTest, InTolerance) {
   frc::BangBangController controller{0.1};

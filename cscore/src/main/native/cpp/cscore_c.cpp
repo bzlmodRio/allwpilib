@@ -2,19 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/cscore/cscore_c.hpp"
-
 #include <algorithm>
 #include <cstddef>
 #include <cstdlib>
 #include <utility>
 #include <vector>
 
+#include <wpi/cscore/cscore_c.hpp>
+#include <wpi/cscore/cscore_cpp.hpp>
 #include <wpi/util/MemAlloc.h>
 #include <wpi/util/SmallString.h>
 
 #include "c_util.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 static CS_Event ConvertToC(const cs::RawEvent& rawEvent) {
   CS_Event event;

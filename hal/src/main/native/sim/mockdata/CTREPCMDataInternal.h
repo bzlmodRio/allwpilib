@@ -4,9 +4,10 @@
 
 #pragma once
 
+#include <wpi/hal/simulation/CTREPCMData.hpp>
+#include <wpi/hal/simulation/SimDataValue.hpp>
+
 #include "../PortsInternal.h"
-#include "wpi/hal/simulation/CTREPCMData.hpp"
-#include "wpi/hal/simulation/SimDataValue.hpp"
 
 namespace hal {
 class CTREPCMData {

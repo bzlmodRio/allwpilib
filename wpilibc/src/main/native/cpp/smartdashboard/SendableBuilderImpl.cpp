@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/smartdashboard/SendableBuilderImpl.hpp"
-
 #include <memory>
 #include <string>
 #include <utility>
@@ -19,6 +17,7 @@
 #include <wpi/ntcore/RawTopic.hpp>
 #include <wpi/ntcore/StringArrayTopic.hpp>
 #include <wpi/ntcore/ntcore_cpp.hpp>
+#include <wpi/smartdashboard/SendableBuilderImpl.hpp>
 #include <wpi/util/SmallVector.h>
 #include <wpi/util/json.h>
 

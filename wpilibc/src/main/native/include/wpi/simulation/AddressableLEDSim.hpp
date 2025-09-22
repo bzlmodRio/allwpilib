@@ -6,7 +6,7 @@
 
 #include <memory>
 
-#include "wpi/simulation/CallbackStore.hpp"
+#include <wpi/simulation/CallbackStore.hpp>
 
 struct HAL_AddressableLEDData;
 

@@ -6,10 +6,9 @@
 
 #include <memory>
 
+#include <wpi/driverstation/DriverStation.hpp>
 #include <wpi/hal/DriverStationTypes.hpp>
-
-#include "wpi/driverstation/DriverStation.hpp"
-#include "wpi/simulation/CallbackStore.hpp"
+#include <wpi/simulation/CallbackStore.hpp>
 
 namespace frc::sim {
 

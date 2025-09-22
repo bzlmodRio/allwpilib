@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/CTREPCMData.hpp>
+
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_CTREPCMDataJNI.h"
-#include "wpi/hal/simulation/CTREPCMData.hpp"
 
 using namespace hal;
 

@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/hal/Counter.hpp"
+#include <wpi/hal/Counter.hpp>
+#include <wpi/hal/handles/HandlesInternal.hpp>
+#include <wpi/hal/handles/LimitedHandleResource.hpp>
 
 #include "CounterInternal.h"
 #include "HALInitializer.h"
 #include "PortsInternal.h"
-#include "wpi/hal/handles/HandlesInternal.hpp"
-#include "wpi/hal/handles/LimitedHandleResource.hpp"
 
 namespace hal {
 

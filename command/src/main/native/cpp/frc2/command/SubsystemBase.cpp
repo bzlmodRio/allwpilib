@@ -2,15 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/command/SubsystemBase.hpp"
-
 #include <string>
 
+#include <wpi/command/Command.hpp>
+#include <wpi/command/CommandScheduler.hpp>
+#include <wpi/command/SubsystemBase.hpp>
 #include <wpi/util/sendable/SendableBuilder.hpp>
 #include <wpi/util/sendable/SendableRegistry.hpp>
-
-#include "wpi/command/Command.hpp"
-#include "wpi/command/CommandScheduler.hpp"
 
 using namespace frc2;
 

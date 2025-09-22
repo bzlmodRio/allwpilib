@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/hal/DriverStation.hpp"
-
 #ifdef __APPLE__
 #include <pthread.h>
 #endif
@@ -15,14 +13,15 @@
 #include <string>
 
 #include <fmt/format.h>
+#include <wpi/hal/DriverStation.hpp>
+#include <wpi/hal/Errors.hpp>
+#include <wpi/hal/cpp/fpga_clock.hpp>
+#include <wpi/hal/simulation/MockHooks.hpp>
 #include <wpi/util/EventVector.hpp>
 #include <wpi/util/condition_variable.hpp>
 #include <wpi/util/mutex.hpp>
 
 #include "HALInitializer.h"
-#include "wpi/hal/Errors.hpp"
-#include "wpi/hal/cpp/fpga_clock.hpp"
-#include "wpi/hal/simulation/MockHooks.hpp"
 #include "mockdata/DriverStationDataInternal.h"
 
 static wpi::mutex msgMutex;

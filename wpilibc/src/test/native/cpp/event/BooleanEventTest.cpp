@@ -5,9 +5,8 @@
 #include <atomic>
 
 #include <gtest/gtest.h>
-
-#include "wpi/event/BooleanEvent.hpp"
-#include "wpi/event/EventLoop.hpp"
+#include <wpi/event/BooleanEvent.hpp>
+#include <wpi/event/EventLoop.hpp>
 
 using namespace frc;
 

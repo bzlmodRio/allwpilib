@@ -14,6 +14,14 @@
 #include <vector>
 
 #include <fmt/format.h>
+#include <wpi/hal/DriverStation.hpp>
+#include <wpi/hal/Errors.hpp>
+#include <wpi/hal/proto/ControlData.hpp>
+#include <wpi/hal/proto/ErrorInfo.hpp>
+#include <wpi/hal/proto/JoystickDescriptor.hpp>
+#include <wpi/hal/proto/JoystickRumbleData.hpp>
+#include <wpi/hal/proto/MatchInfo.hpp>
+#include <wpi/hal/proto/OpMode.hpp>
 #include <wpi/ntcore/BooleanTopic.hpp>
 #include <wpi/ntcore/IntegerTopic.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
@@ -29,14 +37,6 @@
 
 #include "HALInitializer.h"
 #include "SystemServerInternal.h"
-#include "wpi/hal/DriverStation.hpp"
-#include "wpi/hal/Errors.hpp"
-#include "wpi/hal/proto/ControlData.hpp"
-#include "wpi/hal/proto/ErrorInfo.hpp"
-#include "wpi/hal/proto/JoystickDescriptor.hpp"
-#include "wpi/hal/proto/JoystickRumbleData.hpp"
-#include "wpi/hal/proto/MatchInfo.hpp"
-#include "wpi/hal/proto/OpMode.hpp"
 #include "mrc/NtNetComm.h"
 
 static_assert(sizeof(int32_t) >= sizeof(int),

@@ -6,10 +6,10 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
+#include <wpi/hardware/discrete/DigitalInput.hpp>
+#include <wpi/hardware/rotation/DutyCycle.hpp>
 
 #include "callback_helpers/TestCallbackHelpers.h"
-#include "wpi/hardware/discrete/DigitalInput.hpp"
-#include "wpi/hardware/rotation/DutyCycle.hpp"
 
 namespace frc::sim {
 

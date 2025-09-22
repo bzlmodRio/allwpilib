@@ -5,9 +5,8 @@
 #pragma once
 
 #include <unsupported/Eigen/MatrixFunctions>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/units/time.hpp"
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/units/time.hpp>
 
 namespace frc {
 

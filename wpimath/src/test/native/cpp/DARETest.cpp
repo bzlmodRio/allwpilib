@@ -7,12 +7,11 @@
 #include <Eigen/Core>
 #include <Eigen/Eigenvalues>
 #include <gtest/gtest.h>
+#include <wpi/math/fmt/Eigen.hpp>
+#include <wpi/math/linalg/DARE.hpp>
+#include <wpi/math/linalg/EigenCore.hpp>
 #include <wpi/util/expected>
 #include <wpi/util/print.hpp>
-
-#include "wpi/math/linalg/DARE.hpp"
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/fmt/Eigen.hpp"
 
 // 2x1
 extern template wpi::expected<Eigen::Matrix<double, 2, 2>, frc::DAREError>

@@ -14,20 +14,19 @@
 #include <string>
 
 #include <fmt/format.h>
+#include <wpi/net/raw_uv_ostream.hpp>
+#include <wpi/net/uv/Loop.hpp>
+#include <wpi/net/uv/Pipe.hpp>
+#include <wpi/net/uv/Process.hpp>
+#include <wpi/net/uv/Signal.hpp>
+#include <wpi/net/uv/Tcp.hpp>
+#include <wpi/net/uv/Tty.hpp>
+#include <wpi/net/uv/Udp.hpp>
+#include <wpi/net/uv/util.hpp>
 #include <wpi/util/SmallVector.h>
 #include <wpi/util/StringExtras.h>
 #include <wpi/util/print.hpp>
 #include <wpi/util/timestamp.hpp>
-
-#include "wpi/net/raw_uv_ostream.hpp"
-#include "wpi/net/uv/Loop.hpp"
-#include "wpi/net/uv/Pipe.hpp"
-#include "wpi/net/uv/Process.hpp"
-#include "wpi/net/uv/Signal.hpp"
-#include "wpi/net/uv/Tcp.hpp"
-#include "wpi/net/uv/Tty.hpp"
-#include "wpi/net/uv/Udp.hpp"
-#include "wpi/net/uv/util.hpp"
 
 namespace uv = wpi::uv;
 

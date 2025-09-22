@@ -76,19 +76,13 @@ target_include_directories(
 install(TARGETS command EXPORT wpilibnewcommands)
 export(TARGETS command FILE wpilibnewcommands.cmake NAMESPACE wpilibnewcommands::)
 install(DIRECTORY src/main/native/include/ DESTINATION "${include_dest}/command")
-install(
-    DIRECTORY src/generated/main/native/include/
-    DESTINATION "${include_dest}/command"
-)
+install(DIRECTORY src/generated/main/native/include/ DESTINATION "${include_dest}/command")
 
 configure_file(
     wpilibnewcommands-config.cmake.in
     ${WPILIB_BINARY_DIR}/wpilibnewcommands-config.cmake
 )
-install(
-    FILES ${WPILIB_BINARY_DIR}/wpilibnewcommands-config.cmake
-    DESTINATION share/command
-)
+install(FILES ${WPILIB_BINARY_DIR}/wpilibnewcommands-config.cmake DESTINATION share/command)
 install(EXPORT wpilibnewcommands DESTINATION share/command)
 
 if(WITH_TESTS)

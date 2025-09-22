@@ -12,11 +12,11 @@
 #include <utility>
 #include <vector>
 
+#include <wpi/cscore/cscore_cpp.hpp>
 #include <wpi/util/SmallVector.h>
 #include <wpi/util/mutex.hpp>
 
 #include "Image.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 namespace cs {
 

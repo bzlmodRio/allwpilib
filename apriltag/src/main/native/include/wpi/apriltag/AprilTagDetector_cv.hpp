@@ -5,8 +5,7 @@
 #pragma once
 
 #include <opencv2/core/mat.hpp>
-
-#include "wpi/apriltag/AprilTagDetector.hpp"
+#include <wpi/apriltag/AprilTagDetector.hpp>
 
 namespace frc {
 

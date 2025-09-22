@@ -4,10 +4,9 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
-
-#include "wpi/hardware/rotation/AnalogPotentiometer.hpp"
-#include "wpi/simulation/AnalogInputSim.hpp"
-#include "wpi/simulation/RoboRioSim.hpp"
+#include <wpi/hardware/rotation/AnalogPotentiometer.hpp>
+#include <wpi/simulation/AnalogInputSim.hpp>
+#include <wpi/simulation/RoboRioSim.hpp>
 
 namespace frc {
 using namespace frc::sim;

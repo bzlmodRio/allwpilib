@@ -5,10 +5,10 @@
 #include <climits>
 #include <cstdio>
 
+#include <wpi/ntcore/ntcore.hpp>
 #include <wpi/util/timestamp.hpp>
 
 #include "gmock/gmock.h"
-#include "wpi/ntcore/ntcore.hpp"
 
 int main(int argc, char** argv) {
   nt::AddLogger(nt::GetDefaultInstance(), 0, UINT_MAX, [](auto& event) {

@@ -6,11 +6,11 @@
 #include <vector>
 
 #include <gtest/gtest.h>
+#include <wpi/math/kinematics/DifferentialDriveKinematics.hpp>
+#include <wpi/math/trajectory/constraint/DifferentialDriveKinematicsConstraint.hpp>
+#include <wpi/units/time.hpp>
 
-#include "wpi/math/kinematics/DifferentialDriveKinematics.hpp"
-#include "wpi/math/trajectory/constraint/DifferentialDriveKinematicsConstraint.hpp"
 #include "trajectory/TestTrajectory.h"
-#include "wpi/units/time.hpp"
 
 using namespace frc;
 

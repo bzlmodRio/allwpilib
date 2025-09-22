@@ -26,8 +26,7 @@
 #include "wpi/net/uv/Loop.hpp"  // NOLINT(build/include_order)
 
 #include <gtest/gtest.h>
-
-#include "wpi/net/uv/Timer.hpp"
+#include <wpi/net/uv/Timer.hpp>
 
 namespace wpi::uv {
 

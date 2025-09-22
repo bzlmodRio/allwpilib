@@ -2,13 +2,12 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/glass/support/ExpressionParser.hpp"
-
 #include <cmath>
 #include <stack>
 #include <string>
 #include <type_traits>
 
+#include <wpi/glass/support/ExpressionParser.hpp>
 #include <wpi/util/StringExtras.h>
 #include <wpi/util/expected>
 

@@ -22,6 +22,7 @@
 #include <Dbt.h>
 #include <Dshow.h>
 #include <Windows.h>
+#include <wpi/cscore/cscore_cpp.hpp>
 #include <wpi/util/ConvertUTF.h>
 #include <wpi/util/MemAlloc.h>
 #include <wpi/util/SmallString.h>
@@ -39,7 +40,6 @@
 #include "Telemetry.h"
 #include "WindowsMessagePump.h"
 #include "c_util.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 #pragma comment(lib, "Mfplat.lib")
 #pragma comment(lib, "Mf.lib")

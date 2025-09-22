@@ -4,10 +4,10 @@
 
 #pragma once
 
+#include <wpi/math/controller/DifferentialDriveWheelVoltages.hpp>
 #include <wpi/util/SymbolExports.hpp>
 #include <wpi/util/protobuf/Protobuf.hpp>
 
-#include "wpi/math/controller/DifferentialDriveWheelVoltages.hpp"
 #include "pb.h"
 #include "wpimath/protobuf/controller.npb.h"
 

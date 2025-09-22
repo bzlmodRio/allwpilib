@@ -2,10 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/glass/support/NameSetting.hpp"
-
 #include <imgui_internal.h>
 #include <imgui_stdlib.h>
+#include <wpi/glass/support/NameSetting.hpp>
 #include <wpi/util/StringExtras.h>
 
 using namespace glass;

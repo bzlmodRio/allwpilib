@@ -2,9 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/net/uv/Loop.hpp"
-
 #include <memory>
+
+#include <wpi/net/uv/Loop.hpp>
 
 using namespace wpi::uv;
 

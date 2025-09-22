@@ -30,10 +30,9 @@
 #include <thread>
 
 #include <gtest/gtest.h>
+#include <wpi/net/uv/Loop.hpp>
+#include <wpi/net/uv/Prepare.hpp>
 #include <wpi/util/mutex.hpp>
-
-#include "wpi/net/uv/Loop.hpp"
-#include "wpi/net/uv/Prepare.hpp"
 
 namespace wpi::uv {
 

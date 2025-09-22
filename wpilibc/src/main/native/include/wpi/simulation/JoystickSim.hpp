@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "wpi/simulation/GenericHIDSim.hpp"
+#include <wpi/simulation/GenericHIDSim.hpp>
 
 namespace frc {
 

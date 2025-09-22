@@ -8,12 +8,12 @@
 #include <cstdio>
 #include <thread>
 
+#include <wpi/hal/simulation/NotifierData.hpp>
 #include <wpi/util/print.hpp>
 #include <wpi/util/timestamp.hpp>
 
 #include "MockHooksInternal.h"
 #include "NotifierInternal.h"
-#include "wpi/hal/simulation/NotifierData.hpp"
 
 static std::atomic<bool> programStarted{false};
 

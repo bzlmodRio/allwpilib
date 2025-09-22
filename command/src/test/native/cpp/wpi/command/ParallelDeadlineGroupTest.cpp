@@ -6,11 +6,12 @@
 #include <utility>
 #include <vector>
 
+#include <wpi/command/InstantCommand.hpp>
+#include <wpi/command/ParallelDeadlineGroup.hpp>
+#include <wpi/command/WaitUntilCommand.hpp>
+
 #include "CommandTestBase.h"
 #include "CompositionTestBase.h"
-#include "wpi/command/InstantCommand.hpp"
-#include "wpi/command/ParallelDeadlineGroup.hpp"
-#include "wpi/command/WaitUntilCommand.hpp"
 
 using namespace frc2;
 class ParallelDeadlineGroupTest : public CommandTestBase {};

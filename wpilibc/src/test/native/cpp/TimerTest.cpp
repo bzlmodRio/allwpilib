@@ -5,8 +5,7 @@
 #include "wpi/system/Timer.hpp"  // NOLINT(build/include_order)
 
 #include <gtest/gtest.h>
-
-#include "wpi/simulation/SimHooks.hpp"
+#include <wpi/simulation/SimHooks.hpp>
 
 using namespace frc;
 

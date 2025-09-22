@@ -8,12 +8,12 @@
 #include <string_view>
 #include <utility>
 
+#include <wpi/ntcore/NetworkTableValue.hpp>
 #include <wpi/util/DenseMap.h>
 #include <wpi/util/SmallPtrSet.h>
 #include <wpi/util/json.h>
 
 #include "net/NetworkOutgoingQueue.h"
-#include "wpi/ntcore/NetworkTableValue.hpp"
 #include "server/ServerPublisher.h"
 #include "server/ServerSubscriber.h"
 

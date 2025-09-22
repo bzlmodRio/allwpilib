@@ -6,9 +6,8 @@
 
 #include <fmt/format.h>
 #include <gtest/gtest.h>
-
-#include "wpi/math/fmt/Eigen.hpp"
-#include "wpi/units/velocity.hpp"
+#include <wpi/math/fmt/Eigen.hpp>
+#include <wpi/units/velocity.hpp>
 
 TEST(FormatterTest, Eigen) {
   Eigen::Matrix<double, 3, 2> A{{0.0, 1.0}, {2.0, 3.0}, {4.0, 5.0}};

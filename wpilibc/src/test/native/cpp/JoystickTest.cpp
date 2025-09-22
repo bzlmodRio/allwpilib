@@ -5,9 +5,9 @@
 #include "wpi/driverstation/Joystick.hpp"  // NOLINT(build/include_order)
 
 #include <gtest/gtest.h>
+#include <wpi/simulation/JoystickSim.hpp>
 
 #include "JoystickTestMacros.h"
-#include "wpi/simulation/JoystickSim.hpp"
 
 using namespace frc;
 

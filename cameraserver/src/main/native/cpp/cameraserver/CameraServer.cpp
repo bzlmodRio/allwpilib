@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/cameraserver/CameraServer.hpp"
-
 #include <atomic>
 #include <memory>
 #include <string>
@@ -11,20 +9,20 @@
 #include <vector>
 
 #include <fmt/format.h>
+#include <wpi/cameraserver/CameraServer.hpp>
+#include <wpi/cameraserver/CameraServerShared.hpp>
 #include <wpi/ntcore/BooleanTopic.hpp>
 #include <wpi/ntcore/IntegerTopic.hpp>
 #include <wpi/ntcore/NetworkTable.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
 #include <wpi/ntcore/StringArrayTopic.hpp>
 #include <wpi/ntcore/StringTopic.hpp>
+#include <wpi/ntcore/ntcore_cpp.hpp>
 #include <wpi/util/DenseMap.h>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/StringExtras.h>
 #include <wpi/util/StringMap.hpp>
 #include <wpi/util/mutex.hpp>
-
-#include "wpi/cameraserver/CameraServerShared.hpp"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 using namespace frc;
 

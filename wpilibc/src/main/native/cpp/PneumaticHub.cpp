@@ -2,26 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/hardware/pneumatic/PneumaticHub.hpp"
-
 #include <array>
 #include <cstdio>
 #include <memory>
 #include <string>
 
 #include <fmt/format.h>
+#include <wpi/Errors.hpp>
+#include <wpi/SensorUtil.hpp>
 #include <wpi/hal/Ports.hpp>
 #include <wpi/hal/REVPH.hpp>
 #include <wpi/hal/UsageReporting.hpp>
+#include <wpi/hardware/pneumatic/Compressor.hpp>
+#include <wpi/hardware/pneumatic/DoubleSolenoid.hpp>
+#include <wpi/hardware/pneumatic/PneumaticHub.hpp>
+#include <wpi/hardware/pneumatic/Solenoid.hpp>
+#include <wpi/opmode/RobotBase.hpp>
 #include <wpi/util/NullDeleter.hpp>
 #include <wpi/util/StackTrace.hpp>
-
-#include "wpi/hardware/pneumatic/Compressor.hpp"
-#include "wpi/hardware/pneumatic/DoubleSolenoid.hpp"
-#include "wpi/Errors.hpp"
-#include "wpi/opmode/RobotBase.hpp"
-#include "wpi/SensorUtil.hpp"
-#include "wpi/hardware/pneumatic/Solenoid.hpp"
 
 using namespace frc;
 

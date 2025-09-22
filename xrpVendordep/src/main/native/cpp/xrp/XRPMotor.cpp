@@ -2,13 +2,12 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/xrp/XRPMotor.hpp"
-
-#include <wpi/Errors.hpp>
-
 #include <map>
 #include <set>
 #include <string>
+
+#include <wpi/Errors.hpp>
+#include <wpi/xrp/XRPMotor.hpp>
 
 using namespace frc;
 

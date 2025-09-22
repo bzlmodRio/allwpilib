@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/driverstation/DriverStation.hpp"
-
 #include <stdint.h>
 
 #include <array>
@@ -14,6 +12,9 @@
 #include <string_view>
 
 #include <fmt/format.h>
+#include <wpi/Errors.hpp>
+#include <wpi/datalog/DataLog.h>
+#include <wpi/driverstation/DriverStation.hpp>
 #include <wpi/hal/DriverStation.hpp>
 #include <wpi/hal/DriverStationTypes.hpp>
 #include <wpi/hal/HALBase.hpp>
@@ -23,15 +24,12 @@
 #include <wpi/ntcore/NetworkTable.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
 #include <wpi/ntcore/StringTopic.hpp>
+#include <wpi/system/Timer.hpp>
 #include <wpi/util/EventVector.hpp>
 #include <wpi/util/condition_variable.hpp>
-#include <wpi/datalog/DataLog.h>
 #include <wpi/util/json.h>
 #include <wpi/util/mutex.hpp>
 #include <wpi/util/timestamp.hpp>
-
-#include "wpi/Errors.hpp"
-#include "wpi/system/Timer.hpp"
 
 using namespace frc;
 

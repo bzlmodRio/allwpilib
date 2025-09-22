@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/Power.hpp>
+
 #include "HALUtil.h"
 #include "org_wpilib_hardware_hal_PowerJNI.h"
-#include "wpi/hal/Power.hpp"
 
 using namespace hal;
 

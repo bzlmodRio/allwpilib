@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/AnalogInData.hpp>
+
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_AnalogInDataJNI.h"
-#include "wpi/hal/simulation/AnalogInData.hpp"
 
 using namespace hal;
 

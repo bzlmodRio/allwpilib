@@ -4,9 +4,8 @@
 
 #pragma once
 
+#include <wpi/hardware/motor/MotorController.hpp>
 #include <wpi/util/deprecated.hpp>
-
-#include "wpi/hardware/motor/MotorController.hpp"
 
 namespace frc {
 

@@ -7,8 +7,9 @@
 #include <algorithm>
 #include <memory>
 
+#include <wpi/cscore/cscore_raw.hpp>
+
 #include "Instance.h"
-#include "wpi/cscore/cscore_raw.hpp"
 
 using namespace cs;
 

@@ -11,9 +11,8 @@
 #include <random>
 
 #include <gtest/gtest.h>
+#include <wpi/units/time.hpp>
 #include <wpi/util/array.hpp>
-
-#include "wpi/units/time.hpp"
 
 // Filter constants
 static constexpr auto kFilterStep = 5_ms;

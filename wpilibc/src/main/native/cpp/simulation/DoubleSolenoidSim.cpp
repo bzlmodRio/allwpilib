@@ -2,12 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/simulation/DoubleSolenoidSim.hpp"
-
 #include <memory>
 #include <utility>
 
-#include "wpi/hardware/pneumatic/PneumaticsBase.hpp"
+#include <wpi/hardware/pneumatic/PneumaticsBase.hpp>
+#include <wpi/simulation/DoubleSolenoidSim.hpp>
 
 using namespace frc;
 using namespace frc::sim;

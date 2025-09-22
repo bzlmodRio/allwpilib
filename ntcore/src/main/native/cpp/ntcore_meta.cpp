@@ -7,10 +7,9 @@
 #include <vector>
 
 #include <fmt/format.h>
+#include <wpi/ntcore/ntcore_cpp.hpp>
 #include <wpi/util/MessagePack.hpp>
 #include <wpi/util/mpack.h>
-
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 using namespace mpack;
 

@@ -7,6 +7,8 @@
 #include <chrono>
 #include <thread>
 
+#include <wpi/Errors.hpp>
+#include <wpi/RuntimeType.hpp>
 #include <wpi/hal/DriverStation.hpp>
 #include <wpi/hal/HALBase.hpp>
 #include <wpi/hal/Main.hpp>
@@ -15,9 +17,6 @@
 #include <wpi/util/condition_variable.hpp>
 #include <wpi/util/mutex.hpp>
 #include <wpi/util/string.hpp>
-
-#include "wpi/Errors.hpp"
-#include "wpi/RuntimeType.hpp"
 
 namespace frc {
 

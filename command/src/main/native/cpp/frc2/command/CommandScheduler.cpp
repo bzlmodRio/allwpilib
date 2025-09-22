@@ -2,28 +2,26 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/command/CommandScheduler.hpp"
-
 #include <cstdio>
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
 
-#include <wpi/opmode/RobotBase.hpp>
-#include <wpi/opmode/RobotState.hpp>
-#include <wpi/opmode/TimedRobot.hpp>
+#include <wpi/command/CommandPtr.hpp>
+#include <wpi/command/CommandScheduler.hpp>
+#include <wpi/command/Subsystem.hpp>
 #include <wpi/hal/HALBase.hpp>
 #include <wpi/hal/UsageReporting.hpp>
 #include <wpi/ntcore/IntegerArrayTopic.hpp>
 #include <wpi/ntcore/StringArrayTopic.hpp>
+#include <wpi/opmode/RobotBase.hpp>
+#include <wpi/opmode/RobotState.hpp>
+#include <wpi/opmode/TimedRobot.hpp>
 #include <wpi/util/DenseMap.h>
 #include <wpi/util/SmallVector.h>
 #include <wpi/util/sendable/SendableBuilder.hpp>
 #include <wpi/util/sendable/SendableRegistry.hpp>
-
-#include "wpi/command/CommandPtr.hpp"
-#include "wpi/command/Subsystem.hpp"
 
 using namespace frc2;
 

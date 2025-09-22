@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/EncoderData.hpp>
+
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_EncoderDataJNI.h"
-#include "wpi/hal/simulation/EncoderData.hpp"
 
 using namespace hal;
 

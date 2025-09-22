@@ -3,9 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/SharpIR.hpp"
-#include "wpi/simulation/SharpIRSim.hpp"
+#include <wpi/SharpIR.hpp>
+#include <wpi/simulation/SharpIRSim.hpp>
 
 using namespace frc;
 

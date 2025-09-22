@@ -4,13 +4,13 @@
 
 #include <jni.h>
 
+#include <wpi/math/geometry/Transform3d.hpp>
+#include <wpi/math/geometry/Twist3d.hpp>
+#include <wpi/units/angle.hpp>
+#include <wpi/units/length.hpp>
 #include <wpi/util/jni_util.hpp>
 
 #include "org_wpilib_math_jni_Twist3dJNI.h"
-#include "wpi/math/geometry/Transform3d.hpp"
-#include "wpi/math/geometry/Twist3d.hpp"
-#include "wpi/units/angle.hpp"
-#include "wpi/units/length.hpp"
 
 using namespace wpi::java;
 

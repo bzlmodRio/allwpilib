@@ -4,10 +4,10 @@
 
 #pragma once
 
+#include <wpi/math/geometry/Rotation2d.hpp>
 #include <wpi/util/SymbolExports.hpp>
 #include <wpi/util/protobuf/Protobuf.hpp>
 
-#include "wpi/math/geometry/Rotation2d.hpp"
 #include "pb.h"
 #include "wpimath/protobuf/geometry2d.npb.h"
 

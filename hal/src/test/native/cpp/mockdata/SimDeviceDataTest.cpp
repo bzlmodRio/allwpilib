@@ -3,9 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/hal/SimDevice.hpp"
-#include "wpi/hal/simulation/SimDeviceData.hpp"
+#include <wpi/hal/SimDevice.hpp>
+#include <wpi/hal/simulation/SimDeviceData.hpp>
 
 namespace hal {
 

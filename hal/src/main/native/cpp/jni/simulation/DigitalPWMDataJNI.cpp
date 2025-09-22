@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/DigitalPWMData.hpp>
+
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_DigitalPWMDataJNI.h"
-#include "wpi/hal/simulation/DigitalPWMData.hpp"
 
 using namespace hal;
 

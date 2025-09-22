@@ -8,8 +8,9 @@
 #include <ostream>
 #include <utility>
 
+#include <wpi/ntcore/NetworkTableValue.hpp>
+
 #include "gmock/gmock.h"
-#include "wpi/ntcore/NetworkTableValue.hpp"
 
 namespace nt {
 

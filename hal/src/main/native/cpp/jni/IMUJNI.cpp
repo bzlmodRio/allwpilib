@@ -7,10 +7,10 @@
 #include <string_view>
 
 #include <fmt/format.h>
+#include <wpi/hal/IMU.hpp>
 
 #include "HALUtil.h"
 #include "org_wpilib_hardware_hal_IMUJNI.h"
-#include "wpi/hal/IMU.hpp"
 
 using namespace hal;
 

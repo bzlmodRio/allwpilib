@@ -7,10 +7,9 @@
 #include <cstddef>
 #include <string>
 
+#include <wpi/hal/simulation/RoboRioData.hpp>
+#include <wpi/hal/simulation/SimDataValue.hpp>
 #include <wpi/util/spinlock.hpp>
-
-#include "wpi/hal/simulation/RoboRioData.hpp"
-#include "wpi/hal/simulation/SimDataValue.hpp"
 
 namespace hal {
 class RoboRioData {

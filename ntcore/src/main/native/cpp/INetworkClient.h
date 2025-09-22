@@ -8,7 +8,7 @@
 #include <string>
 #include <utility>
 
-#include "wpi/ntcore/ntcore_cpp.hpp"
+#include <wpi/ntcore/ntcore_cpp.hpp>
 
 namespace nt {
 

@@ -7,9 +7,9 @@
 #include <concepts>
 #include <limits>
 
-#include "wpi/math/geometry/Rectangle2d.hpp"
-#include "wpi/math/geometry/Translation2d.hpp"
-#include "wpi/math/trajectory/constraint/TrajectoryConstraint.hpp"
+#include <wpi/math/geometry/Rectangle2d.hpp>
+#include <wpi/math/geometry/Translation2d.hpp>
+#include <wpi/math/trajectory/constraint/TrajectoryConstraint.hpp>
 
 namespace frc {
 

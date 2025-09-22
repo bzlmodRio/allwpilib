@@ -9,6 +9,7 @@
 
 #include <gtest/gtest.h>
 #include <wpi/SpanMatcher.h>
+#include <wpi/ntcore/NetworkTableValue.hpp>
 #include <wpi/util/json.h>
 #include <wpi/util/raw_ostream.h>
 
@@ -18,7 +19,6 @@
 #include "gmock/gmock-matchers.h"
 #include "net/Message.h"
 #include "net/WireEncoder.h"
-#include "wpi/ntcore/NetworkTableValue.hpp"
 
 using namespace std::string_view_literals;
 

@@ -8,8 +8,7 @@
 
 #include <wpi/ntcore/NetworkTableInstance.hpp>
 #include <wpi/ntcore/StringTopic.hpp>
-
-#include "wpi/opmode/RobotBase.hpp"
+#include <wpi/opmode/RobotBase.hpp>
 
 namespace frc::sim {
 

@@ -5,10 +5,9 @@
 #include <vector>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/trajectory/Trajectory.hpp"
-#include "wpi/math/trajectory/TrajectoryConfig.hpp"
-#include "wpi/math/trajectory/TrajectoryGenerator.hpp"
+#include <wpi/math/trajectory/Trajectory.hpp>
+#include <wpi/math/trajectory/TrajectoryConfig.hpp>
+#include <wpi/math/trajectory/TrajectoryGenerator.hpp>
 
 void TestSameShapedTrajectory(std::vector<frc::Trajectory::State> statesA,
                               std::vector<frc::Trajectory::State> statesB) {

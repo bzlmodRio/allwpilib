@@ -4,8 +4,9 @@
 
 #include <jni.h>
 
+#include <wpi/hal/SystemServer.hpp>
+
 #include "org_wpilib_hardware_hal_SystemServerJNI.h"
-#include "wpi/hal/SystemServer.hpp"
 
 extern "C" {
 

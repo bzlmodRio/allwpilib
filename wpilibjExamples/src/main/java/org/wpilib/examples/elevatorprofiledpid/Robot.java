@@ -4,13 +4,13 @@
 
 package org.wpilib.examples.elevatorprofiledpid;
 
+import org.wpilib.driverstation.Joystick;
+import org.wpilib.hardware.motor.PWMSparkMax;
+import org.wpilib.hardware.rotation.Encoder;
 import org.wpilib.math.controller.ElevatorFeedforward;
 import org.wpilib.math.controller.ProfiledPIDController;
 import org.wpilib.math.trajectory.TrapezoidProfile;
-import org.wpilib.hardware.rotation.Encoder;
-import org.wpilib.driverstation.Joystick;
 import org.wpilib.opmode.TimedRobot;
-import org.wpilib.hardware.motor.PWMSparkMax;
 
 @SuppressWarnings("PMD.RedundantFieldInitializer")
 public class Robot extends TimedRobot {

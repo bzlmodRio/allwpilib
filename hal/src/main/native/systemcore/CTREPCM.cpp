@@ -2,18 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/hal/CTREPCM.hpp"
-
 #include <string>
 
 #include <fmt/format.h>
+#include <wpi/hal/CANAPI.hpp>
+#include <wpi/hal/CTREPCM.hpp>
+#include <wpi/hal/Errors.hpp>
+#include <wpi/hal/handles/IndexedHandleResource.hpp>
 
 #include "HALInitializer.h"
 #include "HALInternal.h"
 #include "PortsInternal.h"
-#include "wpi/hal/CANAPI.hpp"
-#include "wpi/hal/Errors.hpp"
-#include "wpi/hal/handles/IndexedHandleResource.hpp"
 
 using namespace hal;
 
@@ -409,9 +408,8 @@ void HAL_SetCTREPCMOneShotDuration(HAL_CTREPCMHandle handle, int32_t index,
   message.dataSize = 8;
 
   std::scoped_lock lock{pcm->lock};
-  pcm->oneShot.sol10MsPerUnit[index] =
-      (std::min)(static_cast<uint32_t>(durMs) / 10,
-                 static_cast<uint32_t>(0xFF));
+  pcm->oneShot.sol10MsPerUnit[index] = (std::min)(
+      static_cast<uint32_t>(durMs) / 10, static_cast<uint32_t>(0xFF));
   std::memcpy(message.data, pcm->oneShot.sol10MsPerUnit, 8);
   HAL_WriteCANPacketRepeating(pcm->canHandle, Control3, &message, SendPeriod,
                               status);

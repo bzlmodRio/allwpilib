@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/opmode/RobotBase.hpp"
-
 #ifdef __FRC_SYSTEMCORE__
 #include <dlfcn.h>
 #endif
@@ -13,20 +11,20 @@
 #include <string>
 #include <utility>
 
+#include <wpi/Errors.hpp>
+#include <wpi/Notifier.hpp>
 #include <wpi/cameraserver/CameraServerShared.hpp>
+#include <wpi/driverstation/DriverStation.hpp>
 #include <wpi/hal/HALBase.hpp>
 #include <wpi/hal/UsageReporting.hpp>
+#include <wpi/math/util/MathShared.hpp>
 #include <wpi/ntcore/NetworkTable.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/opmode/RobotBase.hpp>
+#include <wpi/smartdashboard/SmartDashboard.hpp>
+#include <wpi/system/WPILibVersion.hpp>
 #include <wpi/util/print.hpp>
 #include <wpi/util/timestamp.hpp>
-#include <wpi/math/util/MathShared.hpp>
-
-#include "wpi/system/WPILibVersion.hpp"
-#include "wpi/driverstation/DriverStation.hpp"
-#include "wpi/Errors.hpp"
-#include "wpi/Notifier.hpp"
-#include "wpi/smartdashboard/SmartDashboard.hpp"
 
 static_assert(frc::RuntimeType::kRoboRIO ==
               static_cast<frc::RuntimeType>(HAL_Runtime_RoboRIO));

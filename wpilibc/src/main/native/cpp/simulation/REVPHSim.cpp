@@ -2,13 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/simulation/REVPHSim.hpp"
-
 #include <memory>
 
+#include <wpi/SensorUtil.hpp>
 #include <wpi/hal/simulation/REVPHData.hpp>
-
-#include "wpi/SensorUtil.hpp"
+#include <wpi/simulation/REVPHSim.hpp>
 
 using namespace frc;
 using namespace frc::sim;

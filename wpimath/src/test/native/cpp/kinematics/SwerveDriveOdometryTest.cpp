@@ -6,12 +6,11 @@
 #include <random>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/kinematics/SwerveDriveKinematics.hpp"
-#include "wpi/math/kinematics/SwerveDriveOdometry.hpp"
-#include "wpi/math/trajectory/Trajectory.hpp"
-#include "wpi/math/trajectory/TrajectoryConfig.hpp"
-#include "wpi/math/trajectory/TrajectoryGenerator.hpp"
+#include <wpi/math/kinematics/SwerveDriveKinematics.hpp>
+#include <wpi/math/kinematics/SwerveDriveOdometry.hpp>
+#include <wpi/math/trajectory/Trajectory.hpp>
+#include <wpi/math/trajectory/TrajectoryConfig.hpp>
+#include <wpi/math/trajectory/TrajectoryGenerator.hpp>
 
 using namespace frc;
 

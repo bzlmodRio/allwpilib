@@ -3,13 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/command/CommandScheduler.hpp>
+#include <wpi/command/RunCommand.hpp>
+#include <wpi/command/WaitUntilCommand.hpp>
+#include <wpi/command/button/NetworkButton.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
 
 #include "../CommandTestBase.h"
-#include "wpi/command/CommandScheduler.hpp"
-#include "wpi/command/RunCommand.hpp"
-#include "wpi/command/WaitUntilCommand.hpp"
-#include "wpi/command/button/NetworkButton.hpp"
 
 using namespace frc2;
 

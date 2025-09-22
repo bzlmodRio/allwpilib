@@ -6,10 +6,10 @@ package org.wpilib.hardware.rotation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Test;
 import org.wpilib.hardware.hal.HAL;
 import org.wpilib.simulation.AnalogInputSim;
 import org.wpilib.simulation.RoboRioSim;
-import org.junit.jupiter.api.Test;
 
 class AnalogPotentiometerTest {
   @Test

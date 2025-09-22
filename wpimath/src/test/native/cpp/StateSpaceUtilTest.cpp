@@ -3,9 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/util/StateSpaceUtil.hpp"
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/math/util/StateSpaceUtil.hpp>
 
 TEST(StateSpaceUtilTest, CostParameterPack) {
   constexpr frc::Matrixd<3, 3> mat = frc::MakeCostMatrix(1.0, 2.0, 3.0);

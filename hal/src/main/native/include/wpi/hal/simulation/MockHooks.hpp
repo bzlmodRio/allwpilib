@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "wpi/hal/HALBase.hpp"
-#include "wpi/hal/Types.hpp"
+#include <wpi/hal/HALBase.hpp>
+#include <wpi/hal/Types.hpp>
 
 extern "C" {
 void HALSIM_SetRuntimeType(HAL_RuntimeType type);

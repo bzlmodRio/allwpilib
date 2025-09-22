@@ -5,10 +5,10 @@
 #include <jni.h>
 
 #include <Eigen/Core>
+#include <wpi/math/util/StateSpaceUtil.hpp>
 #include <wpi/util/jni_util.hpp>
 
 #include "org_wpilib_math_jni_StateSpaceUtilJNI.h"
-#include "wpi/math/util/StateSpaceUtil.hpp"
 
 using namespace wpi::java;
 

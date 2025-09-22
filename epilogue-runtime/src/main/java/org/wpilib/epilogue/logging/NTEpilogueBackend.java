@@ -4,6 +4,8 @@
 
 package org.wpilib.epilogue.logging;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.wpilib.networktables.BooleanArrayPublisher;
 import org.wpilib.networktables.BooleanPublisher;
 import org.wpilib.networktables.DoubleArrayPublisher;
@@ -20,8 +22,6 @@ import org.wpilib.networktables.StringPublisher;
 import org.wpilib.networktables.StructArrayPublisher;
 import org.wpilib.networktables.StructPublisher;
 import org.wpilib.util.struct.Struct;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A backend implementation that sends data over network tables. Be careful when using this, since

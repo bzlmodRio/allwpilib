@@ -4,11 +4,11 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/RoboRioData.hpp>
 #include <wpi/util/jni_util.hpp>
 
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_RoboRioDataJNI.h"
-#include "wpi/hal/simulation/RoboRioData.hpp"
 
 using namespace hal;
 using namespace wpi::java;

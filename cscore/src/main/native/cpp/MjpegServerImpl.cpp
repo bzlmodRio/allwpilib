@@ -9,14 +9,15 @@
 #include <string>
 #include <utility>
 
-#include <wpi/util/SmallString.h>
-#include <wpi/util/StringExtras.h>
-#include <wpi/util/fmt/raw_ostream.hpp>
-#include <wpi/util/print.hpp>
+#include <wpi/cscore/cscore_cpp.hpp>
 #include <wpi/net/HttpUtil.hpp>
 #include <wpi/net/TCPAcceptor.h>
 #include <wpi/net/raw_socket_istream.hpp>
 #include <wpi/net/raw_socket_ostream.hpp>
+#include <wpi/util/SmallString.h>
+#include <wpi/util/StringExtras.h>
+#include <wpi/util/fmt/raw_ostream.hpp>
+#include <wpi/util/print.hpp>
 
 #include "Instance.h"
 #include "JpegUtil.h"
@@ -24,7 +25,6 @@
 #include "Notifier.h"
 #include "SourceImpl.h"
 #include "c_util.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 using namespace cs;
 
@@ -773,7 +773,8 @@ void MjpegServerImpl::ConnThread::SendStream(wpi::raw_socket_ostream& os) {
     lastFrameTime = thisFrameTime;
     double timestamp = lastFrameTime / 1000000.0;
     header.clear();
-    oss << "\r\n--" BOUNDARY "\r\n" << "Content-Type: image/jpeg\r\n";
+    oss << "\r\n--" BOUNDARY "\r\n"
+        << "Content-Type: image/jpeg\r\n";
     wpi::print(oss, "Content-Length: {}\r\n", size);
     wpi::print(oss, "X-Timestamp: {}\r\n", timestamp);
     oss << "\r\n";

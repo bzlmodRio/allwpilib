@@ -4,9 +4,9 @@
 
 package org.wpilib.math.linalg;
 
+import org.ejml.simple.SimpleMatrix;
 import org.wpilib.math.jni.DAREJNI;
 import org.wpilib.math.util.Num;
-import org.ejml.simple.SimpleMatrix;
 
 /** DARE solver utility functions. */
 public final class DARE {

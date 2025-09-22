@@ -2,11 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/command/SequentialCommandGroup.hpp"
-
 #include <utility>
 #include <vector>
 
+#include <wpi/command/SequentialCommandGroup.hpp>
 #include <wpi/util/sendable/SendableBuilder.hpp>
 
 using namespace frc2;

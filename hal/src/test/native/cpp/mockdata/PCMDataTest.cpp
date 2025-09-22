@@ -5,11 +5,10 @@
 #include <string>
 
 #include <gtest/gtest.h>
-
-#include "wpi/hal/CTREPCM.hpp"
-#include "wpi/hal/HAL.hpp"
-#include "wpi/hal/handles/HandlesInternal.hpp"
-#include "wpi/hal/simulation/CTREPCMData.hpp"
+#include <wpi/hal/CTREPCM.hpp>
+#include <wpi/hal/HAL.hpp>
+#include <wpi/hal/handles/HandlesInternal.hpp>
+#include <wpi/hal/simulation/CTREPCMData.hpp>
 
 namespace hal {
 

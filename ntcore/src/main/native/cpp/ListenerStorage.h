@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 
+#include <wpi/ntcore/ntcore_cpp.hpp>
 #include <wpi/util/DenseMap.h>
 #include <wpi/util/SafeThread.hpp>
 #include <wpi/util/SmallVector.h>
@@ -21,7 +22,6 @@
 #include "HandleMap.h"
 #include "IListenerStorage.h"
 #include "VectorSet.h"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 namespace nt {
 

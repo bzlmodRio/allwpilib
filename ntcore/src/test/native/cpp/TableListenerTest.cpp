@@ -5,12 +5,12 @@
 #include <memory>
 
 #include <gtest/gtest.h>
+#include <wpi/ntcore/DoubleTopic.hpp>
+#include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/ntcore/ntcore_cpp.hpp>
 
 #include "TestPrinters.h"
 #include "gmock/gmock.h"
-#include "wpi/ntcore/DoubleTopic.hpp"
-#include "wpi/ntcore/NetworkTableInstance.hpp"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 using ::testing::_;
 

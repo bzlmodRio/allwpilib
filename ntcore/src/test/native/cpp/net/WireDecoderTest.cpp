@@ -5,6 +5,7 @@
 #include <string>
 
 #include <gtest/gtest.h>
+#include <wpi/ntcore/NetworkTableValue.hpp>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/raw_ostream.h>
 
@@ -16,7 +17,6 @@
 #include "gmock/gmock.h"
 #include "net/MessageHandler.h"
 #include "net/WireDecoder.h"
-#include "wpi/ntcore/NetworkTableValue.hpp"
 
 using namespace std::string_view_literals;
 using testing::_;

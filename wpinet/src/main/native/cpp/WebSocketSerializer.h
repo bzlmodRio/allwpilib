@@ -8,12 +8,12 @@
 #include <memory>
 #include <utility>
 
+#include <wpi/net/WebSocket.hpp>
+#include <wpi/net/uv/Buffer.hpp>
 #include <wpi/util/SmallVector.h>
 #include <wpi/util/SpanExtras.hpp>
 
 #include "WebSocketDebug.h"
-#include "wpi/net/WebSocket.hpp"
-#include "wpi/net/uv/Buffer.hpp"
 
 namespace wpi::detail {
 

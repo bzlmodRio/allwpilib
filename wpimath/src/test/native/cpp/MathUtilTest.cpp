@@ -6,14 +6,13 @@
 #include <numbers>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/util/MathUtil.hpp"
-#include "wpi/math/geometry/Translation2d.hpp"
-#include "wpi/math/geometry/Translation3d.hpp"
-#include "wpi/units/angle.hpp"
-#include "wpi/units/length.hpp"
-#include "wpi/units/time.hpp"
-#include "wpi/units/velocity.hpp"
+#include <wpi/math/geometry/Translation2d.hpp>
+#include <wpi/math/geometry/Translation3d.hpp>
+#include <wpi/math/util/MathUtil.hpp>
+#include <wpi/units/angle.hpp>
+#include <wpi/units/length.hpp>
+#include <wpi/units/time.hpp>
+#include <wpi/units/velocity.hpp>
 
 #define EXPECT_UNITS_EQ(a, b) EXPECT_DOUBLE_EQ((a).value(), (b).value())
 

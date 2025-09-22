@@ -2,8 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <wpi/command/FunctionalCommand.hpp>
+
 #include "CommandTestBase.h"
-#include "wpi/command/FunctionalCommand.hpp"
 
 using namespace frc2;
 class FunctionalCommandTest : public CommandTestBase {};

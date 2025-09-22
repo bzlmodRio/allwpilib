@@ -8,10 +8,9 @@
 
 #include <wpi/hal/Encoder.hpp>
 #include <wpi/hal/Types.hpp>
+#include <wpi/hardware/discrete/CounterBase.hpp>
 #include <wpi/util/sendable/Sendable.hpp>
 #include <wpi/util/sendable/SendableHelper.hpp>
-
-#include "wpi/hardware/discrete/CounterBase.hpp"
 
 namespace frc {
 /**

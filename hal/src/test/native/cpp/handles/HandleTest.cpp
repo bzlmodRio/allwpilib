@@ -5,8 +5,7 @@
 #include <memory>
 
 #include <gtest/gtest.h>
-
-#include "wpi/hal/handles/IndexedClassedHandleResource.hpp"
+#include <wpi/hal/handles/IndexedClassedHandleResource.hpp>
 
 #define HAL_TestHandle HAL_Handle
 

@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include <wpi/smartdashboard/SmartDashboard.hpp>
+#include <wpi/command/FunctionalCommand.hpp>
+#include <wpi/command/InstantCommand.hpp>
+#include <wpi/command/RunCommand.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/smartdashboard/SmartDashboard.hpp>
 
 #include "CommandTestBase.h"
-#include "wpi/command/FunctionalCommand.hpp"
-#include "wpi/command/InstantCommand.hpp"
-#include "wpi/command/RunCommand.hpp"
 
 using namespace frc2;
 class CommandScheduleTest : public CommandTestBase {};

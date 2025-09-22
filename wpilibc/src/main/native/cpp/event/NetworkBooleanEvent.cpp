@@ -2,11 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/event/NetworkBooleanEvent.hpp"
-
 #include <memory>
 #include <utility>
 
+#include <wpi/event/NetworkBooleanEvent.hpp>
 #include <wpi/ntcore/BooleanTopic.hpp>
 #include <wpi/ntcore/NetworkTable.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>

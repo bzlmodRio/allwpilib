@@ -4,11 +4,10 @@
 
 #pragma once
 
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/math/spline/Spline.hpp>
 #include <wpi/util/SymbolExports.hpp>
 #include <wpi/util/array.hpp>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/spline/Spline.hpp"
 
 namespace frc {
 /**

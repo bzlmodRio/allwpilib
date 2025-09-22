@@ -9,8 +9,9 @@
 
 #include <memory>
 
+#include <wpi/cscore/cscore_cpp.hpp>
+
 #include "ComPtr.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 namespace cs {
 

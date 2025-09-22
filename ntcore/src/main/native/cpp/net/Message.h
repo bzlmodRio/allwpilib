@@ -9,10 +9,10 @@
 #include <variant>
 #include <vector>
 
+#include <wpi/ntcore/NetworkTableValue.hpp>
 #include <wpi/util/json.h>
 
 #include "PubSubOptions.h"
-#include "wpi/ntcore/NetworkTableValue.hpp"
 
 namespace nt::net {
 

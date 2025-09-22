@@ -3,23 +3,22 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/hardware/motor/PWMVictorSPX.hpp>
+#include <wpi/hardware/rotation/Encoder.hpp>
+#include <wpi/math/controller/PIDController.hpp>
+#include <wpi/math/controller/SimpleMotorFeedforward.hpp>
+#include <wpi/math/system/plant/LinearSystemId.hpp>
+#include <wpi/simulation/BatterySim.hpp>
+#include <wpi/simulation/DifferentialDrivetrainSim.hpp>
+#include <wpi/simulation/ElevatorSim.hpp>
+#include <wpi/simulation/EncoderSim.hpp>
+#include <wpi/simulation/FlywheelSim.hpp>
+#include <wpi/simulation/LinearSystemSim.hpp>
+#include <wpi/simulation/PWMSim.hpp>
+#include <wpi/simulation/RoboRioSim.hpp>
+#include <wpi/system/RobotController.hpp>
 #include <wpi/units/angular_acceleration.hpp>
 #include <wpi/units/angular_velocity.hpp>
-
-#include "wpi/hardware/rotation/Encoder.hpp"
-#include "wpi/system/RobotController.hpp"
-#include "wpi/math/controller/PIDController.hpp"
-#include "wpi/math/controller/SimpleMotorFeedforward.hpp"
-#include "wpi/hardware/motor/PWMVictorSPX.hpp"
-#include "wpi/simulation/BatterySim.hpp"
-#include "wpi/simulation/DifferentialDrivetrainSim.hpp"
-#include "wpi/simulation/ElevatorSim.hpp"
-#include "wpi/simulation/EncoderSim.hpp"
-#include "wpi/simulation/FlywheelSim.hpp"
-#include "wpi/simulation/LinearSystemSim.hpp"
-#include "wpi/simulation/PWMSim.hpp"
-#include "wpi/simulation/RoboRioSim.hpp"
-#include "wpi/math/system/plant/LinearSystemId.hpp"
 
 TEST(StateSpaceSimTest, FlywheelSim) {
   const frc::LinearSystem<1, 1, 1> plant =

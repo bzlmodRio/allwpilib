@@ -10,10 +10,9 @@
 #include <vector>
 
 #include <gtest/gtest.h>
-
-#include "wpi/net/uv/Loop.hpp"
-#include "wpi/net/uv/Pipe.hpp"
-#include "wpi/net/uv/Timer.hpp"
+#include <wpi/net/uv/Loop.hpp>
+#include <wpi/net/uv/Pipe.hpp>
+#include <wpi/net/uv/Timer.hpp>
 
 namespace wpi {
 

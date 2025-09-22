@@ -3,9 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/math/controller/DifferentialDriveFeedforward.hpp>
 
 #include "../../StructTestBase.h"
-#include "wpi/math/controller/DifferentialDriveFeedforward.hpp"
 
 using namespace frc;
 

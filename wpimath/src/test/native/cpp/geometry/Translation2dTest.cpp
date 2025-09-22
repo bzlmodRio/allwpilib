@@ -5,8 +5,7 @@
 #include <cmath>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/geometry/Translation2d.hpp"
+#include <wpi/math/geometry/Translation2d.hpp>
 
 using namespace frc;
 

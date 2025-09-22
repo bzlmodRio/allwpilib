@@ -18,10 +18,10 @@
 #include <GLFW/glfw3.h>
 #include <fmt/format.h>
 #include <imgui.h>
-#include <wpi/gui/portable-file-dialogs.hpp>
 #include <tagpose.h>
-#include <wpi/util/json.h>
+#include <wpi/gui/portable-file-dialogs.hpp>
 #include <wpi/gui/wpigui.hpp>
+#include <wpi/util/json.h>
 
 namespace gui = wpi::gui;
 

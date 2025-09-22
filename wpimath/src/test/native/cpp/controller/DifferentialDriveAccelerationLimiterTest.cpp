@@ -3,10 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/controller/DifferentialDriveAccelerationLimiter.hpp"
-#include "wpi/math/system/plant/LinearSystemId.hpp"
-#include "wpi/units/math.hpp"
+#include <wpi/math/controller/DifferentialDriveAccelerationLimiter.hpp>
+#include <wpi/math/system/plant/LinearSystemId.hpp>
+#include <wpi/units/math.hpp>
 
 namespace frc {
 

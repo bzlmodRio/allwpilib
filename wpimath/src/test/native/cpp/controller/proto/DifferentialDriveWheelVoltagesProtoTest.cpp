@@ -3,9 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/math/controller/DifferentialDriveWheelVoltages.hpp>
 #include <wpi/util/SmallVector.h>
-
-#include "wpi/math/controller/DifferentialDriveWheelVoltages.hpp"
 
 using namespace frc;
 

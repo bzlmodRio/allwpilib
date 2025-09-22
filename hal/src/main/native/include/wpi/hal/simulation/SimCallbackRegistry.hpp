@@ -7,11 +7,10 @@
 #include <memory>
 #include <utility>
 
+#include <wpi/hal/simulation/NotifyListener.hpp>
 #include <wpi/util/Compiler.h>
 #include <wpi/util/UidVector.hpp>
 #include <wpi/util/spinlock.hpp>
-
-#include "wpi/hal/simulation/NotifyListener.hpp"
 
 namespace hal {
 
@@ -102,7 +101,7 @@ class SimCallbackRegistry : public impl::SimCallbackRegistryBase {
  */
 #define HAL_SIMCALLBACKREGISTRY_DEFINE_NAME(NAME)           \
   static LLVM_ATTRIBUTE_ALWAYS_INLINE constexpr const char* \
-  Get##NAME##Name() {                                       \
+      Get##NAME##Name() {                                   \
     return #NAME;                                           \
   }
 

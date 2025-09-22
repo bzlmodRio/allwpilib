@@ -6,8 +6,8 @@
 
 #include <string_view>
 
-#include "wpi/command/CommandHelper.hpp"
-#include "wpi/command/InstantCommand.hpp"
+#include <wpi/command/CommandHelper.hpp>
+#include <wpi/command/InstantCommand.hpp>
 
 namespace frc2 {
 /**

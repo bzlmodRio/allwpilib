@@ -2,15 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/math/util/MathShared.hpp"
-
 #include <memory>
 #include <utility>
 
+#include <wpi/math/util/MathShared.hpp>
+#include <wpi/units/time.hpp>
 #include <wpi/util/mutex.hpp>
 #include <wpi/util/timestamp.hpp>
-
-#include "wpi/units/time.hpp"
 
 using namespace wpi::math;
 

@@ -6,10 +6,10 @@
 #include <vector>
 
 #include <gtest/gtest.h>
+#include <wpi/ntcore/NetworkTable.hpp>
+#include <wpi/ntcore/NetworkTableInstance.hpp>
 
 #include "TestPrinters.h"
-#include "wpi/ntcore/NetworkTable.hpp"
-#include "wpi/ntcore/NetworkTableInstance.hpp"
 
 class NetworkTableTest : public ::testing::Test {};
 

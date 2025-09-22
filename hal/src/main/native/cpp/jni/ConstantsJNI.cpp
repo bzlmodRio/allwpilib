@@ -6,9 +6,10 @@
 
 #include <cassert>
 
+#include <wpi/hal/Constants.hpp>
+
 #include "HALUtil.h"
 #include "org_wpilib_hardware_hal_ConstantsJNI.h"
-#include "wpi/hal/Constants.hpp"
 
 using namespace hal;
 

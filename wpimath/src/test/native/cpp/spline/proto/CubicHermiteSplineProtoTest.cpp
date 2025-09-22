@@ -3,9 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/math/spline/CubicHermiteSpline.hpp>
 
 #include "../../ProtoTestBase.h"
-#include "wpi/math/spline/CubicHermiteSpline.hpp"
 
 using namespace frc;
 

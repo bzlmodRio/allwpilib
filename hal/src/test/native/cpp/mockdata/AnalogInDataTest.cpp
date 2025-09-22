@@ -5,11 +5,10 @@
 #include <string>
 
 #include <gtest/gtest.h>
-
-#include "wpi/hal/AnalogInput.hpp"
-#include "wpi/hal/HAL.hpp"
-#include "wpi/hal/handles/HandlesInternal.hpp"
-#include "wpi/hal/simulation/AnalogInData.hpp"
+#include <wpi/hal/AnalogInput.hpp>
+#include <wpi/hal/HAL.hpp>
+#include <wpi/hal/handles/HandlesInternal.hpp>
+#include <wpi/hal/simulation/AnalogInData.hpp>
 
 namespace hal {
 

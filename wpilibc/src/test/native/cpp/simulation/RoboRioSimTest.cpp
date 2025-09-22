@@ -9,9 +9,9 @@
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
 #include <wpi/hal/HALBase.hpp>
+#include <wpi/system/RobotController.hpp>
 
 #include "callback_helpers/TestCallbackHelpers.h"
-#include "wpi/system/RobotController.hpp"
 
 namespace frc::sim {
 

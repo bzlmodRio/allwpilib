@@ -4,8 +4,8 @@
 
 package org.wpilib.math.trajectory;
 
-import org.wpilib.math.util.MathSharedStore;
 import java.util.Objects;
+import org.wpilib.math.util.MathSharedStore;
 
 /**
  * A trapezoid-shaped velocity profile.

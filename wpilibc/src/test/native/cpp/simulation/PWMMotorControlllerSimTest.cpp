@@ -6,8 +6,7 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
-
-#include "wpi/hardware/motor/Spark.hpp"
+#include <wpi/hardware/motor/Spark.hpp>
 
 namespace frc::sim {
 TEST(PWMMotorControllerSimTest, TestMotor) {

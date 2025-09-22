@@ -12,6 +12,8 @@
 
 #include <gtest/gtest.h>
 #include <wpi/SpanMatcher.h>
+#include <wpi/ntcore/ntcore_c.h>
+#include <wpi/ntcore/ntcore_cpp.hpp>
 
 #include "../MockLogger.h"
 #include "../PubSubOptionsMatcher.h"
@@ -24,8 +26,6 @@
 #include "gmock/gmock.h"
 #include "net/Message.h"
 #include "net/WireEncoder.h"
-#include "wpi/ntcore/ntcore_c.h"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 #include "server/ServerImpl.h"
 
 using ::testing::_;

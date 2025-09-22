@@ -5,12 +5,11 @@
 #include <string_view>
 
 #include <gtest/gtest.h>
+#include <wpi/simulation/SimHooks.hpp>
+#include <wpi/system/ScopedTracer.hpp>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/StringExtras.h>
 #include <wpi/util/raw_ostream.h>
-
-#include "wpi/system/ScopedTracer.hpp"
-#include "wpi/simulation/SimHooks.hpp"
 
 TEST(ScopedTracerTest, Timing) {
   wpi::SmallString<128> buf;

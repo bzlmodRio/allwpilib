@@ -6,12 +6,11 @@
 #define UNICODE
 #endif
 
-#include "wpi/net/MulticastServiceResolver.hpp"
-
 #include <memory>
 #include <string>
 #include <utility>
 
+#include <wpi/net/MulticastServiceResolver.hpp>
 #include <wpi/util/ConvertUTF.h>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/SmallVector.h>

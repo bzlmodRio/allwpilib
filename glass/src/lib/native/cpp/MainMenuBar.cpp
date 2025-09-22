@@ -2,17 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/glass/MainMenuBar.hpp"
-
 #include <memory>
 #include <utility>
 
 #include <imgui.h>
-#include <wpi/util/StringExtras.h>
+#include <wpi/glass/Context.hpp>
+#include <wpi/glass/ContextInternal.hpp>
+#include <wpi/glass/MainMenuBar.hpp>
 #include <wpi/gui/wpigui.hpp>
-
-#include "wpi/glass/Context.hpp"
-#include "wpi/glass/ContextInternal.hpp"
+#include <wpi/util/StringExtras.h>
 
 using namespace glass;
 

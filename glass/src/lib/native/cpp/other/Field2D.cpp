@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/glass/other/Field2D.hpp"
-
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -13,14 +11,20 @@
 #include <utility>
 #include <vector>
 
-#include <wpi/fields/wpi/fields.hpp>
-#include <wpi/math/geometry/Pose2d.hpp>
-#include <wpi/math/geometry/Rotation2d.hpp>
-#include <wpi/math/geometry/Translation2d.hpp>
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <imgui_stdlib.h>
+#include <wpi/fields/wpi/fields.hpp>
+#include <wpi/glass/Context.hpp>
+#include <wpi/glass/Storage.hpp>
+#include <wpi/glass/other/Field2D.hpp>
+#include <wpi/glass/support/ColorSetting.hpp>
+#include <wpi/glass/support/EnumSetting.hpp>
 #include <wpi/gui/portable-file-dialogs.hpp>
+#include <wpi/gui/wpigui.hpp>
+#include <wpi/math/geometry/Pose2d.hpp>
+#include <wpi/math/geometry/Rotation2d.hpp>
+#include <wpi/math/geometry/Translation2d.hpp>
 #include <wpi/units/angle.hpp>
 #include <wpi/units/length.hpp>
 #include <wpi/util/MemoryBuffer.h>
@@ -30,12 +34,6 @@
 #include <wpi/util/fs.hpp>
 #include <wpi/util/json.h>
 #include <wpi/util/print.hpp>
-#include <wpi/gui/wpigui.hpp>
-
-#include "wpi/glass/Context.hpp"
-#include "wpi/glass/Storage.hpp"
-#include "wpi/glass/support/ColorSetting.hpp"
-#include "wpi/glass/support/EnumSetting.hpp"
 
 using namespace glass;
 

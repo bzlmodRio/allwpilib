@@ -3,8 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/geometry/Ellipse2d.hpp"
+#include <wpi/math/geometry/Ellipse2d.hpp>
 
 TEST(Ellipse2dTest, FocalPoints) {
   constexpr frc::Pose2d center{1_m, 2_m, 0_deg};

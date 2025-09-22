@@ -2,17 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/glass/other/DeviceTree.hpp"
-
 #include <cinttypes>
 #include <string>
 
 #include <imgui.h>
+#include <wpi/glass/Context.hpp>
+#include <wpi/glass/ContextInternal.hpp>
+#include <wpi/glass/DataSource.hpp>
+#include <wpi/glass/other/DeviceTree.hpp>
 #include <wpi/util/StringExtras.h>
-
-#include "wpi/glass/Context.hpp"
-#include "wpi/glass/ContextInternal.hpp"
-#include "wpi/glass/DataSource.hpp"
 
 using namespace glass;
 

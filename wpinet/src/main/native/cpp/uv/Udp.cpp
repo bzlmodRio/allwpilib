@@ -2,17 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/net/uv/Udp.hpp"
-
 #include <cstring>
 #include <functional>
 #include <memory>
 #include <utility>
 
+#include <wpi/net/uv/Udp.hpp>
+#include <wpi/net/uv/util.hpp>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/SmallVector.h>
-
-#include "wpi/net/uv/util.hpp"
 
 namespace {
 

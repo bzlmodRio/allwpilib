@@ -2,19 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/net/WebSocketServer.hpp"
-
 #include <memory>
 #include <string>
 #include <utility>
 
+#include <wpi/net/WebSocketServer.hpp>
+#include <wpi/net/raw_uv_ostream.hpp>
+#include <wpi/net/uv/Buffer.hpp>
+#include <wpi/net/uv/Stream.hpp>
 #include <wpi/util/StringExtras.h>
 #include <wpi/util/fmt/raw_ostream.hpp>
 #include <wpi/util/print.hpp>
-
-#include "wpi/net/raw_uv_ostream.hpp"
-#include "wpi/net/uv/Buffer.hpp"
-#include "wpi/net/uv/Stream.hpp"
 
 using namespace wpi;
 

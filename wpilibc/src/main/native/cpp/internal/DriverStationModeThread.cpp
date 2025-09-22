@@ -2,12 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/internal/DriverStationModeThread.hpp"
-
+#include <wpi/driverstation/DriverStation.hpp>
 #include <wpi/hal/DriverStation.hpp>
+#include <wpi/internal/DriverStationModeThread.hpp>
 #include <wpi/util/Synchronization.hpp>
-
-#include "wpi/driverstation/DriverStation.hpp"
 
 using namespace frc::internal;
 

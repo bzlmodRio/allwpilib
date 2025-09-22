@@ -13,12 +13,12 @@
 #include <string_view>
 #include <vector>
 
+#include <wpi/cscore/cscore_cpp.hpp>
 #include <wpi/util/StringMap.hpp>
 #include <wpi/util/json_fwd.h>
 #include <wpi/util/mutex.hpp>
 
 #include "PropertyImpl.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 namespace wpi {
 class Logger;

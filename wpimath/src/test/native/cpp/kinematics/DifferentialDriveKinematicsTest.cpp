@@ -5,12 +5,11 @@
 #include <numbers>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/kinematics/ChassisSpeeds.hpp"
-#include "wpi/math/kinematics/DifferentialDriveKinematics.hpp"
-#include "wpi/units/angular_velocity.hpp"
-#include "wpi/units/length.hpp"
-#include "wpi/units/velocity.hpp"
+#include <wpi/math/kinematics/ChassisSpeeds.hpp>
+#include <wpi/math/kinematics/DifferentialDriveKinematics.hpp>
+#include <wpi/units/angular_velocity.hpp>
+#include <wpi/units/length.hpp>
+#include <wpi/units/velocity.hpp>
 
 using namespace frc;
 

@@ -2,16 +2,15 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#ifndef CSCORE_CSCORE_CV_H_
-#define CSCORE_CSCORE_CV_H_
+#ifndef CSCORE_WPI_CSCORE_CSCORE_CV_HPP_
+#define CSCORE_WPI_CSCORE_CSCORE_CV_HPP_
 
 #include <functional>
 
 #include <opencv2/core/mat.hpp>
+#include <wpi/cscore/cscore_oo.hpp>
+#include <wpi/cscore/cscore_raw.hpp>
 #include <wpi/util/RawFrame.hpp>
-
-#include "wpi/cscore/cscore_oo.hpp"
-#include "wpi/cscore/cscore_raw.hpp"
 
 namespace cs {
 /**
@@ -433,4 +432,4 @@ inline WPI_TimestampSource CvSink::LastFrameTimeSource() {
 
 }  // namespace cs
 
-#endif  // CSCORE_CSCORE_CV_H_
+#endif  // CSCORE_WPI_CSCORE_CSCORE_CV_HPP_

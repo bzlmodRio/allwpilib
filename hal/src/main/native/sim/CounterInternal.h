@@ -4,9 +4,10 @@
 
 #pragma once
 
+#include <wpi/hal/handles/HandlesInternal.hpp>
+#include <wpi/hal/handles/LimitedHandleResource.hpp>
+
 #include "PortsInternal.h"
-#include "wpi/hal/handles/HandlesInternal.hpp"
-#include "wpi/hal/handles/LimitedHandleResource.hpp"
 
 namespace hal {
 

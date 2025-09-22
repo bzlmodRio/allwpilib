@@ -8,8 +8,9 @@
 
 #include <string>
 
+#include <wpi/hal/handles/DigitalHandleResource.hpp>
+
 #include "PortsInternal.h"
-#include "wpi/hal/handles/DigitalHandleResource.hpp"
 
 namespace hal {
 /**

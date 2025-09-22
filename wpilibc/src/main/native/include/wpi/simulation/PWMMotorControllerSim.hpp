@@ -5,9 +5,8 @@
 #pragma once
 
 #include <wpi/hal/SimDevice.hpp>
+#include <wpi/hardware/motor/PWMMotorController.hpp>
 #include <wpi/units/length.hpp>
-
-#include "wpi/hardware/motor/PWMMotorController.hpp"
 
 namespace frc {
 

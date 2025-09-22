@@ -3,8 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/estimator/MerweScaledSigmaPoints.hpp"
+#include <wpi/math/estimator/MerweScaledSigmaPoints.hpp>
 
 TEST(MerweScaledSigmaPointsTest, ZeroMean) {
   frc::MerweScaledSigmaPoints<2> sigmaPoints;

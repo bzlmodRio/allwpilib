@@ -4,9 +4,10 @@
 
 #pragma once
 
+#include <wpi/hal/simulation/PowerDistributionData.hpp>
+#include <wpi/hal/simulation/SimDataValue.hpp>
+
 #include "../PortsInternal.h"
-#include "wpi/hal/simulation/PowerDistributionData.hpp"
-#include "wpi/hal/simulation/SimDataValue.hpp"
 
 namespace hal {
 

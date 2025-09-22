@@ -7,9 +7,8 @@
 
 #include <Eigen/Core>
 #include <gtest/gtest.h>
+#include <wpi/math/geometry/Rotation3d.hpp>
 #include <wpi/util/MathExtras.h>
-
-#include "wpi/math/geometry/Rotation3d.hpp"
 
 using namespace frc;
 

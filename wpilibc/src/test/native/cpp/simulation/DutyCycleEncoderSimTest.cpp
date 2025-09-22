@@ -6,9 +6,9 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
+#include <wpi/hardware/rotation/DutyCycleEncoder.hpp>
 
 #include "callback_helpers/TestCallbackHelpers.h"
-#include "wpi/hardware/rotation/DutyCycleEncoder.hpp"
 
 namespace frc::sim {
 

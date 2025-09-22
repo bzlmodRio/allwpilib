@@ -6,9 +6,8 @@
 
 #include <stdint.h>
 
+#include <wpi/hal/Types.hpp>
 #include <wpi/util/nodiscard.hpp>
-
-#include "wpi/hal/Types.hpp"
 
 /**
  * @defgroup hal_notifier Notifier Functions

@@ -6,14 +6,13 @@
 #include <numbers>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/controller/ArmFeedforward.hpp"
-#include "wpi/math/system/NumericalIntegration.hpp"
-#include "wpi/units/angular_acceleration.hpp"
-#include "wpi/units/angular_velocity.hpp"
-#include "wpi/units/time.hpp"
-#include "wpi/units/voltage.hpp"
+#include <wpi/math/controller/ArmFeedforward.hpp>
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/math/system/NumericalIntegration.hpp>
+#include <wpi/units/angular_acceleration.hpp>
+#include <wpi/units/angular_velocity.hpp>
+#include <wpi/units/time.hpp>
+#include <wpi/units/voltage.hpp>
 
 namespace {
 

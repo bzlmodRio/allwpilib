@@ -7,11 +7,10 @@
 #include <functional>
 
 #include <wpi/Notifier.hpp>
+#include <wpi/command/Command.hpp>
+#include <wpi/command/CommandHelper.hpp>
+#include <wpi/command/Requirements.hpp>
 #include <wpi/units/time.hpp>
-
-#include "wpi/command/Command.hpp"
-#include "wpi/command/CommandHelper.hpp"
-#include "wpi/command/Requirements.hpp"
 
 namespace frc2 {
 /**

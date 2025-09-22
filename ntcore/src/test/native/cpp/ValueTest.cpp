@@ -9,10 +9,10 @@
 #include <vector>
 
 #include <gtest/gtest.h>
+#include <wpi/ntcore/NetworkTableValue.hpp>
 
 #include "TestPrinters.h"
 #include "Value_internal.h"
-#include "wpi/ntcore/NetworkTableValue.hpp"
 
 using namespace std::string_view_literals;
 

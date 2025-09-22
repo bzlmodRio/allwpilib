@@ -6,9 +6,8 @@
 
 #include <stdint.h>
 
+#include <wpi/hal/Types.hpp>
 #include <wpi/util/Synchronization.hpp>
-
-#include "wpi/hal/Types.hpp"
 
 /* General Handle Data Layout
  * Bits 0-15:  Handle Index

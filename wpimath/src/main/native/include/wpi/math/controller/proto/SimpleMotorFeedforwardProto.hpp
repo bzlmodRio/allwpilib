@@ -4,11 +4,11 @@
 
 #pragma once
 
+#include <wpi/math/controller/SimpleMotorFeedforward.hpp>
+#include <wpi/units/length.hpp>
 #include <wpi/util/protobuf/Protobuf.hpp>
 
-#include "wpi/math/controller/SimpleMotorFeedforward.hpp"
 #include "pb.h"
-#include "wpi/units/length.hpp"
 #include "wpimath/protobuf/controller.npb.h"
 
 // Everything is converted into units for

@@ -8,9 +8,9 @@
 #include <utility>
 
 #include <gtest/gtest.h>
+#include <wpi/command/Commands.hpp>
 
 #include "CommandTestBase.h"
-#include "wpi/command/Commands.hpp"
 #include "make_vector.h"
 
 namespace frc2 {

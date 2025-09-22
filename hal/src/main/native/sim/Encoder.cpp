@@ -2,17 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/hal/Encoder.hpp"
-
 #include <limits>
+
+#include <wpi/hal/Encoder.hpp>
+#include <wpi/hal/Errors.hpp>
+#include <wpi/hal/handles/HandlesInternal.hpp>
+#include <wpi/hal/handles/LimitedHandleResource.hpp>
 
 #include "CounterInternal.h"
 #include "HALInitializer.h"
 #include "HALInternal.h"
 #include "PortsInternal.h"
-#include "wpi/hal/Errors.hpp"
-#include "wpi/hal/handles/HandlesInternal.hpp"
-#include "wpi/hal/handles/LimitedHandleResource.hpp"
 #include "mockdata/EncoderDataInternal.h"
 
 using namespace hal;

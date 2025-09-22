@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/glass/Context.hpp"
-
 #include <filesystem>
 #include <memory>
 #include <string>
@@ -13,16 +11,16 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <imgui_stdlib.h>
+#include <wpi/glass/Context.hpp>
+#include <wpi/glass/ContextInternal.hpp>
+#include <wpi/gui/wpigui.hpp>
+#include <wpi/gui/wpigui_internal.hpp>
 #include <wpi/util/MemoryBuffer.h>
 #include <wpi/util/StringExtras.h>
 #include <wpi/util/fs.hpp>
 #include <wpi/util/json.h>
 #include <wpi/util/raw_ostream.h>
 #include <wpi/util/timestamp.hpp>
-#include <wpi/gui/wpigui.hpp>
-#include <wpi/gui/wpigui_internal.hpp>
-
-#include "wpi/glass/ContextInternal.hpp"
 
 using namespace glass;
 

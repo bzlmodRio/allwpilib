@@ -7,7 +7,7 @@
 #include <memory>
 #include <string_view>
 
-#include "wpi/event/BooleanEvent.hpp"
+#include <wpi/event/BooleanEvent.hpp>
 
 namespace nt {
 class BooleanSubscriber;

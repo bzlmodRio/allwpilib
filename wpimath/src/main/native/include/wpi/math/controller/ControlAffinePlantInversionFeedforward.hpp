@@ -8,10 +8,9 @@
 #include <functional>
 
 #include <Eigen/QR>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/system/NumericalJacobian.hpp"
-#include "wpi/units/time.hpp"
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/math/system/NumericalJacobian.hpp>
+#include <wpi/units/time.hpp>
 
 namespace frc {
 

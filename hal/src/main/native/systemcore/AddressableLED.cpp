@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/hal/AddressableLED.hpp"
-
 #include <stdint.h>
 
 #include <cstdio>
@@ -12,6 +10,10 @@
 #include <thread>
 
 #include <fmt/format.h>
+#include <wpi/hal/AddressableLED.hpp>
+#include <wpi/hal/AddressableLEDTypes.hpp>
+#include <wpi/hal/Errors.hpp>
+#include <wpi/hal/cpp/fpga_clock.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
 #include <wpi/ntcore/RawTopic.hpp>
 
@@ -21,9 +23,6 @@
 #include "PortsInternal.h"
 #include "SmartIo.h"
 #include "SystemServerInternal.h"
-#include "wpi/hal/AddressableLEDTypes.hpp"
-#include "wpi/hal/Errors.hpp"
-#include "wpi/hal/cpp/fpga_clock.hpp"
 
 using namespace hal;
 

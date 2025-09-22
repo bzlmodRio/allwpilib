@@ -3,9 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/geometry/Rotation2d.hpp"
-#include "wpi/math/kinematics/SwerveModulePosition.hpp"
+#include <wpi/math/geometry/Rotation2d.hpp>
+#include <wpi/math/kinematics/SwerveModulePosition.hpp>
 
 TEST(SwerveModulePositionTest, Equality) {
   frc::SwerveModulePosition position1{2_m, 90_deg};

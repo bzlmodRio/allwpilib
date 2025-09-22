@@ -2,10 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/system/DataLogManager.hpp"
-
-#include <wpi/Errors.hpp>
-
 #include <algorithm>
 #include <ctime>
 #include <random>
@@ -13,21 +9,22 @@
 #include <vector>
 
 #include <fmt/chrono.h>
-#include <wpi/hal/UsageReporting.hpp>
-#include <wpi/ntcore/NetworkTableInstance.hpp>
-#include <wpi/util/SafeThread.hpp>
-#include <wpi/util/StringExtras.h>
+#include <wpi/Errors.hpp>
 #include <wpi/datalog/DataLog.h>
 #include <wpi/datalog/DataLogBackgroundWriter.h>
 #include <wpi/datalog/FileLogger.h>
+#include <wpi/driverstation/DriverStation.hpp>
+#include <wpi/hal/UsageReporting.hpp>
+#include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/opmode/RobotBase.hpp>
+#include <wpi/system/DataLogManager.hpp>
+#include <wpi/system/Filesystem.hpp>
+#include <wpi/system/RobotController.hpp>
+#include <wpi/util/SafeThread.hpp>
+#include <wpi/util/StringExtras.h>
 #include <wpi/util/fs.hpp>
 #include <wpi/util/print.hpp>
 #include <wpi/util/timestamp.hpp>
-
-#include "wpi/driverstation/DriverStation.hpp"
-#include "wpi/system/Filesystem.hpp"
-#include "wpi/opmode/RobotBase.hpp"
-#include "wpi/system/RobotController.hpp"
 
 using namespace frc;
 

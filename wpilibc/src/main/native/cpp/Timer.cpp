@@ -2,13 +2,12 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/system/Timer.hpp"
-
 #include <chrono>
 #include <thread>
 
-#include "wpi/driverstation/DriverStation.hpp"
-#include "wpi/system/RobotController.hpp"
+#include <wpi/driverstation/DriverStation.hpp>
+#include <wpi/system/RobotController.hpp>
+#include <wpi/system/Timer.hpp>
 
 namespace frc {
 

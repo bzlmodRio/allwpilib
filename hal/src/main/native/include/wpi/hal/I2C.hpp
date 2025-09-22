@@ -6,7 +6,7 @@
 
 #include <stdint.h>
 
-#include "wpi/hal/I2CTypes.hpp"
+#include <wpi/hal/I2CTypes.hpp>
 
 /**
  * @defgroup hal_i2c I2C Functions

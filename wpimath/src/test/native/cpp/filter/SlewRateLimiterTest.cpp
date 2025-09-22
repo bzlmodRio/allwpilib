@@ -3,12 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/math/filter/SlewRateLimiter.hpp>
+#include <wpi/units/length.hpp>
+#include <wpi/units/time.hpp>
+#include <wpi/units/velocity.hpp>
 #include <wpi/util/timestamp.hpp>
-
-#include "wpi/math/filter/SlewRateLimiter.hpp"
-#include "wpi/units/length.hpp"
-#include "wpi/units/time.hpp"
-#include "wpi/units/velocity.hpp"
 
 static units::second_t now = 0_s;
 

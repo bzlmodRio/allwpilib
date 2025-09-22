@@ -6,7 +6,7 @@
 
 #include <stdint.h>
 
-#include "wpi/hal/Types.hpp"
+#include <wpi/hal/Types.hpp>
 
 /**
  * @defgroup hal_encoder Encoder Functions

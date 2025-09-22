@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/PWMData.hpp>
+
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_PWMDataJNI.h"
-#include "wpi/hal/simulation/PWMData.hpp"
 
 using namespace hal;
 

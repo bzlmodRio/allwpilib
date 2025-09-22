@@ -3,8 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/controller/ElevatorFeedforward.hpp"
+#include <wpi/math/controller/ElevatorFeedforward.hpp>
 
 using namespace frc;
 

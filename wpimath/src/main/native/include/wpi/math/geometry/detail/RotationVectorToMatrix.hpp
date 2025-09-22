@@ -5,8 +5,7 @@
 #pragma once
 
 #include <Eigen/Core>
-
-#include "wpi/math/linalg/ct_matrix.hpp"
+#include <wpi/math/linalg/ct_matrix.hpp>
 
 namespace frc::detail {
 

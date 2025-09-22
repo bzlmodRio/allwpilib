@@ -3,12 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/math/controller/SimpleMotorFeedforward.hpp>
+#include <wpi/math/controller/struct/SimpleMotorFeedforwardStruct.hpp>
+#include <wpi/units/acceleration.hpp>
+#include <wpi/units/velocity.hpp>
 
 #include "../../StructTestBase.h"
-#include "wpi/math/controller/SimpleMotorFeedforward.hpp"
-#include "wpi/math/controller/struct/SimpleMotorFeedforwardStruct.hpp"
-#include "wpi/units/acceleration.hpp"
-#include "wpi/units/velocity.hpp"
 
 using namespace frc;
 

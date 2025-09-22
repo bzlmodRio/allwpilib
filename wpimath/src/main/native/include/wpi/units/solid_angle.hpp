@@ -26,8 +26,8 @@
 
 #pragma once
 
-#include "wpi/units/angle.hpp"
-#include "wpi/units/base.hpp"
+#include <wpi/units/angle.hpp>
+#include <wpi/units/base.hpp>
 
 namespace units {
 /**

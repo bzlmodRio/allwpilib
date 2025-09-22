@@ -7,15 +7,14 @@
 #include <utility>
 
 #include <Eigen/Core>
+#include <wpi/math/controller/DifferentialDriveWheelVoltages.hpp>
+#include <wpi/math/system/LinearSystem.hpp>
+#include <wpi/units/acceleration.hpp>
+#include <wpi/units/angular_acceleration.hpp>
+#include <wpi/units/length.hpp>
+#include <wpi/units/velocity.hpp>
+#include <wpi/units/voltage.hpp>
 #include <wpi/util/SymbolExports.hpp>
-
-#include "wpi/math/controller/DifferentialDriveWheelVoltages.hpp"
-#include "wpi/math/system/LinearSystem.hpp"
-#include "wpi/units/acceleration.hpp"
-#include "wpi/units/angular_acceleration.hpp"
-#include "wpi/units/length.hpp"
-#include "wpi/units/velocity.hpp"
-#include "wpi/units/voltage.hpp"
 
 namespace frc {
 

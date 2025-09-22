@@ -5,11 +5,10 @@
 #include <string>
 
 #include <gtest/gtest.h>
-
-#include "wpi/hal/DIO.hpp"
-#include "wpi/hal/HAL.hpp"
-#include "wpi/hal/handles/HandlesInternal.hpp"
-#include "wpi/hal/simulation/DIOData.hpp"
+#include <wpi/hal/DIO.hpp>
+#include <wpi/hal/HAL.hpp>
+#include <wpi/hal/handles/HandlesInternal.hpp>
+#include <wpi/hal/simulation/DIOData.hpp>
 
 namespace hal {
 

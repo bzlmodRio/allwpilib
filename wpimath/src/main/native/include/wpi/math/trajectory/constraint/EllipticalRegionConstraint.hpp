@@ -7,11 +7,11 @@
 #include <concepts>
 #include <limits>
 
-#include "wpi/math/geometry/Ellipse2d.hpp"
-#include "wpi/math/geometry/Rotation2d.hpp"
-#include "wpi/math/geometry/Translation2d.hpp"
-#include "wpi/math/trajectory/constraint/TrajectoryConstraint.hpp"
-#include "wpi/units/length.hpp"
+#include <wpi/math/geometry/Ellipse2d.hpp>
+#include <wpi/math/geometry/Rotation2d.hpp>
+#include <wpi/math/geometry/Translation2d.hpp>
+#include <wpi/math/trajectory/constraint/TrajectoryConstraint.hpp>
+#include <wpi/units/length.hpp>
 
 namespace frc {
 

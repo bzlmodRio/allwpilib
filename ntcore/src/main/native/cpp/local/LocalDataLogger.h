@@ -9,8 +9,9 @@
 #include <string>
 #include <string_view>
 
+#include <wpi/ntcore/ntcore_c.h>
+
 #include "Handle.h"
-#include "wpi/ntcore/ntcore_c.h"
 
 namespace wpi::log {
 class DataLog;

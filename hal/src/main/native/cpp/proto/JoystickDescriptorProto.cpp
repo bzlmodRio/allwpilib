@@ -5,9 +5,8 @@
 #include <string>
 #include <utility>
 
+#include <wpi/hal/proto/JoystickDescriptor.hpp>
 #include <wpi/util/protobuf/ProtobufCallbacks.hpp>
-
-#include "wpi/hal/proto/JoystickDescriptor.hpp"
 
 std::optional<mrc::JoystickDescriptor>
 wpi::Protobuf<mrc::JoystickDescriptor>::Unpack(InputStream& Stream) {

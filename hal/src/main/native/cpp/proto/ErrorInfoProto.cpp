@@ -5,9 +5,8 @@
 #include <string>
 #include <utility>
 
+#include <wpi/hal/proto/ErrorInfo.hpp>
 #include <wpi/util/protobuf/ProtobufCallbacks.hpp>
-
-#include "wpi/hal/proto/ErrorInfo.hpp"
 
 std::optional<mrc::ErrorInfo> wpi::Protobuf<mrc::ErrorInfo>::Unpack(
     InputStream& Stream) {

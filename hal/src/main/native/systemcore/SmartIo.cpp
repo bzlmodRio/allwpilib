@@ -6,10 +6,11 @@
 
 #include <atomic>
 
+#include <wpi/hal/AddressableLEDTypes.hpp>
+#include <wpi/hal/Errors.hpp>
+
 #include "HALInitializer.h"
 #include "SystemServerInternal.h"
-#include "wpi/hal/AddressableLEDTypes.hpp"
-#include "wpi/hal/Errors.hpp"
 
 namespace hal {
 

@@ -6,12 +6,11 @@
 
 #include <memory>
 
+#include <wpi/hal/simulation/NotifyListener.hpp>
+#include <wpi/hal/simulation/SimCallbackRegistry.hpp>
 #include <wpi/util/Compiler.h>
 #include <wpi/util/UidVector.hpp>
 #include <wpi/util/spinlock.hpp>
-
-#include "wpi/hal/simulation/NotifyListener.hpp"
-#include "wpi/hal/simulation/SimCallbackRegistry.hpp"
 
 namespace hal {
 
@@ -127,7 +126,7 @@ class SimDataValue final : public impl::SimDataValueBase<T, MakeValue> {
  */
 #define HAL_SIMDATAVALUE_DEFINE_NAME(NAME)                  \
   static LLVM_ATTRIBUTE_ALWAYS_INLINE constexpr const char* \
-  Get##NAME##Name() {                                       \
+      Get##NAME##Name() {                                   \
     return #NAME;                                           \
   }
 

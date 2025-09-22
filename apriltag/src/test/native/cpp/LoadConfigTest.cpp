@@ -5,9 +5,8 @@
 #include <vector>
 
 #include <gtest/gtest.h>
-
-#include "wpi/apriltag/AprilTagFieldLayout.hpp"
-#include "wpi/apriltag/AprilTagFields.hpp"
+#include <wpi/apriltag/AprilTagFieldLayout.hpp>
+#include <wpi/apriltag/AprilTagFields.hpp>
 
 namespace frc {
 

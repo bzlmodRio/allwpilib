@@ -6,11 +6,10 @@
 #include <tuple>
 
 #include <gtest/gtest.h>
-
-#include "wpi/driverstation/DriverStation.hpp"
-#include "wpi/driverstation/Joystick.hpp"
-#include "wpi/simulation/DriverStationSim.hpp"
-#include "wpi/simulation/SimHooks.hpp"
+#include <wpi/driverstation/DriverStation.hpp>
+#include <wpi/driverstation/Joystick.hpp>
+#include <wpi/simulation/DriverStationSim.hpp>
+#include <wpi/simulation/SimHooks.hpp>
 
 class IsJoystickConnectedParametersTest
     : public ::testing::TestWithParam<std::tuple<int, int, int, bool>> {};

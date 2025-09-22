@@ -3,8 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/drive/DifferentialDrive.hpp>
 
-#include "wpi/drive/DifferentialDrive.hpp"
 #include "motorcontrol/MockPWMMotorController.h"
 
 TEST(DifferentialDriveTest, ArcadeDriveIK) {

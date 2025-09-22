@@ -6,8 +6,7 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/SimDevice.hpp>
-
-#include "wpi/simulation/SimDeviceSim.hpp"
+#include <wpi/simulation/SimDeviceSim.hpp>
 
 using namespace frc::sim;
 

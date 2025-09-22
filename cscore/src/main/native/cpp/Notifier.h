@@ -8,10 +8,10 @@
 #include <functional>
 #include <utility>
 
+#include <wpi/cscore/cscore_cpp.hpp>
 #include <wpi/util/CallbackManager.hpp>
 
 #include "Handle.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 namespace cs {
 

@@ -3,9 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/Errors.hpp"
-#include "wpi/event/EventLoop.hpp"
+#include <wpi/Errors.hpp>
+#include <wpi/event/EventLoop.hpp>
 
 using namespace frc;
 

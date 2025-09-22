@@ -2,20 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/system/Watchdog.hpp"
-
 #include <atomic>
 #include <thread>
 #include <utility>
 #include <vector>
 
 #include <fmt/format.h>
+#include <wpi/Errors.hpp>
 #include <wpi/hal/Notifier.hpp>
+#include <wpi/system/Timer.hpp>
+#include <wpi/system/Watchdog.hpp>
 #include <wpi/util/mutex.hpp>
 #include <wpi/util/priority_queue.hpp>
-
-#include "wpi/Errors.hpp"
-#include "wpi/system/Timer.hpp"
 
 using namespace frc;
 

@@ -4,10 +4,10 @@
 
 package org.wpilib.system;
 
-import org.wpilib.hardware.hal.NotifierJNI;
 import java.io.Closeable;
 import java.util.PriorityQueue;
 import java.util.concurrent.locks.ReentrantLock;
+import org.wpilib.hardware.hal.NotifierJNI;
 
 /**
  * A class that's a wrapper around a watchdog timer.

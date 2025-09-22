@@ -8,12 +8,12 @@
 #include <memory>
 #include <vector>
 
+#include <wpi/net/HttpParser.hpp>
 #include <wpi/util/Base64.hpp>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/sha1.hpp>
 
 #include "WebSocketTest.h"
-#include "wpi/net/HttpParser.hpp"
 
 namespace wpi {
 

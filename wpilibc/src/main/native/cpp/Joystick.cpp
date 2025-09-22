@@ -2,13 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/driverstation/Joystick.hpp"
-
 #include <cmath>
 
+#include <wpi/driverstation/Joystick.hpp>
+#include <wpi/event/BooleanEvent.hpp>
 #include <wpi/hal/UsageReporting.hpp>
-
-#include "wpi/event/BooleanEvent.hpp"
 
 using namespace frc;
 

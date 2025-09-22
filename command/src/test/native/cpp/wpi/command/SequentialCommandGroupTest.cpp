@@ -5,11 +5,12 @@
 #include <memory>
 #include <utility>
 
+#include <wpi/command/InstantCommand.hpp>
+#include <wpi/command/SequentialCommandGroup.hpp>
+#include <wpi/command/WaitUntilCommand.hpp>
+
 #include "CommandTestBase.h"
 #include "CompositionTestBase.h"
-#include "wpi/command/InstantCommand.hpp"
-#include "wpi/command/SequentialCommandGroup.hpp"
-#include "wpi/command/WaitUntilCommand.hpp"
 
 using namespace frc2;
 class SequentialCommandGroupTest : public CommandTestBase {};

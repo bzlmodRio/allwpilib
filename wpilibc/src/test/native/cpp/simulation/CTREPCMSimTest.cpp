@@ -6,10 +6,10 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
+#include <wpi/hardware/pneumatic/DoubleSolenoid.hpp>
+#include <wpi/hardware/pneumatic/PneumaticsControlModule.hpp>
 
 #include "callback_helpers/TestCallbackHelpers.h"
-#include "wpi/hardware/pneumatic/DoubleSolenoid.hpp"
-#include "wpi/hardware/pneumatic/PneumaticsControlModule.hpp"
 
 namespace frc::sim {
 

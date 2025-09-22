@@ -2,16 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/system/Resource.hpp"
-
 #include <limits>
 #include <memory>
 #include <string>
 #include <vector>
 
+#include <wpi/Errors.hpp>
+#include <wpi/system/Resource.hpp>
 #include <wpi/util/deprecated.hpp>
-
-#include "wpi/Errors.hpp"
 
 WPI_IGNORE_DEPRECATED
 using namespace frc;

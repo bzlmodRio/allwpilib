@@ -7,7 +7,7 @@
 #include <string>
 #include <string_view>
 
-#include "wpi/system/Tracer.hpp"
+#include <wpi/system/Tracer.hpp>
 
 namespace wpi {
 class raw_ostream;

@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/glass/networktables/NetworkTablesSettings.hpp"
-
 #include <optional>
 #include <string_view>
 #include <utility>
@@ -11,11 +9,11 @@
 
 #include <imgui.h>
 #include <imgui_stdlib.h>
+#include <wpi/glass/Context.hpp>
+#include <wpi/glass/Storage.hpp>
+#include <wpi/glass/networktables/NetworkTablesSettings.hpp>
 #include <wpi/ntcore/ntcore_cpp.hpp>
 #include <wpi/util/StringExtras.h>
-
-#include "wpi/glass/Context.hpp"
-#include "wpi/glass/Storage.hpp"
 
 using namespace glass;
 

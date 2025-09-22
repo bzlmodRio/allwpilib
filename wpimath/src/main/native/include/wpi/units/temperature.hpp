@@ -26,7 +26,7 @@
 
 #pragma once
 
-#include "wpi/units/base.hpp"
+#include <wpi/units/base.hpp>
 
 namespace units {
 // NOTE: temperature units have special conversion overloads, since they

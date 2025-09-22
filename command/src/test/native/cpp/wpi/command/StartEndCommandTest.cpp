@@ -3,9 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <wpi/command/Commands.hpp>
+#include <wpi/command/StartEndCommand.hpp>
 
 #include "CommandTestBase.h"
-#include "wpi/command/StartEndCommand.hpp"
 
 using namespace frc2;
 class StartEndCommandTest : public CommandTestBase {};

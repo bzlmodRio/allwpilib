@@ -6,7 +6,7 @@
 
 #include <stdint.h>
 
-#include "wpi/hal/simulation/MockHooks.hpp"
+#include <wpi/hal/simulation/MockHooks.hpp>
 
 namespace hal {
 void RestartTiming();

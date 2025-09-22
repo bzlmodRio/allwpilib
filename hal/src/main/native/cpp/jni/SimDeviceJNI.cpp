@@ -7,11 +7,11 @@
 #include <string>
 #include <vector>
 
+#include <wpi/hal/SimDevice.hpp>
 #include <wpi/util/jni_util.hpp>
 
 #include "HALUtil.h"
 #include "org_wpilib_hardware_hal_SimDeviceJNI.h"
-#include "wpi/hal/SimDevice.hpp"
 
 using namespace wpi::java;
 

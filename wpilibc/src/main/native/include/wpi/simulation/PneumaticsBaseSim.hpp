@@ -6,9 +6,9 @@
 
 #include <memory>
 
-#include "wpi/hardware/pneumatic/PneumaticsBase.hpp"
-#include "wpi/hardware/pneumatic/PneumaticsModuleType.hpp"
-#include "wpi/simulation/CallbackStore.hpp"
+#include <wpi/hardware/pneumatic/PneumaticsBase.hpp>
+#include <wpi/hardware/pneumatic/PneumaticsModuleType.hpp>
+#include <wpi/simulation/CallbackStore.hpp>
 
 namespace frc::sim {
 

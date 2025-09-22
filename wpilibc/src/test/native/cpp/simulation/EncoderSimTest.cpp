@@ -6,10 +6,10 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
+#include <wpi/hardware/rotation/Encoder.hpp>
 #include <wpi/util/deprecated.hpp>
 
 #include "callback_helpers/TestCallbackHelpers.h"
-#include "wpi/hardware/rotation/Encoder.hpp"
 
 namespace frc::sim {
 

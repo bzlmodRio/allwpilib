@@ -3,10 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/controller/ControlAffinePlantInversionFeedforward.hpp"
-#include "wpi/units/time.hpp"
+#include <wpi/math/controller/ControlAffinePlantInversionFeedforward.hpp>
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/units/time.hpp>
 
 namespace frc {
 

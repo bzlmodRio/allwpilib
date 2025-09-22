@@ -4,9 +4,10 @@
 
 #include <utility>
 
+#include <wpi/command/Commands.hpp>
+#include <wpi/command/RunCommand.hpp>
+
 #include "CommandTestBase.h"
-#include "wpi/command/Commands.hpp"
-#include "wpi/command/RunCommand.hpp"
 
 using namespace frc2;
 class DefaultCommandTest : public CommandTestBase {};

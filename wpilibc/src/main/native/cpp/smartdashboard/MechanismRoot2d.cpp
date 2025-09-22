@@ -2,9 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/smartdashboard/MechanismRoot2d.hpp"
-
-#include "wpi/util/Color8Bit.hpp"
+#include <wpi/smartdashboard/MechanismRoot2d.hpp>
+#include <wpi/util/Color8Bit.hpp>
 
 using namespace frc;
 

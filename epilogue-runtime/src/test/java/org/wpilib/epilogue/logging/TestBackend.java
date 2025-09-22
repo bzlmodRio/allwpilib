@@ -4,12 +4,12 @@
 
 package org.wpilib.epilogue.logging;
 
-import org.wpilib.util.struct.Struct;
-import org.wpilib.util.struct.StructBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.wpilib.util.struct.Struct;
+import org.wpilib.util.struct.StructBuffer;
 
 @SuppressWarnings("PMD.TestClassWithoutTestCases") // This is not a test class!
 public class TestBackend implements EpilogueBackend {

@@ -13,14 +13,14 @@
 #include <string_view>
 #include <vector>
 
-#include <wpi/util/UidVector.hpp>
 #include <wpi/datalog/DataLog.h>
+#include <wpi/ntcore/ntcore_cpp.hpp>
+#include <wpi/util/UidVector.hpp>
 #include <wpi/util/mutex.hpp>
 
 #include "Handle.h"
 #include "HandleMap.h"
 #include "IConnectionList.h"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 namespace nt {
 

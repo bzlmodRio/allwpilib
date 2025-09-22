@@ -12,6 +12,7 @@
 #include <variant>
 
 #include <fmt/format.h>
+#include <wpi/ntcore/NetworkTableValue.hpp>
 #include <wpi/util/Logger.hpp>
 #include <wpi/util/raw_ostream.h>
 #include <wpi/util/timestamp.hpp>
@@ -22,7 +23,6 @@
 #include "NetworkInterface.h"
 #include "WireConnection.h"
 #include "WireEncoder.h"
-#include "wpi/ntcore/NetworkTableValue.hpp"
 
 using namespace nt;
 using namespace nt::net;

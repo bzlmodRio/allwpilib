@@ -2,8 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#ifndef CSCORE_CSCORE_C_H_
-#define CSCORE_CSCORE_C_H_
+#ifndef CSCORE_WPI_CSCORE_CSCORE_C_HPP_
+#define CSCORE_WPI_CSCORE_CSCORE_C_HPP_
 
 #include <stdint.h>
 
@@ -11,13 +11,13 @@
 #include <wpi/util/string.hpp>
 
 #ifdef __cplusplus
-#include <cstddef>
-#else
-#include <stddef.h>
+extern "C" {
 #endif
 
 #ifdef __cplusplus
-extern "C" {
+#include <cstddef>
+#else
+#include <cstddef>
 #endif
 
 /**
@@ -528,4 +528,4 @@ struct WPI_String* CS_GetNetworkInterfaces(int* count);
 }  // extern "C"
 #endif
 
-#endif  // CSCORE_CSCORE_C_H_
+#endif  // CSCORE_WPI_CSCORE_CSCORE_C_HPP_

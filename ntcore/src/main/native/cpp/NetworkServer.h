@@ -15,10 +15,10 @@
 #include <wpi/net/uv/Async.hpp>
 #include <wpi/net/uv/Idle.hpp>
 #include <wpi/net/uv/Timer.hpp>
+#include <wpi/ntcore/ntcore_cpp.hpp>
 
 #include "net/ClientMessageQueue.h"
 #include "net/Message.h"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 #include "server/ServerImpl.h"
 
 namespace wpi {

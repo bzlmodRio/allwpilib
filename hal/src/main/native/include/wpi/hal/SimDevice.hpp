@@ -12,8 +12,8 @@
 #include <string>
 #endif
 
-#include "wpi/hal/Types.hpp"
-#include "wpi/hal/Value.hpp"
+#include <wpi/hal/Types.hpp>
+#include <wpi/hal/Value.hpp>
 
 /**
  * @defgroup hal_simdevice Simulator Device Framework

@@ -5,13 +5,12 @@
 #include <cmath>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/controller/LinearQuadraticRegulator.hpp"
-#include "wpi/math/system/LinearSystem.hpp"
-#include "wpi/math/system/plant/DCMotor.hpp"
-#include "wpi/math/system/plant/LinearSystemId.hpp"
-#include "wpi/units/time.hpp"
+#include <wpi/math/controller/LinearQuadraticRegulator.hpp>
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/math/system/LinearSystem.hpp>
+#include <wpi/math/system/plant/DCMotor.hpp>
+#include <wpi/math/system/plant/LinearSystemId.hpp>
+#include <wpi/units/time.hpp>
 
 namespace frc {
 

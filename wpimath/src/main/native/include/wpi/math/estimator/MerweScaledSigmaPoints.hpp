@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-#include "wpi/math/linalg/EigenCore.hpp"
+#include <wpi/math/linalg/EigenCore.hpp>
 
 namespace frc {
 

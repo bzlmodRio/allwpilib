@@ -3,11 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
+#include <wpi/event/EventLoop.hpp>
+#include <wpi/event/NetworkBooleanEvent.hpp>
 #include <wpi/ntcore/BooleanTopic.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
-
-#include "wpi/event/EventLoop.hpp"
-#include "wpi/event/NetworkBooleanEvent.hpp"
 
 using namespace frc;
 

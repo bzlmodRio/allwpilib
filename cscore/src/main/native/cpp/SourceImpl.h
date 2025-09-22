@@ -12,6 +12,7 @@
 #include <string_view>
 #include <vector>
 
+#include <wpi/cscore/cscore_cpp.hpp>
 #include <wpi/util/Logger.hpp>
 #include <wpi/util/RawFrame.hpp>
 #include <wpi/util/condition_variable.hpp>
@@ -22,7 +23,6 @@
 #include "Handle.h"
 #include "Image.h"
 #include "PropertyContainer.h"
-#include "wpi/cscore/cscore_cpp.hpp"
 
 namespace cs {
 

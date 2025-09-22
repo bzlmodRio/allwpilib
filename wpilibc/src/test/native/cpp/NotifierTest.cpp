@@ -5,9 +5,8 @@
 #include <atomic>
 
 #include <gtest/gtest.h>
-
-#include "wpi/Notifier.hpp"
-#include "wpi/simulation/SimHooks.hpp"
+#include <wpi/Notifier.hpp>
+#include <wpi/simulation/SimHooks.hpp>
 
 using namespace frc;
 

@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/DIOData.hpp>
+
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_DIODataJNI.h"
-#include "wpi/hal/simulation/DIOData.hpp"
 
 using namespace hal;
 

@@ -6,8 +6,7 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
-
-#include "wpi/hardware/servo/Servo.hpp"
+#include <wpi/hardware/servo/Servo.hpp>
 
 namespace frc::sim {
 TEST(ServoSimTest, TestServo) {

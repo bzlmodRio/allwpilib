@@ -4,11 +4,10 @@
 
 #pragma once
 
+#include <wpi/command/Command.hpp>
+#include <wpi/command/CommandHelper.hpp>
 #include <wpi/system/Timer.hpp>
 #include <wpi/units/time.hpp>
-
-#include "wpi/command/Command.hpp"
-#include "wpi/command/CommandHelper.hpp"
 
 namespace frc2 {
 /**

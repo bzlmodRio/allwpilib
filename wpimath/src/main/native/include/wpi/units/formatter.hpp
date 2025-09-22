@@ -7,8 +7,7 @@
 #include <type_traits>
 
 #include <fmt/format.h>
-
-#include "wpi/units/base.hpp"
+#include <wpi/units/base.hpp>
 
 // FIXME: Replace enable_if with requires clause and remove <type_traits>
 // include once using GCC >= 12. GCC 11 incorrectly emits a struct redefinition

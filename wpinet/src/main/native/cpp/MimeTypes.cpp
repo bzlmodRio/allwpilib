@@ -2,8 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/net/MimeTypes.hpp"
-
+#include <wpi/net/MimeTypes.hpp>
 #include <wpi/util/StringExtras.h>
 #include <wpi/util/StringMap.hpp>
 

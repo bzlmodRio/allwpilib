@@ -9,11 +9,10 @@
 #include <string_view>
 #include <utility>
 
-#include <wpi/system/Timer.hpp>
+#include <wpi/command/CommandPtr.hpp>
+#include <wpi/command/Subsystem.hpp>
 #include <wpi/sysid/SysIdRoutineLog.hpp>
-
-#include "wpi/command/CommandPtr.hpp"
-#include "wpi/command/Subsystem.hpp"
+#include <wpi/system/Timer.hpp>
 
 namespace frc2::sysid {
 

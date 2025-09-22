@@ -6,9 +6,8 @@
 #include <utility>
 #include <vector>
 
+#include <wpi/hal/proto/OpMode.hpp>
 #include <wpi/util/protobuf/ProtobufCallbacks.hpp>
-
-#include "wpi/hal/proto/OpMode.hpp"
 
 std::optional<mrc::OpMode> wpi::Protobuf<mrc::OpMode>::Unpack(
     InputStream& Stream) {

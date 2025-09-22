@@ -6,13 +6,13 @@
 #include <tuple>
 
 #include <gtest/gtest.h>
+#include <wpi/driverstation/DriverStation.hpp>
+#include <wpi/driverstation/Joystick.hpp>
+#include <wpi/opmode/RobotState.hpp>
+#include <wpi/simulation/DriverStationSim.hpp>
+#include <wpi/simulation/SimHooks.hpp>
 
 #include "callback_helpers/TestCallbackHelpers.h"
-#include "wpi/driverstation/DriverStation.hpp"
-#include "wpi/driverstation/Joystick.hpp"
-#include "wpi/opmode/RobotState.hpp"
-#include "wpi/simulation/DriverStationSim.hpp"
-#include "wpi/simulation/SimHooks.hpp"
 
 using namespace frc;
 using namespace frc::sim;

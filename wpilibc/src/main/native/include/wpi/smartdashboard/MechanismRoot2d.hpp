@@ -8,8 +8,7 @@
 #include <string_view>
 
 #include <wpi/ntcore/DoubleTopic.hpp>
-
-#include "wpi/smartdashboard/MechanismObject2d.hpp"
+#include <wpi/smartdashboard/MechanismObject2d.hpp>
 
 namespace frc {
 

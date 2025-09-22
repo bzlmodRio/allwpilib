@@ -5,8 +5,7 @@
 #include <cmath>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/kinematics/ChassisSpeeds.hpp"
+#include <wpi/math/kinematics/ChassisSpeeds.hpp>
 
 static constexpr double kEpsilon = 1E-9;
 

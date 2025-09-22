@@ -3,11 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#include <wpi/command/CommandScheduler.hpp>
+#include <wpi/command/button/CommandGenericHID.hpp>
+#include <wpi/command/button/Trigger.hpp>
 #include <wpi/driverstation/Joystick.hpp>
-
-#include "wpi/command/button/Trigger.hpp"
-#include "wpi/command/CommandScheduler.hpp"
-#include "wpi/command/button/CommandGenericHID.hpp"
 
 namespace frc2 {
 /**

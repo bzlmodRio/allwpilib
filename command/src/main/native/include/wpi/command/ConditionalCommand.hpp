@@ -9,8 +9,8 @@
 #include <memory>
 #include <utility>
 
-#include "wpi/command/Command.hpp"
-#include "wpi/command/CommandHelper.hpp"
+#include <wpi/command/Command.hpp>
+#include <wpi/command/CommandHelper.hpp>
 
 namespace frc2 {
 /**

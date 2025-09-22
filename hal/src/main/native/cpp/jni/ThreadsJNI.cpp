@@ -6,9 +6,10 @@
 
 #include <cassert>
 
+#include <wpi/hal/Threads.hpp>
+
 #include "HALUtil.h"
 #include "org_wpilib_hardware_hal_ThreadsJNI.h"
-#include "wpi/hal/Threads.hpp"
 
 using namespace hal;
 

@@ -7,11 +7,10 @@
 #include <memory>
 #include <string_view>
 
+#include <wpi/command/button/Trigger.hpp>
 #include <wpi/ntcore/BooleanTopic.hpp>
 #include <wpi/ntcore/NetworkTable.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
-
-#include "wpi/command/button/Trigger.hpp"
 
 namespace frc2 {
 /**

@@ -5,9 +5,8 @@
 #include <string>
 
 #include <gtest/gtest.h>
-
-#include "wpi/hal/I2C.hpp"
-#include "wpi/hal/simulation/I2CData.hpp"
+#include <wpi/hal/I2C.hpp>
+#include <wpi/hal/simulation/I2CData.hpp>
 
 namespace hal {
 

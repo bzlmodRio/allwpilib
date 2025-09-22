@@ -12,6 +12,7 @@
 #include <string_view>
 #include <vector>
 
+#include <wpi/ntcore/ntcore_cpp.hpp>
 #include <wpi/util/Logger.hpp>
 #include <wpi/util/SmallVector.h>
 #include <wpi/util/json.h>
@@ -20,7 +21,6 @@
 #include "local/LocalStorageImpl.h"
 #include "net/MessageHandler.h"
 #include "net/NetworkInterface.h"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 namespace wpi {
 class Logger;

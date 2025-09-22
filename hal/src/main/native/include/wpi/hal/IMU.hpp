@@ -6,7 +6,7 @@
 
 #include <stdint.h>
 
-#include "wpi/hal/IMUTypes.hpp"
+#include <wpi/hal/IMUTypes.hpp>
 
 /**
  * @defgroup hal_imu IMU Functions

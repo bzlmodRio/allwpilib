@@ -3,8 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/system/plant/DCMotor.hpp"
+#include <wpi/math/system/plant/DCMotor.hpp>
 
 using namespace frc;
 

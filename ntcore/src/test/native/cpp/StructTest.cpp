@@ -4,11 +4,10 @@
 
 #include <gtest/gtest.h>
 #include <wpi/SpanMatcher.h>
+#include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/ntcore/StructArrayTopic.hpp>
+#include <wpi/ntcore/StructTopic.hpp>
 #include <wpi/util/struct/Struct.hpp>
-
-#include "wpi/ntcore/NetworkTableInstance.hpp"
-#include "wpi/ntcore/StructArrayTopic.hpp"
-#include "wpi/ntcore/StructTopic.hpp"
 
 namespace {
 struct Inner {

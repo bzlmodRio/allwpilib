@@ -26,8 +26,7 @@
 #include "wpi/net/uv/GetAddrInfo.hpp"  // NOLINT(build/include_order)
 
 #include <gtest/gtest.h>
-
-#include "wpi/net/uv/Loop.hpp"
+#include <wpi/net/uv/Loop.hpp>
 
 #define CONCURRENT_COUNT 10
 

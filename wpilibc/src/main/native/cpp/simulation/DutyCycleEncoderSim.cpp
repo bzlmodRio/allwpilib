@@ -2,10 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/simulation/DutyCycleEncoderSim.hpp"
-
-#include "wpi/hardware/rotation/DutyCycleEncoder.hpp"
-#include "wpi/simulation/SimDeviceSim.hpp"
+#include <wpi/hardware/rotation/DutyCycleEncoder.hpp>
+#include <wpi/simulation/DutyCycleEncoderSim.hpp>
+#include <wpi/simulation/SimDeviceSim.hpp>
 
 using namespace frc::sim;
 

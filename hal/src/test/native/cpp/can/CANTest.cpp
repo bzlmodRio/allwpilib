@@ -6,9 +6,8 @@
 #include <utility>
 
 #include <gtest/gtest.h>
-
-#include "wpi/hal/CANAPI.hpp"
-#include "wpi/hal/simulation/CanData.hpp"
+#include <wpi/hal/CANAPI.hpp>
+#include <wpi/hal/simulation/CanData.hpp>
 
 namespace hal {
 struct CANTestStore {

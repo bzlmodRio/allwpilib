@@ -4,6 +4,9 @@
 
 #include "SimulatorJNI.h"
 
+#include <wpi/hal/HAL.hpp>
+#include <wpi/hal/handles/HandlesInternal.hpp>
+#include <wpi/hal/simulation/MockHooks.hpp>
 #include <wpi/util/jni_util.hpp>
 
 #include "BufferCallbackStore.h"
@@ -11,9 +14,6 @@
 #include "ConstBufferCallbackStore.h"
 #include "SimDeviceDataJNI.h"
 #include "org_wpilib_hardware_hal_simulation_SimulatorJNI.h"
-#include "wpi/hal/HAL.hpp"
-#include "wpi/hal/handles/HandlesInternal.hpp"
-#include "wpi/hal/simulation/MockHooks.hpp"
 
 using namespace wpi::java;
 

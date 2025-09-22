@@ -2,8 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/net/WebSocket.hpp"
-
 #include <functional>
 #include <memory>
 #include <random>
@@ -12,6 +10,10 @@
 #include <string_view>
 #include <utility>
 
+#include <wpi/net/HttpParser.hpp>
+#include <wpi/net/WebSocket.hpp>
+#include <wpi/net/raw_uv_ostream.hpp>
+#include <wpi/net/uv/Stream.hpp>
 #include <wpi/util/Base64.hpp>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/SmallVector.h>
@@ -22,9 +24,6 @@
 
 #include "WebSocketDebug.h"
 #include "WebSocketSerializer.h"
-#include "wpi/net/HttpParser.hpp"
-#include "wpi/net/raw_uv_ostream.hpp"
-#include "wpi/net/uv/Stream.hpp"
 
 using namespace wpi;
 

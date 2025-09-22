@@ -2,16 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#ifndef CSCORE_CSCORE_H_
-#define CSCORE_CSCORE_H_
+#ifndef CSCORE_WPI_CSCORE_CSCORE_HPP_
+#define CSCORE_WPI_CSCORE_CSCORE_HPP_
 
 /* C API */
-#include "wpi/cscore/cscore_c.hpp"
+#include <wpi/cscore/cscore_c.hpp>
 
 #ifdef __cplusplus
 /* C++ API */
-#include "wpi/cscore/cscore_cpp.hpp"
-#include "wpi/cscore/cscore_oo.hpp"
+#include <wpi/cscore/cscore_cpp.hpp>
+#include <wpi/cscore/cscore_oo.hpp>
 #endif /* __cplusplus */
 
-#endif  // CSCORE_CSCORE_H_
+#endif  // CSCORE_WPI_CSCORE_CSCORE_HPP_

@@ -6,18 +6,17 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
-
-#include "wpi/simulation/AddressableLEDSim.hpp"
-#include "wpi/simulation/AnalogInputSim.hpp"
-#include "wpi/simulation/CTREPCMSim.hpp"
-#include "wpi/simulation/DIOSim.hpp"
-#include "wpi/simulation/DigitalPWMSim.hpp"
-#include "wpi/simulation/DriverStationSim.hpp"
-#include "wpi/simulation/DutyCycleSim.hpp"
-#include "wpi/simulation/EncoderSim.hpp"
-#include "wpi/simulation/PWMSim.hpp"
-#include "wpi/simulation/PowerDistributionSim.hpp"
-#include "wpi/simulation/RoboRioSim.hpp"
+#include <wpi/simulation/AddressableLEDSim.hpp>
+#include <wpi/simulation/AnalogInputSim.hpp>
+#include <wpi/simulation/CTREPCMSim.hpp>
+#include <wpi/simulation/DIOSim.hpp>
+#include <wpi/simulation/DigitalPWMSim.hpp>
+#include <wpi/simulation/DriverStationSim.hpp>
+#include <wpi/simulation/DutyCycleSim.hpp>
+#include <wpi/simulation/EncoderSim.hpp>
+#include <wpi/simulation/PWMSim.hpp>
+#include <wpi/simulation/PowerDistributionSim.hpp>
+#include <wpi/simulation/RoboRioSim.hpp>
 
 using namespace frc::sim;
 

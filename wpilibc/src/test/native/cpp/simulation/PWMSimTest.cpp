@@ -6,9 +6,9 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
+#include <wpi/hardware/discrete/PWM.hpp>
 
 #include "callback_helpers/TestCallbackHelpers.h"
-#include "wpi/hardware/discrete/PWM.hpp"
 
 namespace frc::sim {
 

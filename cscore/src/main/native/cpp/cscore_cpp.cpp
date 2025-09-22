@@ -2,15 +2,14 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/cscore/cscore_cpp.hpp"
-
 #include <memory>
 #include <string>
 #include <vector>
 
+#include <wpi/cscore/cscore_cpp.hpp>
+#include <wpi/net/hostname.hpp>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/json.h>
-#include <wpi/net/hostname.hpp>
 
 #include "Handle.h"
 #include "Instance.h"

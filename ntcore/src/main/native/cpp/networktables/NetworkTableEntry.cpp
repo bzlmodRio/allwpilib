@@ -2,10 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/ntcore/NetworkTableEntry.hpp"
-
-#include "wpi/ntcore/NetworkTableInstance.hpp"
-#include "wpi/ntcore/Topic.hpp"
+#include <wpi/ntcore/NetworkTableEntry.hpp>
+#include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/ntcore/Topic.hpp>
 
 using namespace nt;
 

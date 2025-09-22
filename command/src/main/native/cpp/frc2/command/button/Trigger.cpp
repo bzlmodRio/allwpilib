@@ -2,13 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/command/button/Trigger.hpp"
-
 #include <utility>
 
+#include <wpi/command/CommandPtr.hpp>
+#include <wpi/command/button/Trigger.hpp>
 #include <wpi/math/filter/Debouncer.hpp>
-
-#include "wpi/command/CommandPtr.hpp"
 
 using namespace frc;
 using namespace frc2;

@@ -2,11 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/simulation/DCMotorSim.hpp"
-
+#include <wpi/simulation/DCMotorSim.hpp>
+#include <wpi/system/RobotController.hpp>
 #include <wpi/util/MathExtras.h>
-
-#include "wpi/system/RobotController.hpp"
 
 using namespace frc;
 using namespace frc::sim;

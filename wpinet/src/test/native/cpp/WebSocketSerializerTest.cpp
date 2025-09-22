@@ -15,9 +15,9 @@
 
 #include <gmock/gmock.h>
 #include <wpi/SpanMatcher.h>
+#include <wpi/net/uv/Buffer.hpp>
 
 #include "WebSocketTest.h"
-#include "wpi/net/uv/Buffer.hpp"
 
 using ::testing::_;
 using ::testing::AnyOf;

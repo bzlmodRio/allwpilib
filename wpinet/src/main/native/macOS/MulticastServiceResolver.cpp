@@ -4,8 +4,6 @@
 
 #if defined(__APPLE__)
 
-#include "wpi/net/MulticastServiceResolver.hpp"
-
 #include <netinet/in.h>
 #include <poll.h>
 
@@ -16,6 +14,7 @@
 #include <utility>
 #include <vector>
 
+#include <wpi/net/MulticastServiceResolver.hpp>
 #include <wpi/util/SmallVector.h>
 
 #include "ResolverThread.h"

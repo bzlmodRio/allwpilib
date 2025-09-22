@@ -4,11 +4,12 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/I2CData.hpp>
+
 #include "BufferCallbackStore.h"
 #include "CallbackStore.h"
 #include "ConstBufferCallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_I2CDataJNI.h"
-#include "wpi/hal/simulation/I2CData.hpp"
 
 using namespace hal;
 

@@ -2,13 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/system/Tracer.hpp"
-
 #include <fmt/format.h>
+#include <wpi/Errors.hpp>
+#include <wpi/system/Tracer.hpp>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/raw_ostream.h>
-
-#include "wpi/Errors.hpp"
 
 using namespace frc;
 

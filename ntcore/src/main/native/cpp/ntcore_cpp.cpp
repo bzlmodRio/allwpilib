@@ -13,6 +13,8 @@
 #include <vector>
 
 #include <fmt/format.h>
+#include <wpi/ntcore/ntcore.hpp>
+#include <wpi/ntcore/ntcore_c.h>
 #include <wpi/util/json.h>
 #include <wpi/util/timestamp.hpp>
 
@@ -20,8 +22,6 @@
 #include "InstanceImpl.h"
 #include "Log.h"
 #include "Types_internal.h"
-#include "wpi/ntcore/ntcore.hpp"
-#include "wpi/ntcore/ntcore_c.h"
 
 static std::atomic_bool gNowSet{false};
 static std::atomic<int64_t> gNowTime;

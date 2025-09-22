@@ -6,12 +6,12 @@
 
 #include <cassert>
 
+#include <wpi/hal/Counter.hpp>
+#include <wpi/hal/Errors.hpp>
 #include <wpi/util/jni_util.hpp>
 
 #include "HALUtil.h"
 #include "org_wpilib_hardware_hal_CounterJNI.h"
-#include "wpi/hal/Counter.hpp"
-#include "wpi/hal/Errors.hpp"
 
 using namespace hal;
 

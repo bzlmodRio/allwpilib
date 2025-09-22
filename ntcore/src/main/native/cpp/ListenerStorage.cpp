@@ -8,9 +8,8 @@
 #include <utility>
 #include <vector>
 
+#include <wpi/ntcore/ntcore_c.h>
 #include <wpi/util/SmallVector.h>
-
-#include "wpi/ntcore/ntcore_c.h"
 
 using namespace nt;
 

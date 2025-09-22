@@ -6,9 +6,9 @@
 
 #include <memory>
 
-#include "wpi/hardware/pneumatic/DoubleSolenoid.hpp"
-#include "wpi/hardware/pneumatic/PneumaticsModuleType.hpp"
-#include "wpi/simulation/PneumaticsBaseSim.hpp"
+#include <wpi/hardware/pneumatic/DoubleSolenoid.hpp>
+#include <wpi/hardware/pneumatic/PneumaticsModuleType.hpp>
+#include <wpi/simulation/PneumaticsBaseSim.hpp>
 
 namespace frc::sim {
 

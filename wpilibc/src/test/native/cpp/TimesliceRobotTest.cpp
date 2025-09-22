@@ -10,9 +10,8 @@
 #include <thread>
 
 #include <gtest/gtest.h>
-
-#include "wpi/simulation/DriverStationSim.hpp"
-#include "wpi/simulation/SimHooks.hpp"
+#include <wpi/simulation/DriverStationSim.hpp>
+#include <wpi/simulation/SimHooks.hpp>
 
 using namespace frc;
 

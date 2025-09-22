@@ -5,9 +5,9 @@
 #include "wpi/driverstation/XboxController.hpp"  // NOLINT(build/include_order)
 
 #include <gtest/gtest.h>
+#include <wpi/simulation/XboxControllerSim.hpp>
 
 #include "JoystickTestMacros.h"
-#include "wpi/simulation/XboxControllerSim.hpp"
 
 using namespace frc;
 

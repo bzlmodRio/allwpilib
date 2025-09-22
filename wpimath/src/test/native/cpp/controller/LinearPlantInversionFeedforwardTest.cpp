@@ -5,10 +5,9 @@
 #include <cmath>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/linalg/EigenCore.hpp"
-#include "wpi/math/controller/LinearPlantInversionFeedforward.hpp"
-#include "wpi/units/time.hpp"
+#include <wpi/math/controller/LinearPlantInversionFeedforward.hpp>
+#include <wpi/math/linalg/EigenCore.hpp>
+#include <wpi/units/time.hpp>
 
 namespace frc {
 

@@ -4,23 +4,23 @@
 
 #include <memory>
 
-#include "wpi/glass/networktables/NTAlerts.hpp"
-#include "wpi/glass/networktables/NTCommandScheduler.hpp"
-#include "wpi/glass/networktables/NTCommandSelector.hpp"
-#include "wpi/glass/networktables/NTDifferentialDrive.hpp"
-#include "wpi/glass/networktables/NTDigitalInput.hpp"
-#include "wpi/glass/networktables/NTDigitalOutput.hpp"
-#include "wpi/glass/networktables/NTFMS.hpp"
-#include "wpi/glass/networktables/NTField2D.hpp"
-#include "wpi/glass/networktables/NTGyro.hpp"
-#include "wpi/glass/networktables/NTMecanumDrive.hpp"
-#include "wpi/glass/networktables/NTMechanism2D.hpp"
-#include "wpi/glass/networktables/NTMotorController.hpp"
-#include "wpi/glass/networktables/NTPIDController.hpp"
-#include "wpi/glass/networktables/NTProfiledPIDController.hpp"
-#include "wpi/glass/networktables/NTStringChooser.hpp"
-#include "wpi/glass/networktables/NTSubsystem.hpp"
-#include "wpi/glass/networktables/NetworkTablesProvider.hpp"
+#include <wpi/glass/networktables/NTAlerts.hpp>
+#include <wpi/glass/networktables/NTCommandScheduler.hpp>
+#include <wpi/glass/networktables/NTCommandSelector.hpp>
+#include <wpi/glass/networktables/NTDifferentialDrive.hpp>
+#include <wpi/glass/networktables/NTDigitalInput.hpp>
+#include <wpi/glass/networktables/NTDigitalOutput.hpp>
+#include <wpi/glass/networktables/NTFMS.hpp>
+#include <wpi/glass/networktables/NTField2D.hpp>
+#include <wpi/glass/networktables/NTGyro.hpp>
+#include <wpi/glass/networktables/NTMecanumDrive.hpp>
+#include <wpi/glass/networktables/NTMechanism2D.hpp>
+#include <wpi/glass/networktables/NTMotorController.hpp>
+#include <wpi/glass/networktables/NTPIDController.hpp>
+#include <wpi/glass/networktables/NTProfiledPIDController.hpp>
+#include <wpi/glass/networktables/NTStringChooser.hpp>
+#include <wpi/glass/networktables/NTSubsystem.hpp>
+#include <wpi/glass/networktables/NetworkTablesProvider.hpp>
 
 using namespace glass;
 

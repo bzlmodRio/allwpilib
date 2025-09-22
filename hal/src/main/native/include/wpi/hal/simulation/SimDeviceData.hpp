@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "wpi/hal/Types.hpp"
-#include "wpi/hal/Value.hpp"
+#include <wpi/hal/Types.hpp>
+#include <wpi/hal/Value.hpp>
 
 typedef void (*HALSIM_SimDeviceCallback)(const char* name, void* param,
                                          HAL_SimDeviceHandle handle);

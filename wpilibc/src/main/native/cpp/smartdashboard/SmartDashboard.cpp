@@ -2,23 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/smartdashboard/SmartDashboard.hpp"
-
 #include <memory>
 #include <string>
 #include <utility>
 #include <vector>
 
+#include <wpi/Errors.hpp>
 #include <wpi/hal/UsageReporting.hpp>
 #include <wpi/ntcore/NetworkTable.hpp>
 #include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/smartdashboard/ListenerExecutor.hpp>
+#include <wpi/smartdashboard/SendableBuilderImpl.hpp>
+#include <wpi/smartdashboard/SmartDashboard.hpp>
 #include <wpi/util/StringMap.hpp>
 #include <wpi/util/mutex.hpp>
 #include <wpi/util/sendable/SendableRegistry.hpp>
-
-#include "wpi/Errors.hpp"
-#include "wpi/smartdashboard/ListenerExecutor.hpp"
-#include "wpi/smartdashboard/SendableBuilderImpl.hpp"
 
 using namespace frc;
 

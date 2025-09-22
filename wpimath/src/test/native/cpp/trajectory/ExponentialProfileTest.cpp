@@ -10,14 +10,13 @@
 #include <vector>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/controller/SimpleMotorFeedforward.hpp"
-#include "wpi/units/acceleration.hpp"
-#include "wpi/units/frequency.hpp"
-#include "wpi/units/length.hpp"
-#include "wpi/units/math.hpp"
-#include "wpi/units/velocity.hpp"
-#include "wpi/units/voltage.hpp"
+#include <wpi/math/controller/SimpleMotorFeedforward.hpp>
+#include <wpi/units/acceleration.hpp>
+#include <wpi/units/frequency.hpp>
+#include <wpi/units/length.hpp>
+#include <wpi/units/math.hpp>
+#include <wpi/units/velocity.hpp>
+#include <wpi/units/voltage.hpp>
 
 static constexpr auto kDt = 10_ms;
 static constexpr auto kV = 2.5629_V / 1_mps;

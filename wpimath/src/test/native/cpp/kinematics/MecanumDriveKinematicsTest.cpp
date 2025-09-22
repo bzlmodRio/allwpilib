@@ -5,10 +5,9 @@
 #include <numbers>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/geometry/Translation2d.hpp"
-#include "wpi/math/kinematics/MecanumDriveKinematics.hpp"
-#include "wpi/units/angular_velocity.hpp"
+#include <wpi/math/geometry/Translation2d.hpp>
+#include <wpi/math/kinematics/MecanumDriveKinematics.hpp>
+#include <wpi/units/angular_velocity.hpp>
 
 using namespace frc;
 

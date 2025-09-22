@@ -10,13 +10,13 @@
 #include <vector>
 
 #include <fmt/format.h>
+#include <wpi/ntcore/ntcore.hpp>
+#include <wpi/ntcore/ntcore_cpp.hpp>
 #include <wpi/util/ConvertUTF.h>
 #include <wpi/util/jni_util.hpp>
 #include <wpi/util/json.h>
 
 #include "org_wpilib_networktables_NetworkTablesJNI.h"
-#include "wpi/ntcore/ntcore.hpp"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 using namespace wpi::java;
 

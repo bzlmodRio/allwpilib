@@ -5,10 +5,10 @@
 #include <utility>
 
 #include <wpi/Errors.hpp>
+#include <wpi/command/CommandScheduler.hpp>
+#include <wpi/command/FunctionalCommand.hpp>
 
 #include "CommandTestBase.h"
-#include "wpi/command/CommandScheduler.hpp"
-#include "wpi/command/FunctionalCommand.hpp"
 
 using namespace frc2;
 class CommandRequirementsTest : public CommandTestBase {};

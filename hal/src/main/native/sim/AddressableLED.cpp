@@ -2,17 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/hal/AddressableLED.hpp"
-
 #include <fmt/format.h>
+#include <wpi/hal/AddressableLED.hpp>
+#include <wpi/hal/Errors.hpp>
+#include <wpi/hal/handles/HandlesInternal.hpp>
+#include <wpi/hal/handles/IndexedHandleResource.hpp>
 
 #include "DigitalInternal.h"
 #include "HALInitializer.h"
 #include "HALInternal.h"
 #include "PortsInternal.h"
-#include "wpi/hal/Errors.hpp"
-#include "wpi/hal/handles/HandlesInternal.hpp"
-#include "wpi/hal/handles/IndexedHandleResource.hpp"
 #include "mockdata/AddressableLEDDataInternal.h"
 
 using namespace hal;

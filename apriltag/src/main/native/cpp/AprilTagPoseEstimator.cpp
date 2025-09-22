@@ -2,11 +2,9 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/apriltag/AprilTagPoseEstimator.hpp"
-
 #include <Eigen/QR>
-
-#include "wpi/apriltag/AprilTagDetection.hpp"
+#include <wpi/apriltag/AprilTagDetection.hpp>
+#include <wpi/apriltag/AprilTagPoseEstimator.hpp>
 
 #ifdef _WIN32
 #pragma warning(disable : 4200)

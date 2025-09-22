@@ -16,15 +16,14 @@
 
 #include <fmt/format.h>
 #include <fmt/ranges.h>
+#include <wpi/ntcore/DoubleArrayTopic.hpp>
+#include <wpi/ntcore/NetworkTableInstance.hpp>
+#include <wpi/ntcore/ntcore.hpp>
+#include <wpi/ntcore/ntcore_c.h>
+#include <wpi/ntcore/ntcore_cpp.hpp>
 #include <wpi/util/Synchronization.hpp>
 #include <wpi/util/print.hpp>
 #include <wpi/util/timestamp.hpp>
-
-#include "wpi/ntcore/DoubleArrayTopic.hpp"
-#include "wpi/ntcore/NetworkTableInstance.hpp"
-#include "wpi/ntcore/ntcore.hpp"
-#include "wpi/ntcore/ntcore_c.h"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 void bench();
 void bench2();

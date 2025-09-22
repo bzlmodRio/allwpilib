@@ -8,13 +8,13 @@
 #include <vector>
 
 #include <gtest/gtest.h>
+#include <wpi/ntcore/ntcore_c.h>
+#include <wpi/ntcore/ntcore_cpp.hpp>
 #include <wpi/util/Synchronization.hpp>
 #include <wpi/util/json.h>
 
 #include "TestPrinters.h"
 #include "ValueMatcher.h"
-#include "wpi/ntcore/ntcore_c.h"
-#include "wpi/ntcore/ntcore_cpp.hpp"
 
 class TopicListenerTest : public ::testing::Test {
  public:

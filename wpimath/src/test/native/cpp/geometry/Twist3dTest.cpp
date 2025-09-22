@@ -6,8 +6,7 @@
 #include <numbers>
 
 #include <gtest/gtest.h>
-
-#include "wpi/math/geometry/Pose3d.hpp"
+#include <wpi/math/geometry/Pose3d.hpp>
 
 using namespace frc;
 

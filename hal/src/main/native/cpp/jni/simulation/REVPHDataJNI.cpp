@@ -4,9 +4,10 @@
 
 #include <jni.h>
 
+#include <wpi/hal/simulation/REVPHData.hpp>
+
 #include "CallbackStore.h"
 #include "org_wpilib_hardware_hal_simulation_REVPHDataJNI.h"
-#include "wpi/hal/simulation/REVPHData.hpp"
 
 using namespace hal;
 

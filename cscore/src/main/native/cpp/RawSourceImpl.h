@@ -12,9 +12,10 @@
 #include <string_view>
 #include <vector>
 
+#include <wpi/cscore/cscore_raw.hpp>
+
 #include "ConfigurableSourceImpl.h"
 #include "SourceImpl.h"
-#include "wpi/cscore/cscore_raw.hpp"
 
 namespace cs {
 

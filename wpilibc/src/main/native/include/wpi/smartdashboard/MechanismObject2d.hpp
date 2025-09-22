@@ -11,10 +11,9 @@
 #include <string_view>
 #include <utility>
 
+#include <wpi/Errors.hpp>
 #include <wpi/ntcore/NetworkTable.hpp>
 #include <wpi/util/StringMap.hpp>
-
-#include "wpi/Errors.hpp"
 
 namespace frc {
 

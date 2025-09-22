@@ -9,14 +9,14 @@
 #include <string>
 #include <vector>
 
+#include <wpi/net/HttpParser.hpp>
+#include <wpi/net/raw_uv_ostream.hpp>
 #include <wpi/util/Base64.hpp>
 #include <wpi/util/SmallString.h>
 #include <wpi/util/StringExtras.h>
 #include <wpi/util/sha1.hpp>
 
 #include "WebSocketTest.h"
-#include "wpi/net/HttpParser.hpp"
-#include "wpi/net/raw_uv_ostream.hpp"
 
 namespace wpi {
 

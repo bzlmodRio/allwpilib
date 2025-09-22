@@ -8,17 +8,16 @@
 #include <stdexcept>
 
 #include <gcem.hpp>
+#include <wpi/math/system/LinearSystem.hpp>
+#include <wpi/math/system/plant/DCMotor.hpp>
+#include <wpi/units/acceleration.hpp>
+#include <wpi/units/angular_acceleration.hpp>
+#include <wpi/units/angular_velocity.hpp>
+#include <wpi/units/length.hpp>
+#include <wpi/units/moment_of_inertia.hpp>
+#include <wpi/units/velocity.hpp>
+#include <wpi/units/voltage.hpp>
 #include <wpi/util/SymbolExports.hpp>
-
-#include "wpi/math/system/LinearSystem.hpp"
-#include "wpi/math/system/plant/DCMotor.hpp"
-#include "wpi/units/acceleration.hpp"
-#include "wpi/units/angular_acceleration.hpp"
-#include "wpi/units/angular_velocity.hpp"
-#include "wpi/units/length.hpp"
-#include "wpi/units/moment_of_inertia.hpp"
-#include "wpi/units/velocity.hpp"
-#include "wpi/units/voltage.hpp"
 
 namespace frc {
 /**

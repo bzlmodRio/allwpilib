@@ -2,10 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "wpi/apriltag/AprilTagDetector.hpp"
-
 #include <cmath>
 #include <utility>
+
+#include <wpi/apriltag/AprilTagDetector.hpp>
 
 #ifdef _WIN32
 #pragma warning(disable : 4200)

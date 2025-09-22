@@ -6,9 +6,9 @@
 
 #include <gtest/gtest.h>
 #include <wpi/hal/HAL.hpp>
+#include <wpi/hardware/discrete/DigitalOutput.hpp>
 
 #include "callback_helpers/TestCallbackHelpers.h"
-#include "wpi/hardware/discrete/DigitalOutput.hpp"
 
 namespace frc::sim {
 

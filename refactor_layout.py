@@ -272,16 +272,24 @@ class RawConfig:
 "command/src/test/java/edu/wpi/first/wpilibj2/MockHardwareExtension.java": "command/src/test/java/edu/wpi/first/wpilibj2/MockHardwareExtension.java",
 "ntcore/src/dev/java/edu/wpi/first/ntcore/DevMain.java": "ntcore/src/dev/java/edu/wpi/first/ntcore/DevMain.java",
 "wpilibj/src/test/java/edu/wpi/first/math/util/ColorTest.java": "wpilibj/src/test/java/edu/wpi/first/math/util/ColorTest.java",
-        
+
         """
-        
+
     JAVA_FILE_RENAMES = [
         (
             pathlib.Path("wpiutil"),
             [
                 ("edu/wpi/first/util", "org/wpilib/util/runtime", "ClassPreloader"),
-                ("edu/wpi/first/util", "org/wpilib/util/runtime", "CombinedRuntimeLoader"),
-                ("edu/wpi/first/util", "org/wpilib/util/runtime", "MsvcRuntimeException"),
+                (
+                    "edu/wpi/first/util",
+                    "org/wpilib/util/runtime",
+                    "CombinedRuntimeLoader",
+                ),
+                (
+                    "edu/wpi/first/util",
+                    "org/wpilib/util/runtime",
+                    "MsvcRuntimeException",
+                ),
                 ("edu/wpi/first/util", "org/wpilib/util/runtime", "RuntimeDetector"),
                 ("edu/wpi/first/util", "org/wpilib/util/runtime", "RuntimeLoader"),
                 (
@@ -325,25 +333,57 @@ class RawConfig:
                 ("edu/wpi/first/wpilibj", "org/wpilib/driverstation", "Joystick"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/driverstation", "PS4Controller"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/driverstation", "PS5Controller"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/driverstation", "StadiaController"),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/driverstation",
+                    "StadiaController",
+                ),
                 ("edu/wpi/first/wpilibj", "org/wpilib/driverstation", "XboxController"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/bus", "CAN"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/bus", "I2C"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/bus", "SerialPort"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/accelerometer", "ADXL345_I2C"),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/accelerometer",
+                    "ADXL345_I2C",
+                ),
                 (
                     "edu/wpi/first/wpilibj",
                     "org/wpilib/hardware/accelerometer",
                     "AnalogAccelerometer",
                 ),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/discrete", "AnalogInput"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/discrete", "CounterBase"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/discrete", "DigitalInput"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/discrete", "DigitalOutput"),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/discrete",
+                    "AnalogInput",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/discrete",
+                    "CounterBase",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/discrete",
+                    "DigitalInput",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/discrete",
+                    "DigitalOutput",
+                ),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/discrete", "PWM"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/led", "AddressableLED"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/led", "AddressableLEDBuffer"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/led", "AddressableLEDBufferView"),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/led",
+                    "AddressableLEDBuffer",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/led",
+                    "AddressableLEDBufferView",
+                ),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/led", "LEDPattern"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/led", "LEDReader"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/led", "LEDWriter"),
@@ -364,47 +404,168 @@ class RawConfig:
                     "PWMMotorController",
                 ),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/motor", "MotorSafety"),
-
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "DMC60"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "Jaguar"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "Koors40"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "PWMSparkFlex"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "PWMSparkMax"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "PWMTalonFX"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "PWMTalonSRX"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "PWMVenom"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "PWMVictorSPX"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "SD540"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "Spark"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "SparkMini"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "Talon"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "Victor"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "VictorSP"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "MockPWMMotorController"),
-                ("edu/wpi/first/wpilibj/motorcontrol", "org/wpilib/hardware/motor", "MockMotorController"),
-
-
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "Compressor"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "CompressorConfigType"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "DoubleSolenoid"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "PneumaticHub"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "PneumaticsBase"),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "DMC60",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "Jaguar",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "Koors40",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "PWMSparkFlex",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "PWMSparkMax",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "PWMTalonFX",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "PWMTalonSRX",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "PWMVenom",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "PWMVictorSPX",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "SD540",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "Spark",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "SparkMini",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "Talon",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "Victor",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "VictorSP",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "MockPWMMotorController",
+                ),
+                (
+                    "edu/wpi/first/wpilibj/motorcontrol",
+                    "org/wpilib/hardware/motor",
+                    "MockMotorController",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "Compressor",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "CompressorConfigType",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "DoubleSolenoid",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "PneumaticHub",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "PneumaticsBase",
+                ),
                 (
                     "edu/wpi/first/wpilibj",
                     "org/wpilib/hardware/pneumatic",
                     "PneumaticsControlModule",
                 ),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "PneumaticsModuleType"),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "PneumaticsModuleType",
+                ),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "Solenoid"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "DoubleSolenoidTestCTRE"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "DoubleSolenoidTestREV"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "SolenoidTestCTRE"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/pneumatic", "SolenoidTestREV"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/power", "PowerDistribution"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/rotation", "AnalogEncoder"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/rotation", "AnalogPotentiometer"),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "DoubleSolenoidTestCTRE",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "DoubleSolenoidTestREV",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "SolenoidTestCTRE",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/pneumatic",
+                    "SolenoidTestREV",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/power",
+                    "PowerDistribution",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/rotation",
+                    "AnalogEncoder",
+                ),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/rotation",
+                    "AnalogPotentiometer",
+                ),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/rotation", "DutyCycle"),
-                ("edu/wpi/first/wpilibj", "org/wpilib/hardware/rotation", "DutyCycleEncoder"),
+                (
+                    "edu/wpi/first/wpilibj",
+                    "org/wpilib/hardware/rotation",
+                    "DutyCycleEncoder",
+                ),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/rotation", "Encoder"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/hardware/servo", "Servo"),
                 ("edu/wpi/first/wpilibj", "org/wpilib/opmode", "IterativeRobotBase"),
@@ -1077,7 +1238,8 @@ NAMESPACE_PROJECT_REPLACEMENTS = [
         "wpilibcExamples",
         None,
         None,
-        wpiutil_namespace_replacements() + wpimath_namespace_replacements()
+        wpiutil_namespace_replacements()
+        + wpimath_namespace_replacements()
         + wpilib_namespace_replacements()
         + [
             ("frc2::", "wpi::cmd::"),
@@ -1130,7 +1292,18 @@ def fixup_project_renames():
         suffix = full_file.split(".")[-1]
 
         print(full_file)
-        return suffix not in ["pyc", "jar", "gz", "png", "jpg", "icns", "ico", "avi", "mp4", "bat"]
+        return suffix not in [
+            "pyc",
+            "jar",
+            "gz",
+            "png",
+            "jpg",
+            "icns",
+            "ico",
+            "avi",
+            "mp4",
+            "bat",
+        ]
 
     def fixup_impl(contents):
         contents = contents.replace("wpilibNewCommands", "command")
@@ -1277,16 +1450,21 @@ def generic_renames():
 
     _make_commit("Generic Renames")
 
-def crawl_for_renames(file_renames, include_root, subpath, old_pkg_as_dir, new_pkg_as_dir):
+
+def crawl_for_renames(
+    file_renames, include_root, subpath, old_pkg_as_dir, new_pkg_as_dir
+):
     for root, _, files in os.walk(include_root + subpath):
         for f in files:
             original_file = pathlib.Path(root) / f
-            new_file = str((pathlib.Path(root) / f)).replace(old_pkg_as_dir, new_pkg_as_dir)
+            new_file = str((pathlib.Path(root) / f)).replace(
+                old_pkg_as_dir, new_pkg_as_dir
+            )
             if str(original_file) != new_file:
                 file_renames[str(original_file)] = new_file
 
-def preprocess_java_renames():
 
+def preprocess_java_renames():
 
     full_package_replacements = {}
 
@@ -1300,11 +1478,23 @@ def preprocess_java_renames():
         full_package_replacements[old_pkg_as_dir] = new_pkg_as_dir
 
         include_root = project
-        crawl_for_renames(file_renames, include_root, "/src/main/java", old_pkg_as_dir, new_pkg_as_dir)
-        crawl_for_renames(file_renames, include_root, "/src/dev/java", old_pkg_as_dir, new_pkg_as_dir)
-        crawl_for_renames(file_renames, include_root, "/src/generated/main/java", old_pkg_as_dir, new_pkg_as_dir)
-        crawl_for_renames(file_renames, include_root, "/src/test/java", old_pkg_as_dir, new_pkg_as_dir)
-        
+        crawl_for_renames(
+            file_renames, include_root, "/src/main/java", old_pkg_as_dir, new_pkg_as_dir
+        )
+        crawl_for_renames(
+            file_renames, include_root, "/src/dev/java", old_pkg_as_dir, new_pkg_as_dir
+        )
+        crawl_for_renames(
+            file_renames,
+            include_root,
+            "/src/generated/main/java",
+            old_pkg_as_dir,
+            new_pkg_as_dir,
+        )
+        crawl_for_renames(
+            file_renames, include_root, "/src/test/java", old_pkg_as_dir, new_pkg_as_dir
+        )
+
     class_import_renames = {}
     class_package_overrides = {}
     for project, replacements in RawConfig.JAVA_FILE_RENAMES:
@@ -1312,38 +1502,86 @@ def preprocess_java_renames():
             print("!!!", old_pkg, new_pkg, class_name)
             old_pkg = old_pkg.replace("/", ".")
             new_pkg = new_pkg.replace("/", ".")
-            
+
             old_pkg_as_dir = old_pkg.replace(".", "/")
             new_pkg_as_dir = new_pkg.replace(".", "/")
-            
-            original_file = pathlib.Path(project) / "src/main/java" / old_pkg_as_dir / (class_name + ".java")
-            new_file = pathlib.Path(project) / "src/main/java" / new_pkg_as_dir / (class_name + ".java")
+
+            original_file = (
+                pathlib.Path(project)
+                / "src/main/java"
+                / old_pkg_as_dir
+                / (class_name + ".java")
+            )
+            new_file = (
+                pathlib.Path(project)
+                / "src/main/java"
+                / new_pkg_as_dir
+                / (class_name + ".java")
+            )
             if original_file.exists():
-                class_import_renames[old_pkg + "." + class_name] = new_pkg + "." + class_name
+                class_import_renames[old_pkg + "." + class_name] = (
+                    new_pkg + "." + class_name
+                )
                 class_package_overrides[str(new_file)] = new_pkg
                 file_renames[str(original_file)] = str(new_file)
-            
-            original_file = pathlib.Path(project) / "src/test/java" / old_pkg_as_dir / (class_name + ".java")
-            new_file = pathlib.Path(project) / "src/test/java" / new_pkg_as_dir / (class_name + ".java")
+
+            original_file = (
+                pathlib.Path(project)
+                / "src/test/java"
+                / old_pkg_as_dir
+                / (class_name + ".java")
+            )
+            new_file = (
+                pathlib.Path(project)
+                / "src/test/java"
+                / new_pkg_as_dir
+                / (class_name + ".java")
+            )
             if original_file.exists():
-                class_import_renames[old_pkg + "." + class_name] = new_pkg + "." + class_name
+                class_import_renames[old_pkg + "." + class_name] = (
+                    new_pkg + "." + class_name
+                )
                 class_package_overrides[str(new_file)] = new_pkg
                 file_renames[str(original_file)] = str(new_file)
-            
-            original_file = pathlib.Path(project) / "src/test/java" / old_pkg_as_dir / (class_name + "Test.java")
-            new_file = pathlib.Path(project) / "src/test/java" / new_pkg_as_dir / (class_name + "Test.java")
+
+            original_file = (
+                pathlib.Path(project)
+                / "src/test/java"
+                / old_pkg_as_dir
+                / (class_name + "Test.java")
+            )
+            new_file = (
+                pathlib.Path(project)
+                / "src/test/java"
+                / new_pkg_as_dir
+                / (class_name + "Test.java")
+            )
             if original_file.exists():
-                class_import_renames[old_pkg + "." + class_name + "Test"] = new_pkg + "." + class_name + "Test"
+                class_import_renames[old_pkg + "." + class_name + "Test"] = (
+                    new_pkg + "." + class_name + "Test"
+                )
                 class_package_overrides[str(new_file)] = new_pkg
                 file_renames[str(original_file)] = str(new_file)
-            
-            original_file = pathlib.Path(project) / "src/generated/main/java" / old_pkg_as_dir / (class_name + ".java")
-            new_file = pathlib.Path(project) / "src/generated/main/java" / new_pkg_as_dir / (class_name + ".java")
+
+            original_file = (
+                pathlib.Path(project)
+                / "src/generated/main/java"
+                / old_pkg_as_dir
+                / (class_name + ".java")
+            )
+            new_file = (
+                pathlib.Path(project)
+                / "src/generated/main/java"
+                / new_pkg_as_dir
+                / (class_name + ".java")
+            )
             if "motorcontrol" in str(original_file):
                 print("++++", original_file, new_file, class_name)
             if original_file.exists():
                 print("----", original_file, new_file)
-                class_import_renames[old_pkg + "." + class_name] = new_pkg + "." + class_name
+                class_import_renames[old_pkg + "." + class_name] = (
+                    new_pkg + "." + class_name
+                )
                 class_package_overrides[str(new_file)] = new_pkg
                 file_renames[str(original_file)] = str(new_file)
 
@@ -1351,21 +1589,21 @@ def preprocess_java_renames():
             # rename_java_file(package_replacements, project, "src/test/java", old_pkg, new_pkg, class_name + "Test")
             # rename_java_file(package_replacements, project, "src/generated/main/java", old_pkg, new_pkg, class_name + "Test")
 
-#     original_file = (
-#         pathlib.Path(project)
-#         / subpath
-#         / old_pkg
-#         / (class_name + ".java")
-#     )
-#     new_file = (
-#         pathlib.Path(project)
-#         / subpath
-#         / new_pkg
-#         / (class_name + ".java")
-#     )
-    
-#     original_full_name = old_pkg.replace("/", ".") + "." + class_name
-#     new_full_name = new_pkg.replace("/", ".") + "." + class_name
+    #     original_file = (
+    #         pathlib.Path(project)
+    #         / subpath
+    #         / old_pkg
+    #         / (class_name + ".java")
+    #     )
+    #     new_file = (
+    #         pathlib.Path(project)
+    #         / subpath
+    #         / new_pkg
+    #         / (class_name + ".java")
+    #     )
+
+    #     original_full_name = old_pkg.replace("/", ".") + "." + class_name
+    #     new_full_name = new_pkg.replace("/", ".") + "." + class_name
 
     package_replacements = {}
     package_replacements.update(class_import_renames)
@@ -1393,19 +1631,17 @@ def run_java_fixup_imports(pp_config: PreprocessedConfig):
         for old_pkg, new_pkg in pp_config.java_pkg_renames.items():
             contents = contents.replace(old_pkg, new_pkg)
 
-
         return contents
 
     crawl_and_replace(".", java_replacement_filter, java_replacement_impl)
-    
 
     for filename, new_pkg in pp_config.java_class_package_overrides.items():
-        with open(filename, 'r') as f:
+        with open(filename, "r") as f:
             contents = f.read()
 
         contents = re.sub("package .*;", f"package {new_pkg};", contents)
 
-        with open(filename, 'w') as f:
+        with open(filename, "w") as f:
             f.write(contents)
 
     _make_commit("Run java package replacements")
@@ -1428,7 +1664,7 @@ def run_java_spotless():
 #         / new_pkg
 #         / (class_name + ".java")
 #     )
-    
+
 #     original_full_name = old_pkg.replace("/", ".") + "." + class_name
 #     new_full_name = new_pkg.replace("/", ".") + "." + class_name
 
@@ -1530,7 +1766,9 @@ def main():
         cc_file_renames, cc_include_replacements = preprocess_cc_renames(
             preprocessor_file
         )
-        java_pkg_renames, java_file_renames, java_class_package_overrides = preprocess_java_renames()
+        java_pkg_renames, java_file_renames, java_class_package_overrides = (
+            preprocess_java_renames()
+        )
 
         pp_config = PreprocessedConfig(
             cc_file_renames=cc_file_renames,
