@@ -20,25 +20,21 @@ if(WITH_JAVA)
         field_images_jar
         SOURCES ${JAVA_SOURCES}
         RESOURCES
-        NAMESPACE "edu/wpi/first/fields" ${JAVA_RESOURCES}
+        NAMESPACE "org/wpilib/fields" ${JAVA_RESOURCES}
         INCLUDE_JARS ${JACKSON_JARS}
         OUTPUT_DIR ${WPILIB_BINARY_DIR}/${java_lib_dest}
         OUTPUT_NAME fields
     )
     set_property(TARGET field_images_jar PROPERTY FOLDER "java")
     install_jar(field_images_jar DESTINATION ${java_lib_dest})
-    install_jar_exports(
-        TARGETS field_images_jar
-        FILE fieldImages_jar.cmake
-        DESTINATION share/fields
-    )
+    install_jar_exports(TARGETS field_images_jar FILE fields_jar.cmake DESTINATION share/fields)
 endif()
 
 generate_resources(
-    src/main/native/resources/edu/wpi/first/fields
+    src/main/native/resources/org/wpilib/fields
     ${CMAKE_CURRENT_BINARY_DIR}/generated/main/cpp
     FIELDS
-    fields
+    wpi::fields
     field_images_resources_src
 )
 
@@ -60,9 +56,9 @@ target_include_directories(
         $<INSTALL_INTERFACE:${include_dest}/fields>
 )
 
-install(TARGETS fields EXPORT fieldimages)
-export(TARGETS fields FILE fieldimages.cmake NAMESPACE fieldimages::)
+install(TARGETS fields EXPORT fields)
+export(TARGETS fields FILE fields.cmake NAMESPACE fields::)
 
-configure_file(fieldimages-config.cmake.in ${WPILIB_BINARY_DIR}/fieldimages-config.cmake)
-install(FILES ${WPILIB_BINARY_DIR}/fieldimages-config.cmake DESTINATION share/fields)
-install(EXPORT fieldimages DESTINATION share/fields)
+configure_file(fields-config.cmake.in ${WPILIB_BINARY_DIR}/fields-config.cmake)
+install(FILES ${WPILIB_BINARY_DIR}/fields-config.cmake DESTINATION share/fields)
+install(EXPORT fields DESTINATION share/fields)
