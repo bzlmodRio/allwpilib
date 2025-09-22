@@ -33,7 +33,7 @@ def generate_cpp_headers(
         keep_trailing_newline=True,
     )
 
-    root_path = output_root / "main/native/include/hardware/motor"
+    root_path = output_root / "main/native/include/wpi/hardware/motor"
     template = env.get_template("pwm_motor_controller.hpp.jinja")
 
     for controller in pwm_motor_controllers:

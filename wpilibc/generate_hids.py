@@ -58,7 +58,7 @@ def generate_hids(output_directory: Path, template_directory: Path, schema_file:
     root_path = output_directory / sim_hdr_subdirectory
     template = env.get_template("hidsim.hpp.jinja")
     for controller in controllers:
-        controllerName = f"{controller['ConsoleName']}ControllerSim.h"
+        controllerName = f"{controller['ConsoleName']}ControllerSim.hpp"
         output = template.render(controller)
         write_controller_file(root_path, controllerName, output)
 
