@@ -60,6 +60,15 @@ jobs:
         env:
           ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PUBLISH_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      - name: Build with Gradle
+        uses: addnab/docker-run-action@v3
+        with:
+          image: ${{ matrix.container }}
+          options: -v ${{ github.workspace }}:/work -w /work -e ARTIFACTORY_PUBLISH_USERNAME -e ARTIFACTORY_PUBLISH_PASSWORD -e GITHUB_REF -e CI
+          run: df . && rm -f semicolon_delimited_script && echo $GITHUB_REF && ./gradlew build --continue --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }} || true
+        env:
+          ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PUBLISH_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
       - name: Check free disk space
         run: df .
       - uses: actions/upload-artifact@v4
@@ -157,6 +166,11 @@ jobs:
       - name: Check disk free space post-cleanup (macOS)
         run: df -h .
         if: matrix.os == 'macOS-14'
+      - name: Build with Gradle
+        run: ./gradlew ${{ matrix.task }} --continue --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }} || true
+        env:
+          ARTIFACTORY_PUBLISH_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PUBLISH_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
       - name: Build with Gradle
         run: ./gradlew ${{ matrix.task }} --continue --build-cache -PbuildServer -PskipJavaFormat ${{ matrix.build-options }} ${{ env.EXTRA_GRADLE_ARGS }}
         env:
