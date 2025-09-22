@@ -3,10 +3,10 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <opencv2/core/core.hpp>
-#include <wpi/print.h>
+#include <wpi/util/print.hpp>
 
-#include "cscore.h"
-#include "cscore_cv.h"
+#include "wpi/cscore/cscore.hpp"
+#include "wpi/cscore/cscore_cv.hpp"
 
 int main() {
   cs::UsbCamera camera{"usbcam", 0};

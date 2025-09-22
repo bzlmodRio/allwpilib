@@ -14,8 +14,8 @@
 #include <utility>
 #include <vector>
 
-#include "wpi/StringMap.h"
-#include "wpi/bit.h"
+#include "wpi/util/StringMap.hpp"
+#include "wpi/util/bit.h"
 
 namespace wpi {
 

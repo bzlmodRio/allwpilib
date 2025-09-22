@@ -7,7 +7,7 @@
 #include <fieldmap.h>
 
 #include <tagpose.h>
-#include <wpi/json.h>
+#include <wpi/util/json.h>
 
 namespace fmap {
 wpi::json singleTag(int tag, const tag::Pose& tagpose);

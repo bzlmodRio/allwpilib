@@ -8,7 +8,7 @@
 #include <map>
 
 #include <tagpose.h>
-#include <wpi/json.h>
+#include <wpi/util/json.h>
 
 class Fieldmap {
  public:

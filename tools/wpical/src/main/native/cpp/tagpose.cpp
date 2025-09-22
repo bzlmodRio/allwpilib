@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <tagpose.h>
-#include <wpi/deprecated.h>
+#include <wpi/util/deprecated.hpp>
 
 WPI_IGNORE_DEPRECATED
 namespace tag {
