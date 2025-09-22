@@ -8,7 +8,7 @@
 
 #include "wpi/math/util/StateSpaceUtil.hpp"
 #include "wpi/math/estimator/AngleStatistics.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 using namespace frc;
 

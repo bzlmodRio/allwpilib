@@ -11,7 +11,7 @@
 #include <wpi/util/sendable/Sendable.hpp>
 #include <wpi/util/sendable/SendableHelper.hpp>
 
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 

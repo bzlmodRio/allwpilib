@@ -15,7 +15,7 @@
 #include "wpi/math/kinematics/Kinematics.hpp"
 #include "wpi/units/angle.hpp"
 #include "wpi/units/length.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 /**

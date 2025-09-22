@@ -15,7 +15,7 @@
 #include "wpi/math/kinematics/SwerveModulePosition.hpp"
 #include "wpi/math/kinematics/SwerveModuleState.hpp"
 #include "wpi/math/geometry/Pose2d.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 

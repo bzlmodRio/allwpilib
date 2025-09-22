@@ -15,7 +15,7 @@
 
 #include "wpi/math/linalg/ct_matrix.hpp"
 #include "wpi/units/angle.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 

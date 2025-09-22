@@ -22,7 +22,7 @@
 #include "wpi/math/kinematics/SwerveModuleState.hpp"
 #include "wpi/units/math.hpp"
 #include "wpi/units/velocity.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 

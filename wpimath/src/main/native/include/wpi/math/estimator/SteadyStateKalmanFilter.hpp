@@ -19,7 +19,7 @@
 #include "wpi/math/system/Discretization.hpp"
 #include "wpi/math/system/LinearSystem.hpp"
 #include "wpi/units/time.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 

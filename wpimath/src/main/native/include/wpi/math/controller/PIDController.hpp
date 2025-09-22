@@ -17,7 +17,7 @@
 
 #include "wpi/math/util/MathUtil.hpp"
 #include "wpi/units/time.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 

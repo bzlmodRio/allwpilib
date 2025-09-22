@@ -19,7 +19,7 @@
 #include "wpi/math/kinematics/Kinematics.hpp"
 #include "wpi/math/kinematics/Odometry.hpp"
 #include "wpi/units/time.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 

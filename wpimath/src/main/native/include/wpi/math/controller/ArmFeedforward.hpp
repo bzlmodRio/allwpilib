@@ -13,7 +13,7 @@
 #include "wpi/units/angular_velocity.hpp"
 #include "wpi/units/math.hpp"
 #include "wpi/units/voltage.hpp"
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 namespace frc {
 /**

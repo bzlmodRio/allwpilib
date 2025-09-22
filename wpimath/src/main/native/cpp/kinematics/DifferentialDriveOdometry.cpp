@@ -4,7 +4,7 @@
 
 #include "wpi/math/kinematics/DifferentialDriveOdometry.hpp"
 
-#include "wpi/math/MathShared.hpp"
+#include "wpi/math/util/MathShared.hpp"
 
 using namespace frc;
 
