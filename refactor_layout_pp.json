@@ -1612,7 +1612,7 @@
         "ntcore_cpp.h": "wpi/ntcore/ntcore_cpp.hpp",
         "ntcore_c_types.h": "wpi/ntcore/ntcore_c_types.h",
         "ntcore_cpp_types.h": "wpi/ntcore/ntcore_cpp_types.hpp",
-        "wpimath/MathShared.h": "wpi/math/MathShared.hpp",
+        "wpimath/MathShared.h": "wpi/math/util/MathShared.hpp",
         "cscore_cv.h": "wpi/cscore/cscore_cv.hpp",
         "cscore_cpp.h": "wpi/cscore/cscore_cpp.hpp",
         "cscore.h": "wpi/cscore/cscore.hpp",

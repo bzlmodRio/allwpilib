@@ -11,8 +11,8 @@ from typing import Dict
 class RawConfig:
 
     PROJECT_RENAMES = [
-        ("command/", "command/"),
-        ("fields/", "fields/"),
+        ("wpilibNewCommands/", "command/"),
+        ("fieldImages/", "fields/"),
         ("datalogtool/", "tools/datalogtool/"),
         ("outlineviewer/", "tools/outlineviewer/"),
         ("processstarter/", "tools/processstarter/"),
@@ -486,9 +486,9 @@ class RawConfig:
     ]
 
     STR_REPLACEMENTS = [
-        ("command", "command"),
+        ("wpilibNewCommands", "command"),
         ("wpilibnewcommands", "command"),
-        ("fields", "fields"),
+        ("fieldImages", "fields"),
         ("fieldimages", "fields"),
         (
             "frc2/command/button/Command{{ ConsoleName }}Controller.h",
@@ -535,6 +535,8 @@ def crawl_and_replace(dir_to_crawl, file_filter, replacement_callback):
         for f in files:
 
             full_file = os.path.join(root, f)
+            if full_file == "./refactor_layout.py":
+                continue
             if not file_filter(full_file):
                 continue
 
@@ -1101,8 +1103,8 @@ NAMESPACE_PROJECT_REPLACEMENTS = [
 
 def _make_commit(msg):
     pass
-    subprocess.check_call(["git", "add", "."])
-    subprocess.check_call(["git", "commit", "-m", msg])
+    # subprocess.check_call(["git", "add", "."])
+    # subprocess.check_call(["git", "commit", "-m", msg])
 
 
 def rename_projects():
@@ -1125,23 +1127,14 @@ def rename_projects():
 
 def fixup_project_renames():
     def fixup_filter(full_file):
-        if full_file.endswith("build.gradle"):
-            return True
-        if full_file.endswith("BUILD.bazel"):
-            return True
+        suffix = full_file.split(".")[-1]
 
-        return False
+        print(full_file)
+        return suffix not in ["pyc", "jar", "gz", "png", "jpg", "icns", "ico", "avi", "mp4", "bat"]
 
     def fixup_impl(contents):
-        print("Doing fixup replacents...")
-
-        for old, new in RawConfig.PROJECT_RENAMES:
-            old = old.rstrip("/")
-            new = new.rstrip("/")
-            contents = contents.replace(old, new)
-
-        contents = contents.replace("tools/tools/", "tools/")
-        contents = contents.replace("tools/tools/", "tools/")
+        contents = contents.replace("wpilibNewCommands", "command")
+        contents = contents.replace("fieldImages", "fields")
 
         return contents
 
@@ -1195,7 +1188,6 @@ def preprocess_cc_renames(preprocessor_file):
             file_renames[str(original_file)] = str(destination_file)
             include_replacements[original] = str(new)
 
-    include_replacements["wpimath/MathShared.h"] = "wpi/math/MathShared.hpp"
     include_replacements["EventLoop.h"] = "EventLoop.hpp"
     include_replacements["PneumaticsBase.h"] = "PneumaticsBase.hpp"
     include_replacements["EdgeConfiguration.h"] = "EdgeConfiguration.hpp"
@@ -1395,7 +1387,7 @@ def run_java_renames(pp_config: PreprocessedConfig):
 def run_java_fixup_imports(pp_config: PreprocessedConfig):
     def java_replacement_filter(full_file):
         suffix = full_file.split(".")[-1]
-        return suffix in ["java", "cpp", "jinja"]
+        return suffix in ["java", "cpp", "jinja", "proto"]
 
     def java_replacement_impl(contents):
         for old_pkg, new_pkg in pp_config.java_pkg_renames.items():
@@ -1529,10 +1521,10 @@ def run_namespace_replacements():
 def main():
     preprocessor_file = "refactor_layout_pp.json"
 
-    preprocess = False
+    preprocess = True
 
     rename_projects()
-    # fixup_project_renames()
+    fixup_project_renames()
 
     if preprocess:
         cc_file_renames, cc_include_replacements = preprocess_cc_renames(
