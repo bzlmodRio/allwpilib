@@ -110,7 +110,7 @@ generate_resources(
     src/main/native/resources/org/wpilib/vision/apriltag
     generated/main/cpp
     APRILTAG
-    apriltag
+    frc
     apriltag_resources_src
 )
 
