@@ -647,10 +647,6 @@ class RawConfig:
     ]
 
     STR_REPLACEMENTS = [
-        ("wpilibNewCommands", "command"),
-        ("wpilibnewcommands", "command"),
-        ("fieldImages", "fields"),
-        ("fieldimages", "fields"),
         (
             "frc2/command/button/Command{{ ConsoleName }}Controller.h",
             "wpi/command/button/Command{{ ConsoleName }}Controller.h",
@@ -1307,6 +1303,7 @@ def fixup_project_renames():
 
     def fixup_impl(contents):
         contents = contents.replace("wpilibNewCommands", "command")
+        contents = contents.replace("wpilibnewcommands", "command")
         contents = contents.replace("fieldImages", "fields")
 
         return contents
@@ -1406,16 +1403,19 @@ def run_cc_renames(pp_config: PreprocessedConfig):
 
 def run_cc_include_fixup(pp_config):
     def cc_replacement_filter(full_file):
+        if full_file.endswith("/pyproject.toml"):
+            return True
+
         suffix = full_file.split(".")[-1]
         return suffix in ["c", "cpp", "h", "hpp", "jinja", "mm"]
 
     def cc_replacement_impl(contents):
         for old_pkg, new_pkg in pp_config.cc_incude_replacements.items():
             contents = contents.replace(
-                f'#include "{old_pkg}"', f'#include "{new_pkg}"'
+                f'"{old_pkg}"', f'"{new_pkg}"'
             )
             contents = contents.replace(
-                f"#include <{old_pkg}>", f"#include <{new_pkg}>"
+                f"<{old_pkg}>", f"<{new_pkg}>"
             )
 
         return contents
@@ -1624,8 +1624,14 @@ def run_java_renames(pp_config: PreprocessedConfig):
 
 def run_java_fixup_imports(pp_config: PreprocessedConfig):
     def java_replacement_filter(full_file):
+        if full_file.endswith("/CMakeLists.txt"):
+            return True
+        if "ntcore/src/generate/types.json" in full_file:
+            return True
+        if "styleguide" in full_file:
+            return True
         suffix = full_file.split(".")[-1]
-        return suffix in ["java", "cpp", "jinja", "proto"]
+        return suffix in ["java", "cpp", "jinja", "proto", "Extension"]
 
     def java_replacement_impl(contents):
         for old_pkg, new_pkg in pp_config.java_pkg_renames.items():
@@ -1757,9 +1763,9 @@ def run_namespace_replacements():
 def main():
     preprocessor_file = "refactor_layout_pp.json"
 
-    preprocess = True
+    preprocess = False
 
-    rename_projects()
+    # rename_projects()
     fixup_project_renames()
 
     if preprocess:

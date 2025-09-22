@@ -3063,7 +3063,14 @@
         "wpilibj/src/test/java/edu/wpi/first/wpilibj/simulation/testutils/CallbackHelperBase.java": "wpilibj/src/test/java/org/wpilib/simulation/testutils/CallbackHelperBase.java",
         "wpilibj/src/test/java/edu/wpi/first/wpilibj/util/Color8BitTest.java": "wpilibj/src/test/java/org/wpilib/util/Color8BitTest.java",
         "wpilibj/src/test/java/edu/wpi/first/wpilibj/util/ColorTest.java": "wpilibj/src/test/java/org/wpilib/util/ColorTest.java",
-        "wpilibj/src/test/java/edu/wpi/first/wpilibj/can/CANStatusTest.java": "wpilibj/src/test/java/org/wpilib/can/CANStatusTest.java"
+        "wpilibj/src/test/java/edu/wpi/first/wpilibj/can/CANStatusTest.java": "wpilibj/src/test/java/org/wpilib/can/CANStatusTest.java",
+
+        "command/src/test/java/edu/wpi/first/wpilibj2/MockHardwareExtension.java": "command/src/test/java/org/wpilib/MockHardwareExtension.java",
+        "wpimath/src/test/java/edu/wpi/first/wpilibj/ProtoTestBase.java": "wpimath/src/test/java/org/wpilib/ProtoTestBase.java",
+        "wpimath/src/test/java/edu/wpi/first/wpilibj/StructTestBase.java": "wpimath/src/test/java/org/wpilib/StructTestBase.java",
+        "wpimath/src/test/java/edu/wpi/first/wpilibj/UtilityClassTest.java": "wpimath/src/test/java/org/wpilib/UtilityClassTest.java"
+
+
     },
     "java_pkg_renames": {
         "edu.wpi.first.util.ClassPreloader": "org.wpilib.util.runtime.ClassPreloader",
