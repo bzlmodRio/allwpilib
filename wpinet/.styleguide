@@ -12,7 +12,7 @@ generatedFileExclude {
   src/main/native/thirdparty/
 
   src/main/native/cpp/http_parser\.cpp$
-  src/main/native/include/wpinet/http_parser\.h$
+  src/main/native/include/wpi/net/http_parser\.hpp$
   src/main/native/resources/
   src/main/native/linux/AvahiClient
 

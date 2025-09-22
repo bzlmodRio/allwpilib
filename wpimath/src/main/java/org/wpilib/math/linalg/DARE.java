@@ -5,6 +5,7 @@
 package org.wpilib.math.linalg;
 
 import org.wpilib.math.jni.DAREJNI;
+import org.wpilib.math.util.Num;
 import org.ejml.simple.SimpleMatrix;
 
 /** DARE solver utility functions. */

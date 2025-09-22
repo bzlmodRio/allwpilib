@@ -16,6 +16,8 @@ import org.wpilib.math.numbers.N8;
 import org.wpilib.math.numbers.N9;
 import java.util.Objects;
 import org.ejml.simple.SimpleMatrix;
+import org.wpilib.math.util.Nat;
+import org.wpilib.math.util.Num;
 
 /** A class for constructing vectors (Nx1 matrices). */
 public final class VecBuilder {
