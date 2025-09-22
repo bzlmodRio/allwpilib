@@ -3064,13 +3064,10 @@
         "wpilibj/src/test/java/edu/wpi/first/wpilibj/util/Color8BitTest.java": "wpilibj/src/test/java/org/wpilib/util/Color8BitTest.java",
         "wpilibj/src/test/java/edu/wpi/first/wpilibj/util/ColorTest.java": "wpilibj/src/test/java/org/wpilib/util/ColorTest.java",
         "wpilibj/src/test/java/edu/wpi/first/wpilibj/can/CANStatusTest.java": "wpilibj/src/test/java/org/wpilib/can/CANStatusTest.java",
-
         "command/src/test/java/edu/wpi/first/wpilibj2/MockHardwareExtension.java": "command/src/test/java/org/wpilib/MockHardwareExtension.java",
         "wpimath/src/test/java/edu/wpi/first/wpilibj/ProtoTestBase.java": "wpimath/src/test/java/org/wpilib/ProtoTestBase.java",
         "wpimath/src/test/java/edu/wpi/first/wpilibj/StructTestBase.java": "wpimath/src/test/java/org/wpilib/StructTestBase.java",
         "wpimath/src/test/java/edu/wpi/first/wpilibj/UtilityClassTest.java": "wpimath/src/test/java/org/wpilib/UtilityClassTest.java"
-
-
     },
     "java_pkg_renames": {
         "edu.wpi.first.util.ClassPreloader": "org.wpilib.util.runtime.ClassPreloader",
@@ -3084,6 +3081,7 @@
         "edu.wpi.first.util.CircularBufferTest": "org.wpilib.util.container.CircularBufferTest",
         "edu.wpi.first.util.WPICleaner": "org.wpilib.util.cleanup.WPICleaner",
         "edu.wpi.first.util.EventVector": "org.wpilib.util.concurrent.EventVector",
+        "edu.wpi.first.wpilibj2.MockHardwareExtension": "org.wpilib.MockHardwareExtension",
         "edu.wpi.first.math.DARE": "org.wpilib.math.linalg.DARE",
         "edu.wpi.first.math.DARETest": "org.wpilib.math.linalg.DARETest",
         "edu.wpi.first.math.VecBuilder": "org.wpilib.math.linalg.VecBuilder",
@@ -3104,6 +3102,9 @@
         "edu.wpi.first.math.Num": "org.wpilib.math.util.Num",
         "edu.wpi.first.math.Nat": "org.wpilib.math.util.Nat",
         "edu.wpi.first.math.InterpolatingMatrixTreeMap": "org.wpilib.math.interpolation.InterpolatingMatrixTreeMap",
+        "edu.wpi.first.wpilibj.ProtoTestBase": "org.wpilib.ProtoTestBase",
+        "edu.wpi.first.wpilibj.StructTestBase": "org.wpilib.StructTestBase",
+        "edu.wpi.first.wpilibj.UtilityClassTest": "org.wpilib.UtilityClassTest",
         "edu.wpi.first.wpilibj.DriverStation": "org.wpilib.driverstation.DriverStation",
         "edu.wpi.first.wpilibj.DriverStationTest": "org.wpilib.driverstation.DriverStationTest",
         "edu.wpi.first.wpilibj.GenericHID": "org.wpilib.driverstation.GenericHID",
@@ -3280,6 +3281,7 @@
         "wpiutil/src/test/java/org/wpilib/util/container/CircularBufferTest.java": "org.wpilib.util.container",
         "wpiutil/src/main/java/org/wpilib/util/cleanup/WPICleaner.java": "org.wpilib.util.cleanup",
         "wpiutil/src/main/java/org/wpilib/util/concurrent/EventVector.java": "org.wpilib.util.concurrent",
+        "command/src/test/java/org/wpilib/MockHardwareExtension.java": "org.wpilib",
         "wpimath/src/main/java/org/wpilib/math/linalg/DARE.java": "org.wpilib.math.linalg",
         "wpimath/src/test/java/org/wpilib/math/linalg/DARETest.java": "org.wpilib.math.linalg",
         "wpimath/src/main/java/org/wpilib/math/linalg/VecBuilder.java": "org.wpilib.math.linalg",
@@ -3300,6 +3302,9 @@
         "wpimath/src/main/java/org/wpilib/math/util/Num.java": "org.wpilib.math.util",
         "wpimath/src/generated/main/java/org/wpilib/math/util/Nat.java": "org.wpilib.math.util",
         "wpimath/src/main/java/org/wpilib/math/interpolation/InterpolatingMatrixTreeMap.java": "org.wpilib.math.interpolation",
+        "wpimath/src/test/java/org/wpilib/ProtoTestBase.java": "org.wpilib",
+        "wpimath/src/test/java/org/wpilib/StructTestBase.java": "org.wpilib",
+        "wpimath/src/test/java/org/wpilib/UtilityClassTest.java": "org.wpilib",
         "wpilibj/src/main/java/org/wpilib/driverstation/DriverStation.java": "org.wpilib.driverstation",
         "wpilibj/src/test/java/org/wpilib/driverstation/DriverStationTest.java": "org.wpilib.driverstation",
         "wpilibj/src/main/java/org/wpilib/driverstation/GenericHID.java": "org.wpilib.driverstation",

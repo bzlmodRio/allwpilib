@@ -303,6 +303,12 @@ class RawConfig:
             ],
         ),
         (
+            pathlib.Path("command"),
+            [
+                ("edu/wpi/first/wpilibj2", "org/wpilib", "MockHardwareExtension"),
+            ],
+        ),
+        (
             pathlib.Path("wpimath"),
             [
                 ("edu/wpi/first/math", "org/wpilib/math/linalg", "DARE"),
@@ -323,6 +329,9 @@ class RawConfig:
                     "org/wpilib/math/interpolation",
                     "InterpolatingMatrixTreeMap",
                 ),
+                ("edu/wpi/first/wpilibj", "org/wpilib", "ProtoTestBase"),
+                ("edu/wpi/first/wpilibj", "org/wpilib", "StructTestBase"),
+                ("edu/wpi/first/wpilibj", "org/wpilib", "UtilityClassTest"),
             ],
         ),
         (
@@ -1763,7 +1772,7 @@ def run_namespace_replacements():
 def main():
     preprocessor_file = "refactor_layout_pp.json"
 
-    preprocess = False
+    preprocess = True
 
     # rename_projects()
     fixup_project_renames()
@@ -1788,12 +1797,12 @@ def main():
     else:
         pp_config = load_pp_config(preprocessor_file)
 
-    run_cc_renames(pp_config)
-    run_java_renames(pp_config)
-    generic_renames()
+    # run_cc_renames(pp_config)
+    # run_java_renames(pp_config)
+    # generic_renames()
 
-    run_java_fixup_imports(pp_config)
-    run_cc_include_fixup(pp_config)
+    # run_java_fixup_imports(pp_config)
+    # run_cc_include_fixup(pp_config)
 
 
 if __name__ == "__main__":
