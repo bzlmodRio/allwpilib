@@ -40,7 +40,7 @@ def copy_upstream_src(wpilib_root: Path):
 
         # Fix internal includes
         content = content.replace(".hpp>", ".h>")
-        content = content.replace("include <nlohmann/", "include <wpi/")
+        content = content.replace("include <nlohmann/", "include <wpi/util/")
 
         # Fix include guards and other #defines
         content = content.replace("NLOHMANN_", "WPI_")
