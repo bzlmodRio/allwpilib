@@ -70,7 +70,9 @@ def run_global_replacements(wpiutil_llvm_files: list[Path]):
         content = content.replace("sys::fs::", "fs::")
 
         # Replace wpi/FileSystem.h with wpi/fs.h
-        content = content.replace('include "wpi/FileSystem.h"', 'include "wpi/util/fs.h"')
+        content = content.replace(
+            'include "wpi/FileSystem.h"', 'include "wpi/util/fs.h"'
+        )
 
         # Replace llvm_unreachable() with wpi_unreachable()
         content = content.replace("llvm_unreachable", "wpi_unreachable")
