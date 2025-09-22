@@ -2,7 +2,7 @@
 <FindBugsFilter>
   <Match>
     <Bug pattern="AT_NONATOMIC_64BIT_PRIMITIVE" />
-    <Class name="org.wpilib.DriverStation" />
+    <Class name="org.wpilib.driverstation.DriverStation" />
   </Match>
   <Match>
     <Bug pattern="AT_NONATOMIC_64BIT_PRIMITIVE" />
@@ -10,7 +10,7 @@
   </Match>
   <Match>
     <Bug pattern="AT_NONATOMIC_64BIT_PRIMITIVE" />
-    <Class name="org.wpilib.Watchdog" />
+    <Class name="org.wpilib.system.Watchdog" />
   </Match>
   <Match>
     <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />
@@ -22,11 +22,11 @@
   </Match>
   <Match>
     <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />
-    <Class name="org.wpilib.DriverStation" />
+    <Class name="org.wpilib.driverstation.DriverStation" />
   </Match>
   <Match>
     <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />
-    <Class name="org.wpilib.GenericHID" />
+    <Class name="org.wpilib.driverstation.GenericHID" />
   </Match>
   <Match>
     <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />

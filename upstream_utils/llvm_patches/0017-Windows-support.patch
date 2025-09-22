@@ -99,7 +99,7 @@ index bc04c5ab5113563fb82d7b3b168985369b611f4b..57eb64a6017a6964ab14b40b8c6b3563
  #include <assert.h>
  
 +#ifdef _WIN32
-+#include "wpi/WindowsError.h"
++#include "wpi/util/WindowsError.h"
 +#include "Windows/WindowsSupport.h"
 +#endif
 +

@@ -17,7 +17,7 @@ import org.wpilib.networktables.MultiSubscriber;
 import org.wpilib.networktables.NetworkTableEvent;
 import org.wpilib.networktables.NetworkTableInstance;
 import org.wpilib.system.Timer;
-import org.wpilib.util.WPILibVersion;
+import org.wpilib.system.WPILibVersion;
 import org.wpilib.util.WPIUtilJNI;
 import org.wpilib.vision.stream.CameraServerShared;
 import org.wpilib.vision.stream.CameraServerSharedStore;
