@@ -24,7 +24,7 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//glass:glassnt",
+        "//libglass:glassnt",
         "//hal:wpiHal",
     ],
 )
@@ -53,7 +53,7 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//glass:glassnt",
+        "//libglass:glassnt",
         "//hal:wpiHal",
     ],
 )
@@ -109,7 +109,7 @@ wpilib_cc_static_library(
         "//wpimath:static/wpimath",
         "//datalog:static/datalog",
         "//ntcore:static/ntcore",
-        "//glass:static/glassnt",
+        "//libglass:static/glassnt",
     ],
     visibility = ["//visibility:public"],
     deps = [

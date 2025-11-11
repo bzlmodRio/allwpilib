@@ -95,8 +95,8 @@ model {
                     it.buildable = false
                     return
                 }
-                lib project: ':glass', library: 'glassnt', linkage: 'static'
-                lib project: ':glass', library: 'glass', linkage: 'static'
+                lib project: ':libglass', library: 'glassnt', linkage: 'static'
+                lib project: ':libglass', library: 'glass', linkage: 'static'
                 project(':ntcore').addNtcoreDependency(it, 'static')
                 lib project: ':wpinet', library: 'wpinet', linkage: 'static'
                 lib project: ':wpiutil', library: 'wpiutil', linkage: 'static'

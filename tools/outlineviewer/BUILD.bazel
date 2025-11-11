@@ -35,8 +35,8 @@ cc_binary(
         "//conditions:default": [],
     }),
     deps = [
-        "//glass",
-        "//glass:glassnt",
+        "//libglass:glass",
+        "//libglass:glassnt",
     ],
 )
 

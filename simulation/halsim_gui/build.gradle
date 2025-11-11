@@ -23,8 +23,8 @@ apply from: "${rootDir}/shared/plugins/setupBuild.gradle"
 model {
     binaries {
         all {
-            lib project: ':glass', library: 'glassnt', linkage: 'static'
-            lib project: ':glass', library: 'glass', linkage: 'static'
+            lib project: ':libglass', library: 'glassnt', linkage: 'static'
+            lib project: ':libglass', library: 'glass', linkage: 'static'
             lib project: ':wpigui', library: 'wpigui', linkage: 'static'
             lib project: ':wpimath', library: 'wpimath', linkage: 'shared'
             project(':ntcore').addNtcoreDependency(it, 'shared')

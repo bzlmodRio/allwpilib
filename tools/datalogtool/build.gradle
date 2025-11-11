@@ -98,7 +98,7 @@ model {
                     return
                 }
                 it.cppCompiler.define("LIBSSH_STATIC")
-                lib project: ':glass', library: 'glass', linkage: 'static'
+                lib project: ':libglass', library: 'glass', linkage: 'static'
                 lib project: ':wpigui', library: 'wpigui', linkage: 'static'
                 lib project: ':datalog', library: 'datalog', linkage: 'static'
                 lib project: ':thirdparty:imgui_suite', library: 'imguiSuite', linkage: 'static'

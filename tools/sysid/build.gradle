@@ -96,7 +96,7 @@ model {
                     it.buildable = false
                     return
                 }
-                lib project: ':glass', library: 'glass', linkage: 'static'
+                lib project: ':libglass', library: 'glass', linkage: 'static'
                 lib project: ':wpimath', library: 'wpimath', linkage: 'static'
                 lib project: ':wpigui', library: 'wpigui', linkage: 'static'
                 lib project: ':datalog', library: 'datalog', linkage: 'static'
@@ -136,7 +136,7 @@ model {
                     it.buildable = false
                     return
                 }
-                lib project: ':glass', library: 'glass', linkage: 'static'
+                lib project: ':libglass', library: 'glass', linkage: 'static'
                 lib project: ':wpimath', library: 'wpimath', linkage: 'static'
                 lib project: ':datalog', library: 'datalog', linkage: 'static'
                 lib project: ':wpigui', library: 'wpigui', linkage: 'static'
