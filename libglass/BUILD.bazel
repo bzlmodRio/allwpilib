@@ -69,36 +69,6 @@ wpilib_cc_static_library(
     ],
 )
 
-generate_version_file(
-    name = "generate-version",
-    output_file = "WPILibVersion.cpp",
-    template = "src/app/generate/WPILibVersion.cpp.in",
-)
-
-generate_resources(
-    name = "generate-resources",
-    namespace = "wpi::glass",
-    prefix = "GLASS",
-    resource_files = glob(["src/app/native/resources/*"]),
-)
-
-cc_binary(
-    name = "glassapp",
-    srcs = [
-        ":generate-resources",
-        ":generate-version",
-    ] + glob(["src/app/native/cpp/**"]),
-    linkopts = select({
-        "@platforms//os:windows": ["-SUBSYSTEM:WINDOWS"],
-        "//conditions:default": [],
-    }),
-    tags = [
-        "wpi-cpp-gui",
-    ],
-    deps = [
-        ":glassnt",
-    ],
-)
 
 package_static_cc_project(
     name = "glass",
@@ -112,13 +82,4 @@ package_static_cc_project(
     architectures = host_architectures,
     maven_artifact_name = "libglassnt",
     maven_group_id = "org.wpilib.glass",
-)
-
-package_binary_cc_project(
-    name = "glassapp",
-    maven_artifact_name = "Glass",
-    maven_group_id = "org.wpilib.tools",
-    renames = {
-        "glassapp": "glass",
-    },
 )
