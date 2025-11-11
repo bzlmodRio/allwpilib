@@ -1,6 +1,7 @@
 import argparse
 import collections
 import json
+import os
 import pathlib
 import re
 from typing import Dict, List, Union
@@ -27,6 +28,8 @@ from shared.bazel.rules.robotpy.generation_utils import (
     fixup_shared_lib_name,
 )
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
+
+
 
 
 class HeaderToDatConfig:
@@ -63,6 +66,9 @@ class HeaderToDatConfig:
 
             self.include_file = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)/{base_include_file}"
             self.include_root = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)"
+        elif "cscore" in include_root:
+            self.include_file = "$(execpath :cscore.copy_headers)/" + str(args[2].relative_to(include_root))
+            self.include_root = "$(execpath :cscore.copy_headers)"
         else:
             root_dir = pathlib.Path(
                 include_root[: include_root.find("__main__/") + len("__main__/")]
@@ -168,6 +174,7 @@ class BazelExtensionModule:
         self.name = extension_module.name
         self.package_name = extension_module.package_name
         self.install_path = extension_module.install_path
+        self.package_base = str(self.install_path).replace("/", ".")
 
         self.generation_data = self._extract_header_generation(extension_module.sources)
         self.resolve_casters = ResolveCastersConfig(
@@ -384,18 +391,6 @@ def generate_pybind_build_file(
     env.filters["jsonify"] = jsonify
     template = env.from_string(template_contents)
 
-    all_local_native_deps = set()
-    for em in extension_modules:
-        all_local_native_deps.update(em.native_wrapper_dependencies)
-    all_local_native_deps = sorted(all_local_native_deps)
-
-    try:
-        version_file = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
-            "version_file"
-        ]
-    except:
-        version_file = None
-
     with open(output_file, "w") as f:
         f.write(
             template.render(
@@ -403,13 +398,15 @@ def generate_pybind_build_file(
                 top_level_name=top_level_name,
                 publish_casters_targets=publish_casters_targets,
                 python_deps=sorted(python_deps),
-                all_local_native_deps=all_local_native_deps,
                 stripped_include_prefix=stripped_include_prefix,
                 yml_prefix=yml_prefix,
                 package_root_file=package_root_file,
                 raw_project_config=raw_config["project"],
                 entry_points=entry_points,
-                version_file=version_file,
+                project_file=project_file,
+                update_init=raw_config.get("tool", {})
+                .get("semiwrap", {})
+                .get("update_init", []),
             )
             + "\n"
         )

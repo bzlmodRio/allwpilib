@@ -70,7 +70,7 @@ def generate_robotpy_pybind_build_info(
     if pkgcfgs:
         cmd += " --pkgcfgs "
         for x in pkgcfgs:
-            cmd += " $(locations " + x + ")"
+            cmd += " $(location " + x + ")"
 
     native.genrule(
         name = "{}.gen_build_info".format(name),

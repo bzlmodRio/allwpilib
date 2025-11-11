@@ -1,7 +1,7 @@
-import os
-import pathlib
-from typing import List
 
+from typing import List
+import pathlib
+import os
 
 def hack_pkgconfig(pkgcfgs: List[pathlib.Path]):
     """

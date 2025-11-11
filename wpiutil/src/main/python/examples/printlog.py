@@ -60,7 +60,7 @@ if __name__ == "__main__":
                 # handle systemTime specially
                 if entry.name == "systemTime" and entry.type == "int64":
                     dt = datetime.fromtimestamp(record.getInteger() / 1000000)
-                    print(f"  {dt:%Y-%m-%d %H:%M:%S.%f}")
+                    print("  {:%Y-%m-%d %H:%M:%S.%f}".format(dt))
                     continue
 
                 if entry.type == "double":

@@ -1,11 +1,15 @@
+load("@aspect_bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
+load("@aspect_bazel_lib//lib:copy_directory.bzl", "copy_directory")
 load("@bzlmodrio-opencv//libraries/cpp/opencv:libraries.bzl", "opencv_shared_libraries")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
+load("//cscore:robotpy_pybind_build_info.bzl", "cscore_extension", "define_pybind_library", "publish_library_casters")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
-load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project", "package_shared_cc_project")
+load("//shared/bazel/rules:packaging.bzl", "package_minimal_jni_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
 
 filegroup(
     name = "doxygen-files",
@@ -295,8 +299,68 @@ alias(
     actual = "cscore-srcs-zip",
 )
 
-package_shared_cc_project(
-    name = "cscorejnicvstatic",
-    maven_artifact_name = "cscore-jnicvstatic",
-    maven_group_id = "edu.wpi.first.cscore",
+filegroup(
+    name = "headers",
+    srcs = glob(["src/main/native/include/**/*"]),
+)
+
+copy_to_directory(
+    name = "cscore.copy_headers",
+    srcs = glob(["src/main/native/include/**"]) + ["//cameraserver:headers"],
+    out = "src/main/python/lib/include",
+    replace_prefixes = {
+        "cameraserver/src/main/native/include": "",
+        "cscore/src/main/native/include": "",
+    },
+    root_paths = ["src/main/native/include/"],
+    verbose = True,
+    visibility = ["//visibility:public"],
+)
+
+# copy_directory(
+#     name = "cscore.copy_headers2",
+#     src = "cscore.copy_headers",
+#     out = "src/main/python/lib/include2",
+#     # replace_prefixes = {
+#     #     "cameraserver/src/main/native/include": "",
+#     #     "cscore/src/main/native/include": "",
+#     # },
+#     # root_paths = ["src/main/native/include/"],
+#     verbose = True,
+#     visibility = ["//visibility:public"],
+# )
+
+PKG_CONFIG_DEPS = [
+        "//datalog:native/datalog/robotpy-native-datalog.pc",
+        "//datalog:src/main/python/wpilog/wpilog.pc",
+        "//ntcore:src/main/python/ntcore/ntcore.pc",
+        "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+        "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
+        "//wpinet:src/main/python/wpinet/wpinet.pc",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pc",
+        "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+    ]
+
+# generate_robotpy_pybind_build_info(
+#     name = "robotpy-cscore-generator",
+#     additional_srcs = [":cscore.copy_headers"],
+#     # additional_srcs = ["//cameraserver:headers", ":headers"],
+#     package_root_file = "src/main/python/cscore/__init__.py",
+#     pkgcfgs = PKG_CONFIG_DEPS,
+#     yaml_files = glob(["src/main/python/semiwrap/*.yml"]),
+# )
+
+publish_library_casters()
+
+cscore_extension(
+    srcs = glob(["src/main/python/cscore/**/*.cpp"]),
+    extra_hdrs = glob(["src/main/native/include/**/*"]),
+    header_to_dat_deps = [":headers"],
+)
+
+define_pybind_library(
+    name = "robotpy-cscore",
+    pkgcfgs = PKG_CONFIG_DEPS,
 )

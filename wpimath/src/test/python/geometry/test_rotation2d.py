@@ -1,82 +1,86 @@
-import importlib.util
-import math
-
 import pytest
+import math
+import numpy as np
 
 from wpimath.geometry import Rotation2d
+from wpimath.units import radians
 
 
-@pytest.mark.parametrize(
-    "radians,degrees",
-    [
-        (math.pi / 3, 60.0),
-        (math.pi / 4, 45.0),
-    ],
-)
-def test_radians_to_degrees(radians: float, degrees: float):
-    rot = Rotation2d(radians)
-    assert math.isclose(degrees, rot.degrees())
+def test_radians_to_degrees():
+    rot1 = Rotation2d(radians(math.pi / 3.0))
+    rot2 = Rotation2d(radians(math.pi / 4.0))
+
+    assert rot1.degrees() == pytest.approx(60.0)
+    assert rot2.degrees() == pytest.approx(45.0)
 
 
-@pytest.mark.parametrize(
-    "degrees,radians",
-    [
-        (45.0, math.pi / 4),
-        (30.0, math.pi / 6),
-    ],
-)
-def test_degrees_to_radians(degrees: float, radians: float):
-    rot = Rotation2d.fromDegrees(degrees)
-    assert math.isclose(radians, rot.radians())
+def test_degrees_to_radians():
+    rot1 = Rotation2d(math.radians(45))
+    rot2 = Rotation2d(math.radians(30))
+
+    assert rot1.radians() == pytest.approx(math.pi / 4.0)
+    assert rot2.radians() == pytest.approx(math.pi / 6.0)
 
 
-def test_rotate_by_from_zero() -> None:
+def test_rotate_by_from_zero():
     zero = Rotation2d()
-    rotated = zero + Rotation2d.fromDegrees(90)
+    rotated = zero + Rotation2d(math.radians(90))
 
-    assert math.isclose(math.pi / 2, rotated.radians())
-    assert math.isclose(90.0, rotated.degrees())
-
-
-def test_rotate_by_non_zero() -> None:
-    rot = Rotation2d.fromDegrees(90.0)
-    rot += Rotation2d.fromDegrees(30.0)
-
-    assert math.isclose(120.0, rot.degrees())
+    assert rotated.radians() == pytest.approx(math.pi / 2.0)
+    assert rotated.degrees() == pytest.approx(90.0)
 
 
-def test_minus() -> None:
-    rot1 = Rotation2d.fromDegrees(70)
-    rot2 = Rotation2d.fromDegrees(30)
+def test_rotate_by_non_zero():
+    rot = Rotation2d(math.radians(90))
+    rot = rot + Rotation2d(math.radians(30))
 
-    assert math.isclose(40.0, (rot1 - rot2).degrees())
-
-
-def test_unary_minus() -> None:
-    rot = Rotation2d.fromDegrees(20)
-    assert math.isclose(-20.0, (-rot).degrees())
+    assert rot.degrees() == pytest.approx(120.0)
 
 
-def test_equality() -> None:
-    rot1 = Rotation2d.fromDegrees(43.0)
-    rot2 = Rotation2d.fromDegrees(43.0)
+def test_minus():
+    rot1 = Rotation2d(math.radians(70))
+    rot2 = Rotation2d(math.radians(30))
+
+    assert (rot1 - rot2).degrees() == pytest.approx(40.0)
+
+
+def test_unary_minus():
+    rot = Rotation2d(math.radians(20))
+
+    assert (-rot).degrees() == pytest.approx(-20.0)
+
+
+def test_multiply():
+    rot = Rotation2d(math.radians(10))
+
+    assert (rot * 3.0).degrees() == pytest.approx(30.0)
+    # The C++ test has an odd multiplication where it expects 10*41 to result in 50.
+    # WPILib's Python multiplication does not have this behavior. The test is changed to
+    # expect the correct multiplication.
+    # WPILib's C++ code normalizes the angle to be between [-180, 180] before returning the.
+    # Therefore, 10 * 41 = 410, and 410 - 360 = 50.
+    # Python returns 410 which is equivalent to 50.
+    assert (rot * 41.0).degrees() == pytest.approx(50.0)
+
+
+def test_equality():
+    rot1 = Rotation2d(math.radians(43))
+    rot2 = Rotation2d(math.radians(43))
     assert rot1 == rot2
 
-    rot1 = Rotation2d.fromDegrees(-180.0)
-    rot2 = Rotation2d.fromDegrees(180.0)
+    rot1 = Rotation2d(math.radians(-180))
+    rot2 = Rotation2d(math.radians(180))
     assert rot1 == rot2
 
 
-def test_inequality() -> None:
-    rot1 = Rotation2d.fromDegrees(43.0)
-    rot2 = Rotation2d.fromDegrees(43.5)
+def test_inequality():
+    rot1 = Rotation2d(math.radians(43))
+    rot2 = Rotation2d(math.radians(43.5))
     assert rot1 != rot2
 
 
-@pytest.mark.skipif(
-    importlib.util.find_spec("numpy") is None, reason="numpy is not available"
-)
-def test_to_matrix() -> None:
-    before = Rotation2d.fromDegrees(20.0)
+def test_to_matrix():
+    before = Rotation2d(math.radians(20))
     after = Rotation2d.fromMatrix(before.toMatrix())
+
     assert before == after

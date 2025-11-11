@@ -8,6 +8,7 @@ from ._wpiutil import (
     TimestampSource,
     getStackTrace,
     getStackTraceDefault,
+    WPI_SetNowImpl,
 )
 
 __all__ = [
@@ -17,6 +18,7 @@ __all__ = [
     "TimestampSource",
     "getStackTrace",
     "getStackTraceDefault",
+    "WPI_SetNowImpl",
 ]
 
 # Imported for side effects only
