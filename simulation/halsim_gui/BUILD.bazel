@@ -24,8 +24,8 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//hal:wpiHal",
         "//libglass:glassnt",
+        "//hal:wpiHal",
     ],
 )
 
@@ -53,8 +53,8 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//hal:wpiHal",
         "//libglass:glassnt",
+        "//hal:wpiHal",
     ],
 )
 
