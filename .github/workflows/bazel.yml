@@ -139,10 +139,14 @@ jobs:
       - name: genhtml
         run: |
           genhtml bazel-out/_coverage/_coverage_report.dat -o coverage_report/combined
+        if: always()
+
+
       - uses: actions/upload-artifact@v4
         with:
           name: "Coverage"
           path: coverage_report
+        if: always()
 
   robotpy_pregeneration:
     name: "Robotpy Pregeneration"
