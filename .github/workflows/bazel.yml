@@ -118,6 +118,32 @@ jobs:
           path: bazel-lint-fixes.patch
         if: ${{ failure() }}
 
+  build-coverage:
+    runs-on: ubuntu-24.04
+    name: "Code Coverage"
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      - name: Install LCOV
+        run: sudo apt-get install -y lcov
+
+      - id: Setup_build_buddy
+        uses: ./.github/actions/setup-build-buddy
+        with:
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
+
+      - name: Build, allow buildbudy failure
+        run: bazel coverage --config=ci --config=linux --noenable_bzlmod -k  //... -- -//simulation/halsim_gui:halsim_gui-test -//sysid:sysid-test
+
+      - name: genhtml
+        run: |
+          genhtml bazel-out/_coverage/_coverage_report.dat -o coverage_report/combined
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "Coverage"
+          path: coverage_report
+
   robotpy_pregeneration:
     name: "Robotpy Pregeneration"
     runs-on: ubuntu-24.04
