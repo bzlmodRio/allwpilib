@@ -138,7 +138,7 @@ jobs:
 
       - name: genhtml
         run: |
-          genhtml bazel-out/_coverage/_coverage_report.dat -o coverage_report/combined
+          genhtml bazel-out/_coverage/_coverage_report.dat -o coverage_report/combined --ignore-errors unmapped
         if: always()
 
 
