@@ -157,6 +157,7 @@ python_register_toolchains(
     name = "python_3_10",
     ignore_root_user_error = True,
     python_version = "3.10",
+    register_coverage_tool = True,
 )
 
 load("@rules_python//python:pip.bzl", "pip_parse")
