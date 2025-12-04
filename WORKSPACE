@@ -87,10 +87,12 @@ register_toolchains(
 
 setup_legacy_setup_jdk_dependencies()
 
+
 http_archive(
     name = "bzlmodrio-ni",
-    sha256 = "fff62c3cb3e83f9a0d0a01f1739477c9ca5e9a6fac05be1ad59dafcd385801f7",
-    url = "https://github.com/wpilibsuite/bzlmodRio-ni/releases/download/2025.2.0/bzlmodRio-ni-2025.2.0.tar.gz",
+    sha256 = "a9e7666c3fceb21201e84968ff80b43bf6707b4144cd7e6c01f12501099f02cf",
+    strip_prefix = "bzlmodRio-ni-9aa8ba45e935268d9c507fd2e5bc30cd399c3152",
+    url = "https://github.com/bzlmodRio/bzlmodRio-ni/archive/9aa8ba45e935268d9c507fd2e5bc30cd399c3152.tar.gz",
 )
 
 load("@bzlmodrio-ni//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_ni_cpp_dependencies")
