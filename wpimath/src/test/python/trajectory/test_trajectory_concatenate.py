@@ -3,22 +3,21 @@ import math
 
 from wpimath.trajectory import TrajectoryGenerator, TrajectoryConfig
 from wpimath.geometry import Pose2d, Rotation2d, Translation2d
-from wpimath.units import meters, degrees, meters_per_second, meters_per_second_squared, seconds
 
 
 def test_states():
-    config = TrajectoryConfig(meters_per_second(2), meters_per_second_squared(2))
+    config = TrajectoryConfig(maxVelocity=2, maxAcceleration=2)
 
     t1 = TrajectoryGenerator.generateTrajectory(
-        Pose2d(meters(0), meters(0), Rotation2d.fromDegrees(0)),
+        Pose2d(x=0, y=0, rotation=Rotation2d.fromDegrees(0)),
         [],
-        Pose2d(meters(1), meters(1), Rotation2d.fromDegrees(0)),
+        Pose2d(x=1, y=1, rotation=Rotation2d.fromDegrees(0)),
         config
     )
     t2 = TrajectoryGenerator.generateTrajectory(
-        Pose2d(meters(1), meters(1), Rotation2d.fromDegrees(0)),
+        Pose2d(x=1, y=1, rotation=Rotation2d.fromDegrees(0)),
         [],
-        Pose2d(meters(2), meters(2), Rotation2d.fromDegrees(45)),
+        Pose2d(x=2, y=2, rotation=Rotation2d.fromDegrees(45)),
         config
     )
     

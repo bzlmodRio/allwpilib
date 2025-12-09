@@ -3,13 +3,6 @@ import math
 
 from wpimath.controller import SimpleMotorFeedforwardMeters
 from wpimath.trajectory import ExponentialProfileMeterVolts
-from wpimath.units import (
-    meters,
-    meters_per_second,
-    meters_per_second_squared,
-    volts,
-    seconds,
-)
 
 kT = 10 * 0.001  # 10_ms
 kV = 2.5629 * 1  # 2.5629_V / 1_mps
@@ -26,11 +19,11 @@ def check_dynamics(profile, constraints, feedforward, current, goal):
 
 
 def test_reaches_goal():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(10), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(10, 0)
+    state = ExponentialProfileMeterVolts.State(0, 0)
 
     for _ in range(450):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
@@ -40,11 +33,11 @@ def test_reaches_goal():
 
 
 def test_backwards():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(-10), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(-10, 0)
+    state = ExponentialProfileMeterVolts.State(0, 0)
 
     for _ in range(400):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
@@ -54,18 +47,18 @@ def test_backwards():
 
 
 def test_switch_goal_in_middle():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(12, -kV / kA, 1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal1 = ExponentialProfileMeterVolts.State(meters(-10), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal1 = ExponentialProfileMeterVolts.State(-10, 0)
+    state = ExponentialProfileMeterVolts.State(0, 0)
 
     for _ in range(50):
         state = check_dynamics(profile, constraints, feedforward, state, goal1)
     
     assert state.position != goal1.position
 
-    goal2 = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    goal2 = ExponentialProfileMeterVolts.State(0, 0)
     for _ in range(100):
         state = check_dynamics(profile, constraints, feedforward, state, goal2)
 
@@ -74,13 +67,13 @@ def test_switch_goal_in_middle():
 
 
 def test_top_speed():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(40), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(40, 0)
+    state = ExponentialProfileMeterVolts.State(0, 0)
 
-    max_speed = meters_per_second(0)
+    max_speed = 0
 
     for _ in range(900):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
@@ -92,13 +85,13 @@ def test_top_speed():
 
 
 def test_top_speed_backward():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(-40), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(-40, 0)
+    state = ExponentialProfileMeterVolts.State(0, 0)
 
-    max_speed = meters_per_second(0)
+    max_speed = 0
 
     for _ in range(900):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
@@ -110,11 +103,11 @@ def test_top_speed_backward():
 
 
 def test_high_initial_speed():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(40), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(8))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(40, 0)
+    state = ExponentialProfileMeterVolts.State(0, 8)
 
     for _ in range(900):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
@@ -124,11 +117,11 @@ def test_high_initial_speed():
 
 
 def test_high_initial_speed_backward():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(-40), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-8))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(-40, 0)
+    state = ExponentialProfileMeterVolts.State(0, -8)
 
     for _ in range(900):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
@@ -138,30 +131,30 @@ def test_high_initial_speed_backward():
 
 
 def test_test_heuristic():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
 
     test_cases = [
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(0.75), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(1.3758), meters_per_second(4.4304))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(1.4103), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(1.3758), meters_per_second(4.4304))),
-        (ExponentialProfileMeterVolts.State(meters(0.6603), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(0.75), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(1.3758), meters_per_second(4.4304))),
-        (ExponentialProfileMeterVolts.State(meters(0.6603), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(1.4103), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(1.3758), meters_per_second(4.4304))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(0.5), meters_per_second(-2)), ExponentialProfileMeterVolts.State(meters(0.4367), meters_per_second(3.7217))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(0.546), meters_per_second(2)), ExponentialProfileMeterVolts.State(meters(0.4367), meters_per_second(3.7217))),
-        (ExponentialProfileMeterVolts.State(meters(0.6603), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(0.5), meters_per_second(-2)), ExponentialProfileMeterVolts.State(meters(0.5560), meters_per_second(-2.9616))),
-        (ExponentialProfileMeterVolts.State(meters(0.6603), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(0.546), meters_per_second(2)), ExponentialProfileMeterVolts.State(meters(0.5560), meters_per_second(-2.9616))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(-0.75), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(-0.7156), meters_per_second(-4.4304))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(-0.0897), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(-0.7156), meters_per_second(-4.4304))),
-        (ExponentialProfileMeterVolts.State(meters(0.6603), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(-0.75), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(-0.7156), meters_per_second(-4.4304))),
-        (ExponentialProfileMeterVolts.State(meters(0.6603), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(-0.0897), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(-0.7156), meters_per_second(-4.4304))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(-0.5), meters_per_second(-4.5)), ExponentialProfileMeterVolts.State(meters(1.095), meters_per_second(4.314))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-4)), ExponentialProfileMeterVolts.State(meters(1.0795), meters_per_second(4.5)), ExponentialProfileMeterVolts.State(meters(-0.5122), meters_per_second(-4.351))),
-        (ExponentialProfileMeterVolts.State(meters(0.6603), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(-0.5), meters_per_second(-4.5)), ExponentialProfileMeterVolts.State(meters(1.095), meters_per_second(4.314))),
-        (ExponentialProfileMeterVolts.State(meters(0.6603), meters_per_second(4)), ExponentialProfileMeterVolts.State(meters(1.0795), meters_per_second(4.5)), ExponentialProfileMeterVolts.State(meters(-0.5122), meters_per_second(-4.351))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-8)), ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0)), ExponentialProfileMeterVolts.State(meters(-0.1384), meters_per_second(3.342))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(-8)), ExponentialProfileMeterVolts.State(meters(-1), meters_per_second(0)), ExponentialProfileMeterVolts.State(meters(-0.562), meters_per_second(-6.792))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(8)), ExponentialProfileMeterVolts.State(meters(1), meters_per_second(0)), ExponentialProfileMeterVolts.State(meters(0.562), meters_per_second(6.792))),
-        (ExponentialProfileMeterVolts.State(meters(0), meters_per_second(8)), ExponentialProfileMeterVolts.State(meters(-1), meters_per_second(0)), ExponentialProfileMeterVolts.State(meters(-0.785), meters_per_second(-4.346))),
+        (ExponentialProfileMeterVolts.State(0, -4), ExponentialProfileMeterVolts.State(0.75, -4), ExponentialProfileMeterVolts.State(1.3758, 4.4304)),
+        (ExponentialProfileMeterVolts.State(0, -4), ExponentialProfileMeterVolts.State(1.4103, 4), ExponentialProfileMeterVolts.State(1.3758, 4.4304)),
+        (ExponentialProfileMeterVolts.State(0.6603, 4), ExponentialProfileMeterVolts.State(0.75, -4), ExponentialProfileMeterVolts.State(1.3758, 4.4304)),
+        (ExponentialProfileMeterVolts.State(0.6603, 4), ExponentialProfileMeterVolts.State(1.4103, 4), ExponentialProfileMeterVolts.State(1.3758, 4.4304)),
+        (ExponentialProfileMeterVolts.State(0, -4), ExponentialProfileMeterVolts.State(0.5, -2), ExponentialProfileMeterVolts.State(0.4367, 3.7217)),
+        (ExponentialProfileMeterVolts.State(0, -4), ExponentialProfileMeterVolts.State(0.546, 2), ExponentialProfileMeterVolts.State(0.4367, 3.7217)),
+        (ExponentialProfileMeterVolts.State(0.6603, 4), ExponentialProfileMeterVolts.State(0.5, -2), ExponentialProfileMeterVolts.State(0.5560, -2.9616)),
+        (ExponentialProfileMeterVolts.State(0.6603, 4), ExponentialProfileMeterVolts.State(0.546, 2), ExponentialProfileMeterVolts.State(0.5560, -2.9616)),
+        (ExponentialProfileMeterVolts.State(0, -4), ExponentialProfileMeterVolts.State(-0.75, -4), ExponentialProfileMeterVolts.State(-0.7156, -4.4304)),
+        (ExponentialProfileMeterVolts.State(0, -4), ExponentialProfileMeterVolts.State(-0.0897, 4), ExponentialProfileMeterVolts.State(-0.7156, -4.4304)),
+        (ExponentialProfileMeterVolts.State(0.6603, 4), ExponentialProfileMeterVolts.State(-0.75, -4), ExponentialProfileMeterVolts.State(-0.7156, -4.4304)),
+        (ExponentialProfileMeterVolts.State(0.6603, 4), ExponentialProfileMeterVolts.State(-0.0897, 4), ExponentialProfileMeterVolts.State(-0.7156, -4.4304)),
+        (ExponentialProfileMeterVolts.State(0, -4), ExponentialProfileMeterVolts.State(-0.5, -4.5), ExponentialProfileMeterVolts.State(1.095, 4.314)),
+        (ExponentialProfileMeterVolts.State(0, -4), ExponentialProfileMeterVolts.State(1.0795, 4.5), ExponentialProfileMeterVolts.State(-0.5122, -4.351)),
+        (ExponentialProfileMeterVolts.State(0.6603, 4), ExponentialProfileMeterVolts.State(-0.5, -4.5), ExponentialProfileMeterVolts.State(1.095, 4.314)),
+        (ExponentialProfileMeterVolts.State(0.6603, 4), ExponentialProfileMeterVolts.State(1.0795, 4.5), ExponentialProfileMeterVolts.State(-0.5122, -4.351)),
+        (ExponentialProfileMeterVolts.State(0, -8), ExponentialProfileMeterVolts.State(0, 0), ExponentialProfileMeterVolts.State(-0.1384, 3.342)),
+        (ExponentialProfileMeterVolts.State(0, -8), ExponentialProfileMeterVolts.State(-1, 0), ExponentialProfileMeterVolts.State(-0.562, -6.792)),
+        (ExponentialProfileMeterVolts.State(0, 8), ExponentialProfileMeterVolts.State(1, 0), ExponentialProfileMeterVolts.State(0.562, 6.792)),
+        (ExponentialProfileMeterVolts.State(0, 8), ExponentialProfileMeterVolts.State(-1, 0), ExponentialProfileMeterVolts.State(-0.785, -4.346)),
     ]
     
     for initial, goal, expected_inflection in test_cases:
@@ -171,27 +164,27 @@ def test_test_heuristic():
 
 
 def test_timing_to_current():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(2), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(2, 0)
+    state = ExponentialProfileMeterVolts.State(0, 0)
 
     for _ in range(900):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
         time_left = profile.timeLeftUntil(state, state)
-        assert time_left == pytest.approx(seconds(0), abs=0.02)
+        assert time_left == pytest.approx(0, abs=0.02)
     
     assert state.position == pytest.approx(goal.position, abs=1e-3)
     assert state.velocity == pytest.approx(goal.velocity, abs=1e-3)
 
 
 def test_timing_to_goal():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(2), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(2, 0)
+    state = ExponentialProfileMeterVolts.State(0, 0)
 
     prediction = profile.timeLeftUntil(state, goal)
     reached_goal = False
@@ -199,7 +192,7 @@ def test_timing_to_goal():
     for i in range(900):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
         if not reached_goal and state.position == pytest.approx(goal.position, abs=1e-3) and state.velocity == pytest.approx(goal.velocity, abs=1e-3):
-            assert prediction == pytest.approx((i * seconds(0.01)), abs=0.25)
+            assert prediction == pytest.approx((i * 0.01), abs=0.25)
             reached_goal = True
             
     assert state.position == pytest.approx(goal.position, abs=1e-3)
@@ -207,11 +200,11 @@ def test_timing_to_goal():
 
 
 def test_timing_to_negative_goal():
-    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(volts(12), -kV / kA, 1 / kA)
+    constraints = ExponentialProfileMeterVolts.Constraints.fromStateSpace(maxInput=12, a=-kV / kA, b=1 / kA)
     profile = ExponentialProfileMeterVolts(constraints)
-    feedforward = SimpleMotorFeedforwardMeters(volts(0), kV, kA, kT)
-    goal = ExponentialProfileMeterVolts.State(meters(-2), meters_per_second(0))
-    state = ExponentialProfileMeterVolts.State(meters(0), meters_per_second(0))
+    feedforward = SimpleMotorFeedforwardMeters(0, kV, kA, kT)
+    goal = ExponentialProfileMeterVolts.State(-2, 0)
+    state = ExponentialProfileMeterVolts.State(0, 0)
 
     prediction = profile.timeLeftUntil(state, goal)
     reached_goal = False
@@ -219,7 +212,7 @@ def test_timing_to_negative_goal():
     for i in range(900):
         state = check_dynamics(profile, constraints, feedforward, state, goal)
         if not reached_goal and state.position == pytest.approx(goal.position, abs=1e-3) and state.velocity == pytest.approx(goal.velocity, abs=1e-3):
-            assert prediction == pytest.approx((i * seconds(0.01)), abs=0.25)
+            assert prediction == pytest.approx((i * 0.01), abs=0.25)
             reached_goal = True
             
     assert state.position == pytest.approx(goal.position, abs=1e-3)

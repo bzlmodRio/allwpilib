@@ -3,7 +3,6 @@ import math
 
 from wpimath.trajectory import TrajectoryGenerator, TrajectoryConfig
 from wpimath.geometry import Pose2d, Rotation2d, Translation2d, Transform2d
-from wpimath.units import meters, meters_per_second, meters_per_second_squared, seconds
 import trajectory_generator
 
 
@@ -30,16 +29,16 @@ def assert_same_shaped_trajectory(states_a, states_b):
 
 
 def test_transform_by():
-    config = TrajectoryConfig(meters_per_second(3), meters_per_second_squared(3))
+    config = TrajectoryConfig(3, 3)
     
     trajectory = TrajectoryGenerator.generateTrajectory(
-        Pose2d(), [], Pose2d(meters(1), meters(1), Rotation2d.fromDegrees(90)), config
+        Pose2d(), [], Pose2d(x=1, y=1, rotation=Rotation2d.fromDegrees(90)), config
     )
     
-    transform = Transform2d(Translation2d(meters(1), meters(2)), Rotation2d.fromDegrees(30))
+    transform = Transform2d(Translation2d(x=1, y=2), Rotation2d.fromDegrees(30))
     transformed_trajectory = trajectory.transformBy(transform)
     
-    first_pose = transformed_trajectory.sample(seconds(0)).pose
+    first_pose = transformed_trajectory.sample(0).pose
     
     assert first_pose.x == pytest.approx(1.0, abs=1e-9)
     assert first_pose.y == pytest.approx(2.0, abs=1e-9)
@@ -49,20 +48,20 @@ def test_transform_by():
 
 
 def test_relative_to():
-    config = TrajectoryConfig(meters_per_second(3), meters_per_second_squared(3))
+    config = TrajectoryConfig(3, 3)
     
     trajectory = TrajectoryGenerator.generateTrajectory(
-        Pose2d(meters(1), meters(2), Rotation2d.fromDegrees(30)),
+        Pose2d(x=1, y=2, rotation=Rotation2d.fromDegrees(30)),
         [],
-        Pose2d(meters(5), meters(7), Rotation2d.fromDegrees(90)),
+        Pose2d(x=5, y=7, rotation=Rotation2d.fromDegrees(90)),
         config
     )
     
     transformed_trajectory = trajectory.relativeTo(
-        Pose2d(meters(1), meters(2), Rotation2d.fromDegrees(30))
+        Pose2d(x=1, y=2, rotation=Rotation2d.fromDegrees(30))
     )
 
-    first_pose = transformed_trajectory.sample(seconds(0)).pose
+    first_pose = transformed_trajectory.sample(0).pose
 
     assert first_pose.x == pytest.approx(0.0, abs=1e-9)
     assert first_pose.y == pytest.approx(0.0, abs=1e-9)

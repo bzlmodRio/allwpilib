@@ -3,13 +3,8 @@ import math
 
 from wpimath.trajectory import TrajectoryGenerator, TrajectoryConfig, Trajectory
 from wpimath.geometry import Pose2d, Rotation2d, Translation2d, Rectangle2d
-from wpimath.units import (
-    meters,
-    meters_per_second_squared,
-    radians,
-    feetToMeters,
-)
 from wpimath.trajectory.constraint import RectangularRegionConstraint, MaxVelocityConstraint
+from wpimath.units import feetToMeters
 
 
 def test_constraint():
@@ -23,8 +18,8 @@ def test_constraint():
     # fmt: off
     trajectory = TrajectoryGenerator.generateTrajectory(
         [
-            Pose2d(meters(0), meters(0), Rotation2d.fromDegrees(0)),
-            Pose2d(meters(5), meters(5), Rotation2d.fromDegrees(90)),
+            Pose2d(x=0, y=0, rotation=Rotation2d.fromDegrees(0)),
+            Pose2d(x=5, y=5, rotation=Rotation2d.fromDegrees(90)),
         ],
         config,
     )
@@ -33,8 +28,8 @@ def test_constraint():
     exceeded_constraint_outside_region = False
     for point in trajectory.states():
         if rectangle.contains(point.pose.translation()):
-            assert abs(point.velocity) < max_velocity + meters_per_second_squared(0.05)
-        elif abs(point.velocity) >= max_velocity + meters_per_second_squared(0.05):
+            assert abs(point.velocity) < max_velocity + 0.05
+        elif abs(point.velocity) >= max_velocity + 0.05:
             exceeded_constraint_outside_region = True
 
     assert exceeded_constraint_outside_region
