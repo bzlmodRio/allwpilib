@@ -1,9 +1,9 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_python//python:defs.bzl", "py_binary", "py_test")
+load("@rules_python//python:defs.bzl", "py_test")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
-def __create_yaml_files_impl(ctx):
+def __update_yaml_files_impl(ctx):
     output_dir = ctx.actions.declare_directory(ctx.attr.gen_dir)
 
     args = ctx.actions.args()
@@ -28,8 +28,8 @@ def __create_yaml_files_impl(ctx):
 
     return [DefaultInfo(files = depset([output_dir]))]
 
-__create_yaml_files = rule(
-    implementation = __create_yaml_files_impl,
+__update_yaml_files = rule(
+    implementation = __update_yaml_files_impl,
     attrs = {
         "extra_hdrs": attr.label_list(allow_files = True),
         "gen_dir": attr.string(mandatory = True),
@@ -46,10 +46,12 @@ __create_yaml_files = rule(
 )
 
 def update_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", **kwargs):
-    __create_yaml_files(
-        name = name, 
-        gen_dir  = "{}_gen_create_yaml".format(name),
-        **kwargs)
+    __update_yaml_files(
+        name = name,
+        gen_dir = "{}_gen_update_yaml".format(name),
+        target_compatible_with = robotpy_compatibility_select(),
+        **kwargs
+    )
 
     write_source_files(
         name = "write_{}".format(name),
@@ -57,15 +59,15 @@ def update_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", 
             yaml_output_directory: ":" + name,
         },
         suggested_update_target = "//:write_all",
+        target_compatible_with = robotpy_compatibility_select(),
         visibility = ["//visibility:public"],
     )
 
 def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
-
     if pkgcfgs:
         pkgcfg_args = ["--pkgcfgs"]
         for pkgcfg in pkgcfgs:
-            pkgcfg_args.append(" $(location " + pkgcfg + ")")
+            pkgcfg_args.append(" $(locations " + pkgcfg + ")")
     else:
         pkgcfg_args = []
 
@@ -82,11 +84,13 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
             "semiwrap.tool",
             "scan-headers",
             "--pyproject=$(location " + pyproject_toml + ")",
+            "--check",
         ] + pkgcfg_args,
         data = extra_hdrs + pkgcfgs + [pyproject_toml, package_root_file],
         main = "shared/bazel/rules/robotpy/wrapper.py",
         size = "small",
-        # tags = ["manual"],
+        target_compatible_with = robotpy_compatibility_select(),
+        tags = ["robotpy_scan_headers"],
     )
 
 def create_imports(name, library = None, project_file = None, update_init = []):
