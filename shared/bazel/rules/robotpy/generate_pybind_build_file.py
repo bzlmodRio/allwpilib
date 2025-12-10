@@ -377,12 +377,16 @@ def generate_pybind_build_file(
             return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
 
     python_deps = []
+    native_python_deps = []
     if "dependencies" in raw_config["project"]:
         for d in raw_config["project"]["dependencies"]:
             if "robotpy-cli" in d:
                 continue
             pd = target_from_python_dep(d.split("==")[0])
             python_deps.append(pd)
+            if "native" in pd:
+                native_python_deps.append(pd)
+
 
     env = Environment(loader=BaseLoader)
     env.filters["jsonify"] = jsonify
@@ -394,9 +398,7 @@ def generate_pybind_build_file(
     all_local_native_deps = sorted(all_local_native_deps)
 
     try:
-        version_file = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
-            "version_file"
-        ]
+        version_file = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"]["version_file"]
     except:
         version_file = None
 
@@ -408,6 +410,7 @@ def generate_pybind_build_file(
                 publish_casters_targets=publish_casters_targets,
                 python_deps=sorted(python_deps),
                 all_local_native_deps=all_local_native_deps,
+                native_python_deps=sorted(native_python_deps),
                 stripped_include_prefix=stripped_include_prefix,
                 yml_prefix=yml_prefix,
                 package_root_file=package_root_file,

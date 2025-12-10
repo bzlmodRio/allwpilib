@@ -438,6 +438,7 @@ wpimath_test_extension(
 
 define_test_pybind_library(
     name = "robotpy-wpimath-test",
+    create_imports_extra_deps = [":robotpy-wpimath"],
     pkgcfgs = [
         "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
         "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
@@ -455,6 +456,7 @@ robotpy_py_test(
     deps = [
         ":robotpy-wpimath",
         ":robotpy-wpimath-test",
+        requirement("numpy"),
         requirement("pytest"),
     ],
 )

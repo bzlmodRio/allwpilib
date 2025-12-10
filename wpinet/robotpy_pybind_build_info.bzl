@@ -3,7 +3,7 @@
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
 def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPINET_HEADER_GEN = [
@@ -105,7 +105,7 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = []):
+def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -156,7 +156,25 @@ def define_pybind_library(name, pkgcfgs = []):
             "//wpinet:robotpy-native-wpinet",
             "//wpiutil:robotpy-wpiutil",
         ],
+        # strip_path_prefixes = ["wpinet/src/main/python/"],
+        # summary = "Binary wrapper for FRC wpinet library",
+        # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
+        # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
+        # requires = ["robotpy-native-wpinet==0.0.0", "robotpy-wpiutil==0.0.0"],
+        # entry_points = {
+        #
+        #     "pkg_config": ["wpinet = wpinet"],
+        #
+        # },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        library = [name],
+        prefix = "src/main/python",
+        update_init = ["wpinet"],
+        extra_deps = create_imports_extra_deps,
     )
 
     update_yaml_files(
