@@ -8,7 +8,7 @@ from wpimath.units import (
     radians,
     seconds,
 )
-from wpimath import applyDeadband, slewRateLimit, angleModulus, inputModulus, copySignPow
+from wpimath import applyDeadband, slewRateLimit, angleModulus, inputModulus
 
 
 def test_apply_deadband_unity_scale():
