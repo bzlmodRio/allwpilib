@@ -4,7 +4,7 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files", "create_imports")
 
 def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIMATH_HEADER_GEN = [
@@ -1798,9 +1798,26 @@ def define_pybind_library(name, pkgcfgs = []):
             "//wpimath:robotpy-native-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
+        # strip_path_prefixes = ["wpimath/src/main/python/"],
+        # summary = "Binary wrapper for FRC WPIMath library",
+        # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
+        # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
+        # requires = ["robotpy-native-wpimath==0.0.0", "robotpy-wpiutil==0.0.0"],
+        # entry_points = {
+        #
+        #     "pkg_config": ["wpimath-casters = wpimath", "wpimath = wpimath", "wpimath_filter = wpimath.filter", "wpimath_geometry = wpimath.geometry", "wpimath_interpolation = wpimath.interpolation", "wpimath_kinematics = wpimath.kinematics", "wpimath_spline = wpimath.spline", "wpimath_controls = wpimath._controls"],
+        #
+        # },
         visibility = ["//visibility:public"],
     )
 
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "wpimath/src/main/python/pyproject.toml",
+        library = [name],
+        update_init = ["wpimath", "wpimath.controller wpimath._controls._controls.controller", "wpimath.estimator wpimath._controls._controls.estimator", "wpimath.filter", "wpimath.geometry", "wpimath.kinematics", "wpimath.interpolation", "wpimath.optimization wpimath._controls._controls.optimization", "wpimath.path wpimath._controls._controls.path", "wpimath.spline", "wpimath.system wpimath._controls._controls.system", "wpimath.trajectory wpimath._controls._controls.trajectory", "wpimath.trajectory.constraint wpimath._controls._controls.constraint"],
+    )
+    
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "src/main/python/semiwrap",

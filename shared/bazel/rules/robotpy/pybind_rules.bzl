@@ -83,7 +83,7 @@ def create_pybind_library(
 
 def robotpy_library(
         name,
-        strip_path_prefixes,
+        strip_path_prefixes=None,
         data = [],
         python_tag = "cp310",  # TODO(pj) Select based on python version
         abi = "cp310",  # TODO(pj) Select based on python version

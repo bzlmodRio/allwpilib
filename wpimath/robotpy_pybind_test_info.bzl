@@ -2,7 +2,7 @@
 
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files", "create_imports")
 
 def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
     WPIMATH_TEST_HEADER_GEN = [
@@ -133,9 +133,26 @@ def define_pybind_library(name, pkgcfgs = []):
         imports = ["src/test/python/cpp"],
         deps = [
         ],
+        # strip_path_prefixes = ["wpimath_test/src/test/python/cpp/"],
+        # summary = "Test project for verifying robotpy-build behavior",
+        # project_urls = None,
+        # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
+        # requires = None,
+        # entry_points = {
+        #
+        #     "pkg_config": ["wpimath_test = wpimath_test"],
+        #
+        # },
         visibility = ["//visibility:public"],
     )
 
+    create_imports(
+        name = "{}-create-imports".format(name),
+        # project_file = "wpimath/src/test/python/cpp/pyproject.toml",
+        library = [name],
+        update_init = ["wpimath_test wpimath_test._wpimath_test"],
+    )
+    
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "src/test/python/cpp/semiwrap",

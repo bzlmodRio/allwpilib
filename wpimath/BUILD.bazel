@@ -267,7 +267,7 @@ cc_test(
     name = "wpimath-cpp-test",
     size = "small",
     srcs = glob([
-        "src/test/native/cpp/**/*.cpp",
+        "src/test/native/cpp/main.cpp",
         "src/test/native/cpp/**/*.hpp",
     ]),
     tags = [
