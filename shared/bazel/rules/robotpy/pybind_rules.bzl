@@ -2,6 +2,7 @@ load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
 load("@rules_python//python:defs.bzl", "py_library")
 load("@rules_python//python:packaging.bzl", "py_wheel")
+load("@rules_pycross//pycross/private:wheel_library.bzl", "pycross_wheel_library")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 def create_pybind_library(
@@ -92,6 +93,7 @@ def robotpy_library(
         author_email = None,
         entry_points = None,
         requires = None,
+        robotpy_wheel_deps = [],
         **kwargs):
     """
     Defines a python library that is wrapping a series of pybind extensions.
@@ -127,6 +129,14 @@ def robotpy_library(
         strip_path_prefixes = strip_path_prefixes,
         entry_points = entry_points,
         tags = ["robotpy"],
+    )
+    
+    pycross_wheel_library(
+        name = "{}-import".format(name),
+        wheel = "{}-wheel".format(name),
+        deps = robotpy_wheel_deps,
+        visibility = ["//visibility:public"],
+        tags = ["manual"],
     )
 
 def copy_native_file(name, library, base_path):
@@ -256,4 +266,11 @@ def native_wrappery_library(
         strip_path_prefixes = strip_path_prefixes,
         entry_points = entry_points,
         tags = ["robotpy"],
+    )
+
+    pycross_wheel_library(
+        name = "{}-import".format(name),
+        wheel = "{}-wheel".format(name),
+        visibility = ["//visibility:public"],
+        tags = ["manual"],
     )

@@ -11,10 +11,15 @@ kLEDBuffer = 60
 
 
 class MyRobot(wpilib.TimedRobot):
+    def __init__(self):
+        wpilib.TimedRobot.__init__(self)
+        self.robotInit()
+
     def robotInit(self):
+        print("Init")
         # PWM Port 9
         # Must be a PWM header, not MXP or DIO
-        self.led = wpilib.AddressableLED(9)
+        self.led = wpilib.AddressableLED(0)
 
         # LED Data
         self.ledData = [wpilib.AddressableLED.LEDData() for _ in range(kLEDBuffer)]
@@ -31,6 +36,7 @@ class MyRobot(wpilib.TimedRobot):
         self.led.start()
 
     def robotPeriodic(self):
+        print("Periodic")
         # Fill the buffer with a rainbow
         self.rainbow()
 

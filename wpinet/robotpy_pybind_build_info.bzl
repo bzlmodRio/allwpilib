@@ -156,7 +156,7 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "//wpinet:robotpy-native-wpinet",
             "//wpiutil:robotpy-wpiutil",
         ],
-        # strip_path_prefixes = ["wpinet/src/main/python/"],
+        strip_path_prefixes = ["wpinet/src/main/python/"],
         # summary = "Binary wrapper for FRC wpinet library",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

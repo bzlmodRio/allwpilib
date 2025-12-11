@@ -427,6 +427,10 @@ pyyaml==6.0.2 \
     --hash=sha256:f753120cb8181e736c57ef7636e83f31b9c0d1722c516f7e86cf15b7aa57ff12 \
     --hash=sha256:ff3824dc5261f50c9b0dfb3be22b4567a6f938ccce4587b38952d85fd9e9afe4
     # via semiwrap
+robotpy-cli==2024.0.0 \
+    --hash=sha256:9284035fa67058b33593b1846e13501eda0861fb9d9adce4bd01b101c9f1f26e \
+    --hash=sha256:e6519f06856eb0a7ef5f25a57bfc8dcb20635cef84706fb37c0b602d59e33f39
+    # via -r requirements.txt
 ruamel-yaml==0.18.14 \
     --hash=sha256:710ff198bb53da66718c7db27eec4fbcc9aa6ca7204e4c1df2f282b6fe5eb6b2 \
     --hash=sha256:7227b76aaec364df15936730efbf7d72b30c0b79b1d578bbb8e3dcb2d81f52b7

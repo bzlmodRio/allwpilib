@@ -208,7 +208,7 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "//datalog:robotpy-native-datalog",
             "//wpiutil:robotpy-wpiutil",
         ],
-        # strip_path_prefixes = ["wpilog/src/main/python/"],
+        strip_path_prefixes = ["datalog/src/main/python/"],
         # summary = "Binary wrapper for FRC wpilog library",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

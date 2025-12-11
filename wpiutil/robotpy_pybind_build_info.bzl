@@ -236,7 +236,7 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
         deps = [
             "//wpiutil:robotpy-native-wpiutil",
         ],
-        # strip_path_prefixes = ["wpiutil/src/main/python/"],
+        strip_path_prefixes = ["wpiutil/src/main/python/"],
         # summary = "Binary wrapper for FRC WPIUtil library",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

@@ -1,0 +1,42 @@
+
+
+
+py_wheel(
+    name = "pyfrc-wheel",
+    # distribution = name,
+    platform = select({
+        "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
+        "@bazel_tools//src/conditions:windows": "win_amd64",
+        "//conditions:default": "manylinux_2_35_x86_64",
+    }),
+    # abi = abi,
+    # python_tag = python_tag,
+    # stamp = 1,
+    # version = "2027.0.0a1.dev0",  # TODO(pj)
+    # summary = summary,
+    # requires = requires,
+    # project_urls = project_urls,
+    # author_email = author_email,
+    # deps = data + [":{}".format(name)],
+    # strip_path_prefixes = strip_path_prefixes,
+    entry_points = {
+        
+        "robotpy": [
+            "add-tests = pyfrc.mains.cli_add_tests:PyFrcAddTests", 
+            "coverage = pyfrc.mains.cli_coverage:PyFrcCoverage", 
+            "create-physics = pyfrc.mains.cli_create_physics:PyFrcCreatePhysics",
+            "profiler = pyfrc.mains.cli_profiler:PyFrcProfiler",
+            "sim = pyfrc.mains.cli_sim:PyFrcSim",
+            "test = pyfrc.mains.cli_test:PyFrcTest",
+        ],
+        
+    },
+    # tags = ["robotpy"],
+)
+
+pycross_wheel_library(
+    name = "pyfrc-wheel-import",
+    wheel = "pyfrc-wheel-wheel",
+    visibility = ["//visibility:public"],
+    tags = ["manual"],
+)

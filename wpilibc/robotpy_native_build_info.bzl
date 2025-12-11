@@ -39,4 +39,5 @@ def define_native_wrapper(name, pyproject_toml = None):
         headers = "{}.copy_headers".format(name),
         native_shared_library = "shared/wpilibc",
         install_path = "native/wpilib/",
+        strip_path_prefixes = ["wpilibc"],
     )

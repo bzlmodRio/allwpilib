@@ -35,4 +35,5 @@ def define_native_wrapper(name, pyproject_toml = None):
         headers = "{}.copy_headers".format(name),
         native_shared_library = "shared/ntcore",
         install_path = "native/ntcore/",
+        strip_path_prefixes = ["ntcore"],
     )

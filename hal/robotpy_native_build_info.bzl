@@ -33,4 +33,5 @@ def define_native_wrapper(name, pyproject_toml = None):
         headers = "{}.copy_headers".format(name),
         native_shared_library = "shared/wpiHal",
         install_path = "native/wpihal/",
+        strip_path_prefixes = ["hal"],
     )

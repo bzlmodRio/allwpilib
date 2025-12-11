@@ -419,3 +419,18 @@ http_jar(
     integrity = "sha256-IHW6y6WXJFjX9RYD+IwVAMwAbEo36fLqonIKR+FaqpQ=",
     urls = ["https://github.com/google/copybara/releases/download/v20251027/copybara_deploy.jar"],
 )
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "rules_pycross",
+    sha256 = "305a33b74c507ded89055e4237a0316d862c5a5bf2012a98f6c71aad11425ce7",
+    strip_prefix = "rules_pycross-0.8.0",
+    url = "https://github.com/jvolkman/rules_pycross/releases/download/v0.8.0/rules_pycross-v0.8.0.tar.gz",
+)
+
+# change this to something that works in your environment.
+load("@rules_pycross//pycross:repositories.bzl", "rules_pycross_dependencies")
+
+rules_pycross_dependencies(
+    python_interpreter_target = "@python_3_10_host//:python",
+)

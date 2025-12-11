@@ -36,4 +36,5 @@ def define_native_wrapper(name, pyproject_toml = None):
         headers = "{}.copy_headers".format(name),
         native_shared_library = "shared/wpinet",
         install_path = "native/wpinet/",
+        strip_path_prefixes = ["wpinet"],
     )

@@ -6,3 +6,4 @@ pytest
 numpy
 opencv-python~=4.6
 black
+robotpy-cli
