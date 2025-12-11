@@ -175,16 +175,14 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "//romiVendordep:robotpy-native-romi",
             "//wpilibc:robotpy-wpilib",
         ],
-        # strip_path_prefixes = ["romi/src/main/python/"],
+        strip_path_prefixes = ["romi/src/main/python/"],
         # summary = "Binary wrapper for WPILib Romi Vendor library",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
         # requires = ["robotpy-native-romi==0.0.0", "wpilib==0.0.0"],
-        # entry_points = {
-        #
-        #     "pkg_config": ["romi = romi"],
-        #
-        # },
+        entry_points = {
+            "pkg_config": ["romi = romi"],
+        },
         visibility = ["//visibility:public"],
     )
 

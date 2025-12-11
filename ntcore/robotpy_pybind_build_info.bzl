@@ -490,11 +490,9 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
         # requires = ["robotpy-native-ntcore==0.0.0", "robotpy-wpiutil==0.0.0", "robotpy-wpinet==0.0.0", "robotpy-wpilog==0.0.0"],
-        # entry_points = {
-        #
-        #     "pkg_config": ["ntcore = ntcore"],
-        #
-        # },
+        entry_points = {
+            "pkg_config": ["ntcore = ntcore"],
+        },
         visibility = ["//visibility:public"],
     )
 

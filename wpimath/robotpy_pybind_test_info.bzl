@@ -133,16 +133,14 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
         imports = ["src/test/python/cpp"],
         deps = [
         ],
-        # strip_path_prefixes = ["wpimath_test/src/test/python/cpp/"],
+        strip_path_prefixes = ["wpimath_test/src/test/python/cpp/"],
         # summary = "Test project for verifying robotpy-build behavior",
         # project_urls = None,
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
         # requires = None,
-        # entry_points = {
-        #
-        #     "pkg_config": ["wpimath_test = wpimath_test"],
-        #
-        # },
+        entry_points = {
+            "pkg_config": ["wpimath_test = wpimath_test"],
+        },
         visibility = ["//visibility:public"],
     )
 

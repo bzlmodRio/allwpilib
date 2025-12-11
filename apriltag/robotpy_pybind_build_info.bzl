@@ -214,16 +214,14 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "//wpimath:robotpy-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
-        # strip_path_prefixes = ["apriltag/src/main/python/"],
+        strip_path_prefixes = ["apriltag/src/main/python/"],
         # summary = "RobotPy bindings for WPILib's AprilTag library",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
         # requires = ["robotpy-native-apriltag==0.0.0", "robotpy-wpiutil==0.0.0", "robotpy-wpimath==0.0.0"],
-        # entry_points = {
-        #
-        #     "pkg_config": ["apriltag = robotpy_apriltag"],
-        #
-        # },
+        entry_points = {
+            "pkg_config": ["apriltag = robotpy_apriltag"],
+        },
         visibility = ["//visibility:public"],
     )
 

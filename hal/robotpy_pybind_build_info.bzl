@@ -643,11 +643,9 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
         # requires = ["pyntcore==0.0.0", "robotpy-native-wpihal==0.0.0", "robotpy-wpiutil==0.0.0"],
-        # entry_points = {
-        #
-        #     "pkg_config": ["hal_simulation = hal.simulation", "wpihal = hal"],
-        #
-        # },
+        entry_points = {
+            "pkg_config": ["hal_simulation = hal.simulation", "wpihal = hal"],
+        },
         visibility = ["//visibility:public"],
     )
 
