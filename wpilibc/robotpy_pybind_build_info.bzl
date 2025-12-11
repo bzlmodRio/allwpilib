@@ -1936,6 +1936,7 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
         # requires = ["robotpy-native-wpilib==0.0.0", "robotpy-wpiutil==0.0.0", "robotpy-wpimath==0.0.0", "robotpy-hal==0.0.0", "pyntcore==0.0.0", "robotpy-cli~=2027.0.0a1"],
         entry_points = {
+            "robotpy": ["run = wpilib._impl.start:Main"],
             "pkg_config": ["wpilib_event = wpilib.event", "wpilib = wpilib", "wpilib_counter = wpilib.counter", "wpilib_drive = wpilib.drive", "wpilib_simulation = wpilib.simulation"],
         },
         visibility = ["//visibility:public"],

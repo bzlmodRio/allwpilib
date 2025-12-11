@@ -79,16 +79,16 @@ def define_examples():
             name = example_folder + "-run",
             srcs = [":robotpy_entry_point.py"],
             main = "robotpy_entry_point.py",
-            args = ["--main", "$(location " + example_folder + "/robot.py)", "test", "--builtin", "--help"],
+            args = ["--main", "$(location " + example_folder + "/robot.py)", "run"],
             deps = [":robotpy", ":wrapper"],
             data = [example_folder + "/robot.py"],
         )
         
         py_binary(
-            name = example_folder + "-som",
+            name = example_folder + "-sim",
             srcs = [":robotpy_entry_point.py"],
             main = "robotpy_entry_point.py",
-            args = ["--main", "$(location " + example_folder + "/robot.py)", "sim"],
+            args = ["--main", "$(location " + example_folder + "/robot.py)", "sim", "--nogui"],
             deps = [":robotpy", ":wrapper"],
             data = [example_folder + "/robot.py"],
         )
