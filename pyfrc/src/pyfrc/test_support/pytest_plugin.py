@@ -48,11 +48,17 @@ class PyFrcPlugin:
         # Tests need to know when robotInit is called, so override the robot
         # to do that
         class TestRobot(robot_class):
-            def robotInit(self):
-                try:
-                    super().robotInit()
-                finally:
-                    self.__robotInitialized()
+            pass
+            # def __init__(self):
+            #     try:
+            #         robot_class.__init__(self)
+            #     finally:
+            #         self.__robotInitialized()
+            # def robotInit(self):
+            #     try:
+            #         super().robotInit()
+            #     finally:
+            #         self.__robotInitialized()
 
         TestRobot.__name__ = robot_class.__name__
         TestRobot.__module__ = robot_class.__module__

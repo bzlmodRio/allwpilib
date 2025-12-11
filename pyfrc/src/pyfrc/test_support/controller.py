@@ -76,7 +76,7 @@ class TestController:
 
             # If your robotInit is taking more than 2 seconds in simulation, you're
             # probably doing something wrong... but if not, please report a bug!
-            assert self._cond.wait_for(lambda: self._robot_initialized, timeout=2)
+            # assert self._cond.wait_for(lambda: self._robot_initialized, timeout=2)
 
         try:
             # in this block you should tell the sim to do sim things

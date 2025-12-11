@@ -638,6 +638,11 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "//ntcore:pyntcore",
             "//wpiutil:robotpy-wpiutil",
         ],
+        robotpy_wheel_deps = [
+            "//hal:robotpy-native-wpihal-import",
+            "//ntcore:pyntcore-import",
+            "//wpiutil:robotpy-wpiutil-import",
+        ],
         strip_path_prefixes = ["hal/src/main/python/"],
         # summary = "Binary wrapper for FRC HAL",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},

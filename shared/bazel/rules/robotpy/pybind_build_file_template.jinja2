@@ -214,6 +214,11 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "{{d}}",
             {%- endfor %}
         ],
+        robotpy_wheel_deps = [
+            {%- for d in python_deps %}
+            "{{d}}-import",
+            {%- endfor %}
+        ],
         strip_path_prefixes = ["{% if top_level_name == "robotpy_apriltag" %}{{"apriltag"}}{% else %}{{top_level_name}}{% endif %}/{{stripped_include_prefix}}/"],
         # summary = "{{raw_project_config.description}}",
         # project_urls = {{raw_project_config.urls | jsonify}},

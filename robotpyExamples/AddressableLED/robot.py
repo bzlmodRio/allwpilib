@@ -11,12 +11,9 @@ kLEDBuffer = 60
 
 
 class MyRobot(wpilib.TimedRobot):
-    # def __init__(self):
-    #     wpilib.TimedRobot.__init__(self)
-    #     self.robotInit()
+    def __init__(self):
+        wpilib.TimedRobot.__init__(self)
 
-    def robotInit(self):
-        print("Init")
         # PWM Port 9
         # Must be a PWM header, not MXP or DIO
         self.led = wpilib.AddressableLED(0)
@@ -34,6 +31,8 @@ class MyRobot(wpilib.TimedRobot):
         # Set the data
         self.led.setData(self.ledData)
         # self.led.start()
+
+        # self._on_robot_initialized()
 
     def robotPeriodic(self):
         print("Periodic")

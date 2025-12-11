@@ -485,6 +485,12 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "//wpinet:robotpy-wpinet",
             "//wpiutil:robotpy-wpiutil",
         ],
+        robotpy_wheel_deps = [
+            "//datalog:robotpy-wpilog-import",
+            "//ntcore:robotpy-native-ntcore-import",
+            "//wpinet:robotpy-wpinet-import",
+            "//wpiutil:robotpy-wpiutil-import",
+        ],
         strip_path_prefixes = ["ntcore/src/main/python/"],
         # summary = "Binary wrappers for the FRC ntcore library",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},

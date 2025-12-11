@@ -1798,6 +1798,10 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "//wpimath:robotpy-native-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
+        robotpy_wheel_deps = [
+            "//wpimath:robotpy-native-wpimath-import",
+            "//wpiutil:robotpy-wpiutil-import",
+        ],
         strip_path_prefixes = ["wpimath/src/main/python/"],
         # summary = "Binary wrapper for FRC WPIMath library",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},

@@ -1924,30 +1924,21 @@ def define_pybind_library(name, pkgcfgs = [], create_imports_extra_deps = []):
             "//wpiutil:robotpy-wpiutil",
         ],
         robotpy_wheel_deps = [
-            # "//datalog:robotpy-native-datalog-import",
-            # "//datalog:robotpy-wpilog-import",
-            # "//ntcore:robotpy-native-ntcore-import",
-            "//ntcore:pyntcore-import",
-            # "//hal:robotpy-native-wpihal-import",
             "//hal:robotpy-hal-import",
+            "//ntcore:pyntcore-import",
             "//wpilibc:robotpy-native-wpilib-import",
-            # "//wpimath:robotpy-native-wpimath-import",
             "//wpimath:robotpy-wpimath-import",
-            # "//wpinet:robotpy-native-wpinet-import",
-            # "//wpinet:robotpy-wpinet-import",
-            # "//wpiutil:robotpy-native-wpiutil-import",
             "//wpiutil:robotpy-wpiutil-import",
         ],
         strip_path_prefixes = ["wpilibc/src/main/python/"],
         # summary = "Binary wrapper for FRC WPILib",
         # project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         # author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-native-wpilib==0.0.0", "robotpy-wpiutil==0.0.0", "robotpy-wpimath==0.0.0", "robotpy-hal==0.0.0", "pyntcore==0.0.0", "robotpy-cli~=2027.0.0a1"],
+        # requires = ["robotpy-native-wpilib==0.0.0", "robotpy-wpiutil==0.0.0", "robotpy-wpimath==0.0.0", "robotpy-hal==0.0.0", "pyntcore==0.0.0", "robotpy-cli~=2027.0.0a1"],
         entry_points = {
             "pkg_config": ["wpilib_event = wpilib.event", "wpilib = wpilib", "wpilib_counter = wpilib.counter", "wpilib_drive = wpilib.drive", "wpilib_simulation = wpilib.simulation"],
         },
         visibility = ["//visibility:public"],
-
     )
 
     create_imports(
