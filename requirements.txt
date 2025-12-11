@@ -3,6 +3,7 @@ protobuf==5.28.3
 grpcio-tools==1.68.0
 semiwrap==0.2.1
 pytest
+pytest-reraise
 numpy
 opencv-python~=4.6
 black

@@ -144,7 +144,7 @@ class PyFrcPlugin:
         # -> preferences, SmartDashboard, Shuffleboard, LiveWindow, MotorSafety
         wpilib.simulation._simulation._resetWpilibSimulationData()
         wpilib._wpilib._clearSmartDashboardData()
-        wpilib.shuffleboard._shuffleboard._clearShuffleboardData()
+        # wpilib.shuffleboard._shuffleboard._clearShuffleboardData()
 
         # Cancel all periodic callbacks
         hal.simulation.cancelAllSimPeriodicCallbacks()

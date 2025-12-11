@@ -11,9 +11,9 @@ kLEDBuffer = 60
 
 
 class MyRobot(wpilib.TimedRobot):
-    def __init__(self):
-        wpilib.TimedRobot.__init__(self)
-        self.robotInit()
+    # def __init__(self):
+    #     wpilib.TimedRobot.__init__(self)
+    #     self.robotInit()
 
     def robotInit(self):
         print("Init")
@@ -33,7 +33,7 @@ class MyRobot(wpilib.TimedRobot):
 
         # Set the data
         self.led.setData(self.ledData)
-        self.led.start()
+        # self.led.start()
 
     def robotPeriodic(self):
         print("Periodic")

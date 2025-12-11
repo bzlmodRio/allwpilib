@@ -70,7 +70,9 @@ py_console_script_binary(
 
     deps = [
         requirement("pytest"),
+        requirement("pytest-reraise"),
         "//wpilibc:robotpy-wpilib-import",
+        "//pyfrc:pyfrc-wheel-import",
     ]
 )
 

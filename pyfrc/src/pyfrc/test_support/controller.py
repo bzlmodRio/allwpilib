@@ -23,12 +23,16 @@ class TestController:
         self._robot_initialized = False
         self._robot_finished = False
 
+        print("/constructor")
+
     def _on_robot_initialized(self):
+        print("on robot initialized")
         with self._cond:
             self._robot_initialized = True
             self._cond.notify_all()
 
     def _robot_thread(self, robot):
+        print("Robot thread starting...")
         with self._cond:
             self._robot_started = True
             self._cond.notify_all()
