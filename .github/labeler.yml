@@ -60,3 +60,7 @@
 'attn: NI':
 - changed-files:
   - any-glob-to-any-file: hal/src/generate/**
+'component: robotpy':
+- changed-files:
+  - any-glob-to-any-file: "**/src/main/python/**"
+  - any-glob-to-any-file: "**/src/test/python/**"
