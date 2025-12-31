@@ -231,6 +231,7 @@ write_source_files(
         ":write_robotpy_generated_native_files",
         ":write_robotpy_generated_pybind_files",
         ":write_robotpy_update_yaml_files",
+        ":write_robotpy_create_imports",
     ],
     tags = [
         "manual",

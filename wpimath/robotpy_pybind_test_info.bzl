@@ -1,10 +1,10 @@
 # THIS FILE IS AUTO GENERATED
 
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
-def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
+def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     WPIMATH_TEST_HEADER_GEN = [
         struct(
             class_name = "module",
@@ -91,7 +91,38 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = []):
+def _make_pyi_stubs(name, extra_pyi_deps = []):
+    make_pyi(
+        name = name + ".make_pyi0",
+        extension_package = "wpimath_test._wpimath_test",
+        stub_files = [
+            "wpimath_test/_wpimath_test.pyi",
+            "$(location wpimath_test/_wpimath_test.pyi)",
+        ],
+        remapping_args = [
+            "wpimath_test",
+            "wpimath/src/test/python/cpp/wpimath_test/__init__.py",
+            "wpimath_test._init__wpimath_test",
+            "$(location :src/test/python/cpp/wpimath_test/_init__wpimath_test.py)",
+            "wpimath_test._wpimath_test",
+            "$(location :src/test/python/cpp/wpimath_test/_wpimath_test)",
+        ],
+        outputs = [
+            "wpimath_test/_wpimath_test.pyi",
+        ],
+        srcs = [
+            "src/test/python/cpp/wpimath_test/__init__.py",
+            ":src/test/python/cpp/wpimath_test/_init__wpimath_test.py",
+            ":src/test/python/cpp/wpimath_test/_wpimath_test",
+        ],
+        python_deps = [
+        ] + extra_pyi_deps,
+    )
+
+
+def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
+    _make_pyi_stubs(name, extra_pyi_deps=create_pyi_extra_deps + create_imports_extra_deps)
+
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -134,6 +165,14 @@ def define_pybind_library(name, pkgcfgs = []):
         deps = [
         ],
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        library = [name],
+        prefix = "src/test/python/cpp",
+        update_init = ["wpimath_test wpimath_test._wpimath_test"],
+        extra_deps = create_imports_extra_deps,
     )
 
     update_yaml_files(

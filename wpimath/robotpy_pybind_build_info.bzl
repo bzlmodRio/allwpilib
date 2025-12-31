@@ -3,10 +3,10 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "publish_casters", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
-def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
+def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     WPIMATH_HEADER_GEN = [
         struct(
             class_name = "ComputerVisionUtil",
@@ -1217,7 +1217,40 @@ def publish_library_casters():
         tags = ["robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = []):
+def _make_pyi_stubs(name, extra_pyi_deps = []):
+    make_pyi(
+        name = name + ".make_pyi0",
+        extension_package = "wpimath._wpimath",
+        stub_files = [
+            "wpimath/_wpimath.pyi",
+            "$(location wpimath/_wpimath.pyi)",
+        ],
+        remapping_args = [
+            "wpimath",
+            "wpimath/src/main/python/wpimath/__init__.py",
+            "wpimath._init__wpimath",
+            "$(location :src/main/python/wpimath/_init__wpimath.py)",
+            "wpimath._wpimath",
+            "$(location :src/main/python/wpimath/_wpimath)",
+        ],
+        outputs = [
+            "wpimath/_wpimath.pyi",
+        ],
+        srcs = [
+            "src/main/python/wpimath/__init__.py",
+            ":src/main/python/wpimath/_init__wpimath.py",
+            ":src/main/python/wpimath/_wpimath",
+        ],
+        python_deps = [
+            "//wpimath:robotpy-native-wpimath",
+            "//wpiutil:robotpy-wpiutil",
+        ] + extra_pyi_deps,
+    )
+
+
+def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
+    _make_pyi_stubs(name, extra_pyi_deps=create_pyi_extra_deps + create_imports_extra_deps)
+
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -1271,6 +1304,14 @@ def define_pybind_library(name, pkgcfgs = []):
             "//wpiutil:robotpy-wpiutil",
         ],
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        library = [name],
+        prefix = "src/main/python",
+        update_init = ["wpimath"],
+        extra_deps = create_imports_extra_deps,
     )
 
     update_yaml_files(

@@ -159,6 +159,82 @@ class PublishCastersConfig:
             self.include_paths.append(f"src/main/python/{inc_dir}")
 
 
+class MakePyiConfig:
+    def __init__(self, projectcfg, item: BuildTarget):
+        print("*" * 10)
+        for arg in item.args:
+            if type(arg) == ExtensionModule:
+                print("Extension Module....")
+            else:
+                print(arg)
+        pass
+        
+        self.remapping_args = []
+        self.install_path = item.install_path
+
+
+        self.extension_package = item.args[0]
+        ctr = 1
+        stub_files = []
+        for arg in item.args[1::2]:
+            if arg == "--":
+                break
+            # self.interface_files.append(pathlib.Path(arg).relative_to("wpiutil/_wpiutil"))
+            stub_files.append(arg)
+            # self.stub_files.append("$(location " + arg + ")")
+            ctr += 2
+        stub_files.sort()
+
+        self.stub_files = []
+        self.output_files = []
+        self.src_files = []
+        for sf in stub_files:
+            self.output_files.append(sf)
+
+            self.stub_files.append(sf)
+            self.stub_files.append("$(location " + sf + ")")
+
+        # Move past '--'
+        ctr += 1
+        print(ctr)  
+        print("---------------------")
+        for arg  in item.args[ctr::2]:
+            self.remapping_args.append(item.args[ctr + 0])
+            remapped_arg = item.args[ctr + 1]
+            if isinstance(remapped_arg, str):
+                rel_path = remapped_arg[remapped_arg.find("__main__/") + len("__main__/"):]
+                self.remapping_args.append(rel_path)
+                self.src_files.append("/".join(pathlib.Path(rel_path).parts[1:]))
+            elif isinstance(remapped_arg, BuildTarget):
+                rel_path = remapped_arg.install_path / remapped_arg.args[0].name
+                filepath = ":src/main/python/" + str(rel_path)
+                self.remapping_args.append("$(location " + filepath + ")")
+                self.src_files.append(filepath)
+            elif isinstance(remapped_arg, ExtensionModule):
+                print("Extension Module")
+                filepath = ":src/main/python/" + remapped_arg.package_name.replace(".", "/")
+                self.remapping_args.append("$(location " + filepath + ")")
+                self.src_files.append(filepath)
+            else:
+                raise Exception("Unexpected type", type(remapped_arg))
+            # self.remapping_args.append(item.args[ctr + 1])
+            # print("Hello", ctr)
+            # print("  ", item.args[ctr + 0])
+            # self.init_packages.append(item.args[ctr].replace(".", "/"))
+            # self.init_pkgcfgs.append(item.args[ctr + 2].replace(".", "/") + ".py")
+            # print("  ", item.args[ctr + 1])
+            # print("  ", item.args[ctr + 2])
+            # print("  ", arg[ctr + 1])
+            # print("  ", arg[ctr + 2])
+            ctr += 2
+
+        print("Remaining:")
+        print(item.args[ctr:])
+        assert 0 == len(item.args[ctr:])
+
+        self.extension_library = self.extension_package.replace(".", "/")
+
+
 class BazelExtensionModule:
     def __init__(
         self,
@@ -168,6 +244,7 @@ class BazelExtensionModule:
         self.name = extension_module.name
         self.package_name = extension_module.package_name
         self.install_path = extension_module.install_path
+        self.package_base = str(self.install_path).replace("/", ".")
 
         self.generation_data = self._extract_header_generation(extension_module.sources)
         self.resolve_casters = ResolveCastersConfig(
@@ -180,6 +257,8 @@ class BazelExtensionModule:
         self.gen_modinit = GenModInitHpp(
             additional_extension_targets["gen-modinit-hpp"]
         )
+
+        # print(additional_extension_targets["make-pyi"])
 
         self.pkgcache = PkgconfCache()
 
@@ -304,6 +383,7 @@ def generate_pybind_build_file(
     # Cache built up for an extension module. Gets reset when an ExtensionModule is encountered
     additional_extension_targets: Dict[str, BuildTarget] = {}
     publish_casters_targets = []
+    make_pyi_targets = []
 
     for item in plan:
         if isinstance(item, ExtensionModule):
@@ -327,11 +407,12 @@ def generate_pybind_build_file(
                 "dat2tmplcpp",
                 "dat2tmplhpp",
                 "dat2trampoline",
-                "make-pyi",
             ]:
                 pass
             elif item.command == "publish-casters":
                 publish_casters_targets.append(PublishCastersConfig(projectcfg, item))
+            elif item.command == "make-pyi":
+                make_pyi_targets.append(MakePyiConfig(projectcfg, item))
             else:
                 raise Exception(f"Unhandled build target {item.command}")
         elif isinstance(item, Entrypoint):
@@ -373,12 +454,16 @@ def generate_pybind_build_file(
             return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
 
     python_deps = []
+    native_python_deps = []
     if "dependencies" in raw_config["project"]:
         for d in raw_config["project"]["dependencies"]:
             if "robotpy-cli" in d:
                 continue
             pd = target_from_python_dep(d.split("==")[0])
             python_deps.append(pd)
+            if "native" in pd:
+                native_python_deps.append(pd)
+
 
     env = Environment(loader=BaseLoader)
     env.filters["jsonify"] = jsonify
@@ -390,9 +475,7 @@ def generate_pybind_build_file(
     all_local_native_deps = sorted(all_local_native_deps)
 
     try:
-        version_file = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
-            "version_file"
-        ]
+        version_file = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"]["version_file"]
     except:
         version_file = None
 
@@ -402,13 +485,19 @@ def generate_pybind_build_file(
                 extension_modules=extension_modules,
                 top_level_name=top_level_name,
                 publish_casters_targets=publish_casters_targets,
+                make_pyi_targets=make_pyi_targets,
                 python_deps=sorted(python_deps),
                 all_local_native_deps=all_local_native_deps,
+                native_python_deps=sorted(native_python_deps),
                 stripped_include_prefix=stripped_include_prefix,
                 yml_prefix=yml_prefix,
                 package_root_file=package_root_file,
                 raw_project_config=raw_config["project"],
                 entry_points=entry_points,
+                project_file=project_file,
+                update_init=raw_config.get("tool", {})
+                .get("semiwrap", {})
+                .get("update_init", []),
                 version_file=version_file,
             )
             + "\n"

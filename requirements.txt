@@ -5,3 +5,4 @@ semiwrap==0.2.1
 pytest
 numpy
 opencv-python~=4.6
+black
