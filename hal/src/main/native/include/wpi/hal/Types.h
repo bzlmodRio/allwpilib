@@ -116,7 +116,7 @@ class Handle {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Waddress"
 #endif  // __GNUC__
-      if constexpr (FreeFunction != nullptr) {
+      if (FreeFunction != nullptr) {
 #if __GNUC__
 #pragma GCC diagnostic pop
 #endif  // __GNUC__
@@ -140,7 +140,7 @@ class Handle {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Waddress"
 #endif  // __GNUC__
-    if constexpr (FreeFunction != nullptr) {
+    if (FreeFunction != nullptr) {
 #if __GNUC__
 #pragma GCC diagnostic pop
 #endif  // __GNUC__
