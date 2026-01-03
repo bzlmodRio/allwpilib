@@ -8,8 +8,6 @@ def robotpy_py_test(name, srcs, tags = [], **kwargs):
         srcs = srcs,
         target_compatible_with = robotpy_compatibility_select(),
         tags = tags + [
-            "no-asan",
-            "no-tsan",
             "robotpy",
         ],
         legacy_create_init = 0,
