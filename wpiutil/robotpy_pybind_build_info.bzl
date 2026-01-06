@@ -3,10 +3,10 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "publish_casters", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
-def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
+def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     WPIUTIL_HEADER_GEN = [
         struct(
             class_name = "Color",
@@ -184,7 +184,46 @@ def publish_library_casters():
         tags = ["robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = []):
+def _make_pyi_stubs(name, extra_pyi_deps = []):
+    make_pyi(
+        name = name + ".make_pyi0",
+        extension_package = "wpiutil._wpiutil",
+        stub_files = [
+            "wpiutil/_wpiutil/__init__.pyi",
+            "$(location wpiutil/_wpiutil/__init__.pyi)",
+            "wpiutil/_wpiutil/sync.pyi",
+            "$(location wpiutil/_wpiutil/sync.pyi)",
+            "wpiutil/_wpiutil/wpistruct.pyi",
+            "$(location wpiutil/_wpiutil/wpistruct.pyi)",
+        ],
+        remapping_args = [
+            "wpiutil",
+            "wpiutil/src/main/python/wpiutil/__init__.py",
+            "wpiutil._init__wpiutil",
+            "$(location :src/main/python/wpiutil/_init__wpiutil.py)",
+            "wpiutil._wpiutil",
+            "$(location :src/main/python/wpiutil/_wpiutil)",
+        ],
+        outputs = [
+            "wpiutil/_wpiutil/__init__.pyi",
+            "wpiutil/_wpiutil/sync.pyi",
+            "wpiutil/_wpiutil/wpistruct.pyi",
+        ],
+        srcs = [
+            "src/main/python/wpiutil/__init__.py",
+            ":src/main/python/wpiutil/_init__wpiutil.py",
+            ":src/main/python/wpiutil/_wpiutil",
+        ],
+        python_deps = [
+            "//wpiutil:robotpy-native-wpiutil",
+        ] + extra_pyi_deps,
+    )
+
+
+def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
+    if "hal" not in name:
+        _make_pyi_stubs(name, extra_pyi_deps=create_pyi_extra_deps + create_imports_extra_deps)
+
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -236,7 +275,26 @@ def define_pybind_library(name, pkgcfgs = []):
         deps = [
             "//wpiutil:robotpy-native-wpiutil",
         ],
+        robotpy_wheel_deps = [
+            "//wpiutil:robotpy-native-wpiutil-import",
+        ],
+        strip_path_prefixes = ["wpiutil/src/main/python"],
+        summary = "Binary wrapper for FRC WPIUtil library",
+        project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
+        author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
+        requires = ["robotpy-native-wpiutil==0.0.0"],
+        entry_points = {
+            "pkg_config": ["wpiutil-casters = wpiutil", "wpiutil = wpiutil"],
+        },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        library = [name],
+        prefix = "src/main/python",
+        update_init = ["wpiutil", "wpiutil.sync wpiutil._wpiutil.sync", "wpiutil.wpistruct wpiutil._wpiutil.wpistruct"],
+        extra_deps = create_imports_extra_deps,
     )
 
     update_yaml_files(

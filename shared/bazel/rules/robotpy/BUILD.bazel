@@ -7,6 +7,7 @@ exports_files([
     "wrapper.py",
     "version_template.in",
 ])
+exports_files(["make_pyi_wrapper.py"])
 
 py_library(
     name = "hack_pkgcfgs",

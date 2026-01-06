@@ -2,9 +2,10 @@
 
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "copy_native_file", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
-def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
+def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     HALSIM_GUI_EXT_HEADER_GEN = [
     ]
 
@@ -88,7 +89,43 @@ def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = []):
+def _make_pyi_stubs(name, extra_pyi_deps = []):
+    make_pyi(
+        name = name + ".make_pyi0",
+        extension_package = "halsim_gui._ext._halsim_gui_ext",
+        stub_files = [
+            "halsim_gui/_ext/_halsim_gui_ext.pyi",
+            "$(location halsim_gui/_ext/_halsim_gui_ext.pyi)",
+        ],
+        remapping_args = [
+            "halsim_gui._ext",
+            "simulation/halsim_gui/src/main/python/halsim_gui/_ext/__init__.py",
+            "halsim_gui._ext._init__halsim_gui_ext",
+            "$(location :src/main/python/halsim_gui/_ext/_init__halsim_gui_ext.py)",
+            "halsim_gui._ext._halsim_gui_ext",
+            "$(location :src/main/python/halsim_gui/_ext/_halsim_gui_ext)",
+        ],
+        outputs = [
+            "halsim_gui/_ext/_halsim_gui_ext.pyi",
+        ],
+        srcs = [
+            "halsim_gui/src/main/python/halsim_gui/_ext/__init__.py",
+            ":src/main/python/halsim_gui/_ext/_init__halsim_gui_ext.py",
+            ":src/main/python/halsim_gui/_ext/_halsim_gui_ext",
+        ],
+        python_deps = [
+            "//hal:robotpy-hal",
+            "//ntcore:pyntcore",
+            "//wpimath:robotpy-wpimath",
+            "//wpiutil:robotpy-wpiutil",
+        ] + extra_pyi_deps,
+    )
+
+
+def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
+    if "hal" not in name:
+        _make_pyi_stubs(name, extra_pyi_deps=create_pyi_extra_deps + create_imports_extra_deps)
+
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -148,5 +185,48 @@ def define_pybind_library(name, pkgcfgs = []):
             "//wpimath:robotpy-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
+        robotpy_wheel_deps = [
+            "//hal:robotpy-hal-import",
+            "//ntcore:pyntcore-import",
+            "//wpimath:robotpy-wpimath-import",
+            "//wpiutil:robotpy-wpiutil-import",
+        ],
+        strip_path_prefixes = ["simulation/halsim_gui/src/main/python/"],
+        summary = "WPILib simulation GUI",
+        project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
+        author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
+        requires = ["robotpy-wpiutil==0.0.0", "robotpy-wpimath==0.0.0", "robotpy-hal==0.0.0", "pyntcore==0.0.0"],
+        entry_points = {
+            "pkg_config": ["halsim_gui_ext = halsim_gui._ext"],
+        },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        library = [name],
+        prefix = "src/main/python",
+        update_init = [],
+        extra_deps = create_imports_extra_deps,
+    )
+
+    # update_yaml_files(
+    #     name = "{}-update-yaml".format(name),
+    #     yaml_output_directory = "src/main/python/semiwrap",
+    #     extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
+    #     ],
+    #     package_root_file = "src/main/python/halsim_gui/_ext/__init__.py",
+    #     pkgcfgs = pkgcfgs,
+    #     pyproject_toml = "src/main/python/pyproject.toml",
+    #     yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+    # )
+
+    scan_headers(
+        name = "{}-scan-headers".format(name),
+        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
+            
+        ],
+        package_root_file = "src/main/python/halsim_gui/_ext/__init__.py",
+        pkgcfgs = pkgcfgs,
+        pyproject_toml = "src/main/python/pyproject.toml",
     )

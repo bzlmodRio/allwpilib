@@ -5,6 +5,8 @@ load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
 load("//shared/bazel/rules:publishing.bzl", "host_architectures")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "copy_native_file")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
+load("@rules_python//python:packaging.bzl", "py_wheel")
+load("@rules_pycross//pycross/private:wheel_library.bzl", "pycross_wheel_library")
 
 wpilib_cc_library(
     name = "halsim_ws_core",
@@ -84,6 +86,35 @@ py_library(
         "//hal:robotpy-native-wpihal",
         "//wpinet:robotpy-native-wpinet",
     ],
+)
+
+py_wheel(
+    name = "robotpy-halsim-ws-wheel",
+    distribution = "xxx",
+#     platform = select({
+#         "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
+#         "@bazel_tools//src/conditions:windows": "win_amd64",
+#         "//conditions:default": "manylinux_2_35_x86_64",
+#     }),
+#     abi = abi,
+#     python_tag = python_tag,
+#     stamp = 1,
+    version = "2027.0.0a1.dev0",  # TODO(pj)
+#     summary = summary,
+#     requires = requires,
+#     project_urls = project_urls,
+#     author_email = author_email,
+    deps = ["robotpy-halsim-ws"],
+    strip_path_prefixes = ["simulation/halsim_ws_core/src/main/python/"],
+#     entry_points = entry_points,
+    tags = ["robotpy"],
+)
+
+pycross_wheel_library(
+    name = "robotpy-halsim-ws-import",
+    wheel = "robotpy-halsim-ws-wheel",
+    visibility = ["//visibility:public"],
+    tags = ["manual"],
 )
 
 robotpy_py_test(

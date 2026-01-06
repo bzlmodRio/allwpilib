@@ -156,16 +156,16 @@ load("@rules_python//python:repositories.bzl", "py_repositories", "python_regist
 py_repositories()
 
 python_register_toolchains(
-    name = "python_3_10",
+    name = "python_3_11",
     ignore_root_user_error = True,
-    python_version = "3.10",
+    python_version = "3.11",
 )
 
 load("@rules_python//python:pip.bzl", "pip_parse")
 
 pip_parse(
     name = "allwpilib_pip_deps",
-    python_interpreter_target = "@python_3_10_host//:python",
+    python_interpreter_target = "@python_3_11_host//:python",
     requirements_lock = "//:requirements_lock.txt",
     requirements_windows = "//:requirements_windows_lock.txt",
 )
@@ -418,4 +418,19 @@ http_jar(
     name = "com_github_google_copybara",
     integrity = "sha256-IHW6y6WXJFjX9RYD+IwVAMwAbEo36fLqonIKR+FaqpQ=",
     urls = ["https://github.com/google/copybara/releases/download/v20251027/copybara_deploy.jar"],
+)
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+http_archive(
+    name = "rules_pycross",
+    sha256 = "4acc6eb0f04baf94e6a864e6a199a050e9465967b8b8e900523cc2f4214e7937",
+    strip_prefix = "rules_pycross-0.8.1",
+    url = "https://github.com/jvolkman/rules_pycross/releases/download/v0.8.1/rules_pycross-v0.8.1.tar.gz",
+)
+
+# change this to something that works in your environment.
+load("@rules_pycross//pycross:repositories.bzl", "rules_pycross_dependencies")
+
+rules_pycross_dependencies(
+    python_interpreter_target = "@python_3_11_host//:python",
 )
