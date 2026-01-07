@@ -74,7 +74,7 @@ copy_native_file(
 )
 
 py_library(
-    name = "robotpy-halsim-ws",
+    name = "robotpy-halsim-ws.lib",
     srcs = glob(["src/main/python/**/*.py"]),
     data = [
         ":halsim_ws_client.copy_lib",
@@ -90,38 +90,33 @@ py_library(
 
 py_wheel(
     name = "robotpy-halsim-ws-wheel",
-    distribution = "xxx",
-#     platform = select({
-#         "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
-#         "@bazel_tools//src/conditions:windows": "win_amd64",
-#         "//conditions:default": "manylinux_2_35_x86_64",
-#     }),
-#     abi = abi,
-#     python_tag = python_tag,
-#     stamp = 1,
-    version = "2027.0.0a1.dev0",  # TODO(pj)
-#     summary = summary,
-#     requires = requires,
-#     project_urls = project_urls,
-#     author_email = author_email,
-    deps = ["robotpy-halsim-ws"],
+    distribution = "robotpy_halsim_ws.lib",
+    platform = select({
+        "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
+        "@bazel_tools//src/conditions:windows": "win_amd64",
+        "//conditions:default": "manylinux_2_39_x86_64",
+    }),
+    version = "2027.0.0a3",  # TODO(pj)
+    deps = ["robotpy-halsim-ws.lib"],
     strip_path_prefixes = ["simulation/halsim_ws_core/src/main/python/"],
-#     entry_points = entry_points,
     tags = ["robotpy"],
 )
 
 pycross_wheel_library(
-    name = "robotpy-halsim-ws-import",
+    name = "robotpy-halsim-ws",
     wheel = "robotpy-halsim-ws-wheel",
     visibility = ["//visibility:public"],
     tags = ["manual"],
+    deps = [
+        "//hal:robotpy-hal",
+    ],
 )
 
 robotpy_py_test(
     "python_tests",
     srcs = glob(["src/test/python/**/*.py"]),
     deps = [
-        ":robotpy-halsim-ws",
+        ":robotpy-halsim-ws.lib",
         requirement("pytest"),
     ],
 )

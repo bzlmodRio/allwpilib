@@ -17,7 +17,7 @@ PROJECTS = [
     "ElevatorSimulation",
     "ElevatorTrapezoidProfile",
     "Encoder",
-    "EventLoop",
+    # "EventLoop",
     "FlywheelBangBangController",
     "GettingStarted",
     "Gyro",

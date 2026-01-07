@@ -249,7 +249,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//wpimath:robotpy-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["robotpy_apriltag/src/main/python"],
+        strip_path_prefixes = ["apriltag/src/main/python"],
         summary = "RobotPy bindings for WPILib's AprilTag library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

@@ -201,23 +201,10 @@ py_library(
 
 py_wheel(
     name = "commandsv2-wheel",
-    distribution = "xxx",
-#     platform = select({
-#         "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
-#         "@bazel_tools//src/conditions:windows": "win_amd64",
-#         "//conditions:default": "manylinux_2_35_x86_64",
-#     }),
-#     abi = abi,
-#     python_tag = python_tag,
-#     stamp = 1,
-    version = "2027.0.0a1.dev0",  # TODO(pj)
-#     summary = summary,
-#     requires = requires,
-#     project_urls = project_urls,
-#     author_email = author_email,
+    distribution = "robotpy_commands_v2",
+    version = "2027.0.0a3",  # TODO(pj) #{PYBIND_VERSION}
     deps = ["commandsv2-py"],
     strip_path_prefixes = ["commandsv2/src/main/python/"],
-#     entry_points = entry_points,
     tags = ["robotpy"],
 )
 

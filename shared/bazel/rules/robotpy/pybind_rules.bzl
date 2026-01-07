@@ -86,15 +86,14 @@ def robotpy_library(
         name,
         strip_path_prefixes = None,
         data = [],
-        python_tag = "cp310",  # TODO(pj) Select based on python version
-        abi = "cp310",  # TODO(pj) Select based on python version
+        python_tag = "cp311",  # TODO(pj) Select based on python version
+        abi = "cp311",  # TODO(pj) Select based on python version
         summary = None,
         project_urls = None,
         author_email = None,
         entry_points = None,
         requires = None,
         deps = [],
-        robotpy_wheel_deps = [],
         visibility = None,
         **kwargs):
     """
@@ -111,19 +110,22 @@ def robotpy_library(
         tags = ["robotpy"],
         **kwargs
     )
+    
+
+    distro_name = name if name != "robotpy-wpilib" else "wpilib"
 
     py_wheel(
         name = "{}-wheel".format(name),
-        distribution = name,
+        distribution = distro_name,
         platform = select({
             "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
             "@bazel_tools//src/conditions:windows": "win_amd64",
-            "//conditions:default": "manylinux_2_35_x86_64",
+            "//conditions:default": "manylinux_2_39_x86_64",
         }),
         abi = abi,
         python_tag = python_tag,
         stamp = 1,
-        version = "2027.0.0a1.dev0",  # TODO(pj)
+        version = "2027.0.0a3",  # TODO(pj)
         summary = summary,
         requires = requires,
         project_urls = project_urls,
@@ -131,6 +133,7 @@ def robotpy_library(
         deps = data + [":{}-lib".format(name)],
         strip_path_prefixes = strip_path_prefixes,
         entry_points = entry_points,
+        license = "BSD-3-Clause",
         tags = ["robotpy"],
     )
     
@@ -248,18 +251,28 @@ def native_wrappery_library(
         tags = ["robotpy"],
     )
 
+    distro_name = name if name != "robotpy-wpilib" else "wpilib"
+
+    platform_name = "manylinux_2_39_x86_64"
+    if name == "robotpy-native-wpimath" or name == "robotpy-native-apriltag":
+        platform_name = "manylinux_2_38_x86_64"
+    if name == "robotpy-native-romi":
+        platform_name = "manylinux_2_24_x86_64"
+    if name == "robotpy-native-xrp":
+        platform_name = "manylinux_2_34_x86_64"
+
     py_wheel(
         name = "{}-wheel".format(name),
-        distribution = name,
+        distribution = distro_name,
         platform = select({
             "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
             "@bazel_tools//src/conditions:windows": "win_amd64",
-            "//conditions:default": "manylinux_2_35_x86_64",
+            "//conditions:default": platform_name,
         }),
         abi = abi,
         python_tag = python_tag,
         stamp = 1,
-        version = "2027.0.0a1.dev0",  # TODO(pj)
+        version = "2027.0.0a3",  # TODO(pj)
         summary = summary,
         requires = requires,
         project_urls = project_urls,
@@ -268,6 +281,7 @@ def native_wrappery_library(
         strip_path_prefixes = strip_path_prefixes,
         entry_points = entry_points,
         tags = ["robotpy"],
+        license = "BSD-3-Clause",
     )
 
     pycross_wheel_library(
@@ -275,4 +289,5 @@ def native_wrappery_library(
         wheel = "{}-wheel".format(name),
         visibility = ["//visibility:public"],
         tags = ["manual"],
+        deps = deps,
     )

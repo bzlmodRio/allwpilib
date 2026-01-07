@@ -6,6 +6,7 @@ load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
 load("//shared/bazel/rules:publishing.bzl", "host_architectures")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "copy_native_file")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
+load("@rules_python//python:packaging.bzl", "py_wheel")
 
 cc_library(
     name = "headers",
@@ -114,6 +115,20 @@ py_library(
         "//hal:robotpy-native-wpihal",
         "//wpinet:robotpy-native-wpinet",
     ],
+)
+
+py_wheel(
+    name = "robotpy-halsim-ds-socket-wheel",
+    distribution = "robotpy_halsim_ds_socket",
+    platform = select({
+        "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
+        "@bazel_tools//src/conditions:windows": "win_amd64",
+        "//conditions:default": "manylinux_2_38_x86_64",
+    }),
+    version = "2027.0.0a3",  # TODO(pj)
+    deps = ["robotpy-halsim-ds-socket"],
+    strip_path_prefixes = ["simulation/halsim_ds_socket/src/main/python/"],
+    tags = ["robotpy"],
 )
 
 robotpy_py_test(

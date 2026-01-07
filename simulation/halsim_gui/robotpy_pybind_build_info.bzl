@@ -185,12 +185,6 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//wpimath:robotpy-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
-        robotpy_wheel_deps = [
-            "//hal:robotpy-hal-import",
-            "//ntcore:pyntcore-import",
-            "//wpimath:robotpy-wpimath-import",
-            "//wpiutil:robotpy-wpiutil-import",
-        ],
         strip_path_prefixes = ["simulation/halsim_gui/src/main/python/"],
         summary = "WPILib simulation GUI",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
