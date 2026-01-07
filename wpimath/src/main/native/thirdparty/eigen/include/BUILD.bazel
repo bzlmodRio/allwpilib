@@ -66,6 +66,6 @@ cc_library(
 
 filegroup(
     name = "header_files",
-    srcs = HDRS,
+    srcs = glob(["**"]),
     visibility = ["//visibility:public"],
 )

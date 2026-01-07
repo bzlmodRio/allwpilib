@@ -17,11 +17,18 @@ def define_python_library(name):
 
     py_wheel(
         name = "commandsv2-wheel",
-        distribution = "robotpy_commands_v2",
+        distribution = "robotpy-commands-v2",
         strip_path_prefixes = ["commandsv2/src/main/python/"],
         tags = ["robotpy"],
         version = "2027.0.0a3",  # TODO(pj) #{PYBIND_VERSION}
         deps = ["commandsv2-py"],
+        summary = "WPILib command framework v2",
+        project_urls = {"Source code": "https://github.com/robotpy/robotpy-commands-v2"},
+        author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
+        description_content_type = "text/markdown",
+        description_file = "generate.bzl",
+        requires = ["typing-extensions<5,>=4.1.0", "wpilib==2027.0.0a3"],
+        license = "BSD-3-Clause",
     )
 
     pycross_wheel_library(

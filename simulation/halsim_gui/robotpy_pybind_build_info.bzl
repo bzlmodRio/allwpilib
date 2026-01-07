@@ -70,7 +70,7 @@ def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         dynamic_deps = [
             "//hal:shared/wpiHal",
             "//ntcore:shared/ntcore",
-            "//simulation/halsim_gui:shared/halsim_gui",
+            # "//simulation/halsim_gui:shared/halsim_gui",
             "//wpimath:shared/wpimath",
         ],
         extra_hdrs = extra_hdrs,
@@ -109,9 +109,10 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
             "halsim_gui/_ext/_halsim_gui_ext.pyi",
         ],
         srcs = [
-            "halsim_gui/src/main/python/halsim_gui/_ext/__init__.py",
+            ":src/main/python/halsim_gui/_ext/__init__.py",
             ":src/main/python/halsim_gui/_ext/_init__halsim_gui_ext.py",
             ":src/main/python/halsim_gui/_ext/_halsim_gui_ext",
+            ":halsim_gui.copy_lib",
         ],
         python_deps = [
             "//hal:robotpy-hal",
@@ -121,9 +122,15 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         ] + extra_pyi_deps,
     )
 
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "halsim_gui/_ext/_halsim_gui_ext.pyi",
+        ]
+    )
+
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
-    if "hal" not in name:
-        _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
+    _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
 
     # Helper used to generate all files with one target.
     native.filegroup(
@@ -140,7 +147,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/main/python/halsim_gui/_ext/halsim_gui_ext.pc",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
@@ -184,7 +191,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//wpimath:robotpy-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["simulation/halsim_gui/src/main/python"],
+        strip_path_prefixes = ["simulation/halsim_gui/src/main/python", "simulation/halsim_gui"],
         summary = "WPILib simulation GUI",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
