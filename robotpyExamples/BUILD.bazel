@@ -12,8 +12,8 @@ py_console_script_binary(
     deps = [
         # requirement("pytest"),
         # requirement("pytest-reraise"),
-        "//commandsv2:commandsv2-import",
-        "//wpilibc:robotpy-wpilib-import",
+        # "//commandsv2:commandsv2-import",
+        # "//wpilibc:robotpy-wpilib-import",
         # "//pyfrc:pyfrc-wheel-import",
     ]
 )

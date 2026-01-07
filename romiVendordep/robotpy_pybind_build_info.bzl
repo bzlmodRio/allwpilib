@@ -211,11 +211,6 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//simulation/halsim_ws_core:robotpy-halsim-ws",
             "//wpilibc:robotpy-wpilib",
         ],
-        robotpy_wheel_deps = [
-            "//romiVendordep:robotpy-native-romi-import",
-            "//simulation/halsim_ws_core:robotpy-halsim-ws-import",
-            "//wpilibc:robotpy-wpilib-import",
-        ],
         strip_path_prefixes = ["romiVendordep/src/main/python"],
         summary = "Binary wrapper for WPILib Romi Vendor library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},

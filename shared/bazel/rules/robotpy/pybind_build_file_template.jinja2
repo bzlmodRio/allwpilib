@@ -249,11 +249,6 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             {% if "requirement" in d %}{{d}}{% else %}"{{d}}"{% endif %},
             {%- endfor %}
         ],
-        robotpy_wheel_deps = [
-            {%- for d in python_deps %}
-            {% if "requirement" in d %}{{d}}{% else %}"{{d}}-import"{% endif %},
-            {%- endfor %}
-        ],
         strip_path_prefixes = ["{{ strip_path_prefixes }}"],
         summary = "{{raw_project_config.description}}",
         project_urls = {{raw_project_config.urls | jsonify}},

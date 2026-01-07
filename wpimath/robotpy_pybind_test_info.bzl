@@ -165,8 +165,6 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         imports = ["src/test/python/cpp"],
         deps = [
         ],
-        robotpy_wheel_deps = [
-        ],
         strip_path_prefixes = ["wpimath_test/src/test/python/cpp"],
         summary = "Test project for verifying robotpy-build behavior",
         project_urls = None,

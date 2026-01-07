@@ -93,7 +93,9 @@ def robotpy_library(
         author_email = None,
         entry_points = None,
         requires = None,
+        deps = [],
         robotpy_wheel_deps = [],
+        visibility = None,
         **kwargs):
     """
     Defines a python library that is wrapping a series of pybind extensions.
@@ -103,8 +105,9 @@ def robotpy_library(
         <name>-wheel - A wheel for the library
     """
     py_library(
-        name = name,
+        name = name + "-lib",
         data = data,
+        deps = deps,
         tags = ["robotpy"],
         **kwargs
     )
@@ -125,16 +128,16 @@ def robotpy_library(
         requires = requires,
         project_urls = project_urls,
         author_email = author_email,
-        deps = data + [":{}".format(name)],
+        deps = data + [":{}-lib".format(name)],
         strip_path_prefixes = strip_path_prefixes,
         entry_points = entry_points,
         tags = ["robotpy"],
     )
     
     pycross_wheel_library(
-        name = "{}-import".format(name),
+        name = "{}".format(name),
         wheel = "{}-wheel".format(name),
-        deps = robotpy_wheel_deps,
+        deps = deps,
         visibility = ["//visibility:public"],
         tags = ["manual"],
     )
@@ -237,12 +240,11 @@ def native_wrappery_library(
     )
 
     py_library(
-        name = name,
+        name = name + ".lib",
         srcs = [libinit_file],
         data = [pc_file, ":{}.copy_lib".format(libname), headers],
         deps = deps,
         imports = ["."],
-        visibility = ["//visibility:public"],
         tags = ["robotpy"],
     )
 
@@ -262,14 +264,14 @@ def native_wrappery_library(
         requires = requires,
         project_urls = project_urls,
         author_email = author_email,
-        deps = [name, ":{}.copy_lib".format(libname), headers, name + ".pc_wrapper"],
+        deps = [name + ".lib", ":{}.copy_lib".format(libname), headers, name + ".pc_wrapper"],
         strip_path_prefixes = strip_path_prefixes,
         entry_points = entry_points,
         tags = ["robotpy"],
     )
 
     pycross_wheel_library(
-        name = "{}-import".format(name),
+        name = "{}".format(name),
         wheel = "{}-wheel".format(name),
         visibility = ["//visibility:public"],
         tags = ["manual"],

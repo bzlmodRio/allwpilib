@@ -239,10 +239,6 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//wpilibc:robotpy-wpilib",
             "//xrpVendordep:robotpy-native-xrp",
         ],
-        robotpy_wheel_deps = [
-            "//wpilibc:robotpy-wpilib-import",
-            "//xrpVendordep:robotpy-native-xrp-import",
-        ],
         strip_path_prefixes = ["xrpVendordep/src/main/python"],
         summary = "Binary wrapper for WPILib XRP Vendor library",
         project_urls = None,

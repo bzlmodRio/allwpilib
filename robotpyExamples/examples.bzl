@@ -58,8 +58,9 @@ def define_examples():
         )
         common_deps = [
             ":robotpy", 
-            "//wpilibc:robotpy-wpilib-import", 
-            "//romiVendordep:robotpy-romi-import",
+            "//commandsv2:commandsv2-import",
+            "//wpilibc:robotpy-wpilib", 
+            "//romiVendordep:robotpy-romi",
             requirement("numpy"),
         ]
 
@@ -81,6 +82,6 @@ def define_examples():
         py_binary(
             name = base_name + "-sim",
             args = ["--main", "$(location " + example_folder + "/robot.py)", "sim"],
-            deps = common_deps + ["//simulation/halsim_gui:robotpy-halsim-gui-import"],
+            deps = common_deps + ["//simulation/halsim_gui:robotpy-halsim-gui"],
             **common_kwargs,
         )
