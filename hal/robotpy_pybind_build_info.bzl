@@ -410,8 +410,7 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
-    if "hal" not in name:
-        _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
+    _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
 
     # Helper used to generate all files with one target.
     native.filegroup(
@@ -430,7 +429,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         srcs = [
             "src/main/python/hal/simulation/hal_simulation.pc",
             "src/main/python/hal/wpihal.pc",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
