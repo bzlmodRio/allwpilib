@@ -69,8 +69,8 @@ def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         ],
         dynamic_deps = [
             "//hal:shared/wpiHal",
-            "//simulation/halsim_gui:shared/halsim_gui",
             "//ntcore:shared/ntcore",
+            "//simulation/halsim_gui:shared/halsim_gui",
             "//wpimath:shared/wpimath",
         ],
         extra_hdrs = extra_hdrs,
@@ -185,7 +185,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//wpimath:robotpy-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["simulation/halsim_gui/src/main/python/"],
+        strip_path_prefixes = ["simulation/halsim_gui/src/main/python"],
         summary = "WPILib simulation GUI",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

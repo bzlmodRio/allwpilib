@@ -96,7 +96,7 @@ def {{extension_module.name}}_extension(srcs = [], header_to_dat_deps = [], extr
         name = "{{extension_module.name}}",
         install_path = "{{stripped_include_prefix}}/{{extension_module.install_path}}/",
         extension_name = "{{ extension_module.gen_modinit.lib_name }}",
-        generated_srcs = [":{{extension_module.name}}.generated_srcs"],
+        generated_srcs = [{% if extension_module.generation_data %}":{{extension_module.name}}.generated_srcs"{% endif %}],
         semiwrap_header = [":{{extension_module.name}}.gen_modinit_hpp"],
         deps = [
             ":{{extension_module.name}}.tmpl_hdrs",

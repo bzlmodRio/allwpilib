@@ -1,7 +1,11 @@
 def fixup_root_package_name(name):
     if name == "wpihal":
         return "hal"
+    if name == "hal_simulation":
+        return "hal"
     if name == "wpilib":
+        return "wpilibc"
+    if name == "wpilib_simulation":
         return "wpilibc"
     if name == "wpilog":
         return "datalog"
@@ -13,6 +17,10 @@ def fixup_root_package_name(name):
         return "ntcore"
     if name == "halsim-ws":
         return "simulation/halsim_ws_core"
+    if name == "halsim_gui":
+        return "simulation/halsim_gui"
+    if name == "halsim_gui_ext":
+        return "simulation/halsim_gui"
     if name == "wpimath_test":
         return "wpimath"
     if name == "robotpy_apriltag":
@@ -25,6 +33,7 @@ def fixup_native_lib_name(name):
 
 
 def fixup_shared_lib_name(name):
+    print(name)
     if name == "wpihal":
         return "wpiHal"
     if name == "hal":
@@ -35,6 +44,8 @@ def fixup_shared_lib_name(name):
         return "xrpVendordep"
     if name == "romi":
         return "romiVendordep"
+    if name == "simulation/halsim_gui":
+        return "halsim_gui"
     return name
 
 

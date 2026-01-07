@@ -276,7 +276,7 @@ class BazelExtensionModule:
                 base_library = dep_name.split("-")[0]
                 local_extension_dependencies.add(f"//{base_library}:{dep_name}")
             else:
-                base_library = fixup_root_package_name(dep_name.split("_")[0])
+                base_library = fixup_root_package_name(dep_name)
                 local_extension_dependencies.add(
                     f"//{base_library}:{fixup_shared_lib_name(base_library)}"
                 )
