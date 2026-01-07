@@ -482,7 +482,7 @@ def generate_pybind_build_file(
             for ep_key, ep_value in explicit_entry_points[entry_point_type].items():
                 entry_points[entry_point_type].append(f"{ep_key} = {ep_value}")
         
-    strip_path_prefixes = f"{fixup_root_package_name(top_level_name)}/{stripped_include_prefix}"
+    strip_path_prefixes = [f"{fixup_root_package_name(top_level_name)}/{stripped_include_prefix}", f"{fixup_root_package_name(top_level_name)}"]
 
     with open(output_file, "w") as f:
         f.write(

@@ -401,6 +401,14 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         ] + extra_pyi_deps,
     )
 
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "hal/simulation/_simulation.pyi",
+            "hal/_wpiHal.pyi",
+        ]
+    )
+
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
     if "hal" not in name:
         _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
@@ -461,7 +469,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//ntcore:pyntcore",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["hal/src/main/python"],
+        strip_path_prefixes = ["hal/src/main/python", "hal"],
         summary = "Binary wrapper for FRC HAL",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

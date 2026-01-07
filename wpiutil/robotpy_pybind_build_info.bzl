@@ -190,11 +190,11 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         extension_package = "wpiutil._wpiutil",
         stub_files = [
             "wpiutil/_wpiutil/__init__.pyi",
-            "$(location _wpiutil/__init__.pyi)",
+            "$(location wpiutil/_wpiutil/__init__.pyi)",
             "wpiutil/_wpiutil/sync.pyi",
-            "$(location _wpiutil/sync.pyi)",
+            "$(location wpiutil/_wpiutil/sync.pyi)",
             "wpiutil/_wpiutil/wpistruct.pyi",
-            "$(location _wpiutil/wpistruct.pyi)",
+            "$(location wpiutil/_wpiutil/wpistruct.pyi)",
         ],
         remapping_args = [
             "wpiutil",
@@ -205,9 +205,9 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
             "$(location :src/main/python/wpiutil/_wpiutil)",
         ],
         outputs = [
-            "_wpiutil/__init__.pyi",
-            "_wpiutil/sync.pyi",
-            "_wpiutil/wpistruct.pyi",
+            "wpiutil/_wpiutil/__init__.pyi",
+            "wpiutil/_wpiutil/sync.pyi",
+            "wpiutil/_wpiutil/wpistruct.pyi",
         ],
         srcs = [
             "src/main/python/wpiutil/__init__.py",
@@ -222,9 +222,9 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
     native.filegroup(
         name = name + ".pyi_files",
         srcs = [
-            "_wpiutil/__init__.pyi",
-            "_wpiutil/sync.pyi",
-            "_wpiutil/wpistruct.pyi",
+            "wpiutil/_wpiutil/__init__.pyi",
+            "wpiutil/_wpiutil/sync.pyi",
+            "wpiutil/_wpiutil/wpistruct.pyi",
         ]
     )
 
@@ -283,7 +283,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         deps = [
             "//wpiutil:robotpy-native-wpiutil",
         ],
-        strip_path_prefixes = ["wpiutil/src/main/python"],
+        strip_path_prefixes = ["wpiutil/src/main/python", "wpiutil"],
         summary = "Binary wrapper for FRC WPIUtil library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

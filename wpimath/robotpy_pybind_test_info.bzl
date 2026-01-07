@@ -119,6 +119,13 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         ] + extra_pyi_deps,
     )
 
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "wpimath_test/_wpimath_test.pyi",
+        ]
+    )
+
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
     if "hal" not in name:
         _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
@@ -138,7 +145,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/test/python/cpp/wpimath_test/wpimath_test.pc",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
@@ -164,7 +171,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         imports = ["src/test/python/cpp"],
         deps = [
         ],
-        strip_path_prefixes = ["wpimath/src/test/python/cpp"],
+        strip_path_prefixes = ["wpimath/src/test/python/cpp", "wpimath"],
         summary = "Test project for verifying robotpy-build behavior",
         project_urls = None,
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

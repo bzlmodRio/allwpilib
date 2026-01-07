@@ -1247,6 +1247,13 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         ] + extra_pyi_deps,
     )
 
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "wpimath/_wpimath.pyi",
+        ]
+    )
+
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
     if "hal" not in name:
         _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
@@ -1268,7 +1275,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "src/main/python/wpimath/wpimath.pc",
             "src/main/python/wpimath/wpimath-casters.pc",
             "src/main/python/wpimath/wpimath-casters.pybind11.json",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
@@ -1303,7 +1310,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//wpimath:robotpy-native-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["wpimath/src/main/python"],
+        strip_path_prefixes = ["wpimath/src/main/python", "wpimath"],
         summary = "Binary wrapper for FRC WPIMath library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

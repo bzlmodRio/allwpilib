@@ -187,6 +187,13 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         ] + extra_pyi_deps,
     )
 
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "wpilog/_wpilog.pyi",
+        ]
+    )
+
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
     if "hal" not in name:
         _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
@@ -206,7 +213,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/main/python/wpilog/wpilog.pc",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
@@ -241,7 +248,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//datalog:robotpy-native-datalog",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["datalog/src/main/python"],
+        strip_path_prefixes = ["datalog/src/main/python", "datalog"],
         summary = "Binary wrapper for FRC wpilog library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

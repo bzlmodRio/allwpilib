@@ -155,6 +155,13 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         ] + extra_pyi_deps,
     )
 
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "romi/_romi.pyi",
+        ]
+    )
+
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
     if "hal" not in name:
         _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
@@ -174,7 +181,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/main/python/romi/romi.pc",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
@@ -210,7 +217,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "//simulation/halsim_ws_core:robotpy-halsim-ws",
             "//wpilibc:robotpy-wpilib",
         ],
-        strip_path_prefixes = ["romiVendordep/src/main/python"],
+        strip_path_prefixes = ["romiVendordep/src/main/python", "romiVendordep"],
         summary = "Binary wrapper for WPILib Romi Vendor library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

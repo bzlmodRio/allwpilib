@@ -1671,6 +1671,15 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         ] + extra_pyi_deps,
     )
 
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "wpilib/_wpilib/__init__.pyi",
+            "wpilib/_wpilib/sysid.pyi",
+            "wpilib/simulation/_simulation.pyi",
+        ]
+    )
+
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
     if "hal" not in name:
         _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
@@ -1692,7 +1701,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         srcs = [
             "src/main/python/wpilib/wpilib.pc",
             "src/main/python/wpilib/simulation/wpilib_simulation.pc",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
@@ -1736,7 +1745,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             requirement("pytest-reraise"),
             requirement("robotpy-cli"),
         ],
-        strip_path_prefixes = ["wpilibc/src/main/python"],
+        strip_path_prefixes = ["wpilibc/src/main/python", "wpilibc"],
         summary = "Binary wrapper for FRC WPILib",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
