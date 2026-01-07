@@ -190,11 +190,11 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         extension_package = "wpiutil._wpiutil",
         stub_files = [
             "wpiutil/_wpiutil/__init__.pyi",
-            "$(location wpiutil/_wpiutil/__init__.pyi)",
+            "$(location _wpiutil/__init__.pyi)",
             "wpiutil/_wpiutil/sync.pyi",
-            "$(location wpiutil/_wpiutil/sync.pyi)",
+            "$(location _wpiutil/sync.pyi)",
             "wpiutil/_wpiutil/wpistruct.pyi",
-            "$(location wpiutil/_wpiutil/wpistruct.pyi)",
+            "$(location _wpiutil/wpistruct.pyi)",
         ],
         remapping_args = [
             "wpiutil",
@@ -205,9 +205,9 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
             "$(location :src/main/python/wpiutil/_wpiutil)",
         ],
         outputs = [
-            "wpiutil/_wpiutil/__init__.pyi",
-            "wpiutil/_wpiutil/sync.pyi",
-            "wpiutil/_wpiutil/wpistruct.pyi",
+            "_wpiutil/__init__.pyi",
+            "_wpiutil/sync.pyi",
+            "_wpiutil/wpistruct.pyi",
         ],
         srcs = [
             "src/main/python/wpiutil/__init__.py",
@@ -217,6 +217,15 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         python_deps = [
             "//wpiutil:robotpy-native-wpiutil",
         ] + extra_pyi_deps,
+    )
+
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "_wpiutil/__init__.pyi",
+            "_wpiutil/sync.pyi",
+            "_wpiutil/wpistruct.pyi",
+        ]
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
@@ -240,7 +249,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "src/main/python/wpiutil/wpiutil.pc",
             "src/main/python/wpiutil/wpiutil-casters.pc",
             "src/main/python/wpiutil/wpiutil-casters.pybind11.json",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )

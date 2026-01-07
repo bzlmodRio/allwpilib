@@ -62,3 +62,10 @@ cc_library(
     includes = ["."],
     visibility = ["//visibility:public"],
 )
+
+
+filegroup(
+    name = "header_files",
+    srcs = HDRS,
+    visibility = ["//visibility:public"],
+)

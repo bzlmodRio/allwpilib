@@ -86,8 +86,6 @@ def robotpy_library(
         name,
         strip_path_prefixes = None,
         data = [],
-        python_tag = "cp311",  # TODO(pj) Select based on python version
-        abi = "cp311",  # TODO(pj) Select based on python version
         summary = None,
         project_urls = None,
         author_email = None,
@@ -116,13 +114,6 @@ def robotpy_library(
     py_wheel(
         name = "{}-wheel".format(name),
         distribution = distro_name,
-        platform = select({
-            "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
-            "@bazel_tools//src/conditions:windows": "win_amd64",
-            "//conditions:default": "manylinux_2_39_x86_64",
-        }),
-        abi = abi,
-        python_tag = python_tag,
         stamp = 1,
         version = "2027.0.0a3",  # TODO(pj)
         summary = summary,
@@ -201,8 +192,6 @@ def native_wrappery_library(
         install_path,
         headers,
         strip_path_prefixes = [],
-        python_tag = "py3",  # TODO(pj)
-        abi = "none",
         summary = None,
         project_urls = None,
         author_email = None,
@@ -263,13 +252,6 @@ def native_wrappery_library(
     py_wheel(
         name = "{}-wheel".format(name),
         distribution = distro_name,
-        platform = select({
-            "@bazel_tools//src/conditions:darwin": "macosx_11_0_x86_64",
-            "@bazel_tools//src/conditions:windows": "win_amd64",
-            "//conditions:default": platform_name,
-        }),
-        abi = abi,
-        python_tag = python_tag,
         stamp = 1,
         version = "2027.0.0a3",  # TODO(pj)
         summary = summary,

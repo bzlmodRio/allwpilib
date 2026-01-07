@@ -177,13 +177,12 @@ define_pybind_library(
     pkgcfgs = PKG_CONFIG_DEPS,
 )
 
-generate_robotpy_pybind_build_info(
-    name = "robotpy-wpimath-generator",
-    # additional_srcs = [":robotpy-native-wpimath.copy_headers"],
-    package_root_file = "src/main/python/halsim_gui/_ext/__init__.py",
-    pkgcfgs = PKG_CONFIG_DEPS,
-    yaml_files = [],
-)
+# generate_robotpy_pybind_build_info(
+#     name = "robotpy-wpimath-generator",
+#     package_root_file = "src/main/python/halsim_gui/_ext/__init__.py",
+#     pkgcfgs = PKG_CONFIG_DEPS,
+#     yaml_files = [],
+# )
 
 robotpy_py_test(
     "python_tests",

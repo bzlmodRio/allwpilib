@@ -9,11 +9,14 @@ def define_native_wrapper(name, pyproject_toml = None):
         srcs = native.glob(["src/main/native/include/**"]) + native.glob(["src/generated/main/native/include/**"], allow_empty = True) + native.glob([
             "src/main/native/thirdparty/gcem/include/**",
             "src/main/native/thirdparty/sleipnir/include/**",
-        ]),
+            "src/generated/main/native/cpp/wpimath/protobuf/**/*.h"
+        ]) + ["@eigen//:header_files"],
         out = "native/wpimath/include",
-        root_paths = ["src/main/native/include/"],
+        root_paths = ["src/main/native/include/", "external/eigen"],
+        include_external_repositories = ["eigen/**"],
         replace_prefixes = {
             "wpimath/src/generated/main/native/include": "",
+            "wpimath/src/generated/main/native/cpp/wpimath/protobuf": "wpimath/protobuf",
             "wpimath/src/main/native/include": "",
             "wpimath/src/main/native/thirdparty/gcem/include": "",
             "wpimath/src/main/native/thirdparty/sleipnir/include": "",
