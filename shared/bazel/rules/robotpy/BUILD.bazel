@@ -2,6 +2,7 @@ load("@allwpilib_pip_deps//:requirements.bzl", "requirement", "whl_requirement")
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 load("@rules_python//python:pip.bzl", "whl_filegroup")
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 
 exports_files([
     "wrapper.py",
@@ -86,4 +87,31 @@ whl_filegroup(
     pattern = "semiwrap/semiwrap.pybind11.json",
     visibility = ["//visibility:public"],
     whl = whl_requirement("semiwrap"),
+)
+
+bool_flag(
+    name = "robotpy_enable_update_init",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "robotpy_update_init_enabled",
+    flag_values = {
+        ":robotpy_enable_update_init": "true",
+    },
+)
+
+
+bool_flag(
+    name = "robotpy_enable_make_pyi",
+    build_setting_default = False,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "robotpy_make_pyi_enabled",
+    flag_values = {
+        ":robotpy_enable_make_pyi": "true",
+    },
 )

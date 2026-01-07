@@ -94,7 +94,6 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
     )
 
 def create_imports(name, prefix, library = None, project_file = None, update_init = [], extra_deps = []):
-    pass
     py_binary(
         name = name + ".bin",
         srcs = [
@@ -112,6 +111,8 @@ def create_imports(name, prefix, library = None, project_file = None, update_ini
 
     all_targets = []
 
+
+
     for i, init_file in enumerate(update_init):
         parts = init_file.split(" ", 1)
         cmd = "$(location " + name + ".bin) semiwrap.tool create-imports --write --override_output_file=$(OUTS) " + init_file
@@ -120,8 +121,10 @@ def create_imports(name, prefix, library = None, project_file = None, update_ini
             tools = [name + ".bin"],
             outs = ["{}-create_imports{}.py".format(name, i)],
             cmd = cmd,
-            # tags = ["robotpy", "manual"],
-            target_compatible_with = robotpy_compatibility_select(),
+            target_compatible_with = select({
+                "//shared/bazel/rules/robotpy:robotpy_update_init_enabled": [],
+                "//conditions:default": ["@platforms//:incompatible"],
+            }),
         )
 
         write_source_files(

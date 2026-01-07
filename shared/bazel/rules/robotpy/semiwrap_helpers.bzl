@@ -375,7 +375,10 @@ def make_pyi(name, extension_package, stub_files, remapping_args, srcs, outputs,
         main = "make_pyi_wrapper.py",
         deps = [requirement("semiwrap")] + python_deps,
         legacy_create_init = 0,
-        target_compatible_with = robotpy_compatibility_select(),
+        target_compatible_with = select({
+            "//shared/bazel/rules/robotpy:robotpy_make_pyi_enabled": [],
+            "//conditions:default": ["@platforms//:incompatible"],
+        }),
     )
 
     native.genrule(
