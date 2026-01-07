@@ -1,12 +1,12 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_python//python:packaging.bzl", "py_wheel")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
 load("//shared/bazel/rules:publishing.bzl", "host_architectures")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "copy_native_file")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
-load("@rules_python//python:packaging.bzl", "py_wheel")
 
 cc_library(
     name = "headers",
@@ -125,10 +125,10 @@ py_wheel(
         "@bazel_tools//src/conditions:windows": "win_amd64",
         "//conditions:default": "manylinux_2_38_x86_64",
     }),
-    version = "2027.0.0a3",  # TODO(pj)
-    deps = ["robotpy-halsim-ds-socket"],
     strip_path_prefixes = ["simulation/halsim_ds_socket/src/main/python/"],
     tags = ["robotpy"],
+    version = "2027.0.0a3",  # TODO(pj)
+    deps = ["robotpy-halsim-ds-socket"],
 )
 
 robotpy_py_test(

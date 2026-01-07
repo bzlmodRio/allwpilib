@@ -362,8 +362,8 @@ wpimath_extension(
 
 define_pybind_library(
     name = "robotpy-wpimath",
-    pkgcfgs = PYBIND_PKGCFG_DEPS,
     create_pyi_extra_deps = [requirement("numpy")],
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
 )
 
 generate_robotpy_pybind_build_info(

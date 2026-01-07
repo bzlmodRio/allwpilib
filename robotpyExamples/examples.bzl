@@ -1,5 +1,5 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
-load("@rules_python//python:defs.bzl", "py_test", "py_binary")
+load("@rules_python//python:defs.bzl", "py_binary", "py_test")
 
 PROJECTS = [
     "AddressableLED",
@@ -46,20 +46,19 @@ PROJECTS = [
     "TankDriveXboxController",
 ]
 
-
 def define_examples():
     for example_folder in PROJECTS:
         base_name = example_folder.replace("/", "_")
         common_kwargs = dict(
-            srcs = [":robotpy_entry_point.py",],
+            srcs = [":robotpy_entry_point.py"],
             main = "robotpy_entry_point.py",
             data = native.glob([example_folder + "/**"]),
             imports = [example_folder],
         )
         common_deps = [
-            ":robotpy", 
+            ":robotpy",
             "//commandsv2:commandsv2-import",
-            "//wpilibc:robotpy-wpilib", 
+            "//wpilibc:robotpy-wpilib",
             "//romiVendordep:robotpy-romi",
             requirement("numpy"),
         ]
@@ -68,20 +67,20 @@ def define_examples():
             name = base_name + "-test",
             args = ["--main", "$(location " + example_folder + "/robot.py)", "test", "--builtin"],
             deps = common_deps,
-            size="small",
-            **common_kwargs,
+            size = "small",
+            **common_kwargs
         )
-        
+
         py_binary(
             name = base_name + "-run",
             args = ["--main", "$(location " + example_folder + "/robot.py)", "run"],
             deps = common_deps,
-            **common_kwargs,
+            **common_kwargs
         )
-        
+
         py_binary(
             name = base_name + "-sim",
             args = ["--main", "$(location " + example_folder + "/robot.py)", "sim"],
             deps = common_deps + ["//simulation/halsim_gui:robotpy-halsim-gui"],
-            **common_kwargs,
+            **common_kwargs
         )

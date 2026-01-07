@@ -265,8 +265,8 @@ wpilib_simulation_extension(
 
 define_pybind_library(
     name = "robotpy-wpilib",
-    pkgcfgs = PKG_CONFIG_DEPS,
     create_pyi_extra_deps = [requirement("numpy")],
+    pkgcfgs = PKG_CONFIG_DEPS,
 )
 
 robotpy_py_test(

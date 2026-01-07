@@ -1,8 +1,8 @@
 load("@aspect_bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
+load("@rules_pycross//pycross/private:wheel_library.bzl", "pycross_wheel_library")
 load("@rules_python//python:defs.bzl", "py_library")
 load("@rules_python//python:packaging.bzl", "py_wheel")
-load("@rules_pycross//pycross/private:wheel_library.bzl", "pycross_wheel_library")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 def create_pybind_library(
@@ -110,7 +110,6 @@ def robotpy_library(
         tags = ["robotpy"],
         **kwargs
     )
-    
 
     distro_name = name if name != "robotpy-wpilib" else "wpilib"
 
@@ -136,7 +135,7 @@ def robotpy_library(
         license = "BSD-3-Clause",
         tags = ["robotpy"],
     )
-    
+
     pycross_wheel_library(
         name = "{}".format(name),
         wheel = "{}-wheel".format(name),

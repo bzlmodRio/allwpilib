@@ -420,7 +420,6 @@ http_jar(
     urls = ["https://github.com/google/copybara/releases/download/v20251027/copybara_deploy.jar"],
 )
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
     name = "rules_pycross",
     sha256 = "4acc6eb0f04baf94e6a864e6a199a050e9465967b8b8e900523cc2f4214e7937",

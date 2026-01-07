@@ -1,6 +1,7 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
-load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_python//python:defs.bzl", "py_binary")
+load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 RESOLVE_CASTERS_DIR = "generated/resolve_casters/"
 HEADER_DAT_DIR = "generated/header_to_dat/"
@@ -358,7 +359,6 @@ def run_header_gen(name, casters_pickle, trampoline_subpath, header_gen_config, 
     )
 
 def make_pyi(name, extension_package, stub_files, remapping_args, srcs, outputs, python_deps):
-
     cmd = "$(locations " + name + ".gen_wrapper" + ") "
     cmd += extension_package
     for sf in stub_files:
@@ -368,8 +368,7 @@ def make_pyi(name, extension_package, stub_files, remapping_args, srcs, outputs,
 
     for arg in remapping_args:
         cmd += " " + arg
-
-    native.py_binary(
+    py_binary(
         name = name + ".gen_wrapper",
         srcs = ["//shared/bazel/rules/robotpy:make_pyi_wrapper.py"],
         main = "make_pyi_wrapper.py",

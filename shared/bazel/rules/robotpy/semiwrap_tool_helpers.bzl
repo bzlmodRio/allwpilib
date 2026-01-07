@@ -111,8 +111,6 @@ def create_imports(name, prefix, library = None, project_file = None, update_ini
 
     all_targets = []
 
-
-
     for i, init_file in enumerate(update_init):
         parts = init_file.split(" ", 1)
         cmd = "$(location " + name + ".bin) semiwrap.tool create-imports --write --override_output_file=$(OUTS) " + init_file
