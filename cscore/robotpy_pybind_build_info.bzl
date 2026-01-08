@@ -24,9 +24,9 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             header_file = "cscore/src/main/native/include/wpi/cs/cscore_cpp.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::cs::UsbCameraInfo", "cs__UsbCameraInfo.hpp"),
-                ("wpi::cs::VideoMode", "cs__VideoMode.hpp"),
-                ("wpi::cs::RawEvent", "cs__RawEvent.hpp"),
+                ("wpi::cs::UsbCameraInfo", "wpi__cs__UsbCameraInfo.hpp"),
+                ("wpi::cs::VideoMode", "wpi__cs__VideoMode.hpp"),
+                ("wpi::cs::RawEvent", "wpi__cs__RawEvent.hpp"),
             ],
         ),
         struct(
@@ -36,18 +36,18 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             header_file = "cscore/src/main/native/include/wpi/cs/cscore_oo.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::cs::VideoProperty", "cs__VideoProperty.hpp"),
-                ("wpi::cs::VideoSource", "cs__VideoSource.hpp"),
-                ("wpi::cs::VideoCamera", "cs__VideoCamera.hpp"),
-                ("wpi::cs::UsbCamera", "cs__UsbCamera.hpp"),
-                ("wpi::cs::HttpCamera", "cs__HttpCamera.hpp"),
-                ("wpi::cs::AxisCamera", "cs__AxisCamera.hpp"),
-                ("wpi::cs::ImageSource", "cs__ImageSource.hpp"),
-                ("wpi::cs::VideoSink", "cs__VideoSink.hpp"),
-                ("wpi::cs::MjpegServer", "cs__MjpegServer.hpp"),
-                ("wpi::cs::ImageSink", "cs__ImageSink.hpp"),
-                ("wpi::cs::VideoEvent", "cs__VideoEvent.hpp"),
-                ("wpi::cs::VideoListener", "cs__VideoListener.hpp"),
+                ("wpi::cs::VideoProperty", "wpi__cs__VideoProperty.hpp"),
+                ("wpi::cs::VideoSource", "wpi__cs__VideoSource.hpp"),
+                ("wpi::cs::VideoCamera", "wpi__cs__VideoCamera.hpp"),
+                ("wpi::cs::UsbCamera", "wpi__cs__UsbCamera.hpp"),
+                ("wpi::cs::HttpCamera", "wpi__cs__HttpCamera.hpp"),
+                ("wpi::cs::AxisCamera", "wpi__cs__AxisCamera.hpp"),
+                ("wpi::cs::ImageSource", "wpi__cs__ImageSource.hpp"),
+                ("wpi::cs::VideoSink", "wpi__cs__VideoSink.hpp"),
+                ("wpi::cs::MjpegServer", "wpi__cs__MjpegServer.hpp"),
+                ("wpi::cs::ImageSink", "wpi__cs__ImageSink.hpp"),
+                ("wpi::cs::VideoEvent", "wpi__cs__VideoEvent.hpp"),
+                ("wpi::cs::VideoListener", "wpi__cs__VideoListener.hpp"),
             ],
         ),
         struct(
@@ -57,8 +57,8 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             header_file = "cscore/src/main/native/include/wpi/cs/cscore_cv.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::cs::CvSource", "cs__CvSource.hpp"),
-                ("wpi::cs::CvSink", "cs__CvSink.hpp"),
+                ("wpi::cs::CvSource", "wpi__cs__CvSource.hpp"),
+                ("wpi::cs::CvSink", "wpi__cs__CvSink.hpp"),
             ],
         ),
         struct(
@@ -223,28 +223,28 @@ def define_pybind_library(name, pkgcfgs=[]):
         summary = "RobotPy bindings for cscore image processing library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-wpiutil==2027.0.0a2", "robotpy-wpinet==2027.0.0a2", "pyntcore==2027.0.0a2"],
+        requires = ["robotpy-wpiutil==2027.0.0a3", "robotpy-wpinet==2027.0.0a3", "pyntcore==2027.0.0a3"],
         entry_points = {
             "pkg_config": ["cscore-casters = cscore", "cscore = cscore"],
         },
         visibility = ["//visibility:public"],
     )
 
-    create_imports(
-        name = "{}-create-imports".format(name),
-        # project_file = "cscore/src/main/python/pyproject.toml",
-        library = [name],
-        update_init = ["cscore"],
-    )
+    # create_imports(
+    #     name = "{}-create-imports".format(name),
+    #     # project_file = "cscore/src/main/python/pyproject.toml",
+    #     library = [name],
+    #     update_init = ["cscore"],
+    # )
     
-    update_yaml_files(
-        name = "robotpy-update-yaml",
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + ["cscore.copy_headers"] + ["//cameraserver:headers", ":headers"],
-        package_root_file = "src/main/python/cscore/__init__.py",
-        pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
-    )
+    # update_yaml_files(
+    #     name = "robotpy-update-yaml",
+    #     extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+    #     package_root_file = "src/main/python/cscore/__init__.py",
+    #     pkgcfgs = pkgcfgs,
+    #     pyproject_toml = "src/main/python/pyproject.toml",
+    #     yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+    # )
 
     # scan_headers(
     #     name = "robotpy-scan-headers",
