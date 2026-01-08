@@ -1,11 +1,12 @@
 # THIS FILE IS AUTO GENERATED
 
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "update_yaml_files", "scan_headers")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "publish_casters", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
-def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = [], extra_pyi_deps = []):
+def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     CSCORE_HEADER_GEN = [
         # struct(
         #     class_name = "CameraServer",
@@ -109,7 +110,6 @@ def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         trampoline_subpath = "src/main/python/cscore",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            # ":cscore.copy_headers",
         ],
     )
 
@@ -173,7 +173,47 @@ def publish_library_casters():
         tags = ["robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs=[]):
+def _make_pyi_stubs(name, extra_pyi_deps = []):
+    make_pyi(
+        name = name + ".make_pyi0",
+        extension_package = "cscore._cscore",
+        stub_files = [
+            "cscore/_cscore.pyi",
+            "$(location cscore/_cscore.pyi)",
+        ],
+        remapping_args = [
+            "cscore",
+            "cscore/src/main/python/cscore/__init__.py",
+            "cscore._init__cscore",
+            "$(location :src/main/python/cscore/_init__cscore.py)",
+            "cscore._cscore",
+            "$(location :src/main/python/cscore/_cscore)",
+        ],
+        outputs = [
+            "cscore/_cscore.pyi",
+        ],
+        srcs = [
+            "src/main/python/cscore/__init__.py",
+            ":src/main/python/cscore/_init__cscore.py",
+            ":src/main/python/cscore/_cscore",
+        ],
+        python_deps = [
+            "//ntcore:pyntcore",
+            "//wpinet:robotpy-wpinet",
+            "//wpiutil:robotpy-wpiutil",
+        ] + extra_pyi_deps,
+    )
+
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "cscore/_cscore.pyi",
+        ]
+    )
+
+def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
+    _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
+
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -186,13 +226,14 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     # Files that will be included in the wheel as data deps
     native.filegroup(
-        name = "{}.generated_data_files".format(name),
+        name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/main/python/cscore/cscore.pc",
             "src/main/python/cscore/cscore-casters.pc",
             "src/main/python/cscore/cscore-casters.pybind11.json",
-        ],
+        ] + [name + ".pyi_files"],
         tags = ["manual", "robotpy"],
+        visibility = ["//visibility:public"],
     )
 
     # Contains all of the non-python files that need to be included in the wheel
@@ -202,13 +243,20 @@ def define_pybind_library(name, pkgcfgs=[]):
         tags = ["manual", "robotpy"],
     )
 
+    generate_version_file(
+        name = "{}.generate_version".format(name),
+        output_file = "src/main/python/cscore/version.py",
+        template = "//shared/bazel/rules/robotpy:version_template.in",
+    )
+
     robotpy_library(
         name = name,
         srcs = native.glob(["src/main/python/cscore/**/*.py"]) + [
             "src/main/python/cscore/_init__cscore.py",
+            "{}.generate_version".format(name),
         ],
         data = [
-            "{}.generated_data_files".format(name),
+            "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
             ":src/main/python/cscore/_cscore",
             ":cscore.trampoline_hdr_files",
@@ -219,7 +267,7 @@ def define_pybind_library(name, pkgcfgs=[]):
             "//wpinet:robotpy-wpinet",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["cscore/src/main/python/"],
+        strip_path_prefixes = ["cscore/src/main/python", "cscore"],
         summary = "RobotPy bindings for cscore image processing library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -232,14 +280,17 @@ def define_pybind_library(name, pkgcfgs=[]):
 
     # create_imports(
     #     name = "{}-create-imports".format(name),
-    #     # project_file = "cscore/src/main/python/pyproject.toml",
     #     library = [name],
+    #     prefix = "src/main/python",
     #     update_init = ["cscore"],
+    #     extra_deps = create_imports_extra_deps,
     # )
-    
+
     # update_yaml_files(
-    #     name = "robotpy-update-yaml",
-    #     extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True),
+    #     name = "{}-update-yaml".format(name),
+    #     yaml_output_directory = "src/main/python/semiwrap",
+    #     extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
+    #     ],
     #     package_root_file = "src/main/python/cscore/__init__.py",
     #     pkgcfgs = pkgcfgs,
     #     pyproject_toml = "src/main/python/pyproject.toml",
@@ -247,8 +298,10 @@ def define_pybind_library(name, pkgcfgs=[]):
     # )
 
     # scan_headers(
-    #     name = "robotpy-scan-headers",
-    #     extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty=True) + ["cscore.copy_headers"] + ["//cameraserver:headers", ":headers"],
+    #     name = "{}-scan-headers".format(name),
+    #     extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
+            
+    #     ],
     #     package_root_file = "src/main/python/cscore/__init__.py",
     #     pkgcfgs = pkgcfgs,
     #     pyproject_toml = "src/main/python/pyproject.toml",
