@@ -1677,7 +1677,7 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
             "wpilib/_wpilib/__init__.pyi",
             "wpilib/_wpilib/sysid.pyi",
             "wpilib/simulation/_simulation.pyi",
-        ]
+        ],
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):

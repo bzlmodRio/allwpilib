@@ -472,7 +472,7 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         srcs = [
             "ntcore/_ntcore/__init__.pyi",
             "ntcore/_ntcore/meta.pyi",
-        ]
+        ],
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):

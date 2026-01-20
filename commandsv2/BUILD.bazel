@@ -2,15 +2,13 @@ load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
 load("@rules_java//java:defs.bzl", "java_binary")
-load("@rules_pycross//pycross/private:wheel_library.bzl", "pycross_wheel_library")
-load("@rules_python//python:defs.bzl", "py_binary", "py_library")
-load("@rules_python//python:packaging.bzl", "py_wheel")
+load("@rules_python//python:defs.bzl", "py_binary")
 load("//commandsv2:generate.bzl", "generate_wpilib_new_commands")
+load("//commandsv2:robotpy_pure_python_build_info.bzl", "define_python_library")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_library")
 load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
 load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
-load("//commandsv2:robotpy_pure_python_build_info.bzl", "define_python_library")
 
 filegroup(
     name = "doxygen-files",

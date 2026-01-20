@@ -1,8 +1,8 @@
-
-load("@rules_python//python:packaging.bzl", "py_wheel")
-load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "copy_native_file")
 load("@rules_pycross//pycross/private:wheel_library.bzl", "pycross_wheel_library")
+load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_python//python:packaging.bzl", "py_wheel")
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
+load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "copy_native_file")
 
 def define_python_library(name):
     generate_version_file(
@@ -20,19 +20,18 @@ def define_python_library(name):
     native.filegroup(
         name = name + ".py.typed",
         srcs = [
-            "src/main/python/halsim_ds_socket/py.typed"
-        ]
+            "src/main/python/halsim_ds_socket/py.typed",
+        ],
     )
 
     data_files = [
         ":halsim_ds_socket.copy_lib",
         name + ".py.typed",
     ]
-
-    native.py_library(
+    py_library(
         name = "robotpy-halsim-ds-socket.lib",
         srcs = native.glob(["src/main/python/**/*.py"]) + [
-            "{}.generate_version".format(name)
+            "{}.generate_version".format(name),
         ],
         data = data_files,
         imports = ["src/main/python"],
@@ -56,7 +55,7 @@ def define_python_library(name):
         license = "BSD-3-Clause",
         entry_points = {
             "robotpy_sim.2027": ["ds-socket = halsim_ds_socket"],
-        }
+        },
     )
 
     pycross_wheel_library(

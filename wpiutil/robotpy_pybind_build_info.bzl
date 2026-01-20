@@ -225,7 +225,7 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
             "wpiutil/_wpiutil/__init__.pyi",
             "wpiutil/_wpiutil/sync.pyi",
             "wpiutil/_wpiutil/wpistruct.pyi",
-        ]
+        ],
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):

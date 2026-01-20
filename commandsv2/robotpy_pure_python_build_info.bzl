@@ -1,7 +1,7 @@
-load("@rules_python//python:defs.bzl", "py_library")
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
-load("@rules_python//python:packaging.bzl", "py_wheel")
 load("@rules_pycross//pycross/private:wheel_library.bzl", "pycross_wheel_library")
+load("@rules_python//python:defs.bzl", "py_library")
+load("@rules_python//python:packaging.bzl", "py_wheel")
 
 def define_python_library(name):
     py_library(
@@ -41,4 +41,3 @@ def define_python_library(name):
             requirement("typing-extensions"),
         ],
     )
-

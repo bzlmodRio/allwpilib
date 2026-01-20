@@ -4,7 +4,6 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "publish_casters", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
 def cscore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     CSCORE_HEADER_GEN = [
@@ -208,7 +207,7 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         name = name + ".pyi_files",
         srcs = [
             "cscore/_cscore.pyi",
-        ]
+        ],
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
@@ -300,7 +299,7 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
     # scan_headers(
     #     name = "{}-scan-headers".format(name),
     #     extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
-            
+
     #     ],
     #     package_root_file = "src/main/python/cscore/__init__.py",
     #     pkgcfgs = pkgcfgs,

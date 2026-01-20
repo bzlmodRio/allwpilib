@@ -406,7 +406,7 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         srcs = [
             "hal/simulation/_simulation.pyi",
             "hal/_wpiHal.pyi",
-        ]
+        ],
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):

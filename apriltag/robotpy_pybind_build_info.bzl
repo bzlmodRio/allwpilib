@@ -197,7 +197,7 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         name = name + ".pyi_files",
         srcs = [
             "robotpy_apriltag/_apriltag.pyi",
-        ]
+        ],
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
