@@ -26,7 +26,7 @@ namespace cvnp
 
     static std::string align_center(const std::string& s)
     {
-        int nb_spaces = s.size() < sColumnWidth ? sColumnWidth - s.size() : 0;
+        int nb_spaces = static_cast<int>(s.size()) < sColumnWidth ? sColumnWidth - s.size() : 0;
         int nb_spaces_left = nb_spaces / 2;
         int nb_spaces_right = sColumnWidth - s.size() - nb_spaces_left;
         if (nb_spaces_right < 0)
