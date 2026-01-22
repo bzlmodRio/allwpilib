@@ -204,7 +204,7 @@ class MakePyiConfig:
             self.remapping_args.append(item.args[ctr + 0])
             remapped_arg = item.args[ctr + 1]
             if isinstance(remapped_arg, str):
-                rel_path = remapped_arg[remapped_arg.find("__main__/") + len("__main__/"):]
+                rel_path = remapped_arg[remapped_arg.find("_main/") + len("_main/"):]
                 self.remapping_args.append(rel_path)
                 self.src_files.append("/".join(pathlib.Path(rel_path).parts[1:]))
             elif isinstance(remapped_arg, BuildTarget):

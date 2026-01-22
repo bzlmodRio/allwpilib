@@ -429,7 +429,10 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         srcs = [
             "src/main/python/hal/simulation/hal_simulation.pc",
             "src/main/python/hal/wpihal.pc",
-        ] + [name + ".pyi_files"],
+        ] + select({
+            "//shared/bazel/rules/robotpy:robotpy_make_pyi_enabled": [name + ".pyi_files"],
+            "//conditions:default": [],
+        }),
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )

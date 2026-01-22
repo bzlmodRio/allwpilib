@@ -182,7 +182,7 @@ def _make_pyi_stubs(name, extra_pyi_deps = []):
         srcs = [{%- for pyi_target in make_pyi_targets %}{% for arg in pyi_target.output_files %}
             "{{ arg }}",
         {%- endfor %}{%- endfor %}
-        ]
+        ],
     )
 
 def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
@@ -211,7 +211,10 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "{{stripped_include_prefix}}/{{caster_info.install_path}}/{{caster_info.pc_output}}",
             "{{stripped_include_prefix}}/{{caster_info.install_path}}/{{caster_info.json_output}}",
             {%- endfor %}
-        ] + [name + ".pyi_files"],
+        ] + select({
+            "//shared/bazel/rules/robotpy:robotpy_make_pyi_enabled": [name + ".pyi_files"],
+            "//conditions:default": [],
+        }),
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )

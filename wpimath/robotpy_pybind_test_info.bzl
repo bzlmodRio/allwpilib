@@ -144,7 +144,10 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
             "src/test/python/cpp/wpimath_test/wpimath_test.pc",
-        ] + [name + ".pyi_files"],
+        ] + select({
+            "//shared/bazel/rules/robotpy:robotpy_make_pyi_enabled": [name + ".pyi_files"],
+            "//conditions:default": [],
+        }),
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )

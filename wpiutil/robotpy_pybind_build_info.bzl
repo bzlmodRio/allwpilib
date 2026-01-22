@@ -248,7 +248,10 @@ def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create
             "src/main/python/wpiutil/wpiutil.pc",
             "src/main/python/wpiutil/wpiutil-casters.pc",
             "src/main/python/wpiutil/wpiutil-casters.pybind11.json",
-        ] + [name + ".pyi_files"],
+        ] + select({
+            "//shared/bazel/rules/robotpy:robotpy_make_pyi_enabled": [name + ".pyi_files"],
+            "//conditions:default": [],
+        }),
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
