@@ -150,17 +150,17 @@ jobs:
 
       # You should ensure the headers are correct before trying to pregen files
       - name: Test Scan Headers
-        run: bazel test //... -k --test_tag_filters=robotpy_scan_headers --build_tests_only
+        run: bazel test //... -k --test_tag_filters=robotpy_scan_headers --build_tests_only --config=build_buddy
         shell: bash
 
       - name: Run yaml file generation
-        run: bazel run //:write_robotpy_update_yaml_files
+        run: bazel run //:write_robotpy_update_yaml_files --config=build_buddy
 
       - name: Run build file generation
-        run: bazel run //:write_robotpy_generated_pybind_files
+        run: bazel run //:write_robotpy_generated_pybind_files --config=build_buddy
 
       - name: Run imports
-        run: bazel run //:write_robotpy_create_imports --//shared/bazel/rules/robotpy:robotpy_enable_update_init
+        run: bazel run //:write_robotpy_create_imports --//shared/bazel/rules/robotpy:robotpy_enable_update_init --config=build_buddy
 
       - name: Check Output
         run: git --no-pager diff --exit-code HEAD
