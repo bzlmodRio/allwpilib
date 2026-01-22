@@ -160,7 +160,7 @@ jobs:
         run: bazel run //:write_robotpy_generated_pybind_files --config=build_buddy
 
       - name: Run imports
-        run: bazel run //:write_robotpy_create_imports --//shared/bazel/rules/robotpy:robotpy_enable_update_init --config=build_buddy
+        run: bazel run //:write_robotpy_create_imports --config=build_buddy --//shared/bazel/rules/robotpy:robotpy_enable_update_init --//shared/bazel/rules/robotpy:robotpy_enable_make_pyi
 
       - name: Check Output
         run: git --no-pager diff --exit-code HEAD
