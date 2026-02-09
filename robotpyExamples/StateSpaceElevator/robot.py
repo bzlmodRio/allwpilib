@@ -51,20 +51,12 @@ class MyRobot(wpilib.TimedRobot):
         # Outputs (what we can measure): [position], in meters.
 
         # This elevator is driven by two NEO motors.
-        elevatorPlant = wpimath.LinearSystemId.elevatorSystem(
+        self.elevatorPlant = wpimath.Models.elevatorFromPhysicalConstants(
             wpimath.DCMotor.NEO(2),
             kCarriageMass,
             kDrumRadius,
             kElevatorGearing,
-        )
-
-        # The observer and controller use a position-only output model.
-        self.elevatorPlant = wpimath.LinearSystem_2_1_1(
-            elevatorPlant.A(),
-            elevatorPlant.B(),
-            [[1.0, 0.0]],
-            [[0.0]],
-        )
+        ).slice(0)
 
         # The observer fuses our encoder data and voltage inputs to reject noise.
         self.observer = wpimath.KalmanFilter_2_1_1(
@@ -82,19 +74,21 @@ class MyRobot(wpilib.TimedRobot):
         # A LQR uses feedback to create voltage commands.
         self.controller = wpimath.LinearQuadraticRegulator_2_1(
             self.elevatorPlant,
-            [
+            # qelms. State error tolerance, in meters and meters per second.
+            # Decrease this to more heavily penalize state excursion, or make the
+            # controller behave more aggressively.
+            (
                 wpimath.units.inchesToMeters(1.0),
                 wpimath.units.inchesToMeters(10.0),
-            ],  # qelms. Position
-            # and velocity error tolerances, in meters and meters per second. Decrease this to more
-            # heavily penalize state excursion, or make the controller behave more aggressively. In
-            # this example we weight position much more highly than velocity, but this can be
-            # tuned to balance the two.
-            [12.0],  # relms. Control effort (voltage) tolerance. Decrease this to more
-            # heavily penalize control effort, or make the controller less aggressive. 12 is a good
-            # starting point because that is the (approximate) maximum voltage of a battery.
-            0.020,  # Nominal time between loops. 0.020 for TimedRobot, but can be
-            # lower if using notifiers.
+            ),
+            # relms. Control effort (voltage) tolerance. Decrease this to more
+            # heavily penalize control effort, or make the controller less
+            # aggressive. 12 is a good starting point because that is the
+            # (approximate) maximum voltage of a battery.
+            (12.0,),
+            # Nominal time between loops. 20ms for TimedRobot, but can be lower if
+            # using notifiers.
+            0.020,
         )
 
         # The state-space loop combines a controller, observer, feedforward and plant for easy control.
@@ -125,8 +119,6 @@ class MyRobot(wpilib.TimedRobot):
     def teleopPeriodic(self) -> None:
         # Sets the target position of our arm. This is similar to setting the setpoint of a
         # PID controller.
-
-        goal = wpimath.TrapezoidProfile.State()
 
         if self.joystick.getTrigger():
             # the trigger is pressed, so we go to the high goal.

@@ -39,14 +39,14 @@ class MyRobot(wpilib.TimedRobot):
         )
 
         # if the thumb button is held
-        intakeButton.and_(isBallAtKickerEvent.not_()).ifHigh(
+        intakeButton.and_(isBallAtKickerEvent.negate()).ifHigh(
             # and there is not a ball at the kicker
             # activate the intake
             lambda: self.intake.set(0.5)
         )
 
         # if the thumb button is not held
-        intakeButton.not_().or_(isBallAtKickerEvent).ifHigh(
+        intakeButton.negate().or_(isBallAtKickerEvent).ifHigh(
             # or there is a ball in the kicker
             # stop the intake
             self.intake.stopMotor
@@ -64,7 +64,7 @@ class MyRobot(wpilib.TimedRobot):
         )
 
         # if not, stop
-        shootTrigger.not_().ifHigh(self.shooter.stopMotor)
+        shootTrigger.negate().ifHigh(self.shooter.stopMotor)
 
         atTargetVelocity = wpilib.BooleanEvent(
             self.loop, self.controller.atSetpoint

@@ -15,11 +15,12 @@ kEncoderAChannel = 0
 kEncoderBChannel = 1
 kJoystickPort = 0
 
+kSpinUpRadPerSec = 500.0
 kFlywheelMomentOfInertia = 0.00032  # kg/m^2
 
 # Reduction between motors and encoder, as output over input. If the flywheel spins slower than
 # the motors, this number should be greater than one.
-kFlywheelGearing = 1
+kFlywheelGearing = 1.0
 
 
 class MyRobot(wpilib.TimedRobot):
@@ -30,62 +31,47 @@ class MyRobot(wpilib.TimedRobot):
 
     def __init__(self) -> None:
         super().__init__()
+
         self.kSpinUpRadPerSec = wpimath.units.rotationsPerMinuteToRadiansPerSecond(500)
 
-        self._state_space_enabled = True
-        try:
-            import numpy  # noqa: F401
-        except Exception as exc:
-            self._state_space_enabled = False
-            wpilib.reportWarning(
-                f"State-space disabled (numpy unavailable): {exc}", False
-            )
+        # The plant holds a state-space model of our flywheel. This system has the following properties:
+        #
+        # States: [velocity], in radians per second.
+        # Inputs (what we can "put in"): [voltage], in volts.
+        # Outputs (what we can measure): [velocity], in radians per second.
+        self.flywheelPlant = wpimath.Models.flywheelFromPhysicalConstants(
+            wpimath.DCMotor.NEO(2),
+            kFlywheelMomentOfInertia,
+            kFlywheelGearing,
+        )
 
-        if not self._state_space_enabled:
-            self.flywheelPlant = None
-            self.observer = None
-            self.controller = None
-            self.loop = None
-        else:
-            # The plant holds a state-space model of our flywheel. This system has the following properties:
-            #
-            # States: [velocity], in radians per second.
-            # Inputs (what we can "put in"): [voltage], in volts.
-            # Outputs (what we can measure): [velocity], in radians per second.
-            self.flywheelPlant = wpimath.Models.flywheelFromPhysicalConstants(
-                wpimath.DCMotor.NEO(2),
-                kFlywheelMomentOfInertia,
-                kFlywheelGearing,
-            )
+        # The observer fuses our encoder data and voltage inputs to reject noise.
+        self.observer = wpimath.KalmanFilter_1_1_1(
+            self.flywheelPlant,
+            (3,),  # How accurate we think our model is
+            (0.01,),  # How accurate we think our encoder data is
+            0.020,
+        )
 
-            # The observer fuses our encoder data and voltage inputs to reject noise.
-            self.observer = wpimath.KalmanFilter_1_1_1(
-                self.flywheelPlant,
-                (3,),  # How accurate we think our model is
-                (0.01,),  # How accurate we think our encoder data is
-                0.020,
-            )
+        # A LQR uses feedback to create voltage commands.
+        self.controller = wpimath.LinearQuadraticRegulator_1_1(
+            self.flywheelPlant,
+            # qelms. Velocity error tolerance, in radians per second. Decrease
+            # this to more heavily penalize state excursion, or make the controller behave more
+            # aggressively.
+            (8,),
+            # relms. Control effort (voltage) tolerance. Decrease this to more
+            # heavily penalize control effort, or make the controller less aggressive. 12 is a good
+            # starting point because that is the (approximate) maximum voltage of a battery.
+            (12,),
+            # Nominal time between loops. 0.020 for TimedRobot, but can be lower if using notifiers.
+            0.020,
+        )
 
-            # A LQR uses feedback to create voltage commands.
-            self.controller = wpimath.LinearQuadraticRegulator_1_1(
-                self.flywheelPlant,
-                (
-                    8,
-                ),  # qelms. Velocity error tolerance, in radians per second. Decrease
-                # this to more heavily penalize state excursion, or make the controller behave more
-                # aggressively.
-                (
-                    12,
-                ),  # relms. Control effort (voltage) tolerance. Decrease this to more
-                # heavily penalize control effort, or make the controller less aggressive. 12 is a good
-                # starting point because that is the (approximate) maximum voltage of a battery.
-                0.020,  # Nominal time between loops. 0.020 for TimedRobot, but can be lower if using notifiers.
-            )
-
-            # The state-space loop combines a controller, observer, feedforward and plant for easy control.
-            self.loop = wpimath.LinearSystemLoop_1_1_1(
-                self.flywheelPlant, self.controller, self.observer, 12.0, 0.020
-            )
+        # The state-space loop combines a controller, observer, feedforward and plant for easy control.
+        self.loop = wpimath.LinearSystemLoop_1_1_1(
+            self.flywheelPlant, self.controller, self.observer, 12.0, 0.020
+        )
 
         # An encoder set up to measure flywheel velocity in radians per second.
         self.encoder = wpilib.Encoder(kEncoderAChannel, kEncoderBChannel)
@@ -99,18 +85,9 @@ class MyRobot(wpilib.TimedRobot):
         self.encoder.setDistancePerPulse(math.tau / 4096)
 
     def teleopInit(self) -> None:
-        if self._state_space_enabled:
-            self.loop.reset([self.encoder.getRate()])
-        else:
-            self.motor.setVoltage(0.0)
+        self.loop.reset([self.encoder.getRate()])
 
     def teleopPeriodic(self) -> None:
-        if not self._state_space_enabled:
-            if self.joystick.getTrigger():
-                self.motor.setVoltage(12.0)
-            else:
-                self.motor.setVoltage(0.0)
-            return
 
         # Sets the target speed of our flywheel. This is similar to setting the setpoint of a
         # PID controller.

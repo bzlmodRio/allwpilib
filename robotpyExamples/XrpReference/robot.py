@@ -56,10 +56,10 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def __init__(self) -> None:
         """
-        super().__init__()
         This function is run when the robot is first started up and should be used for any
         initialization code.
         """
+        super().__init__()
 
         # Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         # autonomous chooser on the dashboard.
