@@ -1,50 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@rules_python//python:defs.bzl", "py_binary", "py_test")
-
-PROJECTS = [
-    "AddressableLED",
-    "AprilTagsVision",
-    "ArcadeDrive",
-    "ArcadeDriveXboxController",
-    "ArmSimulation",
-    "CANPDP",
-    "DifferentialDriveBot",
-    "DigitalCommunication",
-    "DriveDistanceOffboard",
-    "DutyCycleEncoder",
-    "DutyCycleInput",
-    "ElevatorProfiledPID",
-    "ElevatorSimulation",
-    "ElevatorTrapezoidProfile",
-    "Encoder",
-    # "EventLoop",
-    "FlywheelBangBangController",
-    "GettingStarted",
-    "Gyro",
-    "GyroMecanum",
-    "HatchbotInlined",
-    "HatchbotTraditional",
-    "HidRumble",
-    "HttpCamera",
-    "I2CCommunication",
-    "IntermediateVision",
-    "MecanumBot",
-    "MecanumDrive",
-    "Mechanism2d",
-    "MotorControl",
-    "PotentiometerPID",
-    "QuickVision",
-    "RomiReference",
-    "SelectCommand",
-    "SimpleDifferentialDriveSimulation",
-    "Solenoid",
-    "StateSpaceFlywheel",
-    "StateSpaceFlywheelSysId",
-    "SwerveBot",
-    "SysId",
-    "TankDrive",
-    "TankDriveXboxController",
-]
+load("//robotpyExamples:example_projects.bzl", "PROJECTS")
 
 def define_examples():
     for example_folder in PROJECTS:
