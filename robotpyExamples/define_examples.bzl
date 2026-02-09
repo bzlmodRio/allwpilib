@@ -13,9 +13,11 @@ def define_examples():
         )
         common_deps = [
             ":robotpy",
+            "//apriltag:robotpy-apriltag",
             "//commandsv2:commandsv2-import",
             "//wpilibc:robotpy-wpilib",
             "//romiVendordep:robotpy-romi",
+            "//xrpVendordep:robotpy-xrp",
             requirement("numpy"),
         ]
 
