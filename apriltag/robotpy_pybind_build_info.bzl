@@ -205,7 +205,7 @@ def define_pybind_library(name, pkgcfgs = []):
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/robotpy_apriltag/_apriltag",
+            ":src/main/python/robotpy_apriltag/_apriltag.filegroup",
             ":apriltag.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

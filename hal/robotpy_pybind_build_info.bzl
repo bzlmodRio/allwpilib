@@ -369,8 +369,8 @@ def define_pybind_library(name, pkgcfgs = []):
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/hal/simulation/_simulation",
-            ":src/main/python/hal/_wpiHal",
+            ":src/main/python/hal/simulation/_simulation.filegroup",
+            ":src/main/python/hal/_wpiHal.filegroup",
             ":hal_simulation.trampoline_hdr_files",
             ":wpihal.trampoline_hdr_files",
         ],

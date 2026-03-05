@@ -137,7 +137,7 @@ def define_pybind_library(name, pkgcfgs = []):
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/halsim_gui/_ext/_halsim_gui_ext",
+            ":src/main/python/halsim_gui/_ext/_halsim_gui_ext.filegroup",
             ":halsim_gui_ext.trampoline_hdr_files",
             ":halsim_gui.copy_lib",
         ],

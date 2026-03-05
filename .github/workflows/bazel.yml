@@ -66,10 +66,9 @@ jobs:
         with: { fetch-depth: 0 }
 
       - id: Setup_bazel_remote
-        uses: ./.github/actions/setup-bazel-remote
+        uses: ./.github/actions/setup-build-buddy
         with:
-          username: ${{ secrets.BAZEL_CACHE_USERNAME }}
-          password: ${{ secrets.BAZEL_CACHE_PASSWORD }}
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Install apt dependencies
         if: matrix.os == 'ubuntu-24.04'
@@ -91,9 +90,9 @@ jobs:
             TARGETS=...
           fi
           if [[ "${{ matrix.os }}" == "windows-2022" ]]; then
-            bazel --output_user_root=C:\\bazelroot ${ACTION} ${TARGETS} --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
+            bazel --output_user_root=C:\\bazelroot ${ACTION} ${TARGETS} -k --config=build_buddy -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
           else
-            bazel ${ACTION} ${TARGETS} --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
+            bazel ${ACTION} ${TARGETS} -k --config=build_buddy -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
           fi
         shell: bash
 
@@ -150,14 +149,14 @@ jobs:
 
       # You should ensure the headers are correct before trying to pregen files
       - name: Test Scan Headers
-        run: bazel test //... -k --test_tag_filters=robotpy_scan_headers --build_tests_only
+        run: bazel test  --config=build_buddy //... -k --test_tag_filters=robotpy_scan_headers --build_tests_only
         shell: bash
 
       - name: Run yaml file generation
-        run: bazel run //:write_robotpy_update_yaml_files
+        run: bazel run  --config=build_buddy //:write_robotpy_update_yaml_files
 
       - name: Run build file generation
-        run: bazel run //:write_robotpy_generated_pybind_files
+        run: bazel run  --config=build_buddy //:write_robotpy_generated_pybind_files
 
       - name: Check Output
         run: git --no-pager diff --exit-code HEAD

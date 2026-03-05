@@ -127,7 +127,7 @@ def define_pybind_library(name, pkgcfgs = []):
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/test/python/cpp/wpimath_test/_wpimath_test",
+            ":src/test/python/cpp/wpimath_test/_wpimath_test.filegroup",
             ":wpimath_test.trampoline_hdr_files",
         ],
         imports = ["src/test/python/cpp"],

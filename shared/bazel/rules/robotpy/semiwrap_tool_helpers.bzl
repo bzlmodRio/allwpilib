@@ -46,22 +46,23 @@ __update_yaml_files = rule(
 )
 
 def update_yaml_files(name, yaml_output_directory = "src/main/python/semiwrap", **kwargs):
-    __update_yaml_files(
-        name = name,
-        gen_dir = "{}_gen_update_yaml".format(name),
-        target_compatible_with = robotpy_compatibility_select(),
-        **kwargs
-    )
-
-    write_source_files(
-        name = "write_{}".format(name),
-        files = {
-            yaml_output_directory: ":" + name,
-        },
-        suggested_update_target = "//:write_all",
-        target_compatible_with = robotpy_compatibility_select(),
-        visibility = ["//visibility:public"],
-    )
+    return
+    # __update_yaml_files(
+    #     name = name,
+    #     gen_dir = "{}_gen_update_yaml".format(name),
+    #     target_compatible_with = robotpy_compatibility_select(),
+    #     **kwargs
+    # )
+# 
+    # write_source_files(
+    #     name = "write_{}".format(name),
+    #     files = {
+    #         yaml_output_directory: ":" + name,
+    #     },
+    #     suggested_update_target = "//:write_all",
+    #     target_compatible_with = robotpy_compatibility_select(),
+    #     visibility = ["//visibility:public"],
+    # )
 
 def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
     if pkgcfgs:

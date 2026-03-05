@@ -229,7 +229,7 @@ def define_pybind_library(name, pkgcfgs = []):
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpiutil/_wpiutil",
+            ":src/main/python/wpiutil/_wpiutil.filegroup",
             ":wpiutil.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

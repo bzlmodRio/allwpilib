@@ -475,7 +475,7 @@ def define_pybind_library(name, pkgcfgs = []):
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/ntcore/_ntcore",
+            ":src/main/python/ntcore/_ntcore.filegroup",
             ":ntcore.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],

@@ -1616,7 +1616,7 @@ def define_pybind_library(name, pkgcfgs = []):
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
             ":src/main/python/wpilib/_wpilib",
-            ":src/main/python/wpilib/simulation/_simulation",
+            ":src/main/python/wpilib/simulation/_simulation.filegroup",
             ":wpilib.trampoline_hdr_files",
             ":wpilib_simulation.trampoline_hdr_files",
         ],

@@ -148,7 +148,7 @@ def define_pybind_library(name, pkgcfgs = []):
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpinet/_wpinet",
+            ":src/main/python/wpinet/_wpinet.filegroup",
             ":wpinet.trampoline_hdr_files",
         ],
         imports = ["src/main/python"],
