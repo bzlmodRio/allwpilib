@@ -33,12 +33,14 @@ def define_examples():
             name = base_name + "-run",
             args = ["--main", "$(location " + example_folder + "/robot.py)", "run"],
             deps = common_deps,
-            **common_kwargs
+            tags = ["manual"],
+            **common_kwargs,
         )
 
         py_binary(
             name = base_name + "-sim",
             args = ["--main", "$(location " + example_folder + "/robot.py)", "sim"],
             deps = common_deps + ["//simulation/halsim_gui:robotpy-halsim-gui"],
+            tags = ["manual"],
             **common_kwargs
         )
