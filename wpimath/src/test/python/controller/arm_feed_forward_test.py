@@ -18,7 +18,7 @@ def simulate(ks, kv, ka, kg, current_angle, current_velocity, voltage_input, dt)
         
         # A * x + B * u + c
         # acc = (1/ka) * (u - kv*vel - ks*sgn(vel) - kg*cos(angle))
-        accel = (u[0] - kv * velocity - ks * math.copysign(1, velocity) - kg * math.cos(angle)) / ka
+        accel = (u[0][0] - kv * velocity - ks * math.copysign(1, velocity[0]) - kg * math.cos(angle[0])) / ka
         return np.array([velocity, accel])
 
     x0 = np.array([current_angle, current_velocity])
