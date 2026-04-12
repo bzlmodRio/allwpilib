@@ -6,7 +6,7 @@
 
 #include <gtest/gtest.h>
 
-#include "motorcontrol/MockPWMMotorController.hpp"
+#include "hardware/motor/MockPWMMotorController.hpp"
 
 TEST(MecanumDriveTest, CartesianIK) {
   // Forward
