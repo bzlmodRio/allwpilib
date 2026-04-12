@@ -45,6 +45,7 @@ wpilib_java_junit5_test(
     deps = [
         ":wpiunits-java",
     ],
+    size = "small",
 )
 
 java_binary(

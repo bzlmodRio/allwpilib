@@ -144,7 +144,7 @@ cc_test(
 
 wpilib_java_junit5_test(
     name = "commandsv2-java-test",
-    srcs = glob(["src/main/java/**/*.java"]),
+    srcs = glob(["src/test/java/**/*.java"]),
     resource_strip_prefix = "commandsv2/src/test/resources",
     resources = glob(["src/test/resources/**"]),
     deps = [
@@ -158,6 +158,19 @@ wpilib_java_junit5_test(
         "//wpiutil:wpiutil-java",
         "@maven//:org_mockito_mockito_core",
     ],
+    native_libs = [
+        "//hal:shared/wpiHal",
+        "//hal:shared/wpiHaljni",
+        "//ntcore:shared/ntcore",
+        "//ntcore:shared/ntcorejni",
+        "//wpimath:shared/wpimath",
+        "//wpimath:shared/wpimathjni",
+        "//wpinet:shared/wpinet",
+        "//wpinet:shared/wpinetjni",
+        "//wpiutil:shared/wpiutil",
+        "//wpiutil:shared/wpiutiljni",
+    ],
+    size = "small",
 )
 
 cc_binary(

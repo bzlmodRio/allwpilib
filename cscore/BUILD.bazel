@@ -237,6 +237,14 @@ wpilib_java_junit5_test(
         ":cscore-java",
         "//wpiutil:wpiutil-java",
     ],
+    native_libs = [
+        "@bzlmodrio-opencv//libraries/cpp/opencv:jni",
+        "//cscore:shared/cscore",
+        "//cscore:shared/cscorejni",
+        "//wpiutil:shared/wpiutil",
+        "//wpiutil:shared/wpiutiljni",
+    ],
+    size = "small",
 )
 
 cc_binary(

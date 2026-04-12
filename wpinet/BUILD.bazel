@@ -237,6 +237,12 @@ wpilib_java_junit5_test(
     deps = [
         ":wpinet-java",
     ],
+    native_libs = [
+        ":shared/wpinet",
+        ":shared/wpinetjni",
+        "//wpiutil:shared/wpiutil",
+        "//wpiutil:shared/wpiutiljni",
+    ]
 )
 
 cc_binary(

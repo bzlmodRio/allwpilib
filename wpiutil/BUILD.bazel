@@ -342,6 +342,11 @@ wpilib_java_junit5_test(
     deps = [
         ":wpiutil-java",
     ],
+    native_libs = [
+        ":shared/wpiutil",
+        ":shared/wpiutiljni",
+    ],
+    size = "small",
 )
 
 cc_binary(
