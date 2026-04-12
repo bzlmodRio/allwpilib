@@ -148,7 +148,22 @@ def build_tests():
                 "//epilogue-runtime:epilogue-java",
                 "//wpiunits:wpiunits-java",
             ],
+            native_libs = [
+                "//datalog:shared/datalog",
+                "//datalog:shared/datalogjni",
+                "//hal:shared/wpiHal",
+                "//hal:shared/wpiHaljni",
+                "//ntcore:shared/ntcore",
+                "//ntcore:shared/ntcorejni",
+                "//wpimath:shared/wpimath",
+                "//wpimath:shared/wpimathjni",
+                "//wpinet:shared/wpinet",
+                "//wpinet:shared/wpinetjni",
+                "//wpiutil:shared/wpiutil",
+                "//wpiutil:shared/wpiutiljni",
+            ],
             tags = ["wpi-example"],
+            size = "small",
         )
 
     for folder in SNIPPET_TESTS_FOLDERS:
@@ -170,5 +185,20 @@ def build_tests():
                 "//epilogue-runtime:epilogue-java",
                 "//wpiunits:wpiunits-java",
             ],
+            native_libs = [
+                "//datalog:shared/datalog",
+                "//datalog:shared/datalogjni",
+                "//hal:shared/wpiHal",
+                "//hal:shared/wpiHaljni",
+                "//ntcore:shared/ntcore",
+                "//ntcore:shared/ntcorejni",
+                "//wpimath:shared/wpimath",
+                "//wpimath:shared/wpimathjni",
+                "//wpinet:shared/wpinet",
+                "//wpinet:shared/wpinetjni",
+                "//wpiutil:shared/wpiutil",
+                "//wpiutil:shared/wpiutiljni",
+            ],
             tags = ["wpi-example"],
+            size = "small",
         )

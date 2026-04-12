@@ -62,6 +62,7 @@ wpilib_java_junit5_test(
     deps = [
         ":fields-java",
     ],
+    size = "small",
 )
 
 package_static_cc_project(

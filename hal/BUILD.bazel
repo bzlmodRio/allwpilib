@@ -156,6 +156,13 @@ wpilib_java_junit5_test(
     deps = [
         ":hal-java",
     ],
+    native_libs = [
+        "//hal:shared/wpiHal",
+        "//hal:shared/wpiHaljni",
+        "//wpiutil:shared/wpiutil",
+        "//wpiutil:shared/wpiutiljni",
+    ],
+    size = "small",
 )
 
 cc_binary(

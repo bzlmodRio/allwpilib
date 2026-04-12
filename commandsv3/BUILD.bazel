@@ -73,6 +73,8 @@ wpilib_java_junit5_test(
     plugins = [
         "//epilogue-processor:plugin",
     ],
+    resource_strip_prefix = "commandsv3/src/test/resources",
+    resources = glob(["src/test/resources/**"]),
     deps = [
         ":commandsv3-java",
         "//epilogue-runtime:epilogue-java",
@@ -85,6 +87,24 @@ wpilib_java_junit5_test(
         "//wpiutil:wpiutil-java",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
+    native_libs = [
+        "//hal:shared/wpiHal",
+        "//hal:shared/wpiHaljni",
+        "//ntcore:shared/ntcore",
+        "//ntcore:shared/ntcorejni",
+        "//wpimath:shared/wpimath",
+        "//wpimath:shared/wpimathjni",
+        "//wpinet:shared/wpinet",
+        "//wpinet:shared/wpinetjni",
+        "//wpiutil:shared/wpiutil",
+        "//wpiutil:shared/wpiutiljni",
+    ],
+    jvm_flags = [
+        '--add-opens',
+        'java.base/jdk.internal.vm=ALL-UNNAMED',
+        '--add-opens',
+        'java.base/java.lang=ALL-UNNAMED',
+    ]
 )
 
 java_binary(

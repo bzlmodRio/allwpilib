@@ -161,6 +161,13 @@ wpilib_java_junit5_test(
         ":datalog-java",
         "//wpiutil:wpiutil-java",
     ],
+    native_libs = [
+        "//datalog:shared/datalog",
+        "//datalog:shared/datalogjni",
+        "//wpiutil:shared/wpiutil",
+        "//wpiutil:shared/wpiutiljni",
+    ],
+    size = "small",
 )
 
 package_default_jni_project(

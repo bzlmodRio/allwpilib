@@ -158,6 +158,19 @@ wpilib_java_junit5_test(
         "//wpiutil:wpiutil-java",
         "@maven//:org_mockito_mockito_core",
     ],
+    native_libs = [
+        "//hal:shared/wpiHal",
+        "//hal:shared/wpiHaljni",
+        "//ntcore:shared/ntcore",
+        "//ntcore:shared/ntcorejni",
+        "//wpimath:shared/wpimath",
+        "//wpimath:shared/wpimathjni",
+        "//wpinet:shared/wpinet",
+        "//wpinet:shared/wpinetjni",
+        "//wpiutil:shared/wpiutil",
+        "//wpiutil:shared/wpiutiljni",
+    ],
+    size = "small",
 )
 
 cc_binary(
