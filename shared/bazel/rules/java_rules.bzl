@@ -143,3 +143,43 @@ def wpilib_java_junit5_test(
         }),
         **kwargs
     )
+
+
+def wpilib_java_binary(
+    name,
+    deps = [],
+    runtime_deps = [],
+    data = [],
+    jvm_flags = [],
+    env = {},
+    **kwargs,
+):
+    native_shared_libraries_symlink = name + ".symlink_native"
+    extracted_native_dir = "extracted_native"
+    full_extracted_native_dir = native.package_name() + "/extracted_native"
+    _symlink_java_native_libraries(
+        name = native_shared_libraries_symlink,
+        deps = deps + runtime_deps,
+        output_directory = select({
+            "@bazel_tools//src/conditions:windows": name + ".exe.runfiles/" + _get_runfiles_suffix(name),
+            "//conditions:default": extracted_native_dir,
+        }),
+        tags = ["manual"],
+    )
+    
+    java_binary(
+        name = name,
+        data = data + [native_shared_libraries_symlink],
+        jvm_flags = jvm_flags + select({
+            "@bazel_tools//src/conditions:windows": ["-Djava.library.path=."],
+            "@rules_bzlmodrio_toolchains//constraints/combined:is_unix": ["-Djava.library.path=" + full_extracted_native_dir],
+        }),
+        env = env | select({
+            "@bazel_tools//src/conditions:darwin": {"DYLD_LIBRARY_PATH": full_extracted_native_dir, "LD_LIBRARY_PATH": full_extracted_native_dir},
+            "@bazel_tools//src/conditions:windows": {},
+            "@rules_bzlmodrio_toolchains//constraints/combined:is_linux": {},
+        }),
+        deps = deps,
+        runtime_deps = runtime_deps,
+        **kwargs
+    )
