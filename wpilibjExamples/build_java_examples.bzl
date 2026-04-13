@@ -31,7 +31,6 @@ def build_examples(halsim_deps):
     _package_type("examples")
     
     shared_deps = [
-                ":example_executor",
                 "//apriltag:apriltag-java",
                 "//cameraserver:cameraserver-java",
                 "//cscore:cscore-java",
@@ -60,14 +59,13 @@ def build_examples(halsim_deps):
         )
 
         extension_names = ["$(location " + dep + ")" for dep in halsim_deps]
-
-
         wpilib_java_binary(
             name = folder + "-example.sim",
             main_class = "org.wpilib.Executor",
             runtime_deps = shared_deps + [
+                ":example_executor",
                 folder + "-example",
-            ] + [d + ".import" for d in halsim_deps],
+            ],
             args = ["org.wpilib.examples." + folder + ".Robot"],
             data = halsim_deps,
             env = select({
@@ -93,14 +91,10 @@ def build_commands():
             tags = ["wpi-example"],
         )
 
-def build_snippets():
+def build_snippets(halsim_deps):
     _package_type("snippets")
 
-    for folder in SNIPPET_FOLDERS:
-        java_library(
-            name = folder + "-snippet",
-            srcs = native.glob(["src/main/java/org/wpilib/snippets/" + folder + "/**/*.java"]),
-            deps = [
+    shared_deps = [
                 "//apriltag:apriltag-java",
                 "//cameraserver:cameraserver-java",
                 "//cscore:cscore-java",
@@ -115,9 +109,33 @@ def build_snippets():
                 "//wpiunits:wpiunits-java",
                 "//epilogue-runtime:epilogue-java",
                 "@bzlmodrio-opencv//libraries/java/opencv",
-            ],
+    ]
+
+    for folder in SNIPPET_FOLDERS:
+        java_library(
+            name = folder + "-snippet",
+            srcs = native.glob(["src/main/java/org/wpilib/snippets/" + folder + "/**/*.java"]),
+            deps = shared_deps,
             tags = ["wpi-example"],
         )
+
+        extension_names = ["$(location " + dep + ")" for dep in halsim_deps]
+        wpilib_java_binary(
+            name = folder + "-snippet.sim",
+            main_class = "org.wpilib.Executor",
+            runtime_deps = shared_deps + [
+                ":example_executor",
+                folder + "-snippet",
+            ],
+            args = ["org.wpilib.snippets." + folder + ".Robot"],
+            data = halsim_deps,
+            env = select({
+                "@bazel_tools//src/conditions:windows": {"HALSIM_EXTENSIONS": ";".join(extension_names)},
+                "//conditions:default": {"HALSIM_EXTENSIONS": ":".join(extension_names)},
+            }),
+            tags = ["manual"],
+        )
+
 
 def build_templates():
     _package_type("templates")
