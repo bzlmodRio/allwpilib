@@ -60,6 +60,7 @@ def build_examples(halsim_deps = []):
                 "@bazel_tools//src/conditions:windows": {"HALSIM_EXTENSIONS": ";".join(extension_names)},
                 "//conditions:default": {"HALSIM_EXTENSIONS": ":".join(extension_names)},
             }),
+            tags = ["manual"],
         )
 
 def build_commands():

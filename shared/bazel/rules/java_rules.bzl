@@ -116,7 +116,7 @@ def wpilib_java_junit5_test(
             "@bazel_tools//src/conditions:windows": name + ".exe.runfiles/" + _get_runfiles_suffix(name),
             "//conditions:default": extracted_native_dir,
         }),
-        tags = ["manual"],
+        tags = ["manual", "no-remote"],
         testonly = True,
     )
 
