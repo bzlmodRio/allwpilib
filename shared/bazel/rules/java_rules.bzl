@@ -161,7 +161,7 @@ def wpilib_java_binary(
             "@bazel_tools//src/conditions:windows": name + ".exe.runfiles/" + _get_runfiles_suffix(name),
             "//conditions:default": extracted_native_dir,
         }),
-        tags = ["manual"],
+        tags = ["manual", "no-remote"],
     )
 
     java_binary(
