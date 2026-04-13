@@ -150,6 +150,7 @@ wpilib_java_junit5_test(
     resources = glob(["src/test/resources/**"]),
     deps = [
         ":commandsv2-java",
+        "//datalog:datalog-java",
         "//hal:hal-java",
         "//ntcore:ntcore-java",
         "//wpiannotations",

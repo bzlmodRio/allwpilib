@@ -111,9 +111,11 @@ wpilib_java_junit5_test(
     resources = glob(["src/test/resources/**"]),
     deps = [
         ":wpilibj-java",
+        "//datalog:datalog-java",
         "//hal:hal-java",
         "//ntcore:ntcore-java",
         "//wpimath:wpimath-java",
+        "//wpinet:wpinet-java",
         "//wpiunits:wpiunits-java",
         "//wpiutil:wpiutil-java",
     ],
