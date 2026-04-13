@@ -36,7 +36,7 @@ def build_examples(halsim_deps = []):
             strip_include_prefix = "src/main/cpp/examples/" + folder + "/include",
             tags = ["wpi-example"],
         )
-        cc_binary(
+        cc_library(
             name = folder + "-example",
             srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"], allow_empty = True),
             deps = [
@@ -47,6 +47,19 @@ def build_examples(halsim_deps = []):
                 ":{}-examples-headers".format(folder),
             ],
             tags = ["wpi-example"],
+        )
+
+        extension_names = ["$(location " + dep + ")" for dep in halsim_deps]
+        cc_binary(
+            name = folder + "-example.sim",
+            data = halsim_deps,
+            deps = [
+                folder + "-example"
+            ],
+            env = select({
+                "@bazel_tools//src/conditions:windows": {"HALSIM_EXTENSIONS": ";".join(extension_names)},
+                "//conditions:default": {"HALSIM_EXTENSIONS": ":".join(extension_names)},
+            }),
         )
 
 def build_commands():
@@ -64,7 +77,7 @@ def build_commands():
             tags = ["wpi-example"],
         )
 
-def build_snippets():
+def build_snippets(halsim_deps):
     _package_type("snippets")
 
     for folder in SNIPPET_FOLDERS:
@@ -85,6 +98,20 @@ def build_snippets():
             ],
             strip_include_prefix = "src/main/cpp/snippets/" + folder + "/include",
             tags = ["wpi-example"],
+        )
+
+        extension_names = ["$(location " + dep + ")" for dep in halsim_deps]
+        cc_binary(
+            name = folder + "-snippet.sim",
+            data = halsim_deps,
+            deps = [
+                folder + "-snippet"
+            ],
+            env = select({
+                "@bazel_tools//src/conditions:windows": {"HALSIM_EXTENSIONS": ";".join(extension_names)},
+                "//conditions:default": {"HALSIM_EXTENSIONS": ":".join(extension_names)},
+            }),
+            tags = ["manual"],
         )
 
 def build_templates():
