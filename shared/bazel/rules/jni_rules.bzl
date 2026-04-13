@@ -5,6 +5,8 @@ load("@rules_cc//cc/common:cc_info.bzl", "CcInfo")
 load("@rules_java//java/common:java_info.bzl", "JavaInfo")
 load("@rules_pkg//:mappings.bzl", "filter_directory")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
+load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 
 def _jni_headers_impl(ctx):
     include_dir = ctx.actions.declare_directory(ctx.attr.name + ".h")
@@ -67,18 +69,64 @@ _jni_headers = rule(
     toolchains = ["@bazel_tools//tools/cpp:toolchain_type"],
 )
 
+
+def _merge_default_infos(ctx, infos):
+    return DefaultInfo(
+        files = depset(transitive = [info.files for info in infos]),
+        runfiles = ctx.runfiles(
+            transitive_files = depset(
+                transitive = [info.default_runfiles.files for info in infos] + [info.data_runfiles.files for info in infos],
+            ),
+        ),
+    )
+
+def _merge_java_infos_impl(ctx):
+    return [
+        _merge_default_infos(ctx, [lib[DefaultInfo] for lib in ctx.attr.libs + ctx.attr.native_libs]),
+        java_common.merge([lib[JavaInfo] for lib in ctx.attr.libs]),
+        cc_common.merge_cc_infos(direct_cc_infos = [lib[CcInfo] for lib in ctx.attr.native_libs]),
+        coverage_common.instrumented_files_info(
+            ctx,
+            dependency_attributes = ["libs"],
+        ),
+    ]
+
+merge_java_infos = rule(
+    implementation = _merge_java_infos_impl,
+    attrs = {
+        "libs": attr.label_list(
+            providers = [JavaInfo],
+        ),
+        "native_libs": attr.label_list(
+            providers = [CcInfo],
+        ),
+    },
+    provides = [JavaInfo],
+)
+
 def wpilib_jni_java_library(
         name,
+        maven_group_id,
+        maven_artifact_name,
         native_libs = [],
+        tags = [],
+        extra_source_pkgs = [],
         **java_library_args):
-    tags = java_library_args.pop("tags", default = None)
+        
+    tags = list(tags) if tags else []
+
+    maven_coordinates = "{}:{}:$(WPILIB_VERSION)".format(maven_group_id, maven_artifact_name)
+    tags.append("maven_coordinates=" + maven_coordinates)
+
     visibility = java_library_args.pop("visibility", default = None)
     testonly = java_library_args.pop("testonly", default = None)
     headers_name = name + ".hdrs"
 
-    wpilib_java_library(
-        name = name,
-        visibility = visibility,
+    intermediate_name = name + ".intermediate"
+
+    native.java_library(
+        name = intermediate_name,
+        visibility = ["//visibility:private"],
         testonly = testonly,
         tags = tags,
         **java_library_args
@@ -88,7 +136,7 @@ def wpilib_jni_java_library(
     _jni_headers(
         name = headers_name,
         jni = jni,
-        lib = ":" + name,
+        lib = ":" + intermediate_name,
         testonly = testonly,
         visibility = visibility,
     )
@@ -99,6 +147,25 @@ def wpilib_jni_java_library(
         src = headers_name,
         excludes = ["MANIFEST.MF"],
         outdir_name = "jni/",
+    )
+
+    merge_java_infos(
+        name = name,
+        libs = [":" + intermediate_name],
+        native_libs = [x for x in native_libs],
+        tags = tags,
+        testonly = testonly,
+        visibility = visibility,
+    )
+
+    zip_java_srcs(name = name, extra_pkgs = extra_source_pkgs)
+
+    wpilib_maven_export(
+        name = "{}_publish".format(name),
+        classifier_artifacts = {"sources": ":lib{}-sources.jar".format(name)},
+        lib_name = name,
+        maven_coordinates = maven_coordinates,
+        visibility = ["//visibility:public"],
     )
 
 def wpilib_jni_cc_library(

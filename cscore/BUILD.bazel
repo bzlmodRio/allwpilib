@@ -212,7 +212,7 @@ wpilib_jni_java_library(
     srcs = glob(["src/main/java/**/*.java"]),
     maven_artifact_name = "cscore-java",
     maven_group_id = "org.wpilib.cscore",
-    native_libs = [":cscorejni"],
+    native_libs = [":shared/cscorejni.import"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpiutil:wpiutil-java",
@@ -236,13 +236,6 @@ wpilib_java_junit5_test(
     deps = [
         ":cscore-java",
         "//wpiutil:wpiutil-java",
-    ],
-    native_libs = [
-        "@bzlmodrio-opencv//libraries/cpp/opencv:jni",
-        "//cscore:shared/cscore",
-        "//cscore:shared/cscorejni",
-        "//wpiutil:shared/wpiutil",
-        "//wpiutil:shared/wpiutiljni",
     ],
     size = "small",
 )
