@@ -117,6 +117,7 @@ wpilib_java_junit5_test(
         "src/generated/test/java/**/*.java",
         "src/test/java/**/*.java",
     ]),
+    size = "small",
     resource_strip_prefix = "wpilibj/src/test/resources",
     resources = glob(["src/test/resources/**"]),
     deps = [
@@ -127,7 +128,6 @@ wpilib_java_junit5_test(
         "//wpiunits:wpiunits-java",
         "//wpiutil:wpiutil-java",
     ],
-    size="small",
 )
 
 cc_binary(

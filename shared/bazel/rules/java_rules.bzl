@@ -1,4 +1,7 @@
+load("@rules_cc//cc/common:cc_info.bzl", "CcInfo")
+load("@rules_cc//cc/common:cc_shared_library_info.bzl", "CcSharedLibraryInfo")
 load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
+load("@rules_java//java/common:java_info.bzl", "JavaInfo")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 
@@ -30,7 +33,6 @@ def wpilib_java_library(
         visibility = ["//visibility:public"],
     )
 
-
 def get_dynamic_deps(target):
     shared_lib_native_deps = []
 
@@ -46,7 +48,7 @@ def get_dynamic_deps(target):
 
     return shared_lib_native_deps
 
-def _symlink_java_native_libraries_impl(ctx):    
+def _symlink_java_native_libraries_impl(ctx):
     shared_libraries = []
     for dep in ctx.attr.deps:
         shared_libraries += get_dynamic_deps(dep)
@@ -56,11 +58,11 @@ def _symlink_java_native_libraries_impl(ctx):
 
     symlinks = []
     for lib in shared_libraries:
-               out = ctx.actions.declare_file(ctx.attr.output_directory + "/" + lib.basename)
-               
-               if out not in symlinks:
-                    ctx.actions.symlink(output = out, target_file = lib)
-                    symlinks.append(out)
+        out = ctx.actions.declare_file(ctx.attr.output_directory + "/" + lib.basename)
+
+        if out not in symlinks:
+            ctx.actions.symlink(output = out, target_file = lib)
+            symlinks.append(out)
 
     return [DefaultInfo(files = depset(symlinks), runfiles = ctx.runfiles(files = symlinks))]
 
@@ -72,7 +74,6 @@ _symlink_java_native_libraries = rule(
     implementation = _symlink_java_native_libraries_impl,
 )
 
-
 def _get_runfiles_suffix(name):
     lbl = Label(native.repository_name() + "//" + native.package_name() + ":" + name)
 
@@ -81,8 +82,6 @@ def _get_runfiles_suffix(name):
         runfiles_suffix = "_main"
 
     return runfiles_suffix
-
-
 
 def wpilib_java_junit5_test(
         name,
@@ -106,7 +105,7 @@ def wpilib_java_junit5_test(
     junit_runtime_deps = [
         "@maven//:org_junit_platform_junit_platform_console",
     ]
-    
+
     native_shared_libraries_symlink = name + ".symlink_native"
     extracted_native_dir = "extracted_native"
     full_extracted_native_dir = native.package_name() + "/extracted_native"
@@ -144,16 +143,14 @@ def wpilib_java_junit5_test(
         **kwargs
     )
 
-
 def wpilib_java_binary(
-    name,
-    deps = [],
-    runtime_deps = [],
-    data = [],
-    jvm_flags = [],
-    env = {},
-    **kwargs,
-):
+        name,
+        deps = [],
+        runtime_deps = [],
+        data = [],
+        jvm_flags = [],
+        env = {},
+        **kwargs):
     native_shared_libraries_symlink = name + ".symlink_native"
     extracted_native_dir = "extracted_native"
     full_extracted_native_dir = native.package_name() + "/extracted_native"
@@ -166,7 +163,7 @@ def wpilib_java_binary(
         }),
         tags = ["manual"],
     )
-    
+
     java_binary(
         name = name,
         data = data + [native_shared_libraries_symlink],

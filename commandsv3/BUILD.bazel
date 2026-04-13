@@ -70,6 +70,12 @@ wpilib_java_library(
 wpilib_java_junit5_test(
     name = "commandsv3-java-test",
     srcs = glob(["src/test/java/**/*.java"]),
+    jvm_flags = [
+        "--add-opens",
+        "java.base/jdk.internal.vm=ALL-UNNAMED",
+        "--add-opens",
+        "java.base/java.lang=ALL-UNNAMED",
+    ],
     plugins = [
         "//epilogue-processor:plugin",
     ],
@@ -87,12 +93,6 @@ wpilib_java_junit5_test(
         "//wpiutil:wpiutil-java",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
-    jvm_flags = [
-        '--add-opens',
-        'java.base/jdk.internal.vm=ALL-UNNAMED',
-        '--add-opens',
-        'java.base/java.lang=ALL-UNNAMED',
-    ]
 )
 
 java_binary(

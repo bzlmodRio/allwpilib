@@ -42,11 +42,11 @@ wpilib_java_library(
 
 wpilib_java_junit5_test(
     name = "wpiunits-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
         ":wpiunits-java",
     ],
-    size = "small",
 )
 
 java_binary(

@@ -1,5 +1,6 @@
 load("@build_bazel_apple_support//rules:universal_binary.bzl", "universal_binary")
 load("@rules_cc//cc:action_names.bzl", "CPP_LINK_STATIC_LIBRARY_ACTION_NAME", "OBJ_COPY_ACTION_NAME", "STRIP_ACTION_NAME")
+load("@rules_cc//cc:cc_import.bzl", "cc_import")
 load("@rules_cc//cc:cc_shared_library.bzl", "cc_shared_library")
 load("@rules_cc//cc:defs.bzl", "CcInfo", "cc_library")
 load("@rules_cc//cc:find_cc_toolchain.bzl", "CC_TOOLCHAIN_ATTRS", "find_cpp_toolchain", "use_cc_toolchain")
@@ -428,8 +429,7 @@ def wpilib_cc_shared_library(
         }),
         **kwargs
     )
-
-    native.cc_import(
+    cc_import(
         name = name + ".import",
         shared_library = name,
         visibility = visibility,

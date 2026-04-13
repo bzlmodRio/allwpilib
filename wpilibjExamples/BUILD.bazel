@@ -1,4 +1,6 @@
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_file")
+load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_file")
+load("@rules_java//java:java_library.bzl", "java_library")
 load("@rules_jvm_external//:defs.bzl", "maven_export")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//wpilibjExamples:build_java_examples.bzl", "build_commands", "build_examples", "build_snippets", "build_templates", "build_tests")
@@ -40,10 +42,10 @@ java_library(
     srcs = ["src/main/java/org/wpilib/Executor.java"],
     deps = [
         "//wpilibj:wpilibj-java",
-    ]
+    ],
 )
 
-# Un/comment the halsim extensions you wish to use when doing a 
+# Un/comment the halsim extensions you wish to use when doing a
 # bazel run //wpilibjExamples:<example>-example.sim
 halsim_deps = [
     # "//simulation/halsim_ds_socket:shared/halsim_ds_socket",

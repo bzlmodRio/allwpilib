@@ -2,9 +2,10 @@ load("@bazel_tools//tools/cpp:toolchain_utils.bzl", "find_cpp_toolchain")
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
 load("@rules_cc//cc/common:cc_info.bzl", "CcInfo")
+load("@rules_java//java:java_library.bzl", "java_library")
+load("@rules_java//java/common:java_common.bzl", "java_common")
 load("@rules_java//java/common:java_info.bzl", "JavaInfo")
 load("@rules_pkg//:mappings.bzl", "filter_directory")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 
@@ -69,7 +70,6 @@ _jni_headers = rule(
     toolchains = ["@bazel_tools//tools/cpp:toolchain_type"],
 )
 
-
 def _merge_default_infos(ctx, infos):
     return DefaultInfo(
         files = depset(transitive = [info.files for info in infos]),
@@ -112,7 +112,6 @@ def wpilib_jni_java_library(
         tags = [],
         extra_source_pkgs = [],
         **java_library_args):
-        
     tags = list(tags) if tags else []
 
     maven_coordinates = "{}:{}:$(WPILIB_VERSION)".format(maven_group_id, maven_artifact_name)
@@ -123,8 +122,7 @@ def wpilib_jni_java_library(
     headers_name = name + ".hdrs"
 
     intermediate_name = name + ".intermediate"
-
-    native.java_library(
+    java_library(
         name = intermediate_name,
         visibility = ["//visibility:private"],
         testonly = testonly,

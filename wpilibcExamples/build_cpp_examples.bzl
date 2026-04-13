@@ -54,7 +54,7 @@ def build_examples(halsim_deps = []):
             name = folder + "-example.sim",
             data = halsim_deps,
             deps = [
-                folder + "-example"
+                folder + "-example",
             ],
             env = select({
                 "@bazel_tools//src/conditions:windows": {"HALSIM_EXTENSIONS": ";".join(extension_names)},
@@ -105,7 +105,7 @@ def build_snippets(halsim_deps):
             name = folder + "-snippet.sim",
             data = halsim_deps,
             deps = [
-                folder + "-snippet"
+                folder + "-snippet",
             ],
             env = select({
                 "@bazel_tools//src/conditions:windows": {"HALSIM_EXTENSIONS": ";".join(extension_names)},

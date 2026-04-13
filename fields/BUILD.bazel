@@ -58,11 +58,11 @@ pkg_files(
 
 wpilib_java_junit5_test(
     name = "fields-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
         ":fields-java",
     ],
-    size = "small",
 )
 
 package_static_cc_project(
