@@ -215,6 +215,8 @@ wpilib_jni_java_library(
     native_libs = [
         ":shared/cscorejni.import",
         ":shared/cscore.import",
+        "//wpinet:shared/wpinetjni.import",
+        "//wpinet:shared/wpinet.import",
         "//wpiutil:shared/wpiutiljni.import",
         "//wpiutil:shared/wpiutil.import",
     ],
