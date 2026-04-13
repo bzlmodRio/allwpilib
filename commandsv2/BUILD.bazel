@@ -144,6 +144,7 @@ cc_test(
 
 wpilib_java_junit5_test(
     name = "commandsv2-java-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     resource_strip_prefix = "commandsv2/src/test/resources",
     resources = glob(["src/test/resources/**"]),
@@ -158,7 +159,6 @@ wpilib_java_junit5_test(
         "//wpiutil:wpiutil-java",
         "@maven//:org_mockito_mockito_core",
     ],
-    size = "small",
 )
 
 cc_binary(

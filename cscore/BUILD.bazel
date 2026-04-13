@@ -232,12 +232,12 @@ cc_test(
 
 wpilib_java_junit5_test(
     name = "cscore-java-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
         ":cscore-java",
         "//wpiutil:wpiutil-java",
     ],
-    size = "small",
 )
 
 cc_binary(

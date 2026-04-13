@@ -155,13 +155,13 @@ cc_test(
 
 wpilib_java_junit5_test(
     name = "datalog-java-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     tags = ["exclusive"],
     deps = [
         ":datalog-java",
         "//wpiutil:wpiutil-java",
     ],
-    size = "small",
 )
 
 package_default_jni_project(

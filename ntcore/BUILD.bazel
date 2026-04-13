@@ -197,13 +197,13 @@ cc_test(
 
 wpilib_java_junit5_test(
     name = "ntcore-java-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     tags = ["exclusive"],
     deps = [
         ":ntcore-java",
         "//wpiutil:wpiutil-java",
     ],
-    size = "small",
 )
 
 cc_binary(

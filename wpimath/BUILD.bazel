@@ -287,6 +287,7 @@ cc_test(
 
 wpilib_java_junit5_test(
     name = "wpimath-java-test",
+    size = "large",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
         ":wpimath-java",
@@ -297,7 +298,6 @@ wpilib_java_junit5_test(
         "@maven//:org_ejml_ejml_simple",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
-    size = "large",
 )
 
 cc_binary(

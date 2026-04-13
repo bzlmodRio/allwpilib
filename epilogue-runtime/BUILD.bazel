@@ -17,6 +17,7 @@ wpilib_java_library(
 
 wpilib_java_junit5_test(
     name = "epilogue-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
         ":epilogue-java",
@@ -24,5 +25,4 @@ wpilib_java_junit5_test(
         "//wpiutil:wpiutil-java",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
-    size = "small",
 )

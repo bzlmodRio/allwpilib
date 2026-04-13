@@ -204,11 +204,11 @@ cc_test(
 
 wpilib_java_junit5_test(
     name = "hal-java-test",
+    size = "small",
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
         ":hal-java",
     ],
-    size = "small",
 )
 
 cc_binary(

@@ -1,7 +1,7 @@
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@rules_java//java:defs.bzl", "java_library")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_binary")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
 load("//wpilibjExamples:example_projects.bzl", "COMMANDS_V2_FOLDERS", "EXAMPLE_FOLDERS", "EXAMPLE_TESTS_FOLDERS", "SNIPPET_FOLDERS", "SNIPPET_TESTS_FOLDERS", "TEMPLATE_FOLDERS")
 
 def _package_type(package_type):
@@ -29,23 +29,23 @@ def _package_type(package_type):
 
 def build_examples(halsim_deps):
     _package_type("examples")
-    
+
     shared_deps = [
-                "//apriltag:apriltag-java",
-                "//cameraserver:cameraserver-java",
-                "//cscore:cscore-java",
-                "//hal:hal-java",
-                "//ntcore:ntcore-java",
-                "//wpimath:wpimath-java",
-                "//wpilibj:wpilibj-java",
-                "//commandsv2:commandsv2-java",
-                "//wpiutil:wpiutil-java",
-                "//romiVendordep:romiVendordep-java",
-                "//xrpVendordep:xrpVendordep-java",
-                "//wpiunits:wpiunits-java",
-                "//epilogue-runtime:epilogue-java",
-                "@bzlmodrio-opencv//libraries/java/opencv",
-            ]
+        "//apriltag:apriltag-java",
+        "//cameraserver:cameraserver-java",
+        "//cscore:cscore-java",
+        "//hal:hal-java",
+        "//ntcore:ntcore-java",
+        "//wpimath:wpimath-java",
+        "//wpilibj:wpilibj-java",
+        "//commandsv2:commandsv2-java",
+        "//wpiutil:wpiutil-java",
+        "//romiVendordep:romiVendordep-java",
+        "//xrpVendordep:xrpVendordep-java",
+        "//wpiunits:wpiunits-java",
+        "//epilogue-runtime:epilogue-java",
+        "@bzlmodrio-opencv//libraries/java/opencv",
+    ]
 
     for folder in EXAMPLE_FOLDERS:
         java_library(
@@ -95,20 +95,20 @@ def build_snippets(halsim_deps):
     _package_type("snippets")
 
     shared_deps = [
-                "//apriltag:apriltag-java",
-                "//cameraserver:cameraserver-java",
-                "//cscore:cscore-java",
-                "//hal:hal-java",
-                "//ntcore:ntcore-java",
-                "//wpimath:wpimath-java",
-                "//wpilibj:wpilibj-java",
-                "//commandsv2:commandsv2-java",
-                "//wpiutil:wpiutil-java",
-                "//romiVendordep:romiVendordep-java",
-                "//xrpVendordep:xrpVendordep-java",
-                "//wpiunits:wpiunits-java",
-                "//epilogue-runtime:epilogue-java",
-                "@bzlmodrio-opencv//libraries/java/opencv",
+        "//apriltag:apriltag-java",
+        "//cameraserver:cameraserver-java",
+        "//cscore:cscore-java",
+        "//hal:hal-java",
+        "//ntcore:ntcore-java",
+        "//wpimath:wpimath-java",
+        "//wpilibj:wpilibj-java",
+        "//commandsv2:commandsv2-java",
+        "//wpiutil:wpiutil-java",
+        "//romiVendordep:romiVendordep-java",
+        "//xrpVendordep:xrpVendordep-java",
+        "//wpiunits:wpiunits-java",
+        "//epilogue-runtime:epilogue-java",
+        "@bzlmodrio-opencv//libraries/java/opencv",
     ]
 
     for folder in SNIPPET_FOLDERS:
@@ -135,7 +135,6 @@ def build_snippets(halsim_deps):
             }),
             tags = ["manual"],
         )
-
 
 def build_templates():
     _package_type("templates")
