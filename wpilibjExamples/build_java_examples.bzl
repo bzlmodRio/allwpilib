@@ -34,6 +34,7 @@ def build_examples(halsim_deps):
         "//apriltag:apriltag-java",
         "//cameraserver:cameraserver-java",
         "//cscore:cscore-java",
+        "//datalog:datalog-java",
         "//hal:hal-java",
         "//ntcore:ntcore-java",
         "//wpimath:wpimath-java",

@@ -239,7 +239,7 @@ wpilib_jni_java_library(
     ],
     maven_artifact_name = "wpimath-java",
     maven_group_id = "org.wpilib.wpimath",
-    native_libs = [":shared/wpimathjni.import"],
+    native_libs = [":shared/wpimathjni.import", ":shared/wpimath.import"],
     plugins = [
         "//:avaje_jsonb_generator",
     ],
