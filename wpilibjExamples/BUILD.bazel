@@ -35,7 +35,22 @@ write_source_file(
     visibility = ["//visibility:public"],
 )
 
+java_library(
+    name = "example_executor",
+    srcs = ["src/main/java/org/wpilib/Executor.java"],
+    deps = [
+        "//wpilibj:wpilibj-java",
+    ]
+)
+
+# Un/comment the halsim extensions you wish to use when doing a 
+# bazel run //wpilibjExamples:<example>-example.sim
 halsim_deps = [
+    # "//simulation/halsim_ds_socket:shared/halsim_ds_socket",
+    "//simulation/halsim_gui:shared/halsim_gui",
+    # "//simulation/halsim_ws_client:shared/halsim_ws_client",
+    # "//simulation/halsim_ws_server:shared/halsim_ws_server",
+    # "//simulation/halsim_xrp:shared/halsim_xrp",
 ]
 
 build_commands()

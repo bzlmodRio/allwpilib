@@ -1,7 +1,7 @@
 load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_binary")
 load("//wpilibjExamples:example_projects.bzl", "COMMANDS_V2_FOLDERS", "EXAMPLE_FOLDERS", "EXAMPLE_TESTS_FOLDERS", "SNIPPET_FOLDERS", "SNIPPET_TESTS_FOLDERS", "TEMPLATE_FOLDERS")
 
 def _package_type(package_type):
@@ -29,16 +29,9 @@ def _package_type(package_type):
 
 def build_examples(halsim_deps):
     _package_type("examples")
-
-    for folder in EXAMPLE_FOLDERS:
-        java_binary(
-            name = folder + "-example",
-            srcs = native.glob(["src/main/java/org/wpilib/examples/" + folder + "/**/*.java"]),
-            main_class = "org/wpilib/examples/" + folder + "/Main",
-            plugins = [
-                "//epilogue-processor:plugin",
-            ],
-            deps = [
+    
+    shared_deps = [
+                ":example_executor",
                 "//apriltag:apriltag-java",
                 "//cameraserver:cameraserver-java",
                 "//cscore:cscore-java",
@@ -54,8 +47,35 @@ def build_examples(halsim_deps):
                 "//wpiunits:wpiunits-java",
                 "//epilogue-runtime:epilogue-java",
                 "@bzlmodrio-opencv//libraries/java/opencv",
+            ]
+
+    for folder in EXAMPLE_FOLDERS:
+        java_library(
+            name = folder + "-example",
+            srcs = native.glob(["src/main/java/org/wpilib/examples/" + folder + "/**/*.java"]),
+            plugins = [
+                "//epilogue-processor:plugin",
             ],
+            deps = shared_deps,
             tags = ["wpi-example"],
+        )
+
+        extension_names = ["$(location " + dep + ")" for dep in halsim_deps]
+
+
+        wpilib_java_binary(
+            name = folder + "-example.sim",
+            main_class = "org.wpilib.Executor",
+            runtime_deps = shared_deps + [
+                folder + "-example",
+            ] + [d + ".import" for d in halsim_deps],
+            args = ["org.wpilib.examples." + folder + ".Robot"],
+            data = halsim_deps,
+            env = select({
+                "@bazel_tools//src/conditions:windows": {"HALSIM_EXTENSIONS": ";".join(extension_names)},
+                "//conditions:default": {"HALSIM_EXTENSIONS": ":".join(extension_names)},
+            }),
+            tags = ["manual"],
         )
 
 def build_commands():
@@ -148,20 +168,6 @@ def build_tests():
                 "//epilogue-runtime:epilogue-java",
                 "//wpiunits:wpiunits-java",
             ],
-            native_libs = [
-                "//datalog:shared/datalog",
-                "//datalog:shared/datalogjni",
-                "//hal:shared/wpiHal",
-                "//hal:shared/wpiHaljni",
-                "//ntcore:shared/ntcore",
-                "//ntcore:shared/ntcorejni",
-                "//wpimath:shared/wpimath",
-                "//wpimath:shared/wpimathjni",
-                "//wpinet:shared/wpinet",
-                "//wpinet:shared/wpinetjni",
-                "//wpiutil:shared/wpiutil",
-                "//wpiutil:shared/wpiutiljni",
-            ],
             tags = ["wpi-example"],
             size = "small",
         )
@@ -184,20 +190,6 @@ def build_tests():
                 "//wpiutil:wpiutil-java",
                 "//epilogue-runtime:epilogue-java",
                 "//wpiunits:wpiunits-java",
-            ],
-            native_libs = [
-                "//datalog:shared/datalog",
-                "//datalog:shared/datalogjni",
-                "//hal:shared/wpiHal",
-                "//hal:shared/wpiHaljni",
-                "//ntcore:shared/ntcore",
-                "//ntcore:shared/ntcorejni",
-                "//wpimath:shared/wpimath",
-                "//wpimath:shared/wpimathjni",
-                "//wpinet:shared/wpinet",
-                "//wpinet:shared/wpinetjni",
-                "//wpiutil:shared/wpiutil",
-                "//wpiutil:shared/wpiutiljni",
             ],
             tags = ["wpi-example"],
             size = "small",
