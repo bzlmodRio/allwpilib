@@ -61,7 +61,6 @@ def _symlink_java_native_libraries_impl(ctx):
                if out not in symlinks:
                     ctx.actions.symlink(output = out, target_file = lib)
                     symlinks.append(out)
-                    print(out)
 
     return [DefaultInfo(files = depset(symlinks), runfiles = ctx.runfiles(files = symlinks))]
 
@@ -94,7 +93,6 @@ def wpilib_java_junit5_test(
         data = [],
         jvm_flags = [],
         package = "org",
-        native_libs = [],
         **kwargs):
     """
     Convenience helper to make a junit5 test
@@ -114,7 +112,7 @@ def wpilib_java_junit5_test(
     full_extracted_native_dir = native.package_name() + "/extracted_native"
     _symlink_java_native_libraries(
         name = native_shared_libraries_symlink,
-        deps = native_libs,
+        deps = deps + runtime_deps,
         output_directory = select({
             "@bazel_tools//src/conditions:windows": name + ".exe.runfiles/" + _get_runfiles_suffix(name),
             "//conditions:default": extracted_native_dir,

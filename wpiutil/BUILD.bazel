@@ -256,7 +256,7 @@ wpilib_jni_java_library(
     srcs = glob(["src/main/java/**/*.java"]),
     maven_artifact_name = "wpiutil-java",
     maven_group_id = "org.wpilib.wpiutil",
-    native_libs = [":wpiutiljni"],
+    native_libs = [":shared/wpiutiljni.import"],
     visibility = ["//visibility:public"],
     deps = [
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
@@ -320,10 +320,6 @@ wpilib_java_junit5_test(
     srcs = glob(["src/test/java/**/*.java"]),
     deps = [
         ":wpiutil-java",
-    ],
-    native_libs = [
-        ":shared/wpiutil",
-        ":shared/wpiutiljni",
     ],
     size = "small",
 )

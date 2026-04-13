@@ -429,6 +429,12 @@ def wpilib_cc_shared_library(
         **kwargs
     )
 
+    native.cc_import(
+        name = name + ".import",
+        shared_library = name,
+        visibility = visibility,
+    )
+
     universal_name = "universal/lib" + lib + ".lib"
     universal_binary(
         name = universal_name,

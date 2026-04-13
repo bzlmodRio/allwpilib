@@ -141,7 +141,7 @@ wpilib_jni_java_library(
     extra_source_pkgs = ["resources"],
     maven_artifact_name = "apriltag-java",
     maven_group_id = "org.wpilib.apriltag",
-    native_libs = [":apriltagjni"],
+    native_libs = [":shared/apriltagjni.import"],
     plugins = [
         "//:avaje_jsonb_generator",
     ],
@@ -187,13 +187,6 @@ wpilib_java_junit5_test(
         "//wpiutil:wpiutil-java",
         "@bzlmodrio-opencv//libraries/java/opencv",
         "@maven//:io_avaje_avaje_jsonb",
-    ],
-    native_libs = [
-        "@bzlmodrio-opencv//libraries/cpp/opencv:jni",
-        "//apriltag:shared/apriltag",
-        "//apriltag:shared/apriltagjni",
-        "//wpiutil:shared/wpiutil",
-        "//wpiutil:shared/wpiutiljni",
     ],
 )
 

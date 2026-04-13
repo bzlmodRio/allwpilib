@@ -1,5 +1,16 @@
 package(default_visibility = ["//visibility:public"])
 
+exports_files(["run_robot.sh"])
+
+platform(
+    name = "systemcore",
+    flags = [
+    ],
+    parents = [
+        "@rules_bzlmodrio_toolchains//platforms/systemcore",
+    ],
+)
+
 windows_flags = [
     "--host_copt=/wd4141",
     "--host_copt=/wd4715",

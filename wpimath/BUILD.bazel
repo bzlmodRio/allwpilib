@@ -239,7 +239,7 @@ wpilib_jni_java_library(
     ],
     maven_artifact_name = "wpimath-java",
     maven_group_id = "org.wpilib.wpimath",
-    native_libs = [":wpimathjni"],
+    native_libs = [":shared/wpimathjni.import"],
     plugins = [
         "//:avaje_jsonb_generator",
     ],
@@ -293,12 +293,7 @@ wpilib_java_junit5_test(
         "@maven//:org_ejml_ejml_java9module",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
-    native_libs = [
-        "//wpimath:shared/wpimath",
-        "//wpimath:shared/wpimathjni",
-        "//wpiutil:shared/wpiutil",
-        "//wpiutil:shared/wpiutiljni",
-    ],
+    size = "large",
 )
 
 cc_binary(
