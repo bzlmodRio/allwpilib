@@ -367,6 +367,7 @@ wpimath_extension(
 
 define_pybind_library(
     name = "robotpy-wpimath",
+    create_pyi_extra_deps = [requirement("numpy")],
     pkgcfgs = PYBIND_PKGCFG_DEPS,
 )
 
@@ -396,6 +397,7 @@ wpimath_test_extension(
 
 define_test_pybind_library(
     name = "robotpy-wpimath-test",
+    create_imports_extra_deps = [":robotpy-wpimath"],
     pkgcfgs = [
         "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
         "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
