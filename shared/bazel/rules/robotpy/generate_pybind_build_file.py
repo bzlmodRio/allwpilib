@@ -177,6 +177,64 @@ class PublishCastersConfig:
             self.include_paths.append(f"src/main/python/{inc_dir}")
 
 
+class MakePyiConfig:
+    def __init__(self, projectcfg, stripped_include_prefix: str, item: BuildTarget):
+
+        self.remapping_args = []
+        self.install_path = item.install_path
+
+        self.extension_package = item.args[0]
+        ctr = 1
+        stub_files = []
+        for arg in item.args[1::2]:
+            if arg == "--":
+                break
+            stub_files.append(arg)
+            ctr += 2
+        stub_files.sort()
+
+        self.stub_files = []
+        self.output_files = []
+        self.src_files = []
+        for sf in stub_files:
+            self.output_files.append(sf)
+
+            self.stub_files.append(sf)
+            self.stub_files.append("$(location " + sf + ")")
+
+        # Move past '--'
+        ctr += 1
+
+        for arg in item.args[ctr::2]:
+            self.remapping_args.append(item.args[ctr + 0])
+            remapped_arg = item.args[ctr + 1]
+            if isinstance(remapped_arg, str):
+                rel_path = remapped_arg[remapped_arg.find("_main/") + len("_main/") :]
+                self.remapping_args.append(rel_path)
+                self.src_files.append("/".join(pathlib.Path(rel_path).parts[1:]))
+            elif isinstance(remapped_arg, BuildTarget):
+                rel_path = remapped_arg.install_path / remapped_arg.args[0].name
+                filepath = ":" + stripped_include_prefix + "/" + str(rel_path)
+                self.remapping_args.append("$(location " + filepath + ")")
+                self.src_files.append(filepath)
+            elif isinstance(remapped_arg, ExtensionModule):
+                filepath = (
+                    ":"
+                    + stripped_include_prefix
+                    + "/"
+                    + remapped_arg.package_name.replace(".", "/")
+                )
+                self.remapping_args.append("$(location " + filepath + ")")
+                self.src_files.append(filepath)
+            else:
+                raise Exception("Unexpected type", type(remapped_arg))
+            ctr += 2
+
+        assert 0 == len(item.args[ctr:])
+
+        self.extension_library = self.extension_package.replace(".", "/")
+
+
 class BazelExtensionModule:
     def __init__(
         self,
@@ -328,6 +386,7 @@ def generate_pybind_build_file(
     # Cache built up for an extension module. Gets reset when an ExtensionModule is encountered
     additional_extension_targets: Dict[str, BuildTarget] = {}
     publish_casters_targets = []
+    make_pyi_targets = []
 
     for item in plan:
         if isinstance(item, ExtensionModule):
@@ -351,11 +410,14 @@ def generate_pybind_build_file(
                 "dat2tmplcpp",
                 "dat2tmplhpp",
                 "dat2trampoline",
-                "make-pyi",
             ]:
                 pass
             elif item.command == "publish-casters":
                 publish_casters_targets.append(PublishCastersConfig(projectcfg, item))
+            elif item.command == "make-pyi":
+                make_pyi_targets.append(
+                    MakePyiConfig(projectcfg, stripped_include_prefix, item)
+                )
             else:
                 raise Exception(f"Unhandled build target {item.command}")
         elif isinstance(item, Entrypoint):
@@ -450,6 +512,7 @@ def generate_pybind_build_file(
                 extension_modules=extension_modules,
                 top_level_name=top_level_name,
                 publish_casters_targets=publish_casters_targets,
+                make_pyi_targets=make_pyi_targets,
                 python_deps=sorted(python_deps),
                 all_local_native_deps=all_local_native_deps,
                 stripped_include_prefix=stripped_include_prefix,
@@ -458,6 +521,10 @@ def generate_pybind_build_file(
                 package_root_file=package_root_file,
                 raw_project_config=raw_config["project"],
                 entry_points=entry_points,
+                project_file=project_file,
+                update_init=raw_config.get("tool", {})
+                .get("semiwrap", {})
+                .get("update_init", []),
                 version_file=version_file,
                 has_external_python_deps=has_external_python_deps,
             )
