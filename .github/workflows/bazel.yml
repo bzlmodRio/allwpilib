@@ -93,7 +93,7 @@ jobs:
           if [[ "${{ matrix.os }}" == "windows-2022" ]]; then
             bazel --output_user_root=C:\\bazelroot ${ACTION} ${TARGETS} --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
           else
-            bazel ${ACTION} ${TARGETS} --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
+            bazel ${ACTION} ${TARGETS} --config=ci -c opt  --//shared/bazel/rules/robotpy:robotpy_enable_make_pyi --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
           fi
         shell: bash
 
