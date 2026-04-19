@@ -256,6 +256,7 @@ apriltag_extension(
 
 define_pybind_library(
     name = "robotpy-apriltag",
+    create_pyi_extra_deps = [requirement("numpy")],
     pkgcfgs = PYBIND_PKGCFG_DEPS,
 )
 

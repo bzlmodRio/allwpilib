@@ -1,4 +1,7 @@
-from .version import version as __version__
+try:
+    from .version import version as __version__
+except ImportError:
+    __version__ = "development"
 
 # Only needed for side effects
 from . import _initialize
