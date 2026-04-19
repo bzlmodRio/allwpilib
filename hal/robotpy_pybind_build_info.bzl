@@ -2,8 +2,8 @@
 
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:pybind_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "create_imports", "scan_headers", "update_yaml_files")
 
 def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     HAL_SIMULATION_HEADER_GEN = [
@@ -364,7 +364,96 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = []):
+def _make_pyi_stubs(name, extra_pyi_deps = []):
+    make_pyi(
+        name = name + ".make_pyi0",
+        extension_package = "hal.simulation._simulation",
+        stub_files = [
+            "hal/simulation/_simulation.pyi",
+            "$(location hal/simulation/_simulation.pyi)",
+        ],
+        remapping_args = [
+            "hal.simulation",
+            "hal/src/main/python/hal/simulation/__init__.py",
+            "hal.simulation._init__simulation",
+            "$(location :src/main/python/hal/simulation/_init__simulation.py)",
+            "hal.simulation._simulation",
+            "$(location :src/main/python/hal/simulation/_simulation)",
+            "hal",
+            "hal/src/main/python/hal/__init__.py",
+            "hal._init__wpiHal",
+            "$(location :src/main/python/hal/_init__wpiHal.py)",
+            "hal._wpiHal",
+            "$(location :src/main/python/hal/_wpiHal)",
+        ],
+        outputs = [
+            "hal/simulation/_simulation.pyi",
+        ],
+        srcs = [
+            "src/main/python/hal/simulation/__init__.py",
+            ":src/main/python/hal/simulation/_init__simulation.py",
+            ":src/main/python/hal/simulation/_simulation",
+            "src/main/python/hal/__init__.py",
+            ":src/main/python/hal/_init__wpiHal.py",
+            ":src/main/python/hal/_wpiHal",
+        ],
+        python_deps = [
+            "//hal:robotpy-native-wpihal",
+            "//ntcore:pyntcore",
+            "//wpiutil:robotpy-wpiutil",
+        ] + extra_pyi_deps,
+    )
+
+    make_pyi(
+        name = name + ".make_pyi1",
+        extension_package = "hal._wpiHal",
+        stub_files = [
+            "hal/_wpiHal.pyi",
+            "$(location hal/_wpiHal.pyi)",
+        ],
+        remapping_args = [
+            "hal.simulation",
+            "hal/src/main/python/hal/simulation/__init__.py",
+            "hal.simulation._init__simulation",
+            "$(location :src/main/python/hal/simulation/_init__simulation.py)",
+            "hal.simulation._simulation",
+            "$(location :src/main/python/hal/simulation/_simulation)",
+            "hal",
+            "hal/src/main/python/hal/__init__.py",
+            "hal._init__wpiHal",
+            "$(location :src/main/python/hal/_init__wpiHal.py)",
+            "hal._wpiHal",
+            "$(location :src/main/python/hal/_wpiHal)",
+        ],
+        outputs = [
+            "hal/_wpiHal.pyi",
+        ],
+        srcs = [
+            "src/main/python/hal/simulation/__init__.py",
+            ":src/main/python/hal/simulation/_init__simulation.py",
+            ":src/main/python/hal/simulation/_simulation",
+            "src/main/python/hal/__init__.py",
+            ":src/main/python/hal/_init__wpiHal.py",
+            ":src/main/python/hal/_wpiHal",
+        ],
+        python_deps = [
+            "//hal:robotpy-native-wpihal",
+            "//ntcore:pyntcore",
+            "//wpiutil:robotpy-wpiutil",
+        ] + extra_pyi_deps,
+    )
+
+    native.filegroup(
+        name = name + ".pyi_files",
+        srcs = [
+            "hal/simulation/_simulation.pyi",
+            "hal/_wpiHal.pyi",
+        ],
+    )
+
+def define_pybind_library(name, pkgcfgs = [], create_pyi_extra_deps = [], create_imports_extra_deps = []):
+    _make_pyi_stubs(name, extra_pyi_deps = create_pyi_extra_deps + create_imports_extra_deps)
+
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -382,7 +471,10 @@ def define_pybind_library(name, pkgcfgs = []):
         srcs = [
             "src/main/python/hal/simulation/hal_simulation.pc",
             "src/main/python/hal/wpihal.pc",
-        ],
+        ] + select({
+            "//shared/bazel/rules/robotpy:robotpy_make_pyi_enabled": [name + ".pyi_files"],
+            "//conditions:default": [],
+        }),
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
     )
@@ -430,6 +522,14 @@ def define_pybind_library(name, pkgcfgs = []):
             "pkg_config": ["hal_simulation = hal.simulation", "wpihal = hal"],
         },
         visibility = ["//visibility:public"],
+    )
+
+    create_imports(
+        name = "{}-create-imports".format(name),
+        library = [name],
+        prefix = "src/main/python",
+        update_init = [],
+        extra_deps = create_imports_extra_deps,
     )
 
     update_yaml_files(

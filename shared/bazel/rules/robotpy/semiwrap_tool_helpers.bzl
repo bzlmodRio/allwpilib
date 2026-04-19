@@ -1,6 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@aspect_bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_python//python:defs.bzl", "py_test")
+load("@rules_python//python:defs.bzl", "py_binary", "py_test")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 def __update_yaml_files_impl(ctx):
@@ -91,4 +91,60 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
         size = "small",
         target_compatible_with = robotpy_compatibility_select(),
         tags = ["robotpy_scan_headers"],
+    )
+
+def create_imports(name, prefix, library = None, project_file = None, update_init = [], extra_deps = []):
+    py_binary(
+        name = name + ".bin",
+        srcs = [
+            "//shared/bazel/rules/robotpy:wrapper.py",
+        ],
+        deps = library + extra_deps + [
+            "//shared/bazel/rules/robotpy:hack_pkgcfgs",
+            requirement("semiwrap"),
+            requirement("black"),
+        ],
+        main = "shared/bazel/rules/robotpy/wrapper.py",
+        # tags = ["robotpy", "manual"],
+        legacy_create_init = 0,
+    )
+
+    all_targets = []
+
+    for i, init_file in enumerate(update_init):
+        parts = init_file.split(" ", 1)
+        cmd = "$(location " + name + ".bin) semiwrap.tool create-imports --write --override_output_file=$(OUTS) " + init_file
+        native.genrule(
+            name = "{}{}.gen".format(name, i),
+            tools = [name + ".bin"],
+            outs = ["{}-create_imports{}.py".format(name, i)],
+            cmd = cmd,
+            target_compatible_with = select({
+                "//shared/bazel/rules/robotpy:robotpy_update_init_enabled": [],
+                "//conditions:default": ["@platforms//:incompatible"],
+            }),
+        )
+
+        write_source_files(
+            name = "{}.gen{}".format(name, i),
+            files = {
+                prefix + "/{}/__init__.py".format(parts[0].replace(".", "/")): "{}-create_imports{}.py".format(name, i),
+            },
+            # tags = ["robotpy", "manual"],
+            visibility = ["//visibility:public"],
+            target_compatible_with = robotpy_compatibility_select(),
+        )
+
+        all_targets.append("{}.gen{}".format(name, i))
+
+    write_source_files(
+        name = name,
+        additional_update_targets = all_targets,
+        tags = [
+            "manual",
+            "pregeneration",
+            "robotpy",
+        ],
+        visibility = ["//visibility:public"],
+        target_compatible_with = robotpy_compatibility_select(),
     )

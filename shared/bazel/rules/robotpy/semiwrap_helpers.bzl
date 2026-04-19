@@ -1,4 +1,6 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
 RESOLVE_CASTERS_DIR = "generated/resolve_casters/"
@@ -354,4 +356,35 @@ def run_header_gen(name, casters_pickle, trampoline_subpath, header_gen_config, 
         name = name + ".header_gen_files",
         srcs = tmpl_hdrs + trampoline_hdrs + generated_cc_files,
         tags = ["manual", "robotpy"],
+    )
+
+def make_pyi(name, extension_package, stub_files, remapping_args, srcs, outputs, python_deps):
+    cmd = "$(locations " + name + ".gen_wrapper" + ") "
+    cmd += extension_package
+    for sf in stub_files:
+        cmd += " " + sf
+
+    cmd += " -- "
+
+    for arg in remapping_args:
+        cmd += " " + arg
+    py_binary(
+        name = name + ".gen_wrapper",
+        srcs = ["//shared/bazel/rules/robotpy:make_pyi_wrapper.py"],
+        main = "make_pyi_wrapper.py",
+        deps = [requirement("semiwrap")] + python_deps,
+        legacy_create_init = 0,
+        target_compatible_with = select({
+            "//shared/bazel/rules/robotpy:robotpy_make_pyi_enabled": [],
+            "//conditions:default": ["@platforms//:incompatible"],
+        }),
+    )
+
+    native.genrule(
+        name = name,
+        srcs = srcs,
+        outs = outputs,
+        cmd = cmd,
+        tools = [name + ".gen_wrapper"],
+        target_compatible_with = robotpy_compatibility_select(),
     )
