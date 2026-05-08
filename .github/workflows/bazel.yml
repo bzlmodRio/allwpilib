@@ -66,11 +66,10 @@ jobs:
       - uses: actions/checkout@v6
         with: { fetch-depth: 0 }
 
-      - id: Setup_bazel_remote
-        uses: ./.github/actions/setup-bazel-remote
+      - id: Setup_build_buddy
+        uses: ./.github/actions/setup-build-buddy
         with:
-          username: ${{ secrets.BAZEL_CACHE_USERNAME }}
-          password: ${{ secrets.BAZEL_CACHE_PASSWORD }}
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Install apt dependencies
         if: runner.os == 'Linux'
@@ -92,9 +91,9 @@ jobs:
             TARGETS=...
           fi
           if [ "${{ runner.os }}" = "Windows" ]; then
-            bazel --output_user_root=C:\\bazelroot ${ACTION} ${TARGETS} --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
+            bazel --output_user_root=C:\\bazelroot ${ACTION} ${TARGETS} --config=ci -k -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
           else
-            bazel ${ACTION} ${TARGETS} --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
+            bazel ${ACTION} ${TARGETS} --config=ci -k -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
           fi
         shell: bash
 
@@ -144,11 +143,10 @@ jobs:
       - uses: actions/checkout@v6
         with: { fetch-depth: 0 }
 
-      - id: Setup_bazel_remote
-        uses: ./.github/actions/setup-bazel-remote
+      - id: Setup_build_buddy
+        uses: ./.github/actions/setup-build-buddy
         with:
-          username: ${{ secrets.BAZEL_CACHE_USERNAME }}
-          password: ${{ secrets.BAZEL_CACHE_PASSWORD }}
+          token: ${{ secrets.BUILDBUDDY_API_KEY }}
 
       - name: Run Non-RobotPy pregeneration
         run: bazel run //:write_pregenerated_files

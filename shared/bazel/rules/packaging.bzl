@@ -160,7 +160,8 @@ def package_default_cc_project(
         name,
         maven_group_id,
         maven_artifact_name,
-        architectures = None):
+        architectures = None,
+        has_headers = True):
     """Packages the C++ shared and static libraries for a project.
 
     This assumes that shared and static libraries exist for the project, and
@@ -208,6 +209,7 @@ def package_default_cc_project(
         maven_group_id = maven_group_id,
         maven_artifact_name = maven_artifact_name,
         architectures = architectures,
+        has_headers = has_headers,
     )
 
 def _wpilib_maven_export_shared_static(
@@ -215,12 +217,12 @@ def _wpilib_maven_export_shared_static(
         target_name,
         maven_group_id,
         maven_artifact_name,
-        architectures = None):
+        architectures = None,
+        has_headers = True):
     wpilib_maven_export(
         name = name,
         maven_coordinates = "{}:{}:$(WPILIB_VERSION)".format(maven_group_id, maven_artifact_name),
-        classifier_artifacts = _filter_artifacts(architectures, {
-            "headers": ":{}-hdrs-zip".format(target_name),
+        classifier_artifacts = _filter_artifacts(architectures, ({"headers": ":{}-hdrs-zip".format(target_name)} if has_headers else {}) | {
             "linuxsystemcore": ":{}_shared_zip-opt-systemcore".format(target_name),
             "linuxsystemcoredebug": ":{}_shared_zip-dbg-systemcore".format(target_name),
             "linuxsystemcorestatic": ":{}_static_zip-opt-systemcore".format(target_name),

@@ -36,6 +36,12 @@ def define_native_wrapper(name, pyproject_toml = None):
         base_path = "native/wpihal/",
     )
 
+    copy_native_file(
+        name = "MrcLib",
+        library = "shared/MrcLib",
+        base_path = "native/wpihal/",
+    )
+
     robotpy_library(
         name = name,
         distribution = "robotpy-native-wpihal",
@@ -43,6 +49,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         data = [
             name + ".pc_wrapper",
             ":wpiHal.copy_lib",
+            ":MrcLib.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [

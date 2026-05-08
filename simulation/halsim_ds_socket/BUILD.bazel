@@ -90,6 +90,7 @@ package_default_cc_project(
     architectures = host_architectures,
     maven_artifact_name = "halsim_ds_socket",
     maven_group_id = "org.wpilib.halsim",
+    has_headers = False,
 )
 
 copy_native_file(
