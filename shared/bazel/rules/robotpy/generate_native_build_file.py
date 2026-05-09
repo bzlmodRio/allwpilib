@@ -46,10 +46,11 @@ def main():
     template = env.from_string(BUILD_FILE_TEMPLATE)
 
     nativelib_config = raw_config["tool"]["hatch"]["build"]["hooks"]["nativelib"]
-    project_name = nativelib_config["pcfile"][0]["name"]
+    project_name = raw_config["project"]["name"].replace("robotpy-native-", "")
     root_package = fixup_root_package_name(project_name)
     pc_files = []
 
+    local_pc_names = set()
     for i, raw_pc in enumerate(nativelib_config.get("pcfile", [])):
         pcfile = parse_input(
             raw_pc,
@@ -60,12 +61,14 @@ def main():
         if pcfile.enable_if and not Marker(pcfile.enable_if).evaluate():
             continue
         pc_files.append(pcfile)
+        local_pc_names.add(pcfile.get_pc_path().name[:-3])
 
     requires = set()
     for pcfile in pc_files:
         if pcfile.requires:
             for dep in pcfile.requires:
-                requires.add(dep)
+                if dep not in local_pc_names:
+                    requires.add(dep)
 
     maven_downloads = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
         "maven_lib_download"
@@ -162,7 +165,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         entry_points = {
             "pkg_config": [
             {%- for pcfile in pc_files %}
-                "{{pcfile.name}} = native.{{nativelib_config.pcfile[0].name}}",
+                "{{pcfile.name}} = native.{{pcfile.name}}",
             {%- endfor %}
             ],
         },
