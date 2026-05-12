@@ -174,3 +174,36 @@ def test_initialization_of_current_state():
     profile = TrapezoidProfile(constraints)
     assert math.isclose(profile.timeLeftUntil(0.0), 0.0, abs_tol=1e-10)
     assert math.isclose(profile.totalTime(), 0.0, abs_tol=1e-10)
+
+
+def test_initial_velocity_constraints():
+    constraints = TrapezoidProfile.Constraints(0.75, 0.75)
+    goal = TrapezoidProfile.State(10.0, 0.0)
+    state = TrapezoidProfile.State(0.0, -10.0)
+    profile = TrapezoidProfile(constraints)
+
+    for _ in range(200):
+        state = profile.calculate(kDt, state, goal)
+        assert abs(state.velocity) <= abs(constraints.maxVelocity)
+
+
+def test_goal_velocity_constraints():
+    constraints = TrapezoidProfile.Constraints(0.75, 0.75)
+    goal = TrapezoidProfile.State(10.0, 5.0)
+    state = TrapezoidProfile.State(0.0, 0.75)
+    profile = TrapezoidProfile(constraints)
+
+    for _ in range(200):
+        state = profile.calculate(kDt, state, goal)
+        assert abs(state.velocity) <= abs(constraints.maxVelocity)
+
+
+def test_negative_goal_velocity_constraints():
+    constraints = TrapezoidProfile.Constraints(0.75, 0.75)
+    goal = TrapezoidProfile.State(10.0, -5.0)
+    state = TrapezoidProfile.State(0.0, 0.75)
+    profile = TrapezoidProfile(constraints)
+
+    for _ in range(200):
+        state = profile.calculate(kDt, state, goal)
+        assert abs(state.velocity) <= abs(constraints.maxVelocity)

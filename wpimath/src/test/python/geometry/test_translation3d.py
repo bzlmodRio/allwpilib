@@ -203,3 +203,14 @@ def test_dot():
     one = Translation3d(1, 2, 3)
     two = Translation3d(4, 5, 6)
     assert one.dot(two) == pytest.approx(32.0, abs=1e-9)
+
+
+def test_cross():
+    one = Translation3d(1, 2, 3)
+    two = Translation3d(4, 5, 6)
+
+    cross = one.cross(two)
+
+    assert cross[0] == pytest.approx(-3.0, abs=1e-9)
+    assert cross[1] == pytest.approx(6.0, abs=1e-9)
+    assert cross[2] == pytest.approx(-3.0, abs=1e-9)

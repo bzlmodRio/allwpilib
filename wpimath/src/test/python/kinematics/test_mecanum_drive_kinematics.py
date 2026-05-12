@@ -2,10 +2,12 @@ import pytest
 import math
 
 from wpimath import (
-    MecanumDriveKinematics,
+    ChassisAccelerations,
     ChassisVelocities,
-    MecanumDriveWheelVelocities,
+    MecanumDriveKinematics,
+    MecanumDriveWheelAccelerations,
     MecanumDriveWheelPositions,
+    MecanumDriveWheelVelocities,
     Rotation2d,
     Translation2d,
 )
@@ -280,3 +282,116 @@ def test_desaturate_negative_velocities(kinematics_test):
     assert wheel_velocities.frontRight == pytest.approx(6.0 * k_factor, abs=1e-9)
     assert wheel_velocities.rearLeft == pytest.approx(4.0 * k_factor, abs=1e-9)
     assert wheel_velocities.rearRight == pytest.approx(-7.0 * k_factor, abs=1e-9)
+
+
+def test_straight_line_inverse_accelerations(kinematics_test):
+    accelerations = ChassisAccelerations(ax=5, ay=0, alpha=0)
+    wheel_accelerations = kinematics_test.kinematics.toWheelAccelerations(accelerations)
+
+    assert wheel_accelerations.frontLeft == pytest.approx(5.0, abs=0.1)
+    assert wheel_accelerations.frontRight == pytest.approx(5.0, abs=0.1)
+    assert wheel_accelerations.rearLeft == pytest.approx(5.0, abs=0.1)
+    assert wheel_accelerations.rearRight == pytest.approx(5.0, abs=0.1)
+
+
+def test_straight_line_forward_accelerations(kinematics_test):
+    wheel_accelerations = MecanumDriveWheelAccelerations(
+        frontLeft=3.536, frontRight=3.536, rearLeft=3.536, rearRight=3.536
+    )
+    chassis_accelerations = kinematics_test.kinematics.toChassisAccelerations(
+        wheel_accelerations
+    )
+
+    assert chassis_accelerations.ax == pytest.approx(3.536, abs=0.1)
+    assert chassis_accelerations.ay == pytest.approx(0, abs=0.1)
+    assert chassis_accelerations.alpha == pytest.approx(0, abs=0.1)
+
+
+def test_strafe_inverse_accelerations(kinematics_test):
+    accelerations = ChassisAccelerations(ax=0, ay=4, alpha=0)
+    wheel_accelerations = kinematics_test.kinematics.toWheelAccelerations(accelerations)
+
+    assert wheel_accelerations.frontLeft == pytest.approx(-4.0, abs=0.1)
+    assert wheel_accelerations.frontRight == pytest.approx(4.0, abs=0.1)
+    assert wheel_accelerations.rearLeft == pytest.approx(4.0, abs=0.1)
+    assert wheel_accelerations.rearRight == pytest.approx(-4.0, abs=0.1)
+
+
+def test_strafe_forward_accelerations(kinematics_test):
+    wheel_accelerations = MecanumDriveWheelAccelerations(
+        frontLeft=-2.828427,
+        frontRight=2.828427,
+        rearLeft=2.828427,
+        rearRight=-2.828427,
+    )
+    chassis_accelerations = kinematics_test.kinematics.toChassisAccelerations(
+        wheel_accelerations
+    )
+
+    assert chassis_accelerations.ax == pytest.approx(0, abs=0.1)
+    assert chassis_accelerations.ay == pytest.approx(2.8284, abs=0.1)
+    assert chassis_accelerations.alpha == pytest.approx(0, abs=0.1)
+
+
+def test_rotation_inverse_accelerations(kinematics_test):
+    accelerations = ChassisAccelerations(ax=0, ay=0, alpha=2 * math.pi)
+    wheel_accelerations = kinematics_test.kinematics.toWheelAccelerations(accelerations)
+
+    assert wheel_accelerations.frontLeft == pytest.approx(-150.79645, abs=0.1)
+    assert wheel_accelerations.frontRight == pytest.approx(150.79645, abs=0.1)
+    assert wheel_accelerations.rearLeft == pytest.approx(-150.79645, abs=0.1)
+    assert wheel_accelerations.rearRight == pytest.approx(150.79645, abs=0.1)
+
+
+def test_rotation_forward_accelerations(kinematics_test):
+    wheel_accelerations = MecanumDriveWheelAccelerations(
+        frontLeft=-150.79645,
+        frontRight=150.79645,
+        rearLeft=-150.79645,
+        rearRight=150.79645,
+    )
+    chassis_accelerations = kinematics_test.kinematics.toChassisAccelerations(
+        wheel_accelerations
+    )
+
+    assert chassis_accelerations.ax == pytest.approx(0, abs=0.1)
+    assert chassis_accelerations.ay == pytest.approx(0, abs=0.1)
+    assert chassis_accelerations.alpha == pytest.approx(2 * math.pi, abs=0.1)
+
+
+def test_mixed_translation_rotation_inverse_accelerations(kinematics_test):
+    accelerations = ChassisAccelerations(ax=2, ay=3, alpha=1)
+    wheel_accelerations = kinematics_test.kinematics.toWheelAccelerations(accelerations)
+
+    assert wheel_accelerations.frontLeft == pytest.approx(-25.0, abs=0.1)
+    assert wheel_accelerations.frontRight == pytest.approx(29.0, abs=0.1)
+    assert wheel_accelerations.rearLeft == pytest.approx(-19.0, abs=0.1)
+    assert wheel_accelerations.rearRight == pytest.approx(23.0, abs=0.1)
+
+
+def test_mixed_translation_rotation_forward_accelerations(kinematics_test):
+    wheel_accelerations = MecanumDriveWheelAccelerations(
+        frontLeft=-17.677670,
+        frontRight=20.51,
+        rearLeft=-13.44,
+        rearRight=16.26,
+    )
+    chassis_accelerations = kinematics_test.kinematics.toChassisAccelerations(
+        wheel_accelerations
+    )
+
+    assert chassis_accelerations.ax == pytest.approx(1.413, abs=0.1)
+    assert chassis_accelerations.ay == pytest.approx(2.122, abs=0.1)
+    assert chassis_accelerations.alpha == pytest.approx(0.707, abs=0.1)
+
+
+def test_off_center_rotation_inverse_accelerations(kinematics_test):
+    accelerations = ChassisAccelerations(ax=0, ay=0, alpha=1)
+    wheel_accelerations = kinematics_test.kinematics.toWheelAccelerations(
+        accelerations, kinematics_test.m_fl
+    )
+
+    assert wheel_accelerations.frontLeft == pytest.approx(0, abs=0.1)
+    assert wheel_accelerations.frontRight == pytest.approx(24.0, abs=0.1)
+    assert wheel_accelerations.rearLeft == pytest.approx(-24.0, abs=0.1)
+    assert wheel_accelerations.rearRight == pytest.approx(48.0, abs=0.1)

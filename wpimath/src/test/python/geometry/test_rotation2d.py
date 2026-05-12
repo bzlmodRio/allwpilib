@@ -87,3 +87,12 @@ def test_to_matrix() -> None:
     before = Rotation2d.fromDegrees(20.0)
     after = Rotation2d.fromMatrix(before.toMatrix())
     assert before == after
+
+
+def test_relative_to() -> None:
+    start = Rotation2d.fromDegrees(30.0)
+    end = Rotation2d.fromDegrees(90.0)
+
+    result = end.relativeTo(start)
+
+    assert result.degrees() == pytest.approx(60.0)
