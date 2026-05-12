@@ -2,10 +2,12 @@ import pytest
 import math
 
 from wpimath import (
-    MecanumDriveKinematics,
+    ChassisAccelerations,
     ChassisVelocities,
-    MecanumDriveWheelVelocities,
+    MecanumDriveKinematics,
+    MecanumDriveWheelAccelerations,
     MecanumDriveWheelPositions,
+    MecanumDriveWheelVelocities,
     Rotation2d,
     Translation2d,
 )

@@ -2,11 +2,13 @@ import pytest
 import math
 
 from wpimath import (
-    SwerveDrive4Kinematics,
+    ChassisAccelerations,
     ChassisVelocities,
     Rotation2d,
-    SwerveModuleVelocity,
+    SwerveModuleAcceleration,
     SwerveModulePosition,
+    SwerveModuleVelocity,
+    SwerveDrive4Kinematics,
     Translation2d,
 )
 
@@ -340,3 +342,128 @@ def test_desaturate_negative_velocity(kinematics_test):
     assert arr[1].velocity == pytest.approx(0.5, abs=kEpsilon)
     assert arr[2].velocity == pytest.approx(-1.0, abs=kEpsilon)
     assert arr[3].velocity == pytest.approx(-1.0, abs=kEpsilon)
+
+
+def test_turn_in_place_inverse_accelerations(kinematics_test):
+    accelerations = ChassisAccelerations(ax=0, ay=0, alpha=2 * math.pi)
+    angular_velocity = 2 * math.pi
+    fl_accel, fr_accel, bl_accel, br_accel = (
+        kinematics_test.m_kinematics.to_swerve_module_accelerations(
+            accelerations, angular_velocity
+        )
+    )
+
+    modules = kinematics_test.m_kinematics.get_modules()
+
+    center_radius = modules[0].norm()
+    tangential_accel = center_radius * accelerations.alpha
+    centripetal_accel = center_radius * angular_velocity**2
+    total_accel = math.hypot(tangential_accel, centripetal_accel)
+
+    expected_angles = []
+    for module in modules:
+        radius_angle = module.angle()
+        tangential_dir = Rotation2d(
+            radius_angle.cos() * 0 - radius_angle.sin() * 1,
+            radius_angle.sin() * 0 + radius_angle.cos() * 1,
+        )
+        tangential_x = tangential_accel * tangential_dir.cos()
+        tangential_y = tangential_accel * tangential_dir.sin()
+
+        centripetal_x = centripetal_accel * (-radius_angle.cos())
+        centripetal_y = centripetal_accel * (-radius_angle.sin())
+
+        total_x = tangential_x + centripetal_x
+        total_y = tangential_y + centripetal_y
+        expected_angles.append(Rotation2d(total_x, total_y))
+
+    assert fl_accel.acceleration == pytest.approx(total_accel, abs=1e-9)
+    assert fr_accel.acceleration == pytest.approx(total_accel, abs=1e-9)
+    assert bl_accel.acceleration == pytest.approx(total_accel, abs=1e-9)
+    assert br_accel.acceleration == pytest.approx(total_accel, abs=1e-9)
+    assert fl_accel.angle.degrees() == pytest.approx(
+        expected_angles[0].degrees(), abs=1e-9
+    )
+    assert fr_accel.angle.degrees() == pytest.approx(
+        expected_angles[1].degrees(), abs=1e-9
+    )
+    assert bl_accel.angle.degrees() == pytest.approx(
+        expected_angles[2].degrees(), abs=1e-9
+    )
+    assert br_accel.angle.degrees() == pytest.approx(
+        expected_angles[3].degrees(), abs=1e-9
+    )
+
+
+def test_turn_in_place_forward_accelerations(kinematics_test):
+    fl_accel = SwerveModuleAcceleration(106.629, Rotation2d.from_degrees(135))
+    fr_accel = SwerveModuleAcceleration(106.629, Rotation2d.from_degrees(45))
+    bl_accel = SwerveModuleAcceleration(106.629, Rotation2d.from_degrees(-135))
+    br_accel = SwerveModuleAcceleration(106.629, Rotation2d.from_degrees(-45))
+
+    chassis_accelerations = kinematics_test.m_kinematics.to_chassis_accelerations(
+        (fl_accel, fr_accel, bl_accel, br_accel)
+    )
+
+    assert chassis_accelerations.ax == pytest.approx(0.0, abs=kEpsilon)
+    assert chassis_accelerations.ay == pytest.approx(0.0, abs=kEpsilon)
+    assert chassis_accelerations.alpha == pytest.approx(2 * math.pi, abs=kEpsilon)
+
+
+def test_off_center_rotation_inverse_accelerations(kinematics_test):
+    accelerations = ChassisAccelerations(ax=0, ay=0, alpha=1)
+    angular_velocity = 1.0
+    fl_accel, fr_accel, bl_accel, br_accel = (
+        kinematics_test.m_kinematics.to_swerve_module_accelerations(
+            accelerations, angular_velocity, kinematics_test.m_fl
+        )
+    )
+
+    modules = kinematics_test.m_kinematics.get_modules()
+
+    expected_accels = []
+    expected_angles = []
+    for module in modules:
+        relative_pos = module - kinematics_test.m_fl
+        r = relative_pos.norm()
+
+        if r < 1e-9:
+            expected_accels.append(0.0)
+            expected_angles.append(Rotation2d())
+        else:
+            tangential_accel = r * accelerations.alpha
+            centripetal_accel = r * angular_velocity**2
+            expected_accels.append(math.hypot(tangential_accel, centripetal_accel))
+
+            radius_angle = Rotation2d(relative_pos.x, relative_pos.y)
+
+            tangential_x = tangential_accel * (
+                radius_angle.cos() * 0 - radius_angle.sin() * 1
+            )
+            tangential_y = tangential_accel * (
+                radius_angle.sin() * 0 + radius_angle.cos() * 1
+            )
+
+            centripetal_x = centripetal_accel * (-radius_angle.cos())
+            centripetal_y = centripetal_accel * (-radius_angle.sin())
+
+            total_x = tangential_x + centripetal_x
+            total_y = tangential_y + centripetal_y
+            expected_angles.append(Rotation2d(total_x, total_y))
+
+    assert fl_accel.acceleration == pytest.approx(expected_accels[0], abs=1e-9)
+    assert fr_accel.acceleration == pytest.approx(expected_accels[1], abs=1e-9)
+    assert bl_accel.acceleration == pytest.approx(expected_accels[2], abs=1e-9)
+    assert br_accel.acceleration == pytest.approx(expected_accels[3], abs=1e-9)
+    assert fl_accel.angle.degrees() == pytest.approx(
+        expected_angles[0].degrees(), abs=1e-9
+    )
+    assert fr_accel.angle.degrees() == pytest.approx(
+        expected_angles[1].degrees(), abs=1e-9
+    )
+    assert bl_accel.angle.degrees() == pytest.approx(
+        expected_angles[2].degrees(), abs=1e-9
+    )
+    assert br_accel.angle.degrees() == pytest.approx(
+        expected_angles[3].degrees(), abs=1e-9
+    )

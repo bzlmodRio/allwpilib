@@ -133,3 +133,13 @@ def test_cross():
     one = Translation2d(2.0, 3.0)
     two = Translation2d(3.0, 4.0)
     assert one.cross(two) == pytest.approx(-1.0)
+
+
+def test_to_vector():
+    import numpy as np
+
+    translation = Translation2d(1.0, 2.0)
+    vec = translation.to_vector()
+
+    assert vec[0] == pytest.approx(1.0)
+    assert vec[1] == pytest.approx(2.0)

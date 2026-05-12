@@ -299,3 +299,55 @@ def test_to_matrix():
     after = Rotation3d(before.to_matrix())
 
     assert before == after
+
+
+def test_relative_to():
+    y_axis = np.array([0.0, 1.0, 0.0])
+    z_axis = np.array([0.0, 0.0, 1.0])
+    intrinsic_axis = np.array([1.0, 1.0, 1.0])
+
+    start = Rotation3d(y_axis, math.radians(-90))
+    end = Rotation3d(z_axis, math.radians(90))
+
+    expected = Rotation3d(intrinsic_axis, math.radians(120))
+    result = end.relative_to(start)
+
+    assert expected == result
+
+
+def test_interpolate():
+    x_axis = np.array([1.0, 0.0, 0.0])
+    y_axis = np.array([0.0, 1.0, 0.0])
+    z_axis = np.array([0.0, 0.0, 1.0])
+
+    # 50 + (70 - 50) * 0.5 = 60
+    rot1 = Rotation3d(x_axis, math.radians(50))
+    rot2 = Rotation3d(x_axis, math.radians(70))
+    interpolated = rot1.interpolate(rot2, 0.5)
+    assert math.degrees(interpolated.x) == pytest.approx(60.0)
+    assert math.degrees(interpolated.y) == pytest.approx(0.0)
+    assert math.degrees(interpolated.z) == pytest.approx(0.0)
+
+    # -160 minus half distance between 170 and -160 (15) = -175
+    rot1 = Rotation3d(x_axis, math.radians(170))
+    rot2 = Rotation3d(x_axis, math.radians(-160))
+    interpolated = rot1.interpolate(rot2, 0.5)
+    assert math.degrees(interpolated.x) == pytest.approx(-175.0)
+    assert math.degrees(interpolated.y) == pytest.approx(0.0)
+    assert math.degrees(interpolated.z) == pytest.approx(0.0)
+
+    # 50 + (70 - 50) * 0.5 = 60
+    rot1 = Rotation3d(z_axis, math.radians(50))
+    rot2 = Rotation3d(z_axis, math.radians(70))
+    interpolated = rot1.interpolate(rot2, 0.5)
+    assert math.degrees(interpolated.x) == pytest.approx(0.0)
+    assert math.degrees(interpolated.y) == pytest.approx(0.0)
+    assert math.degrees(interpolated.z) == pytest.approx(60.0)
+
+    # -160 minus half distance between 170 and -160 (15) = -175
+    rot1 = Rotation3d(z_axis, math.radians(170))
+    rot2 = Rotation3d(z_axis, math.radians(-160))
+    interpolated = rot1.interpolate(rot2, 0.5)
+    assert math.degrees(interpolated.x) == pytest.approx(0.0)
+    assert math.degrees(interpolated.y) == pytest.approx(0.0)
+    assert math.degrees(interpolated.z) == pytest.approx(-175.0)
