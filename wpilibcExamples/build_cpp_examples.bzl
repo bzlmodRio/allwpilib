@@ -46,7 +46,15 @@ def build_examples(halsim_deps = []):
                 "//xrpVendordep",
                 ":{}-examples-headers".format(folder),
             ],
+            data = select({
+                "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": [],
+                "//conditions:default": halsim_deps,
+            }),
             tags = ["wpi-example"],
+            env = select({
+                "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": {},
+                "//conditions:default": {"HALSIM_EXTENSIONS": ":".join(["$(location {})".format(dep) for dep in halsim_deps])},
+            }),
         )
 
 def build_commands():
@@ -64,7 +72,7 @@ def build_commands():
             tags = ["wpi-example"],
         )
 
-def build_snippets():
+def build_snippets(halsim_deps = []):
     _package_type("snippets")
 
     for folder in SNIPPET_FOLDERS:
@@ -74,7 +82,7 @@ def build_snippets():
             strip_include_prefix = "src/main/cpp/snippets/" + folder + "/include",
             tags = ["wpi-example"],
         )
-        cc_library(
+        cc_binary(
             name = folder + "-snippet",
             srcs = native.glob(["src/main/cpp/snippets/" + folder + "/**/*.cpp"]),
             deps = [
@@ -83,8 +91,15 @@ def build_snippets():
                 "//cameraserver",
                 ":{}-snippets-headers".format(folder),
             ],
-            strip_include_prefix = "src/main/cpp/snippets/" + folder + "/include",
+            data = select({
+                "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": [],
+                "//conditions:default": halsim_deps,
+            }),
             tags = ["wpi-example"],
+            env = select({
+                "@rules_bzlmodrio_toolchains//constraints/is_systemcore:systemcore": {},
+                "//conditions:default": {"HALSIM_EXTENSIONS": ":".join(["$(location {})".format(dep) for dep in halsim_deps])},
+            }),
         )
 
 def build_templates():
