@@ -1,9 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-load("//shared/bazel/thirdparty/ceres:repositories.bzl", "ceres_repositories")
-
-ceres_repositories()
-
 http_archive(
     name = "bzlmodrio-opencv",
     sha256 = "947df6f399593a54779b7706da8abaa43865769e02b15533519c800e23be419f",
