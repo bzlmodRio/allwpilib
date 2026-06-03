@@ -30,7 +30,7 @@ bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "rules_java", version = "8.16.1")
 bazel_dep(name = "rules_python", version = "1.9.0")
 bazel_dep(name = "rules_pycross", version = "0.8.1")
-bazel_dep(name = "pybind11_bazel", version = "3.0.0")
+bazel_dep(name = "pybind11_bazel", version = "")
 archive_override(
     module_name = "pybind11_bazel",
     integrity = "sha256-DS8PvRhMzZS4UpQ/kSw96H5f9jJbqcN+r+f0eTAmP9w=",
