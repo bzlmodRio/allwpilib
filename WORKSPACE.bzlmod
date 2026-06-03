@@ -38,10 +38,3 @@ http_archive(
 load("@bzlmodrio-libssh//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_libssh_cpp_dependencies")
 
 setup_legacy_bzlmodrio_libssh_cpp_dependencies()
-
-# Capture the repository environmental variables which specify the filter list for what architectures to build in CI.
-load("//shared/bazel/rules:publishing_rule.bzl", "publishing_repo")
-
-publishing_repo(
-    name = "com_wpilib_allwpilib_publishing_config",
-)

@@ -24,3 +24,10 @@ publishing_repo = repository_rule(
           "This rule must be instantiated in the WORKSPACE file with the name " +
           "'com_wpilib_allwpilib_publishing_config'.",
 )
+
+def _publishing_ext_impl(module_ctx):
+    publishing_repo(name = "com_wpilib_allwpilib_publishing_config")
+
+publishing = module_extension(
+    implementation = _publishing_ext_impl,
+)

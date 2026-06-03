@@ -205,6 +205,22 @@
   },
   "selectedYankedVersions": {},
   "moduleExtensions": {
+    "//shared/bazel/rules:publishing_rule.bzl%publishing": {
+      "general": {
+        "bzlTransitiveDigest": "isGAvRZNUpOD/i1zTluyg4ZzBazRcFerni+3DrYuBUM=",
+        "usagesDigest": "gpHjwOhDu7qPn16EJCGVzEB1Qj03/Pb8qOEx3SCA6cs=",
+        "recordedFileInputs": {},
+        "recordedDirentsInputs": {},
+        "envVariables": {},
+        "generatedRepoSpecs": {
+          "com_wpilib_allwpilib_publishing_config": {
+            "repoRuleId": "@@//shared/bazel/rules:publishing_rule.bzl%publishing_repo",
+            "attributes": {}
+          }
+        },
+        "recordedRepoMappingEntries": []
+      }
+    },
     "@@pybind11_bazel+//:internal_configure.bzl%internal_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "uxP2cZuW027Q8wpZbeJeuW5MXcNBO8GcOK/LNN2sPvQ=",
