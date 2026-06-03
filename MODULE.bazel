@@ -6,13 +6,13 @@ module(
 include("//docs:doxygen.MODULE.bazel")
 
 include("//shared/bazel/thirdparty/ceres:ceres.MODULE.bazel")
+
 include("//shared/bazel/thirdparty/libssh:libssh.MODULE.bazel")
+
 include("//shared/bazel/thirdparty/mrclib:mrclib.MODULE.bazel")
 
 bazel_dep(name = "apple_support", version = "2.0.0", repo_name = "build_bazel_apple_support")
-
 bazel_dep(name = "rules_cc", version = "0.2.17")
-
 bazel_dep(name = "rules_pkg", version = "1.1.0")
 bazel_dep(name = "bazel_features", version = "1.43.0")
 bazel_dep(name = "aspect_bazel_lib", version = "2.14.0")
@@ -25,10 +25,10 @@ bazel_dep(name = "pybind11_bazel", version = "")
 archive_override(
     module_name = "pybind11_bazel",
     integrity = "sha256-DS8PvRhMzZS4UpQ/kSw96H5f9jJbqcN+r+f0eTAmP9w=",
-    urls = ["https://github.com/pybind/pybind11_bazel/releases/download/v3.0.0/pybind11_bazel-3.0.0.tar.gz"],
-    strip_prefix = "pybind11_bazel-3.0.0",
     patch_strip = 1,
     patches = ["//:shared/bazel/patches/pybind11_bazel_update_to_3.0.2.patch"],
+    strip_prefix = "pybind11_bazel-3.0.0",
+    urls = ["https://github.com/pybind/pybind11_bazel/releases/download/v3.0.0/pybind11_bazel-3.0.0.tar.gz"],
 )
 
 bazel_dep(name = "bzlmodrio-opencv", version = "")

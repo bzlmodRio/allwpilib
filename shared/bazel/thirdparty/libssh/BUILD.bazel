@@ -1,6 +1,4 @@
-
-
-load("@rules_cc//cc:defs.bzl", "cc_import", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_import")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -22,4 +20,3 @@ cc_import(
         "@libssh_headers//:headers",
     ],
 )
-
