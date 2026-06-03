@@ -40,6 +40,13 @@ archive_override(
     patches = ["//:shared/bazel/patches/pybind11_bazel_update_to_3.0.2.patch"],
 )
 
+bazel_dep(name = "bzlmodrio-opencv", version = "")
+archive_override(
+    module_name = "bzlmodrio-opencv",
+    sha256 = "947df6f399593a54779b7706da8abaa43865769e02b15533519c800e23be419f",
+    urls = ["https://github.com/wpilibsuite/bzlmodRio-opencv/releases/download/2027.4.13.0-3/bzlmodRio-opencv-2027.4.13.0-3.tar.gz"],
+)
+
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
     python_version = "3.13",
