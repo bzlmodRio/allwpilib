@@ -7,14 +7,14 @@ version = "2.2-1"
 http_archive(
     name = "ceres_headers",
     build_file_content = """
-load(\"@rules_cc//cc:defs.bzl\", \"cc_library\")
+load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
-    name = \"headers\",
+    name = "headers",
     hdrs = glob(["ceres/**", "glog/**", "suitesparse/**", "openblas/**"]),
     includes = ["."],
     deps = ["@//wpimath:eigen-headers"],
-    visibility = [\"//visibility:public\"],
+    visibility = ["//visibility:public"],
 )
 """,
     integrity = "sha256-ITP1hirOrcna3tyOUQyniUGPw5JeeC8Ffm5scno865w=",
@@ -38,9 +38,9 @@ _LIB_ARTIFACTS = {
 
 library_build_content = """
 filegroup(
-    name = \"lib\",
-    srcs = glob([\"%s\"]),
-    visibility = [\"//visibility:public\"],
+    name = "lib",
+    srcs = glob(["%s"]),
+    visibility = ["//visibility:public"],
 )
 """
 

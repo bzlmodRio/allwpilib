@@ -9,13 +9,3 @@ http_archive(
 load("@bzlmodrio-opencv//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_opencv_cpp_dependencies")
 
 setup_legacy_bzlmodrio_opencv_cpp_dependencies()
-
-http_archive(
-    name = "bzlmodrio-libssh",
-    sha256 = "f8fef627c7b393f7f6ed638e12b80ff90b2cfea11488b15214f25ce1e470723a",
-    url = "https://github.com/wpilibsuite/bzlmodRio-libssh/releases/download/2024.0.105-1.bcr1/bzlmodrio-libssh-2024.0.105-1.bcr1.tar.gz",
-)
-
-load("@bzlmodrio-libssh//:maven_cpp_deps.bzl", "setup_legacy_bzlmodrio_libssh_cpp_dependencies")
-
-setup_legacy_bzlmodrio_libssh_cpp_dependencies()
