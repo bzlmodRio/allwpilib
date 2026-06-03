@@ -1,0 +1,39 @@
+From 552a067011235b1e0ff546a77f7788ac9e79c200 Mon Sep 17 00:00:00 2001
+From: PJ Reiniger <pj.reiniger@gmail.com>
+Date: Sun, 10 May 2026 17:11:39 -0400
+Subject: [PATCH] Update to 3.0.2
+
+---
+ MODULE.bazel           | 2 +-
+ internal_configure.bzl | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/MODULE.bazel b/MODULE.bazel
+index 75c2073..f40d57d 100644
+--- a/MODULE.bazel
++++ b/MODULE.bazel
+@@ -1,7 +1,7 @@
+ # Bazel extensions for pybind11
+ module(
+     name = "pybind11_bazel",
+-    version = "3.0.0",
++    version = "3.0.2",
+ )
+ 
+ bazel_dep(name = "bazel_features", version = "1.36.0")
+diff --git a/internal_configure.bzl b/internal_configure.bzl
+index afaf9d5..1933695 100644
+--- a/internal_configure.bzl
++++ b/internal_configure.bzl
+@@ -11,6 +11,8 @@ _INTEGRITIES = {
+     "2.13.5": "sha256-seIJxCs6ntdNo+CyWk9M1HjYnV77tI8EsnffQn+vYlI=",
+     "2.13.6": "sha256-4Iy4f0dz2pf6e18DXeh2OrxlbYfVdz5i9toFh9Hw7CA=",
+     "3.0.0": "sha256-RTsaPismbDrp2ockEcrbbWk6wYBjvXMibZbPtwFaIAw=",
++    "3.0.1": "sha256-dBYz2nRrfHOLtx8YVPlXudpmC80tzmjXGUkDfwlp0Mo=",
++    "3.0.2": "sha256-LyCgrwuSGBXg4Wnqf+xjkJhpMjWBuJ194VU0aFU/ai0=",
+ }
+ 
+ def _internal_configure_extension_impl(module_ctx):
+-- 
+2.43.0
+
