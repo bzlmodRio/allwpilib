@@ -166,6 +166,8 @@ def _wpilib_maven_export_impl(
         classifier_artifacts = filtered_artifacts,
         lib_name = lib_name,
         visibility = visibility,
+        # Exclude the root package, which should only contain module-info.java
+        doc_excluded_packages = ['']
     )
 
 wpilib_maven_export = macro(

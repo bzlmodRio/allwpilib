@@ -6,7 +6,8 @@
  * The WPILib units module. This defines APIs for type-safe unit definitions and math operations.
  */
 open module wpilib.units {
-  exports org.wpilib.units;
-  exports org.wpilib.units.collections;
+  
   exports org.wpilib.units.measure;
+  exports org.wpilib.units.collections;
+  exports org.wpilib.units;
 }

@@ -108,6 +108,7 @@ wpilib_java_library(
     name = "commandsv2-java",
     srcs = glob(["src/main/java/**/*.java"]) + [":generated_java"],
     exported_plugins = ["//javacPlugin:plugin"],
+    javacopts = ["--patch-module=wpilib.command2=commandsv2/src/generated/main/java"],
     maven_artifact_name = "commandsv2-java",
     maven_group_id = "org.wpilib.commandsv2",
     plugins = ["//javacPlugin:plugin"],

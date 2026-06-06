@@ -4,7 +4,7 @@
 
 @SuppressWarnings("requires-transitive-automatic")
 open module wpilib.apriltag {
-  requires transitive org.opencv;
+  // requires transitive org.opencv;
   requires wpilib.math;
   requires wpilib.util;
   requires io.avaje.json;

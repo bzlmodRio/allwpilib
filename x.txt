@@ -1,0 +1,127 @@
+Initialized native services in: /home/pjreiniger/.gradle/native
+Initialized jansi services in: /home/pjreiniger/.gradle/native
+The client will now receive all logging from the daemon (pid: 166689). The daemon log file: /home/pjreiniger/.gradle/daemon/9.4.1/daemon-166689.out.log
+Starting 13th build in daemon [uptime: 12 mins 50.917 secs, performance: 99%, GC rate: 0.00/s, heap usage: 0% of 4 GiB]
+Using 16 worker leases.
+Operational build model parameters: {cachingModelBuilding=false, configurationCache=false, configurationCacheDisabledReason=null, configurationCacheParallelLoad=false, configurationCacheParallelStore=false, configureOnDemand=false, invalidateCoupledProjects=false, isolatedProjects=false, modelAsProjectDependency=false, modelBuilding=false, parallelModelBuilding=false, parallelProjectConfiguration=false, parallelProjectExecution=false, resilientModelBuilding=false}
+Now considering [/home/pjreiniger/git/allwpilib, /home/pjreiniger/git/allwpilib/buildSrc] as hierarchies to watch
+Now considering [/home/pjreiniger/git/allwpilib/buildSrc, /home/pjreiniger/git/allwpilib] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Resolved plugin [id: 'com.gradle.develocity', version: '4.2']
+Settings evaluated using settings file '/home/pjreiniger/git/allwpilib/settings.gradle'.
+Projects loaded. Root project using build file '/home/pjreiniger/git/allwpilib/build.gradle'.
+Included projects: [root project 'allwpilib', project ':wpiunits']
+
+> Configure project :buildSrc
+Evaluating project ':buildSrc' using build file '/home/pjreiniger/git/allwpilib/buildSrc/build.gradle'.
+Resolve mutations for :buildSrc:compileJava (Thread[#1007,Execution worker,5,main]) started.
+:buildSrc:compileJava (Thread[#1007,Execution worker,5,main]) started.
+
+> Task :buildSrc:compileJava NO-SOURCE
+Skipping task ':buildSrc:compileJava' as it has no source files and no previous output files.
+Resolve mutations for :buildSrc:compileGroovy (Thread[#1007,Execution worker,5,main]) started.
+:buildSrc:compileGroovy (Thread[#1007,Execution worker,5,main]) started.
+
+> Task :buildSrc:compileGroovy UP-TO-DATE
+Caching disabled for task ':buildSrc:compileGroovy' because:
+  Build cache is disabled
+Skipping task ':buildSrc:compileGroovy' as it is up-to-date.
+Resolve mutations for :buildSrc:processResources (Thread[#1011,Execution worker Thread 5,5,main]) started.
+:buildSrc:processResources (Thread[#1011,Execution worker Thread 5,5,main]) started.
+
+> Task :buildSrc:processResources NO-SOURCE
+Skipping task ':buildSrc:processResources' as it has no source files and no previous output files.
+Resolve mutations for :buildSrc:classes (Thread[#1011,Execution worker Thread 5,5,main]) started.
+:buildSrc:classes (Thread[#1011,Execution worker Thread 5,5,main]) started.
+
+> Task :buildSrc:classes UP-TO-DATE
+Skipping task ':buildSrc:classes' as it has no actions.
+Resolve mutations for :buildSrc:jar (Thread[#1011,Execution worker Thread 5,5,main]) started.
+:buildSrc:jar (Thread[#1011,Execution worker Thread 5,5,main]) started.
+
+> Task :buildSrc:jar UP-TO-DATE
+Caching disabled for task ':buildSrc:jar' because:
+  Build cache is disabled
+  Not worth caching
+Skipping task ':buildSrc:jar' as it is up-to-date.
+
+> Configure project :
+Evaluating root project 'allwpilib' using build file '/home/pjreiniger/git/allwpilib/build.gradle'.
+Resolved plugin [id: 'base']
+Resolved plugin [id: 'idea']
+Resolved plugin [id: 'visual-studio']
+Resolved plugin [id: 'org.wpilib.WPILibVersioningPlugin', version: '2027.0.1']
+Resolved plugin [id: 'org.wpilib.WPILibRepositoriesPlugin', version: '2027.0.0']
+Resolved plugin [id: 'org.wpilib.NativeUtils', apply: false]
+Resolved plugin [id: 'org.wpilib.GradleVsCode', apply: false]
+Resolved plugin [id: 'org.wpilib.GradleJni', version: '2027.0.0']
+Resolved plugin [id: 'com.gradleup.shadow', version: '9.4.1', apply: false]
+Resolved plugin [id: 'net.ltgt.errorprone', version: '5.1.0', apply: false]
+Resolved plugin [id: 'com.github.spotbugs', version: '6.4.12', apply: false]
+Resolved plugin [id: 'com.diffplug.spotless', version: '8.4.0', apply: false]
+Resolved plugin [id: 'org.javamodularity.moduleplugin', version: '2.0.1', apply: false]
+
+> Configure project :wpiunits
+Evaluating project ':wpiunits' using build file '/home/pjreiniger/git/allwpilib/wpiunits/build.gradle'.
+Caching disabled for Groovy DSL script compilation (cp_proj) because:
+  Build cache is disabled
+  Not worth caching.
+Compiling build file '/home/pjreiniger/git/allwpilib/wpiunits/build.gradle' using SubsetScriptTransformer.
+Caching disabled for Groovy DSL script compilation (proj) because:
+  Build cache is disabled
+  Not worth caching.
+Compiling build file '/home/pjreiniger/git/allwpilib/wpiunits/build.gradle' using BuildScriptTransformer.
+Project :wpiunits => 'wpilib.units' Java module
+compileTestJava.compileOnClasspath: false
+All projects evaluated.
+Task path 'wpiunits:jar' matched project ':wpiunits'
+Task name matched 'jar'
+Selected primary task 'jar' from project :wpiunits
+Tasks to be executed: [task ':wpiunits:compileJava', task ':wpiunits:processResources', task ':wpiunits:classes', task ':wpiunits:jar']
+Tasks that were excluded: []
+Resolve mutations for :wpiunits:compileJava (Thread[#1019,Execution worker Thread 12,5,main]) started.
+:wpiunits:compileJava (Thread[#1019,Execution worker Thread 12,5,main]) started.
+
+> Task :wpiunits:compileJava
+Custom actions are attached to task ':wpiunits:compileJava'.
+Caching disabled for task ':wpiunits:compileJava' because:
+  Build cache is disabled
+Task ':wpiunits:compileJava' is not up-to-date because:
+  Input property 'stableSources' file /home/pjreiniger/git/allwpilib/wpiunits/src/main/java/module-info.java has changed.
+compiler args for task compileJava: [--release, 25, -encoding, UTF8, -Werror, -Xlint:all, -Xlint:-try, -Xlint:-serial, -Xlint:-processing, -Xlint:-preview, -Xlint:-requires-automatic, -Xlint:-requires-transitive-automatic, -Xlint:-exports, -Xlint:-missing-explicit-ctor, -Xlint:-module, -Xlint:-classfile]
+Compilation mode: in-process compilation
+Created classpath snapshot for incremental compilation in 0.0 secs.
+Full recompilation is required because module-info has changed. Analysis took 0.001 secs.
+Compiling with toolchain '/usr/lib/jvm/java-25-openjdk-amd64'.
+Compiling with JDK Java compiler API.
+Class dependency analysis for incremental compilation took 0.003 secs.
+Resolve mutations for :wpiunits:processResources (Thread[#1019,Execution worker Thread 12,5,main]) started.
+:wpiunits:processResources (Thread[#1019,Execution worker Thread 12,5,main]) started.
+
+> Task :wpiunits:processResources NO-SOURCE
+Skipping task ':wpiunits:processResources' as it has no source files and no previous output files.
+Resolve mutations for :wpiunits:classes (Thread[#1019,Execution worker Thread 12,5,main]) started.
+:wpiunits:classes (Thread[#1019,Execution worker Thread 12,5,main]) started.
+
+> Task :wpiunits:classes
+Skipping task ':wpiunits:classes' as it has no actions.
+Resolve mutations for :wpiunits:jar (Thread[#1019,Execution worker Thread 12,5,main]) started.
+:wpiunits:jar (Thread[#1019,Execution worker Thread 12,5,main]) started.
+
+> Task :wpiunits:jar
+Caching disabled for task ':wpiunits:jar' because:
+  Build cache is disabled
+  Not worth caching
+Task ':wpiunits:jar' is not up-to-date because:
+  Input property 'rootSpec$1' file /home/pjreiniger/git/allwpilib/wpiunits/build/classes/java/main/module-info.class has changed.
+file or directory '/home/pjreiniger/git/allwpilib/wpiunits/build/resources/main', not found
+
+BUILD SUCCESSFUL in 1s
+4 actionable tasks: 2 executed, 2 up-to-date
+
+Publishing Build Scan to Develocity...
+https://gradle.com/s/3j3z6tuoylb5q
+
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.4.1/userguide/configuration_cache_enabling.html

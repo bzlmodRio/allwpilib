@@ -281,6 +281,7 @@ wpilib_jni_java_library(
     native_libs = [":wpiutiljni"],
     visibility = ["//visibility:public"],
     deps = [
+        "@maven//:io_avaje_avaje_json_core",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )

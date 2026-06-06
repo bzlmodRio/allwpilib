@@ -240,6 +240,7 @@ wpilib_jni_java_library(
     exported_plugins = ["//javacPlugin:plugin"],
     javacopts = [
         "-Xep:UnicodeInCode:OFF",
+        "--patch-module=wpilib.math=wpimath/src/generated/main/java",
     ],
     maven_artifact_name = "wpimath-java",
     maven_group_id = "org.wpilib.wpimath",
@@ -256,9 +257,8 @@ wpilib_jni_java_library(
         "//wpiutil:wpiutil-java",
         "@maven//:io_avaje_avaje_json_core",
         "@maven//:io_avaje_avaje_jsonb",
-        "@maven//:org_ejml_ejml_core",
-        "@maven//:org_ejml_ejml_ddense",
-        "@maven//:org_ejml_ejml_simple",
+        "@maven//:org_ejml_ejml_java9module",
+        "@maven//:io_avaje_avaje_inject",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )
@@ -295,9 +295,7 @@ wpilib_java_junit5_test(
         ":wpimath-java",
         "//wpiunits:wpiunits-java",
         "//wpiutil:wpiutil-java",
-        "@maven//:org_ejml_ejml_core",
-        "@maven//:org_ejml_ejml_ddense",
-        "@maven//:org_ejml_ejml_simple",
+        "@maven//:org_ejml_ejml_java9module",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )

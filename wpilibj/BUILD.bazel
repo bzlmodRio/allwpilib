@@ -66,6 +66,13 @@ generate_version_file(
     template = "src/generate/WPILibVersion.java.in",
 )
 
+genrule(
+    name = "generate-version-in-pkg",
+    srcs = [":generate-version"],
+    outs = ["version_module_root/org/wpilib/system/WPILibVersion.java"],
+    cmd = "cp $(SRCS) $@",
+)
+
 filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
@@ -74,10 +81,11 @@ filegroup(
 wpilib_java_library(
     name = "wpilibj-java",
     srcs = [
-        ":generate-version",
+        ":generate-version-in-pkg",
         ":generated_java",
     ] + glob(["src/main/java/**/*.java"]),
     extra_source_pkgs = ["generated_version_files"],
+    javacopts = ["--patch-module=wpilib.core=wpilibj/src/generated/main/java:bazel-out/k8-fastbuild/bin/wpilibj/version_module_root:bazel-out/k8-opt-exec-ST-a34130ac6786/bin/wpilibj/version_module_root"],
     maven_artifact_name = "wpilibj-java",
     maven_group_id = "org.wpilib.wpilibj",
     visibility = ["//visibility:public"],
@@ -91,8 +99,7 @@ wpilib_java_library(
         "//wpinet:wpinet-java",
         "//wpiunits:wpiunits-java",
         "//wpiutil:wpiutil-java",
-        "@maven//:org_ejml_ejml_core",
-        "@maven//:org_ejml_ejml_simple",
+        "@maven//:org_ejml_ejml_java9module",
     ],
 )
 

@@ -12,5 +12,15 @@ apply from: "${rootDir}/shared/java/javacommon.gradle"
 
 dependencies {
 }
+tasks.named('compileJava') {
+    options.verbose = true
+}
+
+tasks.withType(JavaExec) {
+    doFirst {
+        println "Executing: ${executable} ${args.join(' ')}"
+        println "Classpath: ${classpath.asPath}"
+    }
+}
 
 sourceSets.main.java.srcDir "${projectDir}/src/generated/main/java"

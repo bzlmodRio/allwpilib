@@ -151,6 +151,8 @@ javadoc(
         "//wpiutil:wpiutil-java",
         "//xrpVendordep:xrpVendordep-java",
     ],
+    # Exclude the root package, which should only contain module-info.java
+    excluded_packages = ['']
 )
 
 copy_file(
