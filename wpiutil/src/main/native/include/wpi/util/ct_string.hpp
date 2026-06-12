@@ -6,11 +6,11 @@
 
 #include <stdint.h>
 
-#include <array>
 #include <limits>
 #include <stdexcept>
-#include <string>
 #include <string_view>
+#include <string>
+#include <array>
 
 namespace wpi::util {
 
