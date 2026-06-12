@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ARTIFACT_ID="7584177289"
+ARTIFACT_ID="7584894712"
 REPO="bzlmodRio/allwpilib"
 DEST="/tmp"
 ZIPFILE="${DEST}/artifact_${ARTIFACT_ID}.zip"

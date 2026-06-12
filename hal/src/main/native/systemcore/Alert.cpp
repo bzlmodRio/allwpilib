@@ -11,8 +11,8 @@
 
 #include "HALInitializer.hpp"
 #include "wpi/hal/Errors.h"
-#include "wpi/hal/HAL.h"
 #include "wpi/hal/Types.h"
+#include "wpi/hal/HAL.h"
 #include "wpi/hal/handles/UnlimitedHandleResource.hpp"
 #include "wpi/hal/simulation/AlertData.h"
 #include "wpi/util/mutex.hpp"

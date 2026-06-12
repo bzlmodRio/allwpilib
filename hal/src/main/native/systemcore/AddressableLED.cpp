@@ -10,7 +10,6 @@
 #include <cstring>
 #include <thread>
 
-#include "AddressableLEDSimd.hpp"
 #include "HALInitializer.hpp"
 #include "PortsInternal.hpp"
 #include "SmartIo.hpp"
@@ -22,6 +21,7 @@
 #include "wpi/hal/monotonic_clock.hpp"
 #include "wpi/nt/NetworkTableInstance.hpp"
 #include "wpi/nt/RawTopic.hpp"
+#include "AddressableLEDSimd.hpp"
 
 using namespace wpi::hal;
 
