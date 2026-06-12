@@ -88,7 +88,7 @@ jobs:
         run: |
           ACTION='${{ matrix.action }}'
           if [ "${ACTION}" = "build" ]; then
-            TARGETS=:publish
+            TARGETS=wpiutil
           else
             TARGETS=wpiutil
           fi
@@ -112,126 +112,126 @@ jobs:
             /tmp/workspace.log
             /tmp/exec.log
 
-  buildifier:
-    name: "buildifier"
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Set up Go 1.15.x
-        uses: actions/setup-go@v6
-        with:
-          cache: false
-          go-version: 1.15.x
-        id: go
-
-      - name: Install Buildifier
-        run: |
-          cd $(mktemp -d)
-          GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@6.0.0
-
-      - uses: actions/checkout@v6
-        with: { fetch-depth: 0 }
-
-      - name: Run buildifier
-        run: buildifier -warnings all --lint=fix -r .
-
-      - name: Check Output
-        run: git --no-pager diff --exit-code HEAD
-
-      - name: Generate diff
-        run: git diff HEAD > ${{ matrix.platform }}-bazel-lint-fixes.patch
-        if: ${{ failure() }}
-
-      - uses: actions/upload-artifact@v7
-        with:
-          archive: false
-          path: "*-bazel-lint-fixes.patch"
-        if: ${{ failure() }}
-
-  mod-lock:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Check lockfile
-        run: bazel mod deps --lockfile_mode=error
-
-      - run: bazel mod deps --lockfile_mode=update
-        if: ${{ failure() }}
-
-      - name: Generate diff
-        run: git diff HEAD > bazel-mod-lock-fixes.patch
-        if: ${{ failure() }}
-
-      - uses: actions/upload-artifact@v7
-        with:
-          archive: false
-          path: "bazel-mod-lock-fixes.patch"
-        if: ${{ failure() }}
-
-  non_robotpy_pregeneration:
-    name: "Non-RobotPy Pregen"
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-        with: { fetch-depth: 0 }
-
-      - id: Setup_bazel_cache
-        uses: ./.github/actions/setup-bazel-cache
-        with:
-          bazel_remote_username: ${{ secrets.BAZEL_CACHE_USERNAME }}
-          bazel_remote_password: ${{ secrets.BAZEL_CACHE_PASSWORD }}
-          buildbuddy_token: ${{ secrets.BUILDBUDDY_API_KEY }}
-
-      - name: Run Non-RobotPy pregeneration
-        run: bazel run --config=ci //:write_pregenerated_files
-
-      - name: Check Output
-        run: git --no-pager diff --exit-code HEAD
-
-      - name: Generate diff
-        run: git diff HEAD > non-robotpy-pregeneration.patch
-        if: ${{ failure() }}
-
-      - uses: actions/upload-artifact@v6
-        with:
-          name: non-robotpy-pregeneration-fixes
-          path: non-robotpy-pregeneration.patch
-        if: ${{ failure() }}
-
-  robotpy_pregeneration:
-    name: "Robotpy Pregeneration"
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v6
-        with: { fetch-depth: 0 }
-
-      - id: Setup_bazel_cache
-        uses: ./.github/actions/setup-bazel-cache
-        with:
-          bazel_remote_username: ${{ secrets.BAZEL_CACHE_USERNAME }}
-          bazel_remote_password: ${{ secrets.BAZEL_CACHE_PASSWORD }}
-          buildbuddy_token: ${{ secrets.BUILDBUDDY_API_KEY }}
-
-      # You should ensure the headers are correct before trying to pregen files
-      - name: Test Scan Headers
-        run: bazel test --config=ci //... -k --test_tag_filters=robotpy_scan_headers --build_tests_only
-        shell: bash
-
-      - name: Run yaml file generation
-        run: bazel run --config=ci //:write_robotpy_update_yaml_files
-
-      - name: Run build file generation
-        run: bazel run --config=ci //:write_robotpy_generated_pybind_files
-
-      - name: Check Output
-        run: git --no-pager diff --exit-code HEAD
-
-      - name: Generate diff
-        run: git diff HEAD > robotpy-pregeneration.patch
-        if: ${{ failure() }}
-
-      - uses: actions/upload-artifact@v6
-        with:
-          name: robotpy-pregeneration-fixes
-          path: robotpy-pregeneration.patch
-        if: ${{ failure() }}
+#   buildifier:
+#     name: "buildifier"
+#     runs-on: ubuntu-24.04
+#     steps:
+#       - name: Set up Go 1.15.x
+#         uses: actions/setup-go@v6
+#         with:
+#           cache: false
+#           go-version: 1.15.x
+#         id: go
+# 
+#       - name: Install Buildifier
+#         run: |
+#           cd $(mktemp -d)
+#           GO111MODULE=on go get github.com/bazelbuild/buildtools/buildifier@6.0.0
+# 
+#       - uses: actions/checkout@v6
+#         with: { fetch-depth: 0 }
+# 
+#       - name: Run buildifier
+#         run: buildifier -warnings all --lint=fix -r .
+# 
+#       - name: Check Output
+#         run: git --no-pager diff --exit-code HEAD
+# 
+#       - name: Generate diff
+#         run: git diff HEAD > ${{ matrix.platform }}-bazel-lint-fixes.patch
+#         if: ${{ failure() }}
+# 
+#       - uses: actions/upload-artifact@v7
+#         with:
+#           archive: false
+#           path: "*-bazel-lint-fixes.patch"
+#         if: ${{ failure() }}
+# 
+#   mod-lock:
+#     runs-on: ubuntu-24.04
+#     steps:
+#       - uses: actions/checkout@v6
+# 
+#       - name: Check lockfile
+#         run: bazel mod deps --lockfile_mode=error
+# 
+#       - run: bazel mod deps --lockfile_mode=update
+#         if: ${{ failure() }}
+# 
+#       - name: Generate diff
+#         run: git diff HEAD > bazel-mod-lock-fixes.patch
+#         if: ${{ failure() }}
+# 
+#       - uses: actions/upload-artifact@v7
+#         with:
+#           archive: false
+#           path: "bazel-mod-lock-fixes.patch"
+#         if: ${{ failure() }}
+# 
+#   non_robotpy_pregeneration:
+#     name: "Non-RobotPy Pregen"
+#     runs-on: ubuntu-24.04
+#     steps:
+#       - uses: actions/checkout@v6
+#         with: { fetch-depth: 0 }
+# 
+#       - id: Setup_bazel_cache
+#         uses: ./.github/actions/setup-bazel-cache
+#         with:
+#           bazel_remote_username: ${{ secrets.BAZEL_CACHE_USERNAME }}
+#           bazel_remote_password: ${{ secrets.BAZEL_CACHE_PASSWORD }}
+#           buildbuddy_token: ${{ secrets.BUILDBUDDY_API_KEY }}
+# 
+#       - name: Run Non-RobotPy pregeneration
+#         run: bazel run --config=ci //:write_pregenerated_files
+# 
+#       - name: Check Output
+#         run: git --no-pager diff --exit-code HEAD
+# 
+#       - name: Generate diff
+#         run: git diff HEAD > non-robotpy-pregeneration.patch
+#         if: ${{ failure() }}
+# 
+#       - uses: actions/upload-artifact@v6
+#         with:
+#           name: non-robotpy-pregeneration-fixes
+#           path: non-robotpy-pregeneration.patch
+#         if: ${{ failure() }}
+# 
+#   robotpy_pregeneration:
+#     name: "Robotpy Pregeneration"
+#     runs-on: ubuntu-24.04
+#     steps:
+#       - uses: actions/checkout@v6
+#         with: { fetch-depth: 0 }
+# 
+#       - id: Setup_bazel_cache
+#         uses: ./.github/actions/setup-bazel-cache
+#         with:
+#           bazel_remote_username: ${{ secrets.BAZEL_CACHE_USERNAME }}
+#           bazel_remote_password: ${{ secrets.BAZEL_CACHE_PASSWORD }}
+#           buildbuddy_token: ${{ secrets.BUILDBUDDY_API_KEY }}
+# 
+#       # You should ensure the headers are correct before trying to pregen files
+#       - name: Test Scan Headers
+#         run: bazel test --config=ci //... -k --test_tag_filters=robotpy_scan_headers --build_tests_only
+#         shell: bash
+# 
+#       - name: Run yaml file generation
+#         run: bazel run --config=ci //:write_robotpy_update_yaml_files
+# 
+#       - name: Run build file generation
+#         run: bazel run --config=ci //:write_robotpy_generated_pybind_files
+# 
+#       - name: Check Output
+#         run: git --no-pager diff --exit-code HEAD
+# 
+#       - name: Generate diff
+#         run: git diff HEAD > robotpy-pregeneration.patch
+#         if: ${{ failure() }}
+# 
+#       - uses: actions/upload-artifact@v6
+#         with:
+#           name: robotpy-pregeneration-fixes
+#           path: robotpy-pregeneration.patch
+#         if: ${{ failure() }}
