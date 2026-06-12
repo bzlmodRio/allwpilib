@@ -89,3 +89,8 @@ build --@rules_python//python/config_settings:bootstrap_impl=script
 build --@rules_python//python/config_settings:venvs_use_declare_symlink=no
 
 try-import %workspace%/bazel_auth.rc
+
+build --incompatible_strict_action_env
+# build:linux --sandbox_block_path=/usr/include
+# build:linux --sandbox_block_path=/usr/lib
+# build:linux --sandbox_block_path=/usr/local
