@@ -54,11 +54,11 @@ def _log_versions(robotpy_version: typing.Optional[str]):
     if wpilib.RobotBase.isSimulation():
         logger.info("Running with simulated HAL.")
 
-        # check to see if we're on a RoboRIO
+        # check to see if we're on a systemcore
         # NOTE: may have false positives, but it should work well enough
         if os.path.exists("/etc/natinst/share/scs_imagemetadata.ini"):
             logger.warning(
-                "Running simulation HAL on actual roboRIO! This probably isn't what you want, and will probably cause difficult-to-debug issues!"
+                "Running simulation HAL on actual systemcore! This probably isn't what you want, and will probably cause difficult-to-debug issues!"
             )
 
     if logger.isEnabledFor(logging.DEBUG):

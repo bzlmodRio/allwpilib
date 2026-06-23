@@ -11,7 +11,7 @@ import wpilib
 class MyRobot(wpilib.TimedRobot):
     """
     This is a sample program demonstrating how to communicate to a light controller from the robot
-    code using the roboRIO's I2C port.
+    code using the systemcore's I2C port.
     """
 
     PORT = wpilib.I2C.Port.PORT_0

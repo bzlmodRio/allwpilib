@@ -68,7 +68,7 @@ package org.wpilib.framework;
  * choice.
  *
  * <p>If you do enable RT though, <i>make sure your periodic functions do not block</i>. If they do,
- * the operating system will lock up, and you'll have to boot the roboRIO into safe mode and delete
+ * the operating system will lock up, and you'll have to boot the systemcore into safe mode and delete
  * the robot program to recover.
  */
 public class TimesliceRobot extends TimedRobot {

@@ -16,8 +16,8 @@ from cscore import CameraServer
 import cv2
 
 #
-# This code will work both on a RoboRIO and on other platforms. The exact mechanism
-# to run it differs depending on whether you’re on a RoboRIO or a coprocessor
+# This code will work both on a systemcore and on other platforms. The exact mechanism
+# to run it differs depending on whether you’re on a systemcore or a coprocessor
 #
 # https://robotpy.readthedocs.io/en/stable/vision/code.html
 

@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
     var detector = new AprilTagDetector();
     // look for tag36h11, correct 1 error bit (hamming distance 1)
     // hamming 1 allocates 781KB, 2 allocates 27.4 MB, 3 allocates 932 MB
-    // max of 1 recommended for RoboRIO 1, while hamming 2 is feasible on the RoboRIO 2
+    // max of 1 recommended for systemcore 1, while hamming 2 is feasible on the systemcore 2
     detector.addFamily("tag36h11", 1);
 
     // Set up Pose Estimator - parameters are for a Microsoft Lifecam HD-3000

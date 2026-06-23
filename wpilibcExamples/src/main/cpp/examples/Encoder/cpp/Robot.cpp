@@ -65,8 +65,8 @@ class Robot : public wpi::TimedRobot {
    * optional.
    *
    * The first two parameters (1, 2 in this case) refer to the ports on the
-   * roboRIO which the encoder uses. Because a quadrature encoder has two signal
-   * wires, the signal from two DIO ports on the roboRIO are used.
+   * systemcore which the encoder uses. Because a quadrature encoder has two signal
+   * wires, the signal from two DIO ports on the systemcore are used.
    *
    * The third (optional) parameter is a boolean which defaults to false. If you
    * set this parameter to true, the direction of the encoder will  be reversed,

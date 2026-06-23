@@ -24,8 +24,8 @@ import org.wpilib.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   /**
    * The Encoder object is constructed with 4 parameters, the last two being optional. The first two
-   * parameters (1, 2 in this case) refer to the ports on the roboRIO which the encoder uses.
-   * Because a quadrature encoder has two signal wires, the signal from two DIO ports on the roboRIO
+   * parameters (1, 2 in this case) refer to the ports on the systemcore which the encoder uses.
+   * Because a quadrature encoder has two signal wires, the signal from two DIO ports on the systemcore
    * are used. The third (optional) parameter is a boolean which defaults to false. If you set this
    * parameter to true, the direction of the encoder will be reversed, in case it makes more sense
    * mechanically. The final (optional) parameter specifies encoding rate (k1X, k2X, or k4X) and

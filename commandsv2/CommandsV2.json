@@ -33,7 +33,6 @@
       "skipInvalidPlatforms": true,
       "binaryPlatforms": [
         "linuxsystemcore",
-        "linuxathena",
         "linuxarm32",
         "linuxarm64",
         "windowsx86-64",

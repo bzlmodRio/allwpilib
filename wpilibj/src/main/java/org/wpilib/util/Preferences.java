@@ -20,10 +20,10 @@ import org.wpilib.networktables.StringTopic;
 import org.wpilib.networktables.Topic;
 
 /**
- * The preferences class provides a relatively simple way to save important values to the roboRIO to
- * access the next time the roboRIO is booted.
+ * The preferences class provides a relatively simple way to save important values to the systemcore to
+ * access the next time the systemcore is booted.
  *
- * <p>This class loads and saves from a file inside the roboRIO. The user can not access the file
+ * <p>This class loads and saves from a file inside the systemcore. The user can not access the file
  * directly, but may modify values at specific fields which will then be automatically saved to the
  * file by the NetworkTables server.
  *

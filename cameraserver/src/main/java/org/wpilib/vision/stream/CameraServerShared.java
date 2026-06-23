@@ -29,11 +29,11 @@ public interface CameraServerShared {
   void reportUsage(String resource, String data);
 
   /**
-   * Get if running on a roboRIO.
+   * Get if running on a systemcore.
    *
-   * @return true if on roboRIO
+   * @return true if on systemcore
    */
-  default boolean isRoboRIO() {
+  default boolean isSystemCore() {
     return false;
   }
 }

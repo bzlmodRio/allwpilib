@@ -6,7 +6,7 @@ package org.wpilib.net;
 
 /**
  * Forward ports to another host. This is primarily useful for accessing Ethernet-connected devices
- * from a computer tethered to the RoboRIO USB port.
+ * from a computer tethered to the systemcore USB port.
  */
 public final class PortForwarder {
   private PortForwarder() {

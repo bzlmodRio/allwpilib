@@ -8,15 +8,15 @@ import java.nio.charset.StandardCharsets;
 import org.wpilib.hardware.hal.HAL;
 import org.wpilib.hardware.hal.SerialPortJNI;
 
-/** Driver for the serial ports (USB, MXP, Onboard) on the roboRIO. */
+/** Driver for the serial ports (USB, MXP, Onboard) on the systemcore. */
 public class SerialPort implements AutoCloseable {
   private int m_portHandle;
 
   /** Serial port. */
   public enum Port {
-    /** Onboard serial port on the roboRIO. */
+    /** Onboard serial port on the systemcore. */
     ONBOARD(0),
-    /** MXP (roboRIO MXP) serial port. */
+    /** MXP (systemcore MXP) serial port. */
     MXP(1),
     /** USB serial port (same as kUSB1). */
     USB(2),

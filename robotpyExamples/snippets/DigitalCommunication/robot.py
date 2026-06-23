@@ -11,7 +11,7 @@ import wpilib
 class MyRobot(wpilib.TimedRobot):
     """
     This is a sample program demonstrating how to communicate to a light controller from the robot
-    code using the roboRIO's DIO ports.
+    code using the systemcore's DIO ports.
     """
 
     # define ports for digitalcommunication with light controller

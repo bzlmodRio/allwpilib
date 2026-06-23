@@ -20,7 +20,7 @@ import org.wpilib.units.measure.Temperature;
 import org.wpilib.units.measure.Time;
 import org.wpilib.units.measure.Voltage;
 
-/** Contains functions for roboRIO functionality. */
+/** Contains functions for systemcore functionality. */
 public final class RobotController {
   private static LongSupplier m_timeSource = RobotController::getMonotonicTime;
 
@@ -29,21 +29,21 @@ public final class RobotController {
   }
 
   /**
-   * Return the serial number of the roboRIO.
+   * Return the serial number of the systemcore.
    *
-   * @return The serial number of the roboRIO.
+   * @return The serial number of the systemcore.
    */
   public static String getSerialNumber() {
     return HALUtil.getSerialNumber();
   }
 
   /**
-   * Return the comments from the roboRIO web interface.
+   * Return the comments from the systemcore web interface.
    *
-   * <p>The comments string is cached after the first call to this function on the RoboRIO - restart
+   * <p>The comments string is cached after the first call to this function on the systemcore - restart
    * the robot code to reload the comments string after changing it in the web interface.
    *
-   * @return the comments from the roboRIO web interface.
+   * @return the comments from the systemcore web interface.
    */
   public static String getComments() {
     return HALUtil.getComments();
@@ -128,7 +128,7 @@ public final class RobotController {
 
   /**
    * Gets a value indicating whether the FPGA outputs are enabled. The outputs may be disabled if
-   * the robot is disabled or e-stopped, the watchdog has expired, or if the roboRIO browns out.
+   * the robot is disabled or e-stopped, the watchdog has expired, or if the systemcore browns out.
    *
    * @return True if the FPGA outputs are enabled.
    */
@@ -279,9 +279,9 @@ public final class RobotController {
   }
 
   /**
-   * Set the voltage the roboRIO will brownout and disable all outputs.
+   * Set the voltage the systemcore will brownout and disable all outputs.
    *
-   * <p>Note that this only does anything on the roboRIO 2. On the roboRIO it is a no-op.
+   * <p>Note that this only does anything on the systemcore 2. On the systemcore it is a no-op.
    *
    * @param brownoutVoltage The brownout voltage
    */
@@ -290,9 +290,9 @@ public final class RobotController {
   }
 
   /**
-   * Set the voltage in a measure the roboRIO will brownout and disable all outputs.
+   * Set the voltage in a measure the systemcore will brownout and disable all outputs.
    *
-   * <p>Note that this only does anything on the roboRIO 2. On the roboRIO it is a no-op.
+   * <p>Note that this only does anything on the systemcore 2. On the systemcore it is a no-op.
    *
    * @param brownoutVoltage The brownout voltage in a measure
    */
