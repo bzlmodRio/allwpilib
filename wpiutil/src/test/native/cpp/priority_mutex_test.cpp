@@ -219,7 +219,7 @@ class InversionTestRunner {
   bool m_success = false;
 };
 
-// TODO: Fix roborio permissions to run as root.
+// TODO: Fix systemcore permissions to run as root.
 
 // Priority inversion test.
 TEST(MutexTest, DISABLED_PriorityInversion) {

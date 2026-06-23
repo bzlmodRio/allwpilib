@@ -350,7 +350,7 @@ void HAL_CAN_SendMessage(int32_t busId, uint32_t messageId,
 
   messageId = MapMessageIdToSocketCan(messageId);
 
-  // TODO determine on the real roborio is a non periodic send removes any
+  // TODO determine on the real systemcore is a non periodic send removes any
   // periodic send.
   if (periodMs == HAL_CAN_SEND_PERIOD_STOP_REPEATING) {
     canState->writeLoopRunner.ExecSync([messageId, busId](wpi::net::uv::Loop&) {

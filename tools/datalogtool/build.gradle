@@ -1,10 +1,10 @@
 import org.gradle.internal.os.OperatingSystem
 
-if (project.hasProperty('onlylinuxathena') || project.hasProperty('onlylinuxsystemcore')) {
+if (project.hasProperty('onlylinuxsystemcore')) {
     return;
 }
 
-description = "A tool to download datalogs from a roborio"
+description = "A tool to download datalogs from a systemcore"
 
 apply plugin: 'cpp'
 apply plugin: 'visual-studio'
