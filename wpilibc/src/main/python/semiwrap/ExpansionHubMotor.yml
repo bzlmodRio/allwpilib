@@ -7,6 +7,8 @@ classes:
       SetPositionSetpoint:
       SetVelocitySetpoint:
       SetEnabled:
+      SetFloatOn0:
+        rename: set_float_on_0
       GetCurrent:
       SetDistancePerCount:
       GetEncoderVelocity:
@@ -15,10 +17,8 @@ classes:
       ResetEncoder:
       IsHubConnected:
       Follow:
-      Unfollow:
       GetVelocityConstants:
       GetPositionConstants:
-      SetNeutralMode:
+      Unfollow:
     enums:
-      NeutralMode:
       FollowDirection:

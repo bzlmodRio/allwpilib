@@ -231,7 +231,7 @@
   },
   {
     "ClassName": "GameCube",
-    "HIDType": "GAMECUBE",
+    "HIDType": "STANDARD",
     "axes": {
       "leftX": 0,
       "leftY": 1,
@@ -335,7 +335,7 @@
   },
   {
     "ClassName": "Steam",
-    "HIDType": "STEAM",
+    "HIDType": "STANDARD",
     "axes": {
       "leftX": 0,
       "leftY": 1,
