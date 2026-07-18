@@ -2,7 +2,7 @@ load("@rules_python//python:defs.bzl", "py_binary")
 
 exports_files([
     "defs.bzl",
-    "java_test_wrapper.sh",
+    "java_native_libs_wrapper.sh",
 ])
 
 py_binary(

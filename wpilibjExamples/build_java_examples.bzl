@@ -1,7 +1,7 @@
-load("@rules_java//java:defs.bzl", "java_binary", "java_library")
+load("@rules_java//java:defs.bzl", "java_library")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_binary", "wpilib_java_junit5_test")
 load("//wpilibjExamples:example_projects.bzl", "COMMANDS_V2_FOLDERS", "EXAMPLE_FOLDERS", "EXAMPLE_TESTS_FOLDERS", "SNIPPET_FOLDERS", "SNIPPET_TESTS_FOLDERS", "TEMPLATE_FOLDERS")
 
 def _package_type(package_type):
@@ -31,7 +31,7 @@ def build_examples(halsim_deps):
     _package_type("examples")
 
     for folder in EXAMPLE_FOLDERS:
-        java_binary(
+        wpilib_java_binary(
             name = folder + "-example",
             srcs = ["src/main/java/org/wpilib/Executor.java"] + native.glob(["src/main/java/org/wpilib/examples/" + folder + "/**/*.java"]),
             main_class = "org.wpilib.Executor",
@@ -79,7 +79,7 @@ def build_snippets():
     _package_type("snippets")
 
     for folder in SNIPPET_FOLDERS:
-        java_binary(
+        wpilib_java_binary(
             name = folder + "-snippet",
             srcs = ["src/main/java/org/wpilib/Executor.java"] + native.glob(["src/main/java/org/wpilib/snippets/" + folder + "/**/*.java"]),
             main_class = "org.wpilib.Executor",
@@ -140,7 +140,10 @@ def build_tests():
                 "//epilogue-processor:plugin",
             ],
             deps = [
-                ":" + folder + "-example",
+                # -example is now an sh_binary wrapper (wpilib_java_binary);
+                # its _java_impl sub-target is the actual java_binary that
+                # provides JavaInfo (the Robot class) for compilation.
+                ":" + folder + "-example_java_impl",
                 "//hal:hal-java",
                 "//ntcore:ntcore-java",
                 "//wpilibj:wpilibj-java",
@@ -162,7 +165,10 @@ def build_tests():
                 "//epilogue-processor:plugin",
             ],
             deps = [
-                ":" + folder + "-snippet",
+                # -snippet is now an sh_binary wrapper (wpilib_java_binary);
+                # its _java_impl sub-target is the actual java_binary that
+                # provides JavaInfo (the Robot class) for compilation.
+                ":" + folder + "-snippet_java_impl",
                 "//hal:hal-java",
                 "//ntcore:ntcore-java",
                 "//wpilibj:wpilibj-java",

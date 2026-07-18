@@ -1,8 +1,14 @@
-load("@rules_java//java:defs.bzl", "java_library", "java_test")
+load("@rules_java//java:defs.bzl", "java_binary", "java_library", "java_test")
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 load("//shared/bazel/rules/gen:native_libs.bzl", "wpilib_flatten_native_libs")
+
+# Applied to every generated "_java_impl"/wrapper target pair (both the
+# wpilib_java_junit5_test and wpilib_java_binary machinery below), so
+# sanitizer builds and //... wildcard expansion treat them uniformly.
+_INNER_TAGS = ["allwpilib-build-java", "no-asan", "no-tsan", "no-ubsan"]
 
 def _native_companion_label(label):
     if ":" not in label:
@@ -132,7 +138,6 @@ def wpilib_java_junit5_test(
         tags = ["manual"],
     )
 
-    _inner_tags = ["allwpilib-build-java", "no-asan", "no-tsan", "no-ubsan"]
     java_impl_name = name + "_java_impl"
 
     # Core java_test: never bakes in -Djava.library.path itself, on any OS.
@@ -171,7 +176,7 @@ def wpilib_java_junit5_test(
         main_class = "org.junit.platform.console.ConsoleLauncher",
         use_testrunner = False,
         testonly = True,
-        tags = tags + ["manual"] + _inner_tags,
+        tags = tags + ["manual"] + _INNER_TAGS,
         **kwargs
     )
 
@@ -183,16 +188,83 @@ def wpilib_java_junit5_test(
     # dependencies.
     sh_test(
         name = name,
-        srcs = ["//shared/bazel/rules/gen:java_test_wrapper.sh"],
+        srcs = ["//shared/bazel/rules/gen:java_native_libs_wrapper.sh"],
         args = args + ["--select-package", package],
         deps = ["@bazel_tools//tools/bash/runfiles"],
         env = {
-            "JAVA_TEST_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
+            "JAVA_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
             "NATIVE_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name,
         },
         size = size or "small",
         data = [":" + java_impl_name, ":" + native_libs_name],
         testonly = True,
         visibility = kwargs.get("visibility"),
-        tags = tags + _inner_tags,
+        tags = tags + _INNER_TAGS,
+    )
+
+def wpilib_java_binary(
+        name,
+        deps = [],
+        runtime_deps = [],
+        args = [],
+        jvm_flags = [],
+        tags = [],
+        data = [],
+        **kwargs):
+    """
+    Convenience helper to make a runnable java_binary that can find its
+    transitive native/JNI shared libraries at runtime (via `bazel run` or by
+    executing the built target directly), the same way wpilib_java_junit5_test
+    already does for `bazel test`. See that macro's comments for the full
+    rationale; this mirrors its native-lib flattening + wrapper-script
+    machinery, minus the JUnit-specific bits.
+    """
+    native_libs_name = name + ".native-libs"
+    native_libs_kwargs = {}
+    if "testonly" in kwargs:
+        native_libs_kwargs["testonly"] = kwargs["testonly"]
+    wpilib_flatten_native_libs(
+        name = native_libs_name,
+        deps = deps + runtime_deps + _internal_native_companions(deps) + _internal_native_companions(runtime_deps),
+        tags = ["manual"],
+        **native_libs_kwargs
+    )
+
+    java_impl_name = name + "_java_impl"
+
+    # Core java_binary: never bakes in -Djava.library.path itself. The
+    # sh_binary wrapper below resolves the native-libs directory from the
+    # runfiles manifest at run time and injects it via --wrapper_script_flag.
+    # Tagged manual so //... wildcard expansion skips it; the sh_binary below
+    # is the only entry point users interact with.
+    java_binary(
+        name = java_impl_name,
+        deps = deps,
+        runtime_deps = runtime_deps,
+        data = data + [":" + native_libs_name],
+        jvm_flags = jvm_flags,
+        args = args,
+        tags = tags + ["manual"] + _INNER_TAGS,
+        **kwargs
+    )
+
+    # Primary runnable target. The wrapper reads RUNFILES_MANIFEST_FILE to
+    # obtain the absolute native-libs path and injects it via
+    # --wrapper_script_flag before invoking the java_impl binary, on every
+    # OS. `args` is duplicated here (rather than relying solely on the inner
+    # java_binary's own `args`) because that attribute is only consulted by
+    # Bazel's own `run` invocation of the target actually being run, not
+    # baked into the generated stub itself.
+    sh_binary(
+        name = name,
+        srcs = ["//shared/bazel/rules/gen:java_native_libs_wrapper.sh"],
+        args = args,
+        deps = ["@bazel_tools//tools/bash/runfiles"],
+        env = {
+            "JAVA_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
+            "NATIVE_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name,
+        },
+        data = [":" + java_impl_name, ":" + native_libs_name],
+        visibility = kwargs.get("visibility"),
+        tags = tags + _INNER_TAGS,
     )

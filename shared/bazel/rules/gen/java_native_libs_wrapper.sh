@@ -52,6 +52,17 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
+# The exec'd java executable below is itself a Bazel-built binary with its
+# own runfiles library, and looks for $JAVA_RUNFILES specifically (unlike
+# this script, which only needs RUNFILES_DIR/RUNFILES_MANIFEST_FILE). `bazel
+# test` happens to set $JAVA_RUNFILES directly as part of its test-runner
+# environment, but `bazel run` does not, so without this call the exec'd
+# child fails with "Cannot locate runfiles directory" under `bazel run`
+# specifically. runfiles_export_envvars (from the sourced runfiles.bash
+# library) fills in JAVA_RUNFILES from RUNFILES_DIR/RUNFILES_MANIFEST_FILE so
+# subprocesses can find it either way.
+runfiles_export_envvars
+
 java_bin_key="${JAVA_EXECUTABLE_RLOCATION:?JAVA_EXECUTABLE_RLOCATION must be set}"
 native_libs_key="${NATIVE_LIBS_RLOCATION:?NATIVE_LIBS_RLOCATION must be set}"
 
