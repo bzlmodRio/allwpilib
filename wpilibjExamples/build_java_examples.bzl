@@ -31,6 +31,7 @@ def build_examples(halsim_deps):
     _package_type("examples")
 
     for folder in EXAMPLE_FOLDERS:
+        smoke_test = True if folder != "rebuiltcmdv3" else False
         wpilib_java_binary(
             name = folder + "-example",
             srcs = ["src/main/java/org/wpilib/Executor.java"] + native.glob(["src/main/java/org/wpilib/examples/" + folder + "/**/*.java"]),
@@ -55,6 +56,7 @@ def build_examples(halsim_deps):
                 "//epilogue-runtime:epilogue-java",
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
+            smoke_test = smoke_test,
             halsim_deps = halsim_deps,
             args = ["org.wpilib.examples." + folder + ".Robot"],
             tags = ["wpi-example"],
