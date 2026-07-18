@@ -74,7 +74,7 @@ def build_snippets():
             strip_include_prefix = "src/main/cpp/snippets/" + folder + "/include",
             tags = ["wpi-example"],
         )
-        cc_library(
+        cc_binary(
             name = folder + "-snippet",
             srcs = native.glob(["src/main/cpp/snippets/" + folder + "/**/*.cpp"]),
             deps = [
@@ -83,7 +83,6 @@ def build_snippets():
                 "//cameraserver",
                 ":{}-snippets-headers".format(folder),
             ],
-            strip_include_prefix = "src/main/cpp/snippets/" + folder + "/include",
             tags = ["wpi-example"],
         )
 

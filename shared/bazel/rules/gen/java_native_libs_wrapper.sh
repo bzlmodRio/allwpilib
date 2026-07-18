@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-# Bazel Java test launcher — resolves native-library paths via runfiles.
+# Bazel Java launcher — resolves native-library paths via runfiles.
+#
+# Backs both `wpilib_java_junit5_test` (wrapping an sh_test around a
+# java_test) and `wpilib_java_binary` (wrapping an sh_binary around a
+# java_binary) in java_rules.bzl: java_test and java_binary share the same
+# underlying stub launcher, so this script's rlocation/exec logic is
+# identical either way.
 #
 # On every OS we resolve the flat native-libs directory from the runfiles
 # manifest and inject -Djava.library.path via --wrapper_script_flag (which
@@ -31,8 +37,8 @@
 #     dependencies, same rationale as LD_LIBRARY_PATH/DYLD_LIBRARY_PATH).
 #
 # Required environment variables (set by the enclosing target in java_rules.bzl):
-#   NATIVE_LIBS_RLOCATION  rlocation key of the flat native-libs directory
-#   JAVA_TEST_RLOCATION    rlocation key of the _java_impl test executable
+#   NATIVE_LIBS_RLOCATION     rlocation key of the flat native-libs directory
+#   JAVA_EXECUTABLE_RLOCATION rlocation key of the _java_impl executable
 
 # --- begin runfiles.bash initialization v3 ---
 # Copy-pasted from the Bazel Bash runfiles library v3.
@@ -46,17 +52,17 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
   { echo>&2 "ERROR: cannot find $f"; exit 1; }; f=; set -e
 # --- end runfiles.bash initialization v3 ---
 
-java_test_key="${JAVA_TEST_RLOCATION:?JAVA_TEST_RLOCATION must be set}"
+java_bin_key="${JAVA_EXECUTABLE_RLOCATION:?JAVA_EXECUTABLE_RLOCATION must be set}"
 native_libs_key="${NATIVE_LIBS_RLOCATION:?NATIVE_LIBS_RLOCATION must be set}"
 
-# Resolve the java test binary.
+# Resolve the java executable.
 # On Windows, Bazel appends .exe to binary rlocation keys in the manifest.
-java_test_bin="$(rlocation "$java_test_key" 2>/dev/null || true)"
-if [[ -z "$java_test_bin" ]]; then
-  java_test_bin="$(rlocation "${java_test_key}.exe" 2>/dev/null || true)"
+java_bin="$(rlocation "$java_bin_key" 2>/dev/null || true)"
+if [[ -z "$java_bin" ]]; then
+  java_bin="$(rlocation "${java_bin_key}.exe" 2>/dev/null || true)"
 fi
-if [[ -z "$java_test_bin" ]]; then
-  echo >&2 "ERROR: cannot resolve java test binary: $java_test_key"
+if [[ -z "$java_bin" ]]; then
+  echo >&2 "ERROR: cannot resolve java executable: $java_bin_key"
   exit 1
 fi
 
@@ -92,4 +98,4 @@ fi
 # required for macOS's default bash (3.2, frozen there for licensing reasons):
 # it throws "unbound variable" under `set -u` when expanding an empty array,
 # a bug fixed upstream in bash 4.4+ but never backported by Apple.
-exec "$java_test_bin" ${wrapper_flags[@]+"${wrapper_flags[@]}"} "$@"
+exec "$java_bin" ${wrapper_flags[@]+"${wrapper_flags[@]}"} "$@"

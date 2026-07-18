@@ -33,8 +33,8 @@ def build_examples(halsim_deps):
     for folder in EXAMPLE_FOLDERS:
         java_binary(
             name = folder + "-example",
-            srcs = native.glob(["src/main/java/org/wpilib/examples/" + folder + "/**/*.java"]),
-            main_class = "org/wpilib/examples/" + folder + "/Main",
+            srcs = ["src/main/java/org/wpilib/Executor.java"] + native.glob(["src/main/java/org/wpilib/examples/" + folder + "/**/*.java"]),
+            main_class = "org.wpilib.Executor",
             plugins = [
                 "//epilogue-processor:plugin",
             ],
@@ -55,6 +55,7 @@ def build_examples(halsim_deps):
                 "//epilogue-runtime:epilogue-java",
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
+            args = ["org.wpilib.examples." + folder + ".Robot"],
             tags = ["wpi-example"],
         )
 
@@ -78,9 +79,10 @@ def build_snippets():
     _package_type("snippets")
 
     for folder in SNIPPET_FOLDERS:
-        java_library(
+        java_binary(
             name = folder + "-snippet",
-            srcs = native.glob(["src/main/java/org/wpilib/snippets/" + folder + "/**/*.java"]),
+            srcs = ["src/main/java/org/wpilib/Executor.java"] + native.glob(["src/main/java/org/wpilib/snippets/" + folder + "/**/*.java"]),
+            main_class = "org.wpilib.Executor",
             plugins = [
                 "//epilogue-processor:plugin",
             ],
@@ -102,6 +104,7 @@ def build_snippets():
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
             tags = ["wpi-example"],
+            args = ["org.wpilib.snippets." + folder + ".Robot"],
         )
 
 def build_templates():
