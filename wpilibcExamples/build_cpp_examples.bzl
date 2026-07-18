@@ -47,6 +47,9 @@ def build_examples(halsim_deps = []):
                 "//xrpVendordep",
                 ":{}-examples-headers".format(folder),
             ],
+            dynamic_deps = [
+                "//commandsv2:shared/commandsv2",
+            ],
             halsim_deps = halsim_deps,
             tags = ["wpi-example"],
         )
@@ -84,6 +87,9 @@ def build_snippets(halsim_deps = []):
                 "//commandsv2",
                 "//cameraserver",
                 ":{}-snippets-headers".format(folder),
+            ],
+            dynamic_deps = [
+                "//commandsv2:shared/commandsv2",
             ],
             halsim_deps = halsim_deps,
             tags = ["wpi-example"],
