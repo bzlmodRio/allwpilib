@@ -7,12 +7,22 @@ package org.wpilib.examples.rebuiltcmdv3.constants;
 import static org.wpilib.units.Units.FeetPerSecond;
 import static org.wpilib.units.Units.RotationsPerSecond;
 
+import org.wpilib.math.geometry.Translation2d;
 import org.wpilib.math.kinematics.SwerveDriveKinematics;
 import org.wpilib.units.measure.AngularVelocity;
 import org.wpilib.units.measure.LinearVelocity;
 
 public final class DriveConstants {
-  public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics();
+  // Generic 0.381 m (15 in) half-track-width/half-wheelbase square footprint, matching the
+  // swervebot/swervedriveposeestimator examples' placeholder chassis dimensions.
+  private static final Translation2d FRONT_LEFT_LOCATION = new Translation2d(0.381, 0.381);
+  private static final Translation2d FRONT_RIGHT_LOCATION = new Translation2d(0.381, -0.381);
+  private static final Translation2d REAR_LEFT_LOCATION = new Translation2d(-0.381, 0.381);
+  private static final Translation2d REAR_RIGHT_LOCATION = new Translation2d(-0.381, -0.381);
+
+  public static final SwerveDriveKinematics KINEMATICS =
+      new SwerveDriveKinematics(
+          FRONT_LEFT_LOCATION, FRONT_RIGHT_LOCATION, REAR_LEFT_LOCATION, REAR_RIGHT_LOCATION);
   public static final LinearVelocity MAX_VELOCITY = FeetPerSecond.of(15);
   public static final AngularVelocity MAX_TURN_RATE = RotationsPerSecond.of(3);
 

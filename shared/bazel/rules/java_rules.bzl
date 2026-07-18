@@ -257,7 +257,18 @@ def wpilib_java_binary(
         deps = deps,
         runtime_deps = runtime_deps,
         data = data + [":" + native_libs_name],
-        jvm_flags = jvm_flags,
+        # commandsv3's Scheduler needs reflective access to JDK-internal
+        # continuation classes (see commandsv3/ContinuationScope.java); any
+        # runnable binary can end up loading it transitively, so this is a
+        # blanket default here rather than something each caller opts into -
+        # matches commandsv3/BUILD.bazel's own test-side flags and Gradle's
+        # `tasks.withType(JavaExec).configureEach` in wpilibjExamples/build.gradle.
+        jvm_flags = jvm_flags + [
+            "--add-opens",
+            "java.base/jdk.internal.vm=ALL-UNNAMED",
+            "--add-opens",
+            "java.base/java.lang=ALL-UNNAMED",
+        ],
         args = args,
         tags = tags + ["manual"] + _INNER_TAGS,
         **kwargs
