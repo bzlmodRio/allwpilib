@@ -1,6 +1,7 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_binary")
 load("//wpilibcExamples:example_projects.bzl", "COMMANDS_V2_FOLDERS", "EXAMPLE_FOLDERS", "EXAMPLE_TESTS_FOLDERS", "SNIPPET_FOLDERS", "SNIPPET_TESTS_FOLDERS", "TEMPLATE_FOLDERS")
 
 def _package_type(package_type):
@@ -36,7 +37,7 @@ def build_examples(halsim_deps = []):
             strip_include_prefix = "src/main/cpp/examples/" + folder + "/include",
             tags = ["wpi-example"],
         )
-        cc_binary(
+        wpilib_cc_binary(
             name = folder + "-example",
             srcs = native.glob(["src/main/cpp/examples/" + folder + "/cpp/**/*.cpp", "src/main/cpp/examples/" + folder + "/c/**/*.c"], allow_empty = True),
             deps = [
@@ -46,6 +47,7 @@ def build_examples(halsim_deps = []):
                 "//xrpVendordep",
                 ":{}-examples-headers".format(folder),
             ],
+            halsim_deps = halsim_deps,
             tags = ["wpi-example"],
         )
 
@@ -64,7 +66,7 @@ def build_commands():
             tags = ["wpi-example"],
         )
 
-def build_snippets():
+def build_snippets(halsim_deps = []):
     _package_type("snippets")
 
     for folder in SNIPPET_FOLDERS:
@@ -74,7 +76,7 @@ def build_snippets():
             strip_include_prefix = "src/main/cpp/snippets/" + folder + "/include",
             tags = ["wpi-example"],
         )
-        cc_binary(
+        wpilib_cc_binary(
             name = folder + "-snippet",
             srcs = native.glob(["src/main/cpp/snippets/" + folder + "/**/*.cpp"]),
             deps = [
@@ -83,6 +85,7 @@ def build_snippets():
                 "//cameraserver",
                 ":{}-snippets-headers".format(folder),
             ],
+            halsim_deps = halsim_deps,
             tags = ["wpi-example"],
         )
 

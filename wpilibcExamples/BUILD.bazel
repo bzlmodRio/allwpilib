@@ -38,13 +38,14 @@ write_source_file(
 )
 
 halsim_deps = [
+    "//simulation/halsim_gui:shared/halsim_gui",
 ]
 
 build_commands()
 
 build_examples(halsim_deps = halsim_deps)
 
-build_snippets()
+build_snippets(halsim_deps = halsim_deps)
 
 build_templates()
 

@@ -1,12 +1,15 @@
 load("@build_bazel_apple_support//rules:universal_binary.bzl", "universal_binary")
 load("@rules_cc//cc:action_names.bzl", "CPP_LINK_STATIC_LIBRARY_ACTION_NAME", "OBJ_COPY_ACTION_NAME", "STRIP_ACTION_NAME")
 load("@rules_cc//cc:cc_shared_library.bzl", "cc_shared_library")
-load("@rules_cc//cc:defs.bzl", "CcInfo", "cc_library")
+load("@rules_cc//cc:defs.bzl", "CcInfo", "cc_binary", "cc_library")
 load("@rules_cc//cc:find_cc_toolchain.bzl", "CC_TOOLCHAIN_ATTRS", "find_cpp_toolchain", "use_cc_toolchain")
 load("@rules_cc//cc/common:cc_common.bzl", "cc_common")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
+load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
+load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//shared/bazel/rules/gen:defs.bzl", "gen_versionscript")
+load("//shared/bazel/rules/gen:native_libs.bzl", "wpilib_flatten_native_libs")
 
 # Copied from bazel since it isn't exposed publicly that I can find.
 # https://github.com/bazelbuild/bazel/blob/cc4e3b25a89cd8294406d9489ece706cfcc019bd/src/main/starlark/builtins_bzl/common/cc/cc_helper.bzl#L272
@@ -768,3 +771,86 @@ def generate_def_windows(name, deps = None, dll_name = "", **kwargs):
         target_compatible_with = ["@platforms//os:windows"],
         **kwargs
     )
+
+def wpilib_cc_binary(
+        name,
+        halsim_deps = [],
+        smoke_test = True,
+        smoke_test_timeout_seconds = 10,
+        tags = [],
+        **kwargs):
+    """Builds a runnable cc_binary that can auto-load HAL simulation
+    extensions (e.g. halsim_gui, halsim_ws_client) via HALSIM_EXTENSIONS, and
+    optionally a companion smoke test.
+
+    A plain cc_binary already resolves all of its own linked native
+    dependencies via RPATH with no help needed, so unlike
+    shared/bazel/rules/java_rules.bzl's wpilib_java_binary this only wraps
+    the binary when there's a HALSIM_EXTENSIONS env var to inject or a smoke
+    test to run - see shared/bazel/rules/gen/cc_halsim_wrapper.sh.
+
+    halsim_deps: HAL simulation extension targets (e.g.
+        //simulation/halsim_gui:shared/halsim_gui) to auto-load at startup
+        via HALSIM_EXTENSIONS.
+    smoke_test: if true (the default), also generate a "<name>-smoke-test"
+        target that runs the program for smoke_test_timeout_seconds and
+        passes if it's still running at the end - these are simulated Robot
+        programs that run forever once started, so a program that exits
+        early indicates a runtime-only bug the compiler couldn't catch (e.g.
+        two DigitalInputs constructed on the same port).
+    """
+    impl_name = name + "_impl"
+
+    # Tagged manual so //... wildcard expansion skips it; the sh_binary below
+    # is the only entry point users interact with.
+    cc_binary(
+        name = impl_name,
+        tags = tags + ["manual"],
+        **kwargs
+    )
+
+    halsim_libs_name = name + ".halsim-libs"
+    wpilib_flatten_native_libs(
+        name = halsim_libs_name,
+        deps = [],
+        halsim_deps = halsim_deps,
+        tags = ["manual"],
+    )
+
+    wrapper_env = {
+        "CC_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + impl_name,
+        "HALSIM_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + halsim_libs_name,
+        "HALSIM_MANIFEST_RLOCATION": "_main/" + native.package_name() + "/" + halsim_libs_name + ".halsim-extensions.txt",
+    }
+
+    # Primary runnable target. The wrapper reads RUNFILES_MANIFEST_FILE to
+    # resolve halsim_deps' absolute paths and injects HALSIM_EXTENSIONS
+    # before invoking the impl binary - the impl binary itself needs no
+    # wrapping for its own native deps, which it already resolves via RPATH.
+    sh_binary(
+        name = name,
+        srcs = ["//shared/bazel/rules/gen:cc_halsim_wrapper.sh"],
+        deps = ["@bazel_tools//tools/bash/runfiles"],
+        env = wrapper_env,
+        data = [":" + impl_name, ":" + halsim_libs_name],
+        visibility = kwargs.get("visibility"),
+        tags = tags,
+    )
+
+    if smoke_test:
+        # Runs the same program as the sh_binary above, except the wrapper
+        # backgrounds it and watches it instead of exec'ing: still alive
+        # after smoke_test_timeout_seconds means it started up cleanly (this
+        # is a simulated Robot program - it never exits on its own), an
+        # early exit means a runtime-only startup bug.
+        sh_test(
+            name = name + "-smoke-test",
+            srcs = ["//shared/bazel/rules/gen:cc_halsim_wrapper.sh"],
+            deps = ["@bazel_tools//tools/bash/runfiles"],
+            env = dict(wrapper_env, SMOKE_TEST_TIMEOUT_SECONDS = str(smoke_test_timeout_seconds)),
+            size = "small",
+            data = [":" + impl_name, ":" + halsim_libs_name],
+            testonly = True,
+            visibility = kwargs.get("visibility"),
+            tags = tags + ["no-asan", "no-tsan", "no-ubsan"],
+        )
