@@ -83,20 +83,23 @@ def _own_native_lib_files(deps):
     ]
 
 def _wpilib_flatten_native_libs_impl(ctx):
-    if ctx.attr.skip_copy_on_windows and ctx.target_platform_has_constraint(ctx.attr._windows_constraint[platform_common.ConstraintValueInfo]):
-        # A cc_binary on Windows already has every transitive runtime dependency
-        # copied next to its .exe (that's how rules_cc handles Windows DLL
-        # dependencies), so halsim_deps' own dependencies (e.g. wpiHal.dll) are
-        # already resolvable without any help. There's nothing to flatten - point
-        # HALSIM_EXTENSIONS straight at each halsim dep's own build output instead
-        # of a duplicate copy in a bundle directory (a real duplicate: loading a
-        # second, separately-initialized copy of a DLL like wpiHal.dll alongside
-        # the one already in use crashes at runtime).
-        #
-        # Non-Windows still needs the flattened bundle below: dlopen()ing a plugin
-        # by absolute path doesn't consult its RPATH-relative siblings the way
-        # normal executable startup does, so its dependencies must be physically
-        # co-located or found via an explicit search-path env var.
+    if ctx.attr.skip_copy:
+        # A wpilib_cc_binary halsim dep (e.g. halsim_gui) always shares its own
+        # transitive runtime dependencies (wpiHal, wpimath, wpiutil, wpinet,
+        # ntcore, ...) with the robot program that dlopen()s it, since both
+        # link the same underlying libraries. By the time HAL_LoadExtensions()
+        # runs, those libraries are already loaded in the process - and every
+        # OS's dynamic loader resolves a newly-loaded library's dependencies
+        # against already-loaded instances first (matched by soname/install
+        # name on Linux/macOS, by filename via the exe's own directory on
+        # Windows), before doing any path search. There's nothing to flatten -
+        # point HALSIM_EXTENSIONS straight at each halsim dep's own build
+        # output instead of a duplicate copy in a bundle directory. A copy is
+        # actively harmful, not just redundant: loading a second, separately-
+        # initialized instance of a library like wpiHal alongside the one
+        # already in use crashes at runtime (confirmed on Windows - a bundled
+        # duplicate wpiHal.dll segfaulted; the original, un-copied build
+        # output doesn't).
         own_files = _own_native_lib_files(ctx.attr.halsim_deps)
         manifest = ctx.actions.declare_file(ctx.label.name + ".halsim-extensions.txt")
         ctx.actions.write(
@@ -155,7 +158,6 @@ wpilib_flatten_native_libs = rule(
     attrs = {
         "deps": attr.label_list(mandatory = True),
         "halsim_deps": attr.label_list(default = []),
-        "skip_copy_on_windows": attr.bool(default = False),
-        "_windows_constraint": attr.label(default = Label("@platforms//os:windows")),
+        "skip_copy": attr.bool(default = False),
     },
 )

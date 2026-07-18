@@ -38,7 +38,7 @@ write_source_file(
 )
 
 halsim_deps = [
-    # "//simulation/halsim_gui:shared/halsim_gui",
+    "//simulation/halsim_gui:shared/halsim_gui",
 ]
 
 build_commands()

@@ -814,13 +814,12 @@ def wpilib_cc_binary(
         name = halsim_libs_name,
         deps = [],
         halsim_deps = halsim_deps,
-        skip_copy_on_windows = True,
+        skip_copy = True,
         tags = ["manual"],
     )
 
     wrapper_env = {
         "CC_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + impl_name,
-        "HALSIM_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + halsim_libs_name,
         "HALSIM_MANIFEST_RLOCATION": "_main/" + native.package_name() + "/" + halsim_libs_name + ".halsim-extensions.txt",
     }
 
