@@ -843,13 +843,21 @@ def wpilib_cc_binary(
         # after smoke_test_timeout_seconds means it started up cleanly (this
         # is a simulated Robot program - it never exits on its own), an
         # early exit means a runtime-only startup bug.
+        #
+        # Deliberately does not set HALSIM_MANIFEST_RLOCATION or depend on
+        # halsim_libs_name: the smoke test only cares whether the program
+        # itself starts up cleanly, and loading halsim_gui would pop open its
+        # simulation GUI window on every test run for no benefit here.
         sh_test(
             name = name + "-smoke-test",
             srcs = ["//shared/bazel/rules/gen:cc_halsim_wrapper.sh"],
             deps = ["@bazel_tools//tools/bash/runfiles"],
-            env = dict(wrapper_env, SMOKE_TEST_TIMEOUT_SECONDS = str(smoke_test_timeout_seconds)),
+            env = {
+                "CC_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + impl_name,
+                "SMOKE_TEST_TIMEOUT_SECONDS": str(smoke_test_timeout_seconds),
+            },
             size = "small",
-            data = [":" + impl_name, ":" + halsim_libs_name],
+            data = [":" + impl_name],
             testonly = True,
             visibility = kwargs.get("visibility"),
             tags = tags + ["no-asan", "no-tsan", "no-ubsan"],

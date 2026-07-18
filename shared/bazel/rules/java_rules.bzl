@@ -304,12 +304,20 @@ def wpilib_java_binary(
         # after smoke_test_timeout_seconds means it started up cleanly (this
         # is a simulated Robot program - it never exits on its own), an
         # early exit means a runtime-only startup bug.
+        #
+        # Deliberately drops HALSIM_MANIFEST_RLOCATION from the shared
+        # wrapper_env: the smoke test only cares whether the program itself
+        # starts up cleanly, and loading halsim_gui would pop open its
+        # simulation GUI window on every test run for no benefit here.
+        smoke_test_env = dict(wrapper_env)
+        smoke_test_env.pop("HALSIM_MANIFEST_RLOCATION", None)
+        smoke_test_env["SMOKE_TEST_TIMEOUT_SECONDS"] = str(smoke_test_timeout_seconds)
         sh_test(
             name = name + "-smoke-test",
             srcs = ["//shared/bazel/rules/gen:java_native_libs_wrapper.sh"],
             args = args,
             deps = ["@bazel_tools//tools/bash/runfiles"],
-            env = dict(wrapper_env, SMOKE_TEST_TIMEOUT_SECONDS = str(smoke_test_timeout_seconds)),
+            env = smoke_test_env,
             size = "small",
             data = [":" + java_impl_name, ":" + native_libs_name],
             testonly = True,
