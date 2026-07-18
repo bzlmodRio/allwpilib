@@ -814,6 +814,7 @@ def wpilib_cc_binary(
         name = halsim_libs_name,
         deps = [],
         halsim_deps = halsim_deps,
+        skip_copy_on_windows = True,
         tags = ["manual"],
     )
 

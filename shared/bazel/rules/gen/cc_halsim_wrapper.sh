@@ -72,30 +72,7 @@ halsim_manifest_key="${HALSIM_MANIFEST_RLOCATION:-}"
 if [[ -n "$halsim_libs_key" && -n "$halsim_manifest_key" ]]; then
   halsim_libs_dir="$(rlocation "$halsim_libs_key" 2>/dev/null || true)"
   halsim_manifest="$(rlocation "$halsim_manifest_key" 2>/dev/null || true)"
-  if [[ -n "$halsim_libs_dir" && -n "$halsim_manifest" && -s "$halsim_manifest" ]]; then
-    # The halsim .so's own transitive dependencies (e.g. libwpimath.so) live
-    # alongside it in halsim_libs_dir, but dlopen()ing an extension by
-    # absolute path doesn't consult its RPATH-relative siblings the way
-    # normal executable startup does - the OS loader needs an explicit
-    # search-path env var to find them (same reasoning as
-    # java_native_libs_wrapper.sh's LD_LIBRARY_PATH/DYLD_FALLBACK_LIBRARY_PATH
-    # export). Without this, the initial dlopen() fails, and
-    # HAL_LoadOneExtension's non-Windows retry - which blindly wraps
-    # whatever string it was given in "lib" and ".so" - mangles the already-
-    # absolute path into a nonsensical name that also fails, obscuring the
-    # real (missing-dependency) error.
-    case "$(uname -s)" in
-      MINGW*|MSYS*|CYGWIN*)
-        export PATH="$halsim_libs_dir:$PATH"
-        ;;
-      Darwin*)
-        export DYLD_FALLBACK_LIBRARY_PATH="$halsim_libs_dir:${DYLD_FALLBACK_LIBRARY_PATH:-}"
-        ;;
-      *)
-        export LD_LIBRARY_PATH="$halsim_libs_dir:${LD_LIBRARY_PATH:-}"
-        ;;
-    esac
-
+  if [[ -n "$halsim_manifest" && -s "$halsim_manifest" ]]; then
     halsim_delim=":"
     case "$(uname -s)" in
       MINGW*|MSYS*|CYGWIN*)
@@ -104,17 +81,56 @@ if [[ -n "$halsim_libs_key" && -n "$halsim_manifest_key" ]]; then
         ;;
     esac
 
-    halsim_extensions=""
-    # `read`, not mapfile/readarray: the latter is a bash 4+ builtin, and
-    # macOS ships bash 3.2.
-    while IFS= read -r halsim_basename || [[ -n "$halsim_basename" ]]; do
-      [[ -z "$halsim_basename" ]] && continue
-      if [[ -n "$halsim_extensions" ]]; then
-        halsim_extensions="${halsim_extensions}${halsim_delim}${halsim_libs_dir}/${halsim_basename}"
-      else
-        halsim_extensions="${halsim_libs_dir}/${halsim_basename}"
-      fi
-    done < "$halsim_manifest"
+    if [[ -n "$halsim_libs_dir" ]]; then
+      # Bundle mode (non-Windows; see native_libs.bzl's skip_copy_on_windows):
+      # the manifest holds bare basenames inside halsim_libs_dir. The halsim
+      # .so's own transitive dependencies (e.g. libwpimath.so) live alongside
+      # it there, but dlopen()ing an extension by absolute path doesn't
+      # consult its RPATH-relative siblings the way normal executable startup
+      # does - the OS loader needs an explicit search-path env var to find
+      # them (same reasoning as java_native_libs_wrapper.sh's
+      # LD_LIBRARY_PATH/DYLD_FALLBACK_LIBRARY_PATH export). Without this, the
+      # initial dlopen() fails, and HAL_LoadOneExtension's non-Windows retry -
+      # which blindly wraps whatever string it was given in "lib" and ".so" -
+      # mangles the already-absolute path into a nonsensical name that also
+      # fails, obscuring the real (missing-dependency) error.
+      case "$(uname -s)" in
+        Darwin*)
+          export DYLD_FALLBACK_LIBRARY_PATH="$halsim_libs_dir:${DYLD_FALLBACK_LIBRARY_PATH:-}"
+          ;;
+        *)
+          export LD_LIBRARY_PATH="$halsim_libs_dir:${LD_LIBRARY_PATH:-}"
+          ;;
+      esac
+
+      halsim_extensions=""
+      # `read`, not mapfile/readarray: the latter is a bash 4+ builtin, and
+      # macOS ships bash 3.2.
+      while IFS= read -r halsim_basename || [[ -n "$halsim_basename" ]]; do
+        [[ -z "$halsim_basename" ]] && continue
+        if [[ -n "$halsim_extensions" ]]; then
+          halsim_extensions="${halsim_extensions}${halsim_delim}${halsim_libs_dir}/${halsim_basename}"
+        else
+          halsim_extensions="${halsim_libs_dir}/${halsim_basename}"
+        fi
+      done < "$halsim_manifest"
+    else
+      # Direct mode (Windows): the manifest holds full rlocation keys
+      # pointing at each halsim dep's own build output - Windows cc_binary
+      # already colocates every transitive dependency next to the wrapped
+      # exe, so no bundle dir or search-path env var is needed at all.
+      halsim_extensions=""
+      while IFS= read -r halsim_rlocation_key || [[ -n "$halsim_rlocation_key" ]]; do
+        [[ -z "$halsim_rlocation_key" ]] && continue
+        halsim_path="$(rlocation "$halsim_rlocation_key" 2>/dev/null || true)"
+        [[ -z "$halsim_path" ]] && continue
+        if [[ -n "$halsim_extensions" ]]; then
+          halsim_extensions="${halsim_extensions}${halsim_delim}${halsim_path}"
+        else
+          halsim_extensions="${halsim_path}"
+        fi
+      done < "$halsim_manifest"
+    fi
 
     if [[ -n "$halsim_extensions" ]]; then
       export HALSIM_EXTENSIONS="$halsim_extensions"
