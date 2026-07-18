@@ -76,11 +76,11 @@ public class SwerveDrive implements Mechanism {
    * @return An array of module positions.
    */
   public SwerveModulePosition[] getModulePositions() {
-    return getSwerveData(SwerveModule::getPosition);
+    return getSwerveData(SwerveModule::getPosition, new SwerveModulePosition[4]);
   }
 
   public SwerveModuleVelocity[] getModuleVelocities() {
-    return getSwerveData(SwerveModule::getVelocity);
+    return getSwerveData(SwerveModule::getVelocity, new SwerveModuleVelocity[4]);
   }
 
   @Override
@@ -230,9 +230,7 @@ public class SwerveDrive implements Mechanism {
         .named("Drive.FollowPath[" + pathName + "]");
   }
 
-  @SuppressWarnings("unchecked")
-  private <T> T[] getSwerveData(Function<SwerveModule, ? extends T> extractor) {
-    T[] data = (T[]) new Object[4];
+  private <T> T[] getSwerveData(Function<SwerveModule, ? extends T> extractor, T[] data) {
     data[0] = extractor.apply(frontLeft);
     data[1] = extractor.apply(frontRight);
     data[2] = extractor.apply(rearLeft);
