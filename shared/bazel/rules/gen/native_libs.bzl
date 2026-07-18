@@ -93,8 +93,8 @@ def _wpilib_flatten_native_libs_impl(ctx):
     # out_dir's contents, which are only ever passively dlopen'd on demand.
     halsim_libs = _native_lib_files(ctx.attr.halsim_deps)
 
-    # Dedupe by basename: prefer a canonical (non-solib) copy over one found
-    # only in Bazel's "_solib_*" symlink farm, matching the old tool's logic.
+    # Dedupe by basename: prefer the canonical (non-solib) copy over one
+    # found only in Bazel's "_solib_*" symlink farm.
     chosen = {}
     for f in native_libs + halsim_libs:
         basename = f.basename

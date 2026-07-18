@@ -140,14 +140,10 @@ def wpilib_java_junit5_test(
 
     java_impl_name = name + "_java_impl"
 
-    # Core java_test: never bakes in -Djava.library.path itself, on any OS.
-    # The sh_test wrapper below resolves the native-libs directory from the
-    # runfiles manifest at test runtime and injects it via
-    # --wrapper_script_flag (which the launcher applies after the params-file
-    # jvm_flags, so it always wins). This avoids relying on
-    # ${CLASSLOADER_PREFIX_PATH} substitution, which is only correct when
-    # this java_test is invoked as the top-level test process; nested inside
-    # the sh_test wrapper it is not reliable.
+    # The java_test itself never sets -Djava.library.path: the sh_test
+    # wrapper below resolves the native-libs directory from the runfiles
+    # manifest at test run time and injects it via --wrapper_script_flag
+    # (applied after the params-file jvm_flags, so it always wins).
     # Tagged manual so //... wildcard expansion skips it; the sh_test below is
     # the only entry point users interact with.
     java_test(
@@ -211,6 +207,8 @@ def wpilib_java_binary(
         jvm_flags = [],
         tags = [],
         data = [],
+        smoke_test = True,
+        smoke_test_timeout_seconds = 10,
         **kwargs):
     """
     Convenience helper to make a runnable java_binary that can find its
@@ -227,6 +225,13 @@ def wpilib_java_binary(
         provides no JavaInfo) - they only flow into the native-libs flattening
         below, which also records their basenames for the wrapper script to
         turn into HALSIM_EXTENSIONS at run time.
+
+    smoke_test: if true (the default), also generate a "<name>-smoke-test"
+        target that runs the program for smoke_test_timeout_seconds and
+        passes if it's still running at the end - these are simulated Robot
+        programs that run forever once started, so a program that exits
+        early indicates a runtime-only bug the compiler couldn't catch (e.g.
+        two DigitalInputs constructed on the same port).
     """
     native_libs_name = name + ".native-libs"
     native_libs_kwargs = {}
@@ -258,6 +263,12 @@ def wpilib_java_binary(
         **kwargs
     )
 
+    wrapper_env = {
+        "HALSIM_MANIFEST_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name + ".halsim-extensions.txt",
+        "JAVA_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
+        "NATIVE_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name,
+    }
+
     # Primary runnable target. The wrapper reads RUNFILES_MANIFEST_FILE to
     # obtain the absolute native-libs path and injects it via
     # --wrapper_script_flag before invoking the java_impl binary, on every
@@ -270,12 +281,27 @@ def wpilib_java_binary(
         srcs = ["//shared/bazel/rules/gen:java_native_libs_wrapper.sh"],
         args = args,
         deps = ["@bazel_tools//tools/bash/runfiles"],
-        env = {
-            "JAVA_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
-            "NATIVE_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name,
-            "HALSIM_MANIFEST_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name + ".halsim-extensions.txt",
-        },
+        env = wrapper_env,
         data = [":" + java_impl_name, ":" + native_libs_name],
         visibility = kwargs.get("visibility"),
         tags = tags + _INNER_TAGS,
     )
+
+    if smoke_test:
+        # Runs the same program as the sh_binary above, except the wrapper
+        # backgrounds it and watches it instead of exec'ing: still alive
+        # after smoke_test_timeout_seconds means it started up cleanly (this
+        # is a simulated Robot program - it never exits on its own), an
+        # early exit means a runtime-only startup bug.
+        sh_test(
+            name = name + "-smoke-test",
+            srcs = ["//shared/bazel/rules/gen:java_native_libs_wrapper.sh"],
+            args = args,
+            deps = ["@bazel_tools//tools/bash/runfiles"],
+            env = dict(wrapper_env, SMOKE_TEST_TIMEOUT_SECONDS = str(smoke_test_timeout_seconds)),
+            size = "small",
+            data = [":" + java_impl_name, ":" + native_libs_name],
+            testonly = True,
+            visibility = kwargs.get("visibility"),
+            tags = tags + _INNER_TAGS,
+        )

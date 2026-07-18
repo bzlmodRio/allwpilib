@@ -48,6 +48,20 @@
 #                              like halsim_ws_client, as opposed to the rest
 #                              of the flattened directory, which is only ever
 #                              passively dlopen'd on demand.
+#
+# Optional (smoke tests only):
+#   SMOKE_TEST_TIMEOUT_SECONDS  if set, don't exec the java executable as the
+#                              final process. Instead run it in the
+#                              background, and treat it still being alive
+#                              after this many seconds as success (these are
+#                              robot simulation programs that run forever
+#                              once started, so a program that exits early -
+#                              e.g. from a runtime-only bug like two
+#                              DigitalInputs on the same port - is the
+#                              failure signal). Implemented with plain bash
+#                              job control rather than the external
+#                              `timeout(1)`, since macOS doesn't ship it and
+#                              this script otherwise supports macOS/Windows.
 
 # --- begin runfiles.bash initialization v3 ---
 # Copy-pasted from the Bazel Bash runfiles library v3.
@@ -130,8 +144,8 @@ if [[ -n "$halsim_manifest_key" && -n "$native_libs_dir" ]]; then
     esac
 
     halsim_extensions=""
-    # `read` (not mapfile/readarray, a bash 4+ builtin) for the same macOS
-    # bash-3.2 compatibility reason noted below.
+    # `read`, not mapfile/readarray: the latter is a bash 4+ builtin, and
+    # macOS ships bash 3.2 (see the final exec's own bash-3.2 note below).
     while IFS= read -r halsim_basename || [[ -n "$halsim_basename" ]]; do
       [[ -z "$halsim_basename" ]] && continue
       if [[ -n "$halsim_extensions" ]]; then
@@ -151,4 +165,35 @@ fi
 # required for macOS's default bash (3.2, frozen there for licensing reasons):
 # it throws "unbound variable" under `set -u` when expanding an empty array,
 # a bug fixed upstream in bash 4.4+ but never backported by Apple.
-exec "$java_bin" ${wrapper_flags[@]+"${wrapper_flags[@]}"} "$@"
+if [[ -z "${SMOKE_TEST_TIMEOUT_SECONDS:-}" ]]; then
+  exec "$java_bin" ${wrapper_flags[@]+"${wrapper_flags[@]}"} "$@"
+fi
+
+# Smoke test mode: run in the background instead of exec'ing, so this script
+# can observe whether the program is still alive once the budget elapses.
+"$java_bin" ${wrapper_flags[@]+"${wrapper_flags[@]}"} "$@" &
+child_pid=$!
+
+elapsed=0
+while [[ "$elapsed" -lt "$SMOKE_TEST_TIMEOUT_SECONDS" ]] && kill -0 "$child_pid" 2>/dev/null; do
+  sleep 1
+  elapsed=$((elapsed + 1))
+done
+
+if kill -0 "$child_pid" 2>/dev/null; then
+  echo "Smoke test PASS: still running after ${SMOKE_TEST_TIMEOUT_SECONDS}s, no startup crash."
+  kill "$child_pid" 2>/dev/null || true
+  grace=0
+  while [[ "$grace" -lt 5 ]] && kill -0 "$child_pid" 2>/dev/null; do
+    sleep 1
+    grace=$((grace + 1))
+  done
+  kill -9 "$child_pid" 2>/dev/null || true
+  wait "$child_pid" 2>/dev/null || true
+  exit 0
+fi
+
+rc=0
+wait "$child_pid" || rc=$?
+echo "Smoke test FAIL: exited after ${elapsed}s with code $rc, before the ${SMOKE_TEST_TIMEOUT_SECONDS}s timeout - see output above for the crash." >&2
+exit 1

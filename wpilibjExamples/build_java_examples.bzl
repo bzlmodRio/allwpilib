@@ -142,9 +142,10 @@ def build_tests():
                 "//epilogue-processor:plugin",
             ],
             deps = [
-                # -example is now an sh_binary wrapper (wpilib_java_binary);
-                # its _java_impl sub-target is the actual java_binary that
-                # provides JavaInfo (the Robot class) for compilation.
+                # -example is an sh_binary wrapper (see wpilib_java_binary);
+                # its _java_impl sub-target is the underlying java_binary and
+                # is what actually provides JavaInfo (the Robot class) for
+                # compilation here.
                 ":" + folder + "-example_java_impl",
                 "//hal:hal-java",
                 "//ntcore:ntcore-java",
@@ -167,9 +168,10 @@ def build_tests():
                 "//epilogue-processor:plugin",
             ],
             deps = [
-                # -snippet is now an sh_binary wrapper (wpilib_java_binary);
-                # its _java_impl sub-target is the actual java_binary that
-                # provides JavaInfo (the Robot class) for compilation.
+                # -snippet is an sh_binary wrapper (see wpilib_java_binary);
+                # its _java_impl sub-target is the underlying java_binary and
+                # is what actually provides JavaInfo (the Robot class) for
+                # compilation here.
                 ":" + folder + "-snippet_java_impl",
                 "//hal:hal-java",
                 "//ntcore:ntcore-java",
