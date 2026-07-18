@@ -1,6 +1,9 @@
 load("@rules_python//python:defs.bzl", "py_binary")
 
-exports_files(["defs.bzl"])
+exports_files([
+    "defs.bzl",
+    "java_test_wrapper.sh",
+])
 
 py_binary(
     name = "gen_versionscript",
@@ -18,3 +21,4 @@ py_binary(
     }),
     visibility = ["//visibility:public"],
 )
+

@@ -294,6 +294,7 @@ wpilib_java_junit5_test(
         "@maven//:org_ejml_ejml_java9module",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
+    size = "medium",
 )
 
 cc_binary(
