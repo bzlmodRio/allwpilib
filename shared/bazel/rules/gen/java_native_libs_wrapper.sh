@@ -39,6 +39,15 @@
 # Required environment variables (set by the enclosing target in java_rules.bzl):
 #   NATIVE_LIBS_RLOCATION     rlocation key of the flat native-libs directory
 #   JAVA_EXECUTABLE_RLOCATION rlocation key of the _java_impl executable
+#
+# Optional (wpilib_java_binary only, when it has halsim_deps):
+#   HALSIM_MANIFEST_RLOCATION rlocation key of a newline-delimited list of
+#                              native-libs-dir basenames to auto-load via
+#                              HALSIM_EXTENSIONS (see hal/src/main/native/sim/
+#                              Extensions.cpp) - HAL simulation extensions
+#                              like halsim_ws_client, as opposed to the rest
+#                              of the flattened directory, which is only ever
+#                              passively dlopen'd on demand.
 
 # --- begin runfiles.bash initialization v3 ---
 # Copy-pasted from the Bazel Bash runfiles library v3.
@@ -103,6 +112,39 @@ if [[ -n "$native_libs_dir" ]]; then
       export LD_LIBRARY_PATH="$native_libs_dir:${LD_LIBRARY_PATH:-}"
       ;;
   esac
+fi
+
+# HALSIM_MANIFEST_RLOCATION is only set by wpilib_java_binary targets that
+# declared halsim_deps; test targets and plain examples never set it, so
+# this whole block is a no-op for them.
+halsim_manifest_key="${HALSIM_MANIFEST_RLOCATION:-}"
+if [[ -n "$halsim_manifest_key" && -n "$native_libs_dir" ]]; then
+  halsim_manifest="$(rlocation "$halsim_manifest_key" 2>/dev/null || true)"
+  if [[ -n "$halsim_manifest" && -s "$halsim_manifest" ]]; then
+    halsim_delim=":"
+    case "$(uname -s)" in
+      MINGW*|MSYS*|CYGWIN*)
+        # Matches DELIM in hal/src/main/native/sim/Extensions.cpp.
+        halsim_delim=";"
+        ;;
+    esac
+
+    halsim_extensions=""
+    # `read` (not mapfile/readarray, a bash 4+ builtin) for the same macOS
+    # bash-3.2 compatibility reason noted below.
+    while IFS= read -r halsim_basename || [[ -n "$halsim_basename" ]]; do
+      [[ -z "$halsim_basename" ]] && continue
+      if [[ -n "$halsim_extensions" ]]; then
+        halsim_extensions="${halsim_extensions}${halsim_delim}${native_libs_dir}/${halsim_basename}"
+      else
+        halsim_extensions="${native_libs_dir}/${halsim_basename}"
+      fi
+    done < "$halsim_manifest"
+
+    if [[ -n "$halsim_extensions" ]]; then
+      export HALSIM_EXTENSIONS="$halsim_extensions"
+    fi
+  fi
 fi
 
 # The ${arr[@]+"${arr[@]}"} form (rather than plain "${wrapper_flags[@]}") is

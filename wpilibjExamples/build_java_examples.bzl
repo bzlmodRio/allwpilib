@@ -55,6 +55,7 @@ def build_examples(halsim_deps):
                 "//epilogue-runtime:epilogue-java",
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
+            halsim_deps = halsim_deps,
             args = ["org.wpilib.examples." + folder + ".Robot"],
             tags = ["wpi-example"],
         )
@@ -75,7 +76,7 @@ def build_commands():
             tags = ["wpi-example"],
         )
 
-def build_snippets():
+def build_snippets(halsim_deps = []):
     _package_type("snippets")
 
     for folder in SNIPPET_FOLDERS:
@@ -103,6 +104,7 @@ def build_snippets():
                 "//epilogue-runtime:epilogue-java",
                 "@bzlmodrio-opencv//libraries/java/opencv",
             ],
+            halsim_deps = halsim_deps,
             tags = ["wpi-example"],
             args = ["org.wpilib.snippets." + folder + ".Robot"],
         )

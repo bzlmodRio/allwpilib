@@ -206,6 +206,7 @@ def wpilib_java_binary(
         name,
         deps = [],
         runtime_deps = [],
+        halsim_deps = [],
         args = [],
         jvm_flags = [],
         tags = [],
@@ -218,6 +219,14 @@ def wpilib_java_binary(
     already does for `bazel test`. See that macro's comments for the full
     rationale; this mirrors its native-lib flattening + wrapper-script
     machinery, minus the JUnit-specific bits.
+
+    halsim_deps: HAL simulation extension targets (e.g.
+        //simulation/halsim_ws_client:shared/halsim_ws_client) to auto-load at
+        startup via HALSIM_EXTENSIONS. Unlike deps/runtime_deps, these never
+        reach the java_binary's own Java classpath (a cc_shared_library
+        provides no JavaInfo) - they only flow into the native-libs flattening
+        below, which also records their basenames for the wrapper script to
+        turn into HALSIM_EXTENSIONS at run time.
     """
     native_libs_name = name + ".native-libs"
     native_libs_kwargs = {}
@@ -226,6 +235,7 @@ def wpilib_java_binary(
     wpilib_flatten_native_libs(
         name = native_libs_name,
         deps = deps + runtime_deps + _internal_native_companions(deps) + _internal_native_companions(runtime_deps),
+        halsim_deps = halsim_deps,
         tags = ["manual"],
         **native_libs_kwargs
     )
@@ -263,6 +273,7 @@ def wpilib_java_binary(
         env = {
             "JAVA_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
             "NATIVE_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name,
+            "HALSIM_MANIFEST_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name + ".halsim-extensions.txt",
         },
         data = [":" + java_impl_name, ":" + native_libs_name],
         visibility = kwargs.get("visibility"),
