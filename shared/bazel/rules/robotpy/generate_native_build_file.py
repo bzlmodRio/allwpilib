@@ -76,7 +76,7 @@ def main():
     maven_downloads = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
         "maven_lib_download"
     ]
-    with open(args.output_file, "w") as f:
+    with open(args.output_file, "w", newline="\n") as f:
         f.write(
             template.render(
                 raw_project_config=raw_config["project"],

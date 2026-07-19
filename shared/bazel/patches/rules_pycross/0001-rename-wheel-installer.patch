@@ -1,0 +1,49 @@
+diff --git a/pycross/private/tools/BUILD.bazel b/pycross/private/tools/BUILD.bazel
+index 1111111..2222222 100644
+--- a/pycross/private/tools/BUILD.bazel
++++ b/pycross/private/tools/BUILD.bazel
+@@ -168,7 +168,8 @@
+ )
+ 
+ py_binary(
+-    name = "wheel_installer",
++    name = "wheel_apply",
++    main = "wheel_installer.py",
+     srcs = ["wheel_installer.py"],
+     imports = ["../../.."],
+     visibility = ["//visibility:public"],
+diff --git a/pycross/private/tools/wheel_installer.py b/pycross/private/tools/wheel_installer.py
+index 5555555..6666666 100644
+--- a/pycross/private/tools/wheel_installer.py
++++ b/pycross/private/tools/wheel_installer.py
+@@ -110,7 +110,16 @@
+         wheel_name = os.path.basename(args.wheel)
+ 
+     link_path = link_dir / wheel_name
+-    os.symlink(os.path.join(os.getcwd(), args.wheel), link_path)
++    # os.symlink requires SeCreateSymbolicLinkPrivilege on Windows (elevation
++    # or Developer Mode), which isn't available in a typical non-elevated
++    # Bazel build. A hardlink (falling back to a copy across volumes) needs
++    # no special privilege and is just as good here, since link_path is only
++    # ever opened for reading.
++    wheel_abspath = os.path.join(os.getcwd(), args.wheel)
++    try:
++        os.link(wheel_abspath, link_path)
++    except OSError:
++        shutil.copyfile(wheel_abspath, link_path)
+ 
+     try:
+         with FilteredWheelFile.open_filtered(link_path, args.install_exclude_globs) as source:
+diff --git a/pycross/private/wheel_library.bzl b/pycross/private/wheel_library.bzl
+index 3333333..4444444 100644
+--- a/pycross/private/wheel_library.bzl
++++ b/pycross/private/wheel_library.bzl
+@@ -125,7 +125,7 @@
+             values = ["PY2", "PY3", ""],
+         ),
+         "_tool": attr.label(
+-            default = Label("//pycross/private/tools:wheel_installer"),
++            default = Label("//pycross/private/tools:wheel_apply"),
+             cfg = "exec",
+             executable = True,
+         ),

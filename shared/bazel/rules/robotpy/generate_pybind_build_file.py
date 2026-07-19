@@ -128,7 +128,7 @@ class ResolveCastersConfig:
             if isinstance(dep_path, BuildTargetOutput):
                 output_file = dep_path.target.args[2]
                 caster_deps.add(
-                    f":src/main/python/{dep_path.target.install_path}/{output_file.name}"
+                    f":src/main/python/{_posix(dep_path.target.install_path)}/{output_file.name}"
                 )
             else:
                 relevant_parts = dep_path.parts[3:]
@@ -143,7 +143,7 @@ class GenLibInitPyConfig:
     def __init__(self, item: BuildTarget):
         self.output_file = item.args[0].name
         self.modules = item.args[1:]
-        self.install_path = item.install_path
+        self.install_path = _posix(item.install_path)
 
 
 class GenPkgConfConfig:
@@ -157,7 +157,7 @@ class GenPkgConfConfig:
 
         assert 0 == len(item.args[6:])
 
-        self.install_path = item.install_path
+        self.install_path = _posix(item.install_path)
 
 
 class GenModInitHpp:
@@ -181,7 +181,7 @@ class PublishCastersConfig:
         self.pc_output = item.args[3].name
         assert 0 == len(item.args[4:])
 
-        self.install_path = item.install_path
+        self.install_path = _posix(item.install_path)
 
         self.include_paths = []
         caster_cfg = projectcfg.export_type_casters[self.casters_name]
@@ -199,7 +199,7 @@ class BazelExtensionModule:
     ):
         self.name = extension_module.name
         self.package_name = extension_module.package_name
-        self.install_path = extension_module.install_path
+        self.install_path = _posix(extension_module.install_path)
 
         self.extension_name_transforms: List[Tuple[str, str]] = []
         self.generation_data = self._extract_header_generation(
@@ -476,7 +476,7 @@ def generate_pybind_build_file(
         f"{fixup_root_package_name(top_level_name)}",
     ]
 
-    with open(output_file, "w") as f:
+    with open(output_file, "w", newline="\n") as f:
         f.write(
             template.render(
                 extension_modules=extension_modules,

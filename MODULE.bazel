@@ -18,12 +18,27 @@ bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1.2")
 bazel_dep(name = "rules_java", version = "8.16.1")
 bazel_dep(name = "rules_python", version = "1.9.0")
+single_version_override(
+    module_name = "rules_python",
+    patch_strip = 1,
+    patches = ["shared/bazel/patches/rules_python/0001-propagate-pythonpath-to-subprocesses.patch"],
+    version = "1.9.0",
+)
 bazel_dep(name = "rules_pycross", version = "0.8.2")
+single_version_override(
+    module_name = "rules_pycross",
+    patch_strip = 1,
+    patches = ["shared/bazel/patches/rules_pycross/0001-rename-wheel-installer.patch"],
+    version = "0.8.2",
+)
 bazel_dep(name = "pybind11_bazel", version = "3.0.1")
 single_version_override(
     module_name = "pybind11_bazel",
     patch_strip = 1,
-    patches = ["shared/bazel/patches/pybind11_bazel/0001-patch-pybind11-bazel.patch"],
+    patches = [
+        "shared/bazel/patches/pybind11_bazel/0001-patch-pybind11-bazel.patch",
+        "shared/bazel/patches/pybind11_bazel/0002-fix-windows-pyd-dll-suffix.patch",
+    ],
     version = "3.0.1",
 )
 

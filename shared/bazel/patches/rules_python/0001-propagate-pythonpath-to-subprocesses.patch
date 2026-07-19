@@ -1,0 +1,15 @@
+diff --git a/python/private/stage2_bootstrap_template.py b/python/private/stage2_bootstrap_template.py
+index 1111111..2222222 100644
+--- a/python/private/stage2_bootstrap_template.py
++++ b/python/private/stage2_bootstrap_template.py
+@@ -472,3 +472,10 @@ def main():
+         _add_site_packages(site_packages)
+ 
++    # Ensure any subprocess we spawn (e.g. a nested "python -m pytest", or
++    # any other tool invoked via sys.executable) can also see these paths.
++    # On Windows there is typically no real venv, so site-packages
++    # visibility only exists via the in-memory sys.path mutation above;
++    # without this, subprocesses silently can't import anything we added.
++    os.environ["PYTHONPATH"] = os.pathsep.join(sys.path)
++
+     print_verbose("runfiles root:", runfiles_root)

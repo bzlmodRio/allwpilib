@@ -1,0 +1,70 @@
+diff --git a/build_defs.bzl b/build_defs.bzl
+index 7cbe6ed..8888888 100644
+--- a/build_defs.bzl
++++ b/build_defs.bzl
+@@ -159,27 +159,44 @@ def pybind_extension(
+         **kwargs
+     )
+ 
+-    cc_binary(
+-        name = name + ".pyd",
+-        copts = copts + PYBIND_COPTS + select({
+-            Label("@pybind11//:msvc_compiler"): [],
+-            "//conditions:default": ["-fvisibility=hidden"],
+-        }),
+-        features = features + PYBIND_FEATURES,
+-        linkopts = linkopts + select({
+-            "@platforms//os:osx": ["-undefined", "dynamic_lookup"],
+-            Label("@pybind11//:msvc_compiler"): [],
+-            "//conditions:default": ["-Wl,-Bsymbolic"],
+-        }),
+-        linkshared = 1,
+-        tags = tags,
+-        target_compatible_with = target_compatible_with + select({
+-            "@platforms//os:windows": [],
+-            "//conditions:default": ["@platforms//:incompatible"],
+-        }),
+-        deps = deps + PYBIND_DEPS,
+-        **kwargs
+-    )
++    cc_binary(
++        name = name + "_pyd_native",
++        copts = copts + PYBIND_COPTS + select({
++            Label("@pybind11//:msvc_compiler"): [],
++            "//conditions:default": ["-fvisibility=hidden"],
++        }),
++        features = features + PYBIND_FEATURES,
++        linkopts = linkopts + select({
++            "@platforms//os:osx": ["-undefined", "dynamic_lookup"],
++            Label("@pybind11//:msvc_compiler"): [],
++            "//conditions:default": ["-Wl,-Bsymbolic"],
++        }),
++        linkshared = 1,
++        tags = tags,
++        target_compatible_with = target_compatible_with + select({
++            "@platforms//os:windows": [],
++            "//conditions:default": ["@platforms//:incompatible"],
++        }),
++        deps = deps + PYBIND_DEPS,
++        **kwargs
++    )
++
++    # On Windows, cc_binary's linkshared output always gets an implicit
++    # ".dll" suffix appended unless the target name already ends in
++    # ".dll" (name + ".pyd" would otherwise produce "NAME.pyd.dll",
++    # which Python's import machinery won't find). Copy the built .dll
++    # to the actual "NAME.pyd" filename Python expects.
++    copy_file(
++        name = name + ".pyd",
++        src = name + "_pyd_native",
++        out = name + ".pyd",
++        target_compatible_with = target_compatible_with + select({
++            "@platforms//os:windows": [],
++            "//conditions:default": ["@platforms//:incompatible"],
++        }),
++        testonly = kwargs.get("testonly"),
++        visibility = kwargs.get("visibility"),
++    )
+ 
+     native.alias(
+         name = name,
