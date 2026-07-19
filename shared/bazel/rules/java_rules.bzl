@@ -3,7 +3,7 @@ load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
-load("//shared/bazel/rules/gen:native_libs.bzl", "wpilib_flatten_native_libs")
+load("//shared/bazel/rules/gen:flatten_native_libs.bzl", "wpilib_flatten_native_libs")
 
 # Applied to every generated "_java_impl"/wrapper target pair (both the
 # wpilib_java_junit5_test and wpilib_java_binary machinery below), so
@@ -184,7 +184,7 @@ def wpilib_java_junit5_test(
     # dependencies.
     sh_test(
         name = name,
-        srcs = ["//shared/bazel/rules/gen:java_native_libs_wrapper.sh"],
+        srcs = ["//shared/bazel/rules:java_executable_wrapper.sh"],
         args = args + ["--select-package", package],
         deps = ["@bazel_tools//tools/bash/runfiles"],
         env = {
@@ -289,7 +289,7 @@ def wpilib_java_binary(
     # baked into the generated stub itself.
     sh_binary(
         name = name,
-        srcs = ["//shared/bazel/rules/gen:java_native_libs_wrapper.sh"],
+        srcs = ["//shared/bazel/rules:java_executable_wrapper.sh"],
         args = args,
         deps = ["@bazel_tools//tools/bash/runfiles"],
         env = wrapper_env,
@@ -314,7 +314,7 @@ def wpilib_java_binary(
         smoke_test_env["SMOKE_TEST_TIMEOUT_SECONDS"] = str(smoke_test_timeout_seconds)
         sh_test(
             name = name + "-smoke-test",
-            srcs = ["//shared/bazel/rules/gen:java_native_libs_wrapper.sh"],
+            srcs = ["//shared/bazel/rules:java_executable_wrapper.sh"],
             args = args,
             deps = ["@bazel_tools//tools/bash/runfiles"],
             env = smoke_test_env,

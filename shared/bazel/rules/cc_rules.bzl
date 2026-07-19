@@ -9,7 +9,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_zip")
 load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//shared/bazel/rules/gen:defs.bzl", "gen_versionscript")
-load("//shared/bazel/rules/gen:native_libs.bzl", "wpilib_flatten_native_libs")
+load("//shared/bazel/rules/gen:flatten_native_libs.bzl", "wpilib_flatten_native_libs")
 
 # Copied from bazel since it isn't exposed publicly that I can find.
 # https://github.com/bazelbuild/bazel/blob/cc4e3b25a89cd8294406d9489ece706cfcc019bd/src/main/starlark/builtins_bzl/common/cc/cc_helper.bzl#L272
@@ -787,7 +787,7 @@ def wpilib_cc_binary(
     dependencies via RPATH with no help needed, so unlike
     shared/bazel/rules/java_rules.bzl's wpilib_java_binary this only wraps
     the binary when there's a HALSIM_EXTENSIONS env var to inject or a smoke
-    test to run - see shared/bazel/rules/gen/cc_halsim_wrapper.sh.
+    test to run - see shared/bazel/rules/cc_halsim_wrapper.sh.
 
     halsim_deps: HAL simulation extension targets (e.g.
         //simulation/halsim_gui:shared/halsim_gui) to auto-load at startup
@@ -829,7 +829,7 @@ def wpilib_cc_binary(
     # wrapping for its own native deps, which it already resolves via RPATH.
     sh_binary(
         name = name,
-        srcs = ["//shared/bazel/rules/gen:cc_halsim_wrapper.sh"],
+        srcs = ["//shared/bazel/rules:cc_halsim_wrapper.sh"],
         deps = ["@bazel_tools//tools/bash/runfiles"],
         env = wrapper_env,
         data = [":" + impl_name, ":" + halsim_libs_name],
@@ -850,7 +850,7 @@ def wpilib_cc_binary(
         # simulation GUI window on every test run for no benefit here.
         sh_test(
             name = name + "-smoke-test",
-            srcs = ["//shared/bazel/rules/gen:cc_halsim_wrapper.sh"],
+            srcs = ["//shared/bazel/rules:cc_halsim_wrapper.sh"],
             deps = ["@bazel_tools//tools/bash/runfiles"],
             env = {
                 "CC_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + impl_name,

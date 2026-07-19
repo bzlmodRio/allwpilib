@@ -31,7 +31,10 @@ def build_examples(halsim_deps):
     _package_type("examples")
 
     for folder in EXAMPLE_FOLDERS:
-        smoke_test = True if folder != "rebuiltcmdv3" else False
+        # TODO: rebuiltcmdv3's Shooter mechanism has a pre-existing command
+        # composition bug (two parallel commands both requiring Shooter)
+        # that crashes the smoke test on startup; re-enable once that's fixed.
+        smoke_test = folder != "rebuiltcmdv3"
         wpilib_java_binary(
             name = folder + "-example",
             srcs = ["src/main/java/org/wpilib/Executor.java"] + native.glob(["src/main/java/org/wpilib/examples/" + folder + "/**/*.java"]),

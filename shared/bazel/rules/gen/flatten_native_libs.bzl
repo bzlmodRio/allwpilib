@@ -113,7 +113,7 @@ def _wpilib_flatten_native_libs_impl(ctx):
     # halsim_deps are HAL simulation extensions (e.g. halsim_ws_client): like
     # any other dep, their .so ends up flattened into out_dir, but their
     # basenames are also recorded separately (below) so the caller (the
-    # java_native_libs_wrapper.sh launcher) knows which specific files in
+    # java_executable_wrapper.sh launcher) knows which specific files in
     # out_dir to auto-load via HALSIM_EXTENSIONS, as opposed to the rest of
     # out_dir's contents, which are only ever passively dlopen'd on demand.
     halsim_libs = _native_lib_files(ctx.attr.halsim_deps)

@@ -3,7 +3,7 @@
 # smoke-testing the wrapped executable for a startup crash.
 #
 # Backs wpilib_cc_binary (shared/bazel/rules/cc_rules.bzl). Unlike the Java
-# launcher (java_native_libs_wrapper.sh), a plain cc_binary already resolves
+# launcher (java_executable_wrapper.sh), a plain cc_binary already resolves
 # all of its own linked native dependencies via RPATH with no help needed, so
 # this script's only job is resolving the absolute path(s) of any declared
 # HAL simulation extensions (halsim_deps) and exporting HALSIM_EXTENSIONS
@@ -12,7 +12,7 @@
 #
 # The smoke-test mechanism (background + poll instead of exec, plain bash
 # job control instead of the external `timeout(1)`) is identical to
-# java_native_libs_wrapper.sh — see that script's comments for the full
+# java_executable_wrapper.sh — see that script's comments for the full
 # rationale.
 #
 # Required environment variables (set by the enclosing target in cc_rules.bzl):
@@ -21,7 +21,7 @@
 # Optional (wpilib_cc_binary only, when it has halsim_deps):
 #   HALSIM_MANIFEST_RLOCATION  rlocation key of a newline-delimited list of
 #                              rlocation keys, one per halsim dep's own build
-#                              output (see native_libs.bzl's skip_copy: a
+#                              output (see flatten_native_libs.bzl's skip_copy: a
 #                              robot program and its halsim extensions always
 #                              share the same underlying libraries, already
 #                              loaded by the time the extension is dlopen'd,
@@ -51,7 +51,7 @@ source "${RUNFILES_DIR:-/dev/null}/$f" 2>/dev/null || \
 
 # The exec'd binary below may itself be a Bazel-built target that needs to
 # resolve its own runfiles (e.g. if it reads data files) — see
-# java_native_libs_wrapper.sh's identical call for why this is needed for
+# java_executable_wrapper.sh's identical call for why this is needed for
 # `bazel run` specifically, not just `bazel test`.
 runfiles_export_envvars
 
@@ -84,7 +84,7 @@ if [[ -n "$halsim_manifest_key" ]]; then
     esac
 
     # The manifest holds one rlocation key per halsim dep's own build output
-    # (see native_libs.bzl's skip_copy) - resolve each to its actual absolute
+    # (see flatten_native_libs.bzl's skip_copy) - resolve each to its actual absolute
     # path and join them for HALSIM_EXTENSIONS.
     halsim_extensions=""
     # `read`, not mapfile/readarray: the latter is a bash 4+ builtin, and
