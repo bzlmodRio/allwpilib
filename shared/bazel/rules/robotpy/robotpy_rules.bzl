@@ -89,11 +89,6 @@ def create_pybind_library(
         }),
     )
 
-    native.filegroup(
-        name = install_path + extension_name + ".filegroup",
-        srcs = [":" + install_path + extension_name]
-    )
-
 def robotpy_library(
         name,
         deps = [],
