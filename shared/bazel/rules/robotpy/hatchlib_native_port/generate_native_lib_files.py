@@ -23,7 +23,7 @@ is_macos = platform_sys == "Darwin"
 
 
 class NativelibHook:
-    def __init__(self, output_pcfile, config, metadata):
+    def __init__(self, output_pcfile: pathlib.Path, config, metadata):
 
         self.config = config
         self.root_pth = output_pcfile.parent.parent.parent
@@ -47,14 +47,14 @@ class NativelibHook:
 
     def _get_pkg_from_path(self, path: pathlib.Path) -> str:
         rel = path.relative_to(self.root_pth)
-        return str(rel).replace("/", ".").replace("\\", ".")
+        return ".".join(rel.parts)
 
     def _generate_pcfile(
         self, pcfg: PcFileConfig, build_data: T.Dict[str, T.Any]
     ) -> pathlib.Path:
 
         pcfile_rel = pcfg.get_pc_path()
-        pcfile = self.root_pth / str(pcfile_rel).removeprefix("src/")
+        pcfile = self.root_pth / str(pcfile_rel).replace("src/", "").replace("src\\", "")
         prefix_rel = pcfile_rel.parent
         prefix_path = pcfile.parent
 
@@ -158,7 +158,7 @@ class NativelibHook:
         build_data: T.Dict[str, T.Any],
     ):
         libinit_py_rel = pcfg.get_init_module_path()
-        libinit_py = self.root_pth / str(libinit_py_rel).removeprefix("src/")
+        libinit_py = self.root_pth / str(libinit_py_rel).replace("src/", "").replace("src\\", "")
 
         libdir = prefix_path
         if pcfg.libdir:

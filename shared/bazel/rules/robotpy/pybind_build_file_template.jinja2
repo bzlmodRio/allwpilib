@@ -213,7 +213,7 @@ def define_pybind_library(name, pkgcfgs = []):
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
         {%- for em in extension_modules %}
-            ":{{stripped_include_prefix}}/{{em.install_path}}/{{em.gen_modinit.lib_name}}",
+            ":{{stripped_include_prefix}}/{{em.install_path}}/{{em.gen_modinit.lib_name}}.filegroup",
         {%- endfor %}
         {%- for em in extension_modules %}
             ":{{em.name}}.trampoline_hdr_files",

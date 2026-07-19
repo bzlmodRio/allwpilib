@@ -80,6 +80,18 @@ def create_pybind_library(
         target_compatible_with = robotpy_compatibility_select(),
         local_defines = local_defines,
         tags = ["robotpy"],
+        linkopts = select({
+            "@bazel_tools//src/conditions:windows": [
+                "external/rules_python++python+python_3_13_x86_64-pc-windows-msvc/libs/python3.lib",
+                "external/rules_python++python+python_3_13_x86_64-pc-windows-msvc/libs/python313.lib",
+            ],
+            "//conditions:default": [],
+        }),
+    )
+
+    native.filegroup(
+        name = install_path + extension_name + ".filegroup",
+        srcs = [":" + install_path + extension_name]
     )
 
 def robotpy_library(
