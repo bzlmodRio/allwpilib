@@ -1,3 +1,10 @@
+def _posix(path) -> str:
+    """Bazel labels/paths always use forward slashes, but on Windows
+    pathlib renders native (backslash) separators; normalize before
+    embedding a path into generated Starlark."""
+    return str(path).replace("\\", "/")
+
+
 def fixup_root_package_name(name):
     if name == "wpihal":
         return "hal"

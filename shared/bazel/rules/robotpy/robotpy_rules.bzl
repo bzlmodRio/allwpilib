@@ -75,6 +75,7 @@ def create_pybind_library(
                 "-Wno-overloaded-virtual",
             ],
             "@bazel_tools//src/conditions:windows": [
+                "/wd4101",
             ],
         }),
         target_compatible_with = robotpy_compatibility_select(),

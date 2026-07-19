@@ -21,19 +21,13 @@ from semiwrap.pkgconf_cache import PkgconfCache
 from semiwrap.pyproject import PyProject
 
 from shared.bazel.rules.robotpy.generation_utils import (
+    _posix,
     fixup_native_lib_name,
     fixup_python_dep_name,
     fixup_root_package_name,
     fixup_shared_lib_name,
 )
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
-
-
-def _posix(path) -> str:
-    """Bazel labels/paths always use forward slashes, but on Windows
-    pathlib renders native (backslash) separators; normalize before
-    embedding a path into generated Starlark."""
-    return str(path).replace("\\", "/")
 
 
 class HeaderToDatConfig:
