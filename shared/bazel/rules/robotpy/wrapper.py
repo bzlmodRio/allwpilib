@@ -91,6 +91,13 @@ def main():
 
     hack_pkgconfig(pkgcfgs)
 
+    if sys.platform == "win32":
+        # On Windows, rules_python doesn't create a real venv, so sys.path is
+        # patched at runtime rather than being discoverable via pyvenv.cfg.
+        # Propagate it as PYTHONPATH so that subprocesses spawned by the
+        # wrapped tool (e.g. semiwrap's header2dat) can also find our deps.
+        os.environ["PYTHONPATH"] = os.pathsep.join(sys.path)
+
     module = importlib.import_module(tool)
     tool_main = getattr(module, "main")
 
