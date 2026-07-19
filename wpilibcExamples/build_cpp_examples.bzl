@@ -1,3 +1,4 @@
+load("@bzlmodrio-opencv//libraries/cpp/opencv:libraries.bzl", "opencv_shared_libraries")
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_pkg//:pkg.bzl", "pkg_zip")
@@ -48,7 +49,9 @@ def build_examples(halsim_deps = []):
                 ":{}-examples-headers".format(folder),
             ],
             dynamic_deps = [
+                "//cameraserver:shared/cameraserver",
                 "//commandsv2:shared/commandsv2",
+                "//cscore:shared/cscore",
                 "//datalog:shared/datalog",
                 "//hal:shared/wpiHal",
                 "//ntcore:shared/ntcore",
@@ -56,7 +59,7 @@ def build_examples(halsim_deps = []):
                 "//wpimath:shared/wpimath",
                 "//wpinet:shared/wpinet",
                 "//wpiutil:shared/wpiutil",
-            ],
+            ] + opencv_shared_libraries,
             halsim_deps = halsim_deps,
             tags = ["wpi-example"],
         )
@@ -96,7 +99,9 @@ def build_snippets(halsim_deps = []):
                 ":{}-snippets-headers".format(folder),
             ],
             dynamic_deps = [
+                "//cameraserver:shared/cameraserver",
                 "//commandsv2:shared/commandsv2",
+                "//cscore:shared/cscore",
                 "//datalog:shared/datalog",
                 "//hal:shared/wpiHal",
                 "//ntcore:shared/ntcore",
@@ -104,7 +109,7 @@ def build_snippets(halsim_deps = []):
                 "//wpimath:shared/wpimath",
                 "//wpinet:shared/wpinet",
                 "//wpiutil:shared/wpiutil",
-            ],
+            ] + opencv_shared_libraries,
             halsim_deps = halsim_deps,
             tags = ["wpi-example"],
         )
