@@ -29,11 +29,19 @@ from shared.bazel.rules.robotpy.generation_utils import (
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
 
 
+def _posix(path) -> str:
+    """Bazel labels/paths always use forward slashes, but on Windows
+    pathlib renders native (backslash) separators; normalize before
+    embedding a path into generated Starlark."""
+    return str(path).replace("\\", "/")
+
+
 class HeaderToDatConfig:
     def __init__(
         self,
         header_to_dat_args: BuildTarget,
         extension_name_transforms: List[Tuple[str, str]],
+        workspace_root: pathlib.Path,
     ):
         includes = []
         defines = []
@@ -76,21 +84,32 @@ class HeaderToDatConfig:
 
         args = header_to_dat_args.args[idx:]
         self.class_name = args[0]
-        self.yml_file = args[1].path
+        self.yml_file = _posix(args[1].path)
         self.defines = defines
 
-        include_root = str(args[3]).replace("\\", "/")
+        include_root = _posix(args[3])
         if "native" in include_root:
             # base_include_root = pathlib.Path(*args[3].relative_to(root_dir).parts[3:])
-            base_include_file = args[2].relative_to(include_root)
+            base_include_file = _posix(args[2].relative_to(include_root))
             base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
 
             self.include_file = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)/{base_include_file}"
             self.include_root = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)"
         else:
-            root_dir = pathlib.Path.cwd().absolute()
-            self.include_file = pathlib.Path(args[2]).absolute().relative_to(root_dir)
-            self.include_root = pathlib.Path(args[3]).absolute().relative_to(root_dir)
+            # args[2]/args[3] come from semiwrap's own path resolution
+            # (PyProject.root.resolve()), which on Windows walks through the
+            # per-package junctions Bazel uses to mount execroot package dirs
+            # (e.g. execroot/_main/wpiutil) onto the real workspace checkout.
+            # So they end up anchored to the real workspace, not execroot.
+            # Compare against workspace_root (also resolved through those
+            # same junctions) rather than the raw execroot cwd, so both sides
+            # live in the same path space.
+            self.include_file = _posix(
+                pathlib.Path(args[2]).resolve().relative_to(workspace_root)
+            )
+            self.include_root = _posix(
+                pathlib.Path(args[3]).resolve().relative_to(workspace_root)
+            )
         # type casters         = 4
         # dat file             = 5
         # d file               = 6
@@ -137,7 +156,7 @@ class GenPkgConfConfig:
     def __init__(self, item: BuildTarget):
         self.module_pkg_name = item.args[0]
         self.pkg_name = item.args[1]
-        self.project_file = item.args[2].path
+        self.project_file = _posix(item.args[2].path)
         self.output_file = item.args[3].name
         # --libinit-py = 4
         self.libinit_py = item.args[5]
@@ -162,7 +181,7 @@ class GenModInitHpp:
 
 class PublishCastersConfig:
     def __init__(self, projectcfg, item: BuildTarget):
-        self.project_file = item.args[0].path
+        self.project_file = _posix(item.args[0].path)
         self.casters_name = item.args[1]
         self.json_output = item.args[2].name
         self.pc_output = item.args[3].name
@@ -182,6 +201,7 @@ class BazelExtensionModule:
         self,
         extension_module: ExtensionModule,
         additional_extension_targets: Dict[str, BuildTarget],
+        workspace_root: pathlib.Path,
     ):
         self.name = extension_module.name
         self.package_name = extension_module.package_name
@@ -189,7 +209,7 @@ class BazelExtensionModule:
 
         self.extension_name_transforms: List[Tuple[str, str]] = []
         self.generation_data = self._extract_header_generation(
-            extension_module.sources, self.extension_name_transforms
+            extension_module.sources, self.extension_name_transforms, workspace_root
         )
         self.resolve_casters = ResolveCastersConfig(
             additional_extension_targets["resolve-casters"]
@@ -273,12 +293,17 @@ class BazelExtensionModule:
                 raise
 
     def _extract_header_generation(
-        self, sources, extension_name_transforms: List[Tuple[str, str]]
+        self,
+        sources,
+        extension_name_transforms: List[Tuple[str, str]],
+        workspace_root: pathlib.Path,
     ) -> Dict[str, HeaderToDatConfig]:
         generation_data: Dict[str, HeaderToDatConfig] = {}
 
         def get_h2d_config(target_info: BuildTarget) -> HeaderToDatConfig:
-            config = HeaderToDatConfig(target_info, extension_name_transforms)
+            config = HeaderToDatConfig(
+                target_info, extension_name_transforms, workspace_root
+            )
             if config.class_name not in generation_data:
                 generation_data[config.class_name] = config
             return generation_data[config.class_name]
@@ -317,6 +342,17 @@ def generate_pybind_build_file(
     project_dir = project_file.parent
     plan = makeplan(project_dir)
 
+    # project_dir is execroot-relative (e.g. "wpiutil/src/main/python"), and
+    # semiwrap resolves its own paths (PyProject.root.resolve()) by walking
+    # through it, which on Windows crosses the per-package junctions Bazel
+    # uses to mount execroot package dirs onto the real workspace checkout.
+    # Derive the equivalent real-workspace root by resolving project_dir the
+    # same way and then walking back up the same number of components, so it
+    # lands in the same path space as paths semiwrap hands back to us.
+    workspace_root = project_dir.resolve()
+    for _ in project_dir.parts:
+        workspace_root = workspace_root.parent
+
     hack_pkgconfig(pkgcfgs)
 
     extension_modules = []
@@ -332,7 +368,9 @@ def generate_pybind_build_file(
     for item in plan:
         if isinstance(item, ExtensionModule):
             extension_modules.append(
-                BazelExtensionModule(item, additional_extension_targets)
+                BazelExtensionModule(
+                    item, additional_extension_targets, workspace_root
+                )
             )
             additional_extension_targets = {}
         elif isinstance(item, BuildTarget):

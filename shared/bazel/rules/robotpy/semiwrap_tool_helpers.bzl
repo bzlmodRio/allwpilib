@@ -89,7 +89,7 @@ def scan_headers(name, pyproject_toml, package_root_file, extra_hdrs, pkgcfgs):
         ] + pkgcfg_args,
         data = extra_hdrs + pkgcfgs + [pyproject_toml, package_root_file],
         main = "shared/bazel/rules/robotpy/wrapper.py",
-        size = "small",
+        size = "medium",
         target_compatible_with = robotpy_compatibility_select(),
         tags = ["robotpy_scan_headers"],
     )
