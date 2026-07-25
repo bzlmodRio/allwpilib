@@ -191,6 +191,7 @@ public class DataLogTelemetryBackend implements TelemetryBackend {
         case null -> {
           StructArrayLogEntry<T> e =
               StructArrayLogEntry.create(m_log, m_path, struct, m_properties);
+          m_struct = struct;
           m_entry = e;
           yield e;
         }

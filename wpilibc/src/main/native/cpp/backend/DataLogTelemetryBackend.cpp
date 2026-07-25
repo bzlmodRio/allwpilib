@@ -161,7 +161,7 @@ class DataLogTelemetryBackend::Entry : public wpi::TelemetryEntry {
       m_entry;
   std::string m_typeString;
   std::atomic_bool m_keepDuplicates{false};
-  wpi::util::json m_properties;
+  wpi::util::json m_properties = wpi::util::json::object();
   std::string m_propertiesStr = "{}";
 };
 
