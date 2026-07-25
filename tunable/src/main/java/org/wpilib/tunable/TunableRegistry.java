@@ -34,7 +34,7 @@ public final class TunableRegistry {
    */
   private record TypeHandlerData<T>(Class<T> cls, TypeHandler<T> handler) {}
 
-  private record ComplexMigrationPrefix(String prefix, TunableBackend backend) {}
+  private record ComplexMigrationPrefix(String prefix) {}
 
   private static final List<TypeHandlerData<?>> s_typeHandlers = new ArrayList<>();
   private static final PrefixMap<TunableBackend> s_backends = new StringPrefixMap<>();
@@ -157,15 +157,13 @@ public final class TunableRegistry {
       List<ComplexMigrationPrefix> complexPrefixes = new ArrayList<>();
       for (var published : migrations) {
         if (published.isComplex()) {
-          complexPrefixes.add(
-              new ComplexMigrationPrefix(
-                  published.path() + "/", s_backends.getLongestMatch(published.path())));
+          complexPrefixes.add(new ComplexMigrationPrefix(published.path() + "/"));
         }
       }
 
       for (var published : migrations) {
         TunableBackend targetBackend = s_backends.getLongestMatch(published.path());
-        if (isChildOfMigratedComplex(published, targetBackend, complexPrefixes)) {
+        if (isChildOfMigratedComplex(published, complexPrefixes)) {
           continue;
         }
         if (published.isComplex()) {
@@ -177,16 +175,13 @@ public final class TunableRegistry {
     }
   }
 
-  @SuppressWarnings("PMD.CompareObjectsWithEquals")
   private static boolean isChildOfMigratedComplex(
-      TunableBackend.PublishedTunable published,
-      TunableBackend targetBackend,
-      List<ComplexMigrationPrefix> complexPrefixes) {
+      TunableBackend.PublishedTunable published, List<ComplexMigrationPrefix> complexPrefixes) {
     if (published.isComplex()) {
       return false;
     }
     for (var prefix : complexPrefixes) {
-      if (targetBackend == prefix.backend() && published.path().startsWith(prefix.prefix())) {
+      if (published.path().startsWith(prefix.prefix())) {
         return true;
       }
     }
@@ -289,8 +284,10 @@ public final class TunableRegistry {
   public static void remove(String path) {
     // Backends may have changed since publishing, so remove from all backends
     synchronized (s_backends) {
+      String childPrefix = path.endsWith("/") ? path : path + "/";
       for (var entry : s_backends.entrySet()) {
         entry.getValue().remove(path);
+        entry.getValue().removePrefix(childPrefix);
       }
     }
   }

@@ -106,6 +106,7 @@ class TunableTest {
 
   private static final class UpdatingComplex implements ComplexTunable {
     private TunableInt m_counter;
+    private int m_updateCount;
 
     @Override
     public void publishTunable(TunableTable table) {
@@ -115,6 +116,7 @@ class TunableTest {
 
     @Override
     public void updateTunable() {
+      m_updateCount++;
       m_counter.set(m_counter.get() + 1);
     }
   }
@@ -363,6 +365,33 @@ class TunableTest {
     TunableRegistry.update();
 
     assertEquals(5, childBackend.getInteger("/child/complex/counter"));
+  }
+
+  @Test
+  void testRegisterBackendMigratesComplexTunableWithMoreSpecificChildBackend() {
+    MockTunableBackend leafBackend = new MockTunableBackend();
+    TunableRegistry.registerBackend("/child/complex/counter", leafBackend);
+    Tunables.addComplex("child/complex", new UpdatingComplex());
+
+    MockTunableBackend childBackend = new MockTunableBackend();
+    TunableRegistry.registerBackend("/child", childBackend);
+
+    assertEquals(0, leafBackend.getInteger("/child/complex/counter"));
+    TunableRegistry.update();
+    assertEquals(1, leafBackend.getInteger("/child/complex/counter"));
+  }
+
+  @Test
+  void testRemoveComplexTunableRemovesChildrenFromAllBackends() {
+    MockTunableBackend leafBackend = new MockTunableBackend();
+    TunableRegistry.registerBackend("/complex/counter", leafBackend);
+    UpdatingComplex complex = Tunables.addComplex("complex", new UpdatingComplex());
+
+    Tunables.remove("complex");
+    TunableRegistry.update();
+
+    assertEquals(0, complex.m_updateCount);
+    assertThrows(IllegalArgumentException.class, () -> leafBackend.getInteger("/complex/counter"));
   }
 
   @Test
