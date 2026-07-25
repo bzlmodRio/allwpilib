@@ -477,7 +477,7 @@ class Command : public wpi::TelemetryLoggable, public wpi::ComplexTunable {
   /// Requirements set.
   wpi::util::SmallSet<Subsystem*, 4> m_requirements;
   std::string m_name;
-  std::string m_subsystem;
+  std::string m_subsystem = "Ungrouped";
   mutable bool m_running = false;
 
   std::optional<std::string> m_previousComposition;

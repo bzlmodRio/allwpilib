@@ -35,7 +35,7 @@ public abstract class Command implements TelemetryLoggable, ComplexTunable {
   private final Set<Subsystem> m_requirements = new HashSet<>();
 
   private String m_name;
-  private String m_subsystem;
+  private String m_subsystem = "Ungrouped";
 
   /** Default constructor. */
   @SuppressWarnings("this-escape")
