@@ -185,13 +185,16 @@ class NetworkTablesTunableBackend::ValueEntry : public Entry {
     if (config && config->robust) {
       m_publisher = backend->m_inst.GetTopic(std::format("{}/value", path))
                         .GenericPublishEx(typeString, GetProperties(config));
+      wpi::nt::PubSubOptions subscriberOptions;
+      subscriberOptions.excludePublisher = m_publisher.GetHandle();
       m_subscriber = backend->m_inst.GetTopic(std::format("{}/tune", path))
-                         .GenericSubscribe(typeString);
+                         .GenericSubscribe(typeString, subscriberOptions);
     } else {
-      m_publisher = backend->m_inst.GetTopic(path).GenericPublishEx(
-          typeString, GetProperties(config));
-      m_subscriber =
-          backend->m_inst.GetTopic(path).GenericSubscribe(typeString);
+      auto topic = backend->m_inst.GetTopic(path);
+      m_publisher = topic.GenericPublishEx(typeString, GetProperties(config));
+      wpi::nt::PubSubOptions subscriberOptions;
+      subscriberOptions.excludePublisher = m_publisher.GetHandle();
+      m_subscriber = topic.GenericSubscribe(typeString, subscriberOptions);
     }
     backend->m_subscribers[m_subscriber.GetHandle()] = this;
     if (!config || config->isMutable) {

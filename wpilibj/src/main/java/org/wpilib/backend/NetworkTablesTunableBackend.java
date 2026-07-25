@@ -25,6 +25,7 @@ import org.wpilib.networktables.NetworkTableEvent;
 import org.wpilib.networktables.NetworkTableInstance;
 import org.wpilib.networktables.NetworkTableListenerPoller;
 import org.wpilib.networktables.NetworkTableValue;
+import org.wpilib.networktables.PubSubOption;
 import org.wpilib.networktables.StringPublisher;
 import org.wpilib.tunable.ComplexTunable;
 import org.wpilib.tunable.Tunable;
@@ -97,10 +98,15 @@ public class NetworkTablesTunableBackend implements TunableBackend {
       if (config != null && config.isRobust()) {
         m_publisher =
             m_inst.getTopic(path + "/value").genericPublishEx(typeString, getProperties(config));
-        m_subscriber = m_inst.getTopic(path + "/tune").genericSubscribe(typeString);
+        m_subscriber =
+            m_inst
+                .getTopic(path + "/tune")
+                .genericSubscribe(typeString, PubSubOption.excludePublisher(m_publisher));
       } else {
-        m_publisher = m_inst.getTopic(path).genericPublishEx(typeString, getProperties(config));
-        m_subscriber = m_inst.getTopic(path).genericSubscribe(typeString);
+        var topic = m_inst.getTopic(path);
+        m_publisher = topic.genericPublishEx(typeString, getProperties(config));
+        m_subscriber =
+            topic.genericSubscribe(typeString, PubSubOption.excludePublisher(m_publisher));
       }
       m_subscriberMap.put(m_subscriber.getHandle(), this);
       if (config == null || config.isMutable()) {

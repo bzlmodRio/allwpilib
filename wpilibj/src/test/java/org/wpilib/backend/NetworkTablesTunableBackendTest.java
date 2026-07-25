@@ -205,6 +205,28 @@ class NetworkTablesTunableBackendTest {
   }
 
   @Test
+  void nonRobustTunablesDoNotTuneFromLocalPublishes() {
+    AtomicInteger calls = new AtomicInteger();
+    Tunable<Double> tunable =
+        Tunable.createConfig(1.0, new TunableConfig().withOnTune(calls::incrementAndGet));
+    Tunables.publish("localPublish", tunable);
+
+    m_inst.flush();
+    TunableRegistry.update();
+
+    assertEquals(0, calls.get());
+
+    tunable.set(2.0);
+    TunableRegistry.update();
+    m_inst.flush();
+    TunableRegistry.update();
+
+    assertEquals(2.0, tunable.get());
+    assertEquals(2.0, m_inst.getTopic("/Tunables/localPublish").getGenericEntry().getDouble(0.0));
+    assertEquals(0, calls.get());
+  }
+
+  @Test
   void tunablesWithoutConfigAreMutable() {
     Tunable<Double> tunable = Tunable.create(1.0);
     Tunables.publish("defaultMutable", tunable);

@@ -305,6 +305,32 @@ TEST_F(NetworkTablesTunableBackendTest, OnTuneRunsForMutableRemoteUpdates) {
   EXPECT_EQ(1, calls);
 }
 
+TEST_F(NetworkTablesTunableBackendTest,
+       NonRobustTunablesDoNotTuneFromLocalPublishes) {
+  int calls = 0;
+  wpi::TunableConfig config;
+  config.onTune = [&](wpi::detail::TunableBase&, wpi::ComplexTunable*) {
+    ++calls;
+  };
+  wpi::TunableDouble value{1.0, config};
+  wpi::Tunables::Publish("localPublish", value);
+
+  inst.Flush();
+  wpi::TunableRegistry::Update();
+
+  EXPECT_EQ(0, calls);
+
+  value = 2.0;
+  wpi::TunableRegistry::Update();
+  inst.Flush();
+  wpi::TunableRegistry::Update();
+
+  auto sub = inst.GetDoubleTopic("/Tunables/localPublish").Subscribe(0.0);
+  EXPECT_EQ(2.0, value.Get());
+  EXPECT_EQ(2.0, sub.Get());
+  EXPECT_EQ(0, calls);
+}
+
 TEST_F(NetworkTablesTunableBackendTest, ImmutableTunablesIgnoreRemoteUpdates) {
   int calls = 0;
   wpi::TunableConfig config;
