@@ -52,6 +52,8 @@ static_assert(std::derived_from<TunableFloatVector,
                                 detail::TunableValueBase<std::vector<float>>>);
 static_assert(std::derived_from<TunableDoubleVector,
                                 detail::TunableValueBase<std::vector<double>>>);
+static_assert(std::same_as<decltype(TunableRegistry::GetUpdateMutex()),
+                           wpi::util::recursive_mutex&>);
 
 namespace {
 struct TunableTest {

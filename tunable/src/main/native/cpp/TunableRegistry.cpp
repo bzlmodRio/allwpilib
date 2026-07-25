@@ -51,7 +51,7 @@ struct Instance {
   } uidInfo[static_cast<uint32_t>(detail::TunableTypeValue::MEMBER_COMPLEX) +
             1];
 
-  util::mutex backendsMutex;
+  util::recursive_mutex backendsMutex;
   util::htrie_map<char, std::shared_ptr<TunableBackend>> backends;
 };
 }  // namespace
@@ -376,6 +376,6 @@ void TunableRegistry::Update() {
   }
 }
 
-wpi::util::mutex& TunableRegistry::GetUpdateMutex() {
+wpi::util::recursive_mutex& TunableRegistry::GetUpdateMutex() {
   return GetInstance().backendsMutex;
 }

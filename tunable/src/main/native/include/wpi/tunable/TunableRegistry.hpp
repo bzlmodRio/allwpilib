@@ -122,13 +122,13 @@ class TunableRegistry final {
    * synchronization for tunables used in secondary threads outside of the robot
    * main loop.
    *
-   * Note the returned mutex is not recursive, so calling other TunableRegistry
-   * functions or creating/removing/moving a tunable while holding the mutex may
-   * deadlock.
+   * Note the returned mutex is recursive, so registry operations invoked from
+   * an update callback on the same thread can re-enter it. It still does not
+   * make tunable objects themselves thread-safe.
    *
    * @return mutex
    */
-  static wpi::util::mutex& GetUpdateMutex();
+  static wpi::util::recursive_mutex& GetUpdateMutex();
 
   /**
    * Clear all registered backends. Should typically only be used by unit test
