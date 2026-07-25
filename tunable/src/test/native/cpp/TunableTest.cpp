@@ -6,6 +6,7 @@
 
 #include <array>
 #include <memory>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -485,6 +486,35 @@ TEST_CASE_METHOD(TunableTest,
   CHECK(calls == 1);
   CHECK(receivedMember);
   CHECK(receivedParent);
+}
+
+TEST_CASE_METHOD(TunableTest,
+                 "TunableTest DestroyingComplexUnregistersMemberTunables",
+                 "[tunable]") {
+  std::optional<uint32_t> parentUid;
+  std::optional<uint32_t> gainUid;
+  std::optional<uint32_t> pointUid;
+  {
+    MemberComplex complex;
+    Tunables::Publish("destroyedComplex", complex);
+    parentUid = backend->GetUid("/destroyedComplex");
+    gainUid = backend->GetUid("/destroyedComplex/gain");
+    pointUid = backend->GetUid("/destroyedComplex/point");
+
+    REQUIRE(parentUid);
+    REQUIRE(gainUid);
+    REQUIRE(pointUid);
+
+    backend->SetInt32("/destroyedComplex/gain", 7);
+  }
+
+  CHECK_FALSE(backend->GetUid("/destroyedComplex"));
+  CHECK_FALSE(backend->GetUid("/destroyedComplex/gain"));
+  CHECK_FALSE(backend->GetUid("/destroyedComplex/point"));
+  CHECK_FALSE(TunableRegistry::GetTunable(*parentUid));
+  CHECK_FALSE(TunableRegistry::GetTunable(*gainUid));
+  CHECK_FALSE(TunableRegistry::GetTunable(*pointUid));
+  CHECK_NOTHROW(TunableRegistry::Update());
 }
 
 TEST_CASE_METHOD(TunableTest, "TunableTest TunablesGetTableFacade",

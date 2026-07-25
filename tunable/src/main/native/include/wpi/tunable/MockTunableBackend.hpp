@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include <optional>
 #include <span>
 #include <string>
 #include <string_view>
@@ -144,6 +145,14 @@ class MockTunableBackend : public TunableBackend {
    */
   void UnregisterTunable(uint32_t uid) override;
 
+  /**
+   * Gets the uid published at a path.
+   *
+   * @param path normalized path
+   * @return tunable uid, or empty if no tunable exists at the path
+   */
+  std::optional<uint32_t> GetUid(std::string_view path) const;
+
   /** Updates all tunable values and calls callbacks where appropriate. */
   void Update() override;
 
@@ -155,7 +164,7 @@ class MockTunableBackend : public TunableBackend {
   void SetProtobufData(std::string_view path, std::string_view typeString,
                        std::span<const uint8_t> data);
 
-  wpi::util::mutex m_mutex;
+  mutable wpi::util::mutex m_mutex;
   wpi::util::StringMap<uint32_t> m_tunables;
   wpi::util::DenseMap<uint32_t, std::vector<std::string>> m_uids;
   struct Action {

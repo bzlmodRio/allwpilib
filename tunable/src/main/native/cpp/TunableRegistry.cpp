@@ -36,6 +36,7 @@ struct Instance {
 
   util::mutex tunablesMutex;
   struct TunableInfoImpl {
+    uint32_t uid;
     detail::TunableBase* tunable;
     std::optional<TunableConfig> config;
     detail::TunableTypeValue type;
@@ -299,23 +300,54 @@ uint32_t TunableRegistry::RegisterTunable(detail::TunableBase* tunable,
   assert((uid & 0x3f000000) == 0);  // ensure type bits are clear
   uid |= static_cast<uint32_t>(type) << 24;
   inst.tunables[uid] = std::make_unique<Instance::TunableInfoImpl>(
-      tunable, config ? std::make_optional(*config) : std::nullopt, type);
+      uid, tunable, config ? std::make_optional(*config) : std::nullopt, type);
   return uid;
 }
 
 void TunableRegistry::UnregisterTunable(uint32_t uid) {
+  uid &= detail::TunableBase::UID_MASK;
   Instance& inst = GetInstance();
+  std::vector<uint32_t> uidsToErase;
+  {
+    std::scoped_lock lock{inst.tunablesMutex};
+    auto collect = [&](auto&& self, uint32_t curUid) -> void {
+      auto it = inst.tunables.find(curUid);
+      if (it == inst.tunables.end()) {
+        return;
+      }
+      for (auto child : it->second->children) {
+        self(self, child->uid);
+      }
+      uidsToErase.emplace_back(curUid);
+    };
+    collect(collect, uid);
+  }
+
   {
     std::scoped_lock lock{inst.backendsMutex};
     for (auto backend : inst.backends) {
-      backend->UnregisterTunable(uid);
+      for (auto eraseUid : uidsToErase) {
+        backend->UnregisterTunable(eraseUid);
+      }
     }
   }
   {
     std::scoped_lock lock{inst.tunablesMutex};
-    auto& uidInfo = inst.uidInfo[uid >> 24];
-    uidInfo.freeUids.push_back(uid & 0x00ffffff);
-    inst.tunables.erase(uid);
+    for (auto eraseUid : uidsToErase) {
+      auto it = inst.tunables.find(eraseUid);
+      if (it == inst.tunables.end()) {
+        continue;
+      }
+      auto& info = *it->second;
+      if (info.parent) {
+        std::erase(info.parent->children, &info);
+      }
+      info.children.clear();
+      info.tunable->m_uid = detail::TunableBase::TYPE_FLAG | (eraseUid >> 24);
+      auto& uidInfo = inst.uidInfo[eraseUid >> 24];
+      uidInfo.freeUids.push_back(eraseUid & 0x00ffffff);
+      inst.tunables.erase(it);
+    }
   }
 }
 

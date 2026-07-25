@@ -227,6 +227,16 @@ void MockTunableBackend::UnregisterTunable(uint32_t uid) {
   std::erase_if(m_actions, [&](auto&& action) { return action.uid == uid; });
 }
 
+std::optional<uint32_t> MockTunableBackend::GetUid(
+    std::string_view path) const {
+  std::scoped_lock lock{m_mutex};
+  auto it = m_tunables.find(path);
+  if (it == m_tunables.end()) {
+    return std::nullopt;
+  }
+  return it->second;
+}
+
 void MockTunableBackend::Update() {
   std::scoped_lock lock{m_mutex};
   for (auto&& action : m_actions) {
