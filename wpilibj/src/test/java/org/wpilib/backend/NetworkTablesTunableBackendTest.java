@@ -18,6 +18,7 @@ import org.wpilib.math.geometry.Translation2d;
 import org.wpilib.networktables.GenericEntry;
 import org.wpilib.networktables.NetworkTableInstance;
 import org.wpilib.networktables.NetworkTableListenerPoller;
+import org.wpilib.networktables.NetworkTableType;
 import org.wpilib.tunable.Tunable;
 import org.wpilib.tunable.TunableConfig;
 import org.wpilib.tunable.TunableRegistry;
@@ -125,6 +126,84 @@ class NetworkTablesTunableBackendTest {
     assertArrayEquals(new float[] {27.25f, 28.5f}, floatArray.get());
     assertArrayEquals(new double[] {29.25, 30.5}, doubleArray.get());
     assertArrayEquals(new String[] {"c", "d"}, stringArray.get());
+  }
+
+  @Test
+  void nullValueTunablesSkipPublishingUntilNonNull() {
+    Tunable<Boolean> booleanValue = Tunable.createNullConfig(Boolean.class, robust());
+    Tunable<Integer> intValue = Tunable.createNullConfig(Integer.class, robust());
+    Tunable<Long> longValue = Tunable.createNullConfig(Long.class, robust());
+    Tunable<Float> floatValue = Tunable.createNullConfig(Float.class, robust());
+    Tunable<Double> doubleValue = Tunable.createNullConfig(Double.class, robust());
+    Tunable<String> stringValue = Tunable.createNullConfig(String.class, robust());
+    Tunable<byte[]> rawValue = Tunable.createNullConfig(byte[].class, robust());
+    Tunable<boolean[]> booleanArray = Tunable.createNullConfig(boolean[].class, robust());
+    Tunable<int[]> intArray = Tunable.createNullConfig(int[].class, robust());
+    Tunable<long[]> longArray = Tunable.createNullConfig(long[].class, robust());
+    Tunable<float[]> floatArray = Tunable.createNullConfig(float[].class, robust());
+    Tunable<double[]> doubleArray = Tunable.createNullConfig(double[].class, robust());
+    Tunable<String[]> stringArray = Tunable.createNullConfig(String[].class, robust());
+
+    Tunables.publish("nullBoolean", booleanValue);
+    Tunables.publish("nullInt", intValue);
+    Tunables.publish("nullLong", longValue);
+    Tunables.publish("nullFloat", floatValue);
+    Tunables.publish("nullDouble", doubleValue);
+    Tunables.publish("nullString", stringValue);
+    Tunables.publish("nullRaw", rawValue);
+    Tunables.publish("nullBooleans", booleanArray);
+    Tunables.publish("nullInts", intArray);
+    Tunables.publish("nullLongs", longArray);
+    Tunables.publish("nullFloats", floatArray);
+    Tunables.publish("nullDoubles", doubleArray);
+    Tunables.publish("nullStrings", stringArray);
+
+    assertUnassigned("nullBoolean");
+    assertUnassigned("nullInt");
+    assertUnassigned("nullLong");
+    assertUnassigned("nullFloat");
+    assertUnassigned("nullDouble");
+    assertUnassigned("nullString");
+    assertUnassigned("nullRaw");
+    assertUnassigned("nullBooleans");
+    assertUnassigned("nullInts");
+    assertUnassigned("nullLongs");
+    assertUnassigned("nullFloats");
+    assertUnassigned("nullDoubles");
+    assertUnassigned("nullStrings");
+
+    booleanValue.set(true);
+    intValue.set(1);
+    longValue.set(2L);
+    floatValue.set(3.25f);
+    doubleValue.set(4.5);
+    stringValue.set("ready");
+    rawValue.set(new byte[] {5, 6});
+    booleanArray.set(new boolean[] {true, false});
+    intArray.set(new int[] {7, 8});
+    longArray.set(new long[] {9L, 10L});
+    floatArray.set(new float[] {11.25f, 12.5f});
+    doubleArray.set(new double[] {13.25, 14.5});
+    stringArray.set(new String[] {"a", "b"});
+    TunableRegistry.update();
+
+    assertTrue(value("nullBoolean").getBoolean(false));
+    assertEquals(1, value("nullInt").getInteger(0));
+    assertEquals(2L, value("nullLong").getInteger(0));
+    assertEquals(3.25f, value("nullFloat").getFloat(0.0f));
+    assertEquals(4.5, value("nullDouble").getDouble(0.0));
+    assertEquals("ready", value("nullString").getString(""));
+    assertArrayEquals(new byte[] {5, 6}, value("nullRaw").getRaw(new byte[] {}));
+    assertArrayEquals(
+        new boolean[] {true, false}, value("nullBooleans").getBooleanArray(new boolean[] {}));
+    assertArrayEquals(new long[] {7L, 8L}, value("nullInts").getIntegerArray(new long[] {}));
+    assertArrayEquals(new long[] {9L, 10L}, value("nullLongs").getIntegerArray(new long[] {}));
+    assertArrayEquals(
+        new float[] {11.25f, 12.5f}, value("nullFloats").getFloatArray(new float[] {}));
+    assertArrayEquals(
+        new double[] {13.25, 14.5}, value("nullDoubles").getDoubleArray(new double[] {}));
+    assertArrayEquals(
+        new String[] {"a", "b"}, value("nullStrings").getStringArray(new String[] {}));
   }
 
   @Test
@@ -332,5 +411,9 @@ class NetworkTablesTunableBackendTest {
 
   private GenericEntry tune(String name) {
     return m_inst.getTopic("/Tunables/" + name + "/tune").getGenericEntry();
+  }
+
+  private void assertUnassigned(String name) {
+    assertEquals(NetworkTableType.UNASSIGNED, value(name).get().getType());
   }
 }

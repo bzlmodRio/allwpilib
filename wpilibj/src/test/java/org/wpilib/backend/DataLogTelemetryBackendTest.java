@@ -140,7 +140,7 @@ class DataLogTelemetryBackendTest {
 
     LogSnapshot snapshot = readSnapshot();
     var structBuffer = StructBuffer.create(Translation2d.struct);
-    var protoBuffer = ProtobufBuffer.create(Translation2d.proto);
+    final var protoBuffer = ProtobufBuffer.create(Translation2d.proto);
 
     assertEquals(Translation2d.struct.getTypeString(), entry(snapshot, "translation").type);
     assertEquals(value, structBuffer.read(last(entry(snapshot, "translation")).getRaw()));

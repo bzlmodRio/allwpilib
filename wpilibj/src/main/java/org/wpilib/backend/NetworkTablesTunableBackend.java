@@ -259,38 +259,61 @@ public class NetworkTablesTunableBackend implements TunableBackend {
     private final DoubleConsumer m_setter;
   }
 
-  private final class TunableStringEntry extends TunableValueEntry {
-    TunableStringEntry(String path, Tunable<String> tunable) {
-      super(path, tunable.getConfig(), "string");
+  @FunctionalInterface
+  private interface ValuePublisher<T> {
+    void publish(GenericPublisher publisher, T value);
+  }
+
+  @FunctionalInterface
+  private interface ValueReader<T> {
+    T read(NetworkTableValue value);
+  }
+
+  private final class NullableTunableValueEntry<T> extends TunableValueEntry {
+    NullableTunableValueEntry(
+        String path,
+        Tunable<T> tunable,
+        String typeString,
+        ValuePublisher<T> valuePublisher,
+        ValueReader<T> valueReader) {
+      super(path, tunable.getConfig(), typeString);
       m_tunable = tunable;
-      m_publisher.setString(m_tunable.get());
+      m_valuePublisher = valuePublisher;
+      m_valueReader = valueReader;
+      updateNetwork();
     }
 
     @Override
     public void updateNetwork() {
-      m_publisher.setString(m_tunable.get());
+      T value = m_tunable.get();
+      if (value != null) {
+        m_valuePublisher.publish(m_publisher, value);
+      }
     }
 
     @Override
     public void doUpdateTunable(NetworkTableValue value) {
-      m_tunable.set(value.getString());
+      m_tunable.set(m_valueReader.read(value));
     }
 
-    private final Tunable<String> m_tunable;
+    private final Tunable<T> m_tunable;
+    private final ValuePublisher<T> m_valuePublisher;
+    private final ValueReader<T> m_valueReader;
   }
 
   private final class TunableRawEntry extends TunableValueEntry {
     TunableRawEntry(String path, Tunable<byte[]> tunable) {
       super(path, tunable.getConfig(), "raw");
       m_tunable = tunable;
-      byte[] value = m_tunable.get();
-      m_lastValue = Arrays.copyOf(value, value.length);
-      m_publisher.setRaw(value, 0, value.length);
+      updateNetwork();
     }
 
     @Override
     public void updateNetwork() {
       byte[] value = m_tunable.get();
+      if (value == null) {
+        return;
+      }
       if (!Arrays.equals(value, m_lastValue)) {
         m_lastValue = Arrays.copyOf(value, value.length);
         m_publisher.setRaw(value, 0, value.length);
@@ -310,14 +333,15 @@ public class NetworkTablesTunableBackend implements TunableBackend {
     TunableBooleanArrayEntry(String path, Tunable<boolean[]> tunable) {
       super(path, tunable.getConfig(), "boolean[]");
       m_tunable = tunable;
-      boolean[] value = m_tunable.get();
-      m_lastValue = Arrays.copyOf(value, value.length);
-      m_publisher.setBooleanArray(value);
+      updateNetwork();
     }
 
     @Override
     public void updateNetwork() {
       boolean[] value = m_tunable.get();
+      if (value == null) {
+        return;
+      }
       if (!Arrays.equals(value, m_lastValue)) {
         m_lastValue = Arrays.copyOf(value, value.length);
         m_publisher.setBooleanArray(value);
@@ -337,13 +361,15 @@ public class NetworkTablesTunableBackend implements TunableBackend {
     TunableIntArrayEntry(String path, Tunable<int[]> tunable) {
       super(path, tunable.getConfig(), "int[]");
       m_tunable = tunable;
-      m_lastValue = Arrays.copyOf(m_tunable.get(), m_tunable.get().length);
-      m_publisher.setIntegerArray(toLongArray(m_lastValue));
+      updateNetwork();
     }
 
     @Override
     public void updateNetwork() {
       int[] value = m_tunable.get();
+      if (value == null) {
+        return;
+      }
       if (!Arrays.equals(value, m_lastValue)) {
         m_lastValue = Arrays.copyOf(value, value.length);
         m_publisher.setIntegerArray(toLongArray(value));
@@ -380,14 +406,15 @@ public class NetworkTablesTunableBackend implements TunableBackend {
     TunableLongArrayEntry(String path, Tunable<long[]> tunable) {
       super(path, tunable.getConfig(), "int[]");
       m_tunable = tunable;
-      long[] value = m_tunable.get();
-      m_lastValue = Arrays.copyOf(value, value.length);
-      m_publisher.setIntegerArray(value);
+      updateNetwork();
     }
 
     @Override
     public void updateNetwork() {
       long[] value = m_tunable.get();
+      if (value == null) {
+        return;
+      }
       if (!Arrays.equals(value, m_lastValue)) {
         m_lastValue = Arrays.copyOf(value, value.length);
         m_publisher.setIntegerArray(value);
@@ -407,14 +434,15 @@ public class NetworkTablesTunableBackend implements TunableBackend {
     TunableFloatArrayEntry(String path, Tunable<float[]> tunable) {
       super(path, tunable.getConfig(), "float[]");
       m_tunable = tunable;
-      float[] value = m_tunable.get();
-      m_lastValue = Arrays.copyOf(value, value.length);
-      m_publisher.setFloatArray(value);
+      updateNetwork();
     }
 
     @Override
     public void updateNetwork() {
       float[] value = m_tunable.get();
+      if (value == null) {
+        return;
+      }
       if (!Arrays.equals(value, m_lastValue)) {
         m_lastValue = Arrays.copyOf(value, value.length);
         m_publisher.setFloatArray(value);
@@ -434,14 +462,15 @@ public class NetworkTablesTunableBackend implements TunableBackend {
     TunableDoubleArrayEntry(String path, Tunable<double[]> tunable) {
       super(path, tunable.getConfig(), "double[]");
       m_tunable = tunable;
-      double[] value = m_tunable.get();
-      m_lastValue = Arrays.copyOf(value, value.length);
-      m_publisher.setDoubleArray(value);
+      updateNetwork();
     }
 
     @Override
     public void updateNetwork() {
       double[] value = m_tunable.get();
+      if (value == null) {
+        return;
+      }
       if (!Arrays.equals(value, m_lastValue)) {
         m_lastValue = Arrays.copyOf(value, value.length);
         m_publisher.setDoubleArray(value);
@@ -461,14 +490,15 @@ public class NetworkTablesTunableBackend implements TunableBackend {
     TunableStringArrayEntry(String path, Tunable<String[]> tunable) {
       super(path, tunable.getConfig(), "string[]");
       m_tunable = tunable;
-      String[] value = m_tunable.get();
-      m_lastValue = Arrays.copyOf(value, value.length);
-      m_publisher.setStringArray(value);
+      updateNetwork();
     }
 
     @Override
     public void updateNetwork() {
       String[] value = m_tunable.get();
+      if (value == null) {
+        return;
+      }
       if (!Arrays.equals(value, m_lastValue)) {
         m_lastValue = Arrays.copyOf(value, value.length);
         m_publisher.setStringArray(value);
@@ -646,7 +676,13 @@ public class NetworkTablesTunableBackend implements TunableBackend {
             case Class<?> c when c == String.class -> {
               @SuppressWarnings("unchecked")
               Tunable<String> tt = (Tunable<String>) t;
-              entry = new TunableStringEntry(ntPath, tt);
+              entry =
+                  new NullableTunableValueEntry<>(
+                      ntPath,
+                      tt,
+                      "string",
+                      GenericPublisher::setString,
+                      NetworkTableValue::getString);
             }
             case Class<?> c when c == byte[].class -> {
               @SuppressWarnings("unchecked")
@@ -686,27 +722,53 @@ public class NetworkTablesTunableBackend implements TunableBackend {
             case Class<?> c when c == Boolean.class -> {
               @SuppressWarnings("unchecked")
               Tunable<Boolean> tt = (Tunable<Boolean>) t;
-              entry = new TunableBooleanEntry(ntPath, tt.getConfig(), tt::get, tt::set);
+              entry =
+                  new NullableTunableValueEntry<>(
+                      ntPath,
+                      tt,
+                      "boolean",
+                      GenericPublisher::setBoolean,
+                      NetworkTableValue::getBoolean);
             }
             case Class<?> c when c == Integer.class -> {
               @SuppressWarnings("unchecked")
               Tunable<Integer> tt = (Tunable<Integer>) t;
-              entry = new TunableIntEntry(ntPath, tt.getConfig(), tt::get, tt::set);
+              entry =
+                  new NullableTunableValueEntry<>(
+                      ntPath,
+                      tt,
+                      "int",
+                      GenericPublisher::setInteger,
+                      value -> (int) value.getInteger());
             }
             case Class<?> c when c == Long.class -> {
               @SuppressWarnings("unchecked")
               Tunable<Long> tt = (Tunable<Long>) t;
-              entry = new TunableLongEntry(ntPath, tt.getConfig(), tt::get, tt::set);
+              entry =
+                  new NullableTunableValueEntry<>(
+                      ntPath,
+                      tt,
+                      "int",
+                      GenericPublisher::setInteger,
+                      NetworkTableValue::getInteger);
             }
             case Class<?> c when c == Float.class -> {
               @SuppressWarnings("unchecked")
               Tunable<Float> tt = (Tunable<Float>) t;
-              entry = new TunableFloatEntry(ntPath, tt.getConfig(), tt::get, tt::set);
+              entry =
+                  new NullableTunableValueEntry<>(
+                      ntPath, tt, "float", GenericPublisher::setFloat, NetworkTableValue::getFloat);
             }
             case Class<?> c when c == Double.class -> {
               @SuppressWarnings("unchecked")
               Tunable<Double> tt = (Tunable<Double>) t;
-              entry = new TunableDoubleEntry(ntPath, tt.getConfig(), tt::get, tt::set);
+              entry =
+                  new NullableTunableValueEntry<>(
+                      ntPath,
+                      tt,
+                      "double",
+                      GenericPublisher::setDouble,
+                      NetworkTableValue::getDouble);
             }
             default -> {
               TunableRegistry.reportWarning(
