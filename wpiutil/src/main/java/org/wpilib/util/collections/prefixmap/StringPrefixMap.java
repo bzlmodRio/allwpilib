@@ -57,9 +57,7 @@ public class StringPrefixMap<V> implements PrefixMap<V> {
     Objects.requireNonNull(value, "The value may not be null");
 
     V previousValue = m_prefixTrie.add(prefix, value);
-    if (previousValue == null) {
-      m_allPrefixes.put(storedKey(prefix), value);
-    }
+    m_allPrefixes.put(storedKey(prefix), value);
     return previousValue;
   }
 
