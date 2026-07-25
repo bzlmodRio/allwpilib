@@ -82,7 +82,7 @@ class TunableBase {
 
   uint32_t GetTunableUid() const { return m_uid & UID_MASK; }
 
-  void SetTunableChanged() { m_uid |= CHANGE_FLAG; }
+  constexpr void SetTunableChanged() { m_uid |= CHANGE_FLAG; }
 
  private:
   constexpr static uint32_t TYPE_FLAG = 0x80000000;

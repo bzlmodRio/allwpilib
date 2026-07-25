@@ -16,7 +16,9 @@
 #include "wpi/nt/GenericEntry.hpp"
 #include "wpi/nt/NetworkTableInstance.hpp"
 #include "wpi/nt/ProtobufTopic.hpp"
+#include "wpi/nt/StringArrayTopic.hpp"
 #include "wpi/nt/StructTopic.hpp"
+#include "wpi/tunable/Selectable.hpp"
 #include "wpi/tunable/Tunable.hpp"
 #include "wpi/tunable/TunableConfig.hpp"
 #include "wpi/tunable/TunableRegistry.hpp"
@@ -205,6 +207,32 @@ TEST_F(NetworkTablesTunableBackendTest, PublishesRobustDouble) {
 
   EXPECT_EQ(value.Get(), 2.0);
   EXPECT_EQ(sub.Get(), 2.0);
+}
+
+TEST_F(NetworkTablesTunableBackendTest,
+       SelectablePublishesOptionChangesAfterPublish) {
+  wpi::Selectable<int> chooser;
+  chooser.Add("one", 1);
+  wpi::Tunables::Publish("chooser", chooser);
+
+  auto sub =
+      inst.GetStringArrayTopic("/Tunables/chooser/options").Subscribe({});
+  EXPECT_EQ((std::vector<std::string>{"one"}), sub.Get());
+
+  chooser.Add("two", 2);
+  wpi::TunableRegistry::Update();
+
+  EXPECT_EQ((std::vector<std::string>{"one", "two"}), sub.Get());
+
+  chooser.Add("one", 11);
+  wpi::TunableRegistry::Update();
+
+  EXPECT_EQ((std::vector<std::string>{"two", "one"}), sub.Get());
+
+  chooser.Clear();
+  wpi::TunableRegistry::Update();
+
+  EXPECT_EQ((std::vector<std::string>{}), sub.Get());
 }
 
 TEST_F(NetworkTablesTunableBackendTest, PublishesAndTunesStruct) {

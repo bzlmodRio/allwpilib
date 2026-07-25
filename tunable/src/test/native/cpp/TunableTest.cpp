@@ -222,6 +222,43 @@ TEST_CASE_METHOD(TunableTest, "TunableTest PrimitiveAndVectorTunables",
   CHECK(vectorValue.Get() == (std::vector<int32_t>{3, 4}));
 }
 
+TEST_CASE_METHOD(TunableTest, "TunableTest MutateMarksTunablesChanged",
+                 "[tunable]") {
+  class InspectableInt : public TunableInt32 {
+   public:
+    using TunableInt32::TunableInt32;
+
+    uint32_t GetUid() const { return GetTunableUid(); }
+  };
+  class InspectableVector : public TunableInt32Vector {
+   public:
+    using TunableInt32Vector::TunableInt32Vector;
+
+    uint32_t GetUid() const { return GetTunableUid(); }
+  };
+
+  TunableConfig config;
+  InspectableInt integer{1, config};
+  InspectableVector vector{std::vector<int32_t>{1, 2}, config};
+
+  auto integerInfo = TunableRegistry::GetTunable(integer.GetUid());
+  auto vectorInfo = TunableRegistry::GetTunable(vector.GetUid());
+  REQUIRE(integerInfo);
+  REQUIRE(vectorInfo);
+  CHECK_FALSE(integerInfo.IsChanged());
+  CHECK_FALSE(vectorInfo.IsChanged());
+
+  integer.Mutate() = 2;
+  vector.Mutate().push_back(3);
+
+  integerInfo = TunableRegistry::GetTunable(integer.GetUid());
+  vectorInfo = TunableRegistry::GetTunable(vector.GetUid());
+  CHECK(integer.Get() == 2);
+  CHECK(vector.Get() == (std::vector<int32_t>{1, 2, 3}));
+  CHECK(integerInfo.IsChanged());
+  CHECK(vectorInfo.IsChanged());
+}
+
 TEST_CASE_METHOD(TunableTest, "TunableTest ConfigImmutableAndOnTune",
                  "[tunable]") {
   int calls = 0;

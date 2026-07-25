@@ -60,7 +60,10 @@ class TunableValueBase : public detail::TunableBase {
     SetTunableChanged();
   }
 
-  constexpr T& Mutate() { return m_value; }
+  constexpr T& Mutate() {
+    SetTunableChanged();
+    return m_value;
+  }
 
  private:
   T m_value;
@@ -98,7 +101,10 @@ class TunableValueBase<std::string> : public detail::TunableBase {
     SetTunableChanged();
   }
 
-  constexpr std::string& Mutate() { return m_value; }
+  constexpr std::string& Mutate() {
+    SetTunableChanged();
+    return m_value;
+  }
 
  private:
   std::string m_value;
@@ -132,7 +138,10 @@ class TunableValueBase<std::vector<U>> : public detail::TunableBase {
     SetTunableChanged();
   }
 
-  constexpr std::vector<U>& Mutate() { return m_value; }
+  constexpr std::vector<U>& Mutate() {
+    SetTunableChanged();
+    return m_value;
+  }
 
  private:
   std::vector<U> m_value;
@@ -225,7 +234,10 @@ class TunableStruct : public detail::TunableStructBase {
     SetTunableChanged();
   }
 
-  constexpr T& Mutate() { return m_value; }
+  constexpr T& Mutate() {
+    SetTunableChanged();
+    return m_value;
+  }
 
  protected:
   std::string GetStructTypeName() const override {
@@ -318,7 +330,10 @@ class TunableStructVector : public detail::TunableStructBase {
     SetTunableChanged();
   }
 
-  constexpr std::vector<T>& Mutate() { return m_value; }
+  constexpr std::vector<T>& Mutate() {
+    SetTunableChanged();
+    return m_value;
+  }
 
  protected:
   std::string GetStructTypeName() const override {
@@ -419,7 +434,10 @@ class TunableProtobuf : public detail::TunableProtobufBase {
     SetTunableChanged();
   }
 
-  constexpr T& Mutate() { return m_value; }
+  constexpr T& Mutate() {
+    SetTunableChanged();
+    return m_value;
+  }
 
  protected:
   std::string GetProtobufTypeString() const override {
