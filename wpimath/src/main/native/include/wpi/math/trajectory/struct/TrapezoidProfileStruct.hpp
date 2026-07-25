@@ -58,12 +58,10 @@ struct wpi::util::Struct<
     constexpr size_t kMaxVelocityOff = 0;
     constexpr size_t kMaxAccelerationOff = kMaxVelocityOff + 8;
     wpi::util::PackStruct<kMaxVelocityOff>(
-        data, typename BaseConstraints::Velocity_t{value.maxVelocity.value()}
-                  .value());
+        data, typename BaseConstraints::Velocity_t{value.maxVelocity}.value());
     wpi::util::PackStruct<kMaxAccelerationOff>(
-        data,
-        typename BaseConstraints::Acceleration_t{value.maxAcceleration.value()}
-            .value());
+        data, typename BaseConstraints::Acceleration_t{value.maxAcceleration}
+                  .value());
   }
 };
 
