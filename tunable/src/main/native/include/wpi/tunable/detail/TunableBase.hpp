@@ -33,31 +33,22 @@ class TunableBase {
   TunableBase(TunableTypeValue type, const TunableConfig& config)
       : m_uid{TunableRegistry::RegisterTunable(this, &config, type)} {}
 
-  constexpr TunableBase(const TunableBase& other) {
-    if ((other.m_uid & TYPE_FLAG) != 0) {
-      m_uid = other.m_uid;
-    } else {
-      m_uid = static_cast<uint32_t>(
-                  TunableRegistry::GetTunable(other.m_uid & UID_MASK).type) |
-              TYPE_FLAG;
-    }
-  }
+  constexpr TunableBase(const TunableBase& other)
+      : m_uid{GetUnregisteredTypeUid(other.m_uid)} {}
 
   constexpr TunableBase(TunableBase&& other) : m_uid{other.m_uid} {
-    other.m_uid = 0;
-    if ((m_uid & TYPE_FLAG) == 0) {
+    if (IsRegisteredUid(m_uid)) {
       TunableRegistry::MoveTunable(m_uid & UID_MASK, this);
+      other.m_uid = GetUnregisteredTypeUid(m_uid);
     }
   }
 
   constexpr TunableBase& operator=(const TunableBase& other) {
     if (this != &other) {
-      if ((other.m_uid & TYPE_FLAG) != 0) {
-        m_uid = other.m_uid;
+      if (IsRegisteredUid(m_uid)) {
+        SetTunableChanged();
       } else {
-        m_uid = static_cast<uint32_t>(
-                    TunableRegistry::GetTunable(other.m_uid & UID_MASK).type) |
-                TYPE_FLAG;
+        m_uid = GetUnregisteredTypeUid(other.m_uid);
       }
     }
     return *this;
@@ -65,17 +56,21 @@ class TunableBase {
 
   constexpr TunableBase& operator=(TunableBase&& other) {
     if (this != &other) {
-      m_uid = other.m_uid;
-      other.m_uid = 0;
-      if ((m_uid & TYPE_FLAG) == 0) {
-        TunableRegistry::MoveTunable(m_uid & UID_MASK, this);
+      if (IsRegisteredUid(m_uid)) {
+        SetTunableChanged();
+      } else {
+        m_uid = other.m_uid;
+        if (IsRegisteredUid(m_uid)) {
+          TunableRegistry::MoveTunable(m_uid & UID_MASK, this);
+          other.m_uid = GetUnregisteredTypeUid(m_uid);
+        }
       }
     }
     return *this;
   }
 
   constexpr ~TunableBase() {
-    if ((m_uid & TYPE_FLAG) == 0) {
+    if (IsRegisteredUid(m_uid)) {
       TunableRegistry::UnregisterTunable(m_uid & UID_MASK);
     }
   }
@@ -88,6 +83,18 @@ class TunableBase {
   constexpr static uint32_t TYPE_FLAG = 0x80000000;
   constexpr static uint32_t CHANGE_FLAG = 0x40000000;
   constexpr static uint32_t UID_MASK = 0x3FFFFFFF;
+
+  constexpr static bool IsRegisteredUid(uint32_t uid) {
+    return (uid & TYPE_FLAG) == 0;
+  }
+
+  constexpr static uint32_t GetUnregisteredTypeUid(uint32_t uid) {
+    if (IsRegisteredUid(uid)) {
+      return ((uid & UID_MASK) >> 24) | TYPE_FLAG;
+    } else {
+      return uid;
+    }
+  }
 
   bool GetTunableChanged() const { return m_uid & CHANGE_FLAG; }
   void ResetTunableChanged() { m_uid &= ~CHANGE_FLAG; }

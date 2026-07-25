@@ -7,6 +7,7 @@
 #include <array>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <catch2/catch_test_macros.hpp>
@@ -123,6 +124,27 @@ class wpi::CustomTunable<CustomType> {
 };
 
 static_assert(wpi::detail::CustomTunableType<CustomType>);
+
+class InspectableDoubleTunable : public TunableDouble {
+ public:
+  using TunableDouble::TunableDouble;
+
+  uint32_t GetUid() const { return GetTunableUid(); }
+};
+
+struct AssignableComplex : public ComplexTunable {
+  explicit AssignableComplex(double value) : gain{value} {}
+
+  uint32_t GetUid() const { return GetTunableUid(); }
+  uint32_t GetGainUid() const { return gain.GetUid(); }
+  double GetGain() const { return gain.Get(); }
+
+  void PublishTunable(TunableTable& table) override {
+    table.Publish("gain", gain);
+  }
+
+  InspectableDoubleTunable gain;
+};
 
 template <>
 struct wpi::util::Struct<TestStruct> {
@@ -257,6 +279,126 @@ TEST_CASE_METHOD(TunableTest, "TunableTest MutateMarksTunablesChanged",
   CHECK(vector.Get() == (std::vector<int32_t>{1, 2, 3}));
   CHECK(integerInfo.IsChanged());
   CHECK(vectorInfo.IsChanged());
+}
+
+TEST_CASE_METHOD(
+    TunableTest,
+    "TunableTest AssignmentPreservesPublishedDestinationRegistration",
+    "[tunable]") {
+  uint32_t copySourceUid;
+  uint32_t copyDestinationUid;
+  {
+    InspectableDoubleTunable source{2.0};
+    InspectableDoubleTunable destination{1.0};
+    Tunables::Publish("copySource", source);
+    Tunables::Publish("copyDestination", destination);
+    copySourceUid = source.GetUid();
+    copyDestinationUid = destination.GetUid();
+
+    destination = source;
+
+    CHECK(source.GetUid() == copySourceUid);
+    CHECK(destination.GetUid() == copyDestinationUid);
+    CHECK(destination.Get() == 2.0);
+    REQUIRE(TunableRegistry::GetTunable(copyDestinationUid));
+    CHECK(TunableRegistry::GetTunable(copyDestinationUid).IsChanged());
+
+    backend->SetDouble("/copySource", 3.0);
+    backend->SetDouble("/copyDestination", 4.0);
+    TunableRegistry::Update();
+
+    CHECK(source.Get() == 3.0);
+    CHECK(destination.Get() == 4.0);
+  }
+  CHECK_FALSE(TunableRegistry::GetTunable(copySourceUid));
+  CHECK_FALSE(TunableRegistry::GetTunable(copyDestinationUid));
+
+  uint32_t moveSourceUid;
+  uint32_t moveDestinationUid;
+  {
+    InspectableDoubleTunable source{6.0};
+    InspectableDoubleTunable destination{5.0};
+    Tunables::Publish("moveSource", source);
+    Tunables::Publish("moveDestination", destination);
+    moveSourceUid = source.GetUid();
+    moveDestinationUid = destination.GetUid();
+
+    destination = std::move(source);
+
+    CHECK(source.GetUid() == moveSourceUid);
+    CHECK(destination.GetUid() == moveDestinationUid);
+    CHECK(destination.Get() == 6.0);
+    REQUIRE(TunableRegistry::GetTunable(moveDestinationUid));
+    CHECK(TunableRegistry::GetTunable(moveDestinationUid).IsChanged());
+
+    backend->SetDouble("/moveSource", 7.0);
+    backend->SetDouble("/moveDestination", 8.0);
+    TunableRegistry::Update();
+
+    CHECK(source.Get() == 7.0);
+    CHECK(destination.Get() == 8.0);
+  }
+  CHECK_FALSE(TunableRegistry::GetTunable(moveSourceUid));
+  CHECK_FALSE(TunableRegistry::GetTunable(moveDestinationUid));
+}
+
+TEST_CASE_METHOD(
+    TunableTest,
+    "TunableTest ComplexAssignmentPreservesPublishedDestinationRegistration",
+    "[tunable]") {
+  uint32_t copyComplexUid;
+  uint32_t copyGainUid;
+  {
+    AssignableComplex source{2.0};
+    AssignableComplex destination{1.0};
+    Tunables::Publish("copyComplex", destination);
+    copyComplexUid = destination.GetUid();
+    copyGainUid = destination.GetGainUid();
+
+    destination = source;
+
+    CHECK(destination.GetUid() == copyComplexUid);
+    CHECK(destination.GetGainUid() == copyGainUid);
+    CHECK(destination.GetGain() == 2.0);
+    REQUIRE(TunableRegistry::GetTunable(copyComplexUid));
+    REQUIRE(TunableRegistry::GetTunable(copyGainUid));
+    CHECK(TunableRegistry::GetTunable(copyComplexUid).IsChanged());
+    CHECK(TunableRegistry::GetTunable(copyGainUid).IsChanged());
+
+    backend->SetDouble("/copyComplex/gain", 3.0);
+    TunableRegistry::Update();
+
+    CHECK(destination.GetGain() == 3.0);
+  }
+  CHECK_FALSE(TunableRegistry::GetTunable(copyComplexUid));
+  CHECK_FALSE(TunableRegistry::GetTunable(copyGainUid));
+
+  uint32_t moveComplexUid;
+  uint32_t moveGainUid;
+  {
+    AssignableComplex source{5.0};
+    AssignableComplex destination{4.0};
+    Tunables::Publish("moveComplex", destination);
+    moveComplexUid = destination.GetUid();
+    moveGainUid = destination.GetGainUid();
+
+    destination = std::move(source);
+
+    CHECK(destination.GetUid() == moveComplexUid);
+    CHECK(destination.GetGainUid() == moveGainUid);
+    CHECK(destination.GetGain() == 5.0);
+    REQUIRE(TunableRegistry::GetTunable(moveComplexUid));
+    REQUIRE(TunableRegistry::GetTunable(moveGainUid));
+    CHECK(TunableRegistry::GetTunable(moveComplexUid).IsChanged());
+    CHECK(TunableRegistry::GetTunable(moveGainUid).IsChanged());
+
+    backend->SetDouble("/moveComplex/gain", 6.0);
+    TunableRegistry::Update();
+
+    CHECK(destination.GetGain() == 6.0);
+  }
+  CHECK_FALSE(TunableRegistry::GetTunable(moveComplexUid));
+  CHECK_FALSE(TunableRegistry::GetTunable(moveGainUid));
 }
 
 TEST_CASE_METHOD(TunableTest, "TunableTest ConfigImmutableAndOnTune",
