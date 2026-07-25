@@ -6,6 +6,7 @@ package org.wpilib.backend;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.wpilib.math.geometry.Translation2d;
 import org.wpilib.networktables.GenericEntry;
 import org.wpilib.networktables.NetworkTableInstance;
+import org.wpilib.networktables.NetworkTableListenerPoller;
 import org.wpilib.tunable.Tunable;
 import org.wpilib.tunable.TunableConfig;
 import org.wpilib.tunable.TunableRegistry;
@@ -270,6 +272,18 @@ class NetworkTablesTunableBackendTest {
     assertEquals(2.5, value("distance").getDouble(0.0));
   }
 
+  @Test
+  void closeDestroysListenerPoller() throws ReflectiveOperationException {
+    var backend = new NetworkTablesTunableBackend(m_inst, "/Tunables");
+    NetworkTableListenerPoller poller = getListenerPoller(backend);
+
+    assertTrue(poller.isValid());
+
+    backend.close();
+
+    assertFalse(poller.isValid());
+  }
+
   @SuppressWarnings("unchecked")
   private static Tunable<Measure<?>> createRobotBaseMeasureTunable(
       Measure<?> initialValue, TunableConfig config) throws ReflectiveOperationException {
@@ -277,6 +291,13 @@ class NetworkTablesTunableBackendTest {
     var constructor = measureClass.getDeclaredConstructor(Measure.class, TunableConfig.class);
     constructor.setAccessible(true);
     return (Tunable<Measure<?>>) constructor.newInstance(initialValue, config);
+  }
+
+  private static NetworkTableListenerPoller getListenerPoller(NetworkTablesTunableBackend backend)
+      throws ReflectiveOperationException {
+    var field = NetworkTablesTunableBackend.class.getDeclaredField("m_poller");
+    field.setAccessible(true);
+    return (NetworkTableListenerPoller) field.get(backend);
   }
 
   private static TunableConfig robust() {

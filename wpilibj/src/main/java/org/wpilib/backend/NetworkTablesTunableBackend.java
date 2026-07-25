@@ -614,6 +614,7 @@ public class NetworkTablesTunableBackend implements TunableBackend {
         entry.entry().close();
       }
       m_entries.clear();
+      m_poller.close();
     }
   }
 
