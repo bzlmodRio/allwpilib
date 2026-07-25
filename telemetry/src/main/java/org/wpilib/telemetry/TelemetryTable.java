@@ -210,21 +210,10 @@ public final class TelemetryTable {
       case TelemetryLoggable v -> {
         TelemetryTable table = getTable(name);
         String typeString = v.getTelemetryType();
-        boolean setType = false;
-        if (typeString != null) {
-          synchronized (table) {
-            if (table.m_type == null) {
-              setType = true;
-            } else if (!table.m_type.equals(typeString)) {
-              table.typeMismatch(typeString);
-              return;
-            }
-          }
+        if (typeString != null && !table.setType(typeString)) {
+          return;
         }
         v.logTo(table);
-        if (setType) {
-          table.setType(typeString);
-        }
       }
       case StructSerializable v -> {
         var lookup = s_structLookupCache.get(v.getClass());

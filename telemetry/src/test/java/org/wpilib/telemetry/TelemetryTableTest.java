@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,6 +66,33 @@ class TelemetryTableTest {
     public String getTelemetryType() {
       return type;
     }
+  }
+
+  private static final class BlockingTypedLoggable implements TelemetryLoggable {
+    BlockingTypedLoggable(CountDownLatch enteredLogTo, CountDownLatch releaseLogTo) {
+      m_enteredLogTo = enteredLogTo;
+      m_releaseLogTo = releaseLogTo;
+    }
+
+    @Override
+    public void logTo(TelemetryTable table) {
+      m_enteredLogTo.countDown();
+      try {
+        m_releaseLogTo.await();
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+        throw new AssertionError(e);
+      }
+      table.log("x", 1.0);
+    }
+
+    @Override
+    public String getTelemetryType() {
+      return "BlockingTypedLoggable";
+    }
+
+    private final CountDownLatch m_enteredLogTo;
+    private final CountDownLatch m_releaseLogTo;
   }
 
   private static final class ThrowingToString {
@@ -365,6 +395,43 @@ class TelemetryTableTest {
     m_mock.clear();
     table.log("typed", new ThingType(5, 6, "OtherThing"));
     assertTrue(m_mock.getActions().isEmpty());
+    assertEquals(1, m_warnings.size());
+    assertTrue(m_warnings.get(0).contains("table type mismatch"));
+  }
+
+  @Test
+  void testTypedLoggableSetsTypeBeforeLoggingFields() throws InterruptedException {
+    TelemetryTable table = TelemetryRegistry.getTable("/");
+    CountDownLatch enteredLogTo = new CountDownLatch(1);
+    CountDownLatch releaseLogTo = new CountDownLatch(1);
+    BlockingTypedLoggable value = new BlockingTypedLoggable(enteredLogTo, releaseLogTo);
+    AtomicReference<Throwable> loggingFailure = new AtomicReference<>();
+
+    Thread loggingThread =
+        new Thread(
+            () -> {
+              try {
+                table.log("blocked", value);
+              } catch (Throwable e) {
+                loggingFailure.set(e);
+              }
+            });
+    loggingThread.start();
+
+    try {
+      assertTrue(enteredLogTo.await(5, TimeUnit.SECONDS));
+
+      TelemetryTable child = table.getTable("blocked");
+      assertEquals("BlockingTypedLoggable", child.getType());
+      assertFalse(child.setType("OtherType"));
+    } finally {
+      releaseLogTo.countDown();
+      loggingThread.join(5000);
+    }
+
+    assertFalse(loggingThread.isAlive());
+    assertNull(loggingFailure.get());
+    assertEquals(1.0, m_mock.getLastValue("/blocked/x", Double.class));
     assertEquals(1, m_warnings.size());
     assertTrue(m_warnings.get(0).contains("table type mismatch"));
   }
