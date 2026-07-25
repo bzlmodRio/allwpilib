@@ -1,9 +1,9 @@
 
 #pragma once
 
-#include <memory>
-
 #include <semiwrap.h>
+
+#include <memory>
 
 #include "wpi/util/sendable/Sendable.hpp"
 

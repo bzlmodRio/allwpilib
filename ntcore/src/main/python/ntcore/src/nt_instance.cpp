@@ -1,9 +1,8 @@
-#include "nt_instance.h"
+#include <semiwrap.h>
 
 #include <set>
 
-#include <semiwrap.h>
-
+#include "nt_instance.h"
 #include "wpi/nt/ntcore_cpp.hpp"
 
 // only accessed under GIL

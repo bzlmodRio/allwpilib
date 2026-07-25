@@ -1,8 +1,8 @@
 #pragma once
 
-#include <format>
-
 #include <semiwrap.h>
+
+#include <format>
 
 #include "wpi/nt/NetworkTableType.hpp"
 #include "wpi/nt/NetworkTableValue.hpp"

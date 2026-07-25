@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <semiwrap.h>
+
 #include <stdint.h>
 
 #include <atomic>
@@ -12,8 +14,6 @@
 #include <thread>
 #include <type_traits>
 #include <utility>
-
-#include <semiwrap.h>
 
 #include "wpi/hal/Types.h"
 #include "wpi/units/time.hpp"

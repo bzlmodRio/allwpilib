@@ -1,11 +1,11 @@
 
-#include <memory>
-#include <string>
-#include <utility>
-
 #include <pybind11/functional.h>
 #include <pybind11/stl.h>
 #include <semiwrap.h>
+
+#include <memory>
+#include <string>
+#include <utility>
 
 #include "wpi/util/sendable/SendableBuilder.hpp"
 #include "wpi/util/sendable/SendableRegistry.hpp"

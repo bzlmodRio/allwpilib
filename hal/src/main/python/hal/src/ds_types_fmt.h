@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>
-
 #include <pybind11/pybind11.h>
+
+#include <string>
 
 #include "wpi/hal/DriverStationTypes.h"
 

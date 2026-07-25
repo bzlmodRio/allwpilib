@@ -1,6 +1,7 @@
 
-#include "nt_instance.h"
 #include "semiwrap_init.ntcore._ntcore.hpp"
+
+#include "nt_instance.h"
 
 SEMIWRAP_PYBIND11_MODULE(m) {
   initWrapper(m);

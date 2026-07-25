@@ -1,9 +1,9 @@
 
+#include "semiwrap_init.wpimath_test._wpimath_test.hpp"
+
 #include <stdexcept>
 
 #include <module.h>
-
-#include "semiwrap_init.wpimath_test._wpimath_test.hpp"
 
 SEMIWRAP_PYBIND11_MODULE(m) {
   initWrapper(m);

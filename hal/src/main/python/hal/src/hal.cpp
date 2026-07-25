@@ -1,9 +1,9 @@
 
 
-#include "wpi/hal/HAL.h"
-
 #include "semiwrap_init.hal._wpi_hal.hpp"
+
 #include "wpi/hal/DriverStation.hpp"
+#include "wpi/hal/HAL.h"
 #include "wpi/hal/Value.h"
 
 using namespace pybind11::literals;

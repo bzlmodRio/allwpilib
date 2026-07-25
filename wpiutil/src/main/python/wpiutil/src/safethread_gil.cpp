@@ -1,8 +1,8 @@
 
-#include <atomic>
-
 #include <gilsafe_object.h>
 #include <semiwrap.h>
+
+#include <atomic>
 
 using OnThreadStartFn = void* (*)();
 using OnThreadEndFn = void (*)(void*);

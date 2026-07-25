@@ -2275,6 +2275,7 @@ class AnnotationProcessorTest {
   }
 
   @Test
+  @SuppressWarnings("ReturnValueIgnored")
   void doesNotBreakWithPackageInfo() {
     String source =
         """

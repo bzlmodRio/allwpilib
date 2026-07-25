@@ -4,11 +4,12 @@
 
 #pragma once
 
+#include "pybind11/pytypes.h"
+
 #include <span>
 #include <stdexcept>
 #include <vector>
 
-#include "pybind11/pytypes.h"
 #include "wpi/hardware/led/AddressableLED.hpp"
 #include "wpi/util/Color.hpp"
 #include "wpi/util/Color8Bit.hpp"

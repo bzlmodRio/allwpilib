@@ -106,6 +106,13 @@ IfMacros:
   - KJ_IF_MAYBE
 IncludeBlocks: Regroup
 IncludeCategories:
+  # Python.h (transitively via pybind11/semiwrap) must be the very first
+  # include: its pyconfig.h unconditionally redefines _POSIX_C_SOURCE and
+  # _XOPEN_SOURCE, which conflicts with glibc's features.h under -Werror
+  # if any other header is included first.
+  - Regex:        '^[<"](pybind11/|semiwrap\.h|semiwrap_init|gilsafe_object\.h|Python\.h)'
+    Priority:     0
+    SortPriority: -1
   # C standard library headers
   #
   # https://en.cppreference.com/w/cpp/header:

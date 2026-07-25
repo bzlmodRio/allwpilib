@@ -2,13 +2,12 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "rpy/Notifier.h"
-
-#include <utility>
-
 #include <gilsafe_object.h>
 #include <pybind11/functional.h>
 
+#include <utility>
+
+#include "rpy/Notifier.h"
 #include "wpi/hal/Notifier.hpp"
 #include "wpi/hal/Threads.h"
 #include "wpi/system/Errors.hpp"

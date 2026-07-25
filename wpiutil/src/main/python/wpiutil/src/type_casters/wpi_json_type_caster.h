@@ -33,12 +33,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 
+#include "pybind11/pybind11.h"
+
 #include <string>
 #include <vector>
 
 #include "wpi/util/json.hpp"
-
-#include "pybind11/pybind11.h"
 
 namespace py = pybind11;
 

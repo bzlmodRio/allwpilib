@@ -1,15 +1,15 @@
 
 #pragma once
 
+#include <pybind11/functional.h>
+#include <pybind11/typing.h>
+#include <semiwrap.h>
+
 #include <format>
 #include <functional>
 #include <memory>
 #include <string>
 #include <string_view>
-
-#include <pybind11/functional.h>
-#include <pybind11/typing.h>
-#include <semiwrap.h>
 
 #include "wpi/util/struct/Struct.hpp"
 

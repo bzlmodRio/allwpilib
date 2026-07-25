@@ -1,7 +1,7 @@
-#include "wpi/util/timestamp.hpp"
-
 #include <pybind11/functional.h>
 #include <pybind11/pybind11.h>
+
+#include "wpi/util/timestamp.hpp"
 
 namespace py = pybind11;
 

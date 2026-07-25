@@ -17,7 +17,7 @@ bazel_dep(name = "bazel_lib", version = "3.5.0")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 bazel_dep(name = "platforms", version = "1.0.0")
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1.2")
-bazel_dep(name = "rules_java", version = "8.16.1")
+bazel_dep(name = "rules_java", version = "9.1.0")
 bazel_dep(name = "rules_python", version = "1.9.0")
 bazel_dep(name = "rules_pycross", version = "0.8.2")
 bazel_dep(name = "rules_shell", version = "0.6.1")
@@ -140,7 +140,7 @@ archive_override(
     urls = ["https://github.com/wpilibsuite/bzlmodRio-opencv/releases/download/2027.4.13.0-3.bcr1/bzlmodRio-opencv-2027.4.13.0-3.bcr1.tar.gz"],
 )
 
-bazel_dep(name = "protobuf", version = "32.1", repo_name = "com_google_protobuf")
+bazel_dep(name = "protobuf", version = "33.4", repo_name = "com_google_protobuf")
 
 http_jar = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
 

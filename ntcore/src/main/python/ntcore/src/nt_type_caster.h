@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vector>
-
 #include <pybind11/pybind11.h>
+
+#include <vector>
 
 namespace pybind11::detail {
 
