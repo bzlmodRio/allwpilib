@@ -8,11 +8,13 @@
 
 #include <array>
 #include <format>
+#include <future>
 #include <memory>
 #include <span>
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <thread>
 #include <utility>
 #include <variant>
 #include <vector>
@@ -67,6 +69,25 @@ struct TestStructLoggableType : public TestStructLoggable {
 
   std::string_view GetTelemetryType() const override {
     return "TestStructLoggableType";
+  }
+};
+
+struct BlockingTypedLoggable : public wpi::TelemetryLoggable {
+  BlockingTypedLoggable(std::promise<void>* entered,
+                        std::shared_future<void> release)
+      : enteredLogTo{entered}, releaseLogTo{std::move(release)} {}
+
+  std::promise<void>* enteredLogTo;
+  std::shared_future<void> releaseLogTo;
+
+  std::string_view GetTelemetryType() const override {
+    return "BlockingTypedLoggable";
+  }
+
+  void LogTo(wpi::TelemetryTable& table) const override {
+    enteredLogTo->set_value();
+    releaseLogTo.wait();
+    table.Log("x", 1.0);
   }
 };
 
@@ -354,6 +375,32 @@ TEST_CASE_METHOD(TelemetryTableTest,
   REQUIRE(warnings.size() == 1u);
   REQUIRE(warnings[0].first == "/adlTyped/");
   REQUIRE(warnings[0].second.find("table type mismatch") != std::string::npos);
+}
+
+TEST_CASE_METHOD(TelemetryTableTest,
+                 "TelemetryTableTest TypedLoggableSetsTypeBeforeLoggingFields",
+                 "[telemetry]") {
+  auto& table = wpi::TelemetryRegistry::GetTable("/");
+  std::promise<void> enteredLogTo;
+  auto enteredFuture = enteredLogTo.get_future();
+  std::promise<void> releaseLogTo;
+  auto releaseFuture = releaseLogTo.get_future().share();
+  telemetrytest::BlockingTypedLoggable value{&enteredLogTo, releaseFuture};
+
+  std::thread loggingThread{[&] { table.Log("blocked", value); }};
+  enteredFuture.wait();
+
+  auto& child = table.GetTable("blocked");
+  CHECK(child.GetType() == "BlockingTypedLoggable");
+  CHECK_FALSE(child.SetType("OtherType"));
+
+  releaseLogTo.set_value();
+  loggingThread.join();
+
+  CHECK(Last<double>("/blocked/x") == 1.0);
+  REQUIRE(warnings.size() == 1u);
+  CHECK(warnings[0].first == "/blocked/");
+  CHECK(warnings[0].second.find("table type mismatch") != std::string::npos);
 }
 
 TEST_CASE_METHOD(

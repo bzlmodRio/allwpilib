@@ -146,20 +146,10 @@ class TelemetryTable final {
     if constexpr (SupportsTelemetryWithTypeName<T, I...>) {
       auto& table = GetTable(name);
       auto typeString = GetTelemetryTypeName(value, info...);
-      bool setType = false;
-      if (!std::string_view{typeString}.empty()) {
-        std::scoped_lock lock{m_mutex};
-        if (table.m_type.empty()) {
-          setType = true;
-        } else if (table.m_type != typeString) {
-          table.TypeMismatch(typeString);
-          return;
-        }
+      if (!std::string_view{typeString}.empty() && !table.SetType(typeString)) {
+        return;
       }
       LogTo(table, value, info...);
-      if (setType) {
-        table.SetType(typeString);
-      }
     } else if constexpr (SupportsTelemetry<T, I...>) {
       auto& table = GetTable(name);
       LogTo(table, value, info...);
