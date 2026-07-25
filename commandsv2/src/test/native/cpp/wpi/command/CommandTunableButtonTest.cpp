@@ -7,6 +7,7 @@
 #include "CommandTestBase.hpp"
 #include "wpi/commands2/Commands.hpp"
 #include "wpi/tunable/MockTunableBackend.hpp"
+#include "wpi/tunable/TunableConfig.hpp"
 #include "wpi/tunable/TunableRegistry.hpp"
 #include "wpi/tunable/Tunables.hpp"
 
@@ -44,6 +45,16 @@ TEST_F(CommandTunableButtonTest, trueAndNotScheduledSchedules) {
   EXPECT_TRUE(m_command->IsScheduled());
   EXPECT_EQ(1, m_schedule);
   EXPECT_EQ(0, m_cancel);
+}
+
+TEST_F(CommandTunableButtonTest, runningTunableAlwaysGetsSchedulerState) {
+  auto uid = m_backend->GetUid("/command/running");
+  ASSERT_TRUE(uid);
+
+  auto info = wpi::TunableRegistry::GetTunable(*uid);
+  ASSERT_TRUE(info);
+  ASSERT_NE(nullptr, info.config);
+  EXPECT_TRUE(info.config->alwaysGet);
 }
 
 TEST_F(CommandTunableButtonTest, trueAndScheduledNoOp) {

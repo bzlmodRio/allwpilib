@@ -223,7 +223,8 @@ void Command::PublishTunable(wpi::TunableTable& table) {
                             }
                           }
                         },
-                    .parent = this});
+                    .parent = this,
+                    .alwaysGet = true});
 }
 
 void Command::UpdateTunable() const {
