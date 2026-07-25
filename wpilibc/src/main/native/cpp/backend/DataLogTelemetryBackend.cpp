@@ -10,6 +10,7 @@
 #include <string_view>
 #include <utility>
 #include <variant>
+#include <vector>
 
 #include "wpi/datalog/DataLog.hpp"
 #include "wpi/telemetry/TelemetryEntry.hpp"
@@ -112,11 +113,13 @@ class DataLogTelemetryBackend::Entry : public wpi::TelemetryEntry {
   }
 
   void LogInt16Array(std::span<const int16_t> value) override {
-    // TODO
+    std::vector<int64_t> arr{value.begin(), value.end()};
+    LogInt64Array(arr);
   }
 
   void LogInt32Array(std::span<const int32_t> value) override {
-    // TODO
+    std::vector<int64_t> arr{value.begin(), value.end()};
+    LogInt64Array(arr);
   }
 
   void LogInt64Array(std::span<const int64_t> value) override {

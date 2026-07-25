@@ -378,12 +378,12 @@ public class DataLogTelemetryBackend implements TelemetryBackend {
 
     @Override
     public void logShortArray(short[] value) {
-      // TODO
+      logLongArray(toLongArray(value));
     }
 
     @Override
     public void logIntArray(int[] value) {
-      // TODO
+      logLongArray(toLongArray(value));
     }
 
     @Override
@@ -410,6 +410,22 @@ public class DataLogTelemetryBackend implements TelemetryBackend {
         }
         default -> TelemetryRegistry.reportWarning(m_path, "type mismatch");
       }
+    }
+
+    private static long[] toLongArray(short[] arr) {
+      long[] result = new long[arr.length];
+      for (int i = 0; i < arr.length; i++) {
+        result[i] = arr[i];
+      }
+      return result;
+    }
+
+    private static long[] toLongArray(int[] arr) {
+      long[] result = new long[arr.length];
+      for (int i = 0; i < arr.length; i++) {
+        result[i] = arr[i];
+      }
+      return result;
     }
 
     @Override
