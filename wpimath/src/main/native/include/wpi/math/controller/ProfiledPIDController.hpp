@@ -15,6 +15,7 @@
 #include "wpi/telemetry/TelemetryTable.hpp"
 #include "wpi/tunable/ComplexTunable.hpp"
 #include "wpi/tunable/Tunable.hpp"
+#include "wpi/tunable/TunableConfig.hpp"
 #include "wpi/tunable/TunableTable.hpp"
 #include "wpi/units/base.hpp"
 #include "wpi/units/time.hpp"
@@ -436,7 +437,17 @@ class ProfiledPIDController : public wpi::TelemetryLoggable,
 
   void PublishTunable(wpi::TunableTable& table) override {
     table.Publish("controller", m_controller);
-    table.Publish("constraints", this, &ProfiledPIDController::m_constraints);
+    table.Publish(
+        "constraints", this, &ProfiledPIDController::m_constraints,
+        wpi::TunableConfig{
+            .onTune =
+                [](wpi::detail::TunableBase&, wpi::ComplexTunable* self) {
+                  if (auto controller =
+                          static_cast<ProfiledPIDController*>(self)) {
+                    controller->SetConstraints(controller->GetConstraints());
+                  }
+                },
+            .parent = this});
   }
 
   std::string_view GetTunableType() const override {

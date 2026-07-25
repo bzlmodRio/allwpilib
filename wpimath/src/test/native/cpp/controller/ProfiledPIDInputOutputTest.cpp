@@ -2,11 +2,16 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#include <memory>
 #include <numbers>
 
 #include <gtest/gtest.h>
 
 #include "wpi/math/controller/ProfiledPIDController.hpp"
+#include "wpi/math/trajectory/struct/TrapezoidProfileStruct.hpp"
+#include "wpi/tunable/MockTunableBackend.hpp"
+#include "wpi/tunable/TunableRegistry.hpp"
+#include "wpi/tunable/Tunables.hpp"
 #include "wpi/units/angle.hpp"
 #include "wpi/units/angular_acceleration.hpp"
 #include "wpi/units/angular_velocity.hpp"
@@ -130,4 +135,28 @@ TEST(ProfiledPIDInputOutputTest, DerivativeGainOutput) {
 
   EXPECT_DOUBLE_EQ(-10_ms / controller.GetPeriod(),
                    controller.Calculate(0.0025_deg, 0_deg));
+}
+
+TEST(ProfiledPIDInputOutputTest, TunedConstraintsRebuildProfile) {
+  using Controller = wpi::math::ProfiledPIDController<wpi::units::radian>;
+
+  wpi::TunableRegistry::Reset();
+  auto backend = std::make_shared<wpi::MockTunableBackend>();
+  wpi::TunableRegistry::RegisterBackend("", backend);
+
+  Controller controller{0.0, 0.0, 0.0, {1_rad_per_s, 1_rad_per_s_sq}};
+  wpi::Tunables::Publish("profiled", controller);
+
+  backend->SetStruct("/profiled/constraints",
+                     Controller::Constraints{10_rad_per_s, 10_rad_per_s_sq});
+  wpi::TunableRegistry::Update();
+
+  EXPECT_EQ(10_rad_per_s, controller.GetConstraints().maxVelocity);
+  EXPECT_EQ(10_rad_per_s_sq, controller.GetConstraints().maxAcceleration);
+
+  controller.Reset(0_rad);
+  controller.Calculate(0_rad, 10_rad);
+  EXPECT_NEAR(0.2, controller.GetSetpoint().velocity.value(), 1e-9);
+
+  wpi::TunableRegistry::Reset();
 }
