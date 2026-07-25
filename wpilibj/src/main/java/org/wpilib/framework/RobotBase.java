@@ -107,6 +107,7 @@ public abstract class RobotBase implements AutoCloseable {
             @Override
             public void set(double value) {
               m_value = m_value.unit().of(value);
+              m_changed = true;
             }
 
             @Override
@@ -119,6 +120,7 @@ public abstract class RobotBase implements AutoCloseable {
     @Override
     public void set(Measure value) {
       m_value = value;
+      m_magnitudeTunable.set(value.magnitude());
     }
 
     @Override

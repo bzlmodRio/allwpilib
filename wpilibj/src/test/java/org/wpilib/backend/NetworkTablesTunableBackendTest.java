@@ -20,6 +20,8 @@ import org.wpilib.tunable.Tunable;
 import org.wpilib.tunable.TunableConfig;
 import org.wpilib.tunable.TunableRegistry;
 import org.wpilib.tunable.Tunables;
+import org.wpilib.units.Measure;
+import org.wpilib.units.Units;
 
 class NetworkTablesTunableBackendTest {
   private NetworkTableInstance m_inst;
@@ -251,6 +253,30 @@ class NetworkTablesTunableBackendTest {
     assertEquals(2.0, value("supplier").getDouble(0.0));
     assertEquals(2.0, tunable.get());
     assertEquals(3, gets.get());
+  }
+
+  @Test
+  void measureTunablesPublishProgrammaticOuterUpdates() throws ReflectiveOperationException {
+    Tunable<Measure<?>> tunable =
+        createRobotBaseMeasureTunable(Units.Meters.of(1.0), robust().withAlwaysGet(false));
+    Tunables.publish("distance", tunable);
+
+    assertEquals(1.0, value("distance").getDouble(0.0));
+
+    tunable.set(Units.Meters.of(2.5));
+    TunableRegistry.update();
+
+    assertEquals(2.5, tunable.get().magnitude());
+    assertEquals(2.5, value("distance").getDouble(0.0));
+  }
+
+  @SuppressWarnings("unchecked")
+  private static Tunable<Measure<?>> createRobotBaseMeasureTunable(
+      Measure<?> initialValue, TunableConfig config) throws ReflectiveOperationException {
+    Class<?> measureClass = Class.forName("org.wpilib.framework.RobotBase$TunableMeasure");
+    var constructor = measureClass.getDeclaredConstructor(Measure.class, TunableConfig.class);
+    constructor.setAccessible(true);
+    return (Tunable<Measure<?>>) constructor.newInstance(initialValue, config);
   }
 
   private static TunableConfig robust() {
