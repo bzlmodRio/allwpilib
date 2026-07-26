@@ -6,6 +6,7 @@ package org.wpilib.command2;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.never;
@@ -13,6 +14,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
+import org.wpilib.backend.NetworkTablesTunableBackend;
+import org.wpilib.networktables.NetworkTableInstance;
 import org.wpilib.tunable.MockTunableBackend;
 import org.wpilib.tunable.TunableRegistry;
 import org.wpilib.tunable.Tunables;
@@ -144,6 +147,34 @@ class CommandScheduleTest extends CommandTestBase {
       assertFalse(scheduler.isScheduled(mockCommand));
     } finally {
       TunableRegistry.reset();
+    }
+  }
+
+  @Test
+  void networkTablesTunableCancelUsesRobustTuneTopic() {
+    NetworkTableInstance inst = NetworkTableInstance.create();
+    TunableRegistry.registerBackend("", new NetworkTablesTunableBackend(inst, "/Tunables"));
+    try (CommandScheduler scheduler = new CommandScheduler()) {
+      Tunables.publish("Scheduler", scheduler);
+
+      assertEquals("true", inst.getTopic("/Tunables/Scheduler/Cancel/value").getProperty("robust"));
+
+      MockCommandHolder holder = new MockCommandHolder(true);
+      Command mockCommand = holder.getMock();
+      scheduler.schedule(mockCommand);
+      scheduler.run();
+      assertTrue(scheduler.isScheduled(mockCommand));
+
+      inst.getIntegerArrayTopic("/Tunables/Scheduler/Cancel/tune")
+          .publish()
+          .set(new long[] {mockCommand.hashCode()});
+      inst.flush();
+      TunableRegistry.update();
+      scheduler.run();
+      assertFalse(scheduler.isScheduled(mockCommand));
+    } finally {
+      TunableRegistry.reset();
+      inst.close();
     }
   }
 }

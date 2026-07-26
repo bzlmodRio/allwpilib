@@ -789,20 +789,22 @@ public final class CommandScheduler implements TelemetryLoggable, ComplexTunable
         Tunable.createConfig(this::getScheduledCommandIds, null, long[].class, immutableConfig));
 
     final long[] empty = {};
-    table.publishValue(
+    table.publish(
         "Cancel",
-        () -> empty,
-        toCancel -> {
-          Map<Long, Command> ids = new LinkedHashMap<>();
-          for (Command command : m_scheduledCommands) {
-            long id = command.hashCode();
-            ids.put(id, command);
-          }
-          for (long hash : toCancel) {
-            cancel(ids.get(hash));
-          }
-        },
-        long[].class);
+        Tunable.createConfig(
+            () -> empty,
+            toCancel -> {
+              Map<Long, Command> ids = new LinkedHashMap<>();
+              for (Command command : m_scheduledCommands) {
+                long id = command.hashCode();
+                ids.put(id, command);
+              }
+              for (long hash : toCancel) {
+                cancel(ids.get(hash));
+              }
+            },
+            long[].class,
+            TunableConfig.of(TunableOption.ROBUST)));
   }
 
   @Override
