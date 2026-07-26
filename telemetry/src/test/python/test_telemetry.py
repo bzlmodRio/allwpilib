@@ -65,9 +65,7 @@ def test_table_helpers(backend):
     table.set_property("speed", "unit", '"m/s"')
     table.log("speed", 4.5)
 
-    assert backend.get_last_action("/drive/speed")["value"] == pytest.approx(
-        4.5
-    )
+    assert backend.get_last_action("/drive/speed")["value"] == pytest.approx(4.5)
     actions = backend.get_actions()
     assert any(action["kind"] == "keep_duplicates" for action in actions)
     assert any(action["kind"] == "set_property" for action in actions)

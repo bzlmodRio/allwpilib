@@ -157,9 +157,7 @@ def _register_networktables_telemetry_backend() -> None:
 
     TelemetryRegistry.register_backend(
         "",
-        NetworkTablesTelemetryBackend(
-            NetworkTableInstance.get_default(), "/Telemetry"
-        ),
+        NetworkTablesTelemetryBackend(NetworkTableInstance.get_default(), "/Telemetry"),
     )
 
 
@@ -168,9 +166,7 @@ def _register_networktables_tunable_backend() -> None:
 
     TunableRegistry.register_backend(
         "",
-        NetworkTablesTunableBackend(
-            NetworkTableInstance.get_default(), "/Tunables"
-        ),
+        NetworkTablesTunableBackend(NetworkTableInstance.get_default(), "/Tunables"),
     )
 
 

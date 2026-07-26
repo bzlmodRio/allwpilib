@@ -24,6 +24,7 @@ class TelemetryLoggable(ABC):
         """Returns this object's stable telemetry type, or an empty string."""
         return ""
 
+
 __all__ = [
     "DiscardTelemetryBackend",
     "MockTelemetryBackend",
