@@ -36,8 +36,6 @@ class MechanismObject2d : public wpi::TelemetryLoggable {
   mutable wpi::util::mutex m_mutex;
 
  public:
-  virtual ~MechanismObject2d() = default;
-
   /**
    * Retrieve the object's name.
    *
