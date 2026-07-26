@@ -476,18 +476,28 @@ void CommandScheduler::RequireUngroupedAndUnscheduled(
   }
 }
 
-void CommandScheduler::LogTo(wpi::TelemetryTable& table) const {
+std::vector<std::string> CommandScheduler::GetScheduledCommandNames() const {
   std::vector<std::string> names;
   for (Command* command : m_impl->scheduledCommands) {
     names.emplace_back(command->GetName());
   }
-  table.Log("Names", names);
+  return names;
+}
 
+std::vector<int64_t> CommandScheduler::GetScheduledCommandIds() const {
   std::vector<int64_t> ids;
   for (Command* command : m_impl->scheduledCommands) {
     uintptr_t ptrTmp = reinterpret_cast<uintptr_t>(command);
     ids.emplace_back(static_cast<int64_t>(ptrTmp));
   }
+  return ids;
+}
+
+void CommandScheduler::LogTo(wpi::TelemetryTable& table) const {
+  std::vector<std::string> names = GetScheduledCommandNames();
+  table.Log("Names", names);
+
+  std::vector<int64_t> ids = GetScheduledCommandIds();
   table.Log("Ids", ids);
 }
 
@@ -496,6 +506,13 @@ std::string_view CommandScheduler::GetTelemetryType() const {
 }
 
 void CommandScheduler::PublishTunable(wpi::TunableTable& table) {
+  UpdateTunable();
+  table.Publish("Names", this, &CommandScheduler::m_scheduledCommandNames,
+                wpi::TunableConfig{
+                    .isMutable = false, .parent = this, .alwaysGet = true});
+  table.Publish("Ids", this, &CommandScheduler::m_scheduledCommandIds,
+                wpi::TunableConfig{
+                    .isMutable = false, .parent = this, .alwaysGet = true});
   table.Publish(
       "Cancel", this, &CommandScheduler::m_toCancel,
       wpi::TunableConfig{
@@ -514,6 +531,11 @@ void CommandScheduler::PublishTunable(wpi::TunableTable& table) {
                 scheduler->m_toCancel.clear();
               },
           .parent = this});
+}
+
+void CommandScheduler::UpdateTunable() const {
+  m_scheduledCommandNames = GetScheduledCommandNames();
+  m_scheduledCommandIds = GetScheduledCommandIds();
 }
 
 std::string_view CommandScheduler::GetTunableType() const {

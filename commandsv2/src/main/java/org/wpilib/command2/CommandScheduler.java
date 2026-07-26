@@ -33,6 +33,9 @@ import org.wpilib.system.Watchdog;
 import org.wpilib.telemetry.TelemetryLoggable;
 import org.wpilib.telemetry.TelemetryTable;
 import org.wpilib.tunable.ComplexTunable;
+import org.wpilib.tunable.Tunable;
+import org.wpilib.tunable.TunableConfig;
+import org.wpilib.tunable.TunableOption;
 import org.wpilib.tunable.TunableTable;
 
 /**
@@ -740,22 +743,32 @@ public final class CommandScheduler implements TelemetryLoggable, ComplexTunable
     return m_composedCommands.keySet();
   }
 
-  @Override
-  public void logTo(TelemetryTable table) {
+  private String[] getScheduledCommandNames() {
     String[] names = new String[m_scheduledCommands.size()];
     int i = 0;
     for (Command command : m_scheduledCommands) {
       names[i] = command.getName();
       i++;
     }
-    table.log("Names", names);
+    return names;
+  }
 
+  private long[] getScheduledCommandIds() {
     long[] ids = new long[m_scheduledCommands.size()];
-    i = 0;
+    int i = 0;
     for (Command command : m_scheduledCommands) {
       ids[i] = command.hashCode();
       i++;
     }
+    return ids;
+  }
+
+  @Override
+  public void logTo(TelemetryTable table) {
+    String[] names = getScheduledCommandNames();
+    table.log("Names", names);
+
+    long[] ids = getScheduledCommandIds();
     table.log("Ids", ids);
   }
 
@@ -766,6 +779,15 @@ public final class CommandScheduler implements TelemetryLoggable, ComplexTunable
 
   @Override
   public void publishTunable(TunableTable table) {
+    TunableConfig immutableConfig = TunableConfig.of(TunableOption.IMMUTABLE);
+    table.publish(
+        "Names",
+        Tunable.createConfig(
+            this::getScheduledCommandNames, null, String[].class, immutableConfig));
+    table.publish(
+        "Ids",
+        Tunable.createConfig(this::getScheduledCommandIds, null, long[].class, immutableConfig));
+
     final long[] empty = {};
     table.publishValue(
         "Cancel",

@@ -3,14 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "CommandTestBase.hpp"
 #include "wpi/commands2/FunctionalCommand.hpp"
 #include "wpi/commands2/InstantCommand.hpp"
 #include "wpi/commands2/RunCommand.hpp"
 #include "wpi/tunable/MockTunableBackend.hpp"
+#include "wpi/tunable/TunableConfig.hpp"
 #include "wpi/tunable/TunableRegistry.hpp"
 #include "wpi/tunable/Tunables.hpp"
+#include "wpi/tunable/detail/TunableMember.hpp"
 
 using namespace wpi::cmd;
 class CommandScheduleTest : public CommandTestBase {};
@@ -158,12 +162,44 @@ TEST_F(CommandScheduleTest, TunableCancel) {
   wpi::TunableRegistry::RegisterBackend("", backend);
   wpi::Tunables::Publish("Scheduler", scheduler);
 
+  auto namesUid = backend->GetUid("/Scheduler/Names");
+  ASSERT_TRUE(namesUid);
+  auto namesInfo = wpi::TunableRegistry::GetTunable(*namesUid);
+  ASSERT_TRUE(namesInfo);
+  ASSERT_NE(nullptr, namesInfo.config);
+  EXPECT_FALSE(namesInfo.config->isMutable);
+  EXPECT_TRUE(namesInfo.config->alwaysGet);
+
+  auto idsUid = backend->GetUid("/Scheduler/Ids");
+  ASSERT_TRUE(idsUid);
+  auto idsInfo = wpi::TunableRegistry::GetTunable(*idsUid);
+  ASSERT_TRUE(idsInfo);
+  ASSERT_NE(nullptr, idsInfo.config);
+  EXPECT_FALSE(idsInfo.config->isMutable);
+  EXPECT_TRUE(idsInfo.config->alwaysGet);
+
   MockCommand command;
   scheduler.Schedule(&command);
   scheduler.Run();
   EXPECT_TRUE(scheduler.IsScheduled(&command));
+  wpi::TunableRegistry::Update();
+
+  const auto& names =
+      static_cast<
+          wpi::detail::TunableMemberValueBase<std::vector<std::string>>*>(
+          namesInfo.tunable)
+          ->Get(namesInfo.config->parent);
+  ASSERT_EQ(1U, names.size());
+  EXPECT_EQ(command.GetName(), names[0]);
+
+  const auto& ids =
+      static_cast<wpi::detail::TunableMemberValueBase<std::vector<int64_t>>*>(
+          idsInfo.tunable)
+          ->Get(idsInfo.config->parent);
+  ASSERT_EQ(1U, ids.size());
 
   uintptr_t ptrTmp = reinterpret_cast<uintptr_t>(&command);
+  EXPECT_EQ(static_cast<int64_t>(ptrTmp), ids[0]);
   backend->SetInt64Vector(
       "/Scheduler/Cancel",
       std::span<const int64_t>{{static_cast<int64_t>(ptrTmp)}});

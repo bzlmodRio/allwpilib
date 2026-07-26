@@ -11,6 +11,7 @@
 #include <memory>
 #include <optional>
 #include <span>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -471,6 +472,7 @@ class CommandScheduler final : public wpi::TelemetryLoggable,
   void LogTo(wpi::TelemetryTable& table) const override;
   std::string_view GetTelemetryType() const override;
   void PublishTunable(wpi::TunableTable& table) override;
+  void UpdateTunable() const override;
   std::string_view GetTunableType() const override;
 
  private:
@@ -481,9 +483,13 @@ class CommandScheduler final : public wpi::TelemetryLoggable,
                              std::unique_ptr<Command> command);
 
   void Cancel(Command* command, std::optional<Command*> interruptor);
+  std::vector<std::string> GetScheduledCommandNames() const;
+  std::vector<int64_t> GetScheduledCommandIds() const;
 
   class Impl;
   std::unique_ptr<Impl> m_impl;
+  mutable std::vector<std::string> m_scheduledCommandNames;
+  mutable std::vector<int64_t> m_scheduledCommandIds;
   std::vector<int64_t> m_toCancel;
 
   wpi::Watchdog m_watchdog;

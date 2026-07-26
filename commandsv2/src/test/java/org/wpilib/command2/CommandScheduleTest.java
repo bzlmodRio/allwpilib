@@ -4,6 +4,7 @@
 
 package org.wpilib.command2;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -132,6 +133,10 @@ class CommandScheduleTest extends CommandTestBase {
       scheduler.schedule(mockCommand);
       scheduler.run();
       assertTrue(scheduler.isScheduled(mockCommand));
+      assertArrayEquals(
+          new String[] {mockCommand.getName()}, backend.<String[]>getValue("/Scheduler/Names"));
+      assertArrayEquals(
+          new long[] {mockCommand.hashCode()}, backend.<long[]>getValue("/Scheduler/Ids"));
 
       backend.setArray("/Scheduler/Cancel", new long[] {mockCommand.hashCode()});
       TunableRegistry.update();
