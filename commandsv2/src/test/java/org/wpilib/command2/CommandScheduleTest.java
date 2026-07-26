@@ -152,29 +152,30 @@ class CommandScheduleTest extends CommandTestBase {
 
   @Test
   void networkTablesTunableCancelUsesRobustTuneTopic() {
-    NetworkTableInstance inst = NetworkTableInstance.create();
-    TunableRegistry.registerBackend("", new NetworkTablesTunableBackend(inst, "/Tunables"));
-    try (CommandScheduler scheduler = new CommandScheduler()) {
-      Tunables.publish("Scheduler", scheduler);
+    try (NetworkTableInstance inst = NetworkTableInstance.create()) {
+      TunableRegistry.registerBackend("", new NetworkTablesTunableBackend(inst, "/Tunables"));
+      try (CommandScheduler scheduler = new CommandScheduler()) {
+        Tunables.publish("Scheduler", scheduler);
 
-      assertEquals("true", inst.getTopic("/Tunables/Scheduler/Cancel/value").getProperty("robust"));
+        assertEquals(
+            "true", inst.getTopic("/Tunables/Scheduler/Cancel/value").getProperty("robust"));
 
-      MockCommandHolder holder = new MockCommandHolder(true);
-      Command mockCommand = holder.getMock();
-      scheduler.schedule(mockCommand);
-      scheduler.run();
-      assertTrue(scheduler.isScheduled(mockCommand));
+        MockCommandHolder holder = new MockCommandHolder(true);
+        Command mockCommand = holder.getMock();
+        scheduler.schedule(mockCommand);
+        scheduler.run();
+        assertTrue(scheduler.isScheduled(mockCommand));
 
-      inst.getIntegerArrayTopic("/Tunables/Scheduler/Cancel/tune")
-          .publish()
-          .set(new long[] {mockCommand.hashCode()});
-      inst.flush();
-      TunableRegistry.update();
-      scheduler.run();
-      assertFalse(scheduler.isScheduled(mockCommand));
-    } finally {
-      TunableRegistry.reset();
-      inst.close();
+        inst.getIntegerArrayTopic("/Tunables/Scheduler/Cancel/tune")
+            .publish()
+            .set(new long[] {mockCommand.hashCode()});
+        inst.flush();
+        TunableRegistry.update();
+        scheduler.run();
+        assertFalse(scheduler.isScheduled(mockCommand));
+      } finally {
+        TunableRegistry.reset();
+      }
     }
   }
 }
