@@ -32,17 +32,22 @@ class NetworkTablesTelemetryBackend::Entry : public wpi::TelemetryEntry {
   }
 
   void SetProperty(std::string_view key, std::string_view value) override {
+    auto parsedValue = wpi::util::json::parse(value);
+    if (!parsedValue) {
+      wpi::TelemetryRegistry::ReportWarning(m_path, "invalid property JSON");
+      return;
+    }
+
     std::scoped_lock lock{m_mutex};
     auto& propMap = m_properties.get_object();
     auto it = propMap.find(key);
     if (it == propMap.end()) {
-      propMap.emplace(key, value);
+      propMap.emplace(key, std::move(*parsedValue));
     } else {
-      auto& curVal = it->second.get_string();
-      if (curVal == value) {
+      if (it->second == *parsedValue) {
         return;
       }
-      curVal = value;
+      it->second = std::move(*parsedValue);
     }
     if (m_pub) {
       m_pub.GetTopic().SetProperties(m_properties);

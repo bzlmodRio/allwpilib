@@ -27,6 +27,7 @@
 #include "wpi/units/length.hpp"
 #include "wpi/util/Logger.hpp"
 #include "wpi/util/MemoryBuffer.hpp"
+#include "wpi/util/json.hpp"
 #include "wpi/util/protobuf/Protobuf.hpp"
 #include "wpi/util/raw_ostream.hpp"
 #include "wpi/util/struct/Struct.hpp"
@@ -349,14 +350,21 @@ TEST_F(DataLogTelemetryBackendTest, LogsStructAndProtobufDataTypes) {
 
 TEST_F(DataLogTelemetryBackendTest, AppliesTelemetryProperties) {
   wpi::Telemetry::SetProperty("speed", "min", "0");
+  wpi::Telemetry::SetProperty("speed", "unit", "\"m/s\"");
   wpi::Telemetry::Log("speed", 4.0);
   wpi::Telemetry::SetProperty("speed", "max", "10");
 
   auto snapshot = ReadSnapshot();
   const auto& speed = Entry(snapshot, "speed");
 
-  EXPECT_NE(std::string::npos, speed.metadata.find("\"min\":\"0\""));
-  EXPECT_NE(std::string::npos, speed.metadata.find("\"max\":\"10\""));
+  auto metadata = wpi::util::json::parse(speed.metadata);
+  ASSERT_TRUE(metadata);
+  ASSERT_TRUE((*metadata)["min"].is_number());
+  ASSERT_TRUE((*metadata)["max"].is_number());
+  ASSERT_TRUE((*metadata)["unit"].is_string());
+  EXPECT_EQ(0.0, (*metadata)["min"].get_number());
+  EXPECT_EQ(10.0, (*metadata)["max"].get_number());
+  EXPECT_EQ("m/s", (*metadata)["unit"].get_string());
 }
 
 TEST_F(DataLogTelemetryBackendTest, HonorsKeepDuplicates) {

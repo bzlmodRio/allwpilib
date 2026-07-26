@@ -174,10 +174,19 @@ TEST_F(NetworkTablesTelemetryBackendTest, PublishesProtobuf) {
 
 TEST_F(NetworkTablesTelemetryBackendTest, AppliesTelemetryProperties) {
   wpi::Telemetry::SetProperty("speed", "min", "0");
-  wpi::Telemetry::SetProperty("speed", "max", "10");
+  wpi::Telemetry::SetProperty("speed", "unit", "\"m/s\"");
 
   wpi::Telemetry::Log("speed", 4.0);
+  wpi::Telemetry::SetProperty("speed", "max", "10");
 
-  EXPECT_EQ("0", inst.GetTopic("/Telemetry/speed").GetProperty("min"));
-  EXPECT_EQ("10", inst.GetTopic("/Telemetry/speed").GetProperty("max"));
+  auto topic = inst.GetTopic("/Telemetry/speed");
+  auto min = topic.GetProperty("min");
+  auto max = topic.GetProperty("max");
+  auto unit = topic.GetProperty("unit");
+  ASSERT_TRUE(min.is_number());
+  ASSERT_TRUE(max.is_number());
+  ASSERT_TRUE(unit.is_string());
+  EXPECT_EQ(0.0, min.get_number());
+  EXPECT_EQ(10.0, max.get_number());
+  EXPECT_EQ("m/s", unit.get_string());
 }
