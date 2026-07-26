@@ -160,3 +160,22 @@ TEST(ProfiledPIDInputOutputTest, TunedConstraintsRebuildProfile) {
 
   wpi::TunableRegistry::Reset();
 }
+
+TEST(ProfiledPIDInputOutputTest, TunedGoalUpdatesGoal) {
+  using Controller = wpi::math::ProfiledPIDController<wpi::units::radian>;
+
+  wpi::TunableRegistry::Reset();
+  auto backend = std::make_shared<wpi::MockTunableBackend>();
+  wpi::TunableRegistry::RegisterBackend("", backend);
+
+  Controller controller{0.0, 0.0, 0.0, {1_rad_per_s, 1_rad_per_s_sq}};
+  wpi::Tunables::Publish("profiled", controller);
+
+  backend->SetDouble("/profiled/goal", 2.0);
+  wpi::TunableRegistry::Update();
+
+  EXPECT_EQ(2_rad, controller.GetGoal().position);
+  EXPECT_EQ(0_rad_per_s, controller.GetGoal().velocity);
+
+  wpi::TunableRegistry::Reset();
+}

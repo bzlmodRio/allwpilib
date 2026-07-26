@@ -464,6 +464,7 @@ public class ProfiledPIDController implements TelemetryLoggable, ComplexTunable 
         () -> m_constraints,
         value -> setConstraints(value),
         TrapezoidProfile.Constraints.class);
+    table.publishDouble("goal", () -> m_goal.position, this::setGoal);
   }
 
   @Override

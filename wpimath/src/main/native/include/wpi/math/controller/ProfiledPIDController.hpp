@@ -5,6 +5,7 @@
 #pragma once
 
 #include <limits>
+#include <ratio>
 #include <string>
 
 #include "wpi/math/controller/PIDController.hpp"
@@ -205,14 +206,17 @@ class ProfiledPIDController : public wpi::TelemetryLoggable,
    *
    * @param goal The desired unprofiled setpoint.
    */
-  constexpr void SetGoal(State goal) { m_goal = goal; }
+  constexpr void SetGoal(State goal) {
+    m_goal = goal;
+    m_goalPosition = ToBaseGoalPosition(m_goal.position);
+  }
 
   /**
    * Sets the goal for the ProfiledPIDController.
    *
    * @param goal The desired unprofiled setpoint.
    */
-  constexpr void SetGoal(Distance_t goal) { m_goal = {goal, Velocity_t{0}}; }
+  constexpr void SetGoal(Distance_t goal) { SetGoal({goal, Velocity_t{0}}); }
 
   /**
    * Gets the goal for the ProfiledPIDController.
@@ -351,6 +355,7 @@ class ProfiledPIDController : public wpi::TelemetryLoggable,
       // offset from the measurement by the input range modulus; they don't need
       // to be equal.
       m_goal.position = goalMinDistance + measurement;
+      m_goalPosition = ToBaseGoalPosition(m_goal.position);
       m_setpoint.position = setpointMinDistance + measurement;
     }
 
@@ -448,6 +453,19 @@ class ProfiledPIDController : public wpi::TelemetryLoggable,
                   }
                 },
             .parent = this});
+    table.Publish(
+        "goal", this, &ProfiledPIDController::m_goalPosition,
+        wpi::TunableConfig{
+            .onTune =
+                [](wpi::detail::TunableBase&, wpi::ComplexTunable* self) {
+                  if (auto controller =
+                          static_cast<ProfiledPIDController*>(self)) {
+                    controller->SetGoal(
+                        FromBaseGoalPosition(controller->m_goalPosition));
+                  }
+                },
+            .parent = this,
+            .alwaysGet = true});
   }
 
   std::string_view GetTunableType() const override {
@@ -455,6 +473,19 @@ class ProfiledPIDController : public wpi::TelemetryLoggable,
   }
 
  private:
+  using BaseDistance =
+      wpi::units::unit<std::ratio<1>,
+                       wpi::units::traits::base_unit_of<Distance>>;
+  using BaseDistance_t = wpi::units::unit_t<BaseDistance>;
+
+  static constexpr double ToBaseGoalPosition(Distance_t position) {
+    return BaseDistance_t{position}.value();
+  }
+
+  static constexpr Distance_t FromBaseGoalPosition(double position) {
+    return BaseDistance_t{position};
+  }
+
   PIDController m_controller;
   Distance_t m_minimumInput{0};
   Distance_t m_maximumInput{0};
@@ -463,6 +494,7 @@ class ProfiledPIDController : public wpi::TelemetryLoggable,
   TrapezoidProfile<Distance> m_profile;
   typename wpi::math::TrapezoidProfile<Distance>::State m_goal;
   typename wpi::math::TrapezoidProfile<Distance>::State m_setpoint;
+  double m_goalPosition = 0.0;
 };
 
 }  // namespace wpi::math

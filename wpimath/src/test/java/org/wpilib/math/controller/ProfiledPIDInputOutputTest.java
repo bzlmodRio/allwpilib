@@ -152,4 +152,30 @@ class ProfiledPIDInputOutputTest {
       TunableRegistry.reset();
     }
   }
+
+  @Test
+  void tunedGoalUpdatesGoal() {
+    var backend = new MockTunableBackend();
+    TunableRegistry.reset();
+    TunableRegistry.registerBackend("", backend);
+
+    try {
+      var controller =
+          new ProfiledPIDController(0.0, 0.0, 0.0, new TrapezoidProfile.Constraints(1.0, 1.0));
+      Tunables.publish("profiled", controller);
+
+      backend.setDouble("/profiled/goal", 2.0);
+      TunableRegistry.update();
+
+      assertEquals(2.0, controller.getGoal().position);
+      assertEquals(0.0, controller.getGoal().velocity);
+
+      controller.setGoal(3.0);
+      TunableRegistry.update();
+
+      assertEquals(3.0, backend.getDouble("/profiled/goal"));
+    } finally {
+      TunableRegistry.reset();
+    }
+  }
 }
