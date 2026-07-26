@@ -52,7 +52,7 @@ def define_native_wrapper(name, pyproject_toml = None):
             "//wpiutil:robotpy-native-wpiutil",
         ],
         summary = "WPILib Utility Library",
-        requires = ["robotpy-native-wpiutil==0.0.0"],
+        requires = ["robotpy-native-telemetry==0.0.0", "robotpy-native-wpiutil==0.0.0"],
         python_requires = ">=3.11",
         strip_path_prefixes = ["datalog"],
         entry_points = {
