@@ -56,7 +56,7 @@ def define_native_wrapper(name, pyproject_toml = None):
             "//wpiutil:robotpy-native-wpiutil",
         ],
         summary = "WPILib NetworkTables Library",
-        requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-wpinet==0.0.0", "robotpy-native-datalog==0.0.0"],
+        requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-wpinet==0.0.0", "robotpy-native-datalog==0.0.0", "robotpy-native-tunable==0.0.0"],
         python_requires = ">=3.11",
         strip_path_prefixes = ["ntcore"],
         entry_points = {
