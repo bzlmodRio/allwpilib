@@ -16,13 +16,13 @@
 #include <utility>
 #include <vector>
 
+#include "wpi/tunable/ComplexTunable.hpp"
 #include "wpi/tunable/detail/TunableBase.hpp"
 #include "wpi/tunable/detail/TunableTypeTraits.hpp"
 #include "wpi/util/protobuf/Protobuf.hpp"
 #include "wpi/util/struct/Struct.hpp"
 
 namespace wpi {
-class ComplexTunable;
 struct TunableConfig;
 }  // namespace wpi
 
@@ -33,10 +33,9 @@ class TunableMemberPointer {
  public:
   template <std::derived_from<ComplexTunable> Class>
   explicit TunableMemberPointer(T Class::* member) {
-    static_assert(alignof(Storage<Class>) ==
-                  alignof(Storage<TunableMemberPointer>));
+    static_assert(alignof(Storage<Class>) == alignof(Storage<StorageSizer>));
     static_assert(sizeof(Storage<Class>) <=
-                  (2 * sizeof(Storage<TunableMemberPointer>)));
+                  (2 * sizeof(Storage<StorageSizer>)));
     ::new (m_storage) Storage<Class>{member};
   }
 
@@ -68,10 +67,14 @@ class TunableMemberPointer {
     }
     T Class::* m_ptr;
   };
+  class StorageSizer : public ComplexTunable {
+   public:
+    void PublishTunable(TunableTable&) override {}
+  };
 
   // 2x in case of virtual base classes or similar
-  alignas(Storage<TunableMemberPointer>)
-      std::byte m_storage[2 * sizeof(Storage<TunableMemberPointer>)];
+  alignas(Storage<StorageSizer>)
+      std::byte m_storage[2 * sizeof(Storage<StorageSizer>)];
 };
 
 template <TunableValueType T>
