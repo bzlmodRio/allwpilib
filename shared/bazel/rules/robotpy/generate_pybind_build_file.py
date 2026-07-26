@@ -95,7 +95,9 @@ class HeaderToDatConfig:
             else:
                 native_headers_label = f"//{base_package}:{native_headers_target}"
 
-            self.include_file = f"$(execpath {native_headers_label})/{base_include_file}"
+            self.include_file = (
+                f"$(execpath {native_headers_label})/{base_include_file}"
+            )
             self.include_root = f"$(execpath {native_headers_label})"
         else:
             root_dir = pathlib.Path.cwd().absolute()
