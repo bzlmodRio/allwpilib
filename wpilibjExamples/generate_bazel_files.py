@@ -79,7 +79,7 @@ def main():
     if len(sys.argv) == 2:
         output_file = sys.argv[1]
 
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8", newline="\n") as f:
         f.write(dump_chunk("EXAMPLE_FOLDERS", examples) + "\n")
         f.write(dump_chunk("COMMANDS_V2_FOLDERS", commands) + "\n")
         f.write(dump_chunk("SNIPPET_FOLDERS", snippets) + "\n")
