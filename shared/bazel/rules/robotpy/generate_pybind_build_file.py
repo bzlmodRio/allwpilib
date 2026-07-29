@@ -22,6 +22,7 @@ from semiwrap.pyproject import PyProject
 
 from shared.bazel.rules.robotpy.generation_utils import (
     fixup_native_lib_name,
+    fixup_pybind_package_name,
     fixup_python_dep_name,
     fixup_root_package_name,
     fixup_shared_lib_name,
@@ -84,9 +85,14 @@ class HeaderToDatConfig:
             # base_include_root = pathlib.Path(*args[3].relative_to(root_dir).parts[3:])
             base_include_file = args[2].relative_to(include_root)
             base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
+            # Fully-qualified rather than a bare ":" reference - the native
+            # wrapper's own package (fixup_root_package_name(base_library), which
+            # is always the project's real top-level package) may differ from
+            # whatever package this pybind macro itself was invoked from.
+            native_wrapper_target_package = fixup_root_package_name(base_library)
 
-            self.include_file = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)/{base_include_file}"
-            self.include_root = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)"
+            self.include_file = f"$(execpath //{native_wrapper_target_package}:{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)/{base_include_file}"
+            self.include_root = f"$(execpath //{native_wrapper_target_package}:{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)"
         else:
             root_dir = pathlib.Path.cwd().absolute()
             self.include_file = pathlib.Path(args[2]).absolute().relative_to(root_dir)
@@ -104,23 +110,28 @@ class HeaderToDatConfig:
 
 
 class ResolveCastersConfig:
-    def __init__(self, item: BuildTarget):
+    def __init__(self, item: BuildTarget, stripped_include_prefix: str):
         self.pkl_file = item.args[0].name
         self.dep_file = item.args[1].name
         # semiwrap casters = 2
         self.caster_files = []
         caster_deps = set()
 
+        include_root_prefix = (
+            f"{stripped_include_prefix}/" if stripped_include_prefix else ""
+        )
         for dep_path in item.args[3:]:
             if isinstance(dep_path, BuildTargetOutput):
                 output_file = dep_path.target.args[2]
                 caster_deps.add(
-                    f":src/main/python/{dep_path.target.install_path}/{output_file.name}"
+                    f":{include_root_prefix}{dep_path.target.install_path}/{output_file.name}"
                 )
             else:
                 relevant_parts = dep_path.parts[3:]
+                package = fixup_pybind_package_name(relevant_parts[0])
+                package_depth = len(package.split("/"))
                 caster_deps.add(
-                    f"//{relevant_parts[0]}:" + "/".join(relevant_parts[1:])
+                    f"//{package}:" + "/".join(relevant_parts[package_depth:])
                 )
 
         self.caster_deps = sorted(caster_deps)
@@ -161,7 +172,7 @@ class GenModInitHpp:
 
 
 class PublishCastersConfig:
-    def __init__(self, projectcfg, item: BuildTarget):
+    def __init__(self, projectcfg, item: BuildTarget, stripped_include_prefix: str):
         self.project_file = item.args[0].path
         self.casters_name = item.args[1]
         self.json_output = item.args[2].name
@@ -173,8 +184,11 @@ class PublishCastersConfig:
         self.include_paths = []
         caster_cfg = projectcfg.export_type_casters[self.casters_name]
 
+        include_root_prefix = (
+            f"{stripped_include_prefix}/" if stripped_include_prefix else ""
+        )
         for inc_dir in caster_cfg.includedir:
-            self.include_paths.append(f"src/main/python/{inc_dir}")
+            self.include_paths.append(f"{include_root_prefix}{inc_dir}")
 
 
 class BazelExtensionModule:
@@ -182,6 +196,7 @@ class BazelExtensionModule:
         self,
         extension_module: ExtensionModule,
         additional_extension_targets: Dict[str, BuildTarget],
+        stripped_include_prefix: str,
     ):
         self.name = extension_module.name
         self.package_name = extension_module.package_name
@@ -192,7 +207,7 @@ class BazelExtensionModule:
             extension_module.sources, self.extension_name_transforms
         )
         self.resolve_casters = ResolveCastersConfig(
-            additional_extension_targets["resolve-casters"]
+            additional_extension_targets["resolve-casters"], stripped_include_prefix
         )
         self.gen_libinit = GenLibInitPyConfig(
             additional_extension_targets["gen-libinit-py"]
@@ -228,7 +243,7 @@ class BazelExtensionModule:
                         f"//{base_library}:{fixup_native_lib_name(d)}.copy_headers"
                     )
             elif "-casters" in dep_name:
-                base_library = dep_name.split("-")[0]
+                base_library = fixup_pybind_package_name(dep_name.split("-")[0])
                 local_extension_dependencies.add(f"//{base_library}:{dep_name}")
             else:
                 base_library = fixup_root_package_name(dep_name.split("_")[0])
@@ -239,8 +254,11 @@ class BazelExtensionModule:
                     f"//{base_library}:shared/{fixup_shared_lib_name(base_library)}"
                 )
                 if dep_name != self.name:
+                    pybind_library_package = fixup_pybind_package_name(
+                        dep_name.split("_")[0]
+                    )
                     local_extension_dependencies.add(
-                        f"//{base_library}:{dep_name}_pybind_library"
+                        f"//{pybind_library_package}:{dep_name}_pybind_library"
                     )
 
         self.native_wrapper_dependencies = sorted(native_wrapper_dependencies)
@@ -313,6 +331,7 @@ def generate_pybind_build_file(
     stripped_include_prefix: str,
     yml_prefix: Union[str, None],
     output_file: pathlib.Path,
+    package_name: str,
 ):
     project_dir = project_file.parent
     plan = makeplan(project_dir)
@@ -332,7 +351,9 @@ def generate_pybind_build_file(
     for item in plan:
         if isinstance(item, ExtensionModule):
             extension_modules.append(
-                BazelExtensionModule(item, additional_extension_targets)
+                BazelExtensionModule(
+                    item, additional_extension_targets, stripped_include_prefix
+                )
             )
             additional_extension_targets = {}
         elif isinstance(item, BuildTarget):
@@ -355,7 +376,9 @@ def generate_pybind_build_file(
             ]:
                 pass
             elif item.command == "publish-casters":
-                publish_casters_targets.append(PublishCastersConfig(projectcfg, item))
+                publish_casters_targets.append(
+                    PublishCastersConfig(projectcfg, item, stripped_include_prefix)
+                )
             else:
                 raise Exception(f"Unhandled build target {item.command}")
         elif isinstance(item, Entrypoint):
@@ -394,7 +417,7 @@ def generate_pybind_build_file(
             return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
         else:
             base_library = python_dep.replace("robotpy-", "")
-            return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
+            return f"//{fixup_pybind_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
 
     EXTERNAL_PYPI_DEPS = [
         "robotpy-cli",
@@ -439,9 +462,23 @@ def generate_pybind_build_file(
             for ep_key, ep_value in explicit_entry_points[entry_point_type].items():
                 entry_points[entry_point_type].append(f"{ep_key} = {ep_value}")
 
+    # package_name is the actual Bazel package this macro was invoked from
+    # (native.package_name()), which is what the checked-out files really
+    # live under. It's usually the same as fixup_root_package_name(top_level_name),
+    # but that lookup only tracks the top-level package and breaks down for a
+    # macro invoked from a nested package (e.g. a project's own src/test/python).
+    #
+    # stripped_include_prefix is normally a subdirectory below the calling
+    # package (e.g. "src/main/python"), but a macro invoked from a package that
+    # *is* that subdirectory (no further nesting) needs it empty. include_root_prefix
+    # is the slash-joined form used throughout the template (empty stays empty,
+    # instead of leaving a stray leading "/"); imports_dir falls back to "."
+    # (Bazel's own-package marker) since imports = [""] isn't meaningful.
+    include_root_prefix = f"{stripped_include_prefix}/" if stripped_include_prefix else ""
+    imports_dir = stripped_include_prefix if stripped_include_prefix else "."
     strip_path_prefixes = [
-        f"{fixup_root_package_name(top_level_name)}/{stripped_include_prefix}",
-        f"{fixup_root_package_name(top_level_name)}",
+        f"{package_name}/{stripped_include_prefix}" if stripped_include_prefix else package_name,
+        f"{package_name}",
     ]
 
     with open(output_file, "w") as f:
@@ -453,6 +490,8 @@ def generate_pybind_build_file(
                 python_deps=sorted(python_deps),
                 all_local_native_deps=all_local_native_deps,
                 stripped_include_prefix=stripped_include_prefix,
+                include_root_prefix=include_root_prefix,
+                imports_dir=imports_dir,
                 strip_path_prefixes=strip_path_prefixes,
                 yml_prefix=yml_prefix,
                 package_root_file=package_root_file,
@@ -470,11 +509,12 @@ def main():
     parser.add_argument("--project_file", type=pathlib.Path, required=True)
     parser.add_argument("--output_file", type=pathlib.Path, required=True)
     parser.add_argument(
-        "--stripped_include_prefix", type=str, default="src/main/python"
+        "--stripped_include_prefix", type=str, default=""
     )
     parser.add_argument("--yml_prefix", type=str)
     parser.add_argument("--package_root_file", type=str)
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
+    parser.add_argument("--package_name", type=str, required=True)
 
     args = parser.parse_args()
 
@@ -485,6 +525,7 @@ def main():
         args.stripped_include_prefix,
         args.yml_prefix,
         args.output_file,
+        args.package_name,
     )
 
 

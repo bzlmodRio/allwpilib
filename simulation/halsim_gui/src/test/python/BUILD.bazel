@@ -5,7 +5,7 @@ robotpy_py_test(
     "python_tests",
     srcs = glob(["**/*.py"]),
     deps = [
-        "//simulation/halsim_gui:robotpy-halsim-gui",
+        "//simulation/halsim_gui/src/main/python:robotpy-halsim-gui",
         requirement("pytest"),
     ],
 )

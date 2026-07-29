@@ -96,7 +96,7 @@ load("@bazel_lib//lib:copy_to_directory.bzl", "copy_to_directory")
 load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "generate_native_files", "robotpy_library")
 
 def define_native_wrapper(name, pyproject_toml = None):
-    pyproject_toml = pyproject_toml or "src/main/python/native-pyproject.toml"
+    pyproject_toml = pyproject_toml or "src/main/native/pyproject.toml"
 
     copy_to_directory(
         name = "{}.copy_headers".format(name),

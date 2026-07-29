@@ -44,7 +44,7 @@ def generate_robotpy_pybind_build_info(
         pkgcfgs = [],
         additional_srcs = [],
         generated_file_name = "robotpy_pybind_build_info.bzl",
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
         stripped_include_prefix = None,
         yml_prefix = None):
     """
@@ -62,10 +62,11 @@ def generate_robotpy_pybind_build_info(
 
     cmd = "$(location //shared/bazel/rules/robotpy:generate_pybind_build_file) --project_file=$(location " + pyproject_toml + ") --output_file=$(OUTS)"
 
+    cmd += " --package_name=" + native.package_name()
     cmd += " --package_root_file=" + package_root_file
-    if stripped_include_prefix:
+    if stripped_include_prefix != None:
         cmd += " --stripped_include_prefix=" + stripped_include_prefix
-    if yml_prefix:
+    if yml_prefix != None:
         cmd += " --yml_prefix=" + yml_prefix
 
     if pkgcfgs:
