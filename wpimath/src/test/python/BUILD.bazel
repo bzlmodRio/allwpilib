@@ -1,0 +1,52 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_pybind_build_info")
+load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
+load("//wpimath/src/test/python:robotpy_pybind_test_info.bzl", "wpimath_test_extension", define_test_pybind_library = "define_pybind_library")
+
+generate_robotpy_pybind_build_info(
+    name = "robotpy-wpimath_test-generator",
+    additional_srcs = ["cpp/wpimath_test/include/module.h"],
+    generated_file_name = "robotpy_pybind_test_info.bzl",
+    package_root_file = "cpp/wpimath_test/__init__.py",
+    pkgcfgs = [
+        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+        "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
+    ],
+    pyproject_toml = "cpp/pyproject.toml",
+    stripped_include_prefix = "cpp",
+    yaml_files = glob(["cpp/semiwrap/**/*.yml"]),
+    yml_prefix = "cpp/",
+)
+
+wpimath_test_extension(
+    srcs = glob(["cpp/wpimath_test/src/*.cpp"]),
+    extra_hdrs = ["cpp/wpimath_test/include/module.h"],
+    header_to_dat_deps = ["cpp/wpimath_test/include/module.h"],
+    includes = ["cpp/wpimath_test/include"],
+)
+
+define_test_pybind_library(
+    name = "robotpy-wpimath-test",
+    pkgcfgs = [
+        "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+        "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
+        "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+        "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
+    ],
+)
+
+robotpy_py_test(
+    "python_tests",
+    srcs = glob(
+        ["**/*.py"],
+        exclude = ["cpp/**"],
+    ),
+    deps = [
+        ":robotpy-wpimath-test",
+        "//wpimath:robotpy-wpimath",
+        requirement("numpy"),
+        requirement("pytest"),
+    ],
+)

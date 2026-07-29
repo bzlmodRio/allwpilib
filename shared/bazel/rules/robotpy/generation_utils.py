@@ -16,7 +16,7 @@ def fixup_root_package_name(name):
     if name == "halsim_gui":
         return "simulation/halsim_gui"
     if name == "wpimath_test":
-        return "wpimath"
+        return "wpimath/src/test/python"
     if name == "robotpy_apriltag":
         return "apriltag"
     if name == "robotpy_fields":
