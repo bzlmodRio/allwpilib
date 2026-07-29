@@ -1,0 +1,26 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "test_headers",
+    hdrs = glob([
+        "include/**",
+    ]),
+    strip_include_prefix = "include",
+)
+
+cc_test(
+    name = "wpimath-cpp-test",
+    size = "small",
+    srcs = glob([
+        "cpp/**/*.cpp",
+        "cpp/**/*.hpp",
+    ]),
+    tags = [
+        "no-raspi",
+    ],
+    deps = [
+        ":test_headers",
+        "//thirdparty/googletest",
+        "//wpimath",
+    ],
+)

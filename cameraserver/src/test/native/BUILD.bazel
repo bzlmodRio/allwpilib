@@ -1,0 +1,11 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "cameraserver-cpp-test",
+    size = "small",
+    srcs = glob(["cpp/**"]),
+    deps = [
+        "//cameraserver",
+        "//thirdparty/googletest",
+    ],
+)

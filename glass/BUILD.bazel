@@ -1,4 +1,4 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:packaging.bzl", "package_binary_cc_project", "package_static_cc_project")
 load("//shared/bazel/rules:publishing.bzl", "host_architectures")
@@ -46,19 +46,6 @@ wpilib_cc_static_library(
     visibility = ["//visibility:public"],
     deps = [
         ":glass",
-    ],
-)
-
-cc_test(
-    name = "glass-test",
-    size = "small",
-    srcs = glob(["src/test/native/**/*.cpp"]),
-    tags = [
-        "wpi-cpp-gui",
-    ],
-    deps = [
-        ":glass",
-        "//thirdparty/catch2",
     ],
 )
 

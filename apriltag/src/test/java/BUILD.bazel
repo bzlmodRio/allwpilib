@@ -1,0 +1,15 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
+
+wpilib_java_junit5_test(
+    name = "apriltag-java-test",
+    srcs = glob(["**/*.java"]),
+    resource_strip_prefix = "apriltag/src/test/resources",
+    resources = ["//apriltag:test-resources"],
+    deps = [
+        "//apriltag:apriltag-java",
+        "//wpimath:wpimath-java",
+        "//wpiutil:wpiutil-java",
+        "@bzlmodrio-opencv//libraries/java/opencv",
+        "@maven//:io_avaje_avaje_jsonb",
+    ],
+)
