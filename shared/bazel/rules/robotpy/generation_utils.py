@@ -26,6 +26,42 @@ def fixup_native_lib_name(name):
     return name
 
 
+def fixup_pybind_package_name(name):
+    """
+    Maps a project's dependency-name-derived key to the Bazel package its
+    *pybind* targets (the "-casters" cc_library, "{dep}_pybind_library", the
+    generated casters .pybind11.json, etc.) currently live in.
+
+    This is separate from fixup_root_package_name because a project's native
+    wrapper and production library always stay at its top-level package, but
+    its pybind-specific targets can be split into a nested package (e.g.
+    <project>/src/main/python) on their own schedule - so the two mappings
+    diverge project by project as each one gets split.
+
+    Add an entry here (not to fixup_root_package_name) when a project's pybind
+    block moves into a subpackage.
+    """
+    if name == "wpiutil":
+        return "wpiutil/src/main/python"
+    if name == "wpinet":
+        return "wpinet/src/main/python"
+    if name == "wpilog":
+        return "datalog/src/main/python"
+    if name == "pyntcore":
+        return "ntcore/src/main/python"
+    if name == "ntcore":
+        return "ntcore/src/main/python"
+    if name == "wpihal":
+        return "hal/src/main/python"
+    if name == "hal":
+        return "hal/src/main/python"
+    if name == "wpimath":
+        return "wpimath/src/main/python"
+    if name == "wpilib":
+        return "wpilibc/src/main/python"
+    return fixup_root_package_name(name)
+
+
 def fixup_shared_lib_name(name):
     if name == "wpihal":
         return "wpiHal"

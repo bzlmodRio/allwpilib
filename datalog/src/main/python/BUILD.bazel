@@ -1,0 +1,31 @@
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_pybind_build_info")
+load("//datalog/src/main/python:robotpy_pybind_build_info.bzl", "define_pybind_library", "wpilog_extension")
+
+PYBIND_PKGCFG_DEPS = [
+    "//datalog:native/datalog/robotpy-native-datalog.pc",
+    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil/src/main/python:robotpy-wpiutil.generated_pkgcfg_files",
+]
+
+generate_robotpy_pybind_build_info(
+    name = "robotpy-datalog-generator",
+    additional_srcs = ["//datalog:robotpy-native-datalog.copy_headers"],
+    package_root_file = "wpilog/__init__.py",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+    pyproject_toml = "pyproject.toml",
+    stripped_include_prefix = "",
+    yaml_files = glob(["semiwrap/*.yml"]),
+    yml_prefix = "",
+)
+
+wpilog_extension(
+    srcs = ["src/main.cpp"],
+    includes = [
+        "datalog/",
+    ],
+)
+
+define_pybind_library(
+    name = "robotpy-wpilog",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+)

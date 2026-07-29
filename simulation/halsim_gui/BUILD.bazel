@@ -124,29 +124,29 @@ package_default_cc_project(
 
 generate_robotpy_native_wrapper_build_info(
     name = "robotpy-native-halsim-gui-generator",
-    pyproject_toml = "src/main/python/native-pyproject.toml",
+    pyproject_toml = "src/main/native/pyproject.toml",
 )
 
 define_native_wrapper(
     name = "robotpy-native-halsim-gui",
-    pyproject_toml = "src/main/python/native-pyproject.toml",
+    pyproject_toml = "src/main/native/pyproject.toml",
 )
 
 PKG_CONFIG_DEPS = [
     "//datalog:native/datalog/robotpy-native-datalog.pc",
-    "//datalog:robotpy-wpilog.generated_pkgcfg_files",
+    "//datalog/src/main/python:robotpy-wpilog.generated_pkgcfg_files",
     "//hal:native/wpihal/robotpy-native-mrclib.pc",
     "//hal:native/wpihal/robotpy-native-wpihal.pc",
-    "//hal:robotpy-hal.generated_pkgcfg_files",
+    "//hal/src/main/python:robotpy-hal.generated_pkgcfg_files",
     "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
-    "//ntcore:pyntcore.generated_pkgcfg_files",
+    "//ntcore/src/main/python:pyntcore.generated_pkgcfg_files",
     "//simulation/halsim_gui:native/halsim_gui/robotpy-native-halsim-gui.pc",
     "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-    "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
+    "//wpimath/src/main/python:robotpy-wpimath.generated_pkgcfg_files",
     "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
-    "//wpinet:robotpy-wpinet.generated_pkgcfg_files",
+    "//wpinet/src/main/python:robotpy-wpinet.generated_pkgcfg_files",
     "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-    "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
+    "//wpiutil/src/main/python:robotpy-wpiutil.generated_pkgcfg_files",
 ]
 
 halsim_gui_ext_extension(

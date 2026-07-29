@@ -1,0 +1,45 @@
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_pybind_build_info")
+load("//hal/src/main/python:robotpy_pybind_build_info.bzl", "define_pybind_library", "hal_simulation_extension", "wpihal_extension")
+
+PYBIND_PKGCFG_DEPS = [
+    "//datalog:native/datalog/robotpy-native-datalog.pc",
+    "//datalog/src/main/python:robotpy-wpilog.generated_pkgcfg_files",
+    "//hal:native/wpihal/robotpy-native-mrclib.pc",
+    "//hal:native/wpihal/robotpy-native-wpihal.pc",
+    "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+    "//ntcore/src/main/python:pyntcore.generated_pkgcfg_files",
+    "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
+    "//wpinet/src/main/python:robotpy-wpinet.generated_pkgcfg_files",
+    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil/src/main/python:robotpy-wpiutil.generated_pkgcfg_files",
+]
+
+generate_robotpy_pybind_build_info(
+    name = "robotpy-hal-generator",
+    additional_srcs = ["//hal:robotpy-native-wpihal.copy_headers"],
+    package_root_file = "hal/__init__.py",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+    pyproject_toml = "pyproject.toml",
+    stripped_include_prefix = "",
+    yaml_files = glob(["semiwrap/**/*.yml"]),
+    yml_prefix = "",
+)
+
+hal_simulation_extension(
+    srcs = glob(["hal/simulation/*.cpp"]),
+    extra_hdrs = glob(["hal/simulation/*.h"]),
+    includes = ["hal/simulation"],
+)
+
+wpihal_extension(
+    srcs = ["hal/src/hal.cpp"],
+    extra_hdrs = ["hal/src/ds_types_fmt.h"],
+    includes = [
+        "hal",
+    ],
+)
+
+define_pybind_library(
+    name = "robotpy-hal",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+)

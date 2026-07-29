@@ -6,7 +6,7 @@ robotpy_py_test(
     srcs = glob(["**/*.py"]),
     tags = ["exclusive"],
     deps = [
-        "//wpilibc:robotpy-wpilib",
+        "//wpilibc/src/main/python:robotpy-wpilib",
         requirement("pytest"),
     ],
 )

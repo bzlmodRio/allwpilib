@@ -1,0 +1,33 @@
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_pybind_build_info")
+load("//apriltag/src/main/python:robotpy_pybind_build_info.bzl", "apriltag_extension", "define_pybind_library")
+
+PYBIND_PKGCFG_DEPS = [
+    "//apriltag:native/apriltag/robotpy-native-apriltag.pc",
+    "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+    "//wpimath/src/main/python:robotpy-wpimath.generated_pkgcfg_files",
+    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil/src/main/python:robotpy-wpiutil.generated_pkgcfg_files",
+]
+
+generate_robotpy_pybind_build_info(
+    name = "robotpy-apriltag-generator",
+    additional_srcs = ["//apriltag:robotpy-native-apriltag.copy_headers"],
+    package_root_file = "robotpy_apriltag/__init__.py",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+    pyproject_toml = "pyproject.toml",
+    stripped_include_prefix = "",
+    yaml_files = glob(["semiwrap/*.yml"]),
+    yml_prefix = "",
+)
+
+apriltag_extension(
+    srcs = ["robotpy_apriltag/src/main.cpp"],
+    includes = [
+        "datalog/",
+    ],
+)
+
+define_pybind_library(
+    name = "robotpy-apriltag",
+    pkgcfgs = PYBIND_PKGCFG_DEPS,
+)

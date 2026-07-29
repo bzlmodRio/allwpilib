@@ -5,7 +5,7 @@ robotpy_py_test(
     "python_tests",
     srcs = glob(["*.py"]),
     deps = [
-        "//xrpVendordep:robotpy-xrp",
+        "//xrpVendordep/src/main/python:robotpy-xrp",
         requirement("pytest"),
     ],
 )

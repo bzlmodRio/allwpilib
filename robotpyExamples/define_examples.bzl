@@ -13,11 +13,11 @@ def _define_robot_project(projects, project_type):
         )
         common_deps = [
             ":robotpy",
-            "//apriltag:robotpy-apriltag",
-            "//commandsv2:commandsv2-py",
-            "//wpilibc:robotpy-wpilib",
-            "//romiVendordep:robotpy-romi",
-            "//xrpVendordep:robotpy-xrp",
+            "//apriltag/src/main/python:robotpy-apriltag",
+            "//commandsv2/src/main/python:commandsv2-py",
+            "//wpilibc/src/main/python:robotpy-wpilib",
+            "//romiVendordep/src/main/python:robotpy-romi",
+            "//xrpVendordep/src/main/python:robotpy-xrp",
             requirement("numpy"),
         ]
 

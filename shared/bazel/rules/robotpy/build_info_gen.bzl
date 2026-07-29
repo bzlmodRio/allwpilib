@@ -64,9 +64,9 @@ def generate_robotpy_pybind_build_info(
 
     cmd += " --package_name=" + native.package_name()
     cmd += " --package_root_file=" + package_root_file
-    if stripped_include_prefix:
+    if stripped_include_prefix != None:
         cmd += " --stripped_include_prefix=" + stripped_include_prefix
-    if yml_prefix:
+    if yml_prefix != None:
         cmd += " --yml_prefix=" + yml_prefix
 
     if pkgcfgs:

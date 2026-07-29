@@ -13,7 +13,7 @@ def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
 
     resolve_casters(
         name = "halsim_gui_ext.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpimath/src/main/python:wpimath/wpimath-casters.pybind11.json", "//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "halsim_gui_ext.casters.pkl",
         dep_file = "halsim_gui_ext.casters.d",
     )
@@ -70,12 +70,12 @@ def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
             ":halsim_gui_ext.tmpl_hdrs",
             ":halsim_gui_ext.trampoline_hdrs",
             "//hal:wpiHal",
-            "//hal:wpihal_pybind_library",
+            "//hal/src/main/python:wpihal_pybind_library",
             "//ntcore:ntcore",
-            "//ntcore:ntcore_pybind_library",
+            "//ntcore/src/main/python:ntcore_pybind_library",
             "//simulation/halsim_gui:halsim_gui",
             "//wpimath:wpimath",
-            "//wpimath:wpimath_pybind_library",
+            "//wpimath/src/main/python:wpimath_pybind_library",
         ],
         dynamic_deps = [
             "//hal:shared/wpiHal",
@@ -148,11 +148,11 @@ def define_pybind_library(name, pkgcfgs = []):
         ],
         imports = ["src/main/python"],
         deps = [
-            "//hal:robotpy-hal",
+            "//hal/src/main/python:robotpy-hal",
             "//simulation/halsim_gui:robotpy-native-halsim-gui",
-            "//ntcore:pyntcore",
-            "//wpimath:robotpy-wpimath",
-            "//wpiutil:robotpy-wpiutil",
+            "//ntcore/src/main/python:pyntcore",
+            "//wpimath/src/main/python:robotpy-wpimath",
+            "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
         strip_path_prefixes = ["simulation/halsim_gui/src/main/python", "simulation/halsim_gui"],
         summary = "WPILib simulation GUI",

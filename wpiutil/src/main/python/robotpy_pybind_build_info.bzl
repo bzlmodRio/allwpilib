@@ -74,8 +74,8 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "Color",
             yml_file = "semiwrap/Color.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/Color.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/Color.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::util::Color", "wpi__util__Color.hpp"),
@@ -84,8 +84,8 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "Color8Bit",
             yml_file = "semiwrap/Color8Bit.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/Color8Bit.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/Color8Bit.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::util::Color8Bit", "wpi__util__Color8Bit.hpp"),
@@ -94,56 +94,56 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "StackTrace",
             yml_file = "semiwrap/StackTrace.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/StackTrace.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/StackTrace.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "Synchronization",
             yml_file = "semiwrap/Synchronization.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/Synchronization.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/Synchronization.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "PixelFormat",
             yml_file = "semiwrap/PixelFormat.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/PixelFormat.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/PixelFormat.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "RawFrame_c",
             yml_file = "semiwrap/RawFrame_c.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/RawFrame.h",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/RawFrame.h",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "RawFrame",
             yml_file = "semiwrap/RawFrame.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/RawFrame.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/RawFrame.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "Timestamp",
             yml_file = "semiwrap/Timestamp.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/timestamp.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/timestamp.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "Sendable",
             yml_file = "semiwrap/Sendable.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/sendable/Sendable.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/sendable/Sendable.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::util::Sendable", "wpi__util__Sendable.hpp"),
@@ -152,8 +152,8 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "SendableBuilder",
             yml_file = "semiwrap/SendableBuilder.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/sendable/SendableBuilder.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/sendable/SendableBuilder.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::util::SendableBuilder", "wpi__util__SendableBuilder.hpp"),
@@ -162,8 +162,8 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "SendableRegistry",
             yml_file = "semiwrap/SendableRegistry.yml",
-            header_root = "$(execpath :robotpy-native-wpiutil.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpiutil.copy_headers)/wpi/util/sendable/SendableRegistry.hpp",
+            header_root = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)",
+            header_file = "$(execpath //wpiutil:robotpy-native-wpiutil.copy_headers)/wpi/util/sendable/SendableRegistry.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::util::SendableRegistry", "wpi__util__SendableRegistry.hpp"),
@@ -181,14 +181,14 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
 
     resolve_casters(
         name = "wpiutil.resolve_casters",
-        caster_deps = [":src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = [":wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "wpiutil.casters.pkl",
         dep_file = "wpiutil.casters.d",
     )
 
     gen_libinit(
         name = "wpiutil.gen_lib_init",
-        output_file = "src/main/python/wpiutil/_init__wpiutil.py",
+        output_file = "wpiutil/_init__wpiutil.py",
         modules = ["native.wpiutil._init_robotpy_native_wpiutil"],
     )
 
@@ -198,9 +198,9 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         module_pkg_name = "wpiutil._wpiutil",
         output_file = "wpiutil.pc",
         pkg_name = "wpiutil",
-        install_path = "src/main/python/wpiutil",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpiutil/__init__.py",
+        install_path = "wpiutil",
+        project_file = "pyproject.toml",
+        package_root = "wpiutil/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -214,25 +214,26 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         name = "wpiutil",
         casters_pickle = "wpiutil.casters.pkl",
         header_gen_config = WPIUTIL_HEADER_GEN,
-        trampoline_subpath = "src/main/python/wpiutil",
+        trampoline_subpath = "wpiutil",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
+        yml_prefix = "",
     )
 
     create_pybind_library(
         name = "wpiutil",
-        install_path = "src/main/python/wpiutil/",
+        install_path = "wpiutil/",
         extension_name = "_wpiutil",
         generated_srcs = [":wpiutil.generated_srcs"],
         semiwrap_header = [":wpiutil.gen_modinit_hpp"],
         deps = [
             ":wpiutil.tmpl_hdrs",
             ":wpiutil.trampoline_hdrs",
+            "//wpiutil/src/main/python:wpiutil-casters",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil-casters",
         ],
         dynamic_deps = [
             "//wpiutil:shared/wpiutil",
@@ -257,17 +258,17 @@ def publish_library_casters():
     publish_casters(
         name = "publish_casters",
         caster_name = "wpiutil-casters",
-        output_json = "src/main/python/wpiutil/wpiutil-casters.pybind11.json",
-        output_pc = "src/main/python/wpiutil/wpiutil-casters.pc",
-        project_config = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpiutil/__init__.py",
-        typecasters_srcs = native.glob(["src/main/python/wpiutil/src/type_casters/**", "src/main/python/wpiutil/src/wpistruct/**"]),
+        output_json = "wpiutil/wpiutil-casters.pybind11.json",
+        output_pc = "wpiutil/wpiutil-casters.pc",
+        project_config = "pyproject.toml",
+        package_root = "wpiutil/__init__.py",
+        typecasters_srcs = native.glob(["wpiutil/src/type_casters/**", "wpiutil/src/wpistruct/**"]),
     )
 
     cc_library(
         name = "wpiutil-casters",
-        hdrs = native.glob(["src/main/python/wpiutil/src/type_casters/*.h", "src/main/python/wpiutil/src/wpistruct/*.h"]),
-        includes = ["src/main/python/wpiutil/src/type_casters", "src/main/python/wpiutil/src/wpistruct"],
+        hdrs = native.glob(["wpiutil/src/type_casters/*.h", "wpiutil/src/wpistruct/*.h"]),
+        includes = ["wpiutil/src/type_casters", "wpiutil/src/wpistruct"],
         visibility = ["//visibility:public"],
         tags = ["robotpy"],
     )
@@ -287,9 +288,9 @@ def define_pybind_library(name, pkgcfgs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/wpiutil/wpiutil.pc",
-            "src/main/python/wpiutil/wpiutil-casters.pc",
-            "src/main/python/wpiutil/wpiutil-casters.pybind11.json",
+            "wpiutil/wpiutil.pc",
+            "wpiutil/wpiutil-casters.pc",
+            "wpiutil/wpiutil-casters.pybind11.json",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -298,34 +299,34 @@ def define_pybind_library(name, pkgcfgs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/wpiutil/**"], exclude = ["src/main/python/wpiutil/**/*.py"], allow_empty = True),
+        srcs = native.glob(["wpiutil/**"], exclude = ["wpiutil/**/*.py"], allow_empty = True),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/wpiutil/version.py",
+        output_file = "wpiutil/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
         distribution = "robotpy-wpiutil",
-        srcs = native.glob(["src/main/python/wpiutil/**/*.py"]) + [
-            "src/main/python/wpiutil/_init__wpiutil.py",
+        srcs = native.glob(["wpiutil/**/*.py"]) + [
+            "wpiutil/_init__wpiutil.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpiutil/_wpiutil",
+            ":wpiutil/_wpiutil",
             ":wpiutil.trampoline_hdr_files",
         ],
-        imports = ["src/main/python"],
+        imports = ["."],
         deps = [
             "//wpiutil:robotpy-native-wpiutil",
         ],
-        strip_path_prefixes = ["wpiutil/src/main/python", "wpiutil"],
+        strip_path_prefixes = ["wpiutil/src/main/python", "wpiutil/src/main/python"],
         summary = "Binary wrapper for WPILib utilities library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -339,22 +340,22 @@ def define_pybind_library(name, pkgcfgs = []):
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
+        yaml_output_directory = "semiwrap",
+        extra_hdrs = native.glob(["**/*.h"], allow_empty = True) + [
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/wpiutil/__init__.py",
+        package_root_file = "wpiutil/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
+        extra_hdrs = native.glob(["**/*.h"], allow_empty = True) + [
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/wpiutil/__init__.py",
+        package_root_file = "wpiutil/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )
