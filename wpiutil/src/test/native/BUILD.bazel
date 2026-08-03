@@ -1,0 +1,24 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "wpiutil-testlib",
+    hdrs = glob(["include/**"]),
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "wpiutil-cpp-test",
+    size = "small",
+    srcs = glob([
+        "cpp/**",
+    ]) + ["//wpiutil:generated-test-native-cpp-srcs"],
+    linkstatic = True,
+    tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
+    deps = [
+        ":wpiutil-testlib",
+        "//thirdparty/catch2",
+        "//wpiutil",
+        "//wpiutil:nanopb-test-headers",
+    ],
+)

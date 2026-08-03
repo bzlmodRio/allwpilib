@@ -198,7 +198,7 @@ write_source_files(
         "//wpilibc:robotpy-wpilib-generator.generate_build_info",
         "//wpinet:robotpy-wpinet-generator.generate_build_info",
         "//wpimath:robotpy-wpimath-generator.generate_build_info",
-        "//wpimath:robotpy-wpimath_test-generator.generate_build_info",
+        "//wpimath/src/test/python:robotpy-wpimath_test-generator.generate_build_info",
         "//wpiutil:robotpy-wpiutil-generator.generate_build_info",
         "//xrpVendordep:robotpy-xrp-generator.generate_build_info",
     ],

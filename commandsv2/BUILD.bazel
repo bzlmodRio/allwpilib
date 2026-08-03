@@ -1,12 +1,10 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_cc//cc:defs.bzl", "cc_test")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//commandsv2:generate.bzl", "generate_wpilib_new_commands")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_library")
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
 load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
-load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "robotpy_library")
 
 filegroup(
@@ -134,45 +132,10 @@ wpilib_java_library(
     ],
 )
 
-cc_test(
-    name = "commandsv2-cpp-test",
-    size = "small",
-    srcs = glob([
-        "src/test/native/**/*.cpp",
-        "src/test/native/**/*.hpp",
-    ]),
-    tags = [
-        "no-tsan",
-        "no-ubsan",
-    ],
-    deps = [
-        ":commandsv2",
-        "//thirdparty/catch2",
-    ],
-)
-
 filegroup(
     name = "test-resources",
     srcs = glob(["src/test/resources/**"]),
     visibility = ["//commandsv2:__subpackages__"],
-)
-
-wpilib_java_junit5_test(
-    name = "commandsv2-java-test",
-    srcs = glob(["src/test/java/**/*.java"]),
-    resource_strip_prefix = "commandsv2/src/test/resources",
-    resources = ["//commandsv2:test-resources"],
-    deps = [
-        ":commandsv2-java",
-        "//hal:hal-java",
-        "//ntcore:ntcore-java",
-        "//wpiannotations",
-        "//wpilibj:wpilibj-java",
-        "//wpimath:wpimath-java",
-        "//wpiunits:wpiunits-java",
-        "//wpiutil:wpiutil-java",
-        "@maven//:org_mockito_mockito_core",
-    ],
 )
 
 package_default_cc_project(
@@ -199,14 +162,5 @@ robotpy_library(
     deps = [
         "//wpilibc:robotpy-wpilib",
         requirement("typing-extensions"),
-    ],
-)
-
-robotpy_py_test(
-    "python_tests",
-    srcs = glob(["src/test/python/**/*.py"]),
-    deps = [
-        ":commandsv2-py",
-        requirement("pytest"),
     ],
 )

@@ -1,0 +1,11 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "cscore-cpp-test",
+    size = "small",
+    srcs = glob(["cpp/**/*.cpp"]),
+    deps = [
+        "//cscore",
+        "//thirdparty/catch2",
+    ],
+)

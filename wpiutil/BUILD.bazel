@@ -1,15 +1,12 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
-load("@rules_python//python:defs.bzl", "py_binary", "py_library")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
 load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library", "wpilib_jni_java_library")
 load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
 load("//shared/bazel/rules/gen:gen-resources.bzl", "generate_resources")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info", "generate_robotpy_pybind_build_info")
-load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
-load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library")
 load("//wpiutil:generate.bzl", "generate_wpiutil")
 load("//wpiutil:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//wpiutil:robotpy_pybind_build_info.bzl", "define_pybind_library", "publish_library_casters", "wpiutil_extension")
@@ -266,13 +263,6 @@ wpilib_jni_java_library(
 )
 
 cc_library(
-    name = "wpiutil-testlib",
-    hdrs = glob(["src/test/native/include/**"]),
-    strip_include_prefix = "src/test/native/include",
-    visibility = ["//visibility:public"],
-)
-
-cc_library(
     name = "nanopb-test-headers",
     hdrs = glob(["src/generated/test/native/cpp/*.h"]),
     includes = ["src/generated/test/native/cpp"],
@@ -284,30 +274,6 @@ filegroup(
     name = "generated-test-native-cpp-srcs",
     srcs = glob(["src/generated/test/native/cpp/*"]),
     visibility = ["//wpiutil:__subpackages__"],
-)
-
-cc_test(
-    name = "wpiutil-cpp-test",
-    size = "small",
-    srcs = glob([
-        "src/test/native/cpp/**",
-    ]) + ["//wpiutil:generated-test-native-cpp-srcs"],
-    linkstatic = True,
-    tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
-    deps = [
-        ":wpiutil",
-        ":wpiutil-testlib",
-        "//thirdparty/catch2",
-        "//wpiutil:nanopb-test-headers",
-    ],
-)
-
-wpilib_java_junit5_test(
-    name = "wpiutil-java-test",
-    srcs = glob(["src/test/java/**/*.java"]),
-    deps = [
-        ":wpiutil-java",
-    ],
 )
 
 generate_robotpy_native_wrapper_build_info(
@@ -360,42 +326,6 @@ wpiutil_extension(
 define_pybind_library(
     name = "robotpy-wpiutil",
     pkgcfgs = PYBIND_PKGCFG_DEPS,
-)
-
-create_pybind_library(
-    name = "module",
-    dynamic_deps = [
-        ":shared/wpiutil",
-    ],
-    extension_name = "module",
-    extra_srcs = glob(["src/test/python/cpp/wpiutil_test/*.cpp"]),
-    install_path = "src/test/python/cpp/wpiutil_test/",
-    deps = [
-        ":wpiutil_pybind_library",
-    ],
-)
-
-py_library(
-    name = "wpiutil_test",
-    srcs = glob(["src/test/python/cpp/wpiutil_test/*.py"]),
-    data = [
-        ":src/test/python/cpp/wpiutil_test/module",
-    ],
-    imports = ["src/test/python/cpp"],
-    visibility = ["//visibility:public"],
-)
-
-robotpy_py_test(
-    "wpiutil_tests",
-    srcs = glob(
-        ["src/test/python/**/*.py"],
-        exclude = ["src/test/python/cpp/**"],
-    ),
-    deps = [
-        ":robotpy-wpiutil",
-        ":wpiutil_test",
-        requirement("pytest"),
-    ],
 )
 
 package_default_jni_project(

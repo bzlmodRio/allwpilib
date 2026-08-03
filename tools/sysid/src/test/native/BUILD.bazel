@@ -1,0 +1,14 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "sysid-test",
+    size = "medium",
+    srcs = glob(["cpp/**"]),
+    tags = [
+        "no-asan",
+    ],
+    deps = [
+        "//thirdparty/catch2",
+        "//tools/sysid:sysid-lib",
+    ],
+)
