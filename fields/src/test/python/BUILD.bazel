@@ -5,7 +5,7 @@ robotpy_py_test(
     "python_tests",
     srcs = glob(["**/*.py"]),
     deps = [
-        "//fields:robotpy-fields",
+        "//fields/src/main/python:robotpy-fields",
         requirement("pytest"),
     ],
 )

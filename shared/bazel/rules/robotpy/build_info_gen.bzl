@@ -28,7 +28,7 @@ def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party
     write_source_files(
         name = "{}.generate_build_info".format(name),
         files = {
-            "robotpy_native_build_info.bzl": "{}-generated_build_info.bzl".format(name),
+            "src/main/native/robotpy_native_build_info.bzl": "{}-generated_build_info.bzl".format(name),
         },
         visibility = ["//visibility:public"],
         suggested_update_target = "//:write_robotpy_generated_native_files",
@@ -44,7 +44,7 @@ def generate_robotpy_pybind_build_info(
         pkgcfgs = [],
         additional_srcs = [],
         generated_file_name = "robotpy_pybind_build_info.bzl",
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
         stripped_include_prefix = None,
         yml_prefix = None):
     """

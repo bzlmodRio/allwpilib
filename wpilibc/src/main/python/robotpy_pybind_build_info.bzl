@@ -113,16 +113,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "EdgeConfiguration",
             yml_file = "semiwrap/EdgeConfiguration.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/counter/EdgeConfiguration.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/counter/EdgeConfiguration.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "Tachometer",
             yml_file = "semiwrap/Tachometer.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/counter/Tachometer.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/counter/Tachometer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Tachometer", "wpi__Tachometer.hpp"),
@@ -131,8 +131,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "UpDownCounter",
             yml_file = "semiwrap/UpDownCounter.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/counter/UpDownCounter.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/counter/UpDownCounter.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::UpDownCounter", "wpi__UpDownCounter.hpp"),
@@ -141,8 +141,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DifferentialDrive",
             yml_file = "semiwrap/DifferentialDrive.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/drive/DifferentialDrive.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/drive/DifferentialDrive.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DifferentialDrive", "wpi__DifferentialDrive.hpp"),
@@ -152,8 +152,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MecanumDrive",
             yml_file = "semiwrap/MecanumDrive.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/drive/MecanumDrive.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/drive/MecanumDrive.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::MecanumDrive", "wpi__MecanumDrive.hpp"),
@@ -163,8 +163,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "RobotDriveBase",
             yml_file = "semiwrap/RobotDriveBase.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/drive/RobotDriveBase.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/drive/RobotDriveBase.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::RobotDriveBase", "wpi__RobotDriveBase.hpp"),
@@ -173,8 +173,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DriverStationBackend",
             yml_file = "semiwrap/DriverStationBackend.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/internal/DriverStationBackend.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/internal/DriverStationBackend.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::internal::DriverStationBackend", "wpi__internal__DriverStationBackend.hpp"),
@@ -183,16 +183,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Alliance",
             yml_file = "semiwrap/Alliance.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/Alliance.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/Alliance.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "DriverStation",
             yml_file = "semiwrap/DriverStation.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/DriverStation.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/DriverStation.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DriverStation", "wpi__DriverStation.hpp"),
@@ -201,8 +201,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DriverStationDisplay",
             yml_file = "semiwrap/DriverStationDisplay.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/DriverStationDisplay.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/DriverStationDisplay.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DriverStationDisplay", "wpi__DriverStationDisplay.hpp"),
@@ -211,8 +211,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MatchState",
             yml_file = "semiwrap/MatchState.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/MatchState.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/MatchState.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::MatchState", "wpi__MatchState.hpp"),
@@ -221,24 +221,24 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MatchType",
             yml_file = "semiwrap/MatchType.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/MatchType.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/MatchType.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "POVDirection",
             yml_file = "semiwrap/POVDirection.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/POVDirection.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/POVDirection.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "RobotState",
             yml_file = "semiwrap/RobotState.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/RobotState.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/RobotState.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::RobotState", "wpi__RobotState.hpp"),
@@ -247,8 +247,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "TouchpadFinger",
             yml_file = "semiwrap/TouchpadFinger.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/TouchpadFinger.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/TouchpadFinger.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::TouchpadFinger", "wpi__TouchpadFinger.hpp"),
@@ -257,8 +257,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Gamepad",
             yml_file = "semiwrap/Gamepad.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/Gamepad.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/Gamepad.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Gamepad", "wpi__Gamepad.hpp"),
@@ -267,8 +267,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DSGamepadChooser",
             yml_file = "semiwrap/DSGamepadChooser.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/DSGamepadChooser.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/DSGamepadChooser.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DSGamepadChooser", "wpi__DSGamepadChooser.hpp"),
@@ -278,8 +278,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "GenericHID",
             yml_file = "semiwrap/GenericHID.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/GenericHID.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/GenericHID.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::GenericHID", "wpi__GenericHID.hpp"),
@@ -288,8 +288,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "HIDDevice",
             yml_file = "semiwrap/HIDDevice.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/HIDDevice.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/HIDDevice.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::HIDDevice", "wpi__HIDDevice.hpp"),
@@ -298,8 +298,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Joystick",
             yml_file = "semiwrap/Joystick.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/Joystick.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/Joystick.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Joystick", "wpi__Joystick.hpp"),
@@ -308,8 +308,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "GameCubeController",
             yml_file = "semiwrap/GameCubeController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/GameCubeController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/GameCubeController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::GameCubeController", "wpi__GameCubeController.hpp"),
@@ -318,8 +318,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DualSenseEdgeController",
             yml_file = "semiwrap/DualSenseEdgeController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/DualSenseEdgeController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/DualSenseEdgeController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DualSenseEdgeController", "wpi__DualSenseEdgeController.hpp"),
@@ -328,8 +328,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DualSenseController",
             yml_file = "semiwrap/DualSenseController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/DualSenseController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/DualSenseController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DualSenseController", "wpi__DualSenseController.hpp"),
@@ -338,8 +338,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DualShock4Controller",
             yml_file = "semiwrap/DualShock4Controller.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/DualShock4Controller.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/DualShock4Controller.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DualShock4Controller", "wpi__DualShock4Controller.hpp"),
@@ -348,8 +348,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "LogitechF310Controller",
             yml_file = "semiwrap/LogitechF310Controller.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/LogitechF310Controller.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/LogitechF310Controller.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::LogitechF310Controller", "wpi__LogitechF310Controller.hpp"),
@@ -358,8 +358,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SteamController",
             yml_file = "semiwrap/SteamController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/SteamController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/SteamController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SteamController", "wpi__SteamController.hpp"),
@@ -368,8 +368,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Switch2GCController",
             yml_file = "semiwrap/Switch2GCController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/Switch2GCController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/Switch2GCController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Switch2GCController", "wpi__Switch2GCController.hpp"),
@@ -378,8 +378,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Switch2ProController",
             yml_file = "semiwrap/Switch2ProController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/Switch2ProController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/Switch2ProController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Switch2ProController", "wpi__Switch2ProController.hpp"),
@@ -388,8 +388,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SwitchN64Controller",
             yml_file = "semiwrap/SwitchN64Controller.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/SwitchN64Controller.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/SwitchN64Controller.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SwitchN64Controller", "wpi__SwitchN64Controller.hpp"),
@@ -398,8 +398,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SwitchProController",
             yml_file = "semiwrap/SwitchProController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/SwitchProController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/SwitchProController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SwitchProController", "wpi__SwitchProController.hpp"),
@@ -408,8 +408,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "XboxController",
             yml_file = "semiwrap/XboxController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/XboxController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/XboxController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::XboxController", "wpi__XboxController.hpp"),
@@ -418,8 +418,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NiDsPS4Controller",
             yml_file = "semiwrap/NiDsPS4Controller.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/NiDsPS4Controller.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/NiDsPS4Controller.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::NiDsPS4Controller", "wpi__NiDsPS4Controller.hpp"),
@@ -430,8 +430,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NiDsPS5Controller",
             yml_file = "semiwrap/NiDsPS5Controller.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/NiDsPS5Controller.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/NiDsPS5Controller.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::NiDsPS5Controller", "wpi__NiDsPS5Controller.hpp"),
@@ -442,8 +442,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NiDsStadiaController",
             yml_file = "semiwrap/NiDsStadiaController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/NiDsStadiaController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/NiDsStadiaController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::NiDsStadiaController", "wpi__NiDsStadiaController.hpp"),
@@ -454,8 +454,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NiDsXboxController",
             yml_file = "semiwrap/NiDsXboxController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/driverstation/NiDsXboxController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/driverstation/NiDsXboxController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::NiDsXboxController", "wpi__NiDsXboxController.hpp"),
@@ -466,8 +466,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "BooleanEvent",
             yml_file = "semiwrap/BooleanEvent.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/event/BooleanEvent.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/event/BooleanEvent.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::BooleanEvent", "wpi__BooleanEvent.hpp"),
@@ -476,8 +476,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "EventLoop",
             yml_file = "semiwrap/EventLoop.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/event/EventLoop.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/event/EventLoop.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::EventLoop", "wpi__EventLoop.hpp"),
@@ -486,8 +486,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NetworkBooleanEvent",
             yml_file = "semiwrap/NetworkBooleanEvent.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/event/NetworkBooleanEvent.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/event/NetworkBooleanEvent.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::NetworkBooleanEvent", "wpi__NetworkBooleanEvent.hpp"),
@@ -496,8 +496,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "IterativeRobotBase",
             yml_file = "semiwrap/IterativeRobotBase.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/framework/IterativeRobotBase.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/framework/IterativeRobotBase.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::IterativeRobotBase", "wpi__IterativeRobotBase.hpp"),
@@ -506,8 +506,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "OpModeRobot",
             yml_file = "semiwrap/OpModeRobot.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/framework/OpModeRobot.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/framework/OpModeRobot.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::OpModeRobotBase", "wpi__OpModeRobotBase.hpp"),
@@ -516,8 +516,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "RobotBase",
             yml_file = "semiwrap/RobotBase.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/framework/RobotBase.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/framework/RobotBase.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::RobotBase", "wpi__RobotBase.hpp"),
@@ -526,8 +526,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "TimedRobot",
             yml_file = "semiwrap/TimedRobot.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/framework/TimedRobot.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/framework/TimedRobot.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::TimedRobot", "wpi__TimedRobot.hpp"),
@@ -536,8 +536,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "TimesliceRobot",
             yml_file = "semiwrap/TimesliceRobot.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/framework/TimesliceRobot.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/framework/TimesliceRobot.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::TimesliceRobot", "wpi__TimesliceRobot.hpp"),
@@ -546,8 +546,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ADXL345_I2C",
             yml_file = "semiwrap/ADXL345_I2C.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/accelerometer/ADXL345_I2C.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/accelerometer/ADXL345_I2C.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::ADXL345_I2C", "wpi__ADXL345_I2C.hpp"),
@@ -557,8 +557,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "AnalogAccelerometer",
             yml_file = "semiwrap/AnalogAccelerometer.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/accelerometer/AnalogAccelerometer.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/accelerometer/AnalogAccelerometer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::AnalogAccelerometer", "wpi__AnalogAccelerometer.hpp"),
@@ -567,8 +567,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "CAN",
             yml_file = "semiwrap/CAN.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/bus/CAN.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/bus/CAN.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::CAN", "wpi__CAN.hpp"),
@@ -577,16 +577,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "CANBusMap",
             yml_file = "semiwrap/CANBusMap.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/bus/CANBusMap.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/bus/CANBusMap.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "I2C",
             yml_file = "semiwrap/I2C.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/bus/I2C.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/bus/I2C.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::I2C", "wpi__I2C.hpp"),
@@ -595,8 +595,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SerialPort",
             yml_file = "semiwrap/SerialPort.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/bus/SerialPort.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/bus/SerialPort.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SerialPort", "wpi__SerialPort.hpp"),
@@ -605,8 +605,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "AnalogInput",
             yml_file = "semiwrap/AnalogInput.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/AnalogInput.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/AnalogInput.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::AnalogInput", "wpi__AnalogInput.hpp"),
@@ -615,8 +615,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "CounterBase",
             yml_file = "semiwrap/CounterBase.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/CounterBase.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/CounterBase.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::CounterBase", "wpi__CounterBase.hpp"),
@@ -625,8 +625,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DigitalInput",
             yml_file = "semiwrap/DigitalInput.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/DigitalInput.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/DigitalInput.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DigitalInput", "wpi__DigitalInput.hpp"),
@@ -635,8 +635,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DigitalOutput",
             yml_file = "semiwrap/DigitalOutput.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/DigitalOutput.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/DigitalOutput.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DigitalOutput", "wpi__DigitalOutput.hpp"),
@@ -645,8 +645,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PWM",
             yml_file = "semiwrap/PWM.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/PWM.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/discrete/PWM.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWM", "wpi__PWM.hpp"),
@@ -655,8 +655,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ExpansionHub",
             yml_file = "semiwrap/ExpansionHub.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHub.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHub.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::ExpansionHub", "wpi__ExpansionHub.hpp"),
@@ -665,8 +665,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ExpansionHubCRServo",
             yml_file = "semiwrap/ExpansionHubCRServo.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubCRServo.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubCRServo.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::ExpansionHubCRServo", "wpi__ExpansionHubCRServo.hpp"),
@@ -675,8 +675,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ExpansionHubMotor",
             yml_file = "semiwrap/ExpansionHubMotor.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubMotor.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubMotor.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::ExpansionHubMotor", "wpi__ExpansionHubMotor.hpp"),
@@ -685,8 +685,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ExpansionHubPositionConstants",
             yml_file = "semiwrap/ExpansionHubPositionConstants.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubPositionConstants.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubPositionConstants.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::ExpansionHubPositionConstants", "wpi__ExpansionHubPositionConstants.hpp"),
@@ -695,8 +695,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ExpansionHubServo",
             yml_file = "semiwrap/ExpansionHubServo.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubServo.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubServo.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::ExpansionHubServo", "wpi__ExpansionHubServo.hpp"),
@@ -705,8 +705,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ExpansionHubVelocityConstants",
             yml_file = "semiwrap/ExpansionHubVelocityConstants.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubVelocityConstants.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/expansionhub/ExpansionHubVelocityConstants.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::ExpansionHubVelocityConstants", "wpi__ExpansionHubVelocityConstants.hpp"),
@@ -715,8 +715,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "OnboardIMU",
             yml_file = "semiwrap/OnboardIMU.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/imu/OnboardIMU.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/imu/OnboardIMU.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::OnboardIMU", "wpi__OnboardIMU.hpp"),
@@ -725,8 +725,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "AddressableLED",
             yml_file = "semiwrap/AddressableLED.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/led/AddressableLED.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/led/AddressableLED.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::AddressableLED", "wpi__AddressableLED.hpp"),
@@ -736,8 +736,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "LEDPattern",
             yml_file = "semiwrap/LEDPattern.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/led/LEDPattern.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/led/LEDPattern.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::LEDPattern", "wpi__LEDPattern.hpp"),
@@ -747,8 +747,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Koors40",
             yml_file = "semiwrap/Koors40.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/Koors40.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/Koors40.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Koors40", "wpi__Koors40.hpp"),
@@ -757,8 +757,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MotorController",
             yml_file = "semiwrap/MotorController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/MotorController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/MotorController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::MotorController", "wpi__MotorController.hpp"),
@@ -767,8 +767,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MotorSafety",
             yml_file = "semiwrap/MotorSafety.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/MotorSafety.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/MotorSafety.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::MotorSafety", "wpi__MotorSafety.hpp"),
@@ -777,8 +777,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PWMMotorController",
             yml_file = "semiwrap/PWMMotorController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMMotorController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMMotorController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMMotorController", "wpi__PWMMotorController.hpp"),
@@ -787,8 +787,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PWMSparkFlex",
             yml_file = "semiwrap/PWMSparkFlex.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMSparkFlex.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMSparkFlex.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMSparkFlex", "wpi__PWMSparkFlex.hpp"),
@@ -797,8 +797,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PWMSparkMax",
             yml_file = "semiwrap/PWMSparkMax.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMSparkMax.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMSparkMax.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMSparkMax", "wpi__PWMSparkMax.hpp"),
@@ -807,8 +807,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PWMTalonFX",
             yml_file = "semiwrap/PWMTalonFX.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMTalonFX.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMTalonFX.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMTalonFX", "wpi__PWMTalonFX.hpp"),
@@ -817,8 +817,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PWMTalonSRX",
             yml_file = "semiwrap/PWMTalonSRX.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMTalonSRX.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMTalonSRX.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMTalonSRX", "wpi__PWMTalonSRX.hpp"),
@@ -827,8 +827,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PWMVenom",
             yml_file = "semiwrap/PWMVenom.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMVenom.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMVenom.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMVenom", "wpi__PWMVenom.hpp"),
@@ -837,8 +837,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PWMVictorSPX",
             yml_file = "semiwrap/PWMVictorSPX.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMVictorSPX.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/PWMVictorSPX.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMVictorSPX", "wpi__PWMVictorSPX.hpp"),
@@ -847,8 +847,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Spark",
             yml_file = "semiwrap/Spark.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/Spark.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/Spark.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Spark", "wpi__Spark.hpp"),
@@ -857,8 +857,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SparkMini",
             yml_file = "semiwrap/SparkMini.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/SparkMini.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/SparkMini.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SparkMini", "wpi__SparkMini.hpp"),
@@ -867,8 +867,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Talon",
             yml_file = "semiwrap/Talon.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/Talon.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/Talon.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Talon", "wpi__Talon.hpp"),
@@ -877,8 +877,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "VictorSP",
             yml_file = "semiwrap/VictorSP.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/VictorSP.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/motor/VictorSP.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::VictorSP", "wpi__VictorSP.hpp"),
@@ -887,8 +887,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Compressor",
             yml_file = "semiwrap/Compressor.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/Compressor.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/Compressor.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Compressor", "wpi__Compressor.hpp"),
@@ -897,16 +897,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "CompressorConfigType",
             yml_file = "semiwrap/CompressorConfigType.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/CompressorConfigType.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/CompressorConfigType.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "DoubleSolenoid",
             yml_file = "semiwrap/DoubleSolenoid.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/DoubleSolenoid.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/DoubleSolenoid.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DoubleSolenoid", "wpi__DoubleSolenoid.hpp"),
@@ -915,8 +915,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PneumaticHub",
             yml_file = "semiwrap/PneumaticHub.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/PneumaticHub.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/PneumaticHub.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PneumaticHub", "wpi__PneumaticHub.hpp"),
@@ -928,8 +928,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PneumaticsBase",
             yml_file = "semiwrap/PneumaticsBase.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/PneumaticsBase.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/PneumaticsBase.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PneumaticsBase", "wpi__PneumaticsBase.hpp"),
@@ -938,8 +938,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PneumaticsControlModule",
             yml_file = "semiwrap/PneumaticsControlModule.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/PneumaticsControlModule.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/PneumaticsControlModule.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PneumaticsControlModule", "wpi__PneumaticsControlModule.hpp"),
@@ -948,16 +948,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PneumaticsModuleType",
             yml_file = "semiwrap/PneumaticsModuleType.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/PneumaticsModuleType.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/PneumaticsModuleType.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "Solenoid",
             yml_file = "semiwrap/Solenoid.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/Solenoid.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/pneumatic/Solenoid.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Solenoid", "wpi__Solenoid.hpp"),
@@ -966,8 +966,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PowerDistribution",
             yml_file = "semiwrap/PowerDistribution.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/power/PowerDistribution.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/power/PowerDistribution.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PowerDistribution", "wpi__PowerDistribution.hpp"),
@@ -979,8 +979,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SharpIR",
             yml_file = "semiwrap/SharpIR.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/range/SharpIR.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/range/SharpIR.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SharpIR", "wpi__SharpIR.hpp"),
@@ -989,8 +989,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "AnalogEncoder",
             yml_file = "semiwrap/AnalogEncoder.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/AnalogEncoder.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/AnalogEncoder.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::AnalogEncoder", "wpi__AnalogEncoder.hpp"),
@@ -999,8 +999,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "AnalogPotentiometer",
             yml_file = "semiwrap/AnalogPotentiometer.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/AnalogPotentiometer.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/AnalogPotentiometer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::AnalogPotentiometer", "wpi__AnalogPotentiometer.hpp"),
@@ -1009,8 +1009,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DutyCycle",
             yml_file = "semiwrap/DutyCycle.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/DutyCycle.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/DutyCycle.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DutyCycle", "wpi__DutyCycle.hpp"),
@@ -1019,8 +1019,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DutyCycleEncoder",
             yml_file = "semiwrap/DutyCycleEncoder.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/DutyCycleEncoder.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/DutyCycleEncoder.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DutyCycleEncoder", "wpi__DutyCycleEncoder.hpp"),
@@ -1029,8 +1029,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Encoder",
             yml_file = "semiwrap/Encoder.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/Encoder.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/hardware/rotation/Encoder.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Encoder", "wpi__Encoder.hpp"),
@@ -1039,8 +1039,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DriverStationModeThread",
             yml_file = "semiwrap/DriverStationModeThread.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/internal/DriverStationModeThread.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/internal/DriverStationModeThread.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::internal::DriverStationModeThread", "wpi__internal__DriverStationModeThread.hpp"),
@@ -1049,8 +1049,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PeriodicPriorityQueue",
             yml_file = "semiwrap/PeriodicPriorityQueue.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/internal/PeriodicPriorityQueue.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/internal/PeriodicPriorityQueue.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::internal::PeriodicPriorityQueue", "wpi__internal__PeriodicPriorityQueue.hpp"),
@@ -1060,8 +1060,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "OpMode",
             yml_file = "semiwrap/OpMode.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/opmode/OpMode.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/opmode/OpMode.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::OpMode", "wpi__OpMode.hpp"),
@@ -1070,8 +1070,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PeriodicOpMode",
             yml_file = "semiwrap/PeriodicOpMode.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/opmode/PeriodicOpMode.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/opmode/PeriodicOpMode.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PeriodicOpMode", "wpi__PeriodicOpMode.hpp"),
@@ -1080,8 +1080,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Field2d",
             yml_file = "semiwrap/Field2d.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/Field2d.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/Field2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Field2d", "wpi__Field2d.hpp"),
@@ -1090,8 +1090,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "FieldObject2d",
             yml_file = "semiwrap/FieldObject2d.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/FieldObject2d.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/FieldObject2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::FieldObject2d", "wpi__FieldObject2d.hpp"),
@@ -1100,8 +1100,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Mechanism2d",
             yml_file = "semiwrap/Mechanism2d.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/Mechanism2d.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/Mechanism2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Mechanism2d", "wpi__Mechanism2d.hpp"),
@@ -1110,8 +1110,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MechanismLigament2d",
             yml_file = "semiwrap/MechanismLigament2d.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/MechanismLigament2d.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/MechanismLigament2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::MechanismLigament2d", "wpi__MechanismLigament2d.hpp"),
@@ -1120,8 +1120,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MechanismObject2d",
             yml_file = "semiwrap/MechanismObject2d.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/MechanismObject2d.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/MechanismObject2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::MechanismObject2d", "wpi__MechanismObject2d.hpp"),
@@ -1130,8 +1130,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MechanismRoot2d",
             yml_file = "semiwrap/MechanismRoot2d.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/MechanismRoot2d.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/MechanismRoot2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::MechanismRoot2d", "wpi__MechanismRoot2d.hpp"),
@@ -1140,8 +1140,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SendableBuilderImpl",
             yml_file = "semiwrap/SendableBuilderImpl.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/SendableBuilderImpl.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/SendableBuilderImpl.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SendableBuilderImpl", "wpi__SendableBuilderImpl.hpp"),
@@ -1150,8 +1150,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SendableChooser",
             yml_file = "semiwrap/SendableChooser.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/SendableChooser.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/SendableChooser.hpp",
             tmpl_class_names = [
                 ("SendableChooser_tmpl1", "SendableChooser"),
             ],
@@ -1162,8 +1162,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SendableChooserBase",
             yml_file = "semiwrap/SendableChooserBase.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/SendableChooserBase.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/SendableChooserBase.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SendableChooserBase", "wpi__SendableChooserBase.hpp"),
@@ -1172,8 +1172,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SmartDashboard",
             yml_file = "semiwrap/SmartDashboard.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/SmartDashboard.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/smartdashboard/SmartDashboard.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SmartDashboard", "wpi__SmartDashboard.hpp"),
@@ -1182,8 +1182,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SysIdRoutineLog",
             yml_file = "semiwrap/SysIdRoutineLog.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/sysid/SysIdRoutineLog.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/sysid/SysIdRoutineLog.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sysid::SysIdRoutineLog", "wpi__sysid__SysIdRoutineLog.hpp"),
@@ -1193,8 +1193,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DataLogManager",
             yml_file = "semiwrap/DataLogManager.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/DataLogManager.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/DataLogManager.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::DataLogManager", "wpi__DataLogManager.hpp"),
@@ -1203,16 +1203,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Errors",
             yml_file = "semiwrap/Errors.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/Errors.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/Errors.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "RobotController",
             yml_file = "semiwrap/RobotController.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/RobotController.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/RobotController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::CANStatus", "wpi__CANStatus.hpp"),
@@ -1222,16 +1222,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "RuntimeType",
             yml_file = "semiwrap/RuntimeType.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/RuntimeType.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/RuntimeType.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "SystemServer",
             yml_file = "semiwrap/SystemServer.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/SystemServer.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/SystemServer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SystemServer", "wpi__SystemServer.hpp"),
@@ -1240,16 +1240,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Threads",
             yml_file = "semiwrap/Threads.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/Threads.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/Threads.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "Timer",
             yml_file = "semiwrap/Timer.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/Timer.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/Timer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Timer", "wpi__Timer.hpp"),
@@ -1258,8 +1258,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Tracer",
             yml_file = "semiwrap/Tracer.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/Tracer.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/Tracer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Tracer", "wpi__Tracer.hpp"),
@@ -1268,8 +1268,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Watchdog",
             yml_file = "semiwrap/Watchdog.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/system/Watchdog.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/system/Watchdog.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Watchdog", "wpi__Watchdog.hpp"),
@@ -1278,8 +1278,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Preferences",
             yml_file = "semiwrap/Preferences.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/util/Preferences.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/util/Preferences.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Preferences", "wpi__Preferences.hpp"),
@@ -1288,8 +1288,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "SensorUtil",
             yml_file = "semiwrap/SensorUtil.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/util/SensorUtil.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/util/SensorUtil.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SensorUtil", "wpi__SensorUtil.hpp"),
@@ -1299,14 +1299,14 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     resolve_casters(
         name = "wpilib.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpimath/src/main/python:wpimath/wpimath-casters.pybind11.json", "//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "wpilib.casters.pkl",
         dep_file = "wpilib.casters.d",
     )
 
     gen_libinit(
         name = "wpilib.gen_lib_init",
-        output_file = "src/main/python/wpilib/_init__wpilib.py",
+        output_file = "wpilib/_init__wpilib.py",
         modules = ["native.wpilib._init_robotpy_native_wpilib", "hal._init__wpi_hal", "wpiutil._init__wpiutil", "ntcore._init__ntcore", "wpimath._init__wpimath"],
     )
 
@@ -1316,9 +1316,9 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         module_pkg_name = "wpilib._wpilib",
         output_file = "wpilib.pc",
         pkg_name = "wpilib",
-        install_path = "src/main/python/wpilib",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpilib/__init__.py",
+        install_path = "wpilib",
+        project_file = "pyproject.toml",
+        package_root = "wpilib/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -1332,7 +1332,7 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         name = "wpilib",
         casters_pickle = "wpilib.casters.pkl",
         header_gen_config = WPILIB_HEADER_GEN,
-        trampoline_subpath = "src/main/python/wpilib",
+        trampoline_subpath = "wpilib",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog:robotpy-native-datalog.copy_headers",
@@ -1348,22 +1348,22 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     create_pybind_library(
         name = "wpilib",
-        install_path = "src/main/python/wpilib/",
+        install_path = "wpilib/",
         extension_name = "_wpilib",
         generated_srcs = [":wpilib.generated_srcs"],
         semiwrap_header = [":wpilib.gen_modinit_hpp"],
         deps = [
             ":wpilib.tmpl_hdrs",
             ":wpilib.trampoline_hdrs",
+            "//hal/src/main/python:wpihal_pybind_library",
             "//hal:wpiHal",
-            "//hal:wpihal_pybind_library",
+            "//ntcore/src/main/python:ntcore_pybind_library",
             "//ntcore:ntcore",
-            "//ntcore:ntcore_pybind_library",
             "//wpilibc:wpilibc",
+            "//wpimath/src/main/python:wpimath_pybind_library",
             "//wpimath:wpimath",
-            "//wpimath:wpimath_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//hal:shared/wpiHal",
@@ -1456,8 +1456,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "ADXL345Sim",
             yml_file = "semiwrap/simulation/ADXL345Sim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/ADXL345Sim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/ADXL345Sim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::ADXL345Sim", "wpi__sim__ADXL345Sim.hpp"),
@@ -1466,8 +1466,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "AddressableLEDSim",
             yml_file = "semiwrap/simulation/AddressableLEDSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/AddressableLEDSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/AddressableLEDSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::AddressableLEDSim", "wpi__sim__AddressableLEDSim.hpp"),
@@ -1476,8 +1476,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "AlertSim",
             yml_file = "semiwrap/simulation/AlertSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/AlertSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/AlertSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::AlertSim", "wpi__sim__AlertSim.hpp"),
@@ -1487,8 +1487,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "AnalogEncoderSim",
             yml_file = "semiwrap/simulation/AnalogEncoderSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/AnalogEncoderSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/AnalogEncoderSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::AnalogEncoderSim", "wpi__sim__AnalogEncoderSim.hpp"),
@@ -1497,8 +1497,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "AnalogInputSim",
             yml_file = "semiwrap/simulation/AnalogInputSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/AnalogInputSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/AnalogInputSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::AnalogInputSim", "wpi__sim__AnalogInputSim.hpp"),
@@ -1507,8 +1507,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "BatterySim",
             yml_file = "semiwrap/simulation/BatterySim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/BatterySim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/BatterySim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::BatterySim", "wpi__sim__BatterySim.hpp"),
@@ -1517,8 +1517,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "CTREPCMSim",
             yml_file = "semiwrap/simulation/CTREPCMSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/CTREPCMSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/CTREPCMSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::CTREPCMSim", "wpi__sim__CTREPCMSim.hpp"),
@@ -1527,8 +1527,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "CallbackStore",
             yml_file = "semiwrap/simulation/CallbackStore.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/CallbackStore.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/CallbackStore.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::CallbackStore", "wpi__sim__CallbackStore.hpp"),
@@ -1537,8 +1537,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DCMotorSim",
             yml_file = "semiwrap/simulation/DCMotorSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DCMotorSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DCMotorSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DCMotorSim", "wpi__sim__DCMotorSim.hpp"),
@@ -1547,8 +1547,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DIOSim",
             yml_file = "semiwrap/simulation/DIOSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DIOSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DIOSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DIOSim", "wpi__sim__DIOSim.hpp"),
@@ -1557,8 +1557,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DifferentialDrivetrainSim",
             yml_file = "semiwrap/simulation/DifferentialDrivetrainSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DifferentialDrivetrainSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DifferentialDrivetrainSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DifferentialDrivetrainSim", "wpi__sim__DifferentialDrivetrainSim.hpp"),
@@ -1571,8 +1571,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DigitalPWMSim",
             yml_file = "semiwrap/simulation/DigitalPWMSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DigitalPWMSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DigitalPWMSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DigitalPWMSim", "wpi__sim__DigitalPWMSim.hpp"),
@@ -1581,8 +1581,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DoubleSolenoidSim",
             yml_file = "semiwrap/simulation/DoubleSolenoidSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DoubleSolenoidSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DoubleSolenoidSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DoubleSolenoidSim", "wpi__sim__DoubleSolenoidSim.hpp"),
@@ -1591,8 +1591,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DriverStationSim",
             yml_file = "semiwrap/simulation/DriverStationSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DriverStationSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DriverStationSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::OpModeOptions", "wpi__sim__OpModeOptions.hpp"),
@@ -1602,8 +1602,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DutyCycleEncoderSim",
             yml_file = "semiwrap/simulation/DutyCycleEncoderSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DutyCycleEncoderSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DutyCycleEncoderSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DutyCycleEncoderSim", "wpi__sim__DutyCycleEncoderSim.hpp"),
@@ -1612,8 +1612,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DutyCycleSim",
             yml_file = "semiwrap/simulation/DutyCycleSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DutyCycleSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DutyCycleSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DutyCycleSim", "wpi__sim__DutyCycleSim.hpp"),
@@ -1622,8 +1622,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "ElevatorSim",
             yml_file = "semiwrap/simulation/ElevatorSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/ElevatorSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/ElevatorSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::ElevatorSim", "wpi__sim__ElevatorSim.hpp"),
@@ -1632,8 +1632,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "EncoderSim",
             yml_file = "semiwrap/simulation/EncoderSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/EncoderSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/EncoderSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::EncoderSim", "wpi__sim__EncoderSim.hpp"),
@@ -1642,8 +1642,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "FlywheelSim",
             yml_file = "semiwrap/simulation/FlywheelSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/FlywheelSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/FlywheelSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::FlywheelSim", "wpi__sim__FlywheelSim.hpp"),
@@ -1652,8 +1652,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "GamepadSim",
             yml_file = "semiwrap/simulation/GamepadSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/GamepadSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/GamepadSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::GamepadSim", "wpi__sim__GamepadSim.hpp"),
@@ -1662,8 +1662,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "GenericHIDSim",
             yml_file = "semiwrap/simulation/GenericHIDSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/GenericHIDSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/GenericHIDSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::GenericHIDSim", "wpi__sim__GenericHIDSim.hpp"),
@@ -1672,8 +1672,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "JoystickSim",
             yml_file = "semiwrap/simulation/JoystickSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/JoystickSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/JoystickSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::JoystickSim", "wpi__sim__JoystickSim.hpp"),
@@ -1682,8 +1682,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "LinearSystemSim",
             yml_file = "semiwrap/simulation/LinearSystemSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/LinearSystemSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/LinearSystemSim.hpp",
             tmpl_class_names = [
                 ("LinearSystemSim_tmpl1", "LinearSystemSim_1_1_1"),
                 ("LinearSystemSim_tmpl2", "LinearSystemSim_1_1_2"),
@@ -1699,8 +1699,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "GameCubeControllerSim",
             yml_file = "semiwrap/simulation/GameCubeControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/GameCubeControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/GameCubeControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::GameCubeControllerSim", "wpi__sim__GameCubeControllerSim.hpp"),
@@ -1709,8 +1709,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DualSenseEdgeControllerSim",
             yml_file = "semiwrap/simulation/DualSenseEdgeControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DualSenseEdgeControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DualSenseEdgeControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DualSenseEdgeControllerSim", "wpi__sim__DualSenseEdgeControllerSim.hpp"),
@@ -1719,8 +1719,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DualSenseControllerSim",
             yml_file = "semiwrap/simulation/DualSenseControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DualSenseControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DualSenseControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DualSenseControllerSim", "wpi__sim__DualSenseControllerSim.hpp"),
@@ -1729,8 +1729,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "DualShock4ControllerSim",
             yml_file = "semiwrap/simulation/DualShock4ControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/DualShock4ControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/DualShock4ControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::DualShock4ControllerSim", "wpi__sim__DualShock4ControllerSim.hpp"),
@@ -1739,8 +1739,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "LogitechF310ControllerSim",
             yml_file = "semiwrap/simulation/LogitechF310ControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/LogitechF310ControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/LogitechF310ControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::LogitechF310ControllerSim", "wpi__sim__LogitechF310ControllerSim.hpp"),
@@ -1749,8 +1749,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "SteamControllerSim",
             yml_file = "semiwrap/simulation/SteamControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SteamControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SteamControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::SteamControllerSim", "wpi__sim__SteamControllerSim.hpp"),
@@ -1759,8 +1759,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "Switch2GCControllerSim",
             yml_file = "semiwrap/simulation/Switch2GCControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/Switch2GCControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/Switch2GCControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::Switch2GCControllerSim", "wpi__sim__Switch2GCControllerSim.hpp"),
@@ -1769,8 +1769,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "Switch2ProControllerSim",
             yml_file = "semiwrap/simulation/Switch2ProControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/Switch2ProControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/Switch2ProControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::Switch2ProControllerSim", "wpi__sim__Switch2ProControllerSim.hpp"),
@@ -1779,8 +1779,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "SwitchN64ControllerSim",
             yml_file = "semiwrap/simulation/SwitchN64ControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SwitchN64ControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SwitchN64ControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::SwitchN64ControllerSim", "wpi__sim__SwitchN64ControllerSim.hpp"),
@@ -1789,8 +1789,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "SwitchProControllerSim",
             yml_file = "semiwrap/simulation/SwitchProControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SwitchProControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SwitchProControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::SwitchProControllerSim", "wpi__sim__SwitchProControllerSim.hpp"),
@@ -1799,8 +1799,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "XboxControllerSim",
             yml_file = "semiwrap/simulation/XboxControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/XboxControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/XboxControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::XboxControllerSim", "wpi__sim__XboxControllerSim.hpp"),
@@ -1809,8 +1809,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "NiDsPS4ControllerSim",
             yml_file = "semiwrap/simulation/NiDsPS4ControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/NiDsPS4ControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/NiDsPS4ControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::NiDsPS4ControllerSim", "wpi__sim__NiDsPS4ControllerSim.hpp"),
@@ -1819,8 +1819,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "NiDsPS5ControllerSim",
             yml_file = "semiwrap/simulation/NiDsPS5ControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/NiDsPS5ControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/NiDsPS5ControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::NiDsPS5ControllerSim", "wpi__sim__NiDsPS5ControllerSim.hpp"),
@@ -1829,8 +1829,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "OnboardIMUSim",
             yml_file = "semiwrap/simulation/OnboardIMUSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/OnboardIMUSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/OnboardIMUSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::OnboardIMUSim", "wpi__sim__OnboardIMUSim.hpp"),
@@ -1839,8 +1839,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "PWMSim",
             yml_file = "semiwrap/simulation/PWMSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/PWMSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/PWMSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::PWMSim", "wpi__sim__PWMSim.hpp"),
@@ -1849,8 +1849,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "PneumaticsBaseSim",
             yml_file = "semiwrap/simulation/PneumaticsBaseSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/PneumaticsBaseSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/PneumaticsBaseSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::PneumaticsBaseSim", "wpi__sim__PneumaticsBaseSim.hpp"),
@@ -1859,8 +1859,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "PowerDistributionSim",
             yml_file = "semiwrap/simulation/PowerDistributionSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/PowerDistributionSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/PowerDistributionSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::PowerDistributionSim", "wpi__sim__PowerDistributionSim.hpp"),
@@ -1869,8 +1869,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "PWMMotorControllerSim",
             yml_file = "semiwrap/simulation/PWMMotorControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/PWMMotorControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/PWMMotorControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::PWMMotorControllerSim", "wpi__sim__PWMMotorControllerSim.hpp"),
@@ -1879,8 +1879,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "REVPHSim",
             yml_file = "semiwrap/simulation/REVPHSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/REVPHSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/REVPHSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::REVPHSim", "wpi__sim__REVPHSim.hpp"),
@@ -1889,8 +1889,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "RoboRioSim",
             yml_file = "semiwrap/simulation/RoboRioSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/RoboRioSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/RoboRioSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::RoboRioSim", "wpi__sim__RoboRioSim.hpp"),
@@ -1899,8 +1899,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "SendableChooserSim",
             yml_file = "semiwrap/simulation/SendableChooserSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SendableChooserSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SendableChooserSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::SendableChooserSim", "wpi__sim__SendableChooserSim.hpp"),
@@ -1909,8 +1909,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "SharpIRSim",
             yml_file = "semiwrap/simulation/SharpIRSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SharpIRSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SharpIRSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SharpIRSim", "wpi__SharpIRSim.hpp"),
@@ -1919,8 +1919,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "SimDeviceSim",
             yml_file = "semiwrap/simulation/SimDeviceSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SimDeviceSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SimDeviceSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::SimDeviceSim", "wpi__sim__SimDeviceSim.hpp"),
@@ -1929,16 +1929,16 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "SimHooks",
             yml_file = "semiwrap/simulation/SimHooks.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SimHooks.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SimHooks.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "SingleJointedArmSim",
             yml_file = "semiwrap/simulation/SingleJointedArmSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SingleJointedArmSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SingleJointedArmSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::SingleJointedArmSim", "wpi__sim__SingleJointedArmSim.hpp"),
@@ -1947,8 +1947,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "SolenoidSim",
             yml_file = "semiwrap/simulation/SolenoidSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/SolenoidSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/SolenoidSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::SolenoidSim", "wpi__sim__SolenoidSim.hpp"),
@@ -1957,8 +1957,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "NiDsStadiaControllerSim",
             yml_file = "semiwrap/simulation/NiDsStadiaControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/NiDsStadiaControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/NiDsStadiaControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::NiDsStadiaControllerSim", "wpi__sim__NiDsStadiaControllerSim.hpp"),
@@ -1967,8 +1967,8 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         struct(
             class_name = "NiDsXboxControllerSim",
             yml_file = "semiwrap/simulation/NiDsXboxControllerSim.yml",
-            header_root = "$(execpath :robotpy-native-wpilib.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpilib.copy_headers)/wpi/simulation/NiDsXboxControllerSim.hpp",
+            header_root = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)",
+            header_file = "$(execpath //wpilibc:robotpy-native-wpilib.copy_headers)/wpi/simulation/NiDsXboxControllerSim.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::sim::NiDsXboxControllerSim", "wpi__sim__NiDsXboxControllerSim.hpp"),
@@ -1978,14 +1978,14 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
 
     resolve_casters(
         name = "wpilib_simulation.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpimath/src/main/python:wpimath/wpimath-casters.pybind11.json", "//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "wpilib_simulation.casters.pkl",
         dep_file = "wpilib_simulation.casters.d",
     )
 
     gen_libinit(
         name = "wpilib_simulation.gen_lib_init",
-        output_file = "src/main/python/wpilib/simulation/_init__simulation.py",
+        output_file = "wpilib/simulation/_init__simulation.py",
         modules = ["native.wpilib._init_robotpy_native_wpilib", "wpilib._init__wpilib", "wpimath._init__wpimath"],
     )
 
@@ -1995,9 +1995,9 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         module_pkg_name = "wpilib.simulation._simulation",
         output_file = "wpilib_simulation.pc",
         pkg_name = "wpilib_simulation",
-        install_path = "src/main/python/wpilib/simulation",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpilib/__init__.py",
+        install_path = "wpilib/simulation",
+        project_file = "pyproject.toml",
+        package_root = "wpilib/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -2011,7 +2011,7 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         name = "wpilib_simulation",
         casters_pickle = "wpilib_simulation.casters.pkl",
         header_gen_config = WPILIB_SIMULATION_HEADER_GEN,
-        trampoline_subpath = "src/main/python/wpilib/simulation",
+        trampoline_subpath = "wpilib/simulation",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog:robotpy-native-datalog.copy_headers",
@@ -2027,23 +2027,23 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
 
     create_pybind_library(
         name = "wpilib_simulation",
-        install_path = "src/main/python/wpilib/simulation/",
+        install_path = "wpilib/simulation/",
         extension_name = "_simulation",
         generated_srcs = [":wpilib_simulation.generated_srcs"],
         semiwrap_header = [":wpilib_simulation.gen_modinit_hpp"],
         deps = [
             ":wpilib_simulation.tmpl_hdrs",
             ":wpilib_simulation.trampoline_hdrs",
+            "//hal/src/main/python:wpihal_pybind_library",
             "//hal:wpiHal",
-            "//hal:wpihal_pybind_library",
+            "//ntcore/src/main/python:ntcore_pybind_library",
             "//ntcore:ntcore",
-            "//ntcore:ntcore_pybind_library",
-            "//wpilibc:wpilib_pybind_library",
+            "//wpilibc/src/main/python:wpilib_pybind_library",
             "//wpilibc:wpilibc",
+            "//wpimath/src/main/python:wpimath_pybind_library",
             "//wpimath:wpimath",
-            "//wpimath:wpimath_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//hal:shared/wpiHal",
@@ -2084,8 +2084,8 @@ def define_pybind_library(name, pkgcfgs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/wpilib/wpilib.pc",
-            "src/main/python/wpilib/simulation/wpilib_simulation.pc",
+            "wpilib/wpilib.pc",
+            "wpilib/simulation/wpilib_simulation.pc",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -2094,44 +2094,44 @@ def define_pybind_library(name, pkgcfgs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/wpilib/**"], exclude = ["src/main/python/wpilib/**/*.py"], allow_empty = True),
+        srcs = native.glob(["wpilib/**"], exclude = ["wpilib/**/*.py"], allow_empty = True),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/wpilib/version.py",
+        output_file = "wpilib/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
         distribution = "wpilib",
-        srcs = native.glob(["src/main/python/wpilib/**/*.py"]) + [
-            "src/main/python/wpilib/_init__wpilib.py",
-            "src/main/python/wpilib/simulation/_init__simulation.py",
+        srcs = native.glob(["wpilib/**/*.py"]) + [
+            "wpilib/_init__wpilib.py",
+            "wpilib/simulation/_init__simulation.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpilib/_wpilib",
-            ":src/main/python/wpilib/simulation/_simulation",
+            ":wpilib/_wpilib",
+            ":wpilib/simulation/_simulation",
             ":wpilib.trampoline_hdr_files",
             ":wpilib_simulation.trampoline_hdr_files",
         ],
-        imports = ["src/main/python"],
+        imports = ["."],
         deps = [
-            "//hal:robotpy-hal",
-            "//ntcore:pyntcore",
+            "//hal/src/main/python:robotpy-hal",
+            "//ntcore/src/main/python:pyntcore",
             "//wpilibc:robotpy-native-wpilib",
-            "//wpimath:robotpy-wpimath",
-            "//wpiutil:robotpy-wpiutil",
+            "//wpimath/src/main/python:robotpy-wpimath",
+            "//wpiutil/src/main/python:robotpy-wpiutil",
             requirement("pytest"),
             requirement("pytest-reraise"),
             requirement("robotpy-cli"),
         ],
-        strip_path_prefixes = ["wpilibc/src/main/python", "wpilibc"],
+        strip_path_prefixes = ["wpilibc/src/main/python", "wpilibc/src/main/python"],
         summary = "Binary wrapper for WPILib",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -2146,8 +2146,8 @@ def define_pybind_library(name, pkgcfgs = []):
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
+        yaml_output_directory = "semiwrap",
+        extra_hdrs = native.glob(["**/*.h"], allow_empty = True) + [
             "//datalog:robotpy-native-datalog.copy_headers",
             "//hal:robotpy-native-wpihal.copy_headers",
             "//ntcore:robotpy-native-ntcore.copy_headers",
@@ -2156,18 +2156,18 @@ def define_pybind_library(name, pkgcfgs = []):
             "//wpinet:robotpy-native-wpinet.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/wpilib/__init__.py",
+        package_root_file = "wpilib/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
         name = "{}-scan-headers".format(name),
-        extra_hdrs = native.glob(["src/main/python/**/*.h"], allow_empty = True) + [
+        extra_hdrs = native.glob(["**/*.h"], allow_empty = True) + [
             "//wpilibc:robotpy-native-wpilib.copy_headers",
         ],
-        package_root_file = "src/main/python/wpilib/__init__.py",
+        package_root_file = "wpilib/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )
