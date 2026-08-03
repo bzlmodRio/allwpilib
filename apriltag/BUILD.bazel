@@ -1,6 +1,5 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("@rules_java//java:defs.bzl", "java_binary")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("//apriltag:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//apriltag:robotpy_pybind_build_info.bzl", "apriltag_extension", "define_pybind_library")
@@ -151,34 +150,23 @@ cc_test(
     ],
 )
 
+filegroup(
+    name = "test-resources",
+    srcs = glob(["src/test/resources/**"]),
+    visibility = ["//apriltag:__subpackages__"],
+)
+
 wpilib_java_junit5_test(
     name = "apriltag-java-test",
     srcs = glob(["src/test/java/**/*.java"]),
     resource_strip_prefix = "apriltag/src/test/resources",
-    resources = glob(["src/test/resources/**"]),
+    resources = ["//apriltag:test-resources"],
     deps = [
         ":apriltag-java",
         "//wpimath:wpimath-java",
         "//wpiutil:wpiutil-java",
         "@bzlmodrio-opencv//libraries/java/opencv",
         "@maven//:io_avaje_avaje_jsonb",
-    ],
-)
-
-cc_binary(
-    name = "DevMain-Cpp",
-    srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":apriltag",
-    ],
-)
-
-java_binary(
-    name = "DevMain-Java",
-    srcs = ["src/dev/java/org/wpilib/vision/apriltag/DevMain.java"],
-    main_class = "org.wpilib.vision.apriltag.DevMain",
-    deps = [
-        ":apriltag-java",
     ],
 )
 

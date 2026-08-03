@@ -7,6 +7,7 @@ generate_version_file(
     name = "generate-version",
     output_file = "WPILibVersion.cpp",
     template = "src/main/generate/WPILibVersion.cpp.in",
+    visibility = ["//tools/sysid:__subpackages__"],
 )
 
 generate_resources(
@@ -23,10 +24,11 @@ cc_library(
         exclude = ["src/main/native/cpp/Main.cpp"],
     ) + [
         ":generate-resources",
-        ":generate-version",
+        "//tools/sysid:generate-version",
     ],
     hdrs = glob(["src/main/native/include/**"]),
     strip_include_prefix = "src/main/native/include",
+    visibility = ["//tools/sysid:__subpackages__"],
     deps = [
         "//datalog",
         "//glass",

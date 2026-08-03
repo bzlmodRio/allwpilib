@@ -215,19 +215,23 @@ wpilib_cc_static_library(
     ],
 )
 
+filegroup(
+    name = "generated_java",
+    srcs = glob(["src/generated/main/java/**/*.java"]),
+)
+
 wpilib_java_library(
     name = "fields-java",
-    srcs = glob(["src/main/java/**/*.java"]) + glob([
-        "src/generated/main/java/**/*.java",
-    ]),
-    extra_source_pkgs = ["resources"],
+    srcs = glob(["src/main/java/**/*.java"]) + ["//fields:generated_java"],
+    extra_source_pkgs = ["//fields:resources"],
+    generated_java_srcs = ["//fields:generated_java"],
     maven_artifact_name = "fields-java",
     maven_group_id = "org.wpilib.fields",
     plugins = [
         "//:avaje_jsonb_generator",
     ],
     resource_strip_prefix = "fields/src/main/native/resources",
-    resources = FIELD_JSONS,
+    resources = ["//fields:field-jsons"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpimath:wpimath-java",
@@ -260,10 +264,16 @@ pkg_files(
     strip_prefix = "src/main/native/resources/",
 )
 
+filegroup(
+    name = "test-resources",
+    srcs = glob(["src/test/resources/**"]),
+    visibility = ["//fields:__subpackages__"],
+)
+
 wpilib_java_junit5_test(
     name = "fields-test",
     srcs = glob(["src/test/java/**/*.java"]),
-    resources = glob(["src/test/resources/**"]),
+    resources = ["//fields:test-resources"],
     deps = [
         ":fields-java",
         "//wpimath:wpimath-java",

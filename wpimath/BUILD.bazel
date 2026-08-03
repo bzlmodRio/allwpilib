@@ -1,7 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("@rules_java//java:defs.bzl", "java_binary")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "generate_def_windows", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
@@ -18,12 +17,23 @@ load("//wpimath:robotpy_pybind_test_info.bzl", "wpimath_test_extension", define_
 filegroup(
     name = "doxygen-files",
     srcs = glob([
-        "src/generated/main/native/cpp/wpimath/protobuf/*.h",
         "src/main/native/include/**/*",
         "src/main/native/thirdparty/gcem/include/**/*",
         "src/main/native/thirdparty/sleipnir/include/**/*",
-    ]),
+    ]) + ["//wpimath:generated-native-protobuf-headers"],
     visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "generated-native-cpp-srcs",
+    srcs = glob(["src/generated/main/native/cpp/**/*.cpp"]),
+    visibility = ["//wpimath:__subpackages__"],
+)
+
+filegroup(
+    name = "proto_java_resources",
+    srcs = glob(["src/main/proto/**"]),
+    visibility = ["//wpimath:__subpackages__"],
 )
 
 filegroup(
@@ -34,6 +44,7 @@ filegroup(
 filegroup(
     name = "proto_files",
     srcs = glob(["src/main/proto/**/*.proto"]),
+    visibility = ["//wpimath:__subpackages__"],
 )
 
 py_binary(
@@ -109,6 +120,7 @@ write_source_files(
 filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
+    visibility = ["//wpimath:__subpackages__"],
 )
 
 alias(
@@ -138,25 +150,24 @@ cc_library(
     hdrs = glob(["src/generated/main/native/cpp/**/*.h"]),
     includes = ["src/generated/main/native/cpp"],
     strip_include_prefix = "src/generated/main/native/cpp",
+    visibility = ["//wpimath:__subpackages__"],
 )
 
 pkg_files(
     name = "protobuf_hdr_pkg",
     srcs = glob(["src/generated/main/native/cpp/wpimath/protobuf/*.npb.h"]),
     strip_prefix = "src/generated/main/native/cpp/",
+    visibility = ["//wpimath:__subpackages__"],
 )
 
 wpilib_cc_library(
     name = "wpimath",
     srcs = glob(
-        [
-            "src/main/native/cpp/**",
-            "src/generated/main/native/cpp/**/*.cpp",
-        ],
+        ["src/main/native/cpp/**"],
         exclude = ["src/main/native/cpp/jni/**"],
-    ),
+    ) + ["//wpimath:generated-native-cpp-srcs"],
     hdrs = glob(["src/main/native/include/**"]),
-    extra_hdr_pkg_files = [":protobuf_hdr_pkg"],
+    extra_hdr_pkg_files = ["//wpimath:protobuf_hdr_pkg"],
     extra_src_pkg_files = [
         ":wpimath-java-jni-hdrs-pkg",
     ],
@@ -241,10 +252,17 @@ wpilib_cc_shared_library(
     deps = [":wpimathjni"],
 )
 
+filegroup(
+    name = "generated-native-protobuf-headers",
+    srcs = glob(["src/generated/main/native/cpp/wpimath/protobuf/*.h"]),
+    visibility = ["//wpimath:__subpackages__"],
+)
+
 wpilib_jni_java_library(
     name = "wpimath-java",
-    srcs = [":generated_java"] + glob(["src/main/java/**/*.java"]),
+    srcs = ["//wpimath:generated_java"] + glob(["src/main/java/**/*.java"]),
     exported_plugins = ["//javacPlugin:plugin"],
+    generated_java_srcs = ["//wpimath:generated_java"],
     javacopts = [
         "-Xep:UnicodeInCode:OFF",
     ],
@@ -254,8 +272,9 @@ wpilib_jni_java_library(
     plugins = [
         "//:avaje_jsonb_generator",
     ],
+    proto_srcs = ["//wpimath:proto_files"],
     resource_strip_prefix = "wpimath/src/main/proto",
-    resources = glob(["src/main/proto/**"]),
+    resources = ["//wpimath:proto_java_resources"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpiannotations",
@@ -303,23 +322,6 @@ wpilib_java_junit5_test(
         "@maven//:io_avaje_avaje_jsonb",
         "@maven//:org_ejml_ejml_java9module",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
-    ],
-)
-
-cc_binary(
-    name = "DevMain-Cpp",
-    srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpimath",
-    ],
-)
-
-java_binary(
-    name = "DevMain-Java",
-    srcs = ["src/dev/java/org/wpilib/math/DevMain.java"],
-    main_class = "org.wpilib.math.DevMain",
-    deps = [
-        ":wpimath-java",
     ],
 )
 

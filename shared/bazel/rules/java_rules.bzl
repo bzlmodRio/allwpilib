@@ -8,6 +8,9 @@ def wpilib_java_library(
         maven_artifact_name,
         tags = [],
         extra_source_pkgs = [],
+        java_srcs_root = "src/main/java",
+        generated_java_srcs = [],
+        proto_srcs = [],
         **kwargs):
     tags = list(tags) if tags else []
 
@@ -20,7 +23,13 @@ def wpilib_java_library(
         **kwargs
     )
 
-    zip_java_srcs(name = name, extra_pkgs = extra_source_pkgs)
+    zip_java_srcs(
+        name = name,
+        extra_pkgs = extra_source_pkgs,
+        java_srcs_root = java_srcs_root,
+        generated_java_srcs = generated_java_srcs,
+        proto_srcs = proto_srcs,
+    )
 
     wpilib_maven_export(
         name = "{}_publish".format(name),

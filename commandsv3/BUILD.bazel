@@ -1,6 +1,5 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//commandsv3:generate.bzl", "generate_commandsv3")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_library")
@@ -46,15 +45,24 @@ write_source_files(
 filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
+    visibility = ["//commandsv3:__subpackages__"],
+)
+
+filegroup(
+    name = "main_proto_srcs",
+    srcs = glob(["src/main/proto/**"]),
+    visibility = ["//commandsv3:__subpackages__"],
 )
 
 wpilib_java_library(
     name = "commandsv3-java",
-    srcs = glob(["src/main/java/**/*.java"]) + [":generated_java"],
+    srcs = glob(["src/main/java/**/*.java"]) + ["//commandsv3:generated_java"],
     exported_plugins = ["//javacPlugin:plugin"],
+    generated_java_srcs = ["//commandsv3:generated_java"],
     maven_artifact_name = "commands3-java",
     maven_group_id = "org.wpilib",
     plugins = ["//javacPlugin:plugin"],
+    proto_srcs = ["//commandsv3:main_proto_srcs"],
     visibility = ["//visibility:public"],
     deps = [
         "//hal:hal-java",
@@ -67,6 +75,12 @@ wpilib_java_library(
         "//wpiutil:wpiutil-java",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
+)
+
+filegroup(
+    name = "test-resources",
+    srcs = glob(["src/test/resources/**"]),
+    visibility = ["//commandsv3:__subpackages__"],
 )
 
 wpilib_java_junit5_test(
@@ -82,7 +96,7 @@ wpilib_java_junit5_test(
         "//epilogue-processor:plugin",
     ],
     resource_strip_prefix = "commandsv3/src/test/resources",
-    resources = glob(["src/test/resources/**"]),
+    resources = ["//commandsv3:test-resources"],
     deps = [
         ":commandsv3-java",
         "//epilogue-runtime:epilogue-java",
@@ -94,17 +108,5 @@ wpilib_java_junit5_test(
         "//wpiunits:wpiunits-java",
         "//wpiutil:wpiutil-java",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
-    ],
-)
-
-java_binary(
-    name = "DevMain-Java",
-    srcs = ["src/dev/java/org/wpilib/command3/DevMain.java"],
-    main_class = "org.wpilib.command3.DevMain",
-    deps = [
-        "//hal:hal-java",
-        "//ntcore:ntcore-java",
-        "//wpimath:wpimath-java",
-        "//wpiutil:wpiutil-java",
     ],
 )

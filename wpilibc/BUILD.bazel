@@ -1,6 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
@@ -13,11 +13,14 @@ load("//wpilibc:robotpy_native_build_info.bzl", "define_native_wrapper")
 load("//wpilibc:robotpy_pybind_build_info.bzl", "define_pybind_library", "wpilib_extension", "wpilib_simulation_extension")
 
 filegroup(
+    name = "generated-native-include-files",
+    srcs = glob(["src/generated/main/native/include/**/*"]),
+    visibility = ["//wpilibc:__subpackages__"],
+)
+
+filegroup(
     name = "doxygen-files",
-    srcs = glob([
-        "src/generated/main/native/include/**/*",
-        "src/main/native/include/**/*",
-    ]),
+    srcs = glob(["src/main/native/include/**/*"]) + ["//wpilibc:generated-native-include-files"],
     visibility = ["//visibility:public"],
 )
 
@@ -91,6 +94,7 @@ generate_version_file(
     name = "generate-version",
     output_file = "WPILibVersion.cpp",
     template = "src/generate/WPILibVersion.cpp.in",
+    visibility = ["//wpilibc:__subpackages__"],
 )
 
 write_source_files(
@@ -108,6 +112,7 @@ third_party_cc_lib_helper(
     name = "generated_cc",
     include_root = "src/generated/main/native/include",
     src_root = "src/generated/main/native/cpp",
+    visibility = ["//wpilibc:__subpackages__"],
 )
 
 pkg_files(
@@ -115,23 +120,24 @@ pkg_files(
     srcs = [
         ":generate-version",
     ],
+    visibility = ["//wpilibc:__subpackages__"],
 )
 
 wpilib_cc_library(
     name = "wpilibc",
     srcs = [
-        ":generate-version",
+        "//wpilibc:generate-version",
     ] + glob([
         "src/main/native/cpp/**",
     ]),
     hdrs = glob(["src/main/native/include/**"]),
     extra_src_pkg_files = [
-        ":generated_version_files_pkg",
+        "//wpilibc:generated_version_files_pkg",
     ],
     include_license_files = True,
     strip_include_prefix = "src/main/native/include",
     third_party_libraries = [
-        ":generated_cc",
+        "//wpilibc:generated_cc",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -184,13 +190,18 @@ cc_library(
     includes = ["src/test/native/include"],
 )
 
+filegroup(
+    name = "generated-test-native-cpp-srcs",
+    srcs = glob(["src/generated/test/native/cpp/**"]),
+    visibility = ["//wpilibc:__subpackages__"],
+)
+
 cc_test(
     name = "wpilibc-test",
     size = "small",
     srcs = glob([
-        "src/generated/test/native/cpp/**",
         "src/test/native/cpp/**",
-    ]),
+    ]) + ["//wpilibc:generated-test-native-cpp-srcs"],
     tags = [
         "no-tsan",
         "no-ubsan",
@@ -199,14 +210,6 @@ cc_test(
         ":test-headers",
         ":wpilibc",
         "//thirdparty/catch2",
-    ],
-)
-
-cc_binary(
-    name = "DevMain-Cpp",
-    srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpilibc",
     ],
 )
 

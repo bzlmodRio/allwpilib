@@ -62,6 +62,7 @@ def generate_robotpy_pybind_build_info(
 
     cmd = "$(location //shared/bazel/rules/robotpy:generate_pybind_build_file) --project_file=$(location " + pyproject_toml + ") --output_file=$(OUTS)"
 
+    cmd += " --package_name=" + native.package_name()
     cmd += " --package_root_file=" + package_root_file
     if stripped_include_prefix:
         cmd += " --stripped_include_prefix=" + stripped_include_prefix

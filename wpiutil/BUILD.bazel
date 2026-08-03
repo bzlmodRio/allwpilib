@@ -1,7 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
-load("@rules_java//java:defs.bzl", "java_binary")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@rules_python//python:defs.bzl", "py_binary", "py_library")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test")
@@ -278,6 +277,13 @@ cc_library(
     hdrs = glob(["src/generated/test/native/cpp/*.h"]),
     includes = ["src/generated/test/native/cpp"],
     strip_include_prefix = "src/generated/test/native/cpp",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+filegroup(
+    name = "generated-test-native-cpp-srcs",
+    srcs = glob(["src/generated/test/native/cpp/*"]),
+    visibility = ["//wpiutil:__subpackages__"],
 )
 
 cc_test(
@@ -285,38 +291,20 @@ cc_test(
     size = "small",
     srcs = glob([
         "src/test/native/cpp/**",
-        "src/generated/test/native/cpp/*",
-    ]),
+    ]) + ["//wpiutil:generated-test-native-cpp-srcs"],
     linkstatic = True,
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
     deps = [
-        ":nanopb-test-headers",
         ":wpiutil",
         ":wpiutil-testlib",
         "//thirdparty/catch2",
+        "//wpiutil:nanopb-test-headers",
     ],
 )
 
 wpilib_java_junit5_test(
     name = "wpiutil-java-test",
     srcs = glob(["src/test/java/**/*.java"]),
-    deps = [
-        ":wpiutil-java",
-    ],
-)
-
-cc_binary(
-    name = "DevMain-Cpp",
-    srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [
-        ":wpiutil",
-    ],
-)
-
-java_binary(
-    name = "DevMain-Java",
-    srcs = ["src/dev/java/org/wpilib/util/DevMain.java"],
-    main_class = "org.wpilib.util.DevMain",
     deps = [
         ":wpiutil-java",
     ],

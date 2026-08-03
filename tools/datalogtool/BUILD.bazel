@@ -14,13 +14,14 @@ generate_version_file(
     name = "generate-version",
     output_file = "WPILibVersion.cpp",
     template = "src/main/generate/WPILibVersion.cpp.in",
+    visibility = ["//tools/datalogtool:__subpackages__"],
 )
 
 cc_binary(
     name = "datalogtool",
     srcs = glob(["src/main/native/cpp/*"]) + [
         ":generate-resources",
-        ":generate-version",
+        "//tools/datalogtool:generate-version",
     ],
     defines = ["LIBSSH_STATIC"],
     linkopts = select({
