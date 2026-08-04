@@ -4,9 +4,9 @@ wpilib_java_junit5_test(
     name = "wpimath-java-test",
     srcs = glob(["**/*.java"]),
     deps = [
-        "//wpimath:wpimath-java",
-        "//wpiunits:wpiunits-java",
-        "//wpiutil:wpiutil-java",
+        "//wpimath/src/main/java:wpimath-java",
+        "//wpiunits/src/main/java:wpiunits-java",
+        "//wpiutil/src/main/java:wpiutil-java",
         "@maven//:io_avaje_avaje_jsonb",
         "@maven//:org_ejml_ejml_java9module",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",

@@ -1,0 +1,24 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+
+wpilib_java_library(
+    name = "wpilibj-java",
+    srcs = [
+        "//wpilibj:generate-version",
+        "//wpilibj:generated_java",
+    ] + glob(["**/*.java"]),
+    extra_source_pkgs = ["//wpilibj:generated_version_files"],
+    generated_java_srcs = ["//wpilibj:generated_java"],
+    maven_artifact_name = "wpilibj-java",
+    maven_group_id = "org.wpilib.wpilibj",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//datalog/src/main/java:datalog-java",
+        "//hal/src/main/java:hal-java",
+        "//ntcore/src/main/java:ntcore-java",
+        "//wpimath/src/main/java:wpimath-java",
+        "//wpinet/src/main/java:wpinet-java",
+        "//wpiunits/src/main/java:wpiunits-java",
+        "//wpiutil/src/main/java:wpiutil-java",
+        "@maven//:org_ejml_ejml_java9module",
+    ],
+)

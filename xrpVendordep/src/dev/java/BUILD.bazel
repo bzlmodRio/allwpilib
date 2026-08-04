@@ -5,8 +5,8 @@ java_binary(
     srcs = ["org/wpilib/xrp/DevMain.java"],
     main_class = "org.wpilib.xrp.DevMain",
     deps = [
-        "//hal:hal-java",
-        "//ntcore:ntcore-java",
-        "//wpiutil:wpiutil-java",
+        "//hal/src/main/java:hal-java",
+        "//ntcore/src/main/java:ntcore-java",
+        "//wpiutil/src/main/java:wpiutil-java",
     ],
 )

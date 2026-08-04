@@ -4,9 +4,9 @@ wpilib_java_junit5_test(
     name = "epilogue-test",
     srcs = glob(["**/*.java"]),
     deps = [
-        "//epilogue-runtime:epilogue-java",
-        "//wpimath:wpimath-java",
-        "//wpiutil:wpiutil-java",
+        "//epilogue-runtime/src/main/java:epilogue-java",
+        "//wpimath/src/main/java:wpimath-java",
+        "//wpiutil/src/main/java:wpiutil-java",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
     ],
 )

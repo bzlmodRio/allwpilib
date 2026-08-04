@@ -1,0 +1,19 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+
+wpilib_java_library(
+    name = "cameraserver-java",
+    srcs = glob(["**/*.java"]),
+    maven_artifact_name = "cameraserver-java",
+    maven_group_id = "org.wpilib.cameraserver",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//cscore/src/main/java:cscore-java",
+        "//hal/src/main/java:hal-java",
+        "//ntcore/src/main/java:ntcore-java",
+        "//wpilibj/src/main/java:wpilibj-java",
+        "//wpimath/src/main/java:wpimath-java",
+        "//wpinet/src/main/java:wpinet-java",
+        "//wpiutil/src/main/java:wpiutil-java",
+        "@bzlmodrio-opencv//libraries/java/opencv",
+    ],
+)

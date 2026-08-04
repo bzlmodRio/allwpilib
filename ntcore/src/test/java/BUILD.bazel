@@ -5,7 +5,7 @@ wpilib_java_junit5_test(
     srcs = glob(["**/*.java"]),
     tags = ["exclusive"],
     deps = [
-        "//ntcore:ntcore-java",
-        "//wpiutil:wpiutil-java",
+        "//ntcore/src/main/java:ntcore-java",
+        "//wpiutil/src/main/java:wpiutil-java",
     ],
 )

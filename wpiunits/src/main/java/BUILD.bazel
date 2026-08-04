@@ -1,0 +1,11 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+
+wpilib_java_library(
+    name = "wpiunits-java",
+    srcs = glob(["**/*.java"]) + ["//wpiunits:generated_java"],
+    generated_java_srcs = ["//wpiunits:generated_java"],
+    maven_artifact_name = "wpiunits-java",
+    maven_group_id = "org.wpilib.wpiunits",
+    visibility = ["//visibility:public"],
+    deps = [],
+)

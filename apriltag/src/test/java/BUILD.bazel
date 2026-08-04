@@ -6,9 +6,9 @@ wpilib_java_junit5_test(
     resource_strip_prefix = "apriltag/src/test/resources",
     resources = ["//apriltag:test-resources"],
     deps = [
-        "//apriltag:apriltag-java",
-        "//wpimath:wpimath-java",
-        "//wpiutil:wpiutil-java",
+        "//apriltag/src/main/java:apriltag-java",
+        "//wpimath/src/main/java:wpimath-java",
+        "//wpiutil/src/main/java:wpiutil-java",
         "@bzlmodrio-opencv//libraries/java/opencv",
         "@maven//:io_avaje_avaje_jsonb",
     ],

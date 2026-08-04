@@ -2,7 +2,6 @@ load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//commandsv3:generate.bzl", "generate_commandsv3")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
 
 py_binary(
     name = "generate_files",
@@ -52,29 +51,6 @@ filegroup(
     name = "main_proto_srcs",
     srcs = glob(["src/main/proto/**"]),
     visibility = ["//commandsv3:__subpackages__"],
-)
-
-wpilib_java_library(
-    name = "commandsv3-java",
-    srcs = glob(["src/main/java/**/*.java"]) + ["//commandsv3:generated_java"],
-    exported_plugins = ["//javacPlugin:plugin"],
-    generated_java_srcs = ["//commandsv3:generated_java"],
-    maven_artifact_name = "commands3-java",
-    maven_group_id = "org.wpilib",
-    plugins = ["//javacPlugin:plugin"],
-    proto_srcs = ["//commandsv3:main_proto_srcs"],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//hal:hal-java",
-        "//ntcore:ntcore-java",
-        "//wpiannotations",
-        "//wpilibj:wpilibj-java",
-        "//wpimath:wpimath-java",
-        "//wpinet:wpinet-java",
-        "//wpiunits:wpiunits-java",
-        "//wpiutil:wpiutil-java",
-        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
-    ],
 )
 
 filegroup(

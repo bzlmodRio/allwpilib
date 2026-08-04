@@ -26,7 +26,7 @@ _headers = rule(
     doc = "Extracts the public headers of a C/C++ library.",
 )
 
-def pkg_files_headers(name, dep):
+def pkg_files_headers(name, dep, visibility = None):
     """Makes a pkg_files out of the headers of a cc_library target."""
     _headers(name = name + "-headers", dep = dep)
     pkg_files(
@@ -35,24 +35,25 @@ def pkg_files_headers(name, dep):
             ":" + name + "-headers",
         ],
         strip_prefix = "",
+        visibility = visibility,
     )
 
-def pkg_java_src_files(name, java_srcs_root = "src/main/java", generated_java_srcs = [], proto_srcs = []):
+def pkg_java_src_files(name, java_srcs_root = "src/main/java", generated_java_srcs = None, proto_srcs = None):
     pkg_files(
         name = name + "-java-srcs",
-        srcs = native.glob([java_srcs_root + "/**"]),
+        srcs = native.glob([(java_srcs_root + "/**") if java_srcs_root else "**"], exclude = ["BUILD.bazel"]),
         strip_prefix = java_srcs_root,
     )
 
     pkg_files(
         name = name + "-generated-java-srcs",
-        srcs = generated_java_srcs,
+        srcs = generated_java_srcs if generated_java_srcs != None else native.glob(["src/generated/main/java/**/*.java"], allow_empty = True),
         strip_prefix = "src/generated/main/java",
     )
 
     pkg_files(
         name = name + "-proto-srcs",
-        srcs = proto_srcs,
+        srcs = proto_srcs if proto_srcs != None else native.glob(["src/main/proto/**"], allow_empty = True),
         strip_prefix = "src/main/proto",
     )
 
@@ -66,7 +67,7 @@ def pkg_java_src_files(name, java_srcs_root = "src/main/java", generated_java_sr
         ],
     )
 
-def zip_java_srcs(name, extra_pkgs = [], java_srcs_root = "src/main/java", generated_java_srcs = [], proto_srcs = []):
+def zip_java_srcs(name, extra_pkgs = [], java_srcs_root = "src/main/java", generated_java_srcs = None, proto_srcs = None):
     pkg_java_src_files(
         "{}-sources.pkg".format(name),
         java_srcs_root = java_srcs_root,
