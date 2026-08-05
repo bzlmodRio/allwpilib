@@ -28,6 +28,14 @@ def fixup_native_lib_name(name):
     return name
 
 
+def fixup_native_package_name(name):
+    return f"{fixup_root_package_name(name)}"
+
+
+def fixup_python_package_name(name):
+    return f"{fixup_root_package_name(name)}"
+
+
 def fixup_shared_lib_name(name):
     if name == "wpihal":
         return "wpiHal"

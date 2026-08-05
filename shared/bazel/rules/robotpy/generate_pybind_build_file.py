@@ -313,7 +313,10 @@ def generate_pybind_build_file(
     stripped_include_prefix: str,
     yml_prefix: Union[str, None],
     output_file: pathlib.Path,
+    package_name: str,
 ):
+    include_root_prefix = f"{stripped_include_prefix}/" if stripped_include_prefix else ""
+
     project_dir = project_file.parent
     plan = makeplan(project_dir)
 
@@ -439,6 +442,7 @@ def generate_pybind_build_file(
             for ep_key, ep_value in explicit_entry_points[entry_point_type].items():
                 entry_points[entry_point_type].append(f"{ep_key} = {ep_value}")
 
+    imports_dir = stripped_include_prefix if stripped_include_prefix else "."
     strip_path_prefixes = [
         f"{fixup_root_package_name(top_level_name)}/{stripped_include_prefix}",
         f"{fixup_root_package_name(top_level_name)}",
@@ -453,6 +457,8 @@ def generate_pybind_build_file(
                 python_deps=sorted(python_deps),
                 all_local_native_deps=all_local_native_deps,
                 stripped_include_prefix=stripped_include_prefix,
+                include_root_prefix=include_root_prefix,
+                imports_dir=imports_dir,
                 strip_path_prefixes=strip_path_prefixes,
                 yml_prefix=yml_prefix,
                 package_root_file=package_root_file,
@@ -475,6 +481,7 @@ def main():
     parser.add_argument("--yml_prefix", type=str)
     parser.add_argument("--package_root_file", type=str)
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
+    parser.add_argument("--package_name", type=str, required=True)
 
     args = parser.parse_args()
 
@@ -485,6 +492,7 @@ def main():
         args.stripped_include_prefix,
         args.yml_prefix,
         args.output_file,
+        args.package_name,
     )
 
 
