@@ -28,28 +28,40 @@ bazel_project_root = "simulation/halsim_xrp"
 [projects.pyntcore]
 bazel_project_root = "ntcore"
 
+[projects.ntcore]
+
+[projects.apriltag]
 [projects.robotpy_apriltag]
 bazel_project_root = "apriltag"
 
+[projects.fields]
 [projects.robotpy_fields]
 bazel_project_root = "fields"
 
 [projects.romi]
 bazel_project_root = "romiVendordep"
 
-[projects.wpihal]
+[projects.hal]
 bazel_project_root = "hal"
 
-[projects.wpiutil]
+[projects.wpihal]
+bazel_project_root = "hal"
 
 [projects.wpilib]
 bazel_project_root = "wpilibc"
 
+[projects.datalog]
 [projects.wpilog]
 bazel_project_root = "datalog"
 
+[projects.wpimath]
+
 [projects.wpimath_test]
 bazel_project_root = "wpimath"
+
+[projects.wpinet]
+
+[projects.wpiutil]
 
 [projects.xrp]
 bazel_project_root = "xrpVendordep"

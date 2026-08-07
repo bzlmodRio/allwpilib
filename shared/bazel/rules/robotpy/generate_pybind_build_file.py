@@ -21,7 +21,6 @@ from semiwrap.pkgconf_cache import PkgconfCache
 from semiwrap.pyproject import PyProject
 
 from shared.bazel.rules.robotpy.generation_utils import (
-    fixup_root_package_name,
     load_config,
     try_tomli_lookup,
 )
@@ -427,7 +426,7 @@ def generate_pybind_build_file(
     maven_libs = []
     for maven_info in maven_downloads:
         for lib in maven_info["libs"]:
-            lib_package = fixup_root_package_name(lib)
+            lib_package = CONVERSION_CONFIG.fixup_root_package_name(lib)
             library_label = f"//{lib_package}:shared/{lib}"
             maven_libs.append(
                 {

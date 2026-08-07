@@ -44,29 +44,29 @@ class BazelTranslationConfig:
 
     def get_pc_dep(self, library):
         base_project = library.replace("robotpy-native-", "")
-        return f"//{fixup_native_package_name(base_project)}:native/{base_project}/{library}.pc"
+        return f"//{self.fixup_native_package_name(base_project)}:native/{base_project}/{library}.pc"
         
     def get_python_dep(self, library):
         base_project = library.replace("robotpy-native-", "")
-        return f"//{fixup_native_package_name(base_project)}:{fixup_python_dep_name(library)}"
+        return f"//{self.fixup_native_package_name(base_project)}:{self.fixup_python_dep_name(library)}"
 
     def get_copy_headers_target_from_base_library(self, base_library):
-        return f":{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers"
+        return f":{self.fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers"
 
     def get_copy_headers_target(self, d):
-        base_library = fixup_root_package_name(
+        base_library = self.fixup_root_package_name(
             d.replace("robotpy-native-", "")
         )
-        return f"//{base_library}:{fixup_native_lib_name(d)}.copy_headers"
+        return f"//{base_library}:{self.fixup_native_lib_name(d)}.copy_headers"
 
     def get_dynamic_dep(self, dep_name):
-        base_library = fixup_root_package_name(dep_name.split("_")[0])
-        return f"//{base_library}:shared/{fixup_shared_lib_name(base_library)}"
+        base_library = self.fixup_root_package_name(dep_name.split("_")[0])
+        return f"//{base_library}:shared/{self.fixup_shared_lib_name(base_library)}"
 
     def get_local_extension_targets(self, dep_name: str, include_pybind_target: bool):
-        base_library = fixup_root_package_name(dep_name.split("_")[0])
+        base_library = self.fixup_root_package_name(dep_name.split("_")[0])
 
-        output = [f"//{base_library}:{fixup_shared_lib_name(base_library)}"]
+        output = [f"//{base_library}:{self.fixup_shared_lib_name(base_library)}"]
         if include_pybind_target:
             output.append(f"//{base_library}:{dep_name}_pybind_library")
 
@@ -75,11 +75,55 @@ class BazelTranslationConfig:
     def target_from_python_dep(self, python_dep):
         if "native" in python_dep:
             base_library = python_dep.replace("robotpy-native-", "")
-            return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
+            return f"//{self.fixup_root_package_name(base_library)}:{self.fixup_python_dep_name(python_dep)}"
         else:
             base_library = python_dep.replace("robotpy-", "")
-            return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
+            return f"//{self.fixup_root_package_name(base_library)}:{self.fixup_python_dep_name(python_dep)}"
 
+    def fixup_native_lib_name(self, name):
+        return name
+
+    def fixup_native_package_name(self, name):
+        return f"{self.fixup_root_package_name(name)}"
+
+
+    def fixup_python_package_name(self, name):
+        return f"{self.fixup_root_package_name(name)}"
+
+
+    def fixup_shared_lib_name(self, name):
+        if name == "wpihal":
+            return "wpiHal"
+        if name == "hal":
+            return "wpiHal"
+        if name == "wpilib":
+            return "wpilibc"
+        if name == "xrp":
+            return "xrpVendordep"
+        if name == "romi":
+            return "romiVendordep"
+        return name
+
+
+    def fixup_python_dep_name(self, name):
+        if name == "robotpy-datalog":
+            return "robotpy-wpilog"
+        if name == "robotpy-ntcore":
+            return "pyntcore"
+        if name == "wpilib":
+            return "robotpy-wpilib"
+        return name
+
+    def fixup_root_package_name(self, name):
+        if name in self.projects:
+            if self.projects[name].bazel_project_root:
+                return self.projects[name].bazel_project_root
+            return name
+        else:
+            print(f"Using default for root name for {name}")
+            # print(config.projects.keys())
+            # raise
+            return name
 
 
     # def __post_init__(self):
@@ -113,53 +157,6 @@ def load_config():
 
     config = validobj.validation.parse_input(toml_data, BazelTranslationConfig)
     return config
-
-
-def fixup_root_package_name(name):
-    config = load_config()
-
-    if name in config.projects:
-        if config.projects[name].bazel_project_root:
-            return config.projects[name].bazel_project_root
-
-    print(f"Using default for {name}")
-    return name
-
-
-def fixup_native_lib_name(name):
-    return name
-
-
-def fixup_native_package_name(name):
-    return f"{fixup_root_package_name(name)}"
-
-
-def fixup_python_package_name(name):
-    return f"{fixup_root_package_name(name)}"
-
-
-def fixup_shared_lib_name(name):
-    if name == "wpihal":
-        return "wpiHal"
-    if name == "hal":
-        return "wpiHal"
-    if name == "wpilib":
-        return "wpilibc"
-    if name == "xrp":
-        return "xrpVendordep"
-    if name == "romi":
-        return "romiVendordep"
-    return name
-
-
-def fixup_python_dep_name(name):
-    if name == "robotpy-datalog":
-        return "robotpy-wpilog"
-    if name == "robotpy-ntcore":
-        return "pyntcore"
-    if name == "wpilib":
-        return "robotpy-wpilib"
-    return name
 
 
 def try_tomli_lookup(tomli_map, str_key, default_value=None):
