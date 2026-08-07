@@ -13,10 +13,18 @@ def fixup_root_package_name(name):
         return "ntcore"
     if name == "halsim-ws":
         return "simulation/halsim_ws_core"
+    if name == "halsim_ws":
+        return "simulation/halsim_ws_core"
     if name == "halsim_gui":
         return "simulation/halsim_gui"
     if name == "halsim_ds_socket":
         return "simulation/halsim_ds_socket"
+    if name == "halsim_ws_server":
+        return "simulation/halsim_ws_server"
+    if name == "halsim_ws_client":
+        return "simulation/halsim_ws_client"
+    if name == "halsim_xrp":
+        return "simulation/halsim_xrp"
     if name == "wpimath_test":
         return "wpimath"
     if name == "robotpy_apriltag":

@@ -247,7 +247,7 @@ def define_pybind_library(name, pkgcfgs = []):
     )
     copy_native_file(
         name = "halsim_xrp",
-        base_path = "src/main/python/halsim_xrp/",
+        base_path = "src/main/python/xrp/extension/",
         library = "//simulation/halsim_xrp:shared/halsim_xrp",
     )
 

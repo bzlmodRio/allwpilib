@@ -36,7 +36,7 @@ def define_pybind_library(name, pkgcfgs = []):
             "//hal:robotpy-native-wpihal",
             "//wpinet:robotpy-native-wpinet",
         ],
-        strip_path_prefixes = ["//simulation/halsim_ws/src/main/python", "//simulation/halsim_ws"],
+        strip_path_prefixes = ["simulation/halsim_ws_core/src/main/python", "simulation/halsim_ws_core"],
         summary = "WPILib simulator websim Extensions",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -47,3 +47,4 @@ def define_pybind_library(name, pkgcfgs = []):
         },
         visibility = ["//visibility:public"],
     )
+

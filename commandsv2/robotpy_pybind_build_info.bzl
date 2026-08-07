@@ -1,9 +1,7 @@
 # THIS FILE IS AUTO GENERATED
 
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
-load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
+load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "robotpy_library")
 
 def define_pybind_library(name, pkgcfgs = []):
 

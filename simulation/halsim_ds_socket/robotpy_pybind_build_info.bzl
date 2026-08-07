@@ -7,7 +7,7 @@ def define_pybind_library(name, pkgcfgs = []):
     copy_native_file(
         name = "halsim_ds_socket",
         base_path = "src/main/python/halsim_ds_socket/",
-        library = "shared/halsim_ds_socket",
+        library = "//simulation/halsim_ds_socket:shared/halsim_ds_socket",
     )
 
     generate_version_file(
@@ -41,3 +41,4 @@ def define_pybind_library(name, pkgcfgs = []):
         },
         visibility = ["//visibility:public"],
     )
+

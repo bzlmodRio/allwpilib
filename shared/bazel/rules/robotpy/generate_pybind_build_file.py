@@ -408,8 +408,7 @@ def generate_pybind_build_file(
         for d in raw_config["project"]["dependencies"]:
             # Strip version strings out
             dep_no_version = re.compile(r"^[A-Za-z0-9_.\-]+").match(d).group(0)
-            print(d, dep_no_version)
-            
+
             for external_dep in EXTERNAL_PYPI_DEPS:
                 if external_dep == dep_no_version:
                     has_external_python_deps = True
@@ -447,6 +446,19 @@ def generate_pybind_build_file(
     is_semiwrap_project = try_tomli_lookup(raw_config, "tool.semiwrap") is not None
     maven_downloads = try_tomli_lookup(raw_config, "tool.hatch.build.hooks.robotpy.maven_lib_download", [])
 
+    maven_libs = []
+    for maven_info in maven_downloads:
+        for lib in maven_info["libs"]:
+            lib_package = fixup_root_package_name(lib)
+            library_label = f"//{lib_package}:shared/{lib}"
+            maven_libs.append(
+                {
+                    "name": lib,
+                    "base_path": f"{include_root_prefix}{maven_info['extract_to']}/",
+                    "library": library_label,
+                }
+            )
+
     with open(output_file, "w") as f:
         f.write(
             template.render(
@@ -466,7 +478,7 @@ def generate_pybind_build_file(
                 version_file=version_file,
                 has_external_python_deps=has_external_python_deps,
                 is_semiwrap_project=is_semiwrap_project,
-                maven_downloads=maven_downloads,
+                maven_libs=maven_libs,
             )
             + "\n"
         )
