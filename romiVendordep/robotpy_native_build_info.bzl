@@ -12,7 +12,6 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/romi/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "romiVendordep/src/generated/main/native/include": "",
             "romiVendordep/src/main/native/include": "",
         },
         verbose = False,

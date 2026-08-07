@@ -1,4 +1,6 @@
 
+native_target_to_files = ""
+python_target_to_files = ""
 
 
 [projects.commands2]

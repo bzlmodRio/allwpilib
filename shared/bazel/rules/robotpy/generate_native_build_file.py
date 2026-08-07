@@ -44,6 +44,7 @@ def main():
     project_name = (
         raw_config["project"]["name"].replace("robotpy-native-", "").replace("-", "_")
     )
+    root_package = CONVERSION_CONFIG.fixup_root_package_name(project_name)
     pc_files = []
 
     local_pc_names = set()
@@ -72,6 +73,7 @@ def main():
             template.render(
                 raw_project_config=raw_config["project"],
                 nativelib_config=nativelib_config,
+                root_package=root_package,
                 maven_downloads=maven_downloads,
                 third_party_dirs=args.third_party_dirs or [],
                 pc_files=pc_files,
@@ -100,13 +102,14 @@ def define_native_wrapper(name, pyproject_toml = None):
         {%- endfor %}
         ]){%- endif %},
         out = "native/{{project_name}}/include",
-        root_paths = ["src/main/native/include/"],
+        root_paths = ["{{native_srcs_root}}include/"],
         replace_prefixes = {
-            "{{package_name}}/src/generated/main/native/include": "",
-            "{{package_name}}/src/main/native/include": "",
+            "{{package_name}}/{{native_srcs_root}}include": "",
             {%- for dir in third_party_dirs %}
-            "{{package_name}}/src/main/native/thirdparty/{{dir}}/include": "",
-            {%- endfor %}
+            "{{package_name}}/{{native_srcs_root}}thirdparty/{{dir}}/include": "",
+            {%- endfor %}{% if generated_include_target %}
+            "{{root_package}}/src/generated/main/native/include": "",
+            {%- endif %}
         },
         verbose = False,
         visibility = ["//visibility:public"],

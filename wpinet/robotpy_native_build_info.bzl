@@ -15,7 +15,6 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/wpinet/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "wpinet/src/generated/main/native/include": "",
             "wpinet/src/main/native/include": "",
             "wpinet/src/main/native/thirdparty/libuv/include": "",
             "wpinet/src/main/native/thirdparty/tcpsockets/include": "",

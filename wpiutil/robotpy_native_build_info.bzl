@@ -22,7 +22,6 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/wpiutil/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "wpiutil/src/generated/main/native/include": "",
             "wpiutil/src/main/native/include": "",
             "wpiutil/src/main/native/thirdparty/argparse/include": "",
             "wpiutil/src/main/native/thirdparty/debugging/include": "",

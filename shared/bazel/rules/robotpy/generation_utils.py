@@ -42,45 +42,54 @@ class SubprojectConfig:
 @dataclasses.dataclass
 class BazelTranslationConfig:
     projects: typing.Dict[str, SubprojectConfig]
+    native_target_to_files: str
+    python_target_to_files: str
 
 
     def get_pc_dep(self, library):
         base_project = library.replace("robotpy-native-", "")
-        return f"//{self.fixup_native_package_name(base_project)}:native/{base_project}/{library}.pc"
+        return f"//{self.fixup_native_package_name(base_project)}{self.native_target_to_files}:native/{base_project}/{library}.pc"
         
     def get_python_dep(self, library):
         base_project = library.replace("robotpy-native-", "")
-        return f"//{self.fixup_native_package_name(base_project)}:{self.fixup_python_dep_name(library)}"
+        if "native" in library:
+            return f"//{self.fixup_native_package_name(base_project)}{self.native_target_to_files}:{self.fixup_python_dep_name(library)}"
+        return f"//{self.fixup_native_package_name(base_project)}{self.python_target_to_files}:{self.fixup_python_dep_name(library)}"
 
     def get_copy_headers_target_from_base_library(self, base_library):
-        return f":{self.fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers"
+        root_package = self.fixup_root_package_name(base_library)
+        return f"//{root_package}{self.native_target_to_files}:{self.fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers"
 
     def get_copy_headers_target(self, d):
         base_library = self.fixup_root_package_name(
             d.replace("robotpy-native-", "")
         )
-        return f"//{base_library}:{self.fixup_native_lib_name(d)}.copy_headers"
+        return f"//{base_library}{self.native_target_to_files}:{self.fixup_native_lib_name(d)}.copy_headers"
 
     def get_dynamic_dep(self, dep_name):
         base_library = self.fixup_root_package_name(dep_name.split("_")[0])
-        return f"//{base_library}:shared/{self.fixup_shared_lib_name(dep_name.split("_")[0])}"
+        return f"//{base_library}{self.native_target_to_files}:shared/{self.fixup_shared_lib_name(dep_name.split("_")[0])}"
 
     def get_local_extension_targets(self, dep_name: str, include_pybind_target: bool):
         base_library = self.fixup_root_package_name(dep_name.split("_")[0])
 
-        output = [f"//{base_library}:{self.fixup_shared_lib_name(dep_name.split("_")[0])}"]
+        output = [f"//{base_library}{self.native_target_to_files}:{self.fixup_shared_lib_name(dep_name.split("_")[0])}"]
         if include_pybind_target:
-            output.append(f"//{base_library}:{dep_name}_pybind_library")
+            output.append(f"//{base_library}{self.python_target_to_files}:{dep_name}_pybind_library")
 
         return output
         
     def target_from_python_dep(self, python_dep):
         if "native" in python_dep:
             base_library = python_dep.replace("robotpy-native-", "")
-            return f"//{self.fixup_root_package_name(base_library)}:{self.fixup_python_dep_name(python_dep)}"
+            return f"//{self.fixup_root_package_name(base_library)}{self.native_target_to_files}:{self.fixup_python_dep_name(python_dep)}"
         else:
             base_library = python_dep.replace("robotpy-", "")
-            return f"//{self.fixup_root_package_name(base_library)}:{self.fixup_python_dep_name(python_dep)}"
+            return f"//{self.fixup_root_package_name(base_library)}{self.python_target_to_files}:{self.fixup_python_dep_name(python_dep)}"
+
+    def get_casters_dep(self, dep_name):
+        base_library = dep_name.split("-")[0]
+        return f"//{base_library}{self.python_target_to_files}:{dep_name}"
 
     def fixup_native_lib_name(self, name):
         return name

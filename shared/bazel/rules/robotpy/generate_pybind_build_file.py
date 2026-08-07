@@ -82,7 +82,7 @@ class HeaderToDatConfig:
         include_root = str(args[3]).replace("\\", "/")
         if "native" in include_root:
             base_include_file = args[2].relative_to(include_root)
-            base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
+            base_library = re.search("native/([^/]+)/include", include_root).groups(1)[0]
 
             self.include_file = f"$(execpath {CONVERSION_CONFIG.get_copy_headers_target_from_base_library(base_library)})/{base_include_file}"
             self.include_root = f"$(execpath {CONVERSION_CONFIG.get_copy_headers_target_from_base_library(base_library)})"
@@ -223,8 +223,7 @@ class BazelExtensionModule:
                         continue
                     native_wrapper_dependencies.add(CONVERSION_CONFIG.get_copy_headers_target(d))
             elif "-casters" in dep_name:
-                base_library = dep_name.split("-")[0]
-                local_extension_dependencies.add(f"//{base_library}:{dep_name}")
+                local_extension_dependencies.add(CONVERSION_CONFIG.get_casters_dep(dep_name))
             else:
                 local_extension_dependencies.update(CONVERSION_CONFIG.get_local_extension_targets(dep_name, dep_name != self.name))
                 dynamic_dependencies.add(CONVERSION_CONFIG.get_dynamic_dep(dep_name))

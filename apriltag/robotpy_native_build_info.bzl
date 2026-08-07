@@ -14,7 +14,6 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/apriltag/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "apriltag/src/generated/main/native/include": "",
             "apriltag/src/main/native/include": "",
             "apriltag/src/main/native/thirdparty/apriltag/include": "",
         },

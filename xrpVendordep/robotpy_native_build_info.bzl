@@ -12,7 +12,6 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/xrp/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "xrpVendordep/src/generated/main/native/include": "",
             "xrpVendordep/src/main/native/include": "",
         },
         verbose = False,

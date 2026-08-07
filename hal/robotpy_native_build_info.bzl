@@ -12,7 +12,6 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/wpihal/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "hal/src/generated/main/native/include": "",
             "hal/src/main/native/include": "",
         },
         verbose = False,

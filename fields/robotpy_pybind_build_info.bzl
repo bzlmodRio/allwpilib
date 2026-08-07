@@ -73,8 +73,8 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Field",
             yml_file = "semiwrap/Field.yml",
-            header_root = "$(execpath :robotpy-native-fields.copy_headers)",
-            header_file = "$(execpath :robotpy-native-fields.copy_headers)/wpi/fields/Field.hpp",
+            header_root = "$(execpath //fields:robotpy-native-fields.copy_headers)",
+            header_file = "$(execpath //fields:robotpy-native-fields.copy_headers)/wpi/fields/Field.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::fields::Field", "wpi__fields__Field.hpp"),
@@ -83,8 +83,8 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "FieldImage",
             yml_file = "semiwrap/FieldImage.yml",
-            header_root = "$(execpath :robotpy-native-fields.copy_headers)",
-            header_file = "$(execpath :robotpy-native-fields.copy_headers)/wpi/fields/FieldImage.hpp",
+            header_root = "$(execpath //fields:robotpy-native-fields.copy_headers)",
+            header_file = "$(execpath //fields:robotpy-native-fields.copy_headers)/wpi/fields/FieldImage.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::fields::FieldImage", "wpi__fields__FieldImage.hpp"),
@@ -93,8 +93,8 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "FieldTag",
             yml_file = "semiwrap/FieldTag.yml",
-            header_root = "$(execpath :robotpy-native-fields.copy_headers)",
-            header_file = "$(execpath :robotpy-native-fields.copy_headers)/wpi/fields/FieldTag.hpp",
+            header_root = "$(execpath //fields:robotpy-native-fields.copy_headers)",
+            header_file = "$(execpath //fields:robotpy-native-fields.copy_headers)/wpi/fields/FieldTag.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::fields::FieldTag", "wpi__fields__FieldTag.hpp"),
@@ -103,8 +103,8 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "fields",
             yml_file = "semiwrap/fields.yml",
-            header_root = "$(execpath :robotpy-native-fields.copy_headers)",
-            header_file = "$(execpath :robotpy-native-fields.copy_headers)/wpi/fields/fields.hpp",
+            header_root = "$(execpath //fields:robotpy-native-fields.copy_headers)",
+            header_file = "$(execpath //fields:robotpy-native-fields.copy_headers)/wpi/fields/fields.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),

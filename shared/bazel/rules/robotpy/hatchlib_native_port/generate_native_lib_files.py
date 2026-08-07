@@ -162,8 +162,8 @@ class NativelibHook:
 
         libdir = prefix_path
         if pcfg.libdir:
-            libdir = self.root_pth / pathlib.PurePosixPath(pcfg.libdir)
-            libdir = pathlib.Path(str(libdir).replace("src/", "").replace("src\\", ""))
+            libdir_rel = str(pcfg.libdir).removeprefix("src/").removeprefix("src\\")
+            libdir = self.root_pth / pathlib.PurePosixPath(libdir_rel)
 
         lib_paths = []
         assert pcfg.shared_libraries is not None

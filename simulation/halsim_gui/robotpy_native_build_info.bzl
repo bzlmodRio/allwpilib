@@ -12,7 +12,6 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/halsim_gui/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "simulation/halsim_gui/src/generated/main/native/include": "",
             "simulation/halsim_gui/src/main/native/include": "",
         },
         verbose = False,

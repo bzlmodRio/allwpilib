@@ -15,7 +15,6 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/wpimath/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "wpimath/src/generated/main/native/include": "",
             "wpimath/src/main/native/include": "",
             "wpimath/src/main/native/thirdparty/gcem/include": "",
             "wpimath/src/main/native/thirdparty/sleipnir/include": "",

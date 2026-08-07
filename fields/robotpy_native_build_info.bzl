@@ -12,8 +12,8 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/fields/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "fields/src/generated/main/native/include": "",
             "fields/src/main/native/include": "",
+            "fields/src/generated/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
