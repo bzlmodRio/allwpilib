@@ -21,13 +21,13 @@ from semiwrap.pkgconf_cache import PkgconfCache
 from semiwrap.pyproject import PyProject
 
 from shared.bazel.rules.robotpy.generation_utils import (
-    fixup_native_lib_name,
-    fixup_python_dep_name,
     fixup_root_package_name,
-    fixup_shared_lib_name,
+    load_config,
     try_tomli_lookup,
 )
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
+
+CONVERSION_CONFIG = load_config()
 
 
 class HeaderToDatConfig:
@@ -82,12 +82,11 @@ class HeaderToDatConfig:
 
         include_root = str(args[3]).replace("\\", "/")
         if "native" in include_root:
-            # base_include_root = pathlib.Path(*args[3].relative_to(root_dir).parts[3:])
             base_include_file = args[2].relative_to(include_root)
             base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
 
-            self.include_file = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)/{base_include_file}"
-            self.include_root = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)"
+            self.include_file = f"$(execpath {CONVERSION_CONFIG.get_copy_headers_target_from_base_library(base_library)})/{base_include_file}"
+            self.include_root = f"$(execpath {CONVERSION_CONFIG.get_copy_headers_target_from_base_library(base_library)})"
         else:
             root_dir = pathlib.Path.cwd().absolute()
             self.include_file = pathlib.Path(args[2]).absolute().relative_to(root_dir)
@@ -105,7 +104,7 @@ class HeaderToDatConfig:
 
 
 class ResolveCastersConfig:
-    def __init__(self, item: BuildTarget):
+    def __init__(self, item: BuildTarget, pybind_prefix):
         self.pkl_file = item.args[0].name
         self.dep_file = item.args[1].name
         # semiwrap casters = 2
@@ -116,7 +115,7 @@ class ResolveCastersConfig:
             if isinstance(dep_path, BuildTargetOutput):
                 output_file = dep_path.target.args[2]
                 caster_deps.add(
-                    f":src/main/python/{dep_path.target.install_path}/{output_file.name}"
+                    f":{pybind_prefix}{dep_path.target.install_path}/{output_file.name}"
                 )
             else:
                 relevant_parts = dep_path.parts[3:]
@@ -162,7 +161,7 @@ class GenModInitHpp:
 
 
 class PublishCastersConfig:
-    def __init__(self, projectcfg, item: BuildTarget):
+    def __init__(self, projectcfg, item: BuildTarget, pybind_prefix):
         self.project_file = item.args[0].path
         self.casters_name = item.args[1]
         self.json_output = item.args[2].name
@@ -175,7 +174,7 @@ class PublishCastersConfig:
         caster_cfg = projectcfg.export_type_casters[self.casters_name]
 
         for inc_dir in caster_cfg.includedir:
-            self.include_paths.append(f"src/main/python/{inc_dir}")
+            self.include_paths.append(f"{pybind_prefix}{inc_dir}")
 
 
 class BazelExtensionModule:
@@ -183,6 +182,7 @@ class BazelExtensionModule:
         self,
         extension_module: ExtensionModule,
         additional_extension_targets: Dict[str, BuildTarget],
+        pybind_prefix,
     ):
         self.name = extension_module.name
         self.package_name = extension_module.package_name
@@ -193,7 +193,7 @@ class BazelExtensionModule:
             extension_module.sources, self.extension_name_transforms
         )
         self.resolve_casters = ResolveCastersConfig(
-            additional_extension_targets["resolve-casters"]
+            additional_extension_targets["resolve-casters"], pybind_prefix
         )
         self.gen_libinit = GenLibInitPyConfig(
             additional_extension_targets["gen-libinit-py"]
@@ -222,27 +222,13 @@ class BazelExtensionModule:
                 for d in transitive_deps:
                     if d == "robotpy-native-mrclib":
                         continue
-                    base_library = fixup_root_package_name(
-                        d.replace("robotpy-native-", "")
-                    )
-                    native_wrapper_dependencies.add(
-                        f"//{base_library}:{fixup_native_lib_name(d)}.copy_headers"
-                    )
+                    native_wrapper_dependencies.add(CONVERSION_CONFIG.get_copy_headers_target(d))
             elif "-casters" in dep_name:
                 base_library = dep_name.split("-")[0]
                 local_extension_dependencies.add(f"//{base_library}:{dep_name}")
             else:
-                base_library = fixup_root_package_name(dep_name.split("_")[0])
-                local_extension_dependencies.add(
-                    f"//{base_library}:{fixup_shared_lib_name(base_library)}"
-                )
-                dynamic_dependencies.add(
-                    f"//{base_library}:shared/{fixup_shared_lib_name(base_library)}"
-                )
-                if dep_name != self.name:
-                    local_extension_dependencies.add(
-                        f"//{base_library}:{dep_name}_pybind_library"
-                    )
+                local_extension_dependencies.update(CONVERSION_CONFIG.get_local_extension_targets(dep_name, dep_name != self.name))
+                dynamic_dependencies.add(CONVERSION_CONFIG.get_dynamic_dep(dep_name))
 
         self.native_wrapper_dependencies = sorted(native_wrapper_dependencies)
         self.local_extension_dependencies = sorted(local_extension_dependencies)
@@ -336,7 +322,7 @@ def generate_pybind_build_file(
     for item in plan:
         if isinstance(item, ExtensionModule):
             extension_modules.append(
-                BazelExtensionModule(item, additional_extension_targets)
+                BazelExtensionModule(item, additional_extension_targets, pybind_prefix=include_root_prefix)
             )
             additional_extension_targets = {}
         elif isinstance(item, BuildTarget):
@@ -359,7 +345,7 @@ def generate_pybind_build_file(
             ]:
                 pass
             elif item.command == "publish-casters":
-                publish_casters_targets.append(PublishCastersConfig(projectcfg, item))
+                publish_casters_targets.append(PublishCastersConfig(projectcfg, item, pybind_prefix=include_root_prefix))
             else:
                 raise Exception(f"Unhandled build target {item.command}")
         elif isinstance(item, Entrypoint):
@@ -387,14 +373,6 @@ def generate_pybind_build_file(
             return "None"
         return json.dumps(item)
 
-    def target_from_python_dep(python_dep):
-        if "native" in python_dep:
-            base_library = python_dep.replace("robotpy-native-", "")
-            return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
-        else:
-            base_library = python_dep.replace("robotpy-", "")
-            return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
-
     EXTERNAL_PYPI_DEPS = [
         "robotpy-cli",
         "pytest-reraise",
@@ -415,7 +393,7 @@ def generate_pybind_build_file(
                     python_deps.append(f'requirement("{dep_no_version}")')
                     break
             else:
-                pd = target_from_python_dep(dep_no_version)
+                pd = CONVERSION_CONFIG.target_from_python_dep(dep_no_version)
                 python_deps.append(pd)
 
     env = Environment(loader=BaseLoader)
@@ -439,8 +417,8 @@ def generate_pybind_build_file(
 
     imports_dir = stripped_include_prefix if stripped_include_prefix else "."
     strip_path_prefixes = [
-        f"{fixup_root_package_name(top_level_name)}/{stripped_include_prefix}",
-        f"{fixup_root_package_name(top_level_name)}",
+        f"{project_dir}",
+        f"{package_name}",
     ]
 
     is_semiwrap_project = try_tomli_lookup(raw_config, "tool.semiwrap") is not None
