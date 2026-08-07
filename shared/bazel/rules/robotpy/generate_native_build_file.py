@@ -6,9 +6,7 @@ from jinja2 import BaseLoader, Environment
 from packaging.markers import Marker
 
 from shared.bazel.rules.robotpy.generation_utils import (
-    fixup_native_package_name,
-    fixup_python_dep_name,
-    fixup_root_package_name,
+    load_config,
     try_tomli_lookup,
 )
 from shared.bazel.rules.robotpy.hatchlib_native_port.config import PcFileConfig
@@ -25,6 +23,8 @@ def main():
     parser.add_argument("--package_name", required=True)
     args = parser.parse_args()
 
+    CONVERSION_CONFIG = load_config()
+
     with open(args.project_cfg, "rb") as fp:
         raw_config = tomli.load(fp)
 
@@ -33,18 +33,10 @@ def main():
             return json.dumps(data)
         return None
 
-    def get_pc_dep(library):
-        base_project = library.replace("robotpy-native-", "")
-        return f"//{fixup_native_package_name(base_project)}:native/{base_project}/{library}.pc"
-
-    def get_python_dep(library):
-        base_project = library.replace("robotpy-native-", "")
-        return f"//{fixup_native_package_name(base_project)}:{fixup_python_dep_name(library)}"
-
     env = Environment(loader=BaseLoader)
     env.filters["double_quotes"] = double_quotes
-    env.filters["get_pc_dep"] = get_pc_dep
-    env.filters["get_python_dep"] = get_python_dep
+    env.filters["get_pc_dep"] = CONVERSION_CONFIG.get_pc_dep
+    env.filters["get_python_dep"] = CONVERSION_CONFIG.get_python_dep
     env.filters["strip_src_prefix"] = lambda x: str(x).removeprefix("src/")
     template = env.from_string(BUILD_FILE_TEMPLATE)
 
@@ -52,7 +44,6 @@ def main():
     project_name = (
         raw_config["project"]["name"].replace("robotpy-native-", "").replace("-", "_")
     )
-    root_package = fixup_root_package_name(project_name)
     pc_files = []
 
     local_pc_names = set()
@@ -81,7 +72,6 @@ def main():
             template.render(
                 raw_project_config=raw_config["project"],
                 nativelib_config=nativelib_config,
-                root_package=root_package,
                 maven_downloads=maven_downloads,
                 third_party_dirs=args.third_party_dirs or [],
                 pc_files=pc_files,
@@ -112,10 +102,10 @@ def define_native_wrapper(name, pyproject_toml = None):
         out = "native/{{project_name}}/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "{{root_package}}/src/generated/main/native/include": "",
-            "{{root_package}}/src/main/native/include": "",
+            "{{package_name}}/src/generated/main/native/include": "",
+            "{{package_name}}/src/main/native/include": "",
             {%- for dir in third_party_dirs %}
-            "{{root_package}}/src/main/native/thirdparty/{{dir}}/include": "",
+            "{{package_name}}/src/main/native/thirdparty/{{dir}}/include": "",
             {%- endfor %}
         },
         verbose = False,

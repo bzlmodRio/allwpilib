@@ -41,6 +41,18 @@ class SubprojectConfig:
 class BazelTranslationConfig:
     projects: typing.Dict[str, SubprojectConfig]
 
+
+    def get_pc_dep(self, library):
+        base_project = library.replace("robotpy-native-", "")
+        return f"//{fixup_native_package_name(base_project)}:native/{base_project}/{library}.pc"
+        
+    def get_python_dep(self, library):
+        base_project = library.replace("robotpy-native-", "")
+        return f"//{fixup_native_package_name(base_project)}:{fixup_python_dep_name(library)}"
+
+
+
+
     # def __post_init__(self):
     #     for key in self.projects:
     #         self.projects[key].populate_defaults(key)
