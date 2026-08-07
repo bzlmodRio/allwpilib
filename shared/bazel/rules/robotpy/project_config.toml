@@ -1,0 +1,143 @@
+
+
+
+[projects.commands2]
+bazel_project_root = "commandsv2"
+
+[projects.halsim_ds_socket]
+bazel_project_root = "simulation/halsim_ds_socket"
+
+[projects.halsim-ws]
+bazel_project_root = "simulation/halsim_ws_core"
+
+[projects.halsim_ws]
+bazel_project_root = "simulation/halsim_ws_core"
+
+[projects.halsim_ws_client]
+bazel_project_root = "simulation/halsim_ws_client"
+
+[projects.halsim_ws_server]
+bazel_project_root = "simulation/halsim_ws_server"
+
+[projects.halsim_gui]
+bazel_project_root = "simulation/halsim_gui"
+
+[projects.halsim_xrp]
+bazel_project_root = "simulation/halsim_xrp"
+
+[projects.pyntcore]
+bazel_project_root = "ntcore"
+
+[projects.robotpy_apriltag]
+bazel_project_root = "apriltag"
+
+[projects.robotpy_fields]
+bazel_project_root = "fields"
+
+[projects.romi]
+bazel_project_root = "romiVendordep"
+
+[projects.wpihal]
+bazel_project_root = "hal"
+
+[projects.wpiutil]
+
+[projects.wpilib]
+bazel_project_root = "wpilibc"
+
+[projects.wpilog]
+bazel_project_root = "datalog"
+
+[projects.wpimath_test]
+bazel_project_root = "wpimath"
+
+[projects.xrp]
+bazel_project_root = "xrpVendordep"
+
+# [layout]
+# native_package_prefix = "subprojects/robotpy-native-"
+# pybind_package_prefix = "subprojects/robotpy-"
+# native_srcs_root = "src/native/{project_name}/"
+# stripped_include_prefix = ""
+# package_path_depth = 2
+# native_source = "bzlmodrio"
+# 
+# [projects.robotpy-native-apriltag]
+# 
+# [projects.robotpy-native-datalog]
+# 
+# [projects.robotpy-native-fields]
+# 
+# [projects.robotpy-native-ntcore]
+# 
+# [projects.robotpy-native-romi]
+# copy_headers_target = "//romiVendordep:robotpy-native-romi.copy_headers"
+# 
+# [projects.robotpy-native-wpihal]
+# copy_headers_target = "//hal:robotpy-native-wpihal.copy_headers"
+# dynamic_dep = "//hal:shared/hal"
+# 
+# [projects.robotpy-native-wpilib]
+# copy_headers_target = "//wpilibc:robotpy-native-wpilib.copy_headers"
+# 
+# [projects.robotpy-native-wpimath]
+# 
+# [projects.robotpy-native-wpinet]
+# 
+# [projects.robotpy-native-wpiutil]
+# 
+# [projects.robotpy-native-xrp]
+# copy_headers_target = "//xrpVendordep:robotpy-native-xrp.copy_headers"
+# 
+# 
+# [projects.apriltag]
+# 
+# [projects.fields]
+# 
+# [projects.ntcore]
+# 
+# [projects.wpihal]
+# local_extension_targets = ["//hal:wpiHal"]
+# pybind_target = "//hal:wpihal_pybind_library"
+# dynamic_dep = "//hal:shared/wpiHal"
+# 
+# [projects.hal_simulation]
+# local_extension_targets = ["//hal:wpiHal"]
+# pybind_target = "//hal:wpihal_pybind_library"
+# dynamic_dep = "//hal:shared/wpiHal"
+# 
+# [projects.romi]
+# local_extension_targets = ["//romiVendordep:romiVendordep"]
+# dynamic_dep = "//romiVendordep:shared/romiVendordep"
+# 
+# [projects.wpilib]
+# local_extension_targets = ["//wpilibc:wpilibc"]
+# pybind_target = "//wpilibc:wpilib_pybind_library"
+# dynamic_dep = "//wpilibc:shared/wpilibc"
+# 
+# [projects.wpilib_simulation]
+# local_extension_targets = []
+# dynamic_dep = "//wpilibc:shared/wpilibc"
+# 
+# [projects.wpilog]
+# local_extension_targets = ["//datalog:datalog"]
+# pybind_target = "//datalog:wpilog_pybind_library"
+# dynamic_dep = "//datalog:shared/datalog"
+# 
+# [projects.wpinet]
+# 
+# [projects.wpimath]
+# 
+# [projects.wpimath_test]
+# local_extension_targets = ["//wpimath:wpimath"]
+# dynamic_dep = "//wpimath:shared/wpimath"
+# 
+# [projects.wpiutil]
+# 
+# [projects.xrp]
+# local_extension_targets = ["//xrpVendordep:xrpVendordep"]
+# dynamic_dep = "//xrpVendordep:shared/xrpVendordep"
+# 
+# 
+# #########################3
+# [projects.datalog]
