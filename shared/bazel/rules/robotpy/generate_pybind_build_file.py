@@ -25,6 +25,7 @@ from shared.bazel.rules.robotpy.generation_utils import (
     fixup_python_dep_name,
     fixup_root_package_name,
     fixup_shared_lib_name,
+    try_tomli_lookup,
 )
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
 
@@ -373,12 +374,7 @@ def generate_pybind_build_file(
     with open(project_file, "rb") as fp:
         raw_config = tomli.load(fp)
 
-    try:
-        top_level_name = raw_config["tool"]["hatch"]["build"]["targets"]["wheel"][
-            "packages"
-        ]
-    except KeyError:
-        top_level_name = [raw_config["project"]["name"]]
+    top_level_name = try_tomli_lookup(raw_config, "tool.hatch.build.targets.wheel.packages", default_value = [raw_config["project"]["name"]])
     assert len(top_level_name) == 1
     top_level_name = top_level_name[0]
 
@@ -403,19 +399,24 @@ def generate_pybind_build_file(
         "robotpy-cli",
         "pytest-reraise",
         "pytest",
+        "typing_extensions",
     ]
 
     python_deps = []
     has_external_python_deps = False
     if "dependencies" in raw_config["project"]:
         for d in raw_config["project"]["dependencies"]:
+            # Strip version strings out
+            dep_no_version = re.compile(r"^[A-Za-z0-9_.\-]+").match(d).group(0)
+            print(d, dep_no_version)
+            
             for external_dep in EXTERNAL_PYPI_DEPS:
-                if external_dep in d:
+                if external_dep == dep_no_version:
                     has_external_python_deps = True
-                    python_deps.append(f'requirement("{external_dep}")')
+                    python_deps.append(f'requirement("{dep_no_version}")')
                     break
             else:
-                pd = target_from_python_dep(d.split("==")[0])
+                pd = target_from_python_dep(dep_no_version)
                 python_deps.append(pd)
 
     env = Environment(loader=BaseLoader)
@@ -427,12 +428,7 @@ def generate_pybind_build_file(
         all_local_native_deps.update(em.native_wrapper_dependencies)
     all_local_native_deps = sorted(all_local_native_deps)
 
-    try:
-        version_file = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
-            "version_file"
-        ]
-    except KeyError:
-        version_file = None
+    version_file = try_tomli_lookup(raw_config, "tool.hatch.build.hooks.robotpy.version_file")
 
     # The entry points defined above are implicit to how the project is broken down in the toml files.
     # This adds potentially extra explicitly declared entry points
@@ -447,6 +443,9 @@ def generate_pybind_build_file(
         f"{fixup_root_package_name(top_level_name)}/{stripped_include_prefix}",
         f"{fixup_root_package_name(top_level_name)}",
     ]
+
+    is_semiwrap_project = try_tomli_lookup(raw_config, "tool.semiwrap") is not None
+    maven_downloads = try_tomli_lookup(raw_config, "tool.hatch.build.hooks.robotpy.maven_lib_download", [])
 
     with open(output_file, "w") as f:
         f.write(
@@ -466,6 +465,8 @@ def generate_pybind_build_file(
                 entry_points=entry_points,
                 version_file=version_file,
                 has_external_python_deps=has_external_python_deps,
+                is_semiwrap_project=is_semiwrap_project,
+                maven_downloads=maven_downloads,
             )
             + "\n"
         )

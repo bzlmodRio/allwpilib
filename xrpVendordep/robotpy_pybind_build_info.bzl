@@ -1,7 +1,7 @@
 # THIS FILE IS AUTO GENERATED
 
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
-load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library", "robotpy_library")
+load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
 
@@ -245,6 +245,11 @@ def define_pybind_library(name, pkgcfgs = []):
         srcs = native.glob(["src/main/python/xrp/**"], exclude = ["src/main/python/xrp/**/*.py"], allow_empty = True),
         tags = ["manual", "robotpy"],
     )
+    copy_native_file(
+        name = "halsim_xrp",
+        base_path = "src/main/python/halsim_xrp/",
+        library = "//simulation/halsim_xrp:shared/halsim_xrp",
+    )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
@@ -262,6 +267,7 @@ def define_pybind_library(name, pkgcfgs = []):
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
+            ":halsim_xrp.copy_lib",
             ":src/main/python/xrp/_xrp",
             ":xrp.trampoline_hdr_files",
         ],

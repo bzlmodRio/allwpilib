@@ -9,6 +9,7 @@ from shared.bazel.rules.robotpy.generation_utils import (
     fixup_native_package_name,
     fixup_python_dep_name,
     fixup_root_package_name,
+    try_tomli_lookup,
 )
 from shared.bazel.rules.robotpy.hatchlib_native_port.config import PcFileConfig
 from shared.bazel.rules.robotpy.hatchlib_native_port.validate import parse_input
@@ -74,9 +75,7 @@ def main():
                 if dep not in local_pc_names:
                     requires.add(dep)
 
-    maven_downloads = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
-        "maven_lib_download"
-    ]
+    maven_downloads = try_tomli_lookup(raw_config, "tool.hatch.build.hooks.robotpy.maven_lib_download")
     with open(args.output_file, "w") as f:
         f.write(
             template.render(

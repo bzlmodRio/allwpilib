@@ -15,7 +15,7 @@ load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 
 filegroup(
     name = "generated-native-include-files",
-    srcs = glob(["src/generated/main/native/include/**/*"])
+    srcs = glob(["src/generated/main/native/include/**/*"]),
 )
 
 filegroup(

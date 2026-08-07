@@ -15,12 +15,16 @@ def fixup_root_package_name(name):
         return "simulation/halsim_ws_core"
     if name == "halsim_gui":
         return "simulation/halsim_gui"
+    if name == "halsim_ds_socket":
+        return "simulation/halsim_ds_socket"
     if name == "wpimath_test":
         return "wpimath"
     if name == "robotpy_apriltag":
         return "apriltag"
     if name == "robotpy_fields":
         return "fields"
+    if name == "commands2":
+        return "commandsv2"
     return name
 
 
@@ -58,3 +62,16 @@ def fixup_python_dep_name(name):
     if name == "wpilib":
         return "robotpy-wpilib"
     return name
+
+
+def try_tomli_lookup(tomli_map, str_key, default_value=None):
+    keys = str_key.split(".")
+    submap = tomli_map
+
+    try:
+        for key in keys:
+            submap = submap[key]
+    except KeyError:
+        return default_value
+
+    return submap
