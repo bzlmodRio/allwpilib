@@ -8,6 +8,8 @@ import validobj.validation
 @dataclasses.dataclass
 class SubprojectConfig:
     bazel_project_root: typing.Optional[str] = None
+    python_library: typing.Optional[str] = None
+    shared_lib_name: typing.Optional[str] = None
     # is_native: typing.Optional[bool] = None
     # project_base_name: typing.Optional[str] = ""
     # copy_headers_target: typing.Optional[str] = None
@@ -61,12 +63,12 @@ class BazelTranslationConfig:
 
     def get_dynamic_dep(self, dep_name):
         base_library = self.fixup_root_package_name(dep_name.split("_")[0])
-        return f"//{base_library}:shared/{self.fixup_shared_lib_name(base_library)}"
+        return f"//{base_library}:shared/{self.fixup_shared_lib_name(dep_name.split("_")[0])}"
 
     def get_local_extension_targets(self, dep_name: str, include_pybind_target: bool):
         base_library = self.fixup_root_package_name(dep_name.split("_")[0])
 
-        output = [f"//{base_library}:{self.fixup_shared_lib_name(base_library)}"]
+        output = [f"//{base_library}:{self.fixup_shared_lib_name(dep_name.split("_")[0])}"]
         if include_pybind_target:
             output.append(f"//{base_library}:{dep_name}_pybind_library")
 
@@ -92,27 +94,26 @@ class BazelTranslationConfig:
 
 
     def fixup_shared_lib_name(self, name):
-        if name == "wpihal":
-            return "wpiHal"
-        if name == "hal":
-            return "wpiHal"
-        if name == "wpilib":
-            return "wpilibc"
-        if name == "xrp":
-            return "xrpVendordep"
-        if name == "romi":
-            return "romiVendordep"
-        return name
+        if name in self.projects:
+            if self.projects[name].shared_lib_name:
+                return self.projects[name].shared_lib_name
+            return name
+        else:
+            print(f"fixup_shared_lib_name using default name for  {name}")
+            raise
 
 
     def fixup_python_dep_name(self, name):
-        if name == "robotpy-datalog":
-            return "robotpy-wpilog"
-        if name == "robotpy-ntcore":
-            return "pyntcore"
-        if name == "wpilib":
-            return "robotpy-wpilib"
-        return name
+        base_library = name.replace("robotpy-native-", "").replace("robotpy-", "")
+
+        if base_library in self.projects:
+            if "-native-" not in name:
+                if self.projects[base_library].python_library:
+                    return self.projects[base_library].python_library
+            return name
+        else:
+            print(f"fixup_python_dep_name using default name for  {name} ({base_library})")
+            raise
 
     def fixup_root_package_name(self, name):
         if name in self.projects:
@@ -120,10 +121,8 @@ class BazelTranslationConfig:
                 return self.projects[name].bazel_project_root
             return name
         else:
-            print(f"Using default for root name for {name}")
-            # print(config.projects.keys())
-            # raise
-            return name
+            print(f"fixup_root_package_name using default name for  {name}")
+            raise
 
 
     # def __post_init__(self):

@@ -40,19 +40,26 @@ bazel_project_root = "fields"
 
 [projects.romi]
 bazel_project_root = "romiVendordep"
+shared_lib_name = "romiVendordep"
 
 [projects.hal]
 bazel_project_root = "hal"
+shared_lib_name = "wpiHal"
 
 [projects.wpihal]
 bazel_project_root = "hal"
+shared_lib_name = "wpiHal"
 
+[projects.wpilibc]
 [projects.wpilib]
 bazel_project_root = "wpilibc"
+python_library = "robotpy-wpilib"
+shared_lib_name = "wpilibc"
 
 [projects.datalog]
 [projects.wpilog]
 bazel_project_root = "datalog"
+shared_lib_name = "datalog"
 
 [projects.wpimath]
 
@@ -65,6 +72,7 @@ bazel_project_root = "wpimath"
 
 [projects.xrp]
 bazel_project_root = "xrpVendordep"
+shared_lib_name = "xrpVendordep"
 
 # [layout]
 # native_package_prefix = "subprojects/robotpy-native-"
