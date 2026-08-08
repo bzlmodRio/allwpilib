@@ -26,6 +26,8 @@ def fixup_root_package_name(name):
         return "wpimath"
     if name == "robotpy_apriltag":
         return "apriltag"
+    if name == "robotpy_fields":
+        return "fields"
     return name
 
 

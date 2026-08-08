@@ -99,7 +99,7 @@ def main():
         os.environ["PYTHONPATH"] = os.pathsep.join(sys.path)
 
     module = importlib.import_module(tool)
-    tool_main = getattr(module, "main")
+    tool_main = module.main
 
     sys.argv = [""] + args
     try:
