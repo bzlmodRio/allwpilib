@@ -8,12 +8,16 @@ def define_native_wrapper(name, pyproject_toml = None):
 
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + ["//fields:generated-native-include-files"],
+        srcs = native.glob(["src/main/native/include/**"]) + [
+            "//fields:generated-native-include-files",
+            "//:LICENSE.md",
+            "//:ThirdPartyNotices.txt",
+        ],
         out = "native/fields/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "fields/src/main/native/include": "",
             "fields/src/generated/main/native/include": "",
+            "fields/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],

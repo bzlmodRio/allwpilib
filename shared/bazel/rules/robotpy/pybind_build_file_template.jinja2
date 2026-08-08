@@ -256,6 +256,8 @@ def define_pybind_library(name, pkgcfgs = []):
         },
         visibility = ["//visibility:public"],{% if raw_project_config.readme %}
         description_file = "{{include_root_prefix + raw_project_config.readme}}",
+        {%- endif %}{% if license_file_name %}
+        extra_distinfo_files = {"{{include_root_prefix + license_file_name}}": "licenses/{{license_file_name}}"},
         {%- endif %}
     )
 {% if is_semiwrap_project %}

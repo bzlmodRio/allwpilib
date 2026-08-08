@@ -8,7 +8,10 @@ def define_native_wrapper(name, pyproject_toml = None):
 
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]),
+        srcs = native.glob(["src/main/native/include/**"]) + [
+            "//:LICENSE.md",
+            "//:ThirdPartyNotices.txt",
+        ],
         out = "native/halsim_gui/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {

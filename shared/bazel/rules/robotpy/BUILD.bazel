@@ -17,8 +17,8 @@ py_library(
 py_library(
     name = "generation_utils",
     srcs = ["generation_utils.py"],
-    visibility = ["//visibility:public"],
     data = ["project_config.toml"],
+    visibility = ["//visibility:public"],
     deps = [
         requirement("semiwrap"),
         requirement("jinja2"),

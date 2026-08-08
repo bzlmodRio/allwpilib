@@ -8,12 +8,16 @@ def define_native_wrapper(name, pyproject_toml = None):
 
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + ["//wpilibc:generated-native-include-files"],
+        srcs = native.glob(["src/main/native/include/**"]) + [
+            "//wpilibc:generated-native-include-files",
+            "//:LICENSE.md",
+            "//:ThirdPartyNotices.txt",
+        ],
         out = "native/wpilib/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "wpilibc/src/main/native/include": "",
             "wpilibc/src/generated/main/native/include": "",
+            "wpilibc/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],

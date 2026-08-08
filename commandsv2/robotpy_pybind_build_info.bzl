@@ -4,7 +4,6 @@ load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "robotpy_library")
 
 def define_pybind_library(name, pkgcfgs = []):
-
     robotpy_library(
         name = name,
         distribution = "robotpy-commands-v2",
@@ -28,4 +27,3 @@ def define_pybind_library(name, pkgcfgs = []):
         visibility = ["//visibility:public"],
         description_file = "src/main/python/README.md",
     )
-

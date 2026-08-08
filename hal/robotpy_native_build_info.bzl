@@ -8,9 +8,14 @@ def define_native_wrapper(name, pyproject_toml = None):
 
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]),
+        srcs = native.glob(["src/main/native/include/**"]) + [
+            "@mrclib_headers//:all_headers",
+        ],
         out = "native/wpihal/include",
         root_paths = ["src/main/native/include/"],
+        include_external_repositories = [
+            "*mrclib_headers*",
+        ],
         replace_prefixes = {
             "hal/src/main/native/include": "",
         },

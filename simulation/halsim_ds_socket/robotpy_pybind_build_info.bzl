@@ -41,4 +41,3 @@ def define_pybind_library(name, pkgcfgs = []):
         },
         visibility = ["//visibility:public"],
     )
-
