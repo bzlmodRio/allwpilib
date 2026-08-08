@@ -2,7 +2,8 @@ load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@buildifier_prebuilt//:rules.bzl", "buildifier")
 load("@rules_java//java:java_binary.bzl", "java_binary")
 load("@rules_java//java:java_plugin.bzl", "java_plugin")
-load("@rules_pkg//:mappings.bzl", "pkg_files")
+load("@rules_pkg//:mappings.bzl", "pkg_files", "strip_prefix")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 load("//shared/bazel/rules:publishing.bzl", "publish_all")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
@@ -172,6 +173,7 @@ write_source_files(
         "//hal:robotpy-native-wpihal-generator.generate_build_info",
         "//ntcore:robotpy-native-ntcore-generator.generate_build_info",
         "//romiVendordep:robotpy-native-xrp-generator.generate_build_info",
+        "//simulation/halsim_gui:robotpy-native-halsim-gui-generator.generate_build_info",
         "//wpilibc:robotpy-native-wpilib-generator.generate_build_info",
         "//wpinet:robotpy-native-wpinet-generator.generate_build_info",
         "//wpimath:robotpy-native-wpimath-generator.generate_build_info",
@@ -189,11 +191,14 @@ write_source_files(
     name = "write_robotpy_generated_pybind_files",
     additional_update_targets = [
         "//apriltag:robotpy-apriltag-generator.generate_build_info",
+        "//commandsv2:robotpy-commandsv2-generator.generate_build_info",
         "//datalog:robotpy-datalog-generator.generate_build_info",
         "//fields:robotpy-fields-generator.generate_build_info",
         "//hal:robotpy-hal-generator.generate_build_info",
         "//ntcore:pyntcore-generator.generate_build_info",
         "//romiVendordep:robotpy-romi-generator.generate_build_info",
+        "//simulation/halsim_ds_socket:robotpy-halsim-ds-socket-generator.generate_build_info",
+        "//simulation/halsim_ws_core:robotpy-halsim-ws-generator.generate_build_info",
         "//wpilibc:robotpy-wpilib-generator.generate_build_info",
         "//wpinet:robotpy-wpinet-generator.generate_build_info",
         "//wpimath:robotpy-wpimath-generator.generate_build_info",
@@ -298,4 +303,51 @@ filegroup(
     ],
     tags = ["manual"],
     target_compatible_with = robotpy_compatibility_select(),
+)
+
+pkg_files(
+    name = "robotpy.pkg_files",
+    srcs = [
+        "//apriltag:robotpy-apriltag-wheel",
+        "//apriltag:robotpy-native-apriltag-wheel",
+        "//commandsv2:commandsv2-py-wheel",
+        "//datalog:robotpy-native-datalog-wheel",
+        "//datalog:robotpy-wpilog-wheel",
+        "//fields:robotpy-fields-wheel",
+        "//fields:robotpy-native-fields-wheel",
+        "//hal:robotpy-hal-wheel",
+        "//hal:robotpy-native-wpihal-wheel",
+        "//ntcore:pyntcore-wheel",
+        "//ntcore:robotpy-native-ntcore-wheel",
+        "//romiVendordep:robotpy-native-romi-wheel",
+        "//romiVendordep:robotpy-romi-wheel",
+        "//simulation/halsim_ds_socket:robotpy-halsim-ds-socket-wheel",
+        "//simulation/halsim_gui:robotpy-halsim-gui-wheel",
+        "//simulation/halsim_gui:robotpy-native-halsim-gui-wheel",
+        "//simulation/halsim_ws_core:robotpy-halsim-ws-wheel",
+        "//wpilibc:robotpy-native-wpilib-wheel",
+        "//wpilibc:robotpy-wpilib-wheel",
+        "//wpimath:robotpy-native-wpimath-wheel",
+        "//wpimath:robotpy-wpimath-wheel",
+        "//wpinet:robotpy-native-wpinet-wheel",
+        "//wpinet:robotpy-wpinet-wheel",
+        "//wpiutil:robotpy-native-wpiutil-wheel",
+        "//wpiutil:robotpy-wpiutil-wheel",
+        "//xrpVendordep:robotpy-native-xrp-wheel",
+        "//xrpVendordep:robotpy-xrp-wheel",
+    ],
+    strip_prefix = strip_prefix.files_only(),
+    tags = [
+        "manual",
+        "robotpy",
+    ],
+)
+
+pkg_zip(
+    name = "robotpy_wheels_zip",
+    srcs = ["robotpy.pkg_files"],
+    tags = [
+        "manual",
+        "robotpy",
+    ],
 )

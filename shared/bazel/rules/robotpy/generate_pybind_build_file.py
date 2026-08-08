@@ -24,6 +24,7 @@ from shared.bazel.rules.robotpy.generation_utils import (
     fixup_python_dep_name,
     fixup_root_package_name,
     fixup_shared_lib_name,
+    try_tomli_lookup,
 )
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
 
@@ -84,8 +85,8 @@ class HeaderToDatConfig:
             base_include_file = args[2].relative_to(include_root)
             base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
 
-            self.include_file = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)/{base_include_file}"
-            self.include_root = f"$(execpath :{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)"
+            self.include_file = f"$(execpath //{fixup_root_package_name(base_library)}:{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)/{base_include_file}"
+            self.include_root = f"$(execpath //{fixup_root_package_name(base_library)}:{fixup_native_lib_name('robotpy-native-' + base_library)}.copy_headers)"
         else:
             root_dir = pathlib.Path.cwd().absolute()
             self.include_file = pathlib.Path(args[2]).absolute().relative_to(root_dir)
@@ -312,7 +313,12 @@ def generate_pybind_build_file(
     stripped_include_prefix: str,
     yml_prefix: str | None,
     output_file: pathlib.Path,
+    package_name: str,
 ):
+    include_root_prefix = (
+        f"{stripped_include_prefix.rstrip('/')}/" if stripped_include_prefix else ""
+    )
+
     project_dir = project_file.parent
     plan = makeplan(project_dir)
 
@@ -367,12 +373,11 @@ def generate_pybind_build_file(
     with open(project_file, "rb") as fp:
         raw_config = tomli.load(fp)
 
-    try:
-        top_level_name = raw_config["tool"]["hatch"]["build"]["targets"]["wheel"][
-            "packages"
-        ]
-    except KeyError:
-        top_level_name = [raw_config["project"]["name"]]
+    top_level_name = try_tomli_lookup(
+        raw_config,
+        "tool.hatch.build.targets.wheel.packages",
+        [raw_config["project"]["name"]],
+    )
     assert len(top_level_name) == 1
     top_level_name = top_level_name[0]
 
@@ -397,6 +402,7 @@ def generate_pybind_build_file(
         "robotpy-cli",
         "pytest-reraise",
         "pytest",
+        "typing_extensions",
     ]
 
     python_deps = []
@@ -421,12 +427,9 @@ def generate_pybind_build_file(
         all_local_native_deps.update(em.native_wrapper_dependencies)
     all_local_native_deps = sorted(all_local_native_deps)
 
-    try:
-        version_file = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
-            "version_file"
-        ]
-    except KeyError:
-        version_file = None
+    version_file = try_tomli_lookup(
+        raw_config, "tool.hatch.build.hooks.robotpy.version_file"
+    )
 
     # The entry points defined above are implicit to how the project is broken down in the toml files.
     # This adds potentially extra explicitly declared entry points
@@ -436,10 +439,27 @@ def generate_pybind_build_file(
             for ep_key, ep_value in explicit_entry_points[entry_point_type].items():
                 entry_points[entry_point_type].append(f"{ep_key} = {ep_value}")
 
+    imports_dir = stripped_include_prefix if stripped_include_prefix else "."
     strip_path_prefixes = [
-        f"{fixup_root_package_name(top_level_name)}/{stripped_include_prefix}",
-        f"{fixup_root_package_name(top_level_name)}",
+        f"{package_name}/{stripped_include_prefix}",
+        package_name,
     ]
+
+    is_semiwrap_project = try_tomli_lookup(raw_config, "tool.semiwrap") is not None
+
+    maven_downloads = try_tomli_lookup(
+        raw_config, "tool.hatch.build.hooks.robotpy.maven_lib_download", []
+    )
+    maven_libs = []
+    for maven_info in maven_downloads:
+        for lib in maven_info["libs"]:
+            maven_libs.append(
+                {
+                    "name": lib,
+                    "base_path": f"{include_root_prefix}{maven_info['extract_to']}/",
+                    "library": f"//{fixup_root_package_name(lib)}:shared/{lib}",
+                }
+            )
 
     with open(output_file, "w") as f:
         f.write(
@@ -450,6 +470,8 @@ def generate_pybind_build_file(
                 python_deps=sorted(python_deps),
                 all_local_native_deps=all_local_native_deps,
                 stripped_include_prefix=stripped_include_prefix,
+                include_root_prefix=include_root_prefix,
+                imports_dir=imports_dir,
                 strip_path_prefixes=strip_path_prefixes,
                 yml_prefix=yml_prefix,
                 package_root_file=package_root_file,
@@ -457,6 +479,8 @@ def generate_pybind_build_file(
                 entry_points=entry_points,
                 version_file=version_file,
                 has_external_python_deps=has_external_python_deps,
+                is_semiwrap_project=is_semiwrap_project,
+                maven_libs=maven_libs,
             )
             + "\n"
         )
@@ -472,6 +496,7 @@ def main():
     parser.add_argument("--yml_prefix", type=str)
     parser.add_argument("--package_root_file", type=str)
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
+    parser.add_argument("--package_name", type=str, required=True)
 
     args = parser.parse_args()
 
@@ -482,6 +507,7 @@ def main():
         args.stripped_include_prefix,
         args.yml_prefix,
         args.output_file,
+        args.package_name,
     )
 
 

@@ -73,8 +73,8 @@ def romi_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes
         struct(
             class_name = "OnBoardIO",
             yml_file = "semiwrap/OnBoardIO.yml",
-            header_root = "$(execpath :robotpy-native-romi.copy_headers)",
-            header_file = "$(execpath :robotpy-native-romi.copy_headers)/wpi/romi/OnBoardIO.hpp",
+            header_root = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)",
+            header_file = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)/wpi/romi/OnBoardIO.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::romi::OnBoardIO", "wpi__romi__OnBoardIO.hpp"),
@@ -83,8 +83,8 @@ def romi_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes
         struct(
             class_name = "RomiGyro",
             yml_file = "semiwrap/RomiGyro.yml",
-            header_root = "$(execpath :robotpy-native-romi.copy_headers)",
-            header_file = "$(execpath :robotpy-native-romi.copy_headers)/wpi/romi/RomiGyro.hpp",
+            header_root = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)",
+            header_file = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)/wpi/romi/RomiGyro.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::romi::RomiGyro", "wpi__romi__RomiGyro.hpp"),
@@ -93,8 +93,8 @@ def romi_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes
         struct(
             class_name = "RomiMotor",
             yml_file = "semiwrap/RomiMotor.yml",
-            header_root = "$(execpath :robotpy-native-romi.copy_headers)",
-            header_file = "$(execpath :robotpy-native-romi.copy_headers)/wpi/romi/RomiMotor.hpp",
+            header_root = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)",
+            header_file = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)/wpi/romi/RomiMotor.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::romi::RomiMotor", "wpi__romi__RomiMotor.hpp"),
@@ -103,8 +103,8 @@ def romi_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes
         struct(
             class_name = "RomiServo",
             yml_file = "semiwrap/RomiServo.yml",
-            header_root = "$(execpath :robotpy-native-romi.copy_headers)",
-            header_file = "$(execpath :robotpy-native-romi.copy_headers)/wpi/romi/RomiServo.hpp",
+            header_root = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)",
+            header_file = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)/wpi/romi/RomiServo.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::romi::RomiServo", "wpi__romi__RomiServo.hpp"),

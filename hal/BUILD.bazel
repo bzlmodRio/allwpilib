@@ -182,6 +182,8 @@ package_default_jni_project(
 
 generate_robotpy_native_wrapper_build_info(
     name = "robotpy-native-wpihal-generator",
+    extra_include_targets = ["@mrclib_headers//:all_headers"],
+    include_external_repositories = ["*mrclib_headers*"],
     pyproject_toml = "src/main/python/native-pyproject.toml",
 )
 

@@ -146,6 +146,12 @@ pkg_files(
     strip_prefix = "src/generated/main/native/cpp/",
 )
 
+filegroup(
+    name = "generated-native-include-files",
+    srcs = glob(["src/generated/main/native/cpp/wpimath/protobuf/*.npb.h"]),
+    visibility = ["//visibility:public"],
+)
+
 wpilib_cc_library(
     name = "wpimath",
     srcs = glob(
@@ -340,6 +346,10 @@ package_default_jni_project(
 
 generate_robotpy_native_wrapper_build_info(
     name = "robotpy-native-wpimath-generator",
+    extra_include_targets = ["@eigen//:all_files"],
+    generated_include_root = "src/generated/main/native/cpp",
+    generated_include_target = "//wpimath:generated-native-include-files",
+    include_external_repositories = ["eigen*"],
     pyproject_toml = "src/main/python/native-pyproject.toml",
     third_party_dirs = [
         "gcem",
