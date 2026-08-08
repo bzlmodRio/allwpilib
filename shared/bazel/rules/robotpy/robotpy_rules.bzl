@@ -1,5 +1,7 @@
 load("@bazel_lib//lib:copy_file.bzl", "copy_file")
 load("@pybind11_bazel//:build_defs.bzl", "pybind_extension", "pybind_library")
+load("@rules_pkg//:mappings.bzl", "pkg_files", "strip_prefix")
+load("@rules_pkg//pkg:zip.bzl", "pkg_zip")
 load("@rules_pycross//pycross:defs.bzl", "pycross_wheel_library")
 load("@rules_python//python:defs.bzl", "py_library")
 load("@rules_python//python:packaging.bzl", "py_wheel")
@@ -95,6 +97,7 @@ def robotpy_library(
         requires = None,
         description_file = None,
         python_requires = None,
+        extra_distinfo_files = None,
         **kwargs):
     """
     Defines a python library that is wrapping a series of pybind extensions.
@@ -125,6 +128,7 @@ def robotpy_library(
         entry_points = entry_points,
         description_file = description_file,
         python_requires = python_requires,
+        extra_distinfo_files = extra_distinfo_files,
         license = "BSD-3-Clause",
         tags = ["robotpy"],
         visibility = ["//visibility:public"],
@@ -199,4 +203,30 @@ def generate_native_files(name, pyproject_toml, pc_deps, libinit_files, pc_files
     native.filegroup(
         name = name + ".pc_wrapper",
         srcs = pc_files,
+    )
+
+def robotpy_wheels_zip(name, wheels, out = None, **kwargs):
+    """Bundles a set of robotpy wheel files into a single flat zip (no nested subfolders).
+
+    Outputs:
+        <name> - A pkg_zip containing every wheel in `wheels` directly at the zip root.
+
+    Params:
+        name - Name of the pkg_zip target.
+        wheels - List of py_wheel (or -wheel) targets to bundle.
+        out - Name of the output zip file. Defaults to "<name>.zip".
+    """
+    pkg_files(
+        name = name + ".pkg_files",
+        srcs = wheels,
+        strip_prefix = strip_prefix.files_only(),
+        tags = ["manual", "robotpy"],
+    )
+
+    pkg_zip(
+        name = name,
+        srcs = [name + ".pkg_files"],
+        out = out or (name + ".zip"),
+        tags = ["manual", "robotpy"],
+        **kwargs
     )

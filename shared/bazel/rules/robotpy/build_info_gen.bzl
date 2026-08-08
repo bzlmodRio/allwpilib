@@ -1,7 +1,7 @@
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
-def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party_dirs = [], native_srcs_root = "src/main/native/", generated_include_target = None, extra_include_root_files = [], extra_include_targets = [], include_external_repositories = []):
+def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party_dirs = [], native_srcs_root = "src/main/native/", generated_include_target = None, generated_include_root = "src/generated/main/native/include", extra_include_root_files = [], extra_include_targets = [], include_external_repositories = []):
     """
     This function will generate the bazel file necessary to declare a library that wraps a standard allwpilib library.
 
@@ -12,6 +12,10 @@ def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party
             directories live, relative to wherever this macro is invoked from
         generated_include_target - Optional label pointing at a public filegroup exposing that project's
             generated headers
+        generated_include_root - Package-relative prefix to strip from generated_include_target's sources
+            so they land correctly under the wheel's include root. Defaults to the standard generated
+            include directory; override when generated_include_target's sources live elsewhere (e.g.
+            wpimath's generated protobuf headers live under src/generated/main/native/cpp).
         extra_include_root_files - Optional extra labels (e.g. //:LICENSE.md) to copy directly into the
             wheel's include root, alongside the project's headers
         extra_include_targets - Optional extra filegroup labels (e.g. an external repo's headers, such as
@@ -29,6 +33,7 @@ def generate_robotpy_native_wrapper_build_info(name, pyproject_toml, third_party
     cmd += " --package_name=" + native.package_name()
     if generated_include_target:
         cmd += " --generated_include_target=" + generated_include_target
+        cmd += " --generated_include_root=" + generated_include_root
     if extra_include_root_files:
         cmd += " --extra_include_root_files "
         for f in extra_include_root_files:

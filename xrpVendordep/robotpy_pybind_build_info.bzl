@@ -245,6 +245,7 @@ def define_pybind_library(name, pkgcfgs = []):
         srcs = native.glob(["src/main/python/xrp/**"], exclude = ["src/main/python/xrp/**/*.py"], allow_empty = True),
         tags = ["manual", "robotpy"],
     )
+
     copy_native_file(
         name = "halsim_xrp",
         base_path = "src/main/python/xrp/extension/",

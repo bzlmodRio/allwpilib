@@ -8,11 +8,10 @@ def define_native_wrapper(name, pyproject_toml = None):
 
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + native.glob([
+        srcs = native.glob(["src/main/native/include/**"]) + ["//wpimath:generated-native-include-files"] + native.glob([
             "src/main/native/thirdparty/gcem/include/**",
             "src/main/native/thirdparty/sleipnir/include/**",
         ]) + [
-            "//wpimath:generated-native-include-files",
             "@eigen//:all_files",
         ],
         out = "native/wpimath/include",

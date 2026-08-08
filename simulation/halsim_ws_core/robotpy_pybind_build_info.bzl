@@ -9,6 +9,7 @@ def define_pybind_library(name, pkgcfgs = []):
         base_path = "src/main/python/halsim_ws/server/",
         library = "//simulation/halsim_ws_server:shared/halsim_ws_server",
     )
+
     copy_native_file(
         name = "halsim_ws_client",
         base_path = "src/main/python/halsim_ws/client/",

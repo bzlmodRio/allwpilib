@@ -196,15 +196,13 @@ def define_pybind_library(name, pkgcfgs = []):
         srcs = native.glob(["{{include_root_prefix}}{{top_level_name}}/**"], exclude = ["{{include_root_prefix}}{{top_level_name}}/**/*.py"], allow_empty = True),
         tags = ["manual", "robotpy"],
     )
-{%- endif %}
-{%- for lib in maven_libs %}
+{% endif %}{%- for lib in maven_libs %}
     copy_native_file(
         name = "{{lib.name}}",
         base_path = "{{lib.base_path}}",
         library = "{{lib.library}}",
     )
-{%- endfor %}
-{% if version_file %}
+{% endfor %}{% if version_file %}
     generate_version_file(
         name = "{}.generate_version".format(name),
         output_file = "{{include_root_prefix}}{{version_file}}",
@@ -259,8 +257,8 @@ def define_pybind_library(name, pkgcfgs = []):
         {%- endif %}{% if license_file_name %}
         extra_distinfo_files = {"{{include_root_prefix + license_file_name}}": "licenses/{{license_file_name}}"},
         {%- endif %}
-    )
-{% if is_semiwrap_project %}
+    ){% if is_semiwrap_project %}
+
     update_yaml_files(
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "{{include_root_prefix}}semiwrap",

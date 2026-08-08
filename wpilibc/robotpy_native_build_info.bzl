@@ -8,8 +8,7 @@ def define_native_wrapper(name, pyproject_toml = None):
 
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + [
-            "//wpilibc:generated-native-include-files",
+        srcs = native.glob(["src/main/native/include/**"]) + ["//wpilibc:generated-native-include-files"] + [
             "//:LICENSE.md",
             "//:ThirdPartyNotices.txt",
         ],

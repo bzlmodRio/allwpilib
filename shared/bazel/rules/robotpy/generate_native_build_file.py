@@ -20,6 +20,9 @@ def main():
     parser.add_argument("--third_party_dirs", nargs="+")
     parser.add_argument("--native_srcs_root", default="src/main/native/")
     parser.add_argument("--generated_include_target", default=None)
+    parser.add_argument(
+        "--generated_include_root", default="src/generated/main/native/include"
+    )
     parser.add_argument("--extra_include_root_files", nargs="+", default=[])
     parser.add_argument("--extra_include_targets", nargs="+", default=[])
     parser.add_argument("--include_external_repositories", nargs="+", default=[])
@@ -71,6 +74,17 @@ def main():
                     requires.add(dep)
 
     maven_downloads = try_tomli_lookup(raw_config, "tool.hatch.build.hooks.robotpy.maven_lib_download")
+
+    third_party_dirs = args.third_party_dirs or []
+    replace_prefix_keys = [args.package_name + "/" + args.native_srcs_root + "include"]
+    for d in third_party_dirs:
+        replace_prefix_keys.append(
+            args.package_name + "/" + args.native_srcs_root + "thirdparty/" + d + "/include"
+        )
+    if args.generated_include_target:
+        replace_prefix_keys.append(root_package + "/" + args.generated_include_root)
+    replace_prefix_keys.sort()
+
     with open(args.output_file, "w") as f:
         f.write(
             template.render(
@@ -78,15 +92,17 @@ def main():
                 nativelib_config=nativelib_config,
                 root_package=root_package,
                 maven_downloads=maven_downloads,
-                third_party_dirs=args.third_party_dirs or [],
+                third_party_dirs=third_party_dirs,
                 pc_files=pc_files,
                 requires=requires,
                 project_name=project_name,
                 native_srcs_root=args.native_srcs_root,
                 generated_include_target=args.generated_include_target,
+                generated_include_root=args.generated_include_root,
                 extra_include_root_files=args.extra_include_root_files,
                 extra_include_targets=args.extra_include_targets,
                 include_external_repositories=args.include_external_repositories,
+                replace_prefix_keys=replace_prefix_keys,
                 package_name=args.package_name,
             )
         )
@@ -125,12 +141,9 @@ def define_native_wrapper(name, pyproject_toml = None):
         ],
         {%- endif %}
         replace_prefixes = {
-            "{{package_name}}/{{native_srcs_root}}include": "",
-            {%- for dir in third_party_dirs %}
-            "{{package_name}}/{{native_srcs_root}}thirdparty/{{dir}}/include": "",
-            {%- endfor %}{% if generated_include_target %}
-            "{{root_package}}/src/generated/main/native/include": "",
-            {%- endif %}
+        {%- for key in replace_prefix_keys %}
+            "{{key}}": "",
+        {%- endfor %}
         },
         verbose = False,
         visibility = ["//visibility:public"],
