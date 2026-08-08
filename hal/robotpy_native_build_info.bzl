@@ -68,7 +68,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         strip_path_prefixes = ["hal"],
         entry_points = {
             "pkg_config": [
-                "mrclib = native.mrclib",
+                "mrclib = native.wpihal",
                 "wpihal = native.wpihal",
             ],
         },

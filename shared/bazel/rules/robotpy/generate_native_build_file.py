@@ -198,7 +198,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         entry_points = {
             "pkg_config": [
             {%- for pcfile in pc_files %}
-                "{{pcfile.name}} = native.{{pcfile.name}}",
+                "{{pcfile.name}} = native.{{project_name}}",
             {%- endfor %}
             ],
         },
