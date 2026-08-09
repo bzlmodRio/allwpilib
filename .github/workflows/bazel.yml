@@ -100,7 +100,7 @@ jobs:
             TARGETS=...
           fi
           if [ "${{ runner.os }}" = "Windows" ]; then
-            bazel --output_user_root=D:\\bazelroot ${ACTION} ${TARGETS} -k --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
+            bazel --windows_enable_symlinks --output_user_root=D:\\bazelroot ${ACTION} ${TARGETS} -k --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
           else
             bazel ${ACTION} ${TARGETS} -k --config=ci -c opt --repo_env=WPI_PUBLISH_CLASSIFIER_FILTER='${{ matrix.classifier }}'
           fi

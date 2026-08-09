@@ -288,7 +288,7 @@ class BazelExtensionModule:
     def _extract_header_generation(
         self,
         sources,
-        extension_name_transforms: list[Tuple[str, str]],
+        extension_name_transforms: list[tuple[str, str]],
         workspace_root: pathlib.Path,
     ) -> dict[str, HeaderToDatConfig]:
         generation_data: dict[str, HeaderToDatConfig] = {}
