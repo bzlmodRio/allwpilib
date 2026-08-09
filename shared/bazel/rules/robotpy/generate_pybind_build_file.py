@@ -33,7 +33,7 @@ class HeaderToDatConfig:
     def __init__(
         self,
         header_to_dat_args: BuildTarget,
-        extension_name_transforms: List[Tuple[str, str]],
+        extension_name_transforms: list[tuple[str, str]],
         workspace_root: pathlib.Path,
     ):
         includes = []
