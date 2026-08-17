@@ -1,0 +1,11 @@
+load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
+load("@rules_python//python:defs.bzl", "py_binary")
+
+py_binary(
+    name = "fix_wheel_platform_tag",
+    srcs = ["fix_wheel_platform_tag.py"],
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("auditwheel"),
+    ],
+)
