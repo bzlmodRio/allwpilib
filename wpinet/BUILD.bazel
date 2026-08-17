@@ -193,6 +193,10 @@ wpilib_cc_library(
         ],
         "//conditions:default": [],
     }),
+    local_defines = select({
+        "@platforms//os:windows": [],
+        "//conditions:default": ["_GNU_SOURCE"],
+    }),
     strip_include_prefix = "src/main/native/include",
     third_party_libraries = [
         ":llhttp",

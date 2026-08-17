@@ -254,6 +254,7 @@ def wpilib_cc_library(
         strip_include_prefix = None,
         linkopts = None,
         visibility = None,
+        local_defines = [],
         **kwargs):
     """
     This function is used to ease the creation of a cc_library with publishing given the standard allwpilib directory structure.
@@ -278,8 +279,12 @@ def wpilib_cc_library(
                 extra, customized headers to be added to the published zip file
         include_license_files: If the header / source / library zip files should automatically includes the license files. This is used to maintain
                 consistency with the gradle publishing, as not all of them export the license files.
+        local_defines: Preprocessor defines local to this library's compilation. "WPILIB_EXPORTS" is
+                added automatically to match the Gradle build, which defines it unconditionally for
+                every native project (see shared/jni/setupBuild.gradle).
     """
     maybe_license_pkg = ["//:license_pkg_files"] if include_license_files else []
+    local_defines = local_defines + ["WPILIB_EXPORTS"]
 
     cc_library(
         name = name + "-headers",
@@ -298,6 +303,7 @@ def wpilib_cc_library(
         deps = deps + [lib + "-headers" for lib in third_party_libraries + third_party_header_only_libraries],
         strip_include_prefix = strip_include_prefix,
         linkopts = linkopts,
+        local_defines = local_defines,
         visibility = visibility,
         **kwargs
     )
