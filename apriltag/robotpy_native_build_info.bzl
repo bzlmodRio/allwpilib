@@ -43,7 +43,10 @@ def define_native_wrapper(name, pyproject_toml = None):
     robotpy_library(
         name = name,
         distribution = "robotpy-native-apriltag",
-        platform = "manylinux_2_35_x86_64",
+        platform = select({
+            "@bazel_tools//src/conditions:linux_x86_64": "manylinux_2_35_x86_64",
+            "//conditions:default": None,
+        }),
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
