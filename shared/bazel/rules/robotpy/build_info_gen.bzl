@@ -7,7 +7,10 @@ def generate_robotpy_native_wrapper_build_info(
         third_party_dirs = [],
         native_srcs_root = "src/main/native/",
         generated_include_target = None,
-        generated_include_root = "src/generated/main/native/include"):
+        generated_include_root = "src/generated/main/native/include",
+        extra_include_root_files = [],
+        extra_include_targets = [],
+        include_external_repositories = []):
     """
     This function will generate the bazel file necessary to declare a library that wraps a standard allwpilib library.
 
@@ -22,6 +25,16 @@ def generate_robotpy_native_wrapper_build_info(
             so they land correctly under the wheel's include root. Defaults to the standard generated
             include directory; override when generated_include_target's sources live elsewhere (e.g.
             wpimath's generated protobuf headers live under src/generated/main/native/cpp).
+        extra_include_root_files - Optional extra labels (e.g. //:LICENSE.md) to copy directly into the
+            wheel's include root, alongside the project's headers
+        extra_include_targets - Optional extra filegroup labels (e.g. an external repo's headers, such as
+            @eigen//:all_files) whose sources are copied verbatim into the wheel's include root with no
+            prefix stripping applied. Use this when the target isn't reachable via third_party_dirs, e.g.
+            because it's a separate Bazel package/module (like a local_path_override) rather than a plain
+            subdirectory of native_srcs_root.
+        include_external_repositories - Optional list of external repository name globs (see
+            copy_to_directory's include_external_repositories) that extra_include_targets' sources may
+            come from. Required whenever extra_include_targets references a target in another repository.
     """
     cmd = "$(location //shared/bazel/rules/robotpy:generate_native_build_file) --output_file=$(OUTS)"
     cmd += " --project_cfg=$(location " + pyproject_toml + ")"
@@ -31,6 +44,18 @@ def generate_robotpy_native_wrapper_build_info(
     if generated_include_target:
         cmd += " --generated_include_target=" + generated_include_target
         cmd += " --generated_include_root=" + generated_include_root
+    if extra_include_root_files:
+        cmd += " --extra_include_root_files "
+        for f in extra_include_root_files:
+            cmd += " " + f
+    if extra_include_targets:
+        cmd += " --extra_include_targets "
+        for t in extra_include_targets:
+            cmd += " " + t
+    if include_external_repositories:
+        cmd += " --include_external_repositories "
+        for r in include_external_repositories:
+            cmd += " " + r
     if third_party_dirs:
         cmd += " --third_party_dirs "
         for d in third_party_dirs:
