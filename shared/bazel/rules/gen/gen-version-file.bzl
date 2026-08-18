@@ -1,6 +1,6 @@
 def _generate_version_file_impl(ctx):
     out = ctx.actions.declare_file(ctx.attr.output_file)
-    wpilib_version = ctx.var.get("WPILIB_VERSION")
+    wpilib_version = ctx.var.get(ctx.attr.version_variable)
     ctx.actions.expand_template(
         output = out,
         template = ctx.file.template,
@@ -12,6 +12,7 @@ generate_version_file = rule(
     implementation = _generate_version_file_impl,
     attrs = {
         "output_file": attr.string(mandatory = True),
+        "version_variable": attr.string(default="WPILIB_VERSION"),
         "template": attr.label(
             allow_single_file = True,
             mandatory = True,

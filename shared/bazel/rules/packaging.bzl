@@ -277,13 +277,19 @@ def package_shared_cc_project(
         name,
         maven_group_id,
         maven_artifact_name,
-        architectures = None):
+        architectures = None,
+        include_headers_sources = True):
     """Packages the C++ shared libraries for a project.
 
     This assumes that shared libraries exist for the project, and that they
     are compatible with the relevant architectures.  This triggers the
     transitions, packages them up, and deploys them for all native platforms
     plus systemcore.
+
+    Params:
+        include_headers_sources: If the headers/sources classifiers should be published.
+                Some projects (e.g. cscore's jnicvstatic variant) don't publish
+                headers or sources in Gradle, so this can be set to False to match.
     """
     pkg_filegroup(
         name = "{}-shared-files".format(name),
@@ -302,14 +308,17 @@ def package_shared_cc_project(
         architectures = architectures,
     )
 
+    classifier_artifacts = {
+        "linuxsystemcore": ":{}_shared_zip-opt-systemcore".format(name),
+        "linuxsystemcoredebug": ":{}_shared_zip-dbg-systemcore".format(name),
+    }
+    if include_headers_sources:
+        classifier_artifacts["headers"] = ":{}-hdrs-zip".format(name)
+        classifier_artifacts["sources"] = ":{}-srcs-zip".format(name)
+
     wpilib_maven_export(
         name = "{}-cpp_publish".format(name),
-        classifier_artifacts = _filter_artifacts(architectures, {
-            "headers": ":{}-hdrs-zip".format(name),
-            "linuxsystemcore": ":{}_shared_zip-opt-systemcore".format(name),
-            "linuxsystemcoredebug": ":{}_shared_zip-dbg-systemcore".format(name),
-            "sources": ":{}-srcs-zip".format(name),
-        }),
+        classifier_artifacts = _filter_artifacts(architectures, classifier_artifacts),
         linux_artifacts = _filter_artifacts(architectures, {
             "linuxx86-64": ":{}_shared_zip-opt-linux-x86-64".format(name),
             "linuxx86-64debug": ":{}_shared_zip-dbg-linux-x86-64".format(name),
