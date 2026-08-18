@@ -11,6 +11,8 @@ def define_native_wrapper(name, pyproject_toml = None):
             "src/main/native/thirdparty/sleipnir/include/**",
         ]) + [
             "@eigen//:all_files",
+        ] + [
+            "//:LICENSE.md",
         ],
         out = "native/wpimath/include",
         root_paths = ["src/main/native/include/"],

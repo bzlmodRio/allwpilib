@@ -8,7 +8,8 @@ def generate_robotpy_native_wrapper_build_info(
         native_srcs_root = "src/main/native/",
         generated_include_target = None,
         generated_include_root = "src/generated/main/native/include",
-        extra_include_root_files = [],
+        include_license_file = True,
+        include_third_party_notices = False,
         extra_include_targets = [],
         include_external_repositories = []):
     """
@@ -25,8 +26,6 @@ def generate_robotpy_native_wrapper_build_info(
             so they land correctly under the wheel's include root. Defaults to the standard generated
             include directory; override when generated_include_target's sources live elsewhere (e.g.
             wpimath's generated protobuf headers live under src/generated/main/native/cpp).
-        extra_include_root_files - Optional extra labels (e.g. //:LICENSE.md) to copy directly into the
-            wheel's include root, alongside the project's headers
         extra_include_targets - Optional extra filegroup labels (e.g. an external repo's headers, such as
             @eigen//:all_files) whose sources are copied verbatim into the wheel's include root with no
             prefix stripping applied. Use this when the target isn't reachable via third_party_dirs, e.g.
@@ -36,6 +35,12 @@ def generate_robotpy_native_wrapper_build_info(
             copy_to_directory's include_external_repositories) that extra_include_targets' sources may
             come from. Required whenever extra_include_targets references a target in another repository.
     """
+    extra_include_root_files = []
+    if include_license_file:
+        extra_include_root_files.append("//:LICENSE.md")
+    if include_third_party_notices:
+        extra_include_root_files.append("//:ThirdPartyNotices.txt")
+
     cmd = "$(location //shared/bazel/rules/robotpy:generate_native_build_file) --output_file=$(OUTS)"
     cmd += " --project_cfg=$(location " + pyproject_toml + ")"
     if native_srcs_root:
