@@ -48,6 +48,7 @@ def define_native_wrapper(name, pyproject_toml = None):
     robotpy_library(
         name = name,
         distribution = "robotpy-native-wpinet",
+        platform = "manylinux_2_35_x86_64",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",

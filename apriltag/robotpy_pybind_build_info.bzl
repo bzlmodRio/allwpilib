@@ -236,6 +236,9 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     robotpy_library(
         name = name,
         distribution = "robotpy-apriltag",
+        platform = "linux_x86_64",
+        python_tag = "cp314",
+        abi = "cp314",
         srcs = native.glob(["src/main/python/robotpy_apriltag/**/*.py"]) + [
             "src/main/python/robotpy_apriltag/_init__apriltag.py",
             "{}.generate_version".format(name),

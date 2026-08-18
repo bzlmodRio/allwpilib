@@ -534,6 +534,9 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     robotpy_library(
         name = name,
         distribution = "pyntcore",
+        platform = "linux_x86_64",
+        python_tag = "cp314",
+        abi = "cp314",
         srcs = native.glob(["src/main/python/ntcore/**/*.py"]) + [
             "src/main/python/ntcore/_init__ntcore.py",
             "{}.generate_version".format(name),

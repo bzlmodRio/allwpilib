@@ -130,6 +130,9 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     robotpy_library(
         name = name,
         distribution = "wpimath_test",
+        platform = "linux_x86_64",
+        python_tag = "cp314",
+        abi = "cp314",
         srcs = native.glob(["src/test/python/cpp/wpimath_test/**/*.py"]) + [
             "src/test/python/cpp/wpimath_test/_init__wpimath_test.py",
         ],

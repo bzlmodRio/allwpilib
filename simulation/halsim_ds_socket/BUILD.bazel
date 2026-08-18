@@ -116,6 +116,7 @@ robotpy_library(
     author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
     data = [":halsim_ds_socket.copy_lib"],
     distribution = "robotpy-halsim-ds-socket",
+    platform = "manylinux_2_35_x86_64",
     entry_points = {
         "robotpy_sim.2027": ["ds-socket = halsim_ds_socket"],
     },

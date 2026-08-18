@@ -532,6 +532,9 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     robotpy_library(
         name = name,
         distribution = "robotpy-hal",
+        platform = "linux_x86_64",
+        python_tag = "cp314",
+        abi = "cp314",
         srcs = native.glob(["src/main/python/hal/**/*.py"]) + [
             "src/main/python/hal/simulation/_init__simulation.py",
             "src/main/python/hal/_init__wpi_hal.py",

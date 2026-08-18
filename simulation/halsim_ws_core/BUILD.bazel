@@ -86,6 +86,7 @@ robotpy_library(
         ":halsim_ws_server.copy_lib",
     ],
     distribution = "robotpy-halsim-ws",
+    platform = "manylinux_2_35_x86_64",
     entry_points = {
         "robotpy_sim.2027": [
             "ws-client = halsim_ws.client",

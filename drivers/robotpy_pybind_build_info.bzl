@@ -313,6 +313,9 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     robotpy_library(
         name = name,
         distribution = "wpilib-drivers",
+        platform = "linux_x86_64",
+        python_tag = "cp314",
+        abi = "cp314",
         srcs = native.glob(["src/main/python/wpilib_drivers/**/*.py"]) + [
             "src/main/python/wpilib_drivers/_init__drivers.py",
             "{}.generate_version".format(name),

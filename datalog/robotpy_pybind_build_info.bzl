@@ -259,6 +259,9 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     robotpy_library(
         name = name,
         distribution = "robotpy-wpilog",
+        platform = "linux_x86_64",
+        python_tag = "cp314",
+        abi = "cp314",
         srcs = native.glob(["src/main/python/wpilog/**/*.py"]) + [
             "src/main/python/wpilog/_init__wpilog.py",
             "{}.generate_version".format(name),
