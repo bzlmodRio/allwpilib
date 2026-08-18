@@ -23,6 +23,9 @@ def main():
     parser.add_argument("--native_srcs_root")
     parser.add_argument("--generated_include_target", default=None)
     parser.add_argument("--generated_include_root")
+    parser.add_argument("--extra_include_root_files", nargs="+", default=[])
+    parser.add_argument("--extra_include_targets", nargs="+", default=[])
+    parser.add_argument("--include_external_repositories", nargs="+", default=[])
     parser.add_argument("--package_name", required=True)
     args = parser.parse_args()
 
@@ -116,7 +119,10 @@ def main():
                 pc_files=pc_files,
                 requires=requires,
                 project_name=project_name,
+                extra_include_root_files=args.extra_include_root_files,
+                extra_include_targets=args.extra_include_targets,
                 generated_include_target=args.generated_include_target,
+                include_external_repositories=args.include_external_repositories,
                 native_srcs_root=args.native_srcs_root,
                 replace_prefix_keys=replace_prefix_keys,
             )
@@ -135,9 +141,24 @@ def define_native_wrapper(name, pyproject_toml = None):
         {%- for dir in third_party_dirs %}
             "{{native_srcs_root}}thirdparty/{{dir}}/include/**",
         {%- endfor %}
-        ]){%- endif %},
+        ]){%- endif %}{% if extra_include_targets %} + [
+        {%- for t in extra_include_targets %}
+            "{{t}}",
+        {%- endfor %}
+        ]{%- endif %}{% if extra_include_root_files %} + [
+        {%- for f in extra_include_root_files %}
+            "{{f}}",
+        {%- endfor %}
+        ]{%- endif %},
         out = "native/{{project_name}}/include",
         root_paths = ["src/main/native/include/"],
+        {%- if include_external_repositories %}
+        include_external_repositories = [
+        {%- for r in include_external_repositories %}
+            "{{r}}",
+        {%- endfor %}
+        ],
+        {%- endif %}
         replace_prefixes = {
         {%- for key in replace_prefix_keys %}
             "{{key}}": "",

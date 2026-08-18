@@ -11,7 +11,9 @@ def define_native_wrapper(name, pyproject_toml = None):
             "src/main/native/thirdparty/libuv/include/**",
             "src/main/native/thirdparty/llhttp/include/**",
             "src/main/native/thirdparty/tcpsockets/include/**",
-        ]),
+        ]) + [
+            "//:LICENSE.md",
+        ],
         out = "native/wpinet/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {

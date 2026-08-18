@@ -170,10 +170,7 @@ wpilib_cc_library(
         "src/main/native/include",
         "src/main/native/thirdparty/sleipnir/src",
     ],
-    local_defines = [
-        "WPILIB_EXPORTS",
-        "SLEIPNIR_EXPORTS",
-    ],
+    local_defines = ["SLEIPNIR_EXPORTS"],
     strip_include_prefix = "src/main/native/include",
     third_party_header_only_libraries = [
         ":eigen",
@@ -346,8 +343,10 @@ package_default_jni_project(
 
 generate_robotpy_native_wrapper_build_info(
     name = "robotpy-native-wpimath-generator",
+    extra_include_targets = ["@eigen//:all_files"],
     generated_include_root = "src/generated/main/native/cpp",
     generated_include_target = "//wpimath:generated-native-include-files",
+    include_external_repositories = ["eigen*"],
     pyproject_toml = "src/main/python/native-pyproject.toml",
     third_party_dirs = [
         "gcem",

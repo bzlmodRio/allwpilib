@@ -182,6 +182,8 @@ wpilib_cc_library(
         ":thirdparty-libuv-hdr-pkg",
     ],
     extra_src_pkg_files = [
+        ":thirdparty-ada-src-pkg",
+        ":thirdparty-libuv-src-pkg",
         ":wpinet-java-jni-hdrs-pkg",
     ],
     includes = ["src/main/native/include"],
@@ -192,6 +194,10 @@ wpilib_cc_library(
             "-Wl,--pop-state",
         ],
         "//conditions:default": [],
+    }),
+    local_defines = select({
+        "@platforms//os:windows": [],
+        "//conditions:default": ["_GNU_SOURCE"],
     }),
     strip_include_prefix = "src/main/native/include",
     third_party_libraries = [

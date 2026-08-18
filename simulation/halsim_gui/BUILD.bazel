@@ -124,6 +124,7 @@ package_default_cc_project(
 
 generate_robotpy_native_wrapper_build_info(
     name = "robotpy-native-halsim-gui-generator",
+    include_third_party_notices = True,
     pyproject_toml = "src/main/python/native-pyproject.toml",
 )
 
