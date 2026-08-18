@@ -6,6 +6,10 @@
 # The target toolchain should be captured already in its toolchain.
 common:linux --repo_env=BAZEL_COPTS="-Wall:-Wextra:-Werror:-gz=zlib"
 
+# Pin to gcc-14 to match the version required by the Gradle build's
+# https://github.com/wpilibsuite/native-utils/blob/a450076a232a39342f1278923470cd90239c0e70/ToolchainPlugin/src/main/java/org/wpilib/toolchain/ToolchainExtension.java#L45-L46
+common:linux --repo_env=CC=gcc-14
+
 # C++ only
 common:linux --repo_env=BAZEL_CXXOPTS="-std=c++23:-Wformat=2:-pedantic:-Wno-psabi:-Wno-unused-parameter:-fPIC:-pthread:-Wno-deprecated-enum-enum-conversion:-Wno-array-bounds"
 

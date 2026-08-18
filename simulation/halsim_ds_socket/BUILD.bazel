@@ -130,6 +130,7 @@ robotpy_library(
         "//hal:robotpy-native-wpihal",
         "//wpinet:robotpy-native-wpinet",
     ],
+    python_requires = ">=3.11",
 )
 
 robotpy_py_test(

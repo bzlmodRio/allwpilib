@@ -196,6 +196,7 @@ robotpy_library(
     description_file = "src/main/python/README.md",
     distribution = "robotpy-commands-v2",
     imports = ["src/main/python"],
+    extra_distinfo_files = {"src/main/python/LICENSE": "licenses/LICENSE"},
     project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
     python_requires = ">=3.11",
     requires = [
