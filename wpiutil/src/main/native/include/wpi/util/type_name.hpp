@@ -26,7 +26,7 @@ struct RawTypeNameTraits {
   static constexpr size_t len = std::string_view("double").size();
   static constexpr size_t prefixLen = name.find("double");
   static_assert(prefixLen != std::string_view::npos,
-                "cannot extract typename from function signature");
+                "cannot extract typename world from function signature");
   static constexpr size_t suffixLen = name.size() - prefixLen - len;
 };
 }  // namespace detail
