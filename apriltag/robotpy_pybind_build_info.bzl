@@ -73,8 +73,8 @@ def apriltag_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         struct(
             class_name = "AprilTagDetection",
             yml_file = "semiwrap/AprilTagDetection.yml",
-            header_root = "$(execpath :robotpy-native-apriltag.copy_headers)",
-            header_file = "$(execpath :robotpy-native-apriltag.copy_headers)/wpi/apriltag/AprilTagDetection.hpp",
+            header_root = "$(execpath //apriltag:robotpy-native-apriltag.copy_headers)",
+            header_file = "$(execpath //apriltag:robotpy-native-apriltag.copy_headers)/wpi/apriltag/AprilTagDetection.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::apriltag::AprilTagDetection", "wpi__apriltag__AprilTagDetection.hpp"),
@@ -84,8 +84,8 @@ def apriltag_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         struct(
             class_name = "AprilTagDetector",
             yml_file = "semiwrap/AprilTagDetector.yml",
-            header_root = "$(execpath :robotpy-native-apriltag.copy_headers)",
-            header_file = "$(execpath :robotpy-native-apriltag.copy_headers)/wpi/apriltag/AprilTagDetector.hpp",
+            header_root = "$(execpath //apriltag:robotpy-native-apriltag.copy_headers)",
+            header_file = "$(execpath //apriltag:robotpy-native-apriltag.copy_headers)/wpi/apriltag/AprilTagDetector.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::apriltag::AprilTagDetector", "wpi__apriltag__AprilTagDetector.hpp"),
@@ -97,8 +97,8 @@ def apriltag_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         struct(
             class_name = "AprilTagPoseEstimate",
             yml_file = "semiwrap/AprilTagPoseEstimate.yml",
-            header_root = "$(execpath :robotpy-native-apriltag.copy_headers)",
-            header_file = "$(execpath :robotpy-native-apriltag.copy_headers)/wpi/apriltag/AprilTagPoseEstimate.hpp",
+            header_root = "$(execpath //apriltag:robotpy-native-apriltag.copy_headers)",
+            header_file = "$(execpath //apriltag:robotpy-native-apriltag.copy_headers)/wpi/apriltag/AprilTagPoseEstimate.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::apriltag::AprilTagPoseEstimate", "wpi__apriltag__AprilTagPoseEstimate.hpp"),
@@ -107,8 +107,8 @@ def apriltag_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         struct(
             class_name = "AprilTagPoseEstimator",
             yml_file = "semiwrap/AprilTagPoseEstimator.yml",
-            header_root = "$(execpath :robotpy-native-apriltag.copy_headers)",
-            header_file = "$(execpath :robotpy-native-apriltag.copy_headers)/wpi/apriltag/AprilTagPoseEstimator.hpp",
+            header_root = "$(execpath //apriltag:robotpy-native-apriltag.copy_headers)",
+            header_file = "$(execpath //apriltag:robotpy-native-apriltag.copy_headers)/wpi/apriltag/AprilTagPoseEstimator.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::apriltag::AprilTagPoseEstimator", "wpi__apriltag__AprilTagPoseEstimator.hpp"),
@@ -247,13 +247,13 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":src/main/python/robotpy_apriltag/_apriltag",
             ":apriltag.trampoline_hdr_files",
         ],
-        imports = ["src/main/python"],
+        imports = ["src/main/python/"],
         deps = [
             "//apriltag:robotpy-native-apriltag",
             "//wpimath:robotpy-wpimath",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["apriltag/src/main/python", "apriltag"],
+        strip_path_prefixes = ["apriltag/src/main/python/", "apriltag"],
         summary = "RobotPy bindings for WPILib's AprilTag library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

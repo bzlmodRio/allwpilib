@@ -73,8 +73,8 @@ def tunables_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         struct(
             class_name = "ComplexTunable",
             yml_file = "semiwrap/ComplexTunable.yml",
-            header_root = "$(execpath :robotpy-native-tunables.copy_headers)",
-            header_file = "$(execpath :robotpy-native-tunables.copy_headers)/wpi/tunables/ComplexTunable.hpp",
+            header_root = "$(execpath //tunables:robotpy-native-tunables.copy_headers)",
+            header_file = "$(execpath //tunables:robotpy-native-tunables.copy_headers)/wpi/tunables/ComplexTunable.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::tunables::ComplexTunable", "wpi__tunables__ComplexTunable.hpp"),
@@ -83,8 +83,8 @@ def tunables_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         struct(
             class_name = "TunableBackend",
             yml_file = "semiwrap/TunableBackend.yml",
-            header_root = "$(execpath :robotpy-native-tunables.copy_headers)",
-            header_file = "$(execpath :robotpy-native-tunables.copy_headers)/wpi/tunables/TunableBackend.hpp",
+            header_root = "$(execpath //tunables:robotpy-native-tunables.copy_headers)",
+            header_file = "$(execpath //tunables:robotpy-native-tunables.copy_headers)/wpi/tunables/TunableBackend.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::tunables::TunableBackend", "wpi__tunables__TunableBackend.hpp"),
@@ -217,12 +217,12 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":src/main/python/tunables/_tunables",
             ":tunables.trampoline_hdr_files",
         ],
-        imports = ["src/main/python"],
+        imports = ["src/main/python/"],
         deps = [
             "//tunables:robotpy-native-tunables",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["tunables/src/main/python", "tunables"],
+        strip_path_prefixes = ["tunables/src/main/python/", "tunables"],
         summary = "Binary wrapper for WPILib tunables library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

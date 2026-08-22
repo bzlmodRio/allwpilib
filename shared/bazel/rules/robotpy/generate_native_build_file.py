@@ -15,6 +15,8 @@ from shared.bazel.rules.robotpy.hatchlib_native_port.config import PcFileConfig
 from shared.bazel.rules.robotpy.hatchlib_native_port.validate import parse_input
 
 
+NATIVE_TARGET_SUBPATH = ""
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project_cfg")
@@ -38,12 +40,12 @@ def main():
         base_project = library.replace("robotpy-native-", "").replace("-", "_")
         wpilib_project = fixup_root_package_name(base_project)
         native_library = fixup_native_lib_name(library)
-        return f"//{wpilib_project}:native/{base_project}/{native_library}.pc"
+        return f"//{wpilib_project}{NATIVE_TARGET_SUBPATH}:native/{base_project}/{native_library}.pc"
 
     def get_python_dep(library):
         base_project = library.replace("robotpy-native-", "").replace("-", "_")
         wpilib_project = fixup_root_package_name(base_project)
-        return f"//{fixup_root_package_name(wpilib_project)}:{fixup_python_dep_name(library)}"
+        return f"//{fixup_root_package_name(wpilib_project)}{NATIVE_TARGET_SUBPATH}:{fixup_python_dep_name(library)}"
 
     env = Environment(loader=BaseLoader)
     env.filters["double_quotes"] = double_quotes
@@ -87,7 +89,7 @@ def main():
 
     third_party_dirs = args.third_party_dirs or []
     replace_prefix_keys = []
-    if args.native_srcs_root:
+    if args.native_srcs_root is not None:
         replace_prefix_keys.append(
             args.package_name + "/" + args.native_srcs_root + "include"
         )
@@ -111,6 +113,7 @@ def main():
                 raw_project_config=raw_config["project"],
                 nativelib_config=nativelib_config,
                 root_package=root_package,
+                package_name=args.package_name,
                 maven_downloads=maven_downloads,
                 third_party_dirs=args.third_party_dirs or [],
                 pc_files=pc_files,
@@ -118,6 +121,7 @@ def main():
                 project_name=project_name,
                 generated_include_target=args.generated_include_target,
                 native_srcs_root=args.native_srcs_root,
+                native_srcs_root_prefix=args.native_srcs_root or "",
                 replace_prefix_keys=replace_prefix_keys,
             )
         )
@@ -131,13 +135,13 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = {% if native_srcs_root %}native.glob(["{{native_srcs_root}}include/**"]){% else %}[]{% endif %}{% if generated_include_target %} + ["{{generated_include_target}}"]{% endif %}{% if third_party_dirs %} + native.glob([
+        srcs = {% if native_srcs_root != None %}native.glob(["{{native_srcs_root}}include/**"]){% else %}[]{% endif %}{% if generated_include_target %} + ["{{generated_include_target}}"]{% endif %}{% if third_party_dirs %} + native.glob([
         {%- for dir in third_party_dirs %}
-            "{{native_srcs_root}}thirdparty/{{dir}}/include/**",
+            "{{native_srcs_root_prefix}}thirdparty/{{dir}}/include/**",
         {%- endfor %}
         ]){%- endif %},
         out = "native/{{project_name}}/include",
-        root_paths = ["src/main/native/include/"],
+        root_paths = ["{{native_srcs_root_prefix}}include/"],
         replace_prefixes = {
         {%- for key in replace_prefix_keys %}
             "{{key}}": "",
@@ -192,7 +196,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         summary = "{{raw_project_config.description}}",
         requires = {{raw_project_config.dependencies | double_quotes}},
         python_requires = "{{raw_project_config["requires-python"]}}",
-        strip_path_prefixes = ["{{root_package}}"],
+        strip_path_prefixes = ["{{package_name}}"],
         entry_points = {
             "pkg_config": [
             {%- for pcfile in pc_files %}

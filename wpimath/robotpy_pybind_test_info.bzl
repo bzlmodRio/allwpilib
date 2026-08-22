@@ -139,10 +139,10 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":src/test/python/cpp/wpimath_test/_wpimath_test",
             ":wpimath_test.trampoline_hdr_files",
         ],
-        imports = ["src/test/python/cpp"],
+        imports = ["src/test/python/cpp/"],
         deps = [
         ],
-        strip_path_prefixes = ["wpimath/src/test/python/cpp", "wpimath"],
+        strip_path_prefixes = ["wpimath/src/test/python/cpp/", "wpimath"],
         summary = "Test project for verifying robotpy-build behavior",
         project_urls = None,
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

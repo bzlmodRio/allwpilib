@@ -20,7 +20,7 @@ filegroup(
 
 filegroup(
     name = "doxygen-files",
-    srcs = glob(["src/main/native/include/**/*"]) + [":generated-native-include-files"],
+    srcs = glob(["src/main/native/include/**/*"]) + ["//drivers:generated-native-include-files"],
     visibility = ["//visibility:public"],
 )
 
@@ -58,11 +58,13 @@ third_party_cc_lib_helper(
     name = "generated_cc",
     include_root = "src/generated/main/native/include",
     src_root = "src/generated/main/native/cpp",
+    visibility = ["//drivers:__subpackages__"],
 )
 
 filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
+    visibility = ["//drivers:__subpackages__"],
 )
 
 wpilib_cc_library(
@@ -72,7 +74,7 @@ wpilib_cc_library(
     includes = ["src/main/native/include"],
     strip_include_prefix = "src/main/native/include",
     third_party_libraries = [
-        ":generated_cc",
+        "//drivers:generated_cc",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -118,7 +120,8 @@ wpilib_java_library(
     name = "drivers-java",
     srcs = glob(
         ["src/main/java/**/*.java"],
-    ) + [":generated_java"],
+    ) + ["//drivers:generated_java"],
+    generated_java_srcs = ["//drivers:generated_java"],
     maven_artifact_name = "drivers-java",
     maven_group_id = "org.wpilib.drivers",
     visibility = ["//visibility:public"],

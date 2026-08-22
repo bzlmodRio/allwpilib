@@ -236,6 +236,7 @@ def third_party_cc_lib_helper(
             name = name + "-srcs-pkg",
             srcs = native.glob([src_root + "/**"]),
             strip_prefix = src_root,
+            visibility = visibility,
         )
 
 def wpilib_cc_library(

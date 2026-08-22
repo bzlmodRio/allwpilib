@@ -34,9 +34,16 @@ write_source_files(
     visibility = ["//visibility:public"],
 )
 
+filegroup(
+    name = "generated_java",
+    srcs = glob(["src/generated/main/java/**/*.java"]),
+    visibility = ["//wpiunits:__subpackages__"],
+)
+
 wpilib_java_library(
     name = "wpiunits-java",
-    srcs = glob(["src/main/java/**/*.java"]) + glob(["src/generated/main/java/**/*.java"]),
+    srcs = glob(["src/main/java/**/*.java"]) + ["//wpiunits:generated_java"],
+    generated_java_srcs = ["//wpiunits:generated_java"],
     maven_artifact_name = "wpiunits-java",
     maven_group_id = "org.wpilib.wpiunits",
     visibility = ["//visibility:public"],

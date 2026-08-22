@@ -285,6 +285,13 @@ cc_library(
     hdrs = glob(["src/generated/test/native/cpp/*.h"]),
     includes = ["src/generated/test/native/cpp"],
     strip_include_prefix = "src/generated/test/native/cpp",
+    visibility = ["//wpiutil:__subpackages__"],
+)
+
+filegroup(
+    name = "generated-test-native-cpp-srcs",
+    srcs = glob(["src/generated/test/native/cpp/*"]),
+    visibility = ["//wpiutil:__subpackages__"],
 )
 
 cc_test(
@@ -292,15 +299,14 @@ cc_test(
     size = "small",
     srcs = glob([
         "src/test/native/cpp/**",
-        "src/generated/test/native/cpp/*",
-    ]),
+    ]) + ["//wpiutil:generated-test-native-cpp-srcs"],
     linkstatic = True,
     tags = ["no-tsan"],  # TODO(pj.reiniger) Find problem
     deps = [
-        ":nanopb-test-headers",
         ":wpiutil",
         ":wpiutil-testlib",
         "//thirdparty/catch2",
+        "//wpiutil:nanopb-test-headers",
         "@wpilib_toolchains//jni",
     ],
 )

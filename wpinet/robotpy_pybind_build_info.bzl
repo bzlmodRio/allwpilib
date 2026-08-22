@@ -73,8 +73,8 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "PortForwarder",
             yml_file = "semiwrap/PortForwarder.yml",
-            header_root = "$(execpath :robotpy-native-wpinet.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpinet.copy_headers)/wpi/net/PortForwarder.hpp",
+            header_root = "$(execpath //wpinet:robotpy-native-wpinet.copy_headers)",
+            header_file = "$(execpath //wpinet:robotpy-native-wpinet.copy_headers)/wpi/net/PortForwarder.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::net::PortForwarder", "wpi__net__PortForwarder.hpp"),
@@ -83,8 +83,8 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "WebServer",
             yml_file = "semiwrap/WebServer.yml",
-            header_root = "$(execpath :robotpy-native-wpinet.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpinet.copy_headers)/wpi/net/WebServer.hpp",
+            header_root = "$(execpath //wpinet:robotpy-native-wpinet.copy_headers)",
+            header_file = "$(execpath //wpinet:robotpy-native-wpinet.copy_headers)/wpi/net/WebServer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::net::WebServer", "wpi__net__WebServer.hpp"),
@@ -216,12 +216,12 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":src/main/python/wpinet/_wpinet",
             ":wpinet.trampoline_hdr_files",
         ],
-        imports = ["src/main/python"],
+        imports = ["src/main/python/"],
         deps = [
             "//wpinet:robotpy-native-wpinet",
             "//wpiutil:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["wpinet/src/main/python", "wpinet"],
+        strip_path_prefixes = ["wpinet/src/main/python/", "wpinet"],
         summary = "Binary wrapper for WPILib networking library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

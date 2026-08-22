@@ -98,6 +98,7 @@ def wpilib_jni_java_library(
         src = headers_name,
         excludes = ["MANIFEST.MF"],
         outdir_name = "jni/",
+        visibility = visibility,
     )
 
 def wpilib_jni_cc_library(
@@ -106,9 +107,6 @@ def wpilib_jni_cc_library(
         java_dep = None,
         **kwargs):
     jni = "@wpilib_toolchains//jni"
-
-    if java_dep[0] != ":":
-        fail("java_dep", java_dep, "should start with a :")
 
     cc_library(
         name = name,

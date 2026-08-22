@@ -25,7 +25,7 @@ def generate_robotpy_native_wrapper_build_info(
     """
     cmd = "$(location //shared/bazel/rules/robotpy:generate_native_build_file) --output_file=$(OUTS)"
     cmd += " --project_cfg=$(location " + pyproject_toml + ")"
-    if native_srcs_root:
+    if native_srcs_root != None:
         cmd += " --native_srcs_root=" + native_srcs_root
     cmd += " --package_name=" + native.package_name()
     if generated_include_target:
@@ -77,11 +77,13 @@ def generate_robotpy_pybind_build_info(
         additional_srcs - Any additional sources needed by the semiwrap process
         generated_file_name - Indicates the path of the auto-generated file
         pyproject_toml - Location of the pyproject.toml file that defines this project
+        stripped_include_prefix - Package-relative prefix to strip from source paths
         yml_prefix - Optional. Used in the event that the yml files are in a non-standard location
     """
 
     cmd = "$(location //shared/bazel/rules/robotpy:generate_pybind_build_file) --project_file=$(location " + pyproject_toml + ") --output_file=$(OUTS)"
 
+    cmd += " --package_name=" + native.package_name()
     cmd += " --package_root_file=" + package_root_file
     if stripped_include_prefix:
         cmd += " --stripped_include_prefix=" + stripped_include_prefix
