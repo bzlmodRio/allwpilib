@@ -1,7 +1,6 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_test")
-load("@rules_java//java:defs.bzl", "java_binary")
+load("@rules_cc//cc:defs.bzl", "cc_test")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//drivers:generate.bzl", "generate_drivers")
 load("//drivers:robotpy_native_build_info.bzl", "define_native_wrapper")
@@ -161,19 +160,6 @@ wpilib_java_junit5_test(
         "//wpiunits:wpiunits-java",
         "//wpiutil:wpiutil-java",
     ],
-)
-
-cc_binary(
-    name = "DevMain-Cpp",
-    srcs = ["src/dev/native/cpp/main.cpp"],
-    deps = [":drivers"],
-)
-
-java_binary(
-    name = "DevMain-Java",
-    srcs = ["src/dev/java/org/wpilib/drivers/DevMain.java"],
-    main_class = "org.wpilib.drivers.DevMain",
-    deps = [":drivers-java"],
 )
 
 package_default_cc_project(
