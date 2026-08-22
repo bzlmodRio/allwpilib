@@ -75,7 +75,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ComputerVisionUtil",
             yml_file = "semiwrap/ComputerVisionUtil.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/util/ComputerVisionUtil.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/util/ComputerVisionUtil.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
@@ -83,7 +83,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MathUtil",
             yml_file = "semiwrap/MathUtil.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/util/MathUtil.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/util/MathUtil.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
@@ -91,7 +91,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "AntiTipping",
             yml_file = "semiwrap/AntiTipping.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/AntiTipping.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/AntiTipping.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::AntiTipping", "wpi__math__AntiTipping.hpp"),
@@ -101,7 +101,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ArmFeedforward",
             yml_file = "semiwrap/ArmFeedforward.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/ArmFeedforward.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/ArmFeedforward.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::ArmFeedforward", "wpi__math__ArmFeedforward.hpp"),
@@ -111,7 +111,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "BangBangController",
             yml_file = "semiwrap/BangBangController.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/BangBangController.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/BangBangController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::BangBangController", "wpi__math__BangBangController.hpp"),
@@ -121,7 +121,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ControlAffinePlantInversionFeedforward",
             yml_file = "semiwrap/ControlAffinePlantInversionFeedforward.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/ControlAffinePlantInversionFeedforward.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/ControlAffinePlantInversionFeedforward.hpp",
             tmpl_class_names = [
                 ("ControlAffinePlantInversionFeedforward_tmpl1", "ControlAffinePlantInversionFeedforward_1_1"),
                 ("ControlAffinePlantInversionFeedforward_tmpl2", "ControlAffinePlantInversionFeedforward_2_1"),
@@ -135,7 +135,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveAccelerationLimiter",
             yml_file = "semiwrap/DifferentialDriveAccelerationLimiter.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/DifferentialDriveAccelerationLimiter.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/DifferentialDriveAccelerationLimiter.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveAccelerationLimiter", "wpi__math__DifferentialDriveAccelerationLimiter.hpp"),
@@ -145,7 +145,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveFeedforward",
             yml_file = "semiwrap/DifferentialDriveFeedforward.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/DifferentialDriveFeedforward.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/DifferentialDriveFeedforward.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveFeedforward", "wpi__math__DifferentialDriveFeedforward.hpp"),
@@ -155,7 +155,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveWheelVoltages",
             yml_file = "semiwrap/DifferentialDriveWheelVoltages.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/DifferentialDriveWheelVoltages.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/DifferentialDriveWheelVoltages.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveWheelVoltages", "wpi__math__DifferentialDriveWheelVoltages.hpp"),
@@ -165,7 +165,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ElevatorFeedforward",
             yml_file = "semiwrap/ElevatorFeedforward.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/ElevatorFeedforward.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/ElevatorFeedforward.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::ElevatorFeedforward", "wpi__math__ElevatorFeedforward.hpp"),
@@ -175,7 +175,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ImplicitModelFollower",
             yml_file = "semiwrap/ImplicitModelFollower.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/ImplicitModelFollower.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/ImplicitModelFollower.hpp",
             tmpl_class_names = [
                 ("ImplicitModelFollower_tmpl1", "ImplicitModelFollower_1_1"),
                 ("ImplicitModelFollower_tmpl2", "ImplicitModelFollower_2_1"),
@@ -189,7 +189,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "LTVDifferentialDriveController",
             yml_file = "semiwrap/LTVDifferentialDriveController.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/LTVDifferentialDriveController.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/LTVDifferentialDriveController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::LTVDifferentialDriveController", "wpi__math__LTVDifferentialDriveController.hpp"),
@@ -199,7 +199,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "LTVUnicycleController",
             yml_file = "semiwrap/LTVUnicycleController.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/LTVUnicycleController.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/LTVUnicycleController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::LTVUnicycleController", "wpi__math__LTVUnicycleController.hpp"),
@@ -209,7 +209,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "LinearPlantInversionFeedforward",
             yml_file = "semiwrap/LinearPlantInversionFeedforward.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/LinearPlantInversionFeedforward.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/LinearPlantInversionFeedforward.hpp",
             tmpl_class_names = [
                 ("LinearPlantInversionFeedforward_tmpl1", "LinearPlantInversionFeedforward_1_1"),
                 ("LinearPlantInversionFeedforward_tmpl2", "LinearPlantInversionFeedforward_2_1"),
@@ -224,7 +224,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "LinearQuadraticRegulator",
             yml_file = "semiwrap/LinearQuadraticRegulator.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/LinearQuadraticRegulator.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/LinearQuadraticRegulator.hpp",
             tmpl_class_names = [
                 ("LinearQuadraticRegulator_tmpl1", "LinearQuadraticRegulator_1_1"),
                 ("LinearQuadraticRegulator_tmpl2", "LinearQuadraticRegulator_2_1"),
@@ -239,7 +239,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "PIDController",
             yml_file = "semiwrap/PIDController.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/PIDController.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/PIDController.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::PIDController", "wpi__math__PIDController.hpp"),
@@ -249,7 +249,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ProfiledPIDController",
             yml_file = "semiwrap/ProfiledPIDController.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/ProfiledPIDController.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/ProfiledPIDController.hpp",
             tmpl_class_names = [
                 ("ProfiledPIDController_tmpl1", "ProfiledPIDController"),
                 ("ProfiledPIDController_tmpl2", "ProfiledPIDControllerRadians"),
@@ -262,7 +262,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SimpleMotorFeedforward",
             yml_file = "semiwrap/SimpleMotorFeedforward.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/controller/SimpleMotorFeedforward.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/controller/SimpleMotorFeedforward.hpp",
             tmpl_class_names = [
                 ("SimpleMotorFeedforward_tmpl1", "SimpleMotorFeedforward"),
                 ("SimpleMotorFeedforward_tmpl2", "SimpleMotorFeedforwardMeters"),
@@ -275,7 +275,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDrivePoseEstimator",
             yml_file = "semiwrap/DifferentialDrivePoseEstimator.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/DifferentialDrivePoseEstimator.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/DifferentialDrivePoseEstimator.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDrivePoseEstimator", "wpi__math__DifferentialDrivePoseEstimator.hpp"),
@@ -285,7 +285,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDrivePoseEstimator3d",
             yml_file = "semiwrap/DifferentialDrivePoseEstimator3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/DifferentialDrivePoseEstimator3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/DifferentialDrivePoseEstimator3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDrivePoseEstimator3d", "wpi__math__DifferentialDrivePoseEstimator3d.hpp"),
@@ -295,7 +295,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ExtendedKalmanFilter",
             yml_file = "semiwrap/ExtendedKalmanFilter.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/ExtendedKalmanFilter.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/ExtendedKalmanFilter.hpp",
             tmpl_class_names = [
                 ("ExtendedKalmanFilter_tmpl1", "ExtendedKalmanFilter_1_1_1"),
                 ("ExtendedKalmanFilter_tmpl2", "ExtendedKalmanFilter_2_1_1"),
@@ -310,7 +310,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "KalmanFilter",
             yml_file = "semiwrap/KalmanFilter.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/KalmanFilter.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/KalmanFilter.hpp",
             tmpl_class_names = [
                 ("KalmanFilter_tmpl1", "KalmanFilter_1_1_1"),
                 ("KalmanFilter_tmpl2", "KalmanFilter_2_1_1"),
@@ -326,7 +326,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDrivePoseEstimator",
             yml_file = "semiwrap/MecanumDrivePoseEstimator.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/MecanumDrivePoseEstimator.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/MecanumDrivePoseEstimator.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDrivePoseEstimator", "wpi__math__MecanumDrivePoseEstimator.hpp"),
@@ -336,7 +336,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDrivePoseEstimator3d",
             yml_file = "semiwrap/MecanumDrivePoseEstimator3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/MecanumDrivePoseEstimator3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/MecanumDrivePoseEstimator3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDrivePoseEstimator3d", "wpi__math__MecanumDrivePoseEstimator3d.hpp"),
@@ -346,7 +346,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "PoseEstimator",
             yml_file = "semiwrap/PoseEstimator.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/PoseEstimator.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/PoseEstimator.hpp",
             tmpl_class_names = [
                 ("PoseEstimator_tmpl1", "DifferentialDrivePoseEstimatorBase"),
                 ("PoseEstimator_tmpl2", "MecanumDrivePoseEstimatorBase"),
@@ -363,7 +363,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "PoseEstimator3d",
             yml_file = "semiwrap/PoseEstimator3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/PoseEstimator3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/PoseEstimator3d.hpp",
             tmpl_class_names = [
                 ("PoseEstimator3d_tmpl1", "DifferentialDrivePoseEstimator3dBase"),
                 ("PoseEstimator3d_tmpl2", "MecanumDrivePoseEstimator3dBase"),
@@ -380,7 +380,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveDrivePoseEstimator",
             yml_file = "semiwrap/SwerveDrivePoseEstimator.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/SwerveDrivePoseEstimator.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/SwerveDrivePoseEstimator.hpp",
             tmpl_class_names = [
                 ("SwerveDrivePoseEstimator_tmpl1", "SwerveDrive2PoseEstimator"),
                 ("SwerveDrivePoseEstimator_tmpl2", "SwerveDrive3PoseEstimator"),
@@ -395,7 +395,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveDrivePoseEstimator3d",
             yml_file = "semiwrap/SwerveDrivePoseEstimator3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/estimator/SwerveDrivePoseEstimator3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/SwerveDrivePoseEstimator3d.hpp",
             tmpl_class_names = [
                 ("SwerveDrivePoseEstimator3d_tmpl1", "SwerveDrive2PoseEstimator3d"),
                 ("SwerveDrivePoseEstimator3d_tmpl2", "SwerveDrive3PoseEstimator3d"),
@@ -410,7 +410,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "BiquadFilter",
             yml_file = "semiwrap/BiquadFilter.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/filter/BiquadFilter.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/filter/BiquadFilter.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::BiquadFilter", "wpi__math__BiquadFilter.hpp"),
@@ -421,7 +421,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Debouncer",
             yml_file = "semiwrap/Debouncer.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/filter/Debouncer.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/filter/Debouncer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Debouncer", "wpi__math__Debouncer.hpp"),
@@ -431,7 +431,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "EdgeCounterFilter",
             yml_file = "semiwrap/EdgeCounterFilter.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/filter/EdgeCounterFilter.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/filter/EdgeCounterFilter.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::EdgeCounterFilter", "wpi__math__EdgeCounterFilter.hpp"),
@@ -441,7 +441,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "LinearFilter",
             yml_file = "semiwrap/LinearFilter.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/filter/LinearFilter.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/filter/LinearFilter.hpp",
             tmpl_class_names = [
                 ("LinearFilter_tmpl1", "LinearFilter"),
             ],
@@ -453,7 +453,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MedianFilter",
             yml_file = "semiwrap/MedianFilter.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/filter/MedianFilter.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/filter/MedianFilter.hpp",
             tmpl_class_names = [
                 ("MedianFilter_tmpl1", "MedianFilter"),
             ],
@@ -465,7 +465,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SlewRateLimiter",
             yml_file = "semiwrap/SlewRateLimiter.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/filter/SlewRateLimiter.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/filter/SlewRateLimiter.hpp",
             tmpl_class_names = [
                 ("SlewRateLimiter_tmpl1", "SlewRateLimiter"),
             ],
@@ -477,7 +477,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "CoordinateAxis",
             yml_file = "semiwrap/CoordinateAxis.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/CoordinateAxis.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/CoordinateAxis.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::CoordinateAxis", "wpi__math__CoordinateAxis.hpp"),
@@ -487,7 +487,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "CoordinateSystem",
             yml_file = "semiwrap/CoordinateSystem.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/CoordinateSystem.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/CoordinateSystem.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::CoordinateSystem", "wpi__math__CoordinateSystem.hpp"),
@@ -497,7 +497,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Pose2d",
             yml_file = "semiwrap/Pose2d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Pose2d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Pose2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Pose2d", "wpi__math__Pose2d.hpp"),
@@ -507,7 +507,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Pose3d",
             yml_file = "semiwrap/Pose3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Pose3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Pose3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Pose3d", "wpi__math__Pose3d.hpp"),
@@ -517,7 +517,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Quaternion",
             yml_file = "semiwrap/Quaternion.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Quaternion.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Quaternion.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Quaternion", "wpi__math__Quaternion.hpp"),
@@ -527,7 +527,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Rotation2d",
             yml_file = "semiwrap/Rotation2d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Rotation2d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Rotation2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Rotation2d", "wpi__math__Rotation2d.hpp"),
@@ -537,7 +537,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Rotation3d",
             yml_file = "semiwrap/Rotation3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Rotation3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Rotation3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Rotation3d", "wpi__math__Rotation3d.hpp"),
@@ -547,7 +547,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Transform2d",
             yml_file = "semiwrap/Transform2d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Transform2d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Transform2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Transform2d", "wpi__math__Transform2d.hpp"),
@@ -557,7 +557,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Transform3d",
             yml_file = "semiwrap/Transform3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Transform3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Transform3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Transform3d", "wpi__math__Transform3d.hpp"),
@@ -567,7 +567,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Translation2d",
             yml_file = "semiwrap/Translation2d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Translation2d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Translation2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Translation2d", "wpi__math__Translation2d.hpp"),
@@ -577,7 +577,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Translation3d",
             yml_file = "semiwrap/Translation3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Translation3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Translation3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Translation3d", "wpi__math__Translation3d.hpp"),
@@ -587,7 +587,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Twist2d",
             yml_file = "semiwrap/Twist2d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Twist2d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Twist2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Twist2d", "wpi__math__Twist2d.hpp"),
@@ -597,7 +597,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Twist3d",
             yml_file = "semiwrap/Twist3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Twist3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/geometry/Twist3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Twist3d", "wpi__math__Twist3d.hpp"),
@@ -607,7 +607,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Ellipse2d",
             yml_file = "semiwrap/Ellipse2d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/shape/Ellipse2d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/shape/Ellipse2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Ellipse2d", "wpi__math__Ellipse2d.hpp"),
@@ -617,7 +617,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Rectangle2d",
             yml_file = "semiwrap/Rectangle2d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/shape/Rectangle2d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/shape/Rectangle2d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Rectangle2d", "wpi__math__Rectangle2d.hpp"),
@@ -627,7 +627,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "TimeInterpolatableBuffer",
             yml_file = "semiwrap/TimeInterpolatableBuffer.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/interpolation/TimeInterpolatableBuffer.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/interpolation/TimeInterpolatableBuffer.hpp",
             tmpl_class_names = [
                 ("TimeInterpolatableBuffer_tmpl1", "TimeInterpolatablePose2dBuffer"),
                 ("TimeInterpolatableBuffer_tmpl2", "TimeInterpolatablePose3dBuffer"),
@@ -645,7 +645,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ChassisVelocities",
             yml_file = "semiwrap/ChassisVelocities.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/ChassisVelocities.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/ChassisVelocities.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::ChassisVelocities", "wpi__math__ChassisVelocities.hpp"),
@@ -655,7 +655,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ChassisAccelerations",
             yml_file = "semiwrap/ChassisAccelerations.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/ChassisAccelerations.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/ChassisAccelerations.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::ChassisAccelerations", "wpi__math__ChassisAccelerations.hpp"),
@@ -665,7 +665,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveKinematics",
             yml_file = "semiwrap/DifferentialDriveKinematics.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveKinematics.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveKinematics.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveKinematics", "wpi__math__DifferentialDriveKinematics.hpp"),
@@ -675,7 +675,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveOdometry3d",
             yml_file = "semiwrap/DifferentialDriveOdometry3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveOdometry3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveOdometry3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveOdometry3d", "wpi__math__DifferentialDriveOdometry3d.hpp"),
@@ -685,7 +685,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveOdometry",
             yml_file = "semiwrap/DifferentialDriveOdometry.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveOdometry.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveOdometry.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveOdometry", "wpi__math__DifferentialDriveOdometry.hpp"),
@@ -695,7 +695,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveWheelPositions",
             yml_file = "semiwrap/DifferentialDriveWheelPositions.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveWheelPositions.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveWheelPositions.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveWheelPositions", "wpi__math__DifferentialDriveWheelPositions.hpp"),
@@ -705,7 +705,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveWheelVelocities",
             yml_file = "semiwrap/DifferentialDriveWheelVelocities.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveWheelVelocities.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveWheelVelocities.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveWheelVelocities", "wpi__math__DifferentialDriveWheelVelocities.hpp"),
@@ -715,7 +715,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveWheelAccelerations",
             yml_file = "semiwrap/DifferentialDriveWheelAccelerations.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveWheelAccelerations.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/DifferentialDriveWheelAccelerations.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveWheelAccelerations", "wpi__math__DifferentialDriveWheelAccelerations.hpp"),
@@ -725,7 +725,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Kinematics",
             yml_file = "semiwrap/Kinematics.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/Kinematics.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/Kinematics.hpp",
             tmpl_class_names = [
                 ("Kinematics_tmpl1", "DifferentialDriveKinematicsBase"),
                 ("Kinematics_tmpl2", "MecanumDriveKinematicsBase"),
@@ -742,7 +742,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDriveKinematics",
             yml_file = "semiwrap/MecanumDriveKinematics.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveKinematics.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveKinematics.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDriveKinematics", "wpi__math__MecanumDriveKinematics.hpp"),
@@ -752,7 +752,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDriveOdometry",
             yml_file = "semiwrap/MecanumDriveOdometry.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveOdometry.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveOdometry.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDriveOdometry", "wpi__math__MecanumDriveOdometry.hpp"),
@@ -762,7 +762,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDriveOdometry3d",
             yml_file = "semiwrap/MecanumDriveOdometry3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveOdometry3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveOdometry3d.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDriveOdometry3d", "wpi__math__MecanumDriveOdometry3d.hpp"),
@@ -772,7 +772,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDriveWheelPositions",
             yml_file = "semiwrap/MecanumDriveWheelPositions.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveWheelPositions.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveWheelPositions.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDriveWheelPositions", "wpi__math__MecanumDriveWheelPositions.hpp"),
@@ -782,7 +782,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDriveWheelVelocities",
             yml_file = "semiwrap/MecanumDriveWheelVelocities.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveWheelVelocities.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveWheelVelocities.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDriveWheelVelocities", "wpi__math__MecanumDriveWheelVelocities.hpp"),
@@ -792,7 +792,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDriveWheelAccelerations",
             yml_file = "semiwrap/MecanumDriveWheelAccelerations.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveWheelAccelerations.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/MecanumDriveWheelAccelerations.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDriveWheelAccelerations", "wpi__math__MecanumDriveWheelAccelerations.hpp"),
@@ -802,7 +802,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Odometry",
             yml_file = "semiwrap/Odometry.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/Odometry.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/Odometry.hpp",
             tmpl_class_names = [
                 ("Odometry_tmpl1", "DifferentialDriveOdometryBase"),
                 ("Odometry_tmpl2", "MecanumDriveOdometryBase"),
@@ -819,7 +819,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Odometry3d",
             yml_file = "semiwrap/Odometry3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/Odometry3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/Odometry3d.hpp",
             tmpl_class_names = [
                 ("Odometry3d_tmpl1", "DifferentialDriveOdometry3dBase"),
                 ("Odometry3d_tmpl2", "MecanumDriveOdometry3dBase"),
@@ -836,7 +836,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveDriveKinematics",
             yml_file = "semiwrap/SwerveDriveKinematics.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveDriveKinematics.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveDriveKinematics.hpp",
             tmpl_class_names = [
                 ("SwerveDriveKinematics_tmpl1", "SwerveDrive2Kinematics"),
                 ("SwerveDriveKinematics_tmpl2", "SwerveDrive3Kinematics"),
@@ -851,7 +851,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveDriveOdometry",
             yml_file = "semiwrap/SwerveDriveOdometry.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveDriveOdometry.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveDriveOdometry.hpp",
             tmpl_class_names = [
                 ("SwerveDriveOdometry_tmpl1", "SwerveDrive2Odometry"),
                 ("SwerveDriveOdometry_tmpl2", "SwerveDrive3Odometry"),
@@ -866,7 +866,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveDriveOdometry3d",
             yml_file = "semiwrap/SwerveDriveOdometry3d.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveDriveOdometry3d.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveDriveOdometry3d.hpp",
             tmpl_class_names = [
                 ("SwerveDriveOdometry3d_tmpl1", "SwerveDrive2Odometry3d"),
                 ("SwerveDriveOdometry3d_tmpl2", "SwerveDrive3Odometry3d"),
@@ -881,7 +881,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveModulePosition",
             yml_file = "semiwrap/SwerveModulePosition.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveModulePosition.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveModulePosition.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::SwerveModulePosition", "wpi__math__SwerveModulePosition.hpp"),
@@ -891,7 +891,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveModuleVelocity",
             yml_file = "semiwrap/SwerveModuleVelocity.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveModuleVelocity.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveModuleVelocity.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::SwerveModuleVelocity", "wpi__math__SwerveModuleVelocity.hpp"),
@@ -901,7 +901,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveModuleAcceleration",
             yml_file = "semiwrap/SwerveModuleAcceleration.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveModuleAcceleration.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/kinematics/SwerveModuleAcceleration.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::SwerveModuleAcceleration", "wpi__math__SwerveModuleAcceleration.hpp"),
@@ -911,7 +911,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SimulatedAnnealing",
             yml_file = "semiwrap/SimulatedAnnealing.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/optimization/SimulatedAnnealing.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/optimization/SimulatedAnnealing.hpp",
             tmpl_class_names = [
                 ("SimulatedAnnealing_tmpl1", "SimulatedAnnealing"),
             ],
@@ -923,7 +923,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "TravelingSalesman",
             yml_file = "semiwrap/TravelingSalesman.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/path/TravelingSalesman.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/path/TravelingSalesman.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::TravelingSalesman", "wpi__math__TravelingSalesman.hpp"),
@@ -933,7 +933,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "CubicHermiteSpline",
             yml_file = "semiwrap/CubicHermiteSpline.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/spline/CubicHermiteSpline.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/spline/CubicHermiteSpline.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::CubicHermiteSpline", "wpi__math__CubicHermiteSpline.hpp"),
@@ -943,7 +943,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "QuinticHermiteSpline",
             yml_file = "semiwrap/QuinticHermiteSpline.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/spline/QuinticHermiteSpline.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/spline/QuinticHermiteSpline.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::QuinticHermiteSpline", "wpi__math__QuinticHermiteSpline.hpp"),
@@ -953,7 +953,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Spline",
             yml_file = "semiwrap/Spline.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/spline/Spline.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/spline/Spline.hpp",
             tmpl_class_names = [
                 ("Spline_tmpl1", "Spline3"),
                 ("Spline_tmpl2", "Spline5"),
@@ -967,7 +967,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SplineHelper",
             yml_file = "semiwrap/SplineHelper.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/spline/SplineHelper.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/spline/SplineHelper.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::SplineHelper", "wpi__math__SplineHelper.hpp"),
@@ -977,7 +977,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SplineParameterizer",
             yml_file = "semiwrap/SplineParameterizer.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/spline/SplineParameterizer.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/spline/SplineParameterizer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::SplineParameterizer", "wpi__math__SplineParameterizer.hpp"),
@@ -987,7 +987,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DCMotor",
             yml_file = "semiwrap/DCMotor.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/system/DCMotor.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/system/DCMotor.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DCMotor", "wpi__math__DCMotor.hpp"),
@@ -997,7 +997,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "LinearSystem",
             yml_file = "semiwrap/LinearSystem.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/system/LinearSystem.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/system/LinearSystem.hpp",
             tmpl_class_names = [
                 ("LinearSystem_tmpl1", "LinearSystem_1_1_1"),
                 ("LinearSystem_tmpl2", "LinearSystem_1_1_2"),
@@ -1020,7 +1020,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "LinearSystemLoop",
             yml_file = "semiwrap/LinearSystemLoop.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/system/LinearSystemLoop.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/system/LinearSystemLoop.hpp",
             tmpl_class_names = [
                 ("LinearSystemLoop_tmpl1", "LinearSystemLoop_1_1_1"),
                 ("LinearSystemLoop_tmpl2", "LinearSystemLoop_2_1_1"),
@@ -1036,7 +1036,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Models",
             yml_file = "semiwrap/Models.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/system/Models.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/system/Models.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::Models", "wpi__math__Models.hpp"),
@@ -1046,7 +1046,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "NumericalIntegration",
             yml_file = "semiwrap/NumericalIntegration.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/system/NumericalIntegration.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/system/NumericalIntegration.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
@@ -1054,7 +1054,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "NumericalJacobian",
             yml_file = "semiwrap/NumericalJacobian.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/system/NumericalJacobian.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/system/NumericalJacobian.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
@@ -1062,7 +1062,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialSample",
             yml_file = "semiwrap/DifferentialSample.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DifferentialSample.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DifferentialSample.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialSample", "wpi__math__DifferentialSample.hpp"),
@@ -1072,7 +1072,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialTrajectory",
             yml_file = "semiwrap/DifferentialTrajectory.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DifferentialTrajectory.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DifferentialTrajectory.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialTrajectory", "wpi__math__DifferentialTrajectory.hpp"),
@@ -1082,7 +1082,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DrivetrainSplineSample",
             yml_file = "semiwrap/DrivetrainSplineSample.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DrivetrainSplineSample.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DrivetrainSplineSample.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DrivetrainSplineSample", "wpi__math__DrivetrainSplineSample.hpp"),
@@ -1092,7 +1092,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DrivetrainSplineTrajectory",
             yml_file = "semiwrap/DrivetrainSplineTrajectory.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DrivetrainSplineTrajectory.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DrivetrainSplineTrajectory.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DrivetrainSplineTrajectory", "wpi__math__DrivetrainSplineTrajectory.hpp"),
@@ -1102,7 +1102,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DrivetrainSplineTrajectoryGenerator",
             yml_file = "semiwrap/DrivetrainSplineTrajectoryGenerator.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DrivetrainSplineTrajectoryGenerator.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DrivetrainSplineTrajectoryGenerator.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DrivetrainSplineTrajectoryGenerator", "wpi__math__DrivetrainSplineTrajectoryGenerator.hpp"),
@@ -1112,7 +1112,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DrivetrainSplineTrajectoryParameterizer",
             yml_file = "semiwrap/DrivetrainSplineTrajectoryParameterizer.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DrivetrainSplineTrajectoryParameterizer.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/DrivetrainSplineTrajectoryParameterizer.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DrivetrainSplineTrajectoryParameterizer", "wpi__math__DrivetrainSplineTrajectoryParameterizer.hpp"),
@@ -1122,7 +1122,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "ExponentialProfile",
             yml_file = "semiwrap/ExponentialProfile.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/ExponentialProfile.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/ExponentialProfile.hpp",
             tmpl_class_names = [
                 ("ExponentialProfile_tmpl1", "ExponentialProfile"),
             ],
@@ -1137,7 +1137,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "HolonomicSample",
             yml_file = "semiwrap/HolonomicSample.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/HolonomicSample.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/HolonomicSample.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::HolonomicSample", "wpi__math__HolonomicSample.hpp"),
@@ -1147,7 +1147,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "HolonomicTrajectory",
             yml_file = "semiwrap/HolonomicTrajectory.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/HolonomicTrajectory.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/HolonomicTrajectory.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::HolonomicTrajectory", "wpi__math__HolonomicTrajectory.hpp"),
@@ -1157,7 +1157,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "Trajectory",
             yml_file = "semiwrap/Trajectory.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/Trajectory.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/Trajectory.hpp",
             tmpl_class_names = [
                 ("Trajectory_tmpl1", "DifferentialTrajectoryBase"),
                 ("Trajectory_tmpl2", "DrivetrainSplineTrajectoryBase"),
@@ -1171,7 +1171,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "TrajectoryConfig",
             yml_file = "semiwrap/TrajectoryConfig.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/TrajectoryConfig.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/TrajectoryConfig.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::TrajectoryConfig", "wpi__math__TrajectoryConfig.hpp"),
@@ -1181,7 +1181,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "TrajectorySample",
             yml_file = "semiwrap/TrajectorySample.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/TrajectorySample.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/TrajectorySample.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::TrajectorySample", "wpi__math__TrajectorySample.hpp"),
@@ -1191,7 +1191,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "TrapezoidProfile",
             yml_file = "semiwrap/TrapezoidProfile.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/TrapezoidProfile.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/TrapezoidProfile.hpp",
             tmpl_class_names = [
                 ("TrapezoidProfile_tmpl1", "_TrapezoidProfileConstraints"),
                 ("TrapezoidProfile_tmpl2", "_TrapezoidProfileRadiansConstraints"),
@@ -1209,7 +1209,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "CentripetalAccelerationConstraint",
             yml_file = "semiwrap/CentripetalAccelerationConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/CentripetalAccelerationConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/CentripetalAccelerationConstraint.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::CentripetalAccelerationConstraint", "wpi__math__CentripetalAccelerationConstraint.hpp"),
@@ -1219,7 +1219,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveKinematicsConstraint",
             yml_file = "semiwrap/DifferentialDriveKinematicsConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/DifferentialDriveKinematicsConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/DifferentialDriveKinematicsConstraint.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveKinematicsConstraint", "wpi__math__DifferentialDriveKinematicsConstraint.hpp"),
@@ -1229,7 +1229,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "DifferentialDriveVoltageConstraint",
             yml_file = "semiwrap/DifferentialDriveVoltageConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/DifferentialDriveVoltageConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/DifferentialDriveVoltageConstraint.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::DifferentialDriveVoltageConstraint", "wpi__math__DifferentialDriveVoltageConstraint.hpp"),
@@ -1239,7 +1239,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "EllipticalRegionConstraint",
             yml_file = "semiwrap/EllipticalRegionConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/EllipticalRegionConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/EllipticalRegionConstraint.hpp",
             tmpl_class_names = [
                 ("EllipticalRegionConstraint_tmpl1", "EllipticalRegionConstraint"),
             ],
@@ -1251,7 +1251,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MaxVelocityConstraint",
             yml_file = "semiwrap/MaxVelocityConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/MaxVelocityConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/MaxVelocityConstraint.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MaxVelocityConstraint", "wpi__math__MaxVelocityConstraint.hpp"),
@@ -1261,7 +1261,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "MecanumDriveKinematicsConstraint",
             yml_file = "semiwrap/MecanumDriveKinematicsConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/MecanumDriveKinematicsConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/MecanumDriveKinematicsConstraint.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::MecanumDriveKinematicsConstraint", "wpi__math__MecanumDriveKinematicsConstraint.hpp"),
@@ -1271,7 +1271,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "RectangularRegionConstraint",
             yml_file = "semiwrap/RectangularRegionConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/RectangularRegionConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/RectangularRegionConstraint.hpp",
             tmpl_class_names = [
                 ("RectangularRegionConstraint_tmpl1", "RectangularRegionConstraint"),
             ],
@@ -1283,7 +1283,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "SwerveDriveKinematicsConstraint",
             yml_file = "semiwrap/SwerveDriveKinematicsConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/SwerveDriveKinematicsConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/SwerveDriveKinematicsConstraint.hpp",
             tmpl_class_names = [
                 ("SwerveDriveKinematicsConstraint_tmpl1", "SwerveDrive2KinematicsConstraint"),
                 ("SwerveDriveKinematicsConstraint_tmpl2", "SwerveDrive3KinematicsConstraint"),
@@ -1298,7 +1298,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             class_name = "TrajectoryConstraint",
             yml_file = "semiwrap/TrajectoryConstraint.yml",
             header_root = "$(execpath :robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath :robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/TrajectoryConstraint.hpp",
+            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/trajectory/constraint/TrajectoryConstraint.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::math::TrajectoryConstraint", "wpi__math__TrajectoryConstraint.hpp"),

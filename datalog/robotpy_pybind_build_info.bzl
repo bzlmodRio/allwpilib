@@ -74,7 +74,7 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             class_name = "DataLog",
             yml_file = "semiwrap/DataLog.yml",
             header_root = "$(execpath :robotpy-native-datalog.copy_headers)",
-            header_file = "$(execpath :robotpy-native-datalog.copy_headers)/wpi/datalog/DataLog.hpp",
+            header_file = "$(execpath //datalog:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLog.hpp",
             tmpl_class_names = [
                 ("DataLog_tmpl1", "StructLogEntry"),
                 ("DataLog_tmpl2", "StructArrayLogEntry"),
@@ -113,7 +113,7 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             class_name = "DataLogBackgroundWriter",
             yml_file = "semiwrap/DataLogBackgroundWriter.yml",
             header_root = "$(execpath :robotpy-native-datalog.copy_headers)",
-            header_file = "$(execpath :robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogBackgroundWriter.hpp",
+            header_file = "$(execpath //datalog:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogBackgroundWriter.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::log::DataLogBackgroundWriter", "wpi__log__DataLogBackgroundWriter.hpp"),
@@ -123,7 +123,7 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             class_name = "DataLogReader",
             yml_file = "semiwrap/DataLogReader.yml",
             header_root = "$(execpath :robotpy-native-datalog.copy_headers)",
-            header_file = "$(execpath :robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogReader.hpp",
+            header_file = "$(execpath //datalog:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogReader.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::log::StartRecordData", "wpi__log__StartRecordData.hpp"),
@@ -136,7 +136,7 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             class_name = "DataLogWriter",
             yml_file = "semiwrap/DataLogWriter.yml",
             header_root = "$(execpath :robotpy-native-datalog.copy_headers)",
-            header_file = "$(execpath :robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogWriter.hpp",
+            header_file = "$(execpath //datalog:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogWriter.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::log::DataLogWriter", "wpi__log__DataLogWriter.hpp"),

@@ -86,7 +86,7 @@ class HeaderToDatConfig:
 
             native_library = fixup_native_lib_name("robotpy-native-" + base_library)
             self.include_file = (
-                f"$(execpath :{native_library}.copy_headers)/{base_include_file}"
+                f"$(execpath //{fixup_root_package_name(base_library)}:{native_library}.copy_headers)/{base_include_file}"
             )
             self.include_root = f"$(execpath :{native_library}.copy_headers)"
         else:

@@ -74,7 +74,7 @@ def tunables_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
             class_name = "ComplexTunable",
             yml_file = "semiwrap/ComplexTunable.yml",
             header_root = "$(execpath :robotpy-native-tunables.copy_headers)",
-            header_file = "$(execpath :robotpy-native-tunables.copy_headers)/wpi/tunables/ComplexTunable.hpp",
+            header_file = "$(execpath //tunables:robotpy-native-tunables.copy_headers)/wpi/tunables/ComplexTunable.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::tunables::ComplexTunable", "wpi__tunables__ComplexTunable.hpp"),
@@ -84,7 +84,7 @@ def tunables_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
             class_name = "TunableBackend",
             yml_file = "semiwrap/TunableBackend.yml",
             header_root = "$(execpath :robotpy-native-tunables.copy_headers)",
-            header_file = "$(execpath :robotpy-native-tunables.copy_headers)/wpi/tunables/TunableBackend.hpp",
+            header_file = "$(execpath //tunables:robotpy-native-tunables.copy_headers)/wpi/tunables/TunableBackend.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::tunables::TunableBackend", "wpi__tunables__TunableBackend.hpp"),

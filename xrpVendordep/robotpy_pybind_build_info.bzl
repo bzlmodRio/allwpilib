@@ -74,7 +74,7 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
             class_name = "XRPGyro",
             yml_file = "semiwrap/XRPGyro.yml",
             header_root = "$(execpath :robotpy-native-xrp.copy_headers)",
-            header_file = "$(execpath :robotpy-native-xrp.copy_headers)/wpi/xrp/XRPGyro.hpp",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPGyro.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::xrp::XRPGyro", "wpi__xrp__XRPGyro.hpp"),
@@ -84,7 +84,7 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
             class_name = "XRPMotor",
             yml_file = "semiwrap/XRPMotor.yml",
             header_root = "$(execpath :robotpy-native-xrp.copy_headers)",
-            header_file = "$(execpath :robotpy-native-xrp.copy_headers)/wpi/xrp/XRPMotor.hpp",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPMotor.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::xrp::XRPMotor", "wpi__xrp__XRPMotor.hpp"),
@@ -94,7 +94,7 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
             class_name = "XRPOnBoardIO",
             yml_file = "semiwrap/XRPOnBoardIO.yml",
             header_root = "$(execpath :robotpy-native-xrp.copy_headers)",
-            header_file = "$(execpath :robotpy-native-xrp.copy_headers)/wpi/xrp/XRPOnBoardIO.hpp",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPOnBoardIO.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::xrp::XRPOnBoardIO", "wpi__xrp__XRPOnBoardIO.hpp"),
@@ -104,7 +104,7 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
             class_name = "XRPRangefinder",
             yml_file = "semiwrap/XRPRangefinder.yml",
             header_root = "$(execpath :robotpy-native-xrp.copy_headers)",
-            header_file = "$(execpath :robotpy-native-xrp.copy_headers)/wpi/xrp/XRPRangefinder.hpp",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPRangefinder.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::xrp::XRPRangefinder", "wpi__xrp__XRPRangefinder.hpp"),
@@ -114,7 +114,7 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
             class_name = "XRPReflectanceSensor",
             yml_file = "semiwrap/XRPReflectanceSensor.yml",
             header_root = "$(execpath :robotpy-native-xrp.copy_headers)",
-            header_file = "$(execpath :robotpy-native-xrp.copy_headers)/wpi/xrp/XRPReflectanceSensor.hpp",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPReflectanceSensor.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::xrp::XRPReflectanceSensor", "wpi__xrp__XRPReflectanceSensor.hpp"),
@@ -124,7 +124,7 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
             class_name = "XRPServo",
             yml_file = "semiwrap/XRPServo.yml",
             header_root = "$(execpath :robotpy-native-xrp.copy_headers)",
-            header_file = "$(execpath :robotpy-native-xrp.copy_headers)/wpi/xrp/XRPServo.hpp",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPServo.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::xrp::XRPServo", "wpi__xrp__XRPServo.hpp"),
