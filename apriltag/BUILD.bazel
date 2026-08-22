@@ -159,11 +159,17 @@ cc_test(
     ],
 )
 
+filegroup(
+    name = "test-resources",
+    srcs = glob(["src/test/resources/**"]),
+    visibility = ["//apriltag:__subpackages__"],
+)
+
 wpilib_java_junit5_test(
     name = "apriltag-java-test",
     srcs = glob(["src/test/java/**/*.java"]),
     resource_strip_prefix = "apriltag/src/test/resources",
-    resources = glob(["src/test/resources/**"]),
+    resources = ["//apriltag:test-resources"],
     deps = [
         ":apriltag-java",
         "//telemetry:telemetry-java",

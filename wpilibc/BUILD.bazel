@@ -20,9 +20,7 @@ filegroup(
 
 filegroup(
     name = "doxygen-files",
-    srcs = glob([
-        "src/main/native/include/**/*",
-    ]) + [":generated-native-include-files"],
+    srcs = glob(["src/main/native/include/**/*"]) + ["//wpilibc:generated-native-include-files"],
     visibility = ["//visibility:public"],
 )
 
@@ -81,6 +79,7 @@ generate_version_file(
     name = "generate-version",
     output_file = "WPILibVersion.cpp",
     template = "src/generate/WPILibVersion.cpp.in",
+    visibility = ["//wpilibc:__subpackages__"],
 )
 
 write_source_files(
@@ -98,6 +97,7 @@ third_party_cc_lib_helper(
     name = "generated_cc",
     include_root = "src/generated/main/native/include",
     src_root = "src/generated/main/native/cpp",
+    visibility = ["//wpilibc:__subpackages__"],
 )
 
 pkg_files(
@@ -105,23 +105,24 @@ pkg_files(
     srcs = [
         ":generate-version",
     ],
+    visibility = ["//wpilibc:__subpackages__"],
 )
 
 wpilib_cc_library(
     name = "wpilibc",
     srcs = [
-        ":generate-version",
+        "//wpilibc:generate-version",
     ] + glob([
         "src/main/native/cpp/**",
     ]),
     hdrs = glob(["src/main/native/include/**"]),
     extra_src_pkg_files = [
-        ":generated_version_files_pkg",
+        "//wpilibc:generated_version_files_pkg",
     ],
     include_license_files = True,
     strip_include_prefix = "src/main/native/include",
     third_party_libraries = [
-        ":generated_cc",
+        "//wpilibc:generated_cc",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -180,13 +181,18 @@ cc_library(
     includes = ["src/test/native/include"],
 )
 
+filegroup(
+    name = "generated-test-native-cpp-srcs",
+    srcs = glob(["src/generated/test/native/cpp/**"]),
+    visibility = ["//wpilibc:__subpackages__"],
+)
+
 cc_test(
     name = "wpilibc-test",
     size = "small",
     srcs = glob([
-        "src/generated/test/native/cpp/**",
         "src/test/native/cpp/**",
-    ]),
+    ]) + ["//wpilibc:generated-test-native-cpp-srcs"],
     tags = [
         "no-tsan",
         "no-ubsan",

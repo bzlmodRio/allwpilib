@@ -13,9 +13,8 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "robotpy_library")
 filegroup(
     name = "doxygen-files",
     srcs = glob([
-        "src/generated/main/native/include/**/*",
         "src/main/native/include/**/*",
-    ]),
+    ]) + ["//commandsv2:generated-native-include-files"],
     visibility = ["//visibility:public"],
 )
 
@@ -30,6 +29,12 @@ py_binary(
         requirement("jinja2"),
         "//:generation",
     ],
+)
+
+filegroup(
+    name = "generated-native-include-files",
+    srcs = glob(["src/generated/main/native/include/**/*"]),
+    visibility = ["//commandsv2:__subpackages__"],
 )
 
 filegroup(
@@ -58,11 +63,13 @@ third_party_cc_lib_helper(
     name = "generated_cc",
     include_root = "src/generated/main/native/include",
     src_root = "src/generated/main/native/cpp",
+    visibility = ["//commandsv2:__subpackages__"],
 )
 
 filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
+    visibility = ["//commandsv2:__subpackages__"],
 )
 
 wpilib_cc_library(
@@ -72,7 +79,7 @@ wpilib_cc_library(
     includes = ["src/main/native/include"],
     strip_include_prefix = "src/main/native/include",
     third_party_libraries = [
-        ":generated_cc",
+        "//commandsv2:generated_cc",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -115,8 +122,9 @@ wpilib_cc_static_library(
 
 wpilib_java_library(
     name = "commandsv2-java",
-    srcs = glob(["src/main/java/**/*.java"]) + [":generated_java"],
+    srcs = glob(["src/main/java/**/*.java"]) + ["//commandsv2:generated_java"],
     exported_plugins = ["//javacPlugin:plugin"],
+    generated_java_srcs = ["//commandsv2:generated_java"],
     maven_artifact_name = "commandsv2-java",
     maven_group_id = "org.wpilib.commandsv2",
     plugins = ["//javacPlugin:plugin"],
@@ -152,11 +160,17 @@ cc_test(
     ],
 )
 
+filegroup(
+    name = "test-resources",
+    srcs = glob(["src/test/resources/**"]),
+    visibility = ["//commandsv2:__subpackages__"],
+)
+
 wpilib_java_junit5_test(
     name = "commandsv2-java-test",
     srcs = glob(["src/test/java/**/*.java"]),
     resource_strip_prefix = "commandsv2/src/test/resources",
-    resources = glob(["src/test/resources/**"]),
+    resources = ["//commandsv2:test-resources"],
     deps = [
         ":commandsv2-java",
         "//hal:hal-java",

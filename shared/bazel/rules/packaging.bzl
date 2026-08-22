@@ -37,22 +37,22 @@ def pkg_files_headers(name, dep):
         strip_prefix = "",
     )
 
-def pkg_java_src_files(name):
+def pkg_java_src_files(name, java_srcs_root = "src/main/java", generated_java_srcs = [], proto_srcs = []):
     pkg_files(
         name = name + "-java-srcs",
-        srcs = native.glob(["src/main/java/**"]),
-        strip_prefix = "src/main/java",
+        srcs = native.glob([java_srcs_root + "/**"]),
+        strip_prefix = java_srcs_root,
     )
 
     pkg_files(
         name = name + "-generated-java-srcs",
-        srcs = native.glob(["src/generated/main/java/**/*.java"], allow_empty = True),
+        srcs = generated_java_srcs,
         strip_prefix = "src/generated/main/java",
     )
 
     pkg_files(
         name = name + "-proto-srcs",
-        srcs = native.glob(["src/main/proto/**"], allow_empty = True),
+        srcs = proto_srcs,
         strip_prefix = "src/main/proto",
     )
 
@@ -66,8 +66,13 @@ def pkg_java_src_files(name):
         ],
     )
 
-def zip_java_srcs(name, extra_pkgs = []):
-    pkg_java_src_files("{}-sources.pkg".format(name))
+def zip_java_srcs(name, extra_pkgs = [], java_srcs_root = "src/main/java", generated_java_srcs = [], proto_srcs = []):
+    pkg_java_src_files(
+        "{}-sources.pkg".format(name),
+        java_srcs_root = java_srcs_root,
+        generated_java_srcs = generated_java_srcs,
+        proto_srcs = proto_srcs,
+    )
 
     pkg_zip(
         name = "lib{}-java-sources".format(name),
