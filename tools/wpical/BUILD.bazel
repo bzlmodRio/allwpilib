@@ -1,6 +1,5 @@
 load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
-load("@rules_cc//cc:cc_test.bzl", "cc_test")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
 load("//shared/bazel/rules:packaging.bzl", "package_binary_cc_project")
@@ -135,25 +134,6 @@ filegroup(
     name = "assets",
     srcs = glob(["src/main/native/assets/**"]),
     visibility = ["//tools/wpical:__subpackages__"],
-)
-
-cc_test(
-    name = "wpical_test",
-    size = "medium",
-    srcs = glob(["src/test/native/**"]),
-    copts = copts,
-    cxxopts = cxxopts,
-    data = ["//tools/wpical:assets"],
-    defines = [
-        'PROJECT_ROOT_PATH=\\"tools/wpical/src/main/native/assets\\"',
-        "__BAZEL__=1",
-    ],
-    deps = [
-        ":wpical_lib",
-        "//shared/bazel/thirdparty/ceres",
-        "//thirdparty/catch2",
-        "@bazel_tools//tools/cpp/runfiles",
-    ],
 )
 
 package_binary_cc_project(

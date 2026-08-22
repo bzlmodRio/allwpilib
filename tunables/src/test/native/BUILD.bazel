@@ -1,0 +1,17 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "tunables-cpp-test",
+    size = "small",
+    srcs = glob(["cpp/**/*.cpp"]),
+    tags = [
+        "exclusive",
+        "no-asan",
+        "no-tsan",
+    ],
+    deps = [
+        "//thirdparty/catch2",
+        "//tunables",
+        "//wpiutil/src/test/native:wpiutil-testlib",
+    ],
+)

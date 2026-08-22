@@ -1,0 +1,16 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "telemetry-cpp-test",
+    size = "small",
+    srcs = glob(["cpp/**/*.cpp"]),
+    tags = [
+        "exclusive",
+        "no-asan",
+        "no-tsan",
+    ],
+    deps = [
+        "//telemetry",
+        "//thirdparty/catch2",
+    ],
+)
