@@ -1,0 +1,11 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "hal-cpp-test",
+    size = "small",
+    srcs = glob(["cpp/**/*.cpp"]),
+    deps = [
+        "//hal:wpiHal",
+        "//thirdparty/catch2",
+    ],
+)

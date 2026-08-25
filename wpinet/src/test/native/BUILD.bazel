@@ -1,0 +1,16 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "wpinet-cpp-test",
+    size = "small",
+    srcs = glob([
+        "cpp/**/*.cpp",
+        "cpp/**/*.hpp",
+    ]),
+    tags = ["no-asan"],
+    deps = [
+        "//thirdparty/catch2",
+        "//wpinet",
+        "//wpiutil/src/test/native:wpiutil-testlib",
+    ],
+)

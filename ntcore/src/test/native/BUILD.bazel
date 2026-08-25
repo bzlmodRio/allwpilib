@@ -1,0 +1,20 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "ntcore-cpp-test",
+    size = "small",
+    srcs = glob([
+        "cpp/**/*.cpp",
+        "cpp/**/*.hpp",
+    ]),
+    tags = [
+        "exclusive",
+        "no-asan",
+        "no-tsan",
+    ],
+    deps = [
+        "//ntcore",
+        "//thirdparty/catch2",
+        "//wpiutil/src/test/native:wpiutil-testlib",
+    ],
+)

@@ -1,0 +1,15 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "halsim_gui-test",
+    size = "small",
+    srcs = glob(["cpp/**/*.cpp"]),
+    tags = [
+        "no-asan",
+        "wpi-cpp-gui",
+    ],
+    deps = [
+        "//simulation/halsim_gui",
+        "//thirdparty/catch2",
+    ],
+)
