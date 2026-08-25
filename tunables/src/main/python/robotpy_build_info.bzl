@@ -5,7 +5,7 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library", 
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
 
-def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
+def tunables_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     NAME_TRANSFORMS = [
         "--name-transform-default",
         "snake_case",
@@ -69,88 +69,89 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         "VIn",
     ]
 
-    WPINET_HEADER_GEN = [
+    TUNABLES_HEADER_GEN = [
         struct(
-            class_name = "PortForwarder",
-            yml_file = "semiwrap/PortForwarder.yml",
-            header_root = "$(execpath //wpinet:robotpy-native-wpinet.copy_headers)",
-            header_file = "$(execpath //wpinet:robotpy-native-wpinet.copy_headers)/wpi/net/PortForwarder.hpp",
+            class_name = "ComplexTunable",
+            yml_file = "semiwrap/ComplexTunable.yml",
+            header_root = "$(execpath //tunables:robotpy-native-tunables.copy_headers)",
+            header_file = "$(execpath //tunables:robotpy-native-tunables.copy_headers)/wpi/tunables/ComplexTunable.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::net::PortForwarder", "wpi__net__PortForwarder.hpp"),
+                ("wpi::tunables::ComplexTunable", "wpi__tunables__ComplexTunable.hpp"),
             ],
         ),
         struct(
-            class_name = "WebServer",
-            yml_file = "semiwrap/WebServer.yml",
-            header_root = "$(execpath //wpinet:robotpy-native-wpinet.copy_headers)",
-            header_file = "$(execpath //wpinet:robotpy-native-wpinet.copy_headers)/wpi/net/WebServer.hpp",
+            class_name = "TunableBackend",
+            yml_file = "semiwrap/TunableBackend.yml",
+            header_root = "$(execpath //tunables:robotpy-native-tunables.copy_headers)",
+            header_file = "$(execpath //tunables:robotpy-native-tunables.copy_headers)/wpi/tunables/TunableBackend.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::net::WebServer", "wpi__net__WebServer.hpp"),
+                ("wpi::tunables::TunableBackend", "wpi__tunables__TunableBackend.hpp"),
+                ("wpi::tunables::TunableBackend::PublishedTunable", "wpi__tunables__TunableBackend__PublishedTunable.hpp"),
             ],
         ),
     ]
 
     resolve_casters(
-        name = "wpinet.resolve_casters",
-        caster_deps = ["//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
-        casters_pkl_file = "wpinet.casters.pkl",
-        dep_file = "wpinet.casters.d",
+        name = "tunables.resolve_casters",
+        caster_deps = ["//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
+        casters_pkl_file = "tunables.casters.pkl",
+        dep_file = "tunables.casters.d",
     )
 
     gen_libinit(
-        name = "wpinet.gen_lib_init",
-        output_file = "src/main/python/wpinet/_init__wpinet.py",
-        modules = ["native.wpinet._init_robotpy_native_wpinet", "wpiutil._init__wpiutil"],
+        name = "tunables.gen_lib_init",
+        output_file = "tunables/_init__tunables.py",
+        modules = ["native.tunables._init_robotpy_native_tunables", "wpiutil._init__wpiutil"],
     )
 
     gen_pkgconf(
-        name = "wpinet.gen_pkgconf",
-        libinit_py = "wpinet._init__wpinet",
-        module_pkg_name = "wpinet._wpinet",
-        output_file = "wpinet.pc",
-        pkg_name = "wpinet",
-        install_path = "src/main/python/wpinet",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpinet/__init__.py",
+        name = "tunables.gen_pkgconf",
+        libinit_py = "tunables._init__tunables",
+        module_pkg_name = "tunables._tunables",
+        output_file = "tunables.pc",
+        pkg_name = "tunables",
+        install_path = "tunables",
+        project_file = "pyproject.toml",
+        package_root = "tunables/__init__.py",
     )
 
     gen_modinit_hpp(
-        name = "wpinet.gen_modinit_hpp",
-        input_dats = [x.class_name for x in WPINET_HEADER_GEN],
-        libname = "_wpinet",
-        output_file = "semiwrap_init.wpinet._wpinet.hpp",
+        name = "tunables.gen_modinit_hpp",
+        input_dats = [x.class_name for x in TUNABLES_HEADER_GEN],
+        libname = "_tunables",
+        output_file = "semiwrap_init.tunables._tunables.hpp",
     )
 
     run_header_gen(
-        name = "wpinet",
-        casters_pickle = "wpinet.casters.pkl",
-        header_gen_config = WPINET_HEADER_GEN,
-        trampoline_subpath = "src/main/python/wpinet",
+        name = "tunables",
+        casters_pickle = "tunables.casters.pkl",
+        header_gen_config = TUNABLES_HEADER_GEN,
+        trampoline_subpath = "tunables",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            "//wpinet:robotpy-native-wpinet.copy_headers",
+            "//tunables:robotpy-native-tunables.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
     )
 
     create_pybind_library(
-        name = "wpinet",
-        install_path = "src/main/python/wpinet/",
-        extension_name = "_wpinet",
-        generated_srcs = [":wpinet.generated_srcs"],
-        semiwrap_header = [":wpinet.gen_modinit_hpp"],
+        name = "tunables",
+        install_path = "tunables/",
+        extension_name = "_tunables",
+        generated_srcs = [":tunables.generated_srcs"],
+        semiwrap_header = [":tunables.gen_modinit_hpp"],
         deps = [
-            ":wpinet.tmpl_hdrs",
-            ":wpinet.trampoline_hdrs",
-            "//wpinet:wpinet",
+            ":tunables.tmpl_hdrs",
+            ":tunables.trampoline_hdrs",
+            "//tunables:tunables",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
         ],
         dynamic_deps = [
-            "//wpinet:shared/wpinet",
+            "//tunables:shared/tunables",
             "//wpiutil:shared/wpiutil",
         ],
         extra_hdrs = extra_hdrs,
@@ -159,12 +160,12 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
     )
 
     native.filegroup(
-        name = "wpinet.generated_files",
+        name = "tunables.generated_files",
         srcs = [
-            "wpinet.gen_modinit_hpp.gen",
-            "wpinet.header_gen_files",
-            "wpinet.gen_pkgconf",
-            "wpinet.gen_lib_init",
+            "tunables.gen_modinit_hpp.gen",
+            "tunables.header_gen_files",
+            "tunables.gen_pkgconf",
+            "tunables.gen_lib_init",
         ],
         tags = ["manual", "robotpy"],
     )
@@ -174,7 +175,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_files".format(name),
         srcs = [
-            "wpinet.generated_files",
+            "tunables.generated_files",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -184,7 +185,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/wpinet/wpinet.pc",
+            "tunables/tunables.pc",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -193,65 +194,65 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/wpinet/**"], exclude = ["src/main/python/wpinet/**/*.py"]),
+        srcs = native.glob(["tunables/**"], exclude = ["tunables/**/*.py"]),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/wpinet/version.py",
+        output_file = "tunables/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-wpinet",
-        srcs = native.glob(["src/main/python/wpinet/**/*.py"]) + [
-            "src/main/python/wpinet/_init__wpinet.py",
+        distribution = "robotpy-tunables",
+        srcs = native.glob(["tunables/**/*.py"]) + [
+            "tunables/_init__tunables.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpinet/_wpinet",
-            ":wpinet.trampoline_hdr_files",
+            ":tunables/_tunables",
+            ":tunables.trampoline_hdr_files",
         ],
-        imports = ["src/main/python/"],
+        imports = [""],
         deps = [
-            "//wpinet:robotpy-native-wpinet",
-            "//wpiutil:robotpy-wpiutil",
+            "//tunables:robotpy-native-tunables",
+            "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["wpinet/src/main/python/", "wpinet"],
-        summary = "Binary wrapper for WPILib networking library",
+        strip_path_prefixes = ["tunables/", "tunables"],
+        summary = "Binary wrapper for WPILib tunables library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-native-wpinet==0.0.0", "robotpy-wpiutil==0.0.0"],
+        requires = ["robotpy-native-tunables==0.0.0", "robotpy-wpiutil==0.0.0"],
         python_requires = ">=3.11",
         entry_points = {
-            "pkg_config": ["wpinet = wpinet"],
+            "pkg_config": ["tunables = tunables"],
         },
         visibility = ["//visibility:public"],
     )
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
+        yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
-            "//wpinet:robotpy-native-wpinet.copy_headers",
+            "//tunables:robotpy-native-tunables.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/wpinet/__init__.py",
+        package_root_file = "tunables/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//wpinet:robotpy-native-wpinet.copy_headers",
+            "//tunables:robotpy-native-tunables.copy_headers",
         ],
-        package_root_file = "src/main/python/wpinet/__init__.py",
+        package_root_file = "tunables/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )

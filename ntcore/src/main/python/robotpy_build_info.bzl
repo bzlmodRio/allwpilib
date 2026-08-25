@@ -393,14 +393,14 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     resolve_casters(
         name = "ntcore.resolve_casters",
-        caster_deps = ["//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "ntcore.casters.pkl",
         dep_file = "ntcore.casters.d",
     )
 
     gen_libinit(
         name = "ntcore.gen_lib_init",
-        output_file = "src/main/python/ntcore/_init__ntcore.py",
+        output_file = "ntcore/_init__ntcore.py",
         modules = ["native.ntcore._init_robotpy_native_ntcore", "wpiutil._init__wpiutil", "wpinet._init__wpinet", "wpilog._init__wpilog"],
     )
 
@@ -410,9 +410,9 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         module_pkg_name = "ntcore._ntcore",
         output_file = "ntcore.pc",
         pkg_name = "ntcore",
-        install_path = "src/main/python/ntcore",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/ntcore/__init__.py",
+        install_path = "ntcore",
+        project_file = "pyproject.toml",
+        package_root = "ntcore/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -426,7 +426,7 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         name = "ntcore",
         casters_pickle = "ntcore.casters.pkl",
         header_gen_config = NTCORE_HEADER_GEN,
-        trampoline_subpath = "src/main/python/ntcore",
+        trampoline_subpath = "ntcore",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog:robotpy-native-datalog.copy_headers",
@@ -439,7 +439,7 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     create_pybind_library(
         name = "ntcore",
-        install_path = "src/main/python/ntcore/",
+        install_path = "ntcore/",
         extension_name = "_ntcore",
         generated_srcs = [":ntcore.generated_srcs"],
         semiwrap_header = [":ntcore.gen_modinit_hpp"],
@@ -447,12 +447,12 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             ":ntcore.tmpl_hdrs",
             ":ntcore.trampoline_hdrs",
             "//datalog:datalog",
-            "//datalog:wpilog_pybind_library",
+            "//datalog/src/main/python:wpilog_pybind_library",
             "//ntcore:ntcore",
             "//wpinet:wpinet",
-            "//wpinet:wpinet_pybind_library",
+            "//wpinet/src/main/python:wpinet_pybind_library",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//datalog:shared/datalog",
@@ -491,7 +491,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/ntcore/ntcore.pc",
+            "ntcore/ntcore.pc",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -500,37 +500,37 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/ntcore/**"], exclude = ["src/main/python/ntcore/**/*.py"]),
+        srcs = native.glob(["ntcore/**"], exclude = ["ntcore/**/*.py"]),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/ntcore/version.py",
+        output_file = "ntcore/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
         distribution = "pyntcore",
-        srcs = native.glob(["src/main/python/ntcore/**/*.py"]) + [
-            "src/main/python/ntcore/_init__ntcore.py",
+        srcs = native.glob(["ntcore/**/*.py"]) + [
+            "ntcore/_init__ntcore.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/ntcore/_ntcore",
+            ":ntcore/_ntcore",
             ":ntcore.trampoline_hdr_files",
         ],
-        imports = ["src/main/python/"],
+        imports = [""],
         deps = [
-            "//datalog:robotpy-wpilog",
+            "//datalog/src/main/python:robotpy-wpilog",
             "//ntcore:robotpy-native-ntcore",
-            "//wpinet:robotpy-wpinet",
-            "//wpiutil:robotpy-wpiutil",
+            "//wpinet/src/main/python:robotpy-wpinet",
+            "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["ntcore/src/main/python/", "ntcore"],
+        strip_path_prefixes = ["ntcore/", "ntcore"],
         summary = "Binary wrappers for the FIRST ntcore library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -544,17 +544,17 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
+        yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
             "//datalog:robotpy-native-datalog.copy_headers",
             "//ntcore:robotpy-native-ntcore.copy_headers",
             "//wpinet:robotpy-native-wpinet.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/ntcore/__init__.py",
+        package_root_file = "ntcore/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
@@ -562,7 +562,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         extra_hdrs = extra_pybind_hdrs + [
             "//ntcore:robotpy-native-ntcore.copy_headers",
         ],
-        package_root_file = "src/main/python/ntcore/__init__.py",
+        package_root_file = "ntcore/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )

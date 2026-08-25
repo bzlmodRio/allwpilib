@@ -124,14 +124,14 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
 
     resolve_casters(
         name = "hal_simulation.resolve_casters",
-        caster_deps = ["//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "hal_simulation.casters.pkl",
         dep_file = "hal_simulation.casters.d",
     )
 
     gen_libinit(
         name = "hal_simulation.gen_lib_init",
-        output_file = "src/main/python/hal/simulation/_init__simulation.py",
+        output_file = "hal/simulation/_init__simulation.py",
         modules = ["native.wpihal._init_robotpy_native_wpihal", "wpiutil._init__wpiutil", "ntcore._init__ntcore"],
     )
 
@@ -141,9 +141,9 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         module_pkg_name = "hal.simulation._simulation",
         output_file = "hal_simulation.pc",
         pkg_name = "hal_simulation",
-        install_path = "src/main/python/hal/simulation",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/hal/__init__.py",
+        install_path = "hal/simulation",
+        project_file = "pyproject.toml",
+        package_root = "hal/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -157,7 +157,7 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         name = "hal_simulation",
         casters_pickle = "hal_simulation.casters.pkl",
         header_gen_config = HAL_SIMULATION_HEADER_GEN,
-        trampoline_subpath = "src/main/python/hal/simulation",
+        trampoline_subpath = "hal/simulation",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog:robotpy-native-datalog.copy_headers",
@@ -171,7 +171,7 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
 
     create_pybind_library(
         name = "hal_simulation",
-        install_path = "src/main/python/hal/simulation/",
+        install_path = "hal/simulation/",
         extension_name = "_simulation",
         generated_srcs = [":hal_simulation.generated_srcs"],
         semiwrap_header = [":hal_simulation.gen_modinit_hpp"],
@@ -180,9 +180,9 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
             ":hal_simulation.trampoline_hdrs",
             "//hal:wpiHal",
             "//ntcore:ntcore",
-            "//ntcore:ntcore_pybind_library",
+            "//ntcore/src/main/python:ntcore_pybind_library",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//hal:shared/wpiHal",
@@ -411,14 +411,14 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     resolve_casters(
         name = "wpihal.resolve_casters",
-        caster_deps = ["//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "wpihal.casters.pkl",
         dep_file = "wpihal.casters.d",
     )
 
     gen_libinit(
         name = "wpihal.gen_lib_init",
-        output_file = "src/main/python/hal/_init__wpi_hal.py",
+        output_file = "hal/_init__wpi_hal.py",
         modules = ["native.wpihal._init_robotpy_native_wpihal", "wpiutil._init__wpiutil", "ntcore._init__ntcore"],
     )
 
@@ -428,9 +428,9 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         module_pkg_name = "hal._wpi_hal",
         output_file = "wpihal.pc",
         pkg_name = "wpihal",
-        install_path = "src/main/python/hal",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/hal/__init__.py",
+        install_path = "hal",
+        project_file = "pyproject.toml",
+        package_root = "hal/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -444,7 +444,7 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         name = "wpihal",
         casters_pickle = "wpihal.casters.pkl",
         header_gen_config = WPIHAL_HEADER_GEN,
-        trampoline_subpath = "src/main/python/hal",
+        trampoline_subpath = "hal",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog:robotpy-native-datalog.copy_headers",
@@ -458,7 +458,7 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     create_pybind_library(
         name = "wpihal",
-        install_path = "src/main/python/hal/",
+        install_path = "hal/",
         extension_name = "_wpi_hal",
         generated_srcs = [":wpihal.generated_srcs"],
         semiwrap_header = [":wpihal.gen_modinit_hpp"],
@@ -467,9 +467,9 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             ":wpihal.trampoline_hdrs",
             "//hal:wpiHal",
             "//ntcore:ntcore",
-            "//ntcore:ntcore_pybind_library",
+            "//ntcore/src/main/python:ntcore_pybind_library",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//hal:shared/wpiHal",
@@ -508,8 +508,8 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/hal/simulation/hal_simulation.pc",
-            "src/main/python/hal/wpihal.pc",
+            "hal/simulation/hal_simulation.pc",
+            "hal/wpihal.pc",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -518,39 +518,39 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/hal/**"], exclude = ["src/main/python/hal/**/*.py"]),
+        srcs = native.glob(["hal/**"], exclude = ["hal/**/*.py"]),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/hal/version.py",
+        output_file = "hal/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
         distribution = "robotpy-hal",
-        srcs = native.glob(["src/main/python/hal/**/*.py"]) + [
-            "src/main/python/hal/simulation/_init__simulation.py",
-            "src/main/python/hal/_init__wpi_hal.py",
+        srcs = native.glob(["hal/**/*.py"]) + [
+            "hal/simulation/_init__simulation.py",
+            "hal/_init__wpi_hal.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/hal/simulation/_simulation",
-            ":src/main/python/hal/_wpi_hal",
+            ":hal/simulation/_simulation",
+            ":hal/_wpi_hal",
             ":hal_simulation.trampoline_hdr_files",
             ":wpihal.trampoline_hdr_files",
         ],
-        imports = ["src/main/python/"],
+        imports = [""],
         deps = [
             "//hal:robotpy-native-wpihal",
             "//ntcore:pyntcore",
-            "//wpiutil:robotpy-wpiutil",
+            "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["hal/src/main/python/", "hal"],
+        strip_path_prefixes = ["hal/", "hal"],
         summary = "Binary wrapper for WPILib HAL",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -564,7 +564,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
+        yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
             "//datalog:robotpy-native-datalog.copy_headers",
             "//hal:robotpy-native-wpihal.copy_headers",
@@ -572,10 +572,10 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             "//wpinet:robotpy-native-wpinet.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/hal/__init__.py",
+        package_root_file = "hal/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
@@ -583,7 +583,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         extra_hdrs = extra_pybind_hdrs + [
             "//hal:robotpy-native-wpihal.copy_headers",
         ],
-        package_root_file = "src/main/python/hal/__init__.py",
+        package_root_file = "hal/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )

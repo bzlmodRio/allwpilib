@@ -1309,14 +1309,14 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
 
     resolve_casters(
         name = "wpimath.resolve_casters",
-        caster_deps = ["//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json", ":src/main/python/wpimath/wpimath-casters.pybind11.json"],
+        caster_deps = ["//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json", ":wpimath/wpimath-casters.pybind11.json"],
         casters_pkl_file = "wpimath.casters.pkl",
         dep_file = "wpimath.casters.d",
     )
 
     gen_libinit(
         name = "wpimath.gen_lib_init",
-        output_file = "src/main/python/wpimath/_init__wpimath.py",
+        output_file = "wpimath/_init__wpimath.py",
         modules = ["native.wpimath._init_robotpy_native_wpimath", "telemetry._init__telemetry", "tunables._init__tunables", "wpiutil._init__wpiutil"],
     )
 
@@ -1326,9 +1326,9 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         module_pkg_name = "wpimath._wpimath",
         output_file = "wpimath.pc",
         pkg_name = "wpimath",
-        install_path = "src/main/python/wpimath",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpimath/__init__.py",
+        install_path = "wpimath",
+        project_file = "pyproject.toml",
+        package_root = "wpimath/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -1342,7 +1342,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         name = "wpimath",
         casters_pickle = "wpimath.casters.pkl",
         header_gen_config = WPIMATH_HEADER_GEN,
-        trampoline_subpath = "src/main/python/wpimath",
+        trampoline_subpath = "wpimath",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//telemetry:robotpy-native-telemetry.copy_headers",
@@ -1355,7 +1355,7 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
 
     create_pybind_library(
         name = "wpimath",
-        install_path = "src/main/python/wpimath/",
+        install_path = "wpimath/",
         extension_name = "_wpimath",
         generated_srcs = [":wpimath.generated_srcs"],
         semiwrap_header = [":wpimath.gen_modinit_hpp"],
@@ -1363,13 +1363,13 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             ":wpimath.tmpl_hdrs",
             ":wpimath.trampoline_hdrs",
             "//telemetry:telemetry",
-            "//telemetry:telemetry_pybind_library",
+            "//telemetry/src/main/python:telemetry_pybind_library",
             "//tunables:tunables",
-            "//tunables:tunables_pybind_library",
+            "//tunables/src/main/python:tunables_pybind_library",
             "//wpimath:wpimath",
             "//wpimath:wpimath-casters",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//telemetry:shared/telemetry",
@@ -1397,17 +1397,17 @@ def publish_library_casters():
     publish_casters(
         name = "publish_casters",
         caster_name = "wpimath-casters",
-        output_json = "src/main/python/wpimath/wpimath-casters.pybind11.json",
-        output_pc = "src/main/python/wpimath/wpimath-casters.pc",
-        project_config = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpimath/__init__.py",
-        typecasters_srcs = native.glob(["src/main/python/wpimath/_impl/src/**", "src/main/python/wpimath/_impl/src/type_casters/**"]),
+        output_json = "wpimath/wpimath-casters.pybind11.json",
+        output_pc = "wpimath/wpimath-casters.pc",
+        project_config = "pyproject.toml",
+        package_root = "wpimath/__init__.py",
+        typecasters_srcs = native.glob(["wpimath/_impl/src/**", "wpimath/_impl/src/type_casters/**"]),
     )
 
     cc_library(
         name = "wpimath-casters",
-        hdrs = native.glob(["src/main/python/wpimath/_impl/src/*.h", "src/main/python/wpimath/_impl/src/type_casters/*.h"]),
-        includes = ["src/main/python/wpimath/_impl/src", "src/main/python/wpimath/_impl/src/type_casters"],
+        hdrs = native.glob(["wpimath/_impl/src/*.h", "wpimath/_impl/src/type_casters/*.h"]),
+        includes = ["wpimath/_impl/src", "wpimath/_impl/src/type_casters"],
         visibility = ["//visibility:public"],
         tags = ["robotpy"],
     )
@@ -1427,9 +1427,9 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/wpimath/wpimath.pc",
-            "src/main/python/wpimath/wpimath-casters.pc",
-            "src/main/python/wpimath/wpimath-casters.pybind11.json",
+            "wpimath/wpimath.pc",
+            "wpimath/wpimath-casters.pc",
+            "wpimath/wpimath-casters.pybind11.json",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -1438,37 +1438,37 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/wpimath/**"], exclude = ["src/main/python/wpimath/**/*.py"]),
+        srcs = native.glob(["wpimath/**"], exclude = ["wpimath/**/*.py"]),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/wpimath/version.py",
+        output_file = "wpimath/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
         distribution = "robotpy-wpimath",
-        srcs = native.glob(["src/main/python/wpimath/**/*.py"]) + [
-            "src/main/python/wpimath/_init__wpimath.py",
+        srcs = native.glob(["wpimath/**/*.py"]) + [
+            "wpimath/_init__wpimath.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpimath/_wpimath",
+            ":wpimath/_wpimath",
             ":wpimath.trampoline_hdr_files",
         ],
-        imports = ["src/main/python/"],
+        imports = [""],
         deps = [
-            "//telemetry:robotpy-telemetry",
-            "//tunables:robotpy-tunables",
+            "//telemetry/src/main/python:robotpy-telemetry",
+            "//tunables/src/main/python:robotpy-tunables",
             "//wpimath:robotpy-native-wpimath",
-            "//wpiutil:robotpy-wpiutil",
+            "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["wpimath/src/main/python/", "wpimath"],
+        strip_path_prefixes = ["wpimath/", "wpimath"],
         summary = "Binary wrapper for WPILib Math library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -1482,17 +1482,17 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
+        yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
             "//telemetry:robotpy-native-telemetry.copy_headers",
             "//tunables:robotpy-native-tunables.copy_headers",
             "//wpimath:robotpy-native-wpimath.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/wpimath/__init__.py",
+        package_root_file = "wpimath/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
@@ -1500,7 +1500,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         extra_hdrs = extra_pybind_hdrs + [
             "//wpimath:robotpy-native-wpimath.copy_headers",
         ],
-        package_root_file = "src/main/python/wpimath/__init__.py",
+        package_root_file = "wpimath/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )

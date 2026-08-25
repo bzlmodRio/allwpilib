@@ -5,13 +5,13 @@ load("//wpimath/src/test/python:robotpy_pybind_test_info.bzl", "wpimath_test_ext
 
 TEST_PYBIND_PKGCFG_DEPS = [
     "//telemetry:native/telemetry/robotpy-native-telemetry.pc",
-    "//telemetry:robotpy-telemetry.generated_pkgcfg_files",
+    "//telemetry/src/main/python:robotpy-telemetry.generated_pkgcfg_files",
     "//tunables:native/tunables/robotpy-native-tunables.pc",
-    "//tunables:robotpy-tunables.generated_pkgcfg_files",
+    "//tunables/src/main/python:robotpy-tunables.generated_pkgcfg_files",
     "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-    "//wpimath:robotpy-wpimath.generated_pkgcfg_files",
+    "//wpimath/src/main/python:robotpy-wpimath.generated_pkgcfg_files",
     "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
-    "//wpiutil:robotpy-wpiutil.generated_pkgcfg_files",
+    "//wpiutil/src/main/python:robotpy-wpiutil.generated_pkgcfg_files",
 ]
 
 generate_robotpy_pybind_build_info(
@@ -47,9 +47,9 @@ robotpy_py_test(
     ),
     deps = [
         ":robotpy-wpimath-test",
-        "//telemetry:robotpy-telemetry",
-        "//tunables:robotpy-tunables",
-        "//wpimath:robotpy-wpimath",
+        "//telemetry/src/main/python:robotpy-telemetry",
+        "//tunables/src/main/python:robotpy-tunables",
+        "//wpimath/src/main/python:robotpy-wpimath",
         requirement("numpy"),
         requirement("pytest"),
     ],

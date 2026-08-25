@@ -6,8 +6,8 @@ robotpy_py_test(
     srcs = glob(["**/*.py"]),
     tags = ["exclusive"],
     deps = [
-        "//tunables:robotpy-tunables",
-        "//wpiutil:robotpy-wpiutil",
+        "//tunables/src/main/python:robotpy-tunables",
+        "//wpiutil/src/main/python:robotpy-wpiutil",
         requirement("pytest"),
     ],
 )

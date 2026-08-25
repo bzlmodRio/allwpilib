@@ -112,14 +112,14 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     resolve_casters(
         name = "fields.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpimath/src/main/python:wpimath/wpimath-casters.pybind11.json", "//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "fields.casters.pkl",
         dep_file = "fields.casters.d",
     )
 
     gen_libinit(
         name = "fields.gen_lib_init",
-        output_file = "src/main/python/robotpy_fields/_init__fields.py",
+        output_file = "robotpy_fields/_init__fields.py",
         modules = ["native.fields._init_robotpy_native_fields", "wpiutil._init__wpiutil", "wpimath._init__wpimath"],
     )
 
@@ -129,9 +129,9 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         module_pkg_name = "robotpy_fields._fields",
         output_file = "fields.pc",
         pkg_name = "fields",
-        install_path = "src/main/python/robotpy_fields",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/robotpy_fields/__init__.py",
+        install_path = "robotpy_fields",
+        project_file = "pyproject.toml",
+        package_root = "robotpy_fields/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -145,7 +145,7 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         name = "fields",
         casters_pickle = "fields.casters.pkl",
         header_gen_config = FIELDS_HEADER_GEN,
-        trampoline_subpath = "src/main/python/robotpy_fields",
+        trampoline_subpath = "robotpy_fields",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//fields:robotpy-native-fields.copy_headers",
@@ -159,7 +159,7 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     create_pybind_library(
         name = "fields",
-        install_path = "src/main/python/robotpy_fields/",
+        install_path = "robotpy_fields/",
         extension_name = "_fields",
         generated_srcs = [":fields.generated_srcs"],
         semiwrap_header = [":fields.gen_modinit_hpp"],
@@ -168,9 +168,9 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             ":fields.trampoline_hdrs",
             "//fields:fields",
             "//wpimath:wpimath",
-            "//wpimath:wpimath_pybind_library",
+            "//wpimath/src/main/python:wpimath_pybind_library",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//fields:shared/fields",
@@ -208,7 +208,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/robotpy_fields/fields.pc",
+            "robotpy_fields/fields.pc",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -217,36 +217,36 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/robotpy_fields/**"], exclude = ["src/main/python/robotpy_fields/**/*.py"]),
+        srcs = native.glob(["robotpy_fields/**"], exclude = ["robotpy_fields/**/*.py"]),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/robotpy_fields/version.py",
+        output_file = "robotpy_fields/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
         distribution = "robotpy-fields",
-        srcs = native.glob(["src/main/python/robotpy_fields/**/*.py"]) + [
-            "src/main/python/robotpy_fields/_init__fields.py",
+        srcs = native.glob(["robotpy_fields/**/*.py"]) + [
+            "robotpy_fields/_init__fields.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/robotpy_fields/_fields",
+            ":robotpy_fields/_fields",
             ":fields.trampoline_hdr_files",
         ],
-        imports = ["src/main/python/"],
+        imports = [""],
         deps = [
             "//fields:robotpy-native-fields",
-            "//wpimath:robotpy-wpimath",
-            "//wpiutil:robotpy-wpiutil",
+            "//wpimath/src/main/python:robotpy-wpimath",
+            "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["fields/src/main/python/", "fields"],
+        strip_path_prefixes = ["fields/", "fields"],
         summary = "RobotPy bindings for WPILib's fields library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -260,7 +260,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
+        yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
             "//fields:robotpy-native-fields.copy_headers",
             "//telemetry:robotpy-native-telemetry.copy_headers",
@@ -268,10 +268,10 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             "//wpimath:robotpy-native-wpimath.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/robotpy_fields/__init__.py",
+        package_root_file = "robotpy_fields/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
@@ -279,7 +279,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         extra_hdrs = extra_pybind_hdrs + [
             "//fields:robotpy-native-fields.copy_headers",
         ],
-        package_root_file = "src/main/python/robotpy_fields/__init__.py",
+        package_root_file = "robotpy_fields/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )

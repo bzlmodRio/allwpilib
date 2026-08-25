@@ -5,7 +5,7 @@ robotpy_py_test(
     "python_tests",
     srcs = glob(["**/*.py"]),
     deps = [
-        "//drivers:wpilib-drivers",
+        "//drivers/src/main/python:wpilib-drivers",
         requirement("pytest"),
     ],
 )

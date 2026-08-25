@@ -6,8 +6,8 @@ robotpy_py_test(
     srcs = glob(["**/*.py"]),
     tags = ["exclusive"],
     deps = [
-        "//telemetry:robotpy-telemetry",
-        "//wpiutil:robotpy-wpiutil",
+        "//telemetry/src/main/python:robotpy-telemetry",
+        "//wpiutil/src/main/python:robotpy-wpiutil",
         requirement("pytest"),
     ],
 )

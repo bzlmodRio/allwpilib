@@ -13,13 +13,13 @@ def _define_robot_project(projects, project_type):
         )
         common_deps = [
             ":robotpy",
-            "//apriltag:robotpy-apriltag",
-            "//commandsv2:commandsv2-py",
-            "//drivers:wpilib-drivers",
-            "//fields:robotpy-fields",
-            "//wpilibc:robotpy-wpilib",
-            "//romiVendordep:robotpy-romi",
-            "//xrpVendordep:robotpy-xrp",
+            "//apriltag/src/main/python:robotpy-apriltag",
+            "//commandsv2/src/main/python:commandsv2-py",
+            "//drivers/src/main/python:wpilib-drivers",
+            "//fields/src/main/python:robotpy-fields",
+            "//wpilibc/src/main/python:robotpy-wpilib",
+            "//romiVendordep/src/main/python:robotpy-romi",
+            "//xrpVendordep/src/main/python:robotpy-xrp",
             requirement("numpy"),
         ]
 
@@ -41,7 +41,7 @@ def _define_robot_project(projects, project_type):
         py_binary(
             name = base_name + "-sim",
             args = ["--main", "$(location " + example_folder + "/robot.py)", "sim"],
-            deps = common_deps + ["//simulation/halsim_gui:robotpy-halsim-gui"],
+            deps = common_deps + ["//simulation/halsim_gui/src/main/python:robotpy-halsim-gui"],
             **common_kwargs
         )
 

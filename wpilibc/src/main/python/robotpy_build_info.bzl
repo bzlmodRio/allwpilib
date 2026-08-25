@@ -74,16 +74,16 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Filesystem",
             yml_file = "semiwrap/Filesystem.yml",
-            header_root = "wpilibc/src/main/python/wpilib/src",
-            header_file = "wpilibc/src/main/python/wpilib/src/rpy/Filesystem.h",
+            header_root = "wpilibc/wpilib/src",
+            header_file = "wpilibc/wpilib/src/rpy/Filesystem.h",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "MotorControllerGroup",
             yml_file = "semiwrap/MotorControllerGroup.yml",
-            header_root = "wpilibc/src/main/python/wpilib/src",
-            header_file = "wpilibc/src/main/python/wpilib/src/rpy/MotorControllerGroup.h",
+            header_root = "wpilibc/wpilib/src",
+            header_file = "wpilibc/wpilib/src/rpy/MotorControllerGroup.h",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PyMotorControllerGroup", "wpi__PyMotorControllerGroup.hpp"),
@@ -92,8 +92,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Notifier",
             yml_file = "semiwrap/Notifier.yml",
-            header_root = "wpilibc/src/main/python/wpilib/src",
-            header_file = "wpilibc/src/main/python/wpilib/src/rpy/Notifier.h",
+            header_root = "wpilibc/wpilib/src",
+            header_file = "wpilibc/wpilib/src/rpy/Notifier.h",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PyNotifier", "wpi__PyNotifier.hpp"),
@@ -102,8 +102,8 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "AddressableLEDBuffer",
             yml_file = "semiwrap/AddressableLEDBuffer.yml",
-            header_root = "wpilibc/src/main/python/wpilib/src",
-            header_file = "wpilibc/src/main/python/wpilib/src/rpy/AddressableLEDBuffer.h",
+            header_root = "wpilibc/wpilib/src",
+            header_file = "wpilibc/wpilib/src/rpy/AddressableLEDBuffer.h",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::AddressableLEDBuffer", "wpi__AddressableLEDBuffer.hpp"),
@@ -1177,14 +1177,14 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     resolve_casters(
         name = "wpilib.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpimath/src/main/python:wpimath/wpimath-casters.pybind11.json", "//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "wpilib.casters.pkl",
         dep_file = "wpilib.casters.d",
     )
 
     gen_libinit(
         name = "wpilib.gen_lib_init",
-        output_file = "src/main/python/wpilib/_init__wpilib.py",
+        output_file = "wpilib/_init__wpilib.py",
         modules = ["native.wpilib._init_robotpy_native_wpilib", "hal._init__wpi_hal", "wpiutil._init__wpiutil", "ntcore._init__ntcore", "wpimath._init__wpimath", "telemetry._init__telemetry", "tunables._init__tunables"],
     )
 
@@ -1194,9 +1194,9 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         module_pkg_name = "wpilib._wpilib",
         output_file = "wpilib.pc",
         pkg_name = "wpilib",
-        install_path = "src/main/python/wpilib",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpilib/__init__.py",
+        install_path = "wpilib",
+        project_file = "pyproject.toml",
+        package_root = "wpilib/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -1210,7 +1210,7 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         name = "wpilib",
         casters_pickle = "wpilib.casters.pkl",
         header_gen_config = WPILIB_HEADER_GEN,
-        trampoline_subpath = "src/main/python/wpilib",
+        trampoline_subpath = "wpilib",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog:robotpy-native-datalog.copy_headers",
@@ -1228,7 +1228,7 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
 
     create_pybind_library(
         name = "wpilib",
-        install_path = "src/main/python/wpilib/",
+        install_path = "wpilib/",
         extension_name = "_wpilib",
         generated_srcs = [":wpilib.generated_srcs"],
         semiwrap_header = [":wpilib.gen_modinit_hpp"],
@@ -1236,18 +1236,18 @@ def wpilib_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             ":wpilib.tmpl_hdrs",
             ":wpilib.trampoline_hdrs",
             "//hal:wpiHal",
-            "//hal:wpihal_pybind_library",
+            "//hal/src/main/python:wpihal_pybind_library",
             "//ntcore:ntcore",
-            "//ntcore:ntcore_pybind_library",
+            "//ntcore/src/main/python:ntcore_pybind_library",
             "//telemetry:telemetry",
-            "//telemetry:telemetry_pybind_library",
+            "//telemetry/src/main/python:telemetry_pybind_library",
             "//tunables:tunables",
-            "//tunables:tunables_pybind_library",
+            "//tunables/src/main/python:tunables_pybind_library",
             "//wpilibc:wpilibc",
             "//wpimath:wpimath",
-            "//wpimath:wpimath_pybind_library",
+            "//wpimath/src/main/python:wpimath_pybind_library",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//hal:shared/wpiHal",
@@ -1854,14 +1854,14 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
 
     resolve_casters(
         name = "wpilib_simulation.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpimath/src/main/python:wpimath/wpimath-casters.pybind11.json", "//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "wpilib_simulation.casters.pkl",
         dep_file = "wpilib_simulation.casters.d",
     )
 
     gen_libinit(
         name = "wpilib_simulation.gen_lib_init",
-        output_file = "src/main/python/wpilib/simulation/_init__simulation.py",
+        output_file = "wpilib/simulation/_init__simulation.py",
         modules = ["native.wpilib._init_robotpy_native_wpilib", "wpilib._init__wpilib", "wpimath._init__wpimath"],
     )
 
@@ -1871,9 +1871,9 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         module_pkg_name = "wpilib.simulation._simulation",
         output_file = "wpilib_simulation.pc",
         pkg_name = "wpilib_simulation",
-        install_path = "src/main/python/wpilib/simulation",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/wpilib/__init__.py",
+        install_path = "wpilib/simulation",
+        project_file = "pyproject.toml",
+        package_root = "wpilib/__init__.py",
     )
 
     gen_modinit_hpp(
@@ -1887,7 +1887,7 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
         name = "wpilib_simulation",
         casters_pickle = "wpilib_simulation.casters.pkl",
         header_gen_config = WPILIB_SIMULATION_HEADER_GEN,
-        trampoline_subpath = "src/main/python/wpilib/simulation",
+        trampoline_subpath = "wpilib/simulation",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog:robotpy-native-datalog.copy_headers",
@@ -1905,7 +1905,7 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
 
     create_pybind_library(
         name = "wpilib_simulation",
-        install_path = "src/main/python/wpilib/simulation/",
+        install_path = "wpilib/simulation/",
         extension_name = "_simulation",
         generated_srcs = [":wpilib_simulation.generated_srcs"],
         semiwrap_header = [":wpilib_simulation.gen_modinit_hpp"],
@@ -1913,19 +1913,19 @@ def wpilib_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs =
             ":wpilib_simulation.tmpl_hdrs",
             ":wpilib_simulation.trampoline_hdrs",
             "//hal:wpiHal",
-            "//hal:wpihal_pybind_library",
+            "//hal/src/main/python:wpihal_pybind_library",
             "//ntcore:ntcore",
-            "//ntcore:ntcore_pybind_library",
+            "//ntcore/src/main/python:ntcore_pybind_library",
             "//telemetry:telemetry",
-            "//telemetry:telemetry_pybind_library",
+            "//telemetry/src/main/python:telemetry_pybind_library",
             "//tunables:tunables",
-            "//tunables:tunables_pybind_library",
-            "//wpilibc:wpilib_pybind_library",
+            "//tunables/src/main/python:tunables_pybind_library",
+            "//wpilibc/src/main/python:wpilib_pybind_library",
             "//wpilibc:wpilibc",
             "//wpimath:wpimath",
-            "//wpimath:wpimath_pybind_library",
+            "//wpimath/src/main/python:wpimath_pybind_library",
             "//wpiutil:wpiutil",
-            "//wpiutil:wpiutil_pybind_library",
+            "//wpiutil/src/main/python:wpiutil_pybind_library",
         ],
         dynamic_deps = [
             "//hal:shared/wpiHal",
@@ -1968,8 +1968,8 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/wpilib/wpilib.pc",
-            "src/main/python/wpilib/simulation/wpilib_simulation.pc",
+            "wpilib/wpilib.pc",
+            "wpilib/simulation/wpilib_simulation.pc",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -1978,46 +1978,46 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/wpilib/**"], exclude = ["src/main/python/wpilib/**/*.py"]),
+        srcs = native.glob(["wpilib/**"], exclude = ["wpilib/**/*.py"]),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/wpilib/version.py",
+        output_file = "wpilib/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
         distribution = "wpilib",
-        srcs = native.glob(["src/main/python/wpilib/**/*.py"]) + [
-            "src/main/python/wpilib/_init__wpilib.py",
-            "src/main/python/wpilib/simulation/_init__simulation.py",
+        srcs = native.glob(["wpilib/**/*.py"]) + [
+            "wpilib/_init__wpilib.py",
+            "wpilib/simulation/_init__simulation.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/wpilib/_wpilib",
-            ":src/main/python/wpilib/simulation/_simulation",
+            ":wpilib/_wpilib",
+            ":wpilib/simulation/_simulation",
             ":wpilib.trampoline_hdr_files",
             ":wpilib_simulation.trampoline_hdr_files",
         ],
-        imports = ["src/main/python/"],
+        imports = [""],
         deps = [
             "//hal:robotpy-hal",
             "//ntcore:pyntcore",
-            "//telemetry:robotpy-telemetry",
-            "//tunables:robotpy-tunables",
+            "//telemetry/src/main/python:robotpy-telemetry",
+            "//tunables/src/main/python:robotpy-tunables",
             "//wpilibc:robotpy-native-wpilib",
-            "//wpimath:robotpy-wpimath",
-            "//wpiutil:robotpy-wpiutil",
+            "//wpimath/src/main/python:robotpy-wpimath",
+            "//wpiutil/src/main/python:robotpy-wpiutil",
             requirement("pytest"),
             requirement("pytest-reraise"),
             requirement("robotpy-cli"),
         ],
-        strip_path_prefixes = ["wpilibc/src/main/python/", "wpilibc"],
+        strip_path_prefixes = ["wpilibc/", "wpilibc"],
         summary = "Binary wrapper for WPILib",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -2032,7 +2032,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
+        yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
             "//datalog:robotpy-native-datalog.copy_headers",
             "//hal:robotpy-native-wpihal.copy_headers",
@@ -2044,10 +2044,10 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             "//wpinet:robotpy-native-wpinet.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
         ],
-        package_root_file = "src/main/python/wpilib/__init__.py",
+        package_root_file = "wpilib/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
@@ -2055,7 +2055,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         extra_hdrs = extra_pybind_hdrs + [
             "//wpilibc:robotpy-native-wpilib.copy_headers",
         ],
-        package_root_file = "src/main/python/wpilib/__init__.py",
+        package_root_file = "wpilib/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )

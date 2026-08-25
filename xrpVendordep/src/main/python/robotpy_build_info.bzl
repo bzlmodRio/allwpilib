@@ -5,7 +5,7 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library", 
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
 
-def romi_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
+def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     NAME_TRANSFORMS = [
         "--name-transform-default",
         "snake_case",
@@ -69,120 +69,140 @@ def romi_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes
         "VIn",
     ]
 
-    ROMI_HEADER_GEN = [
+    XRP_HEADER_GEN = [
         struct(
-            class_name = "OnBoardIO",
-            yml_file = "semiwrap/OnBoardIO.yml",
-            header_root = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)",
-            header_file = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)/wpi/romi/OnBoardIO.hpp",
+            class_name = "XRPGyro",
+            yml_file = "semiwrap/XRPGyro.yml",
+            header_root = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPGyro.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::romi::OnBoardIO", "wpi__romi__OnBoardIO.hpp"),
+                ("wpi::xrp::XRPGyro", "wpi__xrp__XRPGyro.hpp"),
             ],
         ),
         struct(
-            class_name = "RomiGyro",
-            yml_file = "semiwrap/RomiGyro.yml",
-            header_root = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)",
-            header_file = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)/wpi/romi/RomiGyro.hpp",
+            class_name = "XRPMotor",
+            yml_file = "semiwrap/XRPMotor.yml",
+            header_root = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPMotor.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::romi::RomiGyro", "wpi__romi__RomiGyro.hpp"),
+                ("wpi::xrp::XRPMotor", "wpi__xrp__XRPMotor.hpp"),
             ],
         ),
         struct(
-            class_name = "RomiMotor",
-            yml_file = "semiwrap/RomiMotor.yml",
-            header_root = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)",
-            header_file = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)/wpi/romi/RomiMotor.hpp",
+            class_name = "XRPOnBoardIO",
+            yml_file = "semiwrap/XRPOnBoardIO.yml",
+            header_root = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPOnBoardIO.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::romi::RomiMotor", "wpi__romi__RomiMotor.hpp"),
+                ("wpi::xrp::XRPOnBoardIO", "wpi__xrp__XRPOnBoardIO.hpp"),
             ],
         ),
         struct(
-            class_name = "RomiServo",
-            yml_file = "semiwrap/RomiServo.yml",
-            header_root = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)",
-            header_file = "$(execpath //romiVendordep:robotpy-native-romi.copy_headers)/wpi/romi/RomiServo.hpp",
+            class_name = "XRPRangefinder",
+            yml_file = "semiwrap/XRPRangefinder.yml",
+            header_root = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPRangefinder.hpp",
             tmpl_class_names = [],
             trampolines = [
-                ("wpi::romi::RomiServo", "wpi__romi__RomiServo.hpp"),
+                ("wpi::xrp::XRPRangefinder", "wpi__xrp__XRPRangefinder.hpp"),
+            ],
+        ),
+        struct(
+            class_name = "XRPReflectanceSensor",
+            yml_file = "semiwrap/XRPReflectanceSensor.yml",
+            header_root = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPReflectanceSensor.hpp",
+            tmpl_class_names = [],
+            trampolines = [
+                ("wpi::xrp::XRPReflectanceSensor", "wpi__xrp__XRPReflectanceSensor.hpp"),
+            ],
+        ),
+        struct(
+            class_name = "XRPServo",
+            yml_file = "semiwrap/XRPServo.yml",
+            header_root = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)",
+            header_file = "$(execpath //xrpVendordep:robotpy-native-xrp.copy_headers)/wpi/xrp/XRPServo.hpp",
+            tmpl_class_names = [],
+            trampolines = [
+                ("wpi::xrp::XRPServo", "wpi__xrp__XRPServo.hpp"),
             ],
         ),
     ]
 
     resolve_casters(
-        name = "romi.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
-        casters_pkl_file = "romi.casters.pkl",
-        dep_file = "romi.casters.d",
+        name = "xrp.resolve_casters",
+        caster_deps = ["//wpimath/src/main/python:wpimath/wpimath-casters.pybind11.json", "//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
+        casters_pkl_file = "xrp.casters.pkl",
+        dep_file = "xrp.casters.d",
     )
 
     gen_libinit(
-        name = "romi.gen_lib_init",
-        output_file = "src/main/python/romi/_init__romi.py",
-        modules = ["native.romi._init_robotpy_native_romi", "wpilib._init__wpilib", "wpimath._init__wpimath"],
+        name = "xrp.gen_lib_init",
+        output_file = "xrp/_init__xrp.py",
+        modules = ["native.xrp._init_robotpy_native_xrp", "wpilib._init__wpilib", "wpimath._init__wpimath"],
     )
 
     gen_pkgconf(
-        name = "romi.gen_pkgconf",
-        libinit_py = "romi._init__romi",
-        module_pkg_name = "romi._romi",
-        output_file = "romi.pc",
-        pkg_name = "romi",
-        install_path = "src/main/python/romi",
-        project_file = "src/main/python/pyproject.toml",
-        package_root = "src/main/python/romi/__init__.py",
+        name = "xrp.gen_pkgconf",
+        libinit_py = "xrp._init__xrp",
+        module_pkg_name = "xrp._xrp",
+        output_file = "xrp.pc",
+        pkg_name = "xrp",
+        install_path = "xrp",
+        project_file = "pyproject.toml",
+        package_root = "xrp/__init__.py",
     )
 
     gen_modinit_hpp(
-        name = "romi.gen_modinit_hpp",
-        input_dats = [x.class_name for x in ROMI_HEADER_GEN],
-        libname = "_romi",
-        output_file = "semiwrap_init.romi._romi.hpp",
+        name = "xrp.gen_modinit_hpp",
+        input_dats = [x.class_name for x in XRP_HEADER_GEN],
+        libname = "_xrp",
+        output_file = "semiwrap_init.xrp._xrp.hpp",
     )
 
     run_header_gen(
-        name = "romi",
-        casters_pickle = "romi.casters.pkl",
-        header_gen_config = ROMI_HEADER_GEN,
-        trampoline_subpath = "src/main/python/romi",
+        name = "xrp",
+        casters_pickle = "xrp.casters.pkl",
+        header_gen_config = XRP_HEADER_GEN,
+        trampoline_subpath = "xrp",
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog:robotpy-native-datalog.copy_headers",
             "//hal:robotpy-native-wpihal.copy_headers",
             "//ntcore:robotpy-native-ntcore.copy_headers",
-            "//romiVendordep:robotpy-native-romi.copy_headers",
             "//telemetry:robotpy-native-telemetry.copy_headers",
             "//tunables:robotpy-native-tunables.copy_headers",
             "//wpilibc:robotpy-native-wpilib.copy_headers",
             "//wpimath:robotpy-native-wpimath.copy_headers",
             "//wpinet:robotpy-native-wpinet.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//xrpVendordep:robotpy-native-xrp.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
     )
 
     create_pybind_library(
-        name = "romi",
-        install_path = "src/main/python/romi/",
-        extension_name = "_romi",
-        generated_srcs = [":romi.generated_srcs"],
-        semiwrap_header = [":romi.gen_modinit_hpp"],
+        name = "xrp",
+        install_path = "xrp/",
+        extension_name = "_xrp",
+        generated_srcs = [":xrp.generated_srcs"],
+        semiwrap_header = [":xrp.gen_modinit_hpp"],
         deps = [
-            ":romi.tmpl_hdrs",
-            ":romi.trampoline_hdrs",
-            "//romiVendordep:romiVendordep",
-            "//wpilibc:wpilib_pybind_library",
+            ":xrp.tmpl_hdrs",
+            ":xrp.trampoline_hdrs",
+            "//wpilibc/src/main/python:wpilib_pybind_library",
             "//wpilibc:wpilibc",
             "//wpimath:wpimath",
-            "//wpimath:wpimath_pybind_library",
+            "//wpimath/src/main/python:wpimath_pybind_library",
+            "//xrpVendordep:xrpVendordep",
         ],
         dynamic_deps = [
-            "//romiVendordep:shared/romiVendordep",
             "//wpilibc:shared/wpilibc",
             "//wpimath:shared/wpimath",
+            "//xrpVendordep:shared/xrpVendordep",
         ],
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
@@ -190,12 +210,12 @@ def romi_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes
     )
 
     native.filegroup(
-        name = "romi.generated_files",
+        name = "xrp.generated_files",
         srcs = [
-            "romi.gen_modinit_hpp.gen",
-            "romi.header_gen_files",
-            "romi.gen_pkgconf",
-            "romi.gen_lib_init",
+            "xrp.gen_modinit_hpp.gen",
+            "xrp.header_gen_files",
+            "xrp.gen_pkgconf",
+            "xrp.gen_lib_init",
         ],
         tags = ["manual", "robotpy"],
     )
@@ -205,7 +225,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_files".format(name),
         srcs = [
-            "romi.generated_files",
+            "xrp.generated_files",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -215,7 +235,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     native.filegroup(
         name = "{}.generated_pkgcfg_files".format(name),
         srcs = [
-            "src/main/python/romi/romi.pc",
+            "xrp/xrp.pc",
         ],
         tags = ["manual", "robotpy"],
         visibility = ["//visibility:public"],
@@ -224,75 +244,75 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     # Contains all of the non-python files that need to be included in the wheel
     native.filegroup(
         name = "{}.extra_files".format(name),
-        srcs = native.glob(["src/main/python/romi/**"], exclude = ["src/main/python/romi/**/*.py"]),
+        srcs = native.glob(["xrp/**"], exclude = ["xrp/**/*.py"]),
         tags = ["manual", "robotpy"],
     )
 
     generate_version_file(
         name = "{}.generate_version".format(name),
-        output_file = "src/main/python/romi/version.py",
+        output_file = "xrp/version.py",
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-romi",
-        srcs = native.glob(["src/main/python/romi/**/*.py"]) + [
-            "src/main/python/romi/_init__romi.py",
+        distribution = "robotpy-xrp",
+        srcs = native.glob(["xrp/**/*.py"]) + [
+            "xrp/_init__xrp.py",
             "{}.generate_version".format(name),
         ],
         data = [
             "{}.generated_pkgcfg_files".format(name),
             "{}.extra_files".format(name),
-            ":src/main/python/romi/_romi",
-            ":romi.trampoline_hdr_files",
+            ":xrp/_xrp",
+            ":xrp.trampoline_hdr_files",
         ],
-        imports = ["src/main/python/"],
+        imports = [""],
         deps = [
-            "//romiVendordep:robotpy-native-romi",
-            "//simulation/halsim_ws_core:robotpy-halsim-ws",
-            "//wpilibc:robotpy-wpilib",
+            "//wpilibc/src/main/python:robotpy-wpilib",
+            "//xrpVendordep:robotpy-native-xrp",
         ],
-        strip_path_prefixes = ["romiVendordep/src/main/python/", "romiVendordep"],
-        summary = "Binary wrapper for WPILib Romi Vendor library",
-        project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
+        strip_path_prefixes = ["xrpVendordep/", "xrpVendordep"],
+        summary = "Binary wrapper for WPILib XRP Vendor library",
+        project_urls = None,
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
-        requires = ["robotpy-native-romi==0.0.0", "wpilib==0.0.0", "robotpy-halsim-ws==0.0.0"],
+        requires = ["robotpy-native-xrp==0.0.0", "wpilib==0.0.0"],
         python_requires = ">=3.11",
         entry_points = {
-            "pkg_config": ["romi = romi"],
-            "robotpy_cli.2027": ["run-romi = romi.cli:RunRomi"],
+            "pkg_config": ["xrp = xrp"],
+            "robotpy_cli.2027": ["run-xrp = xrp.cli:RunXrp"],
+            "robotpy_sim.2027": ["xrp = xrp.extension"],
         },
         visibility = ["//visibility:public"],
     )
 
     update_yaml_files(
         name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
+        yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
             "//datalog:robotpy-native-datalog.copy_headers",
             "//hal:robotpy-native-wpihal.copy_headers",
             "//ntcore:robotpy-native-ntcore.copy_headers",
-            "//romiVendordep:robotpy-native-romi.copy_headers",
             "//telemetry:robotpy-native-telemetry.copy_headers",
             "//tunables:robotpy-native-tunables.copy_headers",
             "//wpilibc:robotpy-native-wpilib.copy_headers",
             "//wpimath:robotpy-native-wpimath.copy_headers",
             "//wpinet:robotpy-native-wpinet.copy_headers",
             "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//xrpVendordep:robotpy-native-xrp.copy_headers",
         ],
-        package_root_file = "src/main/python/romi/__init__.py",
+        package_root_file = "xrp/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        pyproject_toml = "pyproject.toml",
+        yaml_files = native.glob(["semiwrap/**"]),
     )
 
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//romiVendordep:robotpy-native-romi.copy_headers",
+            "//xrpVendordep:robotpy-native-xrp.copy_headers",
         ],
-        package_root_file = "src/main/python/romi/__init__.py",
+        package_root_file = "xrp/__init__.py",
         pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
+        pyproject_toml = "pyproject.toml",
     )
