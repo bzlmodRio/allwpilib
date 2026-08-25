@@ -1,6 +1,5 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//commandsv3:generate.bzl", "generate_commandsv3")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_junit5_test", "wpilib_java_library")
@@ -110,17 +109,5 @@ wpilib_java_junit5_test(
         "//wpiunits:wpiunits-java",
         "//wpiutil:wpiutil-java",
         "@maven//:us_hebi_quickbuf_quickbuf_runtime",
-    ],
-)
-
-java_binary(
-    name = "DevMain-Java",
-    srcs = ["src/dev/java/org/wpilib/command3/DevMain.java"],
-    main_class = "org.wpilib.command3.DevMain",
-    deps = [
-        "//hal:hal-java",
-        "//ntcore:ntcore-java",
-        "//wpimath:wpimath-java",
-        "//wpiutil:wpiutil-java",
     ],
 )
