@@ -30,8 +30,8 @@ from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
 
 NATIVE_TARGET_SUBPATH = ""
 
-PYTHON_TARGET_SUBPATH = ""
-PROJECT_TO_PYTHON_FILES_SUBPATH = "src/main/python/"
+PYTHON_TARGET_SUBPATH = "/src/main/python"
+PROJECT_TO_PYTHON_FILES_SUBPATH = ""
 
 class HeaderToDatConfig:
     def __init__(
@@ -132,7 +132,7 @@ class ResolveCastersConfig:
                 relevant_parts = dep_path.parts[3:]
                 package = relevant_parts[0]
                 caster_deps.add(
-                    f"//{package}{PYTHON_TARGET_SUBPATH}:" + "/".join(relevant_parts[1:])
+                    f"//{package}{PYTHON_TARGET_SUBPATH}:" + "/".join(relevant_parts[4:])
                 )
 
         self.caster_deps = sorted(caster_deps)
