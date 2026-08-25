@@ -1,6 +1,4 @@
-load("@rules_java//java:defs.bzl", "java_plugin")
 load("@rules_pkg//:mappings.bzl", "pkg_files")
-load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
 
 filegroup(
     name = "resource_files",
@@ -8,36 +6,9 @@ filegroup(
     visibility = ["//epilogue-processor:__subpackages__"],
 )
 
-wpilib_java_library(
-    name = "processor-java",
-    srcs = glob(["src/main/java/**/*.java"]),
-    extra_source_pkgs = ["//epilogue-processor:resources"],
-    maven_artifact_name = "epilogue-processor-java",
-    maven_group_id = "org.wpilib.epilogue",
-    resource_strip_prefix = "epilogue-processor/src/main/resources/",
-    resources = ["//epilogue-processor:resource_files"],
-    visibility = ["//visibility:public"],
-    runtime_deps = [
-        "//commandsv2:commandsv2-java",
-    ],
-    deps = [
-        "//epilogue-runtime:epilogue-java",
-        "//telemetry:telemetry-java",
-    ],
-)
-
 pkg_files(
     name = "resources",
     srcs = glob(["src/main/resources/**"]),
     strip_prefix = "src/main/resources/",
     visibility = ["//epilogue-processor:__subpackages__"],
-)
-
-java_plugin(
-    name = "plugin",
-    processor_class = "org.wpilib.epilogue.processor.AnnotationProcessor",
-    visibility = ["//visibility:public"],
-    deps = [
-        ":processor-java",
-    ],
 )

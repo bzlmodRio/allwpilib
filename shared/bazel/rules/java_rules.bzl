@@ -8,7 +8,7 @@ def wpilib_java_library(
         maven_artifact_name,
         tags = [],
         extra_source_pkgs = [],
-        java_srcs_root = "src/main/java",
+        java_srcs_root = "",
         generated_java_srcs = [],
         proto_srcs = [],
         **kwargs):

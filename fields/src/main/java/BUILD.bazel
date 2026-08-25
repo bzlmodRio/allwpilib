@@ -1,0 +1,22 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+
+wpilib_java_library(
+    name = "fields-java",
+    srcs = glob(["**/*.java"]) + ["//fields:generated_java"],
+    extra_source_pkgs = ["//fields:resources"],
+    generated_java_srcs = ["//fields:generated_java"],
+    maven_artifact_name = "fields-java",
+    maven_group_id = "org.wpilib.fields",
+    plugins = [
+        "//:avaje_jsonb_generator",
+    ],
+    resource_strip_prefix = "fields/src/main/native/resources",
+    resources = ["//fields:field-jsons"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpimath/src/main/java:wpimath-java",
+        "//wpiutil/src/main/java:wpiutil-java",
+        "@maven//:io_avaje_avaje_json_core",
+        "@maven//:io_avaje_avaje_jsonb",
+    ],
+)

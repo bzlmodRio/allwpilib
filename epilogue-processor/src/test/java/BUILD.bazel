@@ -4,11 +4,11 @@ wpilib_java_junit5_test(
     name = "processor-test",
     srcs = glob(["**/*.java"]),
     plugins = [
-        "//epilogue-processor:plugin",
+        "//epilogue-processor/src/main/java:plugin",
     ],
     deps = [
-        "//epilogue-processor:processor-java",
-        "//telemetry:telemetry-java",
+        "//epilogue-processor/src/main/java:processor-java",
+        "//telemetry/src/main/java:telemetry-java",
         "@maven//:com_google_testing_compile_compile_testing",
     ],
 )

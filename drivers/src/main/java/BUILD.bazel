@@ -1,0 +1,21 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+
+wpilib_java_library(
+    name = "drivers-java",
+    srcs = glob(
+        ["**/*.java"],
+    ) + ["//drivers:generated_java"],
+    generated_java_srcs = ["//drivers:generated_java"],
+    maven_artifact_name = "drivers-java",
+    maven_group_id = "org.wpilib.drivers",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//hal/src/main/java:hal-java",
+        "//telemetry/src/main/java:telemetry-java",
+        "//tunables/src/main/java:tunables-java",
+        "//wpilibj/src/main/java:wpilibj-java",
+        "//wpimath/src/main/java:wpimath-java",
+        "//wpiunits/src/main/java:wpiunits-java",
+        "//wpiutil/src/main/java:wpiutil-java",
+    ],
+)

@@ -1,0 +1,13 @@
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_java_library")
+
+wpilib_jni_java_library(
+    name = "wpiutil-java",
+    srcs = glob(["**/*.java"]),
+    maven_artifact_name = "wpiutil-java",
+    maven_group_id = "org.wpilib.wpiutil",
+    native_libs = ["//wpiutil:shared/wpiutiljni"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)

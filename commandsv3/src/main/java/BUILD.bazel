@@ -1,0 +1,24 @@
+load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+
+wpilib_java_library(
+    name = "commandsv3-java",
+    srcs = glob(["**/*.java"]) + ["//commandsv3:generated_java"],
+    exported_plugins = ["//javacPlugin/src/main/java:plugin"],
+    generated_java_srcs = ["//commandsv3:generated_java"],
+    maven_artifact_name = "commandsv3-java",
+    maven_group_id = "org.wpilib",
+    plugins = ["//javacPlugin/src/main/java:plugin"],
+    proto_srcs = ["//commandsv3:main_proto_srcs"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//hal/src/main/java:hal-java",
+        "//ntcore/src/main/java:ntcore-java",
+        "//wpiannotations/src/main/java:wpiannotations",
+        "//wpilibj/src/main/java:wpilibj-java",
+        "//wpimath/src/main/java:wpimath-java",
+        "//wpinet/src/main/java:wpinet-java",
+        "//wpiunits/src/main/java:wpiunits-java",
+        "//wpiutil/src/main/java:wpiutil-java",
+        "@maven//:us_hebi_quickbuf_quickbuf_runtime",
+    ],
+)

@@ -4,6 +4,6 @@ wpilib_java_junit5_test(
     name = "hal-java-test",
     srcs = glob(["**/*.java"]),
     deps = [
-        "//hal:hal-java",
+        "//hal/src/main/java:hal-java",
     ],
 )
