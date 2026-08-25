@@ -113,11 +113,11 @@ cc_binary(
 )
 
 filegroup(
-    name = "assets",
-    srcs = glob(["src/main/native/assets/**"]) + [
-        "src/main/native/assets",
-        "src/main/native/assets/altfieldvideo",
-        "src/main/native/assets/fieldvideo",
+    name = "asset_files",
+    srcs = glob(["assets/**"]) + [
+        "assets",
+        "assets/altfieldvideo",
+        "assets/fieldvideo",
     ],
     visibility = ["//tools/wpical:__subpackages__"],
 )

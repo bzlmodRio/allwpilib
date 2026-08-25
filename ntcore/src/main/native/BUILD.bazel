@@ -4,6 +4,8 @@ load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
 load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
 
+exports_files(["include/wpi/nt/ntcore_c.h"])
+
 filegroup(
     name = "doxygen-files",
     srcs = glob(["include/**/*"]) + ["//ntcore:generated-native-include-files"],

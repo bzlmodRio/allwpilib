@@ -29,8 +29,8 @@ wpilib_cc_library(
     deps = [
         "//datalog/src/main/native:datalog",
         "//hal/src/main/native:wpiHal",
-        "//ntcore:ntcore-headers",
         "//ntcore/src/main/native:ntcore",
+        "//ntcore/src/main/native:ntcore-headers",
         "//telemetry/src/main/native:telemetry",
         "//tunables/src/main/native:tunables",
         "//wpimath/src/main/native:wpimath",

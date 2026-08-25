@@ -179,7 +179,7 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
             "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
             "//wpinet/src/main/native:robotpy-native-wpinet.copy_headers",
             "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
-            "//xrpVendordep:robotpy-native-xrp.copy_headers",
+            "//xrpVendordep/src/main/native:robotpy-native-xrp.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
     )
@@ -193,8 +193,8 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
         deps = [
             ":xrp.tmpl_hdrs",
             ":xrp.trampoline_hdrs",
-            "//wpilibc/src/main/python:wpilib_pybind_library",
             "//wpilibc/src/main/native:wpilibc",
+            "//wpilibc/src/main/python:wpilib_pybind_library",
             "//wpimath/src/main/native:wpimath",
             "//wpimath/src/main/python:wpimath_pybind_library",
             "//xrpVendordep/src/main/native:xrpVendordep",
@@ -267,12 +267,12 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":xrp/_xrp",
             ":xrp.trampoline_hdr_files",
         ],
-        imports = [""],
+        imports = ["."],
         deps = [
             "//wpilibc/src/main/python:robotpy-wpilib",
-            "//xrpVendordep:robotpy-native-xrp",
+            "//xrpVendordep/src/main/native:robotpy-native-xrp",
         ],
-        strip_path_prefixes = ["xrpVendordep/", "xrpVendordep"],
+        strip_path_prefixes = ["xrpVendordep/src/main/python/", "xrpVendordep/src/main/python"],
         summary = "Binary wrapper for WPILib XRP Vendor library",
         project_urls = None,
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -299,7 +299,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
             "//wpinet/src/main/native:robotpy-native-wpinet.copy_headers",
             "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
-            "//xrpVendordep:robotpy-native-xrp.copy_headers",
+            "//xrpVendordep/src/main/native:robotpy-native-xrp.copy_headers",
         ],
         package_root_file = "xrp/__init__.py",
         pkgcfgs = pkgcfgs,
@@ -310,7 +310,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//xrpVendordep:robotpy-native-xrp.copy_headers",
+            "//xrpVendordep/src/main/native:robotpy-native-xrp.copy_headers",
         ],
         package_root_file = "xrp/__init__.py",
         pkgcfgs = pkgcfgs,

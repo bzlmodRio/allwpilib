@@ -1,9 +1,11 @@
+load("@rules_java//java:java_library.bzl", "java_library")
 load("//shared/bazel/rules:java_rules.bzl", "wpilib_java_library")
+load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 
 wpilib_java_library(
     name = "fields-java",
     srcs = glob(["**/*.java"]) + ["//fields:generated_java"],
-    extra_source_pkgs = ["//fields:resources"],
+    extra_source_pkgs = ["//fields/src/main/native:resources"],
     generated_java_srcs = ["//fields:generated_java"],
     maven_artifact_name = "fields-java",
     maven_group_id = "org.wpilib.fields",
@@ -11,7 +13,7 @@ wpilib_java_library(
         "//:avaje_jsonb_generator",
     ],
     resource_strip_prefix = "fields/src/main/native/resources",
-    resources = ["//fields:field-jsons"],
+    resources = ["//fields/src/main/native:field-jsons"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpimath/src/main/java:wpimath-java",
@@ -19,4 +21,20 @@ wpilib_java_library(
         "@maven//:io_avaje_avaje_json_core",
         "@maven//:io_avaje_avaje_jsonb",
     ],
+)
+
+java_library(
+    name = "field-images-java",
+    resource_strip_prefix = "fields/src/main/native/resources",
+    tags = [
+        "maven_coordinates=org.wpilib.fields:field-images-java:$(WPILIB_VERSION)",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+wpilib_maven_export(
+    name = "field-images-java_publish",
+    lib_name = "field-images-java",
+    maven_coordinates = "org.wpilib.fields:field-images-java:$(WPILIB_VERSION)",
+    visibility = ["//visibility:public"],
 )

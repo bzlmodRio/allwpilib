@@ -48,7 +48,7 @@ def generate_robotpy_native_wrapper_build_info(
     write_source_files(
         name = "{}.generate_build_info".format(name),
         files = {
-            "src/main/native/robotpy_build_info.bzl": "{}-generated_build_info.bzl".format(name),
+            "robotpy_build_info.bzl": "{}-generated_build_info.bzl".format(name),
         },
         visibility = ["//visibility:public"],
         suggested_update_target = "//:write_robotpy_generated_native_files",

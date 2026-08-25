@@ -27,7 +27,7 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
 
     resolve_casters(
         name = "wpimath_test.resolve_casters",
-        caster_deps = ["//wpimath:src/main/python/wpimath/wpimath-casters.pybind11.json", "//wpiutil:src/main/python/wpiutil/wpiutil-casters.pybind11.json"],
+        caster_deps = ["//wpimath/src/main/python:wpimath/wpimath-casters.pybind11.json", "//wpiutil/src/main/python:wpiutil/wpiutil-casters.pybind11.json"],
         casters_pkl_file = "wpimath_test.casters.pkl",
         dep_file = "wpimath_test.casters.d",
     )
@@ -77,11 +77,11 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         deps = [
             ":wpimath_test.tmpl_hdrs",
             ":wpimath_test.trampoline_hdrs",
-            "//wpimath:wpimath",
-            "//wpimath:wpimath_pybind_library",
+            "//wpimath/src/main/native:wpimath",
+            "//wpimath/src/main/python:wpimath_pybind_library",
         ],
         dynamic_deps = [
-            "//wpimath:shared/wpimath",
+            "//wpimath/src/main/native:shared/wpimath",
         ],
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,

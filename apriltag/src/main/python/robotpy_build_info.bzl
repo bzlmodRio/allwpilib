@@ -155,7 +155,7 @@ def apriltag_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         trampoline_subpath = "robotpy_apriltag",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            "//apriltag:robotpy-native-apriltag.copy_headers",
+            "//apriltag/src/main/native:robotpy-native-apriltag.copy_headers",
             "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
             "//tunables/src/main/native:robotpy-native-tunables.copy_headers",
             "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
@@ -247,13 +247,13 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":robotpy_apriltag/_apriltag",
             ":apriltag.trampoline_hdr_files",
         ],
-        imports = [""],
+        imports = ["."],
         deps = [
-            "//apriltag:robotpy-native-apriltag",
+            "//apriltag/src/main/native:robotpy-native-apriltag",
             "//wpimath/src/main/python:robotpy-wpimath",
             "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["apriltag/", "apriltag"],
+        strip_path_prefixes = ["apriltag/src/main/python/", "apriltag/src/main/python"],
         summary = "RobotPy bindings for WPILib's AprilTag library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -269,7 +269,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
-            "//apriltag:robotpy-native-apriltag.copy_headers",
+            "//apriltag/src/main/native:robotpy-native-apriltag.copy_headers",
             "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
             "//tunables/src/main/native:robotpy-native-tunables.copy_headers",
             "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
@@ -284,7 +284,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//apriltag:robotpy-native-apriltag.copy_headers",
+            "//apriltag/src/main/native:robotpy-native-apriltag.copy_headers",
         ],
         package_root_file = "robotpy_apriltag/__init__.py",
         pkgcfgs = pkgcfgs,

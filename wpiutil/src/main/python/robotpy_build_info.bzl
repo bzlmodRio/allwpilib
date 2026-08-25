@@ -160,8 +160,8 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "WPyStruct",
             yml_file = "semiwrap/WPyStruct.yml",
-            header_root = "wpiutil/wpiutil",
-            header_file = "wpiutil/wpiutil/src/wpistruct/wpystruct_fns.h",
+            header_root = "wpiutil/src/main/python/wpiutil",
+            header_file = "wpiutil/src/main/python/wpiutil/src/wpistruct/wpystruct_fns.h",
             tmpl_class_names = [],
             trampolines = [],
         ),
@@ -220,7 +220,7 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             ":wpiutil.tmpl_hdrs",
             ":wpiutil.trampoline_hdrs",
             "//wpiutil/src/main/native:wpiutil",
-            "//wpiutil:wpiutil-casters",
+            "//wpiutil/src/main/python:wpiutil-casters",
         ],
         dynamic_deps = [
             "//wpiutil/src/main/native:shared/wpiutil",
@@ -309,11 +309,11 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":wpiutil/_wpiutil",
             ":wpiutil.trampoline_hdr_files",
         ],
-        imports = [""],
+        imports = ["."],
         deps = [
             "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
-        strip_path_prefixes = ["wpiutil/", "wpiutil"],
+        strip_path_prefixes = ["wpiutil/src/main/python/", "wpiutil/src/main/python"],
         summary = "Binary wrapper for WPILib utilities library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",

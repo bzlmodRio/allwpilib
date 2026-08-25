@@ -4,7 +4,7 @@ load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_pybind
 PKG_CONFIG_DEPS = [
     "//datalog/src/main/native:native/datalog/robotpy-native-datalog.pc",
     "//datalog/src/main/python:robotpy-wpilog.generated_pkgcfg_files",
-    "//drivers:native/wpilib_drivers/robotpy-native-wpilib-drivers.pc",
+    "//drivers/src/main/native:native/wpilib_drivers/robotpy-native-wpilib-drivers.pc",
     "//hal/src/main/native:native/wpihal/robotpy-native-mrclib.pc",
     "//hal/src/main/native:native/wpihal/robotpy-native-wpihal.pc",
     "//hal/src/main/python:robotpy-hal.generated_pkgcfg_files",

@@ -1,3 +1,4 @@
+load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("//fields/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
 load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
 load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project", "package_static_cc_project")
@@ -14,16 +15,11 @@ FIELD_IMAGES = glob(
     ],
 )
 
-NO_SYSTEMCORE = select({
-    "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
-    "//conditions:default": [],
-})
-
 filegroup(
     name = "doxygen-files",
     srcs = glob([
         "include/**/*",
-    ]) + [":generated-native-include-files"],
+    ]) + ["//fields:generated-native-include-files"],
     visibility = ["//visibility:public"],
 )
 
@@ -34,17 +30,43 @@ filegroup(
 )
 
 generate_resources(
+    name = "generate-image-resources",
+    namespace = "wpi::fields",
+    prefix = "FIELD_IMAGES",
+    resource_files = FIELD_IMAGES,
+)
+
+generate_resources(
     name = "generate-resources",
     namespace = "wpi::fields",
     prefix = "FIELDS",
     resource_files = FIELD_JSONS,
 )
 
-generate_resources(
-    name = "generate-image-resources",
-    namespace = "wpi::fields",
-    prefix = "FIELD_IMAGES",
-    resource_files = FIELD_IMAGES,
+pkg_files(
+    name = "field-handwritten-srcs-pkg",
+    srcs = [
+        "cpp/Field.cpp",
+        "cpp/FieldImage.cpp",
+        "cpp/FieldTag.cpp",
+    ],
+)
+
+pkg_files(
+    name = "field-image-resource-srcs-pkg",
+    srcs = [":generate-image-resources"],
+)
+
+pkg_files(
+    name = "resources",
+    srcs = FIELD_JSONS,
+    strip_prefix = "resources/",
+    visibility = ["//fields:__subpackages__"],
+)
+
+pkg_files(
+    name = "field-resource-srcs-pkg",
+    srcs = [":generate-resources"],
 )
 
 wpilib_cc_library(
@@ -53,7 +75,7 @@ wpilib_cc_library(
         "cpp/Field.cpp",
         "cpp/FieldImage.cpp",
         "cpp/FieldTag.cpp",
-        "src/generated/main/native/cpp/fields/fields.cpp",
+        "//fields:src/generated/main/native/cpp/fields/fields.cpp",
     ],
     hdrs = glob(["include/**/*"]),
     extra_src_pkg_files = [
@@ -62,10 +84,9 @@ wpilib_cc_library(
     ],
     include_license_files = True,
     local_defines = ["WPILIB_EXPORTS"],
-    srcs_pkg_root = "src/generated/main/native/cpp/fields",
     strip_include_prefix = "include",
     third_party_header_only_libraries = [
-        ":generated_cc",
+        "//fields:generated_cc",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -88,26 +109,6 @@ wpilib_cc_shared_library(
     ],
 )
 
-wpilib_cc_library(
-    name = "fieldimages",
-    srcs = [":generate-image-resources"] + [
-        "src/generated/main/native/cpp/fieldimages/field_images.cpp",
-    ],
-    hdrs = glob(["include/**/*"]),
-    extra_src_pkg_files = [
-        ":field-image-resource-srcs-pkg",
-    ],
-    include_license_files = True,
-    local_defines = ["WPILIB_EXPORTS"],
-    srcs_pkg_root = "src/generated/main/native/cpp/fieldimages",
-    strip_include_prefix = "include",
-    target_compatible_with = NO_SYSTEMCORE,
-    visibility = ["//visibility:public"],
-    deps = [
-        "//wpiutil/src/main/native:wpiutil",
-    ],
-)
-
 wpilib_cc_static_library(
     name = "static/fields",
     static_deps = [
@@ -123,6 +124,41 @@ wpilib_cc_static_library(
     visibility = ["//visibility:public"],
     deps = [
         ":fields",
+    ],
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-fields-generator",
+    generated_include_target = "//fields:generated-native-include-files",
+    pyproject_toml = "pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-fields",
+    pyproject_toml = "pyproject.toml",
+)
+
+NO_SYSTEMCORE = select({
+    "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
+    "//conditions:default": [],
+})
+
+wpilib_cc_library(
+    name = "fieldimages",
+    srcs = [":generate-image-resources"] + [
+        "//fields:src/generated/main/native/cpp/fieldimages/field_images.cpp",
+    ],
+    hdrs = glob(["include/**/*"]),
+    extra_src_pkg_files = [
+        ":field-image-resource-srcs-pkg",
+    ],
+    include_license_files = True,
+    local_defines = ["WPILIB_EXPORTS"],
+    strip_include_prefix = "include",
+    target_compatible_with = NO_SYSTEMCORE,
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 
@@ -150,15 +186,4 @@ package_default_cc_project(
     name = "fields",
     maven_artifact_name = "fields-cpp",
     maven_group_id = "org.wpilib.fields",
-)
-
-generate_robotpy_native_wrapper_build_info(
-    name = "robotpy-native-fields-generator",
-    generated_include_target = "//fields:generated-native-include-files",
-    pyproject_toml = "pyproject.toml",
-)
-
-define_native_wrapper(
-    name = "robotpy-native-fields",
-    pyproject_toml = "pyproject.toml",
 )

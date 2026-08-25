@@ -231,7 +231,7 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         deps = header_to_dat_deps,
         local_native_libraries = [
             "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
-            "//drivers:robotpy-native-wpilib-drivers.copy_headers",
+            "//drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers",
             "//hal/src/main/native:robotpy-native-wpihal.copy_headers",
             "//ntcore/src/main/native:robotpy-native-ntcore.copy_headers",
             "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
@@ -254,8 +254,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
             ":drivers.tmpl_hdrs",
             ":drivers.trampoline_hdrs",
             "//drivers/src/main/native:drivers",
-            "//wpilibc/src/main/python:wpilib_pybind_library",
             "//wpilibc/src/main/native:wpilibc",
+            "//wpilibc/src/main/python:wpilib_pybind_library",
         ],
         dynamic_deps = [
             "//drivers/src/main/native:shared/drivers",
@@ -324,12 +324,12 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":wpilib_drivers/_drivers",
             ":drivers.trampoline_hdr_files",
         ],
-        imports = [""],
+        imports = ["."],
         deps = [
-            "//drivers:robotpy-native-wpilib-drivers",
+            "//drivers/src/main/native:robotpy-native-wpilib-drivers",
             "//wpilibc/src/main/python:robotpy-wpilib",
         ],
-        strip_path_prefixes = ["drivers/", "drivers"],
+        strip_path_prefixes = ["drivers/src/main/python/", "drivers/src/main/python"],
         summary = "RobotPy bindings for WPILib third-party drivers",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -346,7 +346,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
             "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
-            "//drivers:robotpy-native-wpilib-drivers.copy_headers",
+            "//drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers",
             "//hal/src/main/native:robotpy-native-wpihal.copy_headers",
             "//ntcore/src/main/native:robotpy-native-ntcore.copy_headers",
             "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
@@ -365,7 +365,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//drivers:robotpy-native-wpilib-drivers.copy_headers",
+            "//drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers",
         ],
         package_root_file = "wpilib_drivers/__init__.py",
         pkgcfgs = pkgcfgs,

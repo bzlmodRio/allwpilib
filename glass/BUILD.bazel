@@ -28,22 +28,22 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//fields",
-        "//fields:fieldimages",
-        "//wpigui",
-        "//wpimath",
-        "//wpiutil",
+        "//fields/src/main/native:fieldimages",
+        "//fields/src/main/native:fields",
+        "//wpigui/src/main/native:wpigui",
+        "//wpimath/src/main/native:wpimath",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 
 wpilib_cc_static_library(
     name = "static/glass",
     static_deps = [
-        "//wpigui:static/wpigui",
-        "//wpimath:static/wpimath",
-        "//wpiutil:static/wpiutil",
-        "//fields:static/fields",
-        "//fields:static/fieldimages",
+        "//wpigui/src/main/native:static/wpigui",
+        "//wpimath/src/main/native:static/wpimath",
+        "//wpiutil/src/main/native:static/wpiutil",
+        "//fields/src/main/native:static/fields",
+        "//fields/src/main/native:static/fieldimages",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -78,7 +78,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":glass",
-        "//ntcore",
+        "//ntcore/src/main/native:ntcore",
     ],
 )
 
@@ -86,7 +86,7 @@ wpilib_cc_static_library(
     name = "static/glassnt",
     static_deps = [
         ":static/glass",
-        "//ntcore:static/ntcore",
+        "//ntcore/src/main/native:static/ntcore",
     ],
     visibility = ["//visibility:public"],
     deps = [

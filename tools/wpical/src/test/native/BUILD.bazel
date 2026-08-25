@@ -7,7 +7,7 @@ cc_test(
     srcs = glob(["cpp/**"]),
     copts = copts,
     cxxopts = cxxopts,
-    data = ["//tools/wpical/src/main/native:assets"],
+    data = ["//tools/wpical/src/main/native:asset_files"],
     defines = [
         'PROJECT_ROOT_PATH=\\"tools/wpical/src/main/native/assets\\"',
         "__BAZEL__=1",

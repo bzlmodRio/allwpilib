@@ -1,11 +1,13 @@
 load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
-load("@rules_java//java:defs.bzl", "java_library")
-load("@rules_pkg//:mappings.bzl", "pkg_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//fields:generate_fields.bzl", "generate_fields")
 load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper")
-load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
+
+exports_files([
+    "src/generated/main/native/cpp/fields/fields.cpp",
+    "src/generated/main/native/cpp/fieldimages/field_images.cpp",
+])
 
 filegroup(
     name = "generated-native-include-files",
@@ -25,8 +27,8 @@ py_binary(
     name = "generate_fields_script",
     srcs = ["generate_fields.py"],
     data = [
-        ":field-jsons",
         ":templates",
+        "//fields/src/main/native:field-jsons",
     ],
     main = "generate_fields.py",
     target_compatible_with = select({
@@ -60,25 +62,6 @@ write_source_files(
     visibility = ["//visibility:public"],
 )
 
-pkg_files(
-    name = "field-resource-srcs-pkg",
-    srcs = [":generate-resources"],
-)
-
-pkg_files(
-    name = "field-handwritten-srcs-pkg",
-    srcs = [
-        "src/main/native/cpp/Field.cpp",
-        "src/main/native/cpp/FieldImage.cpp",
-        "src/main/native/cpp/FieldTag.cpp",
-    ],
-)
-
-pkg_files(
-    name = "field-image-resource-srcs-pkg",
-    srcs = [":generate-image-resources"],
-)
-
 third_party_cc_lib_helper(
     name = "generated_cc",
     include_root = "src/generated/main/native/include",
@@ -88,30 +71,6 @@ third_party_cc_lib_helper(
 filegroup(
     name = "generated_java",
     srcs = glob(["src/generated/main/java/**/*.java"]),
-    visibility = ["//fields:__subpackages__"],
-)
-
-java_library(
-    name = "field-images-java",
-    resource_strip_prefix = "fields/src/main/native/resources",
-    resources = FIELD_IMAGES,
-    tags = [
-        "maven_coordinates=org.wpilib.fields:field-images-java:$(WPILIB_VERSION)",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-wpilib_maven_export(
-    name = "field-images-java_publish",
-    lib_name = "field-images-java",
-    maven_coordinates = "org.wpilib.fields:field-images-java:$(WPILIB_VERSION)",
-    visibility = ["//visibility:public"],
-)
-
-pkg_files(
-    name = "resources",
-    srcs = FIELD_JSONS,
-    strip_prefix = "src/main/native/resources/",
     visibility = ["//fields:__subpackages__"],
 )
 

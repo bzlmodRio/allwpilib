@@ -148,7 +148,7 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         trampoline_subpath = "robotpy_fields",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            "//fields:robotpy-native-fields.copy_headers",
+            "//fields/src/main/native:robotpy-native-fields.copy_headers",
             "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
             "//tunables/src/main/native:robotpy-native-tunables.copy_headers",
             "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
@@ -240,13 +240,13 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":robotpy_fields/_fields",
             ":fields.trampoline_hdr_files",
         ],
-        imports = [""],
+        imports = ["."],
         deps = [
-            "//fields:robotpy-native-fields",
+            "//fields/src/main/native:robotpy-native-fields",
             "//wpimath/src/main/python:robotpy-wpimath",
             "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["fields/", "fields"],
+        strip_path_prefixes = ["fields/src/main/python/", "fields/src/main/python"],
         summary = "RobotPy bindings for WPILib's fields library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -262,7 +262,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
-            "//fields:robotpy-native-fields.copy_headers",
+            "//fields/src/main/native:robotpy-native-fields.copy_headers",
             "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
             "//tunables/src/main/native:robotpy-native-tunables.copy_headers",
             "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
@@ -277,7 +277,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//fields:robotpy-native-fields.copy_headers",
+            "//fields/src/main/native:robotpy-native-fields.copy_headers",
         ],
         package_root_file = "robotpy_fields/__init__.py",
         pkgcfgs = pkgcfgs,

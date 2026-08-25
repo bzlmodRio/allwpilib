@@ -72,7 +72,7 @@ cc_library(
     name = "ntcore_c_headers",
     hdrs = [
         "src/generated/main/native/include/wpi/nt/ntcore_c_types.h",
-        "src/main/native/include/wpi/nt/ntcore_c.h",
+        "//ntcore/src/main/native:include/wpi/nt/ntcore_c.h",
     ],
     includes = [
         "src/generated/main/native/include",
