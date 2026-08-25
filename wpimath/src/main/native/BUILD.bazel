@@ -1,0 +1,159 @@
+load("//shared/bazel/rules:cc_rules.bzl", "generate_def_windows", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project", "pkg_files_headers")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+load("//wpimath/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*",
+        "thirdparty/gcem/include/**/*",
+        "thirdparty/sleipnir/include/**/*",
+    ]) + ["//wpimath:generated-native-include-files"],
+    visibility = ["//visibility:public"],
+)
+
+alias(
+    name = "eigen-headers",
+    actual = "@eigen",
+    visibility = ["//visibility:public"],
+)
+
+pkg_files_headers(
+    name = "eigen-hdrs-pkg",
+    dep = "@eigen",
+)
+
+third_party_cc_lib_helper(
+    name = "gcem",
+    include_root = "thirdparty/gcem/include",
+)
+
+third_party_cc_lib_helper(
+    name = "sleipnir",
+    include_root = "thirdparty/sleipnir/include",
+    src_root = "thirdparty/sleipnir/src",
+)
+
+wpilib_cc_library(
+    name = "wpimath",
+    srcs = glob(
+        ["cpp/**"],
+        exclude = ["cpp/jni/**"],
+    ) + ["//wpimath:generated-native-cpp-srcs"],
+    hdrs = glob(["include/**"]),
+    extra_hdr_pkg_files = ["//wpimath:protobuf_hdr_pkg"],
+    extra_src_pkg_files = [
+        "//wpimath/src/main/java:wpimath-java-jni-hdrs-pkg",
+    ],
+    includes = [
+        "include",
+        "thirdparty/sleipnir/src",
+    ],
+    local_defines = [
+        "WPILIB_EXPORTS",
+        "SLEIPNIR_EXPORTS",
+    ],
+    strip_include_prefix = "include",
+    third_party_header_only_libraries = [
+        ":eigen",
+        ":gcem",
+    ],
+    third_party_libraries = [
+        ":sleipnir",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//telemetry/src/main/native:telemetry",
+        "//tunables/src/main/native:tunables",
+        "//wpimath:nanopb-generated-headers",
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+generate_def_windows(
+    name = "wpimath_def",
+    dll_name = "wpimath",
+    filters = [
+        ".pb.obj",
+        ".npb.obj",
+    ],
+    deps = [
+        ":wpimath",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpimath",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    win_def_file = ":wpimath_def",
+    deps = [
+        ":wpimath",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/wpimath",
+    static_deps = [
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpimath",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "wpimathjni",
+    srcs = glob(["cpp/jni/**"]),
+    java_dep = "//wpimath/src/main/java:wpimath-java",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpimath",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpimathjni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        ":shared/wpimath",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":wpimathjni"],
+)
+
+package_default_jni_project(
+    name = "wpimath",
+    maven_artifact_name = "wpimath-cpp",
+    maven_group_id = "org.wpilib.wpimath",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-wpimath-generator",
+    generated_include_root = "src/generated/main/native/cpp",
+    generated_include_target = "//wpimath:generated-native-include-files",
+    pyproject_toml = "pyproject.toml",
+    third_party_dirs = [
+        "gcem",
+        "sleipnir",
+    ],
+)
+
+define_native_wrapper(
+    name = "robotpy-native-wpimath",
+    pyproject_toml = "pyproject.toml",
+)

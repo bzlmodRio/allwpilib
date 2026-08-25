@@ -4,7 +4,7 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "robo
 copy_native_file(
     name = "halsim_ds_socket",
     base_path = "halsim_ds_socket/",
-    library = "//simulation/halsim_ds_socket:shared/halsim_ds_socket",
+    library = "//simulation/halsim_ds_socket/src/main/native:shared/halsim_ds_socket",
 )
 
 generate_version_file(
@@ -30,7 +30,7 @@ robotpy_library(
     strip_path_prefixes = ["simulation/halsim_ds_socket/src/main/python"],
     summary = "WPILib simulator DS Socket Extension",
     deps = [
-        "//hal:robotpy-native-wpihal",
-        "//wpinet:robotpy-native-wpinet",
+        "//hal/src/main/native:robotpy-native-wpihal",
+        "//wpinet/src/main/native:robotpy-native-wpinet",
     ],
 )

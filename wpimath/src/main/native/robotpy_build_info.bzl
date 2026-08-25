@@ -6,12 +6,12 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + ["//wpimath:generated-native-include-files"] + native.glob([
-            "src/main/native/thirdparty/gcem/include/**",
-            "src/main/native/thirdparty/sleipnir/include/**",
+        srcs = native.glob(["include/**"]) + ["//wpimath:generated-native-include-files"] + native.glob([
+            "thirdparty/gcem/include/**",
+            "thirdparty/sleipnir/include/**",
         ]),
         out = "native/wpimath/include",
-        root_paths = ["src/main/native/include/"],
+        root_paths = ["include/"],
         replace_prefixes = {
             "wpimath/src/generated/main/native/cpp": "",
             "wpimath/src/main/native/include": "",
@@ -28,9 +28,9 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//telemetry:native/telemetry/robotpy-native-telemetry.pc",
-            "//tunables:native/tunables/robotpy-native-tunables.pc",
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//telemetry/src/main/native:native/telemetry/robotpy-native-telemetry.pc",
+            "//tunables/src/main/native:native/tunables/robotpy-native-tunables.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/wpimath/robotpy-native-wpimath.pc"],
@@ -52,14 +52,14 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//telemetry:robotpy-native-telemetry",
-            "//tunables:robotpy-native-tunables",
-            "//wpiutil:robotpy-native-wpiutil",
+            "//telemetry/src/main/native:robotpy-native-telemetry",
+            "//tunables/src/main/native:robotpy-native-tunables",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
         summary = "WPILib Math Library",
         requires = ["robotpy-native-telemetry==0.0.0", "robotpy-native-tunables==0.0.0", "robotpy-native-wpiutil==0.0.0"],
         python_requires = ">=3.11",
-        strip_path_prefixes = ["wpimath"],
+        strip_path_prefixes = ["wpimath/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "wpimath = native.wpimath",

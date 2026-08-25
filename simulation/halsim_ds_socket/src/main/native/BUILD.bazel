@@ -1,0 +1,76 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+load("//shared/bazel/rules:publishing.bzl", "host_architectures")
+
+cc_library(
+    name = "headers",
+    hdrs = glob(["include/**"]),
+    includes = ["include"],
+)
+
+wpilib_cc_library(
+    name = "halsim_ds_socket",
+    srcs = glob(["cpp/**"]),
+    include_license_files = True,
+    target_compatible_with = select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":headers",
+        "//hal:wpiHalMrc",
+        "//hal/src/main/native:wpiHal",
+        "//wpinet/src/main/native:wpinet",
+    ],
+)
+
+wpilib_cc_library(
+    name = "halsim_ds_socket_static",
+    srcs = glob(["cpp/**"]),
+    copts = [
+        "-DHALSIM_InitExtension=HALSIM_InitExtension_DS_SOCKET",
+    ],
+    include_license_files = True,
+    target_compatible_with = select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":headers",
+        "//hal:wpiHalMrc",
+        "//hal/src/main/native:wpiHal",
+        "//wpinet/src/main/native:wpinet",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/halsim_ds_socket",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        "//hal/src/main/native:shared/wpiHal",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":halsim_ds_socket"],
+)
+
+wpilib_cc_static_library(
+    name = "static/halsim_ds_socket",
+    static_deps = [
+        "//hal/src/main/native:static/wpiHal",
+        "//wpinet/src/main/native:static/wpinet",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":halsim_ds_socket_static"],
+)
+
+package_default_cc_project(
+    name = "halsim_ds_socket",
+    architectures = host_architectures,
+    maven_artifact_name = "halsim_ds_socket",
+    maven_group_id = "org.wpilib.halsim",
+)

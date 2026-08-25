@@ -8,7 +8,7 @@ cc_test(
         "no-asan",
     ],
     deps = [
-        "//apriltag",
+        "//apriltag/src/main/native:apriltag",
         "//thirdparty/catch2",
     ],
 )

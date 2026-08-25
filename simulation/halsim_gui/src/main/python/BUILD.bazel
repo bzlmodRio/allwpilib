@@ -1,19 +1,19 @@
 load("//simulation/halsim_gui/src/main/python:robotpy_build_info.bzl", "define_pybind_library", "halsim_gui_ext_extension")
 
 PKG_CONFIG_DEPS = [
-    "//datalog:native/datalog/robotpy-native-datalog.pc",
+    "//datalog/src/main/native:native/datalog/robotpy-native-datalog.pc",
     "//datalog/src/main/python:robotpy-wpilog.generated_pkgcfg_files",
-    "//hal:native/wpihal/robotpy-native-mrclib.pc",
-    "//hal:native/wpihal/robotpy-native-wpihal.pc",
+    "//hal/src/main/native:native/wpihal/robotpy-native-mrclib.pc",
+    "//hal/src/main/native:native/wpihal/robotpy-native-wpihal.pc",
     "//hal/src/main/python:robotpy-hal.generated_pkgcfg_files",
-    "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+    "//ntcore/src/main/native:native/ntcore/robotpy-native-ntcore.pc",
     "//ntcore/src/main/python:pyntcore.generated_pkgcfg_files",
-    "//simulation/halsim_gui:native/halsim_gui/robotpy-native-halsim-gui.pc",
-    "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+    "//simulation/halsim_gui/src/main/native:native/halsim_gui/robotpy-native-halsim-gui.pc",
+    "//wpimath/src/main/native:native/wpimath/robotpy-native-wpimath.pc",
     "//wpimath/src/main/python:robotpy-wpimath.generated_pkgcfg_files",
-    "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
+    "//wpinet/src/main/native:native/wpinet/robotpy-native-wpinet.pc",
     "//wpinet/src/main/python:robotpy-wpinet.generated_pkgcfg_files",
-    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
     "//wpiutil/src/main/python:robotpy-wpiutil.generated_pkgcfg_files",
 ]
 

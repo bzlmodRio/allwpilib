@@ -5,7 +5,7 @@ cc_test(
     size = "small",
     srcs = glob(["cpp/**/*.cpp"]),
     deps = [
-        "//hal:wpiHal",
+        "//hal/src/main/native:wpiHal",
         "//thirdparty/catch2",
     ],
 )

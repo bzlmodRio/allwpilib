@@ -1,70 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_binary")
 load("@rules_java//java:defs.bzl", "java_binary")
 load("@rules_python//python:defs.bzl", "py_binary")
-load("//datalog:robotpy_native_build_info.bzl", "define_native_wrapper")
-load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
-load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
-load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
-load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
-
-wpilib_cc_library(
-    name = "datalog",
-    srcs = glob(
-        ["src/main/native/cpp/**"],
-        exclude = ["src/main/native/cpp/jni/**"],
-    ),
-    hdrs = glob(["src/main/native/include/**"]),
-    extra_src_pkg_files = ["//datalog/src/main/java:datalog-java-jni-hdrs-pkg"],
-    includes = [
-        "src/main/native/cpp",
-        "src/main/native/include",
-    ],
-    strip_include_prefix = "src/main/native/include",
-    visibility = ["//visibility:public"],
-    deps = [
-        "//wpiutil",
-    ],
-)
-
-wpilib_cc_shared_library(
-    name = "shared/datalog",
-    dynamic_deps = [
-        "//wpiutil:shared/wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":datalog"],
-)
-
-wpilib_cc_static_library(
-    name = "static/datalog",
-    static_deps = [
-        "//wpiutil:static/wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":datalog"],
-)
-
-wpilib_jni_cc_library(
-    name = "datalogjni",
-    srcs = glob(["src/main/native/cpp/jni/**"]),
-    java_dep = "//datalog/src/main/java:datalog-java",
-    visibility = ["//visibility:public"],
-    deps = [
-        ":datalog",
-    ],
-)
-
-wpilib_cc_shared_library(
-    name = "shared/datalogjni",
-    auto_export_windows_symbols = False,
-    dynamic_deps = [
-        ":shared/datalog",
-        "//wpiutil:shared/wpiutil",
-    ],
-    use_debug_name = False,
-    visibility = ["//visibility:public"],
-    deps = [":datalogjni"],
-)
 
 py_binary(
     name = "datalog_example",
@@ -80,8 +16,8 @@ cc_binary(
     name = "printlog",
     srcs = ["examples/printlog/printlog.cpp"],
     deps = [
-        ":datalog",
-        "//wpiutil",
+        "//datalog/src/main/native:datalog",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 
@@ -89,8 +25,8 @@ cc_binary(
     name = "writelog",
     srcs = ["examples/writelog/writelog.cpp"],
     deps = [
-        ":datalog",
-        "//wpiutil",
+        "//datalog/src/main/native:datalog",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 
@@ -101,20 +37,4 @@ java_binary(
     deps = [
         "//datalog/src/main/java:datalog-java",
     ],
-)
-
-package_default_jni_project(
-    name = "datalog",
-    maven_artifact_name = "datalog-cpp",
-    maven_group_id = "org.wpilib.datalog",
-)
-
-generate_robotpy_native_wrapper_build_info(
-    name = "robotpy-native-datalog-generator",
-    pyproject_toml = "src/main/native/pyproject.toml",
-)
-
-define_native_wrapper(
-    name = "robotpy-native-datalog",
-    pyproject_toml = "src/main/native/pyproject.toml",
 )

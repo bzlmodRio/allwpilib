@@ -1,0 +1,76 @@
+load("//drivers/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob(["include/**/*"]) + ["//drivers:generated-native-include-files"],
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
+    name = "drivers",
+    srcs = glob(["cpp/**"]),
+    hdrs = glob(["include/**"]),
+    includes = ["include"],
+    strip_include_prefix = "include",
+    third_party_libraries = [
+        "//drivers:generated_cc",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpilibc/src/main/native:wpilibc",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/drivers",
+    dynamic_deps = [
+        "//datalog/src/main/native:shared/datalog",
+        "//hal/src/main/native:shared/wpiHal",
+        "//ntcore/src/main/native:shared/ntcore",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpilibc/src/main/native:shared/wpilibc",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":drivers"],
+)
+
+wpilib_cc_static_library(
+    name = "static/drivers",
+    static_deps = [
+        "//datalog/src/main/native:static/datalog",
+        "//hal/src/main/native:static/wpiHal",
+        "//ntcore/src/main/native:static/ntcore",
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpilibc/src/main/native:static/wpilibc",
+        "//wpimath/src/main/native:static/wpimath",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":drivers"],
+)
+
+package_default_cc_project(
+    name = "drivers",
+    maven_artifact_name = "drivers-cpp",
+    maven_group_id = "org.wpilib.drivers",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-wpilib-drivers-generator",
+    generated_include_target = "//drivers:generated-native-include-files",
+    pyproject_toml = "pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-wpilib-drivers",
+    pyproject_toml = "pyproject.toml",
+)

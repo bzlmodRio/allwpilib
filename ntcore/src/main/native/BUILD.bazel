@@ -1,0 +1,102 @@
+load("//ntcore/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob(["include/**/*"]) + ["//ntcore:generated-native-include-files"],
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
+    name = "ntcore",
+    srcs = glob(
+        ["cpp/**"],
+        exclude = ["cpp/jni/**"],
+    ),
+    hdrs = glob(["include/**/*"]),
+    extra_src_pkg_files = [
+        "//ntcore/src/main/java:ntcore-java-jni-hdrs-pkg",
+    ],
+    includes = [
+        "cpp",
+        "include",
+    ],
+    strip_include_prefix = "include",
+    third_party_libraries = [
+        "//ntcore:generated_cc",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//datalog/src/main/native:datalog",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/ntcore",
+    dynamic_deps = [
+        "//datalog/src/main/native:shared/datalog",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ntcore",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/ntcore",
+    static_deps = [
+        "//datalog/src/main/native:static/datalog",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ntcore",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "ntcorejni",
+    srcs = glob(["cpp/jni/**"]) + ["//ntcore:generated_jni"],
+    java_dep = "//ntcore/src/main/java:ntcore-java",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ntcore",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/ntcorejni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        ":shared/ntcore",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":ntcorejni"],
+)
+
+package_default_jni_project(
+    name = "ntcore",
+    maven_artifact_name = "ntcore-cpp",
+    maven_group_id = "org.wpilib.ntcore",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-ntcore-generator",
+    generated_include_target = "//ntcore:generated-native-include-files",
+    pyproject_toml = "pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-ntcore",
+    pyproject_toml = "pyproject.toml",
+)

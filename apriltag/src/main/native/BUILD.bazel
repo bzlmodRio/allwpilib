@@ -1,0 +1,143 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
+load("//apriltag/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*",
+        "thirdparty/apriltag/include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+pkg_files(
+    name = "thirdparty-apriltag-src-pkg",
+    srcs = glob(["thirdparty/apriltag/include/**"]),
+    strip_prefix = "thirdparty/apriltag/include",
+)
+
+cc_library(
+    name = "thirdparty-apriltag",
+    srcs = glob(["thirdparty/apriltag/src/**"]),
+    hdrs = glob(["thirdparty/apriltag/include/**"]),
+    copts = select({
+        "@platforms//os:osx": [
+            "-Wno-format-nonliteral",
+            "-Wno-gnu-zero-variadic-macro-arguments",
+            "-Wno-uninitialized",
+            "-Wno-sign-compare",
+            "-Wno-type-limits",
+        ],
+        "@platforms//os:windows": [
+            "/wd4005",
+            "/wd4018",
+            "/wd4244",
+            "/wd4267",
+            "/wd4996",
+        ],
+        "@wpilib_toolchains//constraints/combined:is_linux": [
+            "-Wno-format-nonliteral",
+            "-Wno-maybe-uninitialized",
+            "-Wno-sign-compare",
+            "-Wno-type-limits",
+        ],
+    }),
+    includes = ["thirdparty/apriltag/include/common"],
+    strip_include_prefix = "thirdparty/apriltag/include",
+)
+
+wpilib_cc_library(
+    name = "apriltag",
+    srcs = glob(
+        ["cpp/**"],
+        exclude = ["cpp/jni/**"],
+    ),
+    hdrs = glob(["include/**/*"]),
+    extra_hdr_pkg_files = [":thirdparty-apriltag-src-pkg"],
+    extra_src_pkg_files = ["//apriltag/src/main/java:apriltag-java-jni-hdrs-pkg"],
+    local_defines = ["WPILIB_EXPORTS"],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":thirdparty-apriltag",
+        "//wpimath/src/main/native:wpimath",
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/apriltag",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":apriltag",
+        ":thirdparty-apriltag",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/apriltag",
+    static_deps = [
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpimath/src/main/native:static/wpimath",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":apriltag",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "apriltagjni",
+    srcs = glob(["cpp/jni/**"]),
+    java_dep = "//apriltag/src/main/java:apriltag-java",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":apriltag",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/apriltagjni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        ":shared/apriltag",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":apriltagjni"],
+)
+
+package_default_jni_project(
+    name = "apriltag",
+    maven_artifact_name = "apriltag-cpp",
+    maven_group_id = "org.wpilib.apriltag",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-apriltag-generator",
+    pyproject_toml = "pyproject.toml",
+    third_party_dirs = ["apriltag"],
+)
+
+define_native_wrapper(
+    name = "robotpy-native-apriltag",
+    pyproject_toml = "pyproject.toml",
+)

@@ -6,14 +6,14 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + native.glob([
-            "src/main/native/thirdparty/ada/include/**",
-            "src/main/native/thirdparty/libuv/include/**",
-            "src/main/native/thirdparty/llhttp/include/**",
-            "src/main/native/thirdparty/tcpsockets/include/**",
+        srcs = native.glob(["include/**"]) + native.glob([
+            "thirdparty/ada/include/**",
+            "thirdparty/libuv/include/**",
+            "thirdparty/llhttp/include/**",
+            "thirdparty/tcpsockets/include/**",
         ]),
         out = "native/wpinet/include",
-        root_paths = ["src/main/native/include/"],
+        root_paths = ["include/"],
         replace_prefixes = {
             "wpinet/src/main/native/include": "",
             "wpinet/src/main/native/thirdparty/ada/include": "",
@@ -31,7 +31,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/wpinet/robotpy-native-wpinet.pc"],
@@ -53,12 +53,12 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpiutil:robotpy-native-wpiutil",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
         summary = "WPILib Networking Library",
         requires = ["robotpy-native-wpiutil==0.0.0"],
         python_requires = ">=3.11",
-        strip_path_prefixes = ["wpinet"],
+        strip_path_prefixes = ["wpinet/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "wpinet = native.wpinet",

@@ -6,53 +6,53 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]),
-        out = "native/telemetry/include",
-        root_paths = ["src/main/native/include/"],
+        srcs = native.glob(["include/**"]),
+        out = "native/xrp/include",
+        root_paths = ["include/"],
         replace_prefixes = {
-            "telemetry/src/main/native/include": "",
+            "xrpVendordep/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/telemetry/_init_robotpy_native_telemetry.py"]
+    libinit_files = ["native/xrp/_init_robotpy_native_xrp.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//wpilibc/src/main/native:native/wpilib/robotpy-native-wpilib.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/telemetry/robotpy-native-telemetry.pc"],
+        pc_files = ["native/xrp/robotpy-native-xrp.pc"],
     )
 
     copy_native_file(
-        name = "telemetry",
-        library = "shared/telemetry",
-        base_path = "native/telemetry/",
+        name = "xrpVendordep",
+        library = "shared/xrpVendordep",
+        base_path = "native/xrp/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-telemetry",
+        distribution = "robotpy-native-xrp",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":telemetry.copy_lib",
+            ":xrpVendordep.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpiutil:robotpy-native-wpiutil",
+            "//wpilibc/src/main/native:robotpy-native-wpilib",
         ],
-        summary = "WPILib Telemetry Library",
-        requires = ["robotpy-native-wpiutil==0.0.0"],
-        python_requires = "",
-        strip_path_prefixes = ["telemetry"],
+        summary = "WPILib XRP vendor library",
+        requires = ["robotpy-native-wpilib==0.0.0"],
+        python_requires = ">=3.11",
+        strip_path_prefixes = ["xrpVendordep/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "telemetry = native.telemetry",
+                "xrp = native.xrp",
             ],
         },
     )

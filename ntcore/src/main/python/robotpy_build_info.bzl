@@ -73,8 +73,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "BooleanArrayTopic",
             yml_file = "semiwrap/BooleanArrayTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/BooleanArrayTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/BooleanArrayTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::BooleanArraySubscriber", "wpi__nt__BooleanArraySubscriber.hpp"),
@@ -86,8 +86,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "BooleanTopic",
             yml_file = "semiwrap/BooleanTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/BooleanTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/BooleanTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::BooleanSubscriber", "wpi__nt__BooleanSubscriber.hpp"),
@@ -99,8 +99,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DoubleArrayTopic",
             yml_file = "semiwrap/DoubleArrayTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/DoubleArrayTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/DoubleArrayTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::DoubleArraySubscriber", "wpi__nt__DoubleArraySubscriber.hpp"),
@@ -112,8 +112,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DoubleTopic",
             yml_file = "semiwrap/DoubleTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/DoubleTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/DoubleTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::DoubleSubscriber", "wpi__nt__DoubleSubscriber.hpp"),
@@ -125,8 +125,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "FloatArrayTopic",
             yml_file = "semiwrap/FloatArrayTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/FloatArrayTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/FloatArrayTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::FloatArraySubscriber", "wpi__nt__FloatArraySubscriber.hpp"),
@@ -138,8 +138,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "FloatTopic",
             yml_file = "semiwrap/FloatTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/FloatTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/FloatTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::FloatSubscriber", "wpi__nt__FloatSubscriber.hpp"),
@@ -151,8 +151,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "GenericEntry",
             yml_file = "semiwrap/GenericEntry.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/GenericEntry.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/GenericEntry.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::GenericSubscriber", "wpi__nt__GenericSubscriber.hpp"),
@@ -163,8 +163,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "IntegerArrayTopic",
             yml_file = "semiwrap/IntegerArrayTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/IntegerArrayTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/IntegerArrayTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::IntegerArraySubscriber", "wpi__nt__IntegerArraySubscriber.hpp"),
@@ -176,8 +176,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "IntegerTopic",
             yml_file = "semiwrap/IntegerTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/IntegerTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/IntegerTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::IntegerSubscriber", "wpi__nt__IntegerSubscriber.hpp"),
@@ -189,8 +189,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "MultiSubscriber",
             yml_file = "semiwrap/MultiSubscriber.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/MultiSubscriber.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/MultiSubscriber.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::MultiSubscriber", "wpi__nt__MultiSubscriber.hpp"),
@@ -199,8 +199,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NetworkTable",
             yml_file = "semiwrap/NetworkTable.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTable.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTable.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::NetworkTable", "wpi__nt__NetworkTable.hpp"),
@@ -209,8 +209,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NetworkTableEntry",
             yml_file = "semiwrap/NetworkTableEntry.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableEntry.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableEntry.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::NetworkTableEntry", "wpi__nt__NetworkTableEntry.hpp"),
@@ -219,8 +219,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NetworkTableInstance",
             yml_file = "semiwrap/NetworkTableInstance.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableInstance.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableInstance.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::NetworkTableInstance", "wpi__nt__NetworkTableInstance.hpp"),
@@ -229,8 +229,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NetworkTableListener",
             yml_file = "semiwrap/NetworkTableListener.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableListener.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableListener.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::NetworkTableListener", "wpi__nt__NetworkTableListener.hpp"),
@@ -240,16 +240,16 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "NetworkTableType",
             yml_file = "semiwrap/NetworkTableType.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableType.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableType.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
         struct(
             class_name = "NetworkTableValue",
             yml_file = "semiwrap/NetworkTableValue.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableValue.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/NetworkTableValue.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::Value", "wpi__nt__Value.hpp"),
@@ -258,8 +258,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "RawTopic",
             yml_file = "semiwrap/RawTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/RawTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/RawTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::RawSubscriber", "wpi__nt__RawSubscriber.hpp"),
@@ -271,8 +271,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "StructTopic",
             yml_file = "semiwrap/StructTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/StructTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/StructTopic.hpp",
             tmpl_class_names = [
                 ("StructTopic_tmpl1", "StructSubscriber"),
                 ("StructTopic_tmpl2", "StructPublisher"),
@@ -289,8 +289,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "StructArrayTopic",
             yml_file = "semiwrap/StructArrayTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/StructArrayTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/StructArrayTopic.hpp",
             tmpl_class_names = [
                 ("StructArrayTopic_tmpl1", "StructArraySubscriber"),
                 ("StructArrayTopic_tmpl2", "StructArrayPublisher"),
@@ -307,8 +307,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "StringArrayTopic",
             yml_file = "semiwrap/StringArrayTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/StringArrayTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/StringArrayTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::StringArraySubscriber", "wpi__nt__StringArraySubscriber.hpp"),
@@ -320,8 +320,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "StringTopic",
             yml_file = "semiwrap/StringTopic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/StringTopic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/StringTopic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::StringSubscriber", "wpi__nt__StringSubscriber.hpp"),
@@ -333,8 +333,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Topic",
             yml_file = "semiwrap/Topic.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/Topic.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/Topic.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::Topic", "wpi__nt__Topic.hpp"),
@@ -345,8 +345,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ntcore_cpp",
             yml_file = "semiwrap/ntcore_cpp.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/ntcore_cpp.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/ntcore_cpp.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::nt::EventFlags", "wpi__nt__EventFlags.hpp"),
@@ -368,8 +368,8 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "ntcore_cpp_types",
             yml_file = "semiwrap/ntcore_cpp_types.yml",
-            header_root = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)",
-            header_file = "$(execpath //ntcore:robotpy-native-ntcore.copy_headers)/wpi/nt/ntcore_cpp_types.hpp",
+            header_root = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)",
+            header_file = "$(execpath //ntcore/src/main/native:robotpy-native-ntcore.copy_headers)/wpi/nt/ntcore_cpp_types.hpp",
             tmpl_class_names = [
                 ("ntcore_cpp_types_tmpl1", "TimestampedBoolean"),
                 ("ntcore_cpp_types_tmpl2", "TimestampedInteger"),
@@ -429,10 +429,10 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         trampoline_subpath = "ntcore",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            "//datalog:robotpy-native-datalog.copy_headers",
-            "//ntcore:robotpy-native-ntcore.copy_headers",
-            "//wpinet:robotpy-native-wpinet.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
+            "//ntcore/src/main/native:robotpy-native-ntcore.copy_headers",
+            "//wpinet/src/main/native:robotpy-native-wpinet.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
     )
@@ -446,19 +446,19 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         deps = [
             ":ntcore.tmpl_hdrs",
             ":ntcore.trampoline_hdrs",
+            "//datalog/src/main/native:datalog",
             "//datalog/src/main/python:wpilog_pybind_library",
-            "//datalog:datalog",
-            "//ntcore:ntcore",
+            "//ntcore/src/main/native:ntcore",
+            "//wpinet/src/main/native:wpinet",
             "//wpinet/src/main/python:wpinet_pybind_library",
-            "//wpinet:wpinet",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
-            "//datalog:shared/datalog",
-            "//ntcore:shared/ntcore",
-            "//wpinet:shared/wpinet",
-            "//wpiutil:shared/wpiutil",
+            "//datalog/src/main/native:shared/datalog",
+            "//ntcore/src/main/native:shared/ntcore",
+            "//wpinet/src/main/native:shared/wpinet",
+            "//wpiutil/src/main/native:shared/wpiutil",
         ],
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
@@ -523,14 +523,14 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":ntcore/_ntcore",
             ":ntcore.trampoline_hdr_files",
         ],
-        imports = ["."],
+        imports = [""],
         deps = [
             "//datalog/src/main/python:robotpy-wpilog",
-            "//ntcore:robotpy-native-ntcore",
+            "//ntcore/src/main/native:robotpy-native-ntcore",
             "//wpinet/src/main/python:robotpy-wpinet",
             "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["ntcore/src/main/python/", "ntcore/src/main/python"],
+        strip_path_prefixes = ["ntcore/", "ntcore"],
         summary = "Binary wrappers for the FIRST ntcore library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -546,10 +546,10 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
-            "//datalog:robotpy-native-datalog.copy_headers",
-            "//ntcore:robotpy-native-ntcore.copy_headers",
-            "//wpinet:robotpy-native-wpinet.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
+            "//ntcore/src/main/native:robotpy-native-ntcore.copy_headers",
+            "//wpinet/src/main/native:robotpy-native-wpinet.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         package_root_file = "ntcore/__init__.py",
         pkgcfgs = pkgcfgs,
@@ -560,7 +560,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//ntcore:robotpy-native-ntcore.copy_headers",
+            "//ntcore/src/main/native:robotpy-native-ntcore.copy_headers",
         ],
         package_root_file = "ntcore/__init__.py",
         pkgcfgs = pkgcfgs,

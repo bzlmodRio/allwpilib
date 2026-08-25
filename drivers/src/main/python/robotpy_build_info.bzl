@@ -73,8 +73,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "GoBildaPinpoint",
             yml_file = "semiwrap/GoBildaPinpoint.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/odometry/GoBildaPinpoint.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/odometry/GoBildaPinpoint.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::GoBildaPinpoint", "wpi__GoBildaPinpoint.hpp"),
@@ -83,8 +83,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "Koors40",
             yml_file = "semiwrap/Koors40.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/Koors40.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/Koors40.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Koors40", "wpi__Koors40.hpp"),
@@ -93,8 +93,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "PWMSparkFlex",
             yml_file = "semiwrap/PWMSparkFlex.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMSparkFlex.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMSparkFlex.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMSparkFlex", "wpi__PWMSparkFlex.hpp"),
@@ -103,8 +103,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "PWMSparkMax",
             yml_file = "semiwrap/PWMSparkMax.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMSparkMax.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMSparkMax.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMSparkMax", "wpi__PWMSparkMax.hpp"),
@@ -113,8 +113,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "PWMTalonFX",
             yml_file = "semiwrap/PWMTalonFX.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMTalonFX.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMTalonFX.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMTalonFX", "wpi__PWMTalonFX.hpp"),
@@ -123,8 +123,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "PWMTalonSRX",
             yml_file = "semiwrap/PWMTalonSRX.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMTalonSRX.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMTalonSRX.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMTalonSRX", "wpi__PWMTalonSRX.hpp"),
@@ -133,8 +133,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "PWMVenom",
             yml_file = "semiwrap/PWMVenom.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMVenom.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMVenom.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMVenom", "wpi__PWMVenom.hpp"),
@@ -143,8 +143,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "PWMVictorSPX",
             yml_file = "semiwrap/PWMVictorSPX.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMVictorSPX.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/PWMVictorSPX.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::PWMVictorSPX", "wpi__PWMVictorSPX.hpp"),
@@ -153,8 +153,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "Spark",
             yml_file = "semiwrap/Spark.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/Spark.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/Spark.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Spark", "wpi__Spark.hpp"),
@@ -163,8 +163,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "SparkMini",
             yml_file = "semiwrap/SparkMini.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/SparkMini.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/SparkMini.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::SparkMini", "wpi__SparkMini.hpp"),
@@ -173,8 +173,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "Talon",
             yml_file = "semiwrap/Talon.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/Talon.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/Talon.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::Talon", "wpi__Talon.hpp"),
@@ -183,8 +183,8 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "VictorSP",
             yml_file = "semiwrap/VictorSP.yml",
-            header_root = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)",
-            header_file = "$(execpath //drivers:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/VictorSP.hpp",
+            header_root = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)",
+            header_file = "$(execpath //drivers/src/main/native:robotpy-native-wpilib-drivers.copy_headers)/wpi/drivers/motor/VictorSP.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::VictorSP", "wpi__VictorSP.hpp"),
@@ -230,16 +230,16 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         trampoline_subpath = "wpilib_drivers",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            "//datalog:robotpy-native-datalog.copy_headers",
+            "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
             "//drivers:robotpy-native-wpilib-drivers.copy_headers",
-            "//hal:robotpy-native-wpihal.copy_headers",
-            "//ntcore:robotpy-native-ntcore.copy_headers",
-            "//telemetry:robotpy-native-telemetry.copy_headers",
-            "//tunables:robotpy-native-tunables.copy_headers",
-            "//wpilibc:robotpy-native-wpilib.copy_headers",
-            "//wpimath:robotpy-native-wpimath.copy_headers",
-            "//wpinet:robotpy-native-wpinet.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//hal/src/main/native:robotpy-native-wpihal.copy_headers",
+            "//ntcore/src/main/native:robotpy-native-ntcore.copy_headers",
+            "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
+            "//tunables/src/main/native:robotpy-native-tunables.copy_headers",
+            "//wpilibc/src/main/native:robotpy-native-wpilib.copy_headers",
+            "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
+            "//wpinet/src/main/native:robotpy-native-wpinet.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
     )
@@ -253,13 +253,13 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         deps = [
             ":drivers.tmpl_hdrs",
             ":drivers.trampoline_hdrs",
-            "//drivers:drivers",
+            "//drivers/src/main/native:drivers",
             "//wpilibc/src/main/python:wpilib_pybind_library",
-            "//wpilibc:wpilibc",
+            "//wpilibc/src/main/native:wpilibc",
         ],
         dynamic_deps = [
-            "//drivers:shared/drivers",
-            "//wpilibc:shared/wpilibc",
+            "//drivers/src/main/native:shared/drivers",
+            "//wpilibc/src/main/native:shared/wpilibc",
         ],
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
@@ -324,12 +324,12 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":wpilib_drivers/_drivers",
             ":drivers.trampoline_hdr_files",
         ],
-        imports = ["."],
+        imports = [""],
         deps = [
             "//drivers:robotpy-native-wpilib-drivers",
             "//wpilibc/src/main/python:robotpy-wpilib",
         ],
-        strip_path_prefixes = ["drivers/src/main/python/", "drivers/src/main/python"],
+        strip_path_prefixes = ["drivers/", "drivers"],
         summary = "RobotPy bindings for WPILib third-party drivers",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -345,16 +345,16 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
-            "//datalog:robotpy-native-datalog.copy_headers",
+            "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
             "//drivers:robotpy-native-wpilib-drivers.copy_headers",
-            "//hal:robotpy-native-wpihal.copy_headers",
-            "//ntcore:robotpy-native-ntcore.copy_headers",
-            "//telemetry:robotpy-native-telemetry.copy_headers",
-            "//tunables:robotpy-native-tunables.copy_headers",
-            "//wpilibc:robotpy-native-wpilib.copy_headers",
-            "//wpimath:robotpy-native-wpimath.copy_headers",
-            "//wpinet:robotpy-native-wpinet.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//hal/src/main/native:robotpy-native-wpihal.copy_headers",
+            "//ntcore/src/main/native:robotpy-native-ntcore.copy_headers",
+            "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
+            "//tunables/src/main/native:robotpy-native-tunables.copy_headers",
+            "//wpilibc/src/main/native:robotpy-native-wpilib.copy_headers",
+            "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
+            "//wpinet/src/main/native:robotpy-native-wpinet.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         package_root_file = "wpilib_drivers/__init__.py",
         pkgcfgs = pkgcfgs,

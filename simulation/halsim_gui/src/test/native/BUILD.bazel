@@ -9,7 +9,7 @@ cc_test(
         "wpi-cpp-gui",
     ],
     deps = [
-        "//simulation/halsim_gui",
+        "//simulation/halsim_gui/src/main/native:halsim_gui",
         "//thirdparty/catch2",
     ],
 )

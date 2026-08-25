@@ -1,0 +1,93 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+load("//wpilibc/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob(["include/**/*"]) + ["//wpilibc:generated-native-include-files"],
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
+    name = "wpilibc",
+    srcs = [
+        "//wpilibc:generate-version",
+    ] + glob([
+        "cpp/**",
+    ]),
+    hdrs = glob(["include/**"]),
+    extra_src_pkg_files = [
+        "//wpilibc:generated_version_files_pkg",
+    ],
+    include_license_files = True,
+    strip_include_prefix = "include",
+    third_party_libraries = [
+        "//wpilibc:generated_cc",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//datalog/src/main/native:datalog",
+        "//hal/src/main/native:wpiHal",
+        "//ntcore:ntcore-headers",
+        "//ntcore/src/main/native:ntcore",
+        "//telemetry/src/main/native:telemetry",
+        "//tunables/src/main/native:tunables",
+        "//wpimath/src/main/native:wpimath",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpilibc",
+    dynamic_deps = [
+        "//datalog/src/main/native:shared/datalog",
+        "//hal/src/main/native:shared/wpiHal",
+        "//ntcore/src/main/native:shared/ntcore",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpilibc",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/wpilibc",
+    static_deps = [
+        "//datalog/src/main/native:static/datalog",
+        "//hal/src/main/native:static/wpiHal",
+        "//ntcore/src/main/native:static/ntcore",
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpimath/src/main/native:static/wpimath",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpilibc",
+    ],
+)
+
+package_default_cc_project(
+    name = "wpilibc",
+    maven_artifact_name = "wpilibc-cpp",
+    maven_group_id = "org.wpilib.wpilibc",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-wpilib-generator",
+    generated_include_target = "//wpilibc:generated-native-include-files",
+    pyproject_toml = "pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-wpilib",
+    pyproject_toml = "pyproject.toml",
+)

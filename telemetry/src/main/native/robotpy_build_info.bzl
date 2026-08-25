@@ -6,53 +6,53 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]),
-        out = "native/tunables/include",
-        root_paths = ["src/main/native/include/"],
+        srcs = native.glob(["include/**"]),
+        out = "native/telemetry/include",
+        root_paths = ["include/"],
         replace_prefixes = {
-            "tunables/src/main/native/include": "",
+            "telemetry/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/tunables/_init_robotpy_native_tunables.py"]
+    libinit_files = ["native/telemetry/_init_robotpy_native_telemetry.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/tunables/robotpy-native-tunables.pc"],
+        pc_files = ["native/telemetry/robotpy-native-telemetry.pc"],
     )
 
     copy_native_file(
-        name = "tunables",
-        library = "shared/tunables",
-        base_path = "native/tunables/",
+        name = "telemetry",
+        library = "shared/telemetry",
+        base_path = "native/telemetry/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-tunables",
+        distribution = "robotpy-native-telemetry",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":tunables.copy_lib",
+            ":telemetry.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpiutil:robotpy-native-wpiutil",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
-        summary = "WPILib Tunables Library",
+        summary = "WPILib Telemetry Library",
         requires = ["robotpy-native-wpiutil==0.0.0"],
         python_requires = "",
-        strip_path_prefixes = ["tunables"],
+        strip_path_prefixes = ["telemetry/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "tunables = native.tunables",
+                "telemetry = native.telemetry",
             ],
         },
     )

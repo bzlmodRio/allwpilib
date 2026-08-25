@@ -6,53 +6,53 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]),
-        out = "native/xrp/include",
-        root_paths = ["src/main/native/include/"],
+        srcs = native.glob(["include/**"]),
+        out = "native/datalog/include",
+        root_paths = ["include/"],
         replace_prefixes = {
-            "xrpVendordep/src/main/native/include": "",
+            "datalog/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/xrp/_init_robotpy_native_xrp.py"]
+    libinit_files = ["native/datalog/_init_robotpy_native_datalog.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/xrp/robotpy-native-xrp.pc"],
+        pc_files = ["native/datalog/robotpy-native-datalog.pc"],
     )
 
     copy_native_file(
-        name = "xrpVendordep",
-        library = "shared/xrpVendordep",
-        base_path = "native/xrp/",
+        name = "datalog",
+        library = "shared/datalog",
+        base_path = "native/datalog/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-xrp",
+        distribution = "robotpy-native-datalog",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":xrpVendordep.copy_lib",
+            ":datalog.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpilibc:robotpy-native-wpilib",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
-        summary = "WPILib XRP vendor library",
-        requires = ["robotpy-native-wpilib==0.0.0"],
+        summary = "WPILib Utility Library",
+        requires = ["robotpy-native-wpiutil==0.0.0"],
         python_requires = ">=3.11",
-        strip_path_prefixes = ["xrpVendordep"],
+        strip_path_prefixes = ["datalog/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "xrp = native.xrp",
+                "datalog = native.datalog",
             ],
         },
     )

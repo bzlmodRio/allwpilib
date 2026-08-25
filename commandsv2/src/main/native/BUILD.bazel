@@ -1,0 +1,64 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*",
+    ]) + ["//commandsv2:generated-native-include-files"],
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
+    name = "commandsv2",
+    srcs = glob(["cpp/**"]),
+    hdrs = glob(["include/**"]),
+    includes = ["include"],
+    strip_include_prefix = "include",
+    third_party_libraries = [
+        "//commandsv2:generated_cc",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore/src/main/native:ntcore",
+        "//telemetry",
+        "//tunables",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpinet/src/main/native:wpinet",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/commandsv2",
+    dynamic_deps = [
+        "//hal/src/main/native:shared/wpiHal",
+        "//ntcore/src/main/native:shared/ntcore",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpilibc/src/main/native:shared/wpilibc",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":commandsv2"],
+)
+
+wpilib_cc_static_library(
+    name = "static/commandsv2",
+    static_deps = [
+        "//ntcore/src/main/native:static/ntcore",
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpilibc/src/main/native:static/wpilibc",
+        "//wpinet/src/main/native:static/wpinet",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":commandsv2"],
+)
+
+package_default_cc_project(
+    name = "commandsv2",
+    maven_artifact_name = "commandsv2-cpp",
+    maven_group_id = "org.wpilib.commandsv2",
+)

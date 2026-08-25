@@ -1,0 +1,79 @@
+load("//romiVendordep/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
+    name = "romiVendordep",
+    srcs = glob([
+        "cpp/**",
+    ]),
+    hdrs = glob(["include/**"]),
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore/src/main/native:ntcore",
+        "//telemetry/src/main/native:telemetry",
+        "//tunables/src/main/native:tunables",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpinet/src/main/native:wpinet",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/romiVendordep",
+    dynamic_deps = [
+        "//hal/src/main/native:shared/wpiHal",
+        "//ntcore/src/main/native:shared/ntcore",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpilibc/src/main/native:shared/wpilibc",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":romiVendordep",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/romiVendordep",
+    static_deps = [
+        "//hal/src/main/native:static/wpiHal",
+        "//ntcore/src/main/native:static/ntcore",
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpilibc/src/main/native:static/wpilibc",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":romiVendordep",
+    ],
+)
+
+package_default_cc_project(
+    name = "romiVendordep",
+    maven_artifact_name = "romiVendordep-cpp",
+    maven_group_id = "org.wpilib.romiVendordep",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-xrp-generator",
+    pyproject_toml = "pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-romi",
+    pyproject_toml = "pyproject.toml",
+)

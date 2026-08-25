@@ -1,0 +1,227 @@
+load("@bzlmodrio-opencv//libraries/cpp/opencv:libraries.bzl", "opencv_shared_libraries")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules:objectivec_rules.bzl", "wpilib_objc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project", "package_shared_cc_project")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+WIN_SRCS = glob([
+    "windows/**/*.cpp",
+    "windows/**/*.hpp",
+])
+
+LINUX_SRCS = glob([
+    "linux/**/*.cpp",
+    "linux/**/*.hpp",
+])
+
+MAC_SRCS = glob(["osx/**/*.cpp"])
+
+filegroup(
+    name = "native-srcs",
+    srcs = select({
+        "@platforms//os:osx": MAC_SRCS,
+        "@platforms//os:windows": WIN_SRCS,
+        "@wpilib_toolchains//constraints/combined:is_linux": LINUX_SRCS,
+    }),
+)
+
+wpilib_objc_library(
+    name = "cscore-mac",
+    srcs = glob([
+        "objcpp/**/*.mm",
+        "cpp/*.hpp",
+    ]),
+    hdrs = glob([
+        "include/**/*",
+        "objcpp/**/*.hpp",
+    ]),
+    include_arc = False,
+    includes = [
+        "cpp",
+        "include",
+        "objcpp",
+    ],
+    sdk_frameworks = [
+        "CoreFoundation",
+        "AVFoundation",
+        "Foundation",
+        "CoreMedia",
+        "CoreVideo",
+        "IOKit",
+    ],
+    deps = [
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
+        "@bzlmodrio-opencv//libraries/cpp/opencv",
+    ],
+)
+
+wpilib_cc_library(
+    name = "cscore",
+    srcs = [":native-srcs"] + glob(
+        ["cpp/**"],
+        exclude = ["cpp/jni/**"],
+    ),
+    hdrs = glob(["include/**/*"]),
+    extra_src_pkg_files = [
+        "//cscore/src/main/java:cscore-java-jni-hdrs-pkg",
+    ],
+    includes = [
+        "cpp",
+        "include",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
+        "@bzlmodrio-opencv//libraries/cpp/opencv",
+    ] + select({
+        "@platforms//os:osx": [":cscore-mac"],
+        "//conditions:default": [],
+    }),
+)
+
+sdk_framework_flags = [
+    "-framework",
+    "Metal",
+    "-framework",
+    "MetalKit",
+    "-framework",
+    "Cocoa",
+    "-framework",
+    "IOKit",
+    "-framework",
+    "CoreFoundation",
+    "-framework",
+    "AVFoundation",
+    "-framework",
+    "Foundation",
+    "-framework",
+    "CoreMedia",
+    "-framework",
+    "CoreVideo",
+    "-framework",
+    "QuartzCore",
+]
+
+wpilib_cc_shared_library(
+    name = "shared/cscore",
+    additional_linker_inputs = select({
+        "@platforms//os:osx": [":cscore-mac"],
+        "//conditions:default": [],
+    }),
+    dynamic_deps = [
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ] + opencv_shared_libraries,
+    user_link_flags = select({
+        "@platforms//os:osx": [
+            "-Wl,-force_load,$(location :cscore-mac)",
+        ] + sdk_framework_flags,
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cscore",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/cscore",
+    static_deps = [
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":cscore"],
+)
+
+wpilib_jni_cc_library(
+    name = "cscorejni",
+    srcs = glob(["cpp/jni/**"]),
+    java_dep = "//cscore/src/main/java:cscore-java",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cscore",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/cscorejni",
+    dynamic_deps = [
+        ":shared/cscore",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":cscorejni"],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/cscorejnicvstatic",
+    additional_linker_inputs = select({
+        "@platforms//os:osx": [":cscore-mac"],
+        "//conditions:default": [],
+    }) + [
+        ":LinuxSymbolScript.txt",
+        ":MacSymbolScript.txt",
+    ],
+    dynamic_deps = [
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    user_link_flags = select({
+        "@platforms//os:linux": [
+            "-Wl,-soname,libcscorejnicvstatic.so",
+            "-Wl,--version-script=$(location :LinuxSymbolScript.txt)",
+        ],
+        "@platforms//os:osx": [
+            "-Wl,-install_name,libcscorejnicvstatic.so",
+            "-exported_symbols_list",
+            "$(location :MacSymbolScript.txt)",
+        ],
+        "//conditions:default": [],
+    }) + select({
+        "@platforms//os:osx": [
+            "-Wl,-force_load,$(location :cscore-mac)",
+        ] + sdk_framework_flags,
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":cscore",
+        ":cscorejni",
+    ],
+)
+
+package_default_jni_project(
+    name = "cscore",
+    maven_artifact_name = "cscore-cpp",
+    maven_group_id = "org.wpilib.cscore",
+)
+
+alias(
+    name = "cscorejnicvstatic-hdrs-zip",
+    actual = "cscore-hdrs-zip",
+)
+
+alias(
+    name = "cscorejnicvstatic-srcs-zip",
+    actual = "cscore-srcs-zip",
+)
+
+package_shared_cc_project(
+    name = "cscorejnicvstatic",
+    maven_artifact_name = "cscore-jnicvstatic",
+    maven_group_id = "org.wpilib.cscore",
+)

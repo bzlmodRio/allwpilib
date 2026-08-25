@@ -28,7 +28,7 @@ from shared.bazel.rules.robotpy.generation_utils import (
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
 
 
-NATIVE_TARGET_SUBPATH = ""
+NATIVE_TARGET_SUBPATH = "/src/main/native"
 
 PYTHON_TARGET_SUBPATH = "/src/main/python"
 PROJECT_TO_PYTHON_FILES_SUBPATH = ""

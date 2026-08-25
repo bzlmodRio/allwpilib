@@ -1,0 +1,130 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_binary_cc_project")
+load("//shared/bazel/rules/gen:gen-resources.bzl", "generate_resources")
+load("//tools/wpical:flags.bzl", "copts", "cxxopts", "linkopts")
+
+generate_resources(
+    name = "generate-resources",
+    namespace = "wpical",
+    prefix = "WPI",
+    resource_files = glob(["resources/*"]),
+)
+
+cc_library(
+    name = "headers",
+    hdrs = glob([
+        "include/**/*",
+    ]),
+    strip_include_prefix = "include",
+    deps = [
+        ":headers-libdogleg",
+        ":headers-mrcal",
+        ":headers-mrcal-generated",
+        ":headers-mrcal-java",
+    ],
+)
+
+cc_library(
+    name = "headers-libdogleg",
+    hdrs = glob([
+        "thirdparty/libdogleg/include/**/*",
+    ]),
+    strip_include_prefix = "thirdparty/libdogleg/include",
+)
+
+cc_library(
+    name = "headers-mrcal-generated",
+    hdrs = glob([
+        "thirdparty/mrcal/generated/**/*",
+    ]),
+    strip_include_prefix = "thirdparty/mrcal/generated/",
+)
+
+cc_library(
+    name = "headers-mrcal",
+    hdrs = glob([
+        "thirdparty/mrcal/include/**/*",
+    ]),
+    strip_include_prefix = "thirdparty/mrcal/include/",
+)
+
+cc_library(
+    name = "headers-mrcal-java",
+    hdrs = glob([
+        "thirdparty/mrcal_java/include/**/*",
+    ]),
+    strip_include_prefix = "thirdparty/mrcal_java/include/",
+)
+
+wpilib_cc_library(
+    name = "wpical_lib",
+    srcs = glob(
+        [
+            "cpp/**/*.cpp",
+            "thirdparty/libdogleg/src/**/*.c",
+            "thirdparty/mrcal/src/**/*.cpp",
+            "thirdparty/mrcal/src/**/*.c",
+            "thirdparty/mrcal_java/src/**/*.cpp",
+        ],
+        exclude = ["cpp/WPIcal.cpp"],
+    ) + [
+        ":generate-resources",
+        "//tools/wpical:generate-version",
+    ],
+    copts = copts,
+    cxxopts = cxxopts,
+    defines = ["OPENCV_DISABLE_EIGEN_TENSOR_SUPPORT"],
+    include_license_files = True,
+    linkopts = linkopts,
+    linkstatic = True,
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":headers",
+        "//apriltag/src/main/native:apriltag",
+        "//fields/src/main/native:fields",
+        "//shared/bazel/thirdparty/ceres",
+        "//wpigui/src/main/native:wpigui",
+        "//wpiutil/src/main/native:wpiutil",
+        "@bzlmodrio-opencv//libraries/cpp/opencv",
+    ],
+)
+
+cc_binary(
+    name = "wpical",
+    srcs = [
+        "cpp/WPIcal.cpp",
+    ],
+    copts = copts,
+    cxxopts = cxxopts,
+    linkopts = select({
+        "@platforms//os:linux": [],
+        "@platforms//os:osx": [],
+        "@platforms//os:windows": [
+            "-SUBSYSTEM:WINDOWS",
+        ],
+    }),
+    deps = [
+        ":wpical_lib",
+        "//glass",
+        "//thirdparty/imgui_suite",
+    ],
+)
+
+filegroup(
+    name = "assets",
+    srcs = glob(["src/main/native/assets/**"]) + [
+        "src/main/native/assets",
+        "src/main/native/assets/altfieldvideo",
+        "src/main/native/assets/fieldvideo",
+    ],
+    visibility = ["//tools/wpical:__subpackages__"],
+)
+
+package_binary_cc_project(
+    name = "wpical",
+    extra_files = ["//tools/wpical:licenses"],
+    maven_artifact_name = "wpical",
+    maven_group_id = "org.wpilib.tools",
+)

@@ -4,13 +4,13 @@ load("//shared/bazel/rules/robotpy:pytest_util.bzl", "robotpy_py_test")
 load("//wpimath/src/test/python:robotpy_pybind_test_info.bzl", "wpimath_test_extension", define_test_pybind_library = "define_pybind_library")
 
 TEST_PYBIND_PKGCFG_DEPS = [
-    "//telemetry:native/telemetry/robotpy-native-telemetry.pc",
+    "//telemetry/src/main/native:native/telemetry/robotpy-native-telemetry.pc",
     "//telemetry/src/main/python:robotpy-telemetry.generated_pkgcfg_files",
-    "//tunables:native/tunables/robotpy-native-tunables.pc",
+    "//tunables/src/main/native:native/tunables/robotpy-native-tunables.pc",
     "//tunables/src/main/python:robotpy-tunables.generated_pkgcfg_files",
-    "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+    "//wpimath/src/main/native:native/wpimath/robotpy-native-wpimath.pc",
     "//wpimath/src/main/python:robotpy-wpimath.generated_pkgcfg_files",
-    "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+    "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
     "//wpiutil/src/main/python:robotpy-wpiutil.generated_pkgcfg_files",
 ]
 

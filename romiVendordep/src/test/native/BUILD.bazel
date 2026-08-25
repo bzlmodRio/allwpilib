@@ -5,7 +5,7 @@ cc_test(
     size = "small",
     srcs = glob(["cpp/**"]),
     deps = [
-        "//romiVendordep",
+        "//romiVendordep/src/main/native:romiVendordep",
         "//thirdparty/catch2",
     ],
 )

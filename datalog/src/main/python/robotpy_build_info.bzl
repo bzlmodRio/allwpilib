@@ -73,8 +73,8 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DataLog",
             yml_file = "semiwrap/DataLog.yml",
-            header_root = "$(execpath //datalog:robotpy-native-datalog.copy_headers)",
-            header_file = "$(execpath //datalog:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLog.hpp",
+            header_root = "$(execpath //datalog/src/main/native:robotpy-native-datalog.copy_headers)",
+            header_file = "$(execpath //datalog/src/main/native:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLog.hpp",
             tmpl_class_names = [
                 ("DataLog_tmpl1", "StructLogEntry"),
                 ("DataLog_tmpl2", "StructArrayLogEntry"),
@@ -112,8 +112,8 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DataLogBackgroundWriter",
             yml_file = "semiwrap/DataLogBackgroundWriter.yml",
-            header_root = "$(execpath //datalog:robotpy-native-datalog.copy_headers)",
-            header_file = "$(execpath //datalog:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogBackgroundWriter.hpp",
+            header_root = "$(execpath //datalog/src/main/native:robotpy-native-datalog.copy_headers)",
+            header_file = "$(execpath //datalog/src/main/native:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogBackgroundWriter.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::log::DataLogBackgroundWriter", "wpi__log__DataLogBackgroundWriter.hpp"),
@@ -122,8 +122,8 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DataLogReader",
             yml_file = "semiwrap/DataLogReader.yml",
-            header_root = "$(execpath //datalog:robotpy-native-datalog.copy_headers)",
-            header_file = "$(execpath //datalog:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogReader.hpp",
+            header_root = "$(execpath //datalog/src/main/native:robotpy-native-datalog.copy_headers)",
+            header_file = "$(execpath //datalog/src/main/native:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogReader.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::log::StartRecordData", "wpi__log__StartRecordData.hpp"),
@@ -135,8 +135,8 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "DataLogWriter",
             yml_file = "semiwrap/DataLogWriter.yml",
-            header_root = "$(execpath //datalog:robotpy-native-datalog.copy_headers)",
-            header_file = "$(execpath //datalog:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogWriter.hpp",
+            header_root = "$(execpath //datalog/src/main/native:robotpy-native-datalog.copy_headers)",
+            header_file = "$(execpath //datalog/src/main/native:robotpy-native-datalog.copy_headers)/wpi/datalog/DataLogWriter.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::log::DataLogWriter", "wpi__log__DataLogWriter.hpp"),
@@ -182,8 +182,8 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         trampoline_subpath = "wpilog",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            "//datalog:robotpy-native-datalog.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
     )
@@ -197,13 +197,13 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         deps = [
             ":wpilog.tmpl_hdrs",
             ":wpilog.trampoline_hdrs",
-            "//datalog:datalog",
+            "//datalog/src/main/native:datalog",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
-            "//datalog:shared/datalog",
-            "//wpiutil:shared/wpiutil",
+            "//datalog/src/main/native:shared/datalog",
+            "//wpiutil/src/main/native:shared/wpiutil",
         ],
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
@@ -268,12 +268,12 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":wpilog/_wpilog",
             ":wpilog.trampoline_hdr_files",
         ],
-        imports = ["."],
+        imports = [""],
         deps = [
-            "//datalog:robotpy-native-datalog",
+            "//datalog/src/main/native:robotpy-native-datalog",
             "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["datalog/src/main/python/", "datalog/src/main/python"],
+        strip_path_prefixes = ["datalog/", "datalog"],
         summary = "Binary wrapper for WPILib logging library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -289,8 +289,8 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
-            "//datalog:robotpy-native-datalog.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         package_root_file = "wpilog/__init__.py",
         pkgcfgs = pkgcfgs,
@@ -301,7 +301,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//datalog:robotpy-native-datalog.copy_headers",
+            "//datalog/src/main/native:robotpy-native-datalog.copy_headers",
         ],
         package_root_file = "wpilog/__init__.py",
         pkgcfgs = pkgcfgs,

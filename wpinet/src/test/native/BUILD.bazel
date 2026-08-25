@@ -10,7 +10,7 @@ cc_test(
     tags = ["no-asan"],
     deps = [
         "//thirdparty/catch2",
-        "//wpinet",
+        "//wpinet/src/main/native:wpinet",
         "//wpiutil/src/test/native:wpiutil-testlib",
     ],
 )

@@ -6,6 +6,6 @@ cc_test(
     srcs = glob(["cpp/**"]),
     deps = [
         "//thirdparty/catch2",
-        "//xrpVendordep",
+        "//xrpVendordep/src/main/native:xrpVendordep",
     ],
 )

@@ -1,0 +1,80 @@
+load("//datalog/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+
+wpilib_cc_library(
+    name = "datalog",
+    srcs = glob(
+        ["cpp/**"],
+        exclude = ["cpp/jni/**"],
+    ),
+    hdrs = glob(["include/**"]),
+    extra_src_pkg_files = ["//datalog/src/main/java:datalog-java-jni-hdrs-pkg"],
+    includes = [
+        "cpp",
+        "include",
+    ],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/datalog",
+    dynamic_deps = [
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":datalog"],
+)
+
+wpilib_cc_static_library(
+    name = "static/datalog",
+    static_deps = [
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":datalog"],
+)
+
+wpilib_jni_cc_library(
+    name = "datalogjni",
+    srcs = glob(["cpp/jni/**"]),
+    java_dep = "//datalog/src/main/java:datalog-java",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":datalog",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/datalogjni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        ":shared/datalog",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":datalogjni"],
+)
+
+package_default_jni_project(
+    name = "datalog",
+    maven_artifact_name = "datalog-cpp",
+    maven_group_id = "org.wpilib.datalog",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-datalog-generator",
+    pyproject_toml = "pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-datalog",
+    pyproject_toml = "pyproject.toml",
+)

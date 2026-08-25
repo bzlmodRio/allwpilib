@@ -1,11 +1,11 @@
 load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_pybind_build_info")
 load("//wpiutil/src/main/python:robotpy_build_info.bzl", "define_pybind_library", "publish_library_casters", "wpiutil_extension")
 
-PYBIND_PKGCFG_DEPS = ["//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc"]
+PYBIND_PKGCFG_DEPS = ["//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc"]
 
 generate_robotpy_pybind_build_info(
     name = "robotpy-wpiutil-generator",
-    additional_srcs = ["wpiutil/src/wpistruct/wpystruct_fns.h"] + ["//wpiutil:robotpy-native-wpiutil.copy_headers"],
+    additional_srcs = ["wpiutil/src/wpistruct/wpystruct_fns.h"] + ["//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers"],
     package_root_file = "wpiutil/__init__.py",
     pkgcfgs = PYBIND_PKGCFG_DEPS,
     pyproject_toml = "pyproject.toml",

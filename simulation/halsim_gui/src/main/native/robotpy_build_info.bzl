@@ -6,9 +6,9 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]),
+        srcs = native.glob(["include/**"]),
         out = "native/halsim_gui/include",
-        root_paths = ["src/main/native/include/"],
+        root_paths = ["include/"],
         replace_prefixes = {
             "simulation/halsim_gui/src/main/native/include": "",
         },
@@ -22,9 +22,9 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
-            "//hal:native/wpihal/robotpy-native-wpihal.pc",
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
+            "//ntcore/src/main/native:native/ntcore/robotpy-native-ntcore.pc",
+            "//hal/src/main/native:native/wpihal/robotpy-native-wpihal.pc",
+            "//wpimath/src/main/native:native/wpimath/robotpy-native-wpimath.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/halsim_gui/robotpy-native-halsim-gui.pc"],
@@ -46,14 +46,14 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//ntcore:robotpy-native-ntcore",
-            "//hal:robotpy-native-wpihal",
-            "//wpimath:robotpy-native-wpimath",
+            "//ntcore/src/main/native:robotpy-native-ntcore",
+            "//hal/src/main/native:robotpy-native-wpihal",
+            "//wpimath/src/main/native:robotpy-native-wpimath",
         ],
         summary = "WPILib HALSim GUI native library",
         requires = ["robotpy-native-wpihal==0.0.0", "robotpy-native-wpimath==0.0.0", "robotpy-native-ntcore==0.0.0"],
         python_requires = ">=3.11",
-        strip_path_prefixes = ["simulation/halsim_gui"],
+        strip_path_prefixes = ["simulation/halsim_gui/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "halsim_gui = native.halsim_gui",

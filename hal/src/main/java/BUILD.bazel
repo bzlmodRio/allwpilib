@@ -5,7 +5,7 @@ wpilib_jni_java_library(
     srcs = glob(["**/*.java"]),
     maven_artifact_name = "hal-java",
     maven_group_id = "org.wpilib.hal",
-    native_libs = ["//hal:shared/wpiHaljni"],
+    native_libs = ["//hal/src/main/native:shared/wpiHaljni"],
     visibility = ["//visibility:public"],
     deps = [
         "//ntcore/src/main/java:ntcore-java",

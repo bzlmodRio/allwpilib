@@ -1,0 +1,74 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+load("//xrpVendordep/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
+    name = "xrpVendordep",
+    srcs = glob([
+        "cpp/**",
+    ]),
+    hdrs = glob(["include/**"]),
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore/src/main/native:ntcore",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpinet/src/main/native:wpinet",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/xrpVendordep",
+    dynamic_deps = [
+        "//hal/src/main/native:shared/wpiHal",
+        "//ntcore/src/main/native:shared/ntcore",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpilibc/src/main/native:shared/wpilibc",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":xrpVendordep"],
+)
+
+wpilib_cc_static_library(
+    name = "static/xrpVendordep",
+    static_deps = [
+        "//ntcore/src/main/native:static/ntcore",
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpilibc/src/main/native:static/wpilibc",
+        "//wpimath/src/main/native:static/wpimath",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":xrpVendordep"],
+)
+
+package_default_cc_project(
+    name = "xrpVendordep",
+    maven_artifact_name = "xrpVendordep-cpp",
+    maven_group_id = "org.wpilib.xrpVendordep",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-xrp-generator",
+    pyproject_toml = "pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-xrp",
+    pyproject_toml = "pyproject.toml",
+)

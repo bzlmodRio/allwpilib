@@ -1,0 +1,106 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+load("//shared/bazel/rules:publishing.bzl", "host_architectures")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+load("//simulation/halsim_gui/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+
+wpilib_cc_library(
+    name = "halsim_gui",
+    srcs = glob([
+        "cpp/*",
+        "include/**/*.hpp",
+    ]),
+    include_license_files = True,
+    includes = ["include"],
+    linkopts = [
+        "-lm",
+    ],
+    tags = [
+        "wpi-cpp-gui",
+    ],
+    target_compatible_with = select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//glass:glassnt",
+        "//hal/src/main/native:wpiHal",
+    ],
+)
+
+wpilib_cc_library(
+    name = "halsim_gui_static",
+    srcs = glob([
+        "cpp/*",
+        "include/**/*.hpp",
+    ]),
+    copts = [
+        "-DHALSIM_InitExtension=HALSIM_InitExtension_GUI",
+    ],
+    include_license_files = True,
+    includes = ["include"],
+    linkopts = [
+        "-lm",
+    ],
+    tags = [
+        "wpi-cpp-gui",
+    ],
+    target_compatible_with = select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//glass:glassnt",
+        "//hal/src/main/native:wpiHal",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/halsim_gui",
+    dynamic_deps = [
+        "//hal/src/main/native:shared/wpiHal",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//datalog/src/main/native:shared/datalog",
+        "//ntcore/src/main/native:shared/ntcore",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":halsim_gui",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/halsim_gui",
+    static_deps = [
+        "//hal/src/main/native:static/wpiHal",
+        "//wpimath/src/main/native:static/wpimath",
+        "//datalog/src/main/native:static/datalog",
+        "//ntcore/src/main/native:static/ntcore",
+        "//glass:static/glassnt",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":halsim_gui_static",
+    ],
+)
+
+package_default_cc_project(
+    name = "halsim_gui",
+    architectures = host_architectures,
+    maven_artifact_name = "halsim_gui",
+    maven_group_id = "org.wpilib.halsim",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-halsim-gui-generator",
+    pyproject_toml = "pyproject.toml",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-halsim-gui",
+    pyproject_toml = "pyproject.toml",
+)

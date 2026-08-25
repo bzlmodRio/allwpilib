@@ -7,8 +7,8 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//cscore",
-        "//wpiutil",
+        "//cscore/src/main/native:cscore",
+        "//wpiutil/src/main/native:wpiutil",
         "@bzlmodrio-opencv//libraries/cpp/opencv",
     ],
 )

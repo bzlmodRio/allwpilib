@@ -20,6 +20,6 @@ cc_test(
     deps = [
         ":test-headers",
         "//thirdparty/catch2",
-        "//wpilibc",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

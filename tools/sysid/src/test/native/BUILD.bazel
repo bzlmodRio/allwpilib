@@ -9,6 +9,6 @@ cc_test(
     ],
     deps = [
         "//thirdparty/catch2",
-        "//tools/sysid:sysid-lib",
+        "//tools/sysid/src/main/native:sysid-lib",
     ],
 )

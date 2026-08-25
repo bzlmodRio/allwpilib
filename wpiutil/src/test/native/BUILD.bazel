@@ -18,8 +18,8 @@ cc_test(
     deps = [
         ":wpiutil-testlib",
         "//thirdparty/catch2",
-        "//wpiutil",
         "//wpiutil:nanopb-test-headers",
+        "//wpiutil/src/main/native:wpiutil",
         "@wpilib_toolchains//jni",
     ],
 )

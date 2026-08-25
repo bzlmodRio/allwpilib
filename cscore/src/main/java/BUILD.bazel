@@ -5,7 +5,7 @@ wpilib_jni_java_library(
     srcs = glob(["**/*.java"]),
     maven_artifact_name = "cscore-java",
     maven_group_id = "org.wpilib.cscore",
-    native_libs = ["//cscore:shared/cscorejni"],
+    native_libs = ["//cscore/src/main/native:shared/cscorejni"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpiutil/src/main/java:wpiutil-java",

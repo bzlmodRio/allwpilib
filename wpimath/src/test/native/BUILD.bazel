@@ -21,6 +21,6 @@ cc_test(
     deps = [
         ":test_headers",
         "//thirdparty/catch2",
-        "//wpimath",
+        "//wpimath/src/main/native:wpimath",
     ],
 )

@@ -16,7 +16,7 @@ cc_test(
     ],
     deps = [
         ":test_headers",
-        "//simulation/halsim_ws_server",
+        "//simulation/halsim_ws_server/src/main/native:halsim_ws_server",
         "//thirdparty/catch2",
     ],
 )

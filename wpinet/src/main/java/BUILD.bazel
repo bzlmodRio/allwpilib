@@ -5,7 +5,7 @@ wpilib_jni_java_library(
     srcs = glob(["**/*.java"]),
     maven_artifact_name = "wpinet-java",
     maven_group_id = "org.wpilib.wpinet",
-    native_libs = ["//wpinet:shared/wpinetjni"],
+    native_libs = ["//wpinet/src/main/native:shared/wpinetjni"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpiutil/src/main/java:wpiutil-java",

@@ -1,0 +1,272 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
+load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+load("//wpinet/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*",
+        "thirdparty/libuv/include/**/*",
+        "thirdparty/tcpsockets/include/**/*",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "ada-headers",
+    hdrs = glob([
+        "thirdparty/ada/include/**/*.h",
+    ]),
+    includes = ["thirdparty/ada/src"],
+    strip_include_prefix = "thirdparty/ada/include",
+)
+
+cc_library(
+    name = "ada",
+    srcs = ["thirdparty/ada/src/ada.cpp"],
+    hdrs = glob([
+        "thirdparty/ada/src/**/*.cpp",
+    ]),
+    strip_include_prefix = "thirdparty/ada/src",
+    visibility = ["//wpinet:__subpackages__"],
+    deps = [":ada-headers"],
+)
+
+pkg_files(
+    name = "thirdparty-ada-hdr-pkg",
+    srcs = glob(["thirdparty/ada/include/**"]),
+    strip_prefix = "thirdparty/ada/include",
+)
+
+pkg_files(
+    name = "thirdparty-ada-src-pkg",
+    srcs = glob(["thirdparty/ada/src/**"]),
+    strip_prefix = "thirdparty/ada/src",
+)
+
+WIN_UV_SRCS = glob([
+    "thirdparty/libuv/src/win/*.cpp",
+    "thirdparty/libuv/src/win/*.h",
+])
+
+UNIX_UV_SRCS = [
+    "thirdparty/libuv/src/unix/async.cpp",
+    "thirdparty/libuv/src/unix/core.cpp",
+    "thirdparty/libuv/src/unix/dl.cpp",
+    "thirdparty/libuv/src/unix/fs.cpp",
+    "thirdparty/libuv/src/unix/getaddrinfo.cpp",
+    "thirdparty/libuv/src/unix/getnameinfo.cpp",
+    "thirdparty/libuv/src/unix/loop-watcher.cpp",
+    "thirdparty/libuv/src/unix/loop.cpp",
+    "thirdparty/libuv/src/unix/pipe.cpp",
+    "thirdparty/libuv/src/unix/poll.cpp",
+    "thirdparty/libuv/src/unix/process.cpp",
+    "thirdparty/libuv/src/unix/random-devurandom.cpp",
+    "thirdparty/libuv/src/unix/random-getentropy.cpp",
+    "thirdparty/libuv/src/unix/random-getrandom.cpp",
+    "thirdparty/libuv/src/unix/signal.cpp",
+    "thirdparty/libuv/src/unix/stream.cpp",
+    "thirdparty/libuv/src/unix/tcp.cpp",
+    "thirdparty/libuv/src/unix/thread.cpp",
+    "thirdparty/libuv/src/unix/tty.cpp",
+    "thirdparty/libuv/src/unix/udp.cpp",
+] + glob(["thirdparty/libuv/src/unix/*.h"])
+
+MAC_UV_SRCS = [
+    "thirdparty/libuv/src/unix/bsd-ifaddrs.cpp",
+    "thirdparty/libuv/src/unix/darwin.cpp",
+    "thirdparty/libuv/src/unix/darwin-proctitle.cpp",
+    "thirdparty/libuv/src/unix/fsevents.cpp",
+    "thirdparty/libuv/src/unix/kqueue.cpp",
+    "thirdparty/libuv/src/unix/proctitle.cpp",
+]
+
+LINUX_UV_SRCS = [
+    "thirdparty/libuv/src/unix/linux.cpp",
+    "thirdparty/libuv/src/unix/procfs-exepath.cpp",
+    "thirdparty/libuv/src/unix/proctitle.cpp",
+    "thirdparty/libuv/src/unix/random-sysctl-linux.cpp",
+]
+
+cc_library(
+    name = "libuv-headers",
+    hdrs = glob([
+        "thirdparty/libuv/include/**/*.h",
+    ]),
+    includes = ["thirdparty/libuv/src"],
+    strip_include_prefix = "thirdparty/libuv/include",
+)
+
+filegroup(
+    name = "libuv-srcs",
+    srcs = select({
+               "@wpilib_toolchains//constraints/combined:is_unix": UNIX_UV_SRCS,
+               "//conditions:default": [],
+           }) +
+           select({
+               "@platforms//os:osx": MAC_UV_SRCS,
+               "@platforms//os:windows": WIN_UV_SRCS,
+               "@wpilib_toolchains//constraints/combined:is_linux": LINUX_UV_SRCS,
+           }) + glob(["thirdparty/libuv/src/*"]),
+    visibility = ["//wpinet:__subpackages__"],
+)
+
+pkg_files(
+    name = "thirdparty-libuv-hdr-pkg",
+    srcs = glob(["thirdparty/libuv/include/**"]),
+    strip_prefix = "thirdparty/libuv/include",
+)
+
+pkg_files(
+    name = "thirdparty-libuv-src-pkg",
+    srcs = glob(["thirdparty/libuv/src/**"]),
+    strip_prefix = "thirdparty/libuv/src",
+)
+
+third_party_cc_lib_helper(
+    name = "llhttp",
+    include_root = "thirdparty/llhttp/include",
+    src_root = "thirdparty/llhttp/src",
+)
+
+third_party_cc_lib_helper(
+    name = "tcpsockets",
+    include_root = "thirdparty/tcpsockets/include",
+    src_root = "thirdparty/tcpsockets/cpp",
+)
+
+filegroup(
+    name = "native-srcs",
+    srcs = select({
+        "@platforms//os:osx": glob(["macOS/*"]),
+        "@platforms//os:windows": glob(["windows/*"]),
+        "@wpilib_toolchains//constraints/combined:is_linux": glob(["linux/*"]),
+    }),
+)
+
+cc_library(
+    name = "private_includes",
+    hdrs = glob([
+        "cpp/*.hpp",
+    ]),
+    strip_include_prefix = "cpp",
+)
+
+wpilib_cc_library(
+    name = "wpinet",
+    srcs = glob(
+        ["cpp/**"],
+        exclude = ["cpp/jni/**"],
+    ) + [
+        ":libuv-srcs",
+    ] + ["native-srcs"],
+    hdrs = glob(["include/**/*"]),
+    copts = select({
+        "@platforms//os:windows": [],
+        "//conditions:default": [
+            "-Wno-error=pedantic",
+            "-Wno-error=format",
+        ],
+    }),
+    extra_hdr_pkg_files = [
+        ":thirdparty-ada-hdr-pkg",
+        ":thirdparty-libuv-hdr-pkg",
+    ],
+    extra_src_pkg_files = [
+        "//wpinet/src/main/java:wpinet-java-jni-hdrs-pkg",
+    ],
+    includes = ["include"],
+    linkopts = select({
+        "@platforms//os:linux": [
+            "-Wl,--push-state,-as-needed",
+            "-ldl",
+            "-Wl,--pop-state",
+        ],
+        "//conditions:default": [],
+    }),
+    strip_include_prefix = "include",
+    third_party_libraries = [
+        ":llhttp",
+        ":tcpsockets",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":ada",
+        ":libuv-headers",
+        ":private_includes",
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpinet",
+    dynamic_deps = [
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpinet",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/wpinet",
+    static_deps = [
+        "//wpiutil/src/main/native:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpinet",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "wpinetjni",
+    srcs = glob([
+        "cpp/jni/**",
+        "cpp/**/*.hpp",
+    ]),
+    java_dep = "//wpinet/src/main/java:wpinet-java",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpinet",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpinetjni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        "//wpiutil/src/main/native:shared/wpiutil",
+        ":shared/wpinet",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":wpinetjni"],
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-wpinet-generator",
+    pyproject_toml = "pyproject.toml",
+    third_party_dirs = [
+        "ada",
+        "libuv",
+        "llhttp",
+        "tcpsockets",
+    ],
+)
+
+define_native_wrapper(
+    name = "robotpy-native-wpinet",
+    pyproject_toml = "pyproject.toml",
+)
+
+package_default_jni_project(
+    name = "wpinet",
+    maven_artifact_name = "wpinet-cpp",
+    maven_group_id = "org.wpilib.wpinet",
+)

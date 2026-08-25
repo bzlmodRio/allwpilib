@@ -6,9 +6,9 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]),
+        srcs = native.glob(["include/**"]),
         out = "native/wpihal/include",
-        root_paths = ["src/main/native/include/"],
+        root_paths = ["include/"],
         replace_prefixes = {
             "hal/src/main/native/include": "",
         },
@@ -22,8 +22,8 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//ntcore/src/main/native:native/ntcore/robotpy-native-ntcore.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/wpihal/robotpy-native-mrclib.pc", "native/wpihal/robotpy-native-wpihal.pc"],
@@ -52,13 +52,13 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//ntcore:robotpy-native-ntcore",
-            "//wpiutil:robotpy-native-wpiutil",
+            "//ntcore/src/main/native:robotpy-native-ntcore",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
         summary = "WPILib HAL implementation",
         requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-ntcore==0.0.0"],
         python_requires = ">=3.11",
-        strip_path_prefixes = ["hal"],
+        strip_path_prefixes = ["hal/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "mrclib = native.wpihal",

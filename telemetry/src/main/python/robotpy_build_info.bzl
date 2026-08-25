@@ -73,8 +73,8 @@ def telemetry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inc
         struct(
             class_name = "TelemetryEntry",
             yml_file = "semiwrap/TelemetryEntry.yml",
-            header_root = "$(execpath //telemetry:robotpy-native-telemetry.copy_headers)",
-            header_file = "$(execpath //telemetry:robotpy-native-telemetry.copy_headers)/wpi/telemetry/TelemetryEntry.hpp",
+            header_root = "$(execpath //telemetry/src/main/native:robotpy-native-telemetry.copy_headers)",
+            header_file = "$(execpath //telemetry/src/main/native:robotpy-native-telemetry.copy_headers)/wpi/telemetry/TelemetryEntry.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::telemetry::TelemetryEntry", "wpi__telemetry__TelemetryEntry.hpp"),
@@ -83,8 +83,8 @@ def telemetry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inc
         struct(
             class_name = "TelemetryBackend",
             yml_file = "semiwrap/TelemetryBackend.yml",
-            header_root = "$(execpath //telemetry:robotpy-native-telemetry.copy_headers)",
-            header_file = "$(execpath //telemetry:robotpy-native-telemetry.copy_headers)/wpi/telemetry/TelemetryBackend.hpp",
+            header_root = "$(execpath //telemetry/src/main/native:robotpy-native-telemetry.copy_headers)",
+            header_file = "$(execpath //telemetry/src/main/native:robotpy-native-telemetry.copy_headers)/wpi/telemetry/TelemetryBackend.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::telemetry::TelemetryBackend", "wpi__telemetry__TelemetryBackend.hpp"),
@@ -93,8 +93,8 @@ def telemetry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inc
         struct(
             class_name = "TelemetryLoggable",
             yml_file = "semiwrap/TelemetryLoggable.yml",
-            header_root = "$(execpath //telemetry:robotpy-native-telemetry.copy_headers)",
-            header_file = "$(execpath //telemetry:robotpy-native-telemetry.copy_headers)/wpi/telemetry/TelemetryLoggable.hpp",
+            header_root = "$(execpath //telemetry/src/main/native:robotpy-native-telemetry.copy_headers)",
+            header_file = "$(execpath //telemetry/src/main/native:robotpy-native-telemetry.copy_headers)/wpi/telemetry/TelemetryLoggable.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::telemetry::TelemetryLoggable", "wpi__telemetry__TelemetryLoggable.hpp"),
@@ -140,8 +140,8 @@ def telemetry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inc
         trampoline_subpath = "telemetry",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            "//telemetry:robotpy-native-telemetry.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
     )
@@ -155,13 +155,13 @@ def telemetry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inc
         deps = [
             ":telemetry.tmpl_hdrs",
             ":telemetry.trampoline_hdrs",
-            "//telemetry:telemetry",
+            "//telemetry/src/main/native:telemetry",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
-            "//telemetry:shared/telemetry",
-            "//wpiutil:shared/wpiutil",
+            "//telemetry/src/main/native:shared/telemetry",
+            "//wpiutil/src/main/native:shared/wpiutil",
         ],
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
@@ -226,12 +226,12 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":telemetry/_telemetry",
             ":telemetry.trampoline_hdr_files",
         ],
-        imports = ["."],
+        imports = [""],
         deps = [
-            "//telemetry:robotpy-native-telemetry",
+            "//telemetry/src/main/native:robotpy-native-telemetry",
             "//wpiutil/src/main/python:robotpy-wpiutil",
         ],
-        strip_path_prefixes = ["telemetry/src/main/python/", "telemetry/src/main/python"],
+        strip_path_prefixes = ["telemetry/", "telemetry"],
         summary = "Binary wrapper for WPILib telemetry library",
         project_urls = {"Source code": "https://github.com/robotpy/mostrobotpy"},
         author_email = "RobotPy Development Team <robotpy@googlegroups.com>",
@@ -247,8 +247,8 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
-            "//telemetry:robotpy-native-telemetry.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         package_root_file = "telemetry/__init__.py",
         pkgcfgs = pkgcfgs,
@@ -259,7 +259,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//telemetry:robotpy-native-telemetry.copy_headers",
+            "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
         ],
         package_root_file = "telemetry/__init__.py",
         pkgcfgs = pkgcfgs,

@@ -10,7 +10,7 @@ wpilib_jni_java_library(
     ],
     maven_artifact_name = "wpimath-java",
     maven_group_id = "org.wpilib.wpimath",
-    native_libs = ["//wpimath:shared/wpimathjni"],
+    native_libs = ["//wpimath/src/main/native:shared/wpimathjni"],
     plugins = [
         "//:avaje_jsonb_generator",
     ],

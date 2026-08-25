@@ -1,0 +1,162 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
+load("//hal/src/main/native:robotpy_build_info.bzl", "define_native_wrapper")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*.h",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+MRCLIB_SRCS = glob(["cpp/mrclib/**"])
+
+SYSTEMCORE_SRCS = glob(["systemcore/**"]) + MRCLIB_SRCS
+
+SIM_SRCS = glob(["sim/**"])
+
+filegroup(
+    name = "platform-srcs",
+    srcs = select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": SYSTEMCORE_SRCS,
+        "//conditions:default": SIM_SRCS,
+    }),
+)
+
+pkg_files(
+    name = "hal-sim-pkg",
+    srcs = glob(["sim/**"]),
+    strip_prefix = "",
+)
+
+pkg_files(
+    name = "hal-systemcore-pkg",
+    srcs = glob(["systemcore/**"]),
+    strip_prefix = "",
+)
+
+wpilib_cc_library(
+    name = "wpiHal",
+    srcs = [":platform-srcs"] + glob(
+        [
+            "cpp/**",
+        ],
+        exclude = [
+            "cpp/jni/**",
+            "cpp/mrclib/**",
+        ],
+    ),
+    hdrs = glob(["include/**/*"]),
+    extra_src_pkg_files = [
+        ":hal-sim-pkg",
+        ":hal-systemcore-pkg",
+        "//hal/src/main/java:hal-java-jni-hdrs-pkg",
+    ],
+    includes = ["include"],
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore/src/main/native:ntcore",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
+        "@mrclib_headers//:headers",
+    ] + select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": [
+            "//shared/bazel/thirdparty/mrclib",
+        ],
+        "//conditions:default": [
+            "//ntcore:ntcore_c_headers",
+        ],
+    }),
+)
+
+cc_library(
+    name = "wpiHalMrc",
+    srcs = MRCLIB_SRCS,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal-headers",
+        "//shared/bazel/thirdparty/mrclib",
+        "//wpiutil/src/main/native:wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpiHal",
+    dynamic_deps = [
+        "//ntcore/src/main/native:shared/ntcore",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ] + select({
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/wpiHal",
+    static_deps = [
+        "//ntcore/src/main/native:static/ntcore",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
+    ] + select({
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "wpiHaljni",
+    srcs = glob(["cpp/jni/**"]),
+    java_dep = "//hal/src/main/java:hal-java",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpiHaljni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        ":shared/wpiHal",
+        "//wpiutil/src/main/native:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHaljni",
+    ],
+)
+
+package_default_jni_project(
+    name = "wpiHal",
+    maven_artifact_name = "hal-cpp",
+    maven_group_id = "org.wpilib.hal",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-wpihal-generator",
+    pyproject_toml = "pyproject.toml",
+)
+
+# Alias to make robotpy gen simpler.
+alias(
+    name = "shared/MrcLib",
+    actual = "//shared/bazel/thirdparty/mrclib:MrcLib",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-wpihal",
+)

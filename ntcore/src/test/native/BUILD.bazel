@@ -13,7 +13,7 @@ cc_test(
         "no-tsan",
     ],
     deps = [
-        "//ntcore",
+        "//ntcore/src/main/native:ntcore",
         "//thirdparty/catch2",
         "//wpiutil/src/test/native:wpiutil-testlib",
     ],

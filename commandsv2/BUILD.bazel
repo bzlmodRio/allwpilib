@@ -2,16 +2,7 @@ load("@allwpilib_pip_deps//:requirements.bzl", "requirement")
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("@rules_python//python:defs.bzl", "py_binary")
 load("//commandsv2:generate.bzl", "generate_wpilib_new_commands")
-load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
-load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
-
-filegroup(
-    name = "doxygen-files",
-    srcs = glob([
-        "src/main/native/include/**/*",
-    ]) + ["//commandsv2:generated-native-include-files"],
-    visibility = ["//visibility:public"],
-)
+load("//shared/bazel/rules:cc_rules.bzl", "third_party_cc_lib_helper")
 
 py_binary(
     name = "generate_hids",
@@ -67,62 +58,8 @@ filegroup(
     visibility = ["//commandsv2:__subpackages__"],
 )
 
-wpilib_cc_library(
-    name = "commandsv2",
-    srcs = glob(["src/main/native/cpp/**"]),
-    hdrs = glob(["src/main/native/include/**"]),
-    includes = ["src/main/native/include"],
-    strip_include_prefix = "src/main/native/include",
-    third_party_libraries = [
-        "//commandsv2:generated_cc",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        "//ntcore",
-        "//telemetry",
-        "//tunables",
-        "//wpilibc",
-        "//wpinet",
-    ],
-)
-
-wpilib_cc_shared_library(
-    name = "shared/commandsv2",
-    dynamic_deps = [
-        "//hal:shared/wpiHal",
-        "//ntcore:shared/ntcore",
-        "//telemetry:shared/telemetry",
-        "//tunables:shared/tunables",
-        "//wpilibc:shared/wpilibc",
-        "//wpimath:shared/wpimath",
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":commandsv2"],
-)
-
-wpilib_cc_static_library(
-    name = "static/commandsv2",
-    static_deps = [
-        "//ntcore:static/ntcore",
-        "//telemetry:static/telemetry",
-        "//tunables:static/tunables",
-        "//wpilibc:static/wpilibc",
-        "//wpinet:static/wpinet",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [":commandsv2"],
-)
-
 filegroup(
     name = "test-resources",
     srcs = glob(["src/test/resources/**"]),
     visibility = ["//commandsv2:__subpackages__"],
-)
-
-package_default_cc_project(
-    name = "commandsv2",
-    maven_artifact_name = "commandsv2-cpp",
-    maven_group_id = "org.wpilib.commandsv2",
 )

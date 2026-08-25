@@ -6,9 +6,9 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + ["//ntcore:generated-native-include-files"],
+        srcs = native.glob(["include/**"]) + ["//ntcore:generated-native-include-files"],
         out = "native/ntcore/include",
-        root_paths = ["src/main/native/include/"],
+        root_paths = ["include/"],
         replace_prefixes = {
             "ntcore/src/generated/main/native/include": "",
             "ntcore/src/main/native/include": "",
@@ -23,9 +23,9 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//datalog:native/datalog/robotpy-native-datalog.pc",
-            "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//datalog/src/main/native:native/datalog/robotpy-native-datalog.pc",
+            "//wpinet/src/main/native:native/wpinet/robotpy-native-wpinet.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/ntcore/robotpy-native-ntcore.pc"],
@@ -47,14 +47,14 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//datalog:robotpy-native-datalog",
-            "//wpinet:robotpy-native-wpinet",
-            "//wpiutil:robotpy-native-wpiutil",
+            "//datalog/src/main/native:robotpy-native-datalog",
+            "//wpinet/src/main/native:robotpy-native-wpinet",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
         summary = "WPILib NetworkTables Library",
         requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-wpinet==0.0.0", "robotpy-native-datalog==0.0.0"],
         python_requires = ">=3.11",
-        strip_path_prefixes = ["ntcore"],
+        strip_path_prefixes = ["ntcore/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "ntcore = native.ntcore",

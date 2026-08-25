@@ -15,7 +15,7 @@ from shared.bazel.rules.robotpy.hatchlib_native_port.config import PcFileConfig
 from shared.bazel.rules.robotpy.hatchlib_native_port.validate import parse_input
 
 
-NATIVE_TARGET_SUBPATH = ""
+NATIVE_TARGET_SUBPATH = "/src/main/native"
 
 def main():
     parser = argparse.ArgumentParser()

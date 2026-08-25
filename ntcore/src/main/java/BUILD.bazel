@@ -6,7 +6,7 @@ wpilib_jni_java_library(
     generated_java_srcs = ["//ntcore:generated_java"],
     maven_artifact_name = "ntcore-java",
     maven_group_id = "org.wpilib.ntcore",
-    native_libs = ["//ntcore:shared/ntcorejni"],
+    native_libs = ["//ntcore/src/main/native:shared/ntcorejni"],
     visibility = ["//visibility:public"],
     deps = [
         "//datalog/src/main/java:datalog-java",
