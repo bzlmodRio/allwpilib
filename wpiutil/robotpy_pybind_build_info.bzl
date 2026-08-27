@@ -368,7 +368,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         package_root_file = "src/main/python/wpiutil/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
+        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
     )
 
     scan_headers(

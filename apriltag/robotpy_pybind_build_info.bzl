@@ -236,7 +236,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         name = "robotpy_apriltag._apriltag.make_pyi",
         package_name = "robotpy_apriltag._apriltag",
         output_files = [["robotpy_apriltag/_apriltag.pyi", "src/main/python/robotpy_apriltag/_apriltag.pyi"]],
-        module_files = [["robotpy_apriltag", "src/main/python/robotpy_apriltag/__init__.py"], ["robotpy_apriltag._init__apriltag", "src/main/python/robotpy_apriltag/_init__apriltag.py"], ["robotpy_apriltag._apriltag", "src/main/python/robotpy_apriltag/_apriltag"]],
+        module_files = [["robotpy_apriltag", "src/main/python/robotpy_apriltag/__init__.py"], ["robotpy_apriltag._apriltag", "src/main/python/robotpy_apriltag/_apriltag"], ["robotpy_apriltag._init__apriltag", "src/main/python/robotpy_apriltag/_init__apriltag.py"]],
         runner = ":{}.make_pyi_runner".format(name),
     )
 
@@ -286,7 +286,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         package_root_file = "src/main/python/robotpy_apriltag/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
+        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
     )
 
     scan_headers(

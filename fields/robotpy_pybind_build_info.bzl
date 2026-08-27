@@ -229,7 +229,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         name = "robotpy_fields._fields.make_pyi",
         package_name = "robotpy_fields._fields",
         output_files = [["robotpy_fields/_fields.pyi", "src/main/python/robotpy_fields/_fields.pyi"]],
-        module_files = [["robotpy_fields", "src/main/python/robotpy_fields/__init__.py"], ["robotpy_fields._init__fields", "src/main/python/robotpy_fields/_init__fields.py"], ["robotpy_fields._fields", "src/main/python/robotpy_fields/_fields"]],
+        module_files = [["robotpy_fields", "src/main/python/robotpy_fields/__init__.py"], ["robotpy_fields._fields", "src/main/python/robotpy_fields/_fields"], ["robotpy_fields._init__fields", "src/main/python/robotpy_fields/_init__fields.py"]],
         runner = ":{}.make_pyi_runner".format(name),
     )
 
@@ -279,7 +279,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         package_root_file = "src/main/python/robotpy_fields/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
+        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
     )
 
     scan_headers(

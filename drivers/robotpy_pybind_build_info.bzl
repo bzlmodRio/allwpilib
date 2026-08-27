@@ -313,7 +313,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         name = "wpilib_drivers._drivers.make_pyi",
         package_name = "wpilib_drivers._drivers",
         output_files = [["wpilib_drivers/_drivers.pyi", "src/main/python/wpilib_drivers/_drivers.pyi"]],
-        module_files = [["wpilib_drivers", "src/main/python/wpilib_drivers/__init__.py"], ["wpilib_drivers._init__drivers", "src/main/python/wpilib_drivers/_init__drivers.py"], ["wpilib_drivers._drivers", "src/main/python/wpilib_drivers/_drivers"]],
+        module_files = [["wpilib_drivers", "src/main/python/wpilib_drivers/__init__.py"], ["wpilib_drivers._drivers", "src/main/python/wpilib_drivers/_drivers"], ["wpilib_drivers._init__drivers", "src/main/python/wpilib_drivers/_init__drivers.py"]],
         runner = ":{}.make_pyi_runner".format(name),
     )
 
@@ -367,7 +367,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         package_root_file = "src/main/python/wpilib_drivers/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
+        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
     )
 
     scan_headers(

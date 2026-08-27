@@ -532,7 +532,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         name = "hal.simulation._simulation.make_pyi",
         package_name = "hal.simulation._simulation",
         output_files = [["hal/simulation/_simulation.pyi", "src/main/python/hal/simulation/_simulation.pyi"]],
-        module_files = [["hal.simulation", "src/main/python/hal/simulation/__init__.py"], ["hal.simulation._init__simulation", "src/main/python/hal/simulation/_init__simulation.py"], ["hal.simulation._simulation", "src/main/python/hal/simulation/_simulation"], ["hal", "src/main/python/hal/__init__.py"], ["hal._init__wpi_hal", "src/main/python/hal/_init__wpi_hal.py"], ["hal._wpi_hal", "src/main/python/hal/_wpi_hal"]],
+        module_files = [["hal", "src/main/python/hal/__init__.py"], ["hal._init__wpi_hal", "src/main/python/hal/_init__wpi_hal.py"], ["hal._wpi_hal", "src/main/python/hal/_wpi_hal"], ["hal.simulation", "src/main/python/hal/simulation/__init__.py"], ["hal.simulation._init__simulation", "src/main/python/hal/simulation/_init__simulation.py"], ["hal.simulation._simulation", "src/main/python/hal/simulation/_simulation"]],
         runner = ":{}.make_pyi_runner".format(name),
     )
 
@@ -540,7 +540,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         name = "hal._wpi_hal.make_pyi",
         package_name = "hal._wpi_hal",
         output_files = [["hal/_wpi_hal.pyi", "src/main/python/hal/_wpi_hal.pyi"]],
-        module_files = [["hal.simulation", "src/main/python/hal/simulation/__init__.py"], ["hal.simulation._init__simulation", "src/main/python/hal/simulation/_init__simulation.py"], ["hal.simulation._simulation", "src/main/python/hal/simulation/_simulation"], ["hal", "src/main/python/hal/__init__.py"], ["hal._init__wpi_hal", "src/main/python/hal/_init__wpi_hal.py"], ["hal._wpi_hal", "src/main/python/hal/_wpi_hal"]],
+        module_files = [["hal", "src/main/python/hal/__init__.py"], ["hal._init__wpi_hal", "src/main/python/hal/_init__wpi_hal.py"], ["hal._wpi_hal", "src/main/python/hal/_wpi_hal"], ["hal.simulation", "src/main/python/hal/simulation/__init__.py"], ["hal.simulation._init__simulation", "src/main/python/hal/simulation/_init__simulation.py"], ["hal.simulation._simulation", "src/main/python/hal/simulation/_simulation"]],
         runner = ":{}.make_pyi_runner".format(name),
     )
 
@@ -596,7 +596,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         package_root_file = "src/main/python/hal/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
+        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
     )
 
     scan_headers(

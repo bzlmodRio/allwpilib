@@ -3,7 +3,6 @@
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library", "robotpy_library")
 load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "resolve_casters", "run_header_gen")
-load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
 
 def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
     NAME_TRANSFORMS = [
@@ -138,7 +137,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         name = "halsim_gui._ext._halsim_gui_ext.make_pyi",
         package_name = "halsim_gui._ext._halsim_gui_ext",
         output_files = [["halsim_gui/_ext/_halsim_gui_ext.pyi", "src/main/python/halsim_gui/_ext/_halsim_gui_ext.pyi"]],
-        module_files = [["halsim_gui._ext", "src/main/python/halsim_gui/_ext/__init__.py"], ["halsim_gui._ext._init__halsim_gui_ext", "src/main/python/halsim_gui/_ext/_init__halsim_gui_ext.py"], ["halsim_gui._ext._halsim_gui_ext", "src/main/python/halsim_gui/_ext/_halsim_gui_ext"]],
+        module_files = [["halsim_gui._ext", "src/main/python/halsim_gui/_ext/__init__.py"], ["halsim_gui._ext._halsim_gui_ext", "src/main/python/halsim_gui/_ext/_halsim_gui_ext"], ["halsim_gui._ext._init__halsim_gui_ext", "src/main/python/halsim_gui/_ext/_init__halsim_gui_ext.py"]],
         runner = ":{}.make_pyi_runner".format(name),
     )
 
@@ -177,32 +176,4 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
             "pkg_config": ["halsim_gui_ext = halsim_gui._ext"],
         },
         visibility = ["//visibility:public"],
-    )
-
-    update_yaml_files(
-        name = "{}-update-yaml".format(name),
-        yaml_output_directory = "src/main/python/semiwrap",
-        extra_hdrs = extra_pybind_hdrs + [
-            "//datalog:robotpy-native-datalog.copy_headers",
-            "//hal:robotpy-native-wpihal.copy_headers",
-            "//ntcore:robotpy-native-ntcore.copy_headers",
-            "//simulation/halsim_gui:robotpy-native-halsim-gui.copy_headers",
-            "//wpimath:robotpy-native-wpimath.copy_headers",
-            "//wpinet:robotpy-native-wpinet.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
-        ],
-        package_root_file = "src/main/python/halsim_gui/_ext/__init__.py",
-        pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
-    )
-
-    scan_headers(
-        name = "{}-scan-headers".format(name),
-        extra_hdrs = extra_pybind_hdrs + [
-            "//simulation/halsim_gui:robotpy-native-halsim-gui.copy_headers",
-        ],
-        package_root_file = "src/main/python/halsim_gui/_ext/__init__.py",
-        pkgcfgs = pkgcfgs,
-        pyproject_toml = "src/main/python/pyproject.toml",
     )

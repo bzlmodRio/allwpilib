@@ -174,7 +174,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_
         package_root_file = "src/test/python/cpp/wpimath_test/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/test/python/cpp/pyproject.toml",
-        yaml_files = native.glob(["src/test/python/cpp/semiwrap/**"], allow_empty = True),
+        yaml_files = native.glob(["src/test/python/cpp/semiwrap/**"]),
     )
 
     scan_headers(
