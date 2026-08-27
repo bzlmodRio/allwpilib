@@ -13,6 +13,8 @@ def fixup_root_package_name(name):
         return "ntcore"
     if name == "halsim-ws":
         return "simulation/halsim_ws_core"
+    if name == "halsim":
+        return "simulation/halsim_gui"
     if name == "halsim_gui":
         return "simulation/halsim_gui"
     if name == "wpimath_test":
@@ -41,6 +43,8 @@ def fixup_shared_lib_name(name):
         return "xrpVendordep"
     if name == "romi":
         return "romiVendordep"
+    if name == "simulation/halsim_gui":
+        return "halsim_gui"
     return name
 
 

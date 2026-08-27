@@ -2,7 +2,7 @@
 
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "resolve_casters", "run_header_gen")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
 
 def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
@@ -218,7 +218,7 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
+def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_deps = []):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -252,6 +252,14 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
+    make_pyi(
+        name = "xrp._xrp.make_pyi",
+        package_name = "xrp._xrp",
+        output_files = [["xrp/_xrp.pyi", "src/main/python/xrp/_xrp.pyi"]],
+        module_files = [["xrp", "src/main/python/xrp/__init__.py"], ["xrp._init__xrp", "src/main/python/xrp/_init__xrp.py"], ["xrp._xrp", "src/main/python/xrp/_xrp"]],
+        runner = ":{}.make_pyi_runner".format(name),
+    )
+
     robotpy_library(
         name = name,
         distribution = "robotpy-xrp",
@@ -265,6 +273,10 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":src/main/python/xrp/_xrp",
             ":xrp.trampoline_hdr_files",
         ],
+        pyi_srcs = [
+            ":xrp._xrp.make_pyi",
+        ],
+        pyi_deps = extra_pyi_deps,
         imports = ["src/main/python"],
         deps = [
             "//wpilibc:robotpy-wpilib",
@@ -300,7 +312,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         package_root_file = "src/main/python/xrp/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
     )
 
     scan_headers(

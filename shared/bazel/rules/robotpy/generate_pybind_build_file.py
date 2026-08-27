@@ -13,7 +13,9 @@ from semiwrap.makeplan import (
     CppMacroValue,
     Entrypoint,
     ExtensionModule,
+    InputFile,
     LocalDependency,
+    OutputFile,
     makeplan,
 )
 from semiwrap.pkgconf_cache import PkgconfCache
@@ -166,6 +168,66 @@ class GenModInitHpp:
         assert 0 == len(item.args[idx:])
 
 
+class MakePyiConfig:
+    def __init__(
+        self,
+        item: BuildTarget,
+        project_dir: pathlib.Path,
+        stripped_include_prefix: str,
+    ):
+        args = item.args
+        self.package_name = args[0]
+        self.output_files = []
+
+        idx = 1
+        while args[idx] != "--":
+            output = args[idx + 1]
+            assert isinstance(output, OutputFile)
+            output_path = (
+                pathlib.PurePosixPath(stripped_include_prefix)
+                / item.install_path
+                / output.name
+            ).as_posix()
+            self.output_files.append((args[idx], output_path))
+            idx += 2
+
+        self.module_files = []
+        idx += 1
+        while idx < len(args):
+            module_name = args[idx]
+            module = args[idx + 1]
+
+            if isinstance(module, InputFile):
+                module_path = (
+                    pathlib.PurePosixPath(stripped_include_prefix) / module.path
+                )
+            elif isinstance(module, (str, pathlib.Path)):
+                source_path = pathlib.Path(module)
+                if source_path.is_absolute():
+                    source_path = source_path.relative_to(project_dir.resolve())
+                module_path = (
+                    pathlib.PurePosixPath(stripped_include_prefix) / source_path
+                )
+            elif isinstance(module, BuildTarget):
+                output = next(arg for arg in module.args if isinstance(arg, OutputFile))
+                module_path = (
+                    pathlib.PurePosixPath(stripped_include_prefix)
+                    / module.install_path
+                    / output.name
+                )
+            elif isinstance(module, ExtensionModule):
+                module_path = (
+                    pathlib.PurePosixPath(stripped_include_prefix)
+                    / module.install_path
+                    / module.package_name.rsplit(".", 1)[-1]
+                )
+            else:
+                raise TypeError(f"Unknown make-pyi module type {type(module)}")
+
+            self.module_files.append((module_name, module_path.as_posix()))
+            idx += 2
+
+
 class PublishCastersConfig:
     def __init__(self, projectcfg, item: BuildTarget):
         self.project_file = item.args[0].path
@@ -238,11 +300,12 @@ class BazelExtensionModule:
                 local_extension_dependencies.add(f"//{base_library}:{dep_name}")
             else:
                 base_library = fixup_root_package_name(dep_name.split("_")[0])
+                shared_lib_name = fixup_shared_lib_name(base_library)
                 local_extension_dependencies.add(
-                    f"//{base_library}:{fixup_shared_lib_name(base_library)}"
+                    f"//{base_library}:{shared_lib_name}"
                 )
                 dynamic_dependencies.add(
-                    f"//{base_library}:shared/{fixup_shared_lib_name(base_library)}"
+                    f"//{base_library}:shared/{shared_lib_name}"
                 )
                 if dep_name != self.name:
                     local_extension_dependencies.add(
@@ -334,6 +397,7 @@ def generate_pybind_build_file(
     # Cache built up for an extension module. Gets reset when an ExtensionModule is encountered
     additional_extension_targets: dict[str, BuildTarget] = {}
     publish_casters_targets = []
+    make_pyi_targets = []
 
     for item in plan:
         if isinstance(item, ExtensionModule):
@@ -351,13 +415,16 @@ def generate_pybind_build_file(
                 if item.command in additional_extension_targets:
                     raise RuntimeError(f"Repeated target {item.command}")
                 additional_extension_targets[item.command] = item
+            elif item.command == "make-pyi":
+                make_pyi_targets.append(
+                    MakePyiConfig(item, project_dir, stripped_include_prefix)
+                )
             elif item.command in [
                 "header2dat",
                 "dat2cpp",
                 "dat2tmplcpp",
                 "dat2tmplhpp",
                 "dat2trampoline",
-                "make-pyi",
             ]:
                 pass
             elif item.command == "publish-casters":
@@ -454,6 +521,7 @@ def generate_pybind_build_file(
                 extension_modules=extension_modules,
                 top_level_name=top_level_name,
                 publish_casters_targets=publish_casters_targets,
+                make_pyi_targets=make_pyi_targets,
                 python_deps=sorted(python_deps),
                 all_local_native_deps=all_local_native_deps,
                 stripped_include_prefix=stripped_include_prefix,

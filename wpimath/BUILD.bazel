@@ -414,6 +414,7 @@ wpimath_test_extension(
 define_test_pybind_library(
     name = "robotpy-wpimath-test",
     extra_pybind_hdrs = glob(["src/test/python/cpp/**/*.h"]),
+    extra_pyi_deps = [":robotpy-wpimath-lib"],
     pkgcfgs = [
         "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
         "//wpimath:robotpy-wpimath.generated_pkgcfg_files",

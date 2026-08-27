@@ -2,7 +2,7 @@
 
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "resolve_casters", "run_header_gen")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
 
 def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
@@ -191,7 +191,7 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         tags = ["manual", "robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
+def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_deps = []):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -225,6 +225,14 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
+    make_pyi(
+        name = "robotpy_fields._fields.make_pyi",
+        package_name = "robotpy_fields._fields",
+        output_files = [["robotpy_fields/_fields.pyi", "src/main/python/robotpy_fields/_fields.pyi"]],
+        module_files = [["robotpy_fields", "src/main/python/robotpy_fields/__init__.py"], ["robotpy_fields._init__fields", "src/main/python/robotpy_fields/_init__fields.py"], ["robotpy_fields._fields", "src/main/python/robotpy_fields/_fields"]],
+        runner = ":{}.make_pyi_runner".format(name),
+    )
+
     robotpy_library(
         name = name,
         distribution = "robotpy-fields",
@@ -238,6 +246,10 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":src/main/python/robotpy_fields/_fields",
             ":fields.trampoline_hdr_files",
         ],
+        pyi_srcs = [
+            ":robotpy_fields._fields.make_pyi",
+        ],
+        pyi_deps = extra_pyi_deps,
         imports = ["src/main/python"],
         deps = [
             "//fields:robotpy-native-fields",
@@ -267,7 +279,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         package_root_file = "src/main/python/robotpy_fields/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
     )
 
     scan_headers(

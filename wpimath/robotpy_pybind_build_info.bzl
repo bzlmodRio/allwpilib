@@ -3,7 +3,7 @@
 load("@rules_cc//cc:cc_library.bzl", "cc_library")
 load("//shared/bazel/rules/gen:gen-version-file.bzl", "generate_version_file")
 load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library", "robotpy_library")
-load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "publish_casters", "resolve_casters", "run_header_gen")
+load("//shared/bazel/rules/robotpy:semiwrap_helpers.bzl", "gen_libinit", "gen_modinit_hpp", "gen_pkgconf", "make_pyi", "publish_casters", "resolve_casters", "run_header_gen")
 load("//shared/bazel/rules/robotpy:semiwrap_tool_helpers.bzl", "scan_headers", "update_yaml_files")
 
 def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes = []):
@@ -1402,7 +1402,7 @@ def publish_library_casters():
         tags = ["robotpy"],
     )
 
-def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
+def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [], extra_pyi_deps = []):
     # Helper used to generate all files with one target.
     native.filegroup(
         name = "{}.generated_files".format(name),
@@ -1438,6 +1438,14 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         template = "//shared/bazel/rules/robotpy:version_template.in",
     )
 
+    make_pyi(
+        name = "wpimath._wpimath.make_pyi",
+        package_name = "wpimath._wpimath",
+        output_files = [["wpimath/_wpimath.pyi", "src/main/python/wpimath/_wpimath.pyi"]],
+        module_files = [["wpimath", "src/main/python/wpimath/__init__.py"], ["wpimath._init__wpimath", "src/main/python/wpimath/_init__wpimath.py"], ["wpimath._wpimath", "src/main/python/wpimath/_wpimath"]],
+        runner = ":{}.make_pyi_runner".format(name),
+    )
+
     robotpy_library(
         name = name,
         distribution = "robotpy-wpimath",
@@ -1451,6 +1459,10 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
             ":src/main/python/wpimath/_wpimath",
             ":wpimath.trampoline_hdr_files",
         ],
+        pyi_srcs = [
+            ":wpimath._wpimath.make_pyi",
+        ],
+        pyi_deps = extra_pyi_deps,
         imports = ["src/main/python"],
         deps = [
             "//wpimath:robotpy-native-wpimath",
@@ -1478,7 +1490,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         package_root_file = "src/main/python/wpimath/__init__.py",
         pkgcfgs = pkgcfgs,
         pyproject_toml = "src/main/python/pyproject.toml",
-        yaml_files = native.glob(["src/main/python/semiwrap/**"]),
+        yaml_files = native.glob(["src/main/python/semiwrap/**"], allow_empty = True),
     )
 
     scan_headers(

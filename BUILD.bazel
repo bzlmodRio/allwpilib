@@ -199,6 +199,7 @@ write_source_files(
         "//hal:robotpy-hal-generator.generate_build_info",
         "//ntcore:pyntcore-generator.generate_build_info",
         "//romiVendordep:robotpy-romi-generator.generate_build_info",
+        "//simulation/halsim_gui:robotpy-halsim-gui-generator.generate_build_info",
         "//wpilibc:robotpy-wpilib-generator.generate_build_info",
         "//wpinet:robotpy-wpinet-generator.generate_build_info",
         "//wpimath:robotpy-wpimath-generator.generate_build_info",
