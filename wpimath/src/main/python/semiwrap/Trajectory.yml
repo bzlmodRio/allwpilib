@@ -12,6 +12,7 @@ classes:
     methods:
       Trajectory:
       Duration:
+      InitialPose:
       operator==:
       Samples:
       Start:
@@ -20,6 +21,8 @@ classes:
         overloads:
           wpi::units::second_t [const]:
           double [const]:
+      RelativeSamples:
+      ConcatenateSamples:
       Interpolate:
     attributes:
       m_samples:

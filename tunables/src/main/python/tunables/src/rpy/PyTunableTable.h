@@ -18,7 +18,6 @@ class PyComplexTunableAdapter;
 
 struct TunableTableOwnerContext {
   std::weak_ptr<PyComplexTunableAdapter> owner;
-  std::string path;
 };
 
 namespace table {
@@ -167,14 +166,7 @@ std::shared_ptr<PyTunable> PublishRaw(
     bool isMutable = true, std::optional<Properties> properties = std::nullopt,
     std::string typeString = "");
 void Remove(wpi::tunables::TunableTable& table, std::string_view name);
-
-/**
- * Invalidates pending publications and callback table owners for a removed
- * path and its descendants.
- *
- * @param path normalized path being removed
- */
-void InvalidatePublications(std::string_view path);
+void InvalidatePendingPublications(std::string_view path);
 void ClearContexts();
 
 }  // namespace table

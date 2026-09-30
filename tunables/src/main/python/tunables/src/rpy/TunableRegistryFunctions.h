@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstdint>
 #include <memory>
 #include <mutex>
 #include <optional>
@@ -52,8 +51,6 @@ void RegisterBackend(std::string_view prefix,
 wpi::tunables::TunableTable GetRegistryTable(std::string_view path);
 
 std::string NormalizeName(std::string_view path);
-
-uint64_t GetTuneRevision(pybind11::handle value);
 
 void Remove(RemovableValue value);
 
