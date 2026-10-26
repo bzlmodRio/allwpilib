@@ -1,0 +1,54 @@
+
+extra_includes:
+- optional
+
+classes:
+  wpi::CameraServer:
+    force_type_casters:
+    - std::optional
+    attributes:
+      kBasePort:
+      kSize640x480:
+      kSize320x240:
+      kSize160x120:
+    methods:
+      StartAutomaticCapture:
+        overloads:
+          "":
+          int:
+          std::string_view, int:
+          std::string_view, std::string_view:
+          const cs::VideoSource&:
+      AddSwitchedCamera:
+      GetVideo:
+        overloads:
+          "":
+          const cs::VideoSource&:
+          const cs::VideoSource&, wpi::util::PixelFormat:
+          std::string_view:
+          std::string_view, wpi::util::PixelFormat:
+      PutVideo:
+      AddServer:
+        overloads:
+          std::string_view:
+          std::string_view, int:
+          const cs::VideoSink&:
+      RemoveServer:
+      GetServer:
+        overloads:
+          "":
+          std::string_view:
+      AddCamera:
+      RemoveCamera:
+      SetSize:
+    inline_code: |-
+      .def_static("wait_forever", []() {
+        auto time_module = py::module::import("time");
+        while (true) {
+          time_module.attr("sleep")(1);
+        }
+      }, py::doc("Infinitely loops until the process dies"))
+      .def_static("enable_logging", [](std::optional<int> level) {
+        auto lm = py::module::import("cscore._logging");
+        lm.attr("enable_logging")(level);
+      }, py::arg("level") = py::none(), py::doc("Enable cscore logging"))
