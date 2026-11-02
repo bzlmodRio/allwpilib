@@ -48,6 +48,18 @@ MOSTROBOTPY_PROJECTS = [
         has_tests = True,
     ),
     struct(
+        wpilib_name = "telemetry",
+        robotpy_name = "robotpy-telemetry",
+        native_robotpy_name = "robotpy-native-telemetry",
+        has_tests = True,
+    ),
+    struct(
+        wpilib_name = "tunables",
+        robotpy_name = "robotpy-tunables",
+        native_robotpy_name = "robotpy-native-tunables",
+        has_tests = True,
+    ),
+    struct(
         wpilib_name = "wpilibc",
         robotpy_name = "robotpy-wpilib",
         native_robotpy_name = "robotpy-native-wpilib",
@@ -174,7 +186,7 @@ def define_mostrobotpy_to_allwpilib():
 
         if project_info.native_robotpy_name:
             origin_files += glob([
-                "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml",
+                "subprojects/" + project_info.native_robotpy_name + "/pyproject.in.toml",
             ], exclude = EXCLUDES)
 
             rename_transforms.append(core.replace(
@@ -187,15 +199,24 @@ def define_mostrobotpy_to_allwpilib():
         destination_files += glob([
             project_info.wpilib_name + "/src/main/python/**",
             project_info.wpilib_name + "/src/test/python/**",
-        ], exclude = [project_info.wpilib_name + "/src/main/python/examples/**"])
+        ], exclude = [
+            project_info.wpilib_name + "/src/main/python/examples/**",
+            project_info.wpilib_name + "/src/test/python/BUILD.bazel",
+            project_info.wpilib_name + "/src/test/python/robotpy_pybind_test_info.bzl"
+        ])
+
 
         if project_info.has_tests:
             transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/tests", project_info.wpilib_name + "/src/test/python"))
         if project_info.native_robotpy_name:
-            transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/pyproject.toml", "subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml"))
+            # TODO(pjreiniger) Actually generate the pyproject.toml
+            transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/pyproject.in.toml", "subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml"))
         transformations.append(core.move("subprojects/" + project_info.robotpy_name, project_info.wpilib_name + "/src/main/python"))
         if project_info.native_robotpy_name:
             transformations.append(core.move("subprojects/" + project_info.native_robotpy_name + "/native-pyproject.toml", project_info.wpilib_name + "/src/main/python/native-pyproject.toml"))
+
+        # TODO(pjreiniger) Actually generate the pyproject.toml
+        transformations.append(core.move(project_info.wpilib_name + "/src/main/python/pyproject.in.toml", project_info.wpilib_name + "/src/main/python/pyproject.toml"))
 
         rename_transforms.append(core.replace(
             before = '"wpilib==${version}"',
@@ -217,6 +238,23 @@ def define_mostrobotpy_to_allwpilib():
 
         transformations = [core.transform(rename_transforms, noop_behavior = "IGNORE_NOOP", reversal = [])] + transformations
 
+    # TODO(pjreiniger) Actually generate the pyproject.toml
+    transformations.append(core.replace(
+        before = 'project.entry-points.robotpy_cli',
+        after = 'project.entry-points."robotpy_cli.2027"',
+        paths = glob(["**/*.toml"]),
+    ))
+    transformations.append(core.replace(
+        before = 'project.entry-points.robotpy_sim',
+        after = 'project.entry-points."robotpy_sim.2027"',
+        paths = glob(["**/*.toml"]),
+    ))
+    transformations.append(core.replace(
+        before = 'known_words = []',
+        after = 'known_words = ["3V3", "5V", "CAN", "CPU", "DS", "FMS", "FPGA", "HAL", "HTTP", "I2C", "IMU", "JNI", "JSON", "mDNS", "NT", "OpMode", "PCM", "PDH", "PDP", "PID", "POVs", "PWM", "RIO", "SPI", "URI", "URL", "USB", "VIn"]',
+        paths = glob(["**/*.toml"]),
+    ))
+    
     # Examples aren't as complicated
     origin_files += glob([
         "examples/robot/**",
@@ -268,13 +306,21 @@ def define_allwpilib_to_mostrobotpy():
             project_info.wpilib_name + "/src/test/python/**",
         ], exclude = [
             project_info.wpilib_name + "/src/main/python/examples/**",
+            project_info.wpilib_name + "/src/test/python/BUILD.bazel",
+            project_info.wpilib_name + "/src/test/python/robotpy_pybind_test_info.bzl",
         ])
 
         if project_info.has_tests:
             transformations.append(core.move(project_info.wpilib_name + "/src/test/python", "subprojects/" + project_info.robotpy_name + "/tests"))
         transformations.append(core.move(project_info.wpilib_name + "/src/main/python", "subprojects/" + project_info.robotpy_name))
+
+        
+        # TODO(pjreiniger) Actually generate the pyproject.toml
+        transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/pyproject.toml", "subprojects/" + project_info.robotpy_name + "/pyproject.in.toml"))
+
         if project_info.native_robotpy_name:
-            transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/native-pyproject.toml", "subprojects/" + project_info.native_robotpy_name + "/pyproject.toml"))
+            # TODO(pjreiniger) Actually generate the pyproject.toml
+            transformations.append(core.move("subprojects/" + project_info.robotpy_name + "/native-pyproject.toml", "subprojects/" + project_info.native_robotpy_name + "/pyproject.in.toml"))
 
     # Sync the commands generation scripts
     # buildifier: disable=list-append
@@ -300,6 +346,23 @@ def define_allwpilib_to_mostrobotpy():
         before = '# @pytest.mark.xfail(reason="wpilib bug")',
         after = '@pytest.mark.xfail(reason="wpilib bug")',
         paths = glob(["**/tests**/*.py"]),
+    ))
+
+    # TODO(pjreiniger) Actually generate the pyproject.toml
+    transformations.append(core.replace(
+        before = 'project.entry-points."robotpy_cli.2027"',
+        after = 'project.entry-points.robotpy_cli',
+        paths = glob(["**/*.toml"]),
+    ))
+    transformations.append(core.replace(
+        before = 'project.entry-points."robotpy_sim.2027"',
+        after = 'project.entry-points.robotpy_sim',
+        paths = glob(["**/*.toml"]),
+    ))
+    transformations.append(core.replace(
+        before = 'known_words = ["3V3", "5V", "CAN", "CPU", "DS", "FMS", "FPGA", "HAL", "HTTP", "I2C", "IMU", "JNI", "JSON", "mDNS", "NT", "OpMode", "PCM", "PDH", "PDP", "PID", "POVs", "PWM", "RIO", "SPI", "URI", "URL", "USB", "VIn"]',
+        after = 'known_words = []',
+        paths = glob(["**/*.toml"]),
     ))
 
     transformations.append(metadata.replace_message("[copybara] allwpilib to mostrobotpy"))

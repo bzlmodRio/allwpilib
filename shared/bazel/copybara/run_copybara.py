@@ -88,9 +88,9 @@ def update_mostrobotpy_rdev(
 
     artifactory_path = "https://frcmaven.wpi.edu/artifactory/"
     if is_development_build:
-        artifactory_path += "development-2027"
+        artifactory_path += "development"
     else:
-        artifactory_path += "release-2027"
+        artifactory_path += "release"
 
     contents = re.sub(
         'wpilib_bin_version = ".*"',
@@ -112,7 +112,8 @@ def update_mostrobotpy_rdev(
     with open("rdev.toml", "w") as f:
         f.write(contents)
 
-    subprocess.check_call(["./rdev.sh", "update-pyproject", "--commit"])
+    subprocess.check_call(["git", "add", "."])
+    subprocess.check_call(["git", "commit", "-m", "Updated dependencies"])
 
 
 def allwpilib_to_mostrobotpy(
