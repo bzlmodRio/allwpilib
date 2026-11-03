@@ -1,12 +1,11 @@
 import argparse
 import collections
-import json
 import pathlib
 import re
 
-import jinja2
 import tomli
 from jinja2 import BaseLoader, Environment
+from packaging.markers import Marker
 from semiwrap.makeplan import (
     BuildTarget,
     BuildTargetOutput,
@@ -24,8 +23,13 @@ from shared.bazel.rules.robotpy.generation_utils import (
     fixup_python_dep_name,
     fixup_root_package_name,
     fixup_shared_lib_name,
+    jsonify,
+    maven_dep_to_library,
+    try_tomli_lookup,
 )
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
+from shared.bazel.rules.robotpy.hatchlib_native_port.config import PcFileConfig
+from shared.bazel.rules.robotpy.hatchlib_native_port.validate import parse_input
 
 
 class HeaderToDatConfig:
@@ -311,29 +315,157 @@ class BazelExtensionModule:
         return generation_data
 
 
-def generate_pybind_build_file(
-    pkgcfgs: list[pathlib.Path],
-    project_file: pathlib.Path,
-    package_root_file: str,
-    stripped_include_prefix: str,
-    yml_prefix: str | None,
-    output_file: pathlib.Path,
-    package_name: str | None = None,
-):
-    project_dir = project_file.parent
-    plan = makeplan(project_dir)
+def get_pc_dep(library):
+    base_project = library.replace("robotpy-native-", "").replace("-", "_")
+    wpilib_project = fixup_root_package_name(base_project)
+    native_library = fixup_native_lib_name(library)
+    return f"//{wpilib_project}:native/{base_project}/{native_library}.pc"
 
-    hack_pkgconfig(pkgcfgs)
+
+def get_python_dep(library):
+    base_project = library.replace("robotpy-native-", "").replace("-", "_")
+    wpilib_project = fixup_root_package_name(base_project)
+    return (
+        f"//{fixup_root_package_name(wpilib_project)}:{fixup_python_dep_name(library)}"
+    )
+
+
+def target_from_python_dep(python_dep):
+    if "native" in python_dep:
+        base_library = python_dep.replace("robotpy-native-", "").replace("-", "_")
+        return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
+    else:
+        base_library = python_dep.replace("robotpy-", "")
+        return f"//{fixup_root_package_name(base_library)}/src/main/python"
+
+
+def strip_src_prefix(path):
+    return pathlib.PurePath(path).as_posix().removeprefix("src/")
+
+
+def native_wrapper_context(raw_config, args):
+    """
+    Template values for a library that wraps a standard allwpilib native library
+    (tool.hatch.build.hooks.nativelib)
+    """
+    nativelib_config = raw_config["tool"]["hatch"]["build"]["hooks"]["nativelib"]
+    project_name = (
+        raw_config["project"]["name"].replace("robotpy-native-", "").replace("-", "_")
+    )
+    root_package = fixup_root_package_name(project_name)
+    pc_files = []
+
+    local_pc_names = set()
+    for i, raw_pc in enumerate(nativelib_config.get("pcfile", [])):
+        pcfile = parse_input(
+            raw_pc,
+            PcFileConfig,
+            "pyproject.toml",
+            f"tool.hatch.build.hooks.nativelib.pcfile[{i}]",
+        )
+        if pcfile.enable_if and not Marker(pcfile.enable_if).evaluate():
+            continue
+        pc_files.append(pcfile)
+        local_pc_names.add(pcfile.get_pc_path().name[:-3])
+
+    requires = set()
+    for pcfile in pc_files:
+        if pcfile.requires:
+            for dep in pcfile.requires:
+                if dep not in local_pc_names:
+                    requires.add(dep)
+
+    maven_libs = []
+    for maven_dep in raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
+        "maven_lib_download"
+    ]:
+        for lib in maven_dep["libs"]:
+            maven_libs.append(
+                dict(
+                    name=lib,
+                    library=f"shared/{lib}",
+                    base_path=f"native/{project_name}/",
+                )
+            )
+
+    # label=strip_prefix pairs for header trees that live in a Bazel module
+    # rather than under thirdparty/, e.g. @libuv//:include_files=include.
+    module_include_targets = []
+    module_include_repos = set()
+    for entry in args.module_include_targets:
+        label = entry.partition("=")[0]
+        module_include_targets.append(label)
+        module_include_repos.add("*" + label.removeprefix("@").split("//")[0] + "*")
+
+    replace_prefix_keys = []
+    if args.native_srcs_root:
+        replace_prefix_keys.append(
+            args.package_name + "/" + args.native_srcs_root + "include"
+        )
+        for d in args.third_party_dirs:
+            replace_prefix_keys.append(
+                args.package_name
+                + "/"
+                + args.native_srcs_root
+                + "thirdparty/"
+                + d
+                + "/include"
+            )
+
+    if args.generated_include_target:
+        replace_prefix_keys.append(root_package + "/" + args.generated_include_root)
+    for entry in args.module_include_targets:
+        replace_prefix_keys.append(entry.partition("=")[2])
+    replace_prefix_keys.sort()
+
+    return dict(
+        macro_signature="define_native_wrapper(name, pyproject_toml = None)",
+        project_name=project_name,
+        third_party_dirs=args.third_party_dirs,
+        extra_include_root_files=args.extra_include_root_files,
+        generated_include_target=args.generated_include_target,
+        native_srcs_root=args.native_srcs_root,
+        replace_prefix_keys=replace_prefix_keys,
+        module_include_targets=module_include_targets,
+        module_include_repos=sorted(module_include_repos),
+        libinit_files=[strip_src_prefix(p.get_init_module_path()) for p in pc_files],
+        pc_files=[strip_src_prefix(p.pcfile) for p in pc_files],
+        pc_deps=[get_pc_dep(d) for d in sorted(requires)],
+        python_deps=[get_python_dep(d) for d in sorted(requires)],
+        maven_libs=maven_libs,
+        strip_path_prefixes=[root_package],
+        imports_dir=None,
+        entry_points={
+            "pkg_config": [f"{p.name} = native.{project_name}" for p in pc_files],
+        },
+    )
+
+
+def pybind_library_context(raw_config, args):
+    """
+    Template values for a python library, which may or may not have semiwrap generated
+    extension modules (tool.semiwrap)
+    """
+    stripped_include_prefix = args.stripped_include_prefix
 
     extension_modules = []
     entry_points = collections.defaultdict(list)
 
-    pyproject = PyProject(project_file)
-    projectcfg = pyproject.project
-
     # Cache built up for an extension module. Gets reset when an ExtensionModule is encountered
     additional_extension_targets: dict[str, BuildTarget] = {}
     publish_casters_targets = []
+
+    # Pure python projects (no semiwrap section) have nothing for semiwrap to plan
+    is_semiwrap_project = try_tomli_lookup(raw_config, "tool.semiwrap") is not None
+    if is_semiwrap_project:
+        plan = makeplan(args.project_file.parent)
+
+        hack_pkgconfig(args.pkgcfgs)
+
+        pyproject = PyProject(args.project_file)
+        projectcfg = pyproject.project
+    else:
+        plan = []
 
     for item in plan:
         if isinstance(item, ExtensionModule):
@@ -375,34 +507,13 @@ def generate_pybind_build_file(
         else:
             raise TypeError(f"Unknown item {type(item)}")
 
-    with open(project_file, "rb") as fp:
-        raw_config = tomli.load(fp)
-
-    try:
-        top_level_name = raw_config["tool"]["hatch"]["build"]["targets"]["wheel"][
-            "packages"
-        ]
-    except KeyError:
+    top_level_name = try_tomli_lookup(
+        raw_config, "tool.hatch.build.targets.wheel.packages"
+    )
+    if top_level_name is None:
         top_level_name = [raw_config["project"]["name"]]
     assert len(top_level_name) == 1
     top_level_name = top_level_name[0]
-
-    template_file = "shared/bazel/rules/robotpy/pybind_build_file_template.jinja2"
-    with open(template_file, "r") as f:
-        template_contents = f.read()
-
-    def jsonify(item):
-        if isinstance(item, jinja2.runtime.Undefined):
-            return "None"
-        return json.dumps(item)
-
-    def target_from_python_dep(python_dep):
-        if "native" in python_dep:
-            base_library = python_dep.replace("robotpy-native-", "").replace("-", "_")
-            return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
-        else:
-            base_library = python_dep.replace("robotpy-", "")
-            return f"//{fixup_root_package_name(base_library)}/src/main/python"
 
     EXTERNAL_PYPI_DEPS = [
         "robotpy-cli",
@@ -423,38 +534,32 @@ def generate_pybind_build_file(
                 pd = target_from_python_dep(d.split("==")[0])
                 python_deps.append(pd)
 
-    env = Environment(loader=BaseLoader)
-    env.filters["jsonify"] = jsonify
-    template = env.from_string(template_contents)
-
     all_local_native_deps = set()
     for em in extension_modules:
         all_local_native_deps.update(em.native_wrapper_dependencies)
     all_local_native_deps = sorted(all_local_native_deps)
 
-    try:
-        version_file = raw_config["tool"]["hatch"]["build"]["hooks"]["robotpy"][
-            "version_file"
-        ]
-    except KeyError:
-        version_file = None
-
-    # The entry points defined above are implicit to how the project is broken down in the toml files.
-    # This adds potentially extra explicitly declared entry points
-    if "entry-points" in raw_config["project"]:
-        explicit_entry_points = raw_config["project"]["entry-points"]
-        for entry_point_type in explicit_entry_points:
-            for ep_key, ep_value in explicit_entry_points[entry_point_type].items():
-                entry_points[entry_point_type].append(f"{ep_key} = {ep_value}")
-
-    imports_dir = stripped_include_prefix if stripped_include_prefix else "."
+    # Shared libraries built elsewhere in allwpilib that get shipped inside this wheel
+    maven_libs = []
+    for maven_dep in try_tomli_lookup(
+        raw_config, "tool.hatch.build.hooks.robotpy.maven_lib_download", []
+    ):
+        if maven_dep.get("use_headers", True):
+            raise NotImplementedError(
+                f"Shipping headers for {maven_dep['artifact_id']} is not supported"
+            )
+        for lib in maven_dep["libs"]:
+            maven_libs.append(
+                dict(
+                    name=lib,
+                    library=maven_dep_to_library(maven_dep, lib),
+                    base_path=f"{stripped_include_prefix}{maven_dep['extract_to']}/",
+                )
+            )
 
     # The package the generated file is loaded from is usually the project root, but a
     # project can generate a build file for a module in a subpackage (e.g. test modules).
-    bazel_package = package_name or fixup_root_package_name(top_level_name)
-    strip_path_prefixes = [
-        f"{bazel_package}/{stripped_include_prefix}",
-    ]
+    bazel_package = args.package_name or fixup_root_package_name(top_level_name)
 
     has_semiwrap_files = False
     for em in extension_modules:
@@ -462,24 +567,76 @@ def generate_pybind_build_file(
             has_semiwrap_files = True
             break
 
-    with open(output_file, "w", newline="\n") as f:
+    return dict(
+        macro_signature="define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = [])",
+        is_semiwrap_project=is_semiwrap_project,
+        extension_modules=extension_modules,
+        top_level_name=top_level_name,
+        publish_casters_targets=publish_casters_targets,
+        python_deps=sorted(python_deps),
+        all_local_native_deps=all_local_native_deps,
+        include_root_prefix=stripped_include_prefix,
+        imports_dir=stripped_include_prefix if stripped_include_prefix else ".",
+        strip_path_prefixes=[f"{bazel_package}/{stripped_include_prefix}"],
+        yml_prefix=args.yml_prefix,
+        package_root_file=args.package_root_file,
+        entry_points=entry_points,
+        version_file=try_tomli_lookup(
+            raw_config, "tool.hatch.build.hooks.robotpy.version_file"
+        ),
+        maven_libs=maven_libs,
+        has_external_python_deps=has_external_python_deps,
+        has_semiwrap_files=has_semiwrap_files,
+    )
+
+
+def generate_build_file(raw_config, args):
+    is_native_wrapper = (
+        try_tomli_lookup(raw_config, "tool.hatch.build.hooks.nativelib") is not None
+    )
+
+    if is_native_wrapper:
+        context = native_wrapper_context(raw_config, args)
+    else:
+        context = pybind_library_context(raw_config, args)
+
+    # The entry points implied by the project layout are filled in above. This adds any
+    # explicitly declared ones
+    entry_points = context["entry_points"]
+    for entry_point_type, explicit_entry_points in (
+        raw_config["project"].get("entry-points", {}).items()
+    ):
+        for ep_key, ep_value in explicit_entry_points.items():
+            entry_points.setdefault(entry_point_type, []).append(
+                f"{ep_key} = {ep_value}"
+            )
+
+    authors = raw_config["project"].get("authors")
+    if authors:
+        author_email = f"{authors[0]['name']} <{authors[0]['email']}>"
+    else:
+        author_email = None
+
+    template_file = "shared/bazel/rules/robotpy/pybind_build_file_template.jinja2"
+    with open(template_file, "r") as f:
+        template_contents = f.read()
+
+    env = Environment(loader=BaseLoader)
+    env.filters["jsonify"] = jsonify
+    template = env.from_string(template_contents)
+
+    with open(args.output_file, "w", newline="\n") as f:
         f.write(
             template.render(
-                extension_modules=extension_modules,
-                top_level_name=top_level_name,
-                publish_casters_targets=publish_casters_targets,
-                python_deps=sorted(python_deps),
-                all_local_native_deps=all_local_native_deps,
-                include_root_prefix=stripped_include_prefix,
-                imports_dir=imports_dir,
-                strip_path_prefixes=strip_path_prefixes,
-                yml_prefix=yml_prefix,
-                package_root_file=package_root_file,
+                is_native_wrapper=is_native_wrapper,
                 raw_project_config=raw_config["project"],
-                entry_points=entry_points,
-                version_file=version_file,
-                has_external_python_deps=has_external_python_deps,
-                has_semiwrap_files=has_semiwrap_files,
+                author_email=author_email,
+                readme=raw_config["project"].get("readme"),
+                extra_distinfo_files={
+                    f: f"licenses/{f}"
+                    for f in raw_config["project"].get("license-files", [])
+                },
+                **context,
             )
             + "\n"
         )
@@ -489,23 +646,39 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project_file", type=pathlib.Path, required=True)
     parser.add_argument("--output_file", type=pathlib.Path, required=True)
+    parser.add_argument("--package_name", type=str)
+
+    # Arguments for pybind / pure python projects
     parser.add_argument("--stripped_include_prefix", type=str, default="")
     parser.add_argument("--yml_prefix", type=str)
     parser.add_argument("--package_root_file", type=str)
-    parser.add_argument("--package_name", type=str)
     parser.add_argument("--pkgcfgs", type=pathlib.Path, nargs="+")
+
+    # Arguments for native library wrappers
+    native_args = parser.add_argument_group("native wrapper arguments")
+    native_args.add_argument("--third_party_dirs", nargs="+", default=[])
+    native_args.add_argument("--module_include_targets", nargs="+", default=[])
+    native_args.add_argument("--native_srcs_root")
+    native_args.add_argument("--generated_include_target", default=None)
+    native_args.add_argument("--generated_include_root")
+    native_args.add_argument("--extra_include_root_files", nargs="+", default=[])
 
     args = parser.parse_args()
 
-    generate_pybind_build_file(
-        args.pkgcfgs,
-        args.project_file,
-        args.package_root_file,
-        args.stripped_include_prefix,
-        args.yml_prefix,
-        args.output_file,
-        args.package_name,
-    )
+    with open(args.project_file, "rb") as fp:
+        raw_config = tomli.load(fp)
+
+    if try_tomli_lookup(raw_config, "tool.hatch.build.hooks.nativelib") is not None:
+        if args.package_name is None:
+            parser.error("--package_name is required for native wrappers")
+    else:
+        for action in native_args._group_actions:
+            if getattr(args, action.dest) != action.default:
+                parser.error(
+                    f"{action.option_strings[0]} is only valid for native wrappers"
+                )
+
+    generate_build_file(raw_config, args)
 
 
 if __name__ == "__main__":

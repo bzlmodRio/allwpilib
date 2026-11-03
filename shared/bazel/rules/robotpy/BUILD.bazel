@@ -24,19 +24,6 @@ py_library(
     ],
 )
 
-py_binary(
-    name = "generate_native_build_file",
-    srcs = ["generate_native_build_file.py"],
-    visibility = ["//visibility:public"],
-    deps = [
-        ":generation_utils",
-        ":hack_pkgcfgs",
-        "//shared/bazel/rules/robotpy/hatchlib_native_port:generate_native_lib_files",
-        requirement("semiwrap"),
-        requirement("jinja2"),
-    ],
-)
-
 filegroup(
     name = "jinja_templates",
     srcs = glob(["*.jinja2"]),
@@ -53,6 +40,7 @@ py_binary(
     deps = [
         ":generation_utils",
         ":hack_pkgcfgs",
+        "//shared/bazel/rules/robotpy/hatchlib_native_port:generate_native_lib_files",
         requirement("semiwrap"),
         requirement("jinja2"),
     ],

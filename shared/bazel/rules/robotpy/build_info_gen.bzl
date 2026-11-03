@@ -1,6 +1,38 @@
 load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
 load("//shared/bazel/rules/robotpy:compatibility_select.bzl", "robotpy_compatibility_select")
 
+def _generate_build_info(name, pyproject_toml, args, srcs, generated_file_name, suggested_update_target):
+    """
+    Runs the build file generator on a pyproject.toml file, and creates the targets to write the result back into the source tree.
+    The generator chooses between a native library wrapper and a pybind / pure python library based on the contents of the toml file.
+    """
+    cmd = "$(location //shared/bazel/rules/robotpy:generate_pybind_build_file) --project_file=$(location " + pyproject_toml + ") --output_file=$(OUTS)"
+    cmd += " --package_name=" + native.package_name()
+    if args:
+        cmd += " " + " ".join(args)
+
+    native.genrule(
+        name = "{}.gen_build_info".format(name),
+        tools = ["//shared/bazel/rules/robotpy:generate_pybind_build_file"],
+        srcs = [pyproject_toml] + srcs + ["//shared/bazel/rules/robotpy:jinja_templates"],
+        outs = ["{}-generated_build_info.bzl".format(name)],
+        cmd = cmd,
+        tags = ["robotpy"],
+        target_compatible_with = robotpy_compatibility_select(),
+    )
+
+    write_source_files(
+        name = "{}.generate_build_info".format(name),
+        files = {
+            generated_file_name: "{}-generated_build_info.bzl".format(name),
+        },
+        visibility = ["//visibility:public"],
+        suggested_update_target = suggested_update_target,
+        tags = ["robotpy"],
+        target_compatible_with = robotpy_compatibility_select(),
+        diff_args = ["-u"],
+    )
+
 def generate_robotpy_native_wrapper_build_info(
         name,
         pyproject_toml,
@@ -36,46 +68,26 @@ def generate_robotpy_native_wrapper_build_info(
     if include_third_party_notices:
         extra_include_root_files.append("//:ThirdPartyNotices.txt")
 
-    cmd = "$(location //shared/bazel/rules/robotpy:generate_native_build_file) --output_file=$(OUTS)"
-    cmd += " --project_cfg=$(location " + pyproject_toml + ")"
+    args = []
     if native_srcs_root:
-        cmd += " --native_srcs_root=" + native_srcs_root
-    cmd += " --package_name=" + native.package_name()
+        args.append("--native_srcs_root=" + native_srcs_root)
     if generated_include_target:
-        cmd += " --generated_include_target=" + generated_include_target
-        cmd += " --generated_include_root=" + generated_include_root
+        args.append("--generated_include_target=" + generated_include_target)
+        args.append("--generated_include_root=" + generated_include_root)
     if extra_include_root_files:
-        cmd += " --extra_include_root_files "
-        for f in extra_include_root_files:
-            cmd += " " + f
+        args.append("--extra_include_root_files " + " ".join(extra_include_root_files))
     if third_party_dirs:
-        cmd += " --third_party_dirs "
-        for d in third_party_dirs:
-            cmd += " " + d
+        args.append("--third_party_dirs " + " ".join(third_party_dirs))
     if module_include_targets:
-        cmd += " --module_include_targets "
-        for label, strip in module_include_targets.items():
-            cmd += " " + label + "=" + strip
-    native.genrule(
-        name = "{}.gen_build_info".format(name),
-        tools = ["//shared/bazel/rules/robotpy:generate_native_build_file"],
-        srcs = [pyproject_toml],
-        outs = ["{}-generated_build_info.bzl".format(name)],
-        cmd = cmd,
-        tags = ["robotpy"],
-        target_compatible_with = robotpy_compatibility_select(),
-    )
+        args.append("--module_include_targets " + " ".join([label + "=" + strip for label, strip in module_include_targets.items()]))
 
-    write_source_files(
-        name = "{}.generate_build_info".format(name),
-        files = {
-            "robotpy_build_info.bzl": "{}-generated_build_info.bzl".format(name),
-        },
-        visibility = ["//visibility:public"],
+    _generate_build_info(
+        name = name,
+        pyproject_toml = pyproject_toml,
+        args = args,
+        srcs = [],
+        generated_file_name = "robotpy_build_info.bzl",
         suggested_update_target = "//:write_robotpy_generated_native_files",
-        tags = ["robotpy"],
-        target_compatible_with = robotpy_compatibility_select(),
-        diff_args = ["-u"],
     )
 
 def generate_robotpy_pybind_build_info(
@@ -101,38 +113,19 @@ def generate_robotpy_pybind_build_info(
         yml_prefix - Optional. Used in the event that the yml files are in a non-standard location
     """
 
-    cmd = "$(location //shared/bazel/rules/robotpy:generate_pybind_build_file) --project_file=$(location " + pyproject_toml + ") --output_file=$(OUTS)"
-
-    cmd += " --package_root_file=" + package_root_file
+    args = ["--package_root_file=" + package_root_file]
     if stripped_include_prefix:
-        cmd += " --stripped_include_prefix=" + stripped_include_prefix
+        args.append("--stripped_include_prefix=" + stripped_include_prefix)
     if yml_prefix:
-        cmd += " --yml_prefix=" + yml_prefix
-    cmd += " --package_name=" + native.package_name()
-
+        args.append("--yml_prefix=" + yml_prefix)
     if pkgcfgs:
-        cmd += " --pkgcfgs "
-        for x in pkgcfgs:
-            cmd += " $(locations " + x + ")"
+        args.append("--pkgcfgs " + " ".join(["$(locations " + x + ")" for x in pkgcfgs]))
 
-    native.genrule(
-        name = "{}.gen_build_info".format(name),
-        tools = ["//shared/bazel/rules/robotpy:generate_pybind_build_file"],
-        srcs = [pyproject_toml, package_root_file] + yaml_files + pkgcfgs + additional_srcs + ["//shared/bazel/rules/robotpy:jinja_templates"],
-        outs = ["{}-generated_build_info.bzl".format(name)],
-        cmd = cmd,
-        tags = ["robotpy"],
-        target_compatible_with = robotpy_compatibility_select(),
-    )
-
-    write_source_files(
-        name = "{}.generate_build_info".format(name),
-        files = {
-            generated_file_name: "{}-generated_build_info.bzl".format(name),
-        },
+    _generate_build_info(
+        name = name,
+        pyproject_toml = pyproject_toml,
+        args = args,
+        srcs = [package_root_file] + yaml_files + pkgcfgs + additional_srcs,
+        generated_file_name = generated_file_name,
         suggested_update_target = "//:write_robotpy_generated_pybind_files",
-        visibility = ["//visibility:public"],
-        tags = ["robotpy"],
-        target_compatible_with = robotpy_compatibility_select(),
-        diff_args = ["-u"],
     )
