@@ -12,8 +12,9 @@ filegroup(
     srcs = glob([
         "src/main/native/include/**/*",
         "src/main/native/thirdparty/ada/include/**/*",
+        "src/main/native/thirdparty/llhttp/include/**/*",
         "src/main/native/thirdparty/tcpsockets/include/**/*",
-    ]),
+    ]) + ["//wpinet/src/main/native/thirdparty/libuv:include_files"],
     visibility = ["//visibility:public"],
 )
 

@@ -9,7 +9,7 @@ load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native
 filegroup(
     name = "doxygen-files",
     srcs = glob([
-        "src/main/native/include/**/*.h",
+        "src/main/native/include/**/*",
     ]),
     visibility = ["//visibility:public"],
 )
@@ -104,6 +104,21 @@ wpilib_cc_static_library(
     visibility = ["//visibility:public"],
     deps = [
         ":wpiHal",
+    ],
+)
+
+# Not published.  Gradle never ships halMrc as a static library; it only links
+# it into the halsim_ds_socket shared library.  This exists so static archives
+# that depend on wpiHalMrc can leave its objects out, as Gradle does.
+wpilib_cc_static_library(
+    name = "static/wpiHalMrc",
+    static_deps = [
+        ":static/wpiHal",
+        "//wpiutil:static/wpiutil",
+    ],
+    visibility = ["//simulation/halsim_ds_socket:__pkg__"],
+    deps = [
+        ":wpiHalMrc",
     ],
 )
 

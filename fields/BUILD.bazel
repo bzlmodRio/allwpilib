@@ -230,10 +230,9 @@ wpilib_cc_static_library(
 
 wpilib_cc_static_library(
     name = "static/fieldimages",
-    static_lib_name = select({
-        "@platforms//os:windows": "static/fieldimages.lib",
-        "//conditions:default": "static/libfieldimages.a",
-    }),
+    static_deps = [
+        "//wpiutil:static/wpiutil",
+    ],
     target_compatible_with = select({
         "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
         "//conditions:default": [],

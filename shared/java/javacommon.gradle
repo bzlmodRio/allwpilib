@@ -11,6 +11,7 @@ def outputsFolder = file("$project.buildDir/outputs")
 task sourcesJar(type: Jar, dependsOn: classes) {
     archiveClassifier = 'sources'
     from sourceSets.main.allSource
+    exclude '**/*.bazel'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
@@ -29,6 +30,7 @@ task outputSourcesJar(type: Jar, dependsOn: classes) {
     destinationDirectory = outputsFolder
     archiveClassifier = 'sources'
     from sourceSets.main.allSource
+    exclude '**/*.bazel'
 }
 
 task outputJavadocJar(type: Jar, dependsOn: javadoc) {

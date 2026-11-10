@@ -70,6 +70,7 @@ task cppCommandsZip(type: Zip) {
 task cppSnippetsZip(type: Zip) {
     destinationDirectory = outputsFolder
     archiveBaseName = snippetsZipBaseName
+    exclude '**/*.bazel'
 
     from(licenseFile) {
         into '/'

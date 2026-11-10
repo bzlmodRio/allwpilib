@@ -5,6 +5,7 @@ load("@rules_pkg//:pkg.bzl", "pkg_zip")
 
 paths = [
     "apriltag/src/main/native/include",
+    "apriltag/src/main/native/thirdparty/apriltag/include",
     "cameraserver/src/main/native/include",
     "commandsv2/src/generated/main/native/include",
     "commandsv2/src/main/native/include",
@@ -23,11 +24,13 @@ paths = [
     "wpilibc/src/generated/main/native/include",
     "wpilibc/src/main/native/include",
     "wpimath/src/main/native/include",
-    "wpimath/src/generated/main/native/cpp",
+    "wpimath/src/generated/main/native/include",
     "wpimath/src/main/native/thirdparty/gcem/include",
     "wpimath/src/main/native/thirdparty/sleipnir/include",
     "wpinet/src/main/native/include",
     "wpinet/src/main/native/thirdparty/ada/include",
+    "wpinet/src/main/native/thirdparty/libuv/include",
+    "wpinet/src/main/native/thirdparty/llhttp/include",
     "wpinet/src/main/native/thirdparty/tcpsockets/include",
     "wpiutil/src/main/native/include",
     "wpiutil/src/main/native/thirdparty/argparse/include",
@@ -108,6 +111,8 @@ doxygen(
         "*/sleipnir/optimization/solver/util/feasibility_restoration.hpp",
         # apriltag
         "*/apriltag_pose.h",
+        # libuv
+        "*/libuv/include/uv/*",
     ],
     html_extra_stylesheet = "docs/theme.css",
     include_path = paths,
@@ -123,9 +128,17 @@ doxygen(
     warnings = "NO",
 )
 
+# Only the html tree; the doxygen target's default outputs also hold the
+# generated Doxyfile.
+filegroup(
+    name = "doxygen-html",
+    srcs = [":doxygen"],
+    output_group = "html",
+)
+
 pkg_zip(
     name = "doxygen-zip",
-    srcs = [":doxygen"],
+    srcs = [":doxygen-html"],
     strip_prefix = "html",
 )
 

@@ -60,6 +60,7 @@ wpilib_cc_static_library(
     name = "static/halsim_ds_socket",
     static_deps = [
         "//hal:static/wpiHal",
+        "//hal:static/wpiHalMrc",
         "//wpinet:static/wpinet",
     ],
     visibility = ["//visibility:public"],

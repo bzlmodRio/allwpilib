@@ -394,6 +394,11 @@ def wpilib_cc_shared_library(
     if auto_export_windows_symbols:
         features.append("windows_export_all_symbols")
 
+    # The toolchain's set_soname feature appends -soname with the output file
+    # name after user_link_flags, which would override the debug-suffixed name
+    # set below (libfood.so).  The soname is always set explicitly here.
+    features.append("-set_soname")
+
     if use_debug_name:
         user_link_flags = (user_link_flags or []) + select({
             "//shared/bazel/rules:linux_compilation_mode_dbg": ["-Wl,-soname,lib" + lib + "d.so"],

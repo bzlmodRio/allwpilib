@@ -42,7 +42,7 @@ def _package_type(package_type):
     )
 
     pkgs = ["//:license_pkg_files", ":" + package_type + "-pkg"]
-    if package_type in ["examples", "templates"]:
+    if package_type in ["examples", "snippets", "templates"]:
         pkg_files(
             name = package_type + "-main-pkg",
             srcs = ["src/main/java/org/wpilib/Main.java"],
@@ -50,12 +50,12 @@ def _package_type(package_type):
         )
         pkgs.append(package_type + "-main-pkg")
 
-    if package_type == "examples":
+    if package_type in ["examples", "snippets"]:
         pkg_files(
             name = package_type + "-tests-pkg",
             srcs = native.glob(["src/test/java/org/wpilib/" + package_type + "/**"]),
             strip_prefix = "src/test/java/org/wpilib/" + package_type,
-            prefix = "examples_test",
+            prefix = package_type + "_test",
         )
         pkgs.append(package_type + "-tests-pkg")
 
