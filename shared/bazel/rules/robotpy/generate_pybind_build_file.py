@@ -82,7 +82,14 @@ class HeaderToDatConfig:
         if "native" in include_root:
             # base_include_root = pathlib.Path(*args[3].relative_to(root_dir).parts[3:])
             base_include_file = args[2].relative_to(include_root).as_posix()
-            base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
+            # copy_headers always outputs to native/<lib>/include, but the package
+            # holding it may itself contain a "native/" segment (src/main/native),
+            # so match the last native/<lib>/include occurrence.
+            matches = re.findall(r"native/([^/]+)/include", include_root)
+            if matches:
+                base_library = matches[-1]
+            else:
+                base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
 
             native_library = fixup_native_lib_name("robotpy-native-" + base_library)
             self.include_file = f"$(execpath //{fixup_root_package_name(base_library)}:{native_library}.copy_headers)/{base_include_file}"

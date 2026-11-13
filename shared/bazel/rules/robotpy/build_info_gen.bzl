@@ -22,7 +22,9 @@ def generate_robotpy_native_wrapper_build_info(
             package, so globs cannot reach it). Maps a filegroup label exporting the header tree
             to the prefix to strip from its paths, e.g. {"@libuv//:include_files": "include"}
         native_srcs_root - Package-relative prefix under which the native cpp/include/thirdparty
-            directories live, relative to wherever this macro is invoked from
+            directories live, relative to wherever this macro is invoked from. Use "" when the
+            macro is invoked from the src/main/native package itself, or None for a wrapper
+            with no native sources of its own
         generated_include_target - Optional label pointing at a public filegroup exposing that project's
             generated headers
         generated_include_root - Package-relative prefix to strip from generated_include_target's sources
@@ -38,7 +40,7 @@ def generate_robotpy_native_wrapper_build_info(
 
     cmd = "$(location //shared/bazel/rules/robotpy:generate_native_build_file) --output_file=$(OUTS)"
     cmd += " --project_cfg=$(location " + pyproject_toml + ")"
-    if native_srcs_root:
+    if native_srcs_root != None:
         cmd += " --native_srcs_root=" + native_srcs_root
     cmd += " --package_name=" + native.package_name()
     if generated_include_target:

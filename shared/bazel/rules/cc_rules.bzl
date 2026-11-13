@@ -235,6 +235,7 @@ def third_party_cc_lib_helper(
             name = name + "-srcs-pkg",
             srcs = native.glob([src_root + "/**"]),
             strip_prefix = src_root,
+            visibility = visibility,
         )
 
 def wpilib_cc_library(
@@ -248,6 +249,7 @@ def wpilib_cc_library(
         extra_src_pkg_files = [],
         extra_hdr_pkg_files = [],
         srcs_pkg_root = "src/main/native/cpp",
+        srcs_pkg = None,
         hdrs_pkg_root = "src/main/native/include",
         strip_include_prefix = None,
         linkopts = None,
@@ -272,6 +274,8 @@ def wpilib_cc_library(
         third_party_header_only_libraries: Similar to third_party_libraries, but for shims that contain no sources
         extra_src_pkg_files: Extra pkg_files to add to the source bundle. This is useful in the event that a library is complicated and requires
                 extra, customized sources to be added to the published zip file
+        srcs_pkg: Optional pkg_files label to use as the library's own sources in the source bundle instead of
+                globbing srcs_pkg_root. Useful when those sources live outside this package (e.g. src/generated).
         extra_hdr_pkg_files: Extra pkg_files to add to the headers bundle. This is useful in the event that a library is complicated and requires
                 extra, customized headers to be added to the published zip file
     """
@@ -297,16 +301,18 @@ def wpilib_cc_library(
         **kwargs
     )
 
-    if srcs_pkg_root:
-        pkg_files(
-            name = name + "-srcs-pkg",
-            srcs = native.glob([srcs_pkg_root + "/**"]),
-            strip_prefix = srcs_pkg_root,
-        )
+    if srcs_pkg_root or srcs_pkg:
+        if not srcs_pkg:
+            pkg_files(
+                name = name + "-srcs-pkg",
+                srcs = native.glob([srcs_pkg_root + "/**"]),
+                strip_prefix = srcs_pkg_root,
+            )
+            srcs_pkg = name + "-srcs-pkg"
 
         pkg_zip(
             name = name + "-srcs-zip",
-            srcs = ["//:license_pkg_files"] + extra_src_pkg_files + [name + "-srcs-pkg"] + [lib + "-srcs-pkg" for lib in third_party_libraries],
+            srcs = ["//:license_pkg_files"] + extra_src_pkg_files + [srcs_pkg] + [lib + "-srcs-pkg" for lib in third_party_libraries],
             tags = ["manual"],
         )
 

@@ -98,7 +98,7 @@ def main():
 
     third_party_dirs = args.third_party_dirs or []
     replace_prefix_keys = []
-    if args.native_srcs_root:
+    if args.native_srcs_root is not None:
         replace_prefix_keys.append(
             args.package_name + "/" + args.native_srcs_root + "include"
         )
@@ -124,6 +124,7 @@ def main():
                 raw_project_config=raw_config["project"],
                 nativelib_config=nativelib_config,
                 root_package=root_package,
+                package_name=args.package_name,
                 maven_downloads=maven_downloads,
                 third_party_dirs=args.third_party_dirs or [],
                 pc_files=pc_files,
@@ -147,7 +148,7 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = {% if native_srcs_root %}native.glob(["{{native_srcs_root}}include/**"]){% else %}[]{% endif %}{% if generated_include_target %} + ["{{generated_include_target}}"]{% endif %}{% if third_party_dirs %} + native.glob([
+        srcs = {% if native_srcs_root is not none %}native.glob(["{{native_srcs_root}}include/**"]){% else %}[]{% endif %}{% if generated_include_target %} + ["{{generated_include_target}}"]{% endif %}{% if third_party_dirs %} + native.glob([
         {%- for dir in third_party_dirs %}
             "{{native_srcs_root}}thirdparty/{{dir}}/include/**",
         {%- endfor %}
@@ -219,7 +220,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         summary = "{{raw_project_config.description}}",
         requires = {{raw_project_config.dependencies | double_quotes}},
         python_requires = "{{raw_project_config["requires-python"]}}",
-        strip_path_prefixes = ["{{root_package}}"],
+        strip_path_prefixes = ["{{package_name}}"],
         entry_points = {
             "pkg_config": [
             {%- for pcfile in pc_files %}

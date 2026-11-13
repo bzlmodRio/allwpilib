@@ -162,8 +162,9 @@ class NativelibHook:
 
         libdir = prefix_path
         if pcfg.libdir:
-            libdir = self.root_pth / pathlib.PurePosixPath(pcfg.libdir)
-            libdir = pathlib.Path(str(libdir).replace("src/", "").replace("src\\", ""))
+            # Only strip the pyproject-relative "src/" prefix; root_pth itself may
+            # legitimately contain "src/" (e.g. <project>/src/main/native).
+            libdir = self.root_pth / pathlib.PurePosixPath(pcfg.libdir).as_posix().removeprefix("src/")
 
         lib_paths = []
         assert pcfg.shared_libraries is not None
