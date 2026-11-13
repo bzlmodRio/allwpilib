@@ -73,8 +73,8 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "Field",
             yml_file = "semiwrap/Field.yml",
-            header_root = "$(execpath //fields:robotpy-native-fields.copy_headers)",
-            header_file = "$(execpath //fields:robotpy-native-fields.copy_headers)/wpi/fields/Field.hpp",
+            header_root = "$(execpath //fields/src/main/native:robotpy-native-fields.copy_headers)",
+            header_file = "$(execpath //fields/src/main/native:robotpy-native-fields.copy_headers)/wpi/fields/Field.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::fields::Field", "wpi__fields__Field.hpp"),
@@ -83,8 +83,8 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "FieldImage",
             yml_file = "semiwrap/FieldImage.yml",
-            header_root = "$(execpath //fields:robotpy-native-fields.copy_headers)",
-            header_file = "$(execpath //fields:robotpy-native-fields.copy_headers)/wpi/fields/FieldImage.hpp",
+            header_root = "$(execpath //fields/src/main/native:robotpy-native-fields.copy_headers)",
+            header_file = "$(execpath //fields/src/main/native:robotpy-native-fields.copy_headers)/wpi/fields/FieldImage.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::fields::FieldImage", "wpi__fields__FieldImage.hpp"),
@@ -93,8 +93,8 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "FieldTag",
             yml_file = "semiwrap/FieldTag.yml",
-            header_root = "$(execpath //fields:robotpy-native-fields.copy_headers)",
-            header_file = "$(execpath //fields:robotpy-native-fields.copy_headers)/wpi/fields/FieldTag.hpp",
+            header_root = "$(execpath //fields/src/main/native:robotpy-native-fields.copy_headers)",
+            header_file = "$(execpath //fields/src/main/native:robotpy-native-fields.copy_headers)/wpi/fields/FieldTag.hpp",
             tmpl_class_names = [],
             trampolines = [
                 ("wpi::fields::FieldTag", "wpi__fields__FieldTag.hpp"),
@@ -103,8 +103,8 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         struct(
             class_name = "fields",
             yml_file = "semiwrap/fields.yml",
-            header_root = "$(execpath //fields:robotpy-native-fields.copy_headers)",
-            header_file = "$(execpath //fields:robotpy-native-fields.copy_headers)/wpi/fields/fields.hpp",
+            header_root = "$(execpath //fields/src/main/native:robotpy-native-fields.copy_headers)",
+            header_file = "$(execpath //fields/src/main/native:robotpy-native-fields.copy_headers)/wpi/fields/fields.hpp",
             tmpl_class_names = [],
             trampolines = [],
         ),
@@ -148,11 +148,11 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         trampoline_subpath = "robotpy_fields",
         deps = header_to_dat_deps,
         local_native_libraries = [
-            "//fields:robotpy-native-fields.copy_headers",
-            "//telemetry:robotpy-native-telemetry.copy_headers",
-            "//tunables:robotpy-native-tunables.copy_headers",
-            "//wpimath:robotpy-native-wpimath.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//fields/src/main/native:robotpy-native-fields.copy_headers",
+            "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
+            "//tunables/src/main/native:robotpy-native-tunables.copy_headers",
+            "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         name_transforms = NAME_TRANSFORMS,
     )
@@ -173,9 +173,9 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
             "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
-            "//fields:shared/fields",
-            "//wpimath:shared/wpimath",
-            "//wpiutil:shared/wpiutil",
+            "//fields/src/main/native:shared/fields",
+            "//wpimath/src/main/native:shared/wpimath",
+            "//wpiutil/src/main/native:shared/wpiutil",
         ],
         extra_hdrs = extra_hdrs,
         extra_srcs = srcs,
@@ -243,7 +243,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         ],
         imports = ["."],
         deps = [
-            "//fields:robotpy-native-fields",
+            "//fields/src/main/native:robotpy-native-fields",
             "//wpimath/src/main/python",
             "//wpiutil/src/main/python",
         ],
@@ -263,11 +263,11 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
         name = "{}-update-yaml".format(name),
         yaml_output_directory = "semiwrap",
         extra_hdrs = extra_pybind_hdrs + [
-            "//fields:robotpy-native-fields.copy_headers",
-            "//telemetry:robotpy-native-telemetry.copy_headers",
-            "//tunables:robotpy-native-tunables.copy_headers",
-            "//wpimath:robotpy-native-wpimath.copy_headers",
-            "//wpiutil:robotpy-native-wpiutil.copy_headers",
+            "//fields/src/main/native:robotpy-native-fields.copy_headers",
+            "//telemetry/src/main/native:robotpy-native-telemetry.copy_headers",
+            "//tunables/src/main/native:robotpy-native-tunables.copy_headers",
+            "//wpimath/src/main/native:robotpy-native-wpimath.copy_headers",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil.copy_headers",
         ],
         package_root_file = "robotpy_fields/__init__.py",
         pkgcfgs = pkgcfgs,
@@ -278,7 +278,7 @@ def define_pybind_library(name, pkgcfgs = [], extra_pybind_hdrs = []):
     scan_headers(
         name = "{}-scan-headers".format(name),
         extra_hdrs = extra_pybind_hdrs + [
-            "//fields:robotpy-native-fields.copy_headers",
+            "//fields/src/main/native:robotpy-native-fields.copy_headers",
         ],
         package_root_file = "robotpy_fields/__init__.py",
         pkgcfgs = pkgcfgs,

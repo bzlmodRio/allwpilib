@@ -24,7 +24,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
+            "//wpilibc/src/main/native:native/wpilib/robotpy-native-wpilib.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/romi/robotpy-native-romi.pc"],
@@ -46,7 +46,7 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpilibc:robotpy-native-wpilib",
+            "//wpilibc/src/main/native:robotpy-native-wpilib",
         ],
         summary = "WPILib Romi support library",
         requires = ["robotpy-native-wpilib==0.0.0"],

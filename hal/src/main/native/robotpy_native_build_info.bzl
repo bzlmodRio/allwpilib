@@ -28,8 +28,8 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//ntcore/src/main/native:native/ntcore/robotpy-native-ntcore.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/wpihal/robotpy-native-mrclib.pc", "native/wpihal/robotpy-native-wpihal.pc"],
@@ -58,8 +58,8 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//ntcore:robotpy-native-ntcore",
-            "//wpiutil:robotpy-native-wpiutil",
+            "//ntcore/src/main/native:robotpy-native-ntcore",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
         summary = "WPILib HAL implementation",
         requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-ntcore==0.0.0"],

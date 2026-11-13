@@ -35,7 +35,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/wpinet/robotpy-native-wpinet.pc"],
@@ -57,7 +57,7 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpiutil:robotpy-native-wpiutil",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
         summary = "WPILib Networking Library",
         requires = ["robotpy-native-wpiutil==0.0.0"],
