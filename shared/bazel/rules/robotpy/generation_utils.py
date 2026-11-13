@@ -26,6 +26,12 @@ def fixup_root_package_name(name):
     return name
 
 
+def native_package_name(name):
+    """Bazel package holding a project's C++ targets (shared/static libs, robotpy
+    native wrapper, copy_headers, .pc files)."""
+    return fixup_root_package_name(name) + "/src/main/native"
+
+
 def fixup_native_lib_name(name):
     return name.replace("_", "-")
 

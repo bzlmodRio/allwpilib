@@ -10,6 +10,7 @@ from shared.bazel.rules.robotpy.generation_utils import (
     fixup_native_lib_name,
     fixup_python_dep_name,
     fixup_root_package_name,
+    native_package_name,
 )
 from shared.bazel.rules.robotpy.hatchlib_native_port.config import PcFileConfig
 from shared.bazel.rules.robotpy.hatchlib_native_port.validate import parse_input
@@ -38,14 +39,12 @@ def main():
 
     def get_pc_dep(library):
         base_project = library.replace("robotpy-native-", "").replace("-", "_")
-        wpilib_project = fixup_root_package_name(base_project)
         native_library = fixup_native_lib_name(library)
-        return f"//{wpilib_project}:native/{base_project}/{native_library}.pc"
+        return f"//{native_package_name(base_project)}:native/{base_project}/{native_library}.pc"
 
     def get_python_dep(library):
         base_project = library.replace("robotpy-native-", "").replace("-", "_")
-        wpilib_project = fixup_root_package_name(base_project)
-        return f"//{fixup_root_package_name(wpilib_project)}:{fixup_python_dep_name(library)}"
+        return f"//{native_package_name(base_project)}:{fixup_python_dep_name(library)}"
 
     env = Environment(loader=BaseLoader)
     env.filters["double_quotes"] = double_quotes

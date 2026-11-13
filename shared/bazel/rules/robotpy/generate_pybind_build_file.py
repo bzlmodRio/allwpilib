@@ -24,6 +24,7 @@ from shared.bazel.rules.robotpy.generation_utils import (
     fixup_python_dep_name,
     fixup_root_package_name,
     fixup_shared_lib_name,
+    native_package_name,
 )
 from shared.bazel.rules.robotpy.hack_pkgcfgs import hack_pkgconfig
 
@@ -92,8 +93,8 @@ class HeaderToDatConfig:
                 base_library = re.search("native/(.*?)/", include_root).groups(1)[0]
 
             native_library = fixup_native_lib_name("robotpy-native-" + base_library)
-            self.include_file = f"$(execpath //{fixup_root_package_name(base_library)}:{native_library}.copy_headers)/{base_include_file}"
-            self.include_root = f"$(execpath //{fixup_root_package_name(base_library)}:{native_library}.copy_headers)"
+            self.include_file = f"$(execpath //{native_package_name(base_library)}:{native_library}.copy_headers)/{base_include_file}"
+            self.include_root = f"$(execpath //{native_package_name(base_library)}:{native_library}.copy_headers)"
         else:
             root_dir = pathlib.Path.cwd().absolute()
             self.include_file = (
@@ -234,11 +235,11 @@ class BazelExtensionModule:
                 for d in transitive_deps:
                     if d == "robotpy-native-mrclib":
                         continue
-                    base_library = fixup_root_package_name(
+                    native_package = native_package_name(
                         d.replace("robotpy-native-", "").replace("-", "_")
                     )
                     native_wrapper_dependencies.add(
-                        f"//{base_library}:{fixup_native_lib_name(d)}.copy_headers"
+                        f"//{native_package}:{fixup_native_lib_name(d)}.copy_headers"
                     )
             elif "-casters" in dep_name:
                 base_library = dep_name.split("-")[0]
@@ -249,7 +250,9 @@ class BazelExtensionModule:
                 base_library = fixup_root_package_name(dep_name.rsplit("_", 1)[0])
                 shared_lib_name = fixup_shared_lib_name(base_library.rsplit("/", 1)[-1])
                 local_extension_dependencies.add(f"//{base_library}:{shared_lib_name}")
-                dynamic_dependencies.add(f"//{base_library}:shared/{shared_lib_name}")
+                dynamic_dependencies.add(
+                    f"//{base_library}/src/main/native:shared/{shared_lib_name}"
+                )
                 if dep_name != self.name:
                     local_extension_dependencies.add(
                         f"//{base_library}/src/main/python:{dep_name}_pybind_library"
@@ -406,7 +409,7 @@ def generate_pybind_build_file(
     def target_from_python_dep(python_dep):
         if "native" in python_dep:
             base_library = python_dep.replace("robotpy-native-", "").replace("-", "_")
-            return f"//{fixup_root_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
+            return f"//{native_package_name(base_library)}:{fixup_python_dep_name(python_dep)}"
         else:
             base_library = python_dep.replace("robotpy-", "")
             return f"//{fixup_root_package_name(base_library)}/src/main/python"
