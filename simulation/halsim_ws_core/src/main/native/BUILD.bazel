@@ -1,0 +1,62 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+load("//shared/bazel/rules:publishing.bzl", "host_architectures")
+
+wpilib_cc_library(
+    name = "halsim_ws_core",
+    srcs = glob(["cpp/*.cpp"]),
+    hdrs = glob(["include/**/*.hpp"]),
+    hdrs_pkg_root = "include",
+    srcs_pkg_root = "cpp",
+    strip_include_prefix = "include",
+    target_compatible_with = select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
+        "//conditions:default": [],
+    }),
+    visibility = ["//visibility:public"],
+    deps = [
+        "//hal:wpiHal",
+        "//wpinet",
+        "//wpiutil",
+    ],
+)
+
+alias(
+    name = "native",
+    actual = ":halsim_ws_core",
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/halsim_ws_core",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        "//hal:shared/wpiHal",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":halsim_ws_core",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/halsim_ws_core",
+    static_deps = [
+        "//hal:static/wpiHal",
+        "//wpinet:static/wpinet",
+        "//wpiutil:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":halsim_ws_core",
+    ],
+)
+
+package_default_cc_project(
+    name = "halsim_ws_core",
+    architectures = host_architectures,
+    maven_artifact_name = "halsim_ws_core",
+    maven_group_id = "org.wpilib.halsim",
+)

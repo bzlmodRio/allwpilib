@@ -1,0 +1,70 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_cc_project")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = ["//commandsv2:generated-doxygen-files"] + glob(["include/**/*"]),
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_library(
+    name = "commandsv2",
+    srcs = glob(["cpp/**"]),
+    hdrs = glob(["include/**"]),
+    hdrs_pkg_root = "include",
+    includes = ["include"],
+    srcs_pkg_root = "cpp",
+    strip_include_prefix = "include",
+    third_party_libraries = [
+        "//commandsv2:generated_cc",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore",
+        "//telemetry",
+        "//tunables",
+        "//wpilibc",
+        "//wpinet",
+    ],
+)
+
+alias(
+    name = "native",
+    actual = ":commandsv2",
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/commandsv2",
+    dynamic_deps = [
+        "//hal:shared/wpiHal",
+        "//ntcore:shared/ntcore",
+        "//telemetry:shared/telemetry",
+        "//tunables:shared/tunables",
+        "//wpilibc:shared/wpilibc",
+        "//wpimath:shared/wpimath",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":commandsv2"],
+)
+
+wpilib_cc_static_library(
+    name = "static/commandsv2",
+    static_deps = [
+        "//ntcore:static/ntcore",
+        "//telemetry:static/telemetry",
+        "//tunables:static/tunables",
+        "//wpilibc:static/wpilibc",
+        "//wpinet:static/wpinet",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [":commandsv2"],
+)
+
+package_default_cc_project(
+    name = "commandsv2",
+    maven_artifact_name = "commandsv2-cpp",
+    maven_group_id = "org.wpilib.commandsv2",
+)

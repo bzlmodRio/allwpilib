@@ -1,0 +1,17 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "aosnt",
+    srcs = glob(["cpp/**"]),
+    hdrs = glob(["include/**"]),
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//aosnt/types:nt_types_fbs",
+        "//ntcore",
+        "//wpiutil",
+        "@aos//aos:configuration",
+        "@aos//aos/events:event_loop",
+        "@aos_flatbuffers//:flatbuffers",
+    ],
+)

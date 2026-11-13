@@ -1,0 +1,166 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library", "wpilib_cc_static_library")
+load("//shared/bazel/rules:jni_rules.bzl", "wpilib_jni_cc_library")
+load("//shared/bazel/rules:packaging.bzl", "package_default_jni_project")
+load("//shared/bazel/rules/robotpy:build_info_gen.bzl", "generate_robotpy_native_wrapper_build_info")
+load(":robotpy_native_build_info.bzl", "define_native_wrapper")
+
+filegroup(
+    name = "doxygen-files",
+    srcs = glob([
+        "include/**/*.h",
+    ]),
+    visibility = ["//visibility:public"],
+)
+
+MRCLIB_SRCS = glob(["cpp/mrclib/**"])
+
+filegroup(
+    name = "platform-srcs",
+    srcs = select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": glob(["systemcore/**"]) + MRCLIB_SRCS,
+        "//conditions:default": glob(["sim/**"]),
+    }),
+)
+
+pkg_files(
+    name = "hal-sim-pkg",
+    srcs = glob(["sim/**"]),
+    strip_prefix = "",
+)
+
+pkg_files(
+    name = "hal-systemcore-pkg",
+    srcs = glob(["systemcore/**"]),
+    strip_prefix = "",
+)
+
+wpilib_cc_library(
+    name = "wpiHal",
+    srcs = [":platform-srcs"] + glob(
+        [
+            "cpp/**",
+        ],
+        exclude = [
+            "cpp/jni/**",
+            "cpp/mrclib/**",
+        ],
+    ),
+    hdrs = glob(["include/**/*"]),
+    extra_src_pkg_files = [
+        ":hal-sim-pkg",
+        ":hal-systemcore-pkg",
+        "//hal/src/main/java:hal-java-jni-hdrs-pkg",
+    ],
+    hdrs_pkg_root = "include",
+    includes = ["include"],
+    srcs_pkg_root = "cpp",
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore",
+        "//wpinet",
+        "//wpiutil",
+        "@mrclib_headers//:headers",
+    ] + select({
+        "@wpilib_toolchains//constraints/is_systemcore:systemcore": [
+            "//shared/bazel/thirdparty/mrclib",
+        ],
+        "//conditions:default": [
+        ],
+    }),
+)
+
+alias(
+    name = "native",
+    actual = ":wpiHal",
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "wpiHalMrc",
+    srcs = MRCLIB_SRCS,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal-headers",
+        "//shared/bazel/thirdparty/mrclib",
+        "//wpiutil",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpiHal",
+    dynamic_deps = [
+        "//ntcore:shared/ntcore",
+        "//wpinet:shared/wpinet",
+        "//wpiutil:shared/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal",
+    ],
+)
+
+wpilib_cc_static_library(
+    name = "static/wpiHal",
+    static_deps = [
+        "//ntcore:static/ntcore",
+        "//wpinet:static/wpinet",
+        "//wpiutil:static/wpiutil",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal",
+    ],
+)
+
+wpilib_jni_cc_library(
+    name = "wpiHaljni",
+    srcs = glob(["cpp/jni/**"]),
+    java_dep = "//hal/src/main/java:hal-java",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHal",
+    ],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/wpiHaljni",
+    auto_export_windows_symbols = False,
+    dynamic_deps = [
+        ":shared/wpiHal",
+        "//wpiutil:shared/wpiutil",
+    ],
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [
+        ":wpiHaljni",
+    ],
+)
+
+package_default_jni_project(
+    name = "wpiHal",
+    maven_artifact_name = "hal-cpp",
+    maven_group_id = "org.wpilib.hal",
+)
+
+generate_robotpy_native_wrapper_build_info(
+    name = "robotpy-native-wpihal-generator",
+    module_include_targets = {
+        "@mrclib_headers//:all_headers": "include",
+    },
+    native_srcs_root = "",
+    pyproject_toml = "pyproject.toml",
+)
+
+# Alias to make robotpy gen simpler.
+alias(
+    name = "shared/MrcLib",
+    actual = "//shared/bazel/thirdparty/mrclib:MrcLib",
+)
+
+define_native_wrapper(
+    name = "robotpy-native-wpihal",
+    pyproject_toml = "pyproject.toml",
+)

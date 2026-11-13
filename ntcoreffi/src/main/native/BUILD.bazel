@@ -1,0 +1,62 @@
+load("//shared/bazel/rules:cc_rules.bzl", "wpilib_cc_library", "wpilib_cc_shared_library")
+load("//shared/bazel/rules:packaging.bzl", "package_shared_cc_project")
+
+exports_files(
+    ["symbols.txt"],
+    visibility = ["//ntcoreffi:__pkg__"],
+)
+
+wpilib_cc_library(
+    name = "ntcoreffi",
+    srcs = glob([
+        "c/**",
+        "cpp/**",
+    ]),
+    hdrs = glob(["include/**"]),
+    extra_hdr_pkg_files = [
+        "//wpiutil/src/main/native:llvm-hdrs-pkg",
+        "//wpiutil/src/main/native:wpiutil-hdrs-pkg",
+        "//wpiutil/src/main/native:htrie-hdrs-pkg",
+        "//wpiutil/src/main/native:json-hdrs-pkg",
+        "//wpiutil/src/main/native:mpack-hdrs-pkg",
+        "//wpiutil/src/main/native:debugging-hdrs-pkg",
+        "//wpiutil/src/main/native:sigslot-hdrs-pkg",
+        "//wpiutil/src/main/native:nanopb-hdrs-pkg",
+        "//wpiutil/src/main/native:argparse-hdrs-pkg",
+        "//wpiutil/src/main/native:upb-hdrs-pkg",
+        "//wpiutil/src/main/native:double-conversion-hdrs-pkg",
+        "//ntcore/src/main/native:ntcore-hdrs-pkg",
+        "//ntcore:generated_cc-hdrs-pkg",
+    ],
+    hdrs_pkg_root = "include",
+    srcs_pkg_root = "cpp",
+    strip_include_prefix = "include",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//ntcore",
+        "//ntcoreffi:exported_symbols",
+        "//wpinet",
+        "//wpiutil",
+    ],
+)
+
+alias(
+    name = "native",
+    actual = ":ntcoreffi",
+    visibility = ["//visibility:public"],
+)
+
+wpilib_cc_shared_library(
+    name = "shared/ntcoreffi",
+    symbols = "symbols.txt",
+    use_debug_name = False,
+    visibility = ["//visibility:public"],
+    deps = [":ntcoreffi"],
+)
+
+package_shared_cc_project(
+    name = "ntcoreffi",
+    include_sources = False,
+    maven_artifact_name = "ntcoreffi-cpp",
+    maven_group_id = "org.wpilib.ntcoreffi",
+)
