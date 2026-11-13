@@ -4,7 +4,7 @@ load("//shared/bazel/rules:java_rules.bzl", "patch_module", "wpilib_java_library
 wpilib_java_library(
     name = "fields-java",
     srcs = glob(["**/*.java"]) + ["//fields:generated_java"],
-    extra_source_pkgs = ["//fields:resources"],
+    extra_source_pkgs = ["//fields/src/main/native:resources"],
     generated_java_srcs = ["//fields:generated_java"],
     javacopts = patch_module(
         "wpilib.gamefields",
@@ -32,7 +32,7 @@ wpilib_java_library(
     maven_artifact_name = "field-images-java",
     maven_group_id = "org.wpilib.fields",
     resource_strip_prefix = "fields/src/main/native/resources",
-    resources = ["//fields:field-images"],
+    resources = ["//fields/src/main/native:field-images"],
     visibility = ["//visibility:public"],
 )
 
