@@ -6,55 +6,55 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + [
+        srcs = native.glob(["include/**"]) + [
             "//:LICENSE.md",
         ],
-        out = "native/xrp/include",
+        out = "native/tunables/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "xrpVendordep/src/main/native/include": "",
+            "tunables/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/xrp/_init_robotpy_native_xrp.py"]
+    libinit_files = ["native/tunables/_init_robotpy_native_tunables.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
+            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/xrp/robotpy-native-xrp.pc"],
+        pc_files = ["native/tunables/robotpy-native-tunables.pc"],
     )
 
     copy_native_file(
-        name = "xrpVendordep",
-        library = "shared/xrpVendordep",
-        base_path = "native/xrp/",
+        name = "tunables",
+        library = "shared/tunables",
+        base_path = "native/tunables/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-xrp",
+        distribution = "robotpy-native-tunables",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":xrpVendordep.copy_lib",
+            ":tunables.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpilibc:robotpy-native-wpilib",
+            "//wpiutil:robotpy-native-wpiutil",
         ],
-        summary = "WPILib XRP vendor library",
-        requires = ["robotpy-native-wpilib==0.0.0"],
-        python_requires = ">=3.12",
-        strip_path_prefixes = ["xrpVendordep"],
+        summary = "WPILib Tunables Library",
+        requires = ["robotpy-native-wpiutil==0.0.0"],
+        python_requires = "",
+        strip_path_prefixes = ["tunables/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "xrp = native.xrp",
+                "tunables = native.tunables",
             ],
         },
     )

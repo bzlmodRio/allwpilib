@@ -6,55 +6,60 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + [
+        srcs = native.glob(["include/**"]) + ["//ntcore:generated-native-include-files"] + [
             "//:LICENSE.md",
         ],
-        out = "native/telemetry/include",
+        out = "native/ntcore/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "telemetry/src/main/native/include": "",
+            "ntcore/src/generated/main/native/include": "",
+            "ntcore/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/telemetry/_init_robotpy_native_telemetry.py"]
+    libinit_files = ["native/ntcore/_init_robotpy_native_ntcore.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
+            "//datalog:native/datalog/robotpy-native-datalog.pc",
+            "//wpinet:native/wpinet/robotpy-native-wpinet.pc",
             "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/telemetry/robotpy-native-telemetry.pc"],
+        pc_files = ["native/ntcore/robotpy-native-ntcore.pc"],
     )
 
     copy_native_file(
-        name = "telemetry",
-        library = "shared/telemetry",
-        base_path = "native/telemetry/",
+        name = "ntcore",
+        library = "shared/ntcore",
+        base_path = "native/ntcore/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-telemetry",
+        distribution = "robotpy-native-ntcore",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":telemetry.copy_lib",
+            ":ntcore.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
+            "//datalog:robotpy-native-datalog",
+            "//wpinet:robotpy-native-wpinet",
             "//wpiutil:robotpy-native-wpiutil",
         ],
-        summary = "WPILib Telemetry Library",
-        requires = ["robotpy-native-wpiutil==0.0.0"],
-        python_requires = "",
-        strip_path_prefixes = ["telemetry"],
+        summary = "WPILib NetworkTables Library",
+        requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-wpinet==0.0.0", "robotpy-native-datalog==0.0.0"],
+        python_requires = ">=3.12",
+        strip_path_prefixes = ["ntcore/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "telemetry = native.telemetry",
+                "ntcore = native.ntcore",
             ],
         },
     )

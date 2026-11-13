@@ -6,55 +6,55 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + [
+        srcs = native.glob(["include/**"]) + [
             "//:LICENSE.md",
         ],
-        out = "native/romi/include",
+        out = "native/datalog/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "romiVendordep/src/main/native/include": "",
+            "datalog/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/romi/_init_robotpy_native_romi.py"]
+    libinit_files = ["native/datalog/_init_robotpy_native_datalog.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
+            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/romi/robotpy-native-romi.pc"],
+        pc_files = ["native/datalog/robotpy-native-datalog.pc"],
     )
 
     copy_native_file(
-        name = "romiVendordep",
-        library = "shared/romiVendordep",
-        base_path = "native/romi/",
+        name = "datalog",
+        library = "shared/datalog",
+        base_path = "native/datalog/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-romi",
+        distribution = "robotpy-native-datalog",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":romiVendordep.copy_lib",
+            ":datalog.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpilibc:robotpy-native-wpilib",
+            "//wpiutil:robotpy-native-wpiutil",
         ],
-        summary = "WPILib Romi support library",
-        requires = ["robotpy-native-wpilib==0.0.0"],
+        summary = "WPILib Utility Library",
+        requires = ["robotpy-native-wpiutil==0.0.0"],
         python_requires = ">=3.12",
-        strip_path_prefixes = ["romiVendordep"],
+        strip_path_prefixes = ["datalog/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "romi = native.romi",
+                "datalog = native.datalog",
             ],
         },
     )

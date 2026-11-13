@@ -6,59 +6,60 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + ["//fields:generated-native-include-files"] + [
+        srcs = native.glob(["include/**"]) + [
             "//:LICENSE.md",
             "//:ThirdPartyNotices.txt",
         ],
-        out = "native/fields/include",
+        out = "native/halsim_gui/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "fields/src/generated/main/native/include": "",
-            "fields/src/main/native/include": "",
+            "simulation/halsim_gui/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/fields/_init_robotpy_native_fields.py"]
+    libinit_files = ["native/halsim_gui/_init_robotpy_native_halsim_gui.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
+            "//ntcore:native/ntcore/robotpy-native-ntcore.pc",
+            "//hal:native/wpihal/robotpy-native-wpihal.pc",
             "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/fields/robotpy-native-fields.pc"],
+        pc_files = ["native/halsim_gui/robotpy-native-halsim-gui.pc"],
     )
 
     copy_native_file(
-        name = "fields",
-        library = "shared/fields",
-        base_path = "native/fields/",
+        name = "halsim_gui",
+        library = "shared/halsim_gui",
+        base_path = "native/halsim_gui/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-fields",
+        distribution = "robotpy-native-halsim-gui",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":fields.copy_lib",
+            ":halsim_gui.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
+            "//ntcore:robotpy-native-ntcore",
+            "//hal:robotpy-native-wpihal",
             "//wpimath:robotpy-native-wpimath",
-            "//wpiutil:robotpy-native-wpiutil",
         ],
-        summary = "WPILib Fields Library",
-        requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-wpimath==0.0.0"],
+        summary = "WPILib HALSim GUI native library",
+        requires = ["robotpy-native-wpihal==0.0.0", "robotpy-native-wpimath==0.0.0", "robotpy-native-ntcore==0.0.0"],
         python_requires = ">=3.12",
-        strip_path_prefixes = ["fields"],
+        strip_path_prefixes = ["simulation/halsim_gui/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "fields = native.fields",
+                "halsim_gui = native.halsim_gui",
             ],
         },
     )

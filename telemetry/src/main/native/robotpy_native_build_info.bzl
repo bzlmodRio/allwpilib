@@ -6,60 +6,55 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + native.glob([
-            "src/main/native/thirdparty/apriltag/include/**",
-        ]) + [
+        srcs = native.glob(["include/**"]) + [
             "//:LICENSE.md",
         ],
-        out = "native/apriltag/include",
+        out = "native/telemetry/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "apriltag/src/main/native/include": "",
-            "apriltag/src/main/native/thirdparty/apriltag/include": "",
+            "telemetry/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/apriltag/_init_robotpy_native_apriltag.py"]
+    libinit_files = ["native/telemetry/_init_robotpy_native_telemetry.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
             "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/apriltag/robotpy-native-apriltag.pc"],
+        pc_files = ["native/telemetry/robotpy-native-telemetry.pc"],
     )
 
     copy_native_file(
-        name = "apriltag",
-        library = "shared/apriltag",
-        base_path = "native/apriltag/",
+        name = "telemetry",
+        library = "shared/telemetry",
+        base_path = "native/telemetry/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-apriltag",
+        distribution = "robotpy-native-telemetry",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":apriltag.copy_lib",
+            ":telemetry.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpimath:robotpy-native-wpimath",
             "//wpiutil:robotpy-native-wpiutil",
         ],
-        summary = "WPILib AprilTag Library",
-        requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-wpimath==0.0.0"],
-        python_requires = ">=3.12",
-        strip_path_prefixes = ["apriltag"],
+        summary = "WPILib Telemetry Library",
+        requires = ["robotpy-native-wpiutil==0.0.0"],
+        python_requires = "",
+        strip_path_prefixes = ["telemetry/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "apriltag = native.apriltag",
+                "telemetry = native.telemetry",
             ],
         },
     )

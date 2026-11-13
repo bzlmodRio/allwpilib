@@ -6,55 +6,55 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + [
+        srcs = native.glob(["include/**"]) + [
             "//:LICENSE.md",
         ],
-        out = "native/tunables/include",
+        out = "native/romi/include",
         root_paths = ["src/main/native/include/"],
         replace_prefixes = {
-            "tunables/src/main/native/include": "",
+            "romiVendordep/src/main/native/include": "",
         },
         verbose = False,
         visibility = ["//visibility:public"],
     )
 
-    libinit_files = ["native/tunables/_init_robotpy_native_tunables.py"]
+    libinit_files = ["native/romi/_init_robotpy_native_romi.py"]
 
     generate_native_files(
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//wpilibc:native/wpilib/robotpy-native-wpilib.pc",
         ],
         libinit_files = libinit_files,
-        pc_files = ["native/tunables/robotpy-native-tunables.pc"],
+        pc_files = ["native/romi/robotpy-native-romi.pc"],
     )
 
     copy_native_file(
-        name = "tunables",
-        library = "shared/tunables",
-        base_path = "native/tunables/",
+        name = "romiVendordep",
+        library = "shared/romiVendordep",
+        base_path = "native/romi/",
     )
 
     robotpy_library(
         name = name,
-        distribution = "robotpy-native-tunables",
+        distribution = "robotpy-native-romi",
         srcs = libinit_files,
         data = [
             name + ".pc_wrapper",
-            ":tunables.copy_lib",
+            ":romiVendordep.copy_lib",
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpiutil:robotpy-native-wpiutil",
+            "//wpilibc:robotpy-native-wpilib",
         ],
-        summary = "WPILib Tunables Library",
-        requires = ["robotpy-native-wpiutil==0.0.0"],
-        python_requires = "",
-        strip_path_prefixes = ["tunables"],
+        summary = "WPILib Romi support library",
+        requires = ["robotpy-native-wpilib==0.0.0"],
+        python_requires = ">=3.12",
+        strip_path_prefixes = ["romiVendordep/src/main/native"],
         entry_points = {
             "pkg_config": [
-                "tunables = native.tunables",
+                "romi = native.romi",
             ],
         },
     )

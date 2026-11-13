@@ -6,17 +6,17 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + native.glob([
-            "src/main/native/thirdparty/argparse/include/**",
-            "src/main/native/thirdparty/debugging/include/**",
-            "src/main/native/thirdparty/double-conversion/include/**",
-            "src/main/native/thirdparty/htrie/include/**",
-            "src/main/native/thirdparty/json/include/**",
-            "src/main/native/thirdparty/llvm/include/**",
-            "src/main/native/thirdparty/mpack/include/**",
-            "src/main/native/thirdparty/nanopb/include/**",
-            "src/main/native/thirdparty/sigslot/include/**",
-            "src/main/native/thirdparty/upb/include/**",
+        srcs = native.glob(["include/**"]) + native.glob([
+            "thirdparty/argparse/include/**",
+            "thirdparty/debugging/include/**",
+            "thirdparty/double-conversion/include/**",
+            "thirdparty/htrie/include/**",
+            "thirdparty/json/include/**",
+            "thirdparty/llvm/include/**",
+            "thirdparty/mpack/include/**",
+            "thirdparty/nanopb/include/**",
+            "thirdparty/sigslot/include/**",
+            "thirdparty/upb/include/**",
         ]) + [
             "//:LICENSE.md",
         ],
@@ -70,7 +70,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         summary = "WPILib Utility Library",
         requires = ["msvc-runtime>=14.42.34433; platform_system == 'Windows'"],
         python_requires = ">=3.12",
-        strip_path_prefixes = ["wpiutil"],
+        strip_path_prefixes = ["wpiutil/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "wpiutil = native.wpiutil",

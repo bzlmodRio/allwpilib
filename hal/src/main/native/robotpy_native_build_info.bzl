@@ -6,7 +6,7 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + [
+        srcs = native.glob(["include/**"]) + [
             "@mrclib_headers//:all_headers",
         ] + [
             "//:LICENSE.md",
@@ -64,7 +64,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         summary = "WPILib HAL implementation",
         requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-ntcore==0.0.0"],
         python_requires = ">=3.12",
-        strip_path_prefixes = ["hal"],
+        strip_path_prefixes = ["hal/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "mrclib = native.wpihal",

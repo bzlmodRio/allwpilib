@@ -6,7 +6,7 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + ["//wpilibc:generated-native-include-files"] + [
+        srcs = native.glob(["include/**"]) + ["//wpilibc:generated-native-include-files"] + [
             "//:LICENSE.md",
             "//:ThirdPartyNotices.txt",
         ],
@@ -65,7 +65,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         summary = "WPILib Robotics Library",
         requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-wpinet==0.0.0", "robotpy-native-ntcore==0.0.0", "robotpy-native-wpimath==0.0.0", "robotpy-native-wpihal==0.0.0", "robotpy-native-telemetry==0.0.0", "robotpy-native-tunables==0.0.0"],
         python_requires = ">=3.12",
-        strip_path_prefixes = ["wpilibc"],
+        strip_path_prefixes = ["wpilibc/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "wpilib = native.wpilib",

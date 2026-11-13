@@ -6,7 +6,7 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "copy_native_file", "gene
 def define_native_wrapper(name, pyproject_toml = None):
     copy_to_directory(
         name = "{}.copy_headers".format(name),
-        srcs = native.glob(["src/main/native/include/**"]) + ["//drivers:generated-native-include-files"] + [
+        srcs = native.glob(["include/**"]) + ["//drivers:generated-native-include-files"] + [
             "//:LICENSE.md",
         ],
         out = "native/wpilib_drivers/include",
@@ -52,7 +52,7 @@ def define_native_wrapper(name, pyproject_toml = None):
         summary = "WPILib third-party drivers library",
         requires = ["robotpy-native-wpilib==0.0.0"],
         python_requires = ">=3.12",
-        strip_path_prefixes = ["drivers"],
+        strip_path_prefixes = ["drivers/src/main/native"],
         entry_points = {
             "pkg_config": [
                 "wpilib_drivers = native.wpilib_drivers",
