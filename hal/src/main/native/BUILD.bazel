@@ -92,9 +92,9 @@ cc_library(
 wpilib_cc_shared_library(
     name = "shared/wpiHal",
     dynamic_deps = [
-        "//ntcore:shared/ntcore",
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
+        "//ntcore/src/main/native:shared/ntcore",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -105,9 +105,9 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/wpiHal",
     static_deps = [
-        "//ntcore:static/ntcore",
-        "//wpinet:static/wpinet",
-        "//wpiutil:static/wpiutil",
+        "//ntcore/src/main/native:static/ntcore",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -130,7 +130,7 @@ wpilib_cc_shared_library(
     auto_export_windows_symbols = False,
     dynamic_deps = [
         ":shared/wpiHal",
-        "//wpiutil:shared/wpiutil",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     use_debug_name = False,
     visibility = ["//visibility:public"],

@@ -122,8 +122,8 @@ wpilib_cc_shared_library(
         "//conditions:default": [],
     }),
     dynamic_deps = [
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ] + opencv_shared_libraries,
     user_link_flags = select({
         "@platforms//os:osx": [
@@ -140,8 +140,8 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/cscore",
     static_deps = [
-        "//wpinet:static/wpinet",
-        "//wpiutil:static/wpiutil",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [":cscore"],
@@ -161,7 +161,7 @@ wpilib_cc_shared_library(
     name = "shared/cscorejni",
     dynamic_deps = [
         ":shared/cscore",
-        "//wpiutil:shared/wpiutil",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     use_debug_name = False,
     visibility = ["//visibility:public"],
@@ -178,8 +178,8 @@ wpilib_cc_shared_library(
         ":MacSymbolScript.txt",
     ],
     dynamic_deps = [
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     use_debug_name = False,
     user_link_flags = select({

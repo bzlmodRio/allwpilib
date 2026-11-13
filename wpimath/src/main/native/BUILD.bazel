@@ -91,9 +91,9 @@ wpilib_cc_shared_library(
     name = "shared/wpimath",
     auto_export_windows_symbols = False,
     dynamic_deps = [
-        "//telemetry:shared/telemetry",
-        "//tunables:shared/tunables",
-        "//wpiutil:shared/wpiutil",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     visibility = ["//visibility:public"],
     win_def_file = ":wpimath_def",
@@ -105,9 +105,9 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/wpimath",
     static_deps = [
-        "//telemetry:static/telemetry",
-        "//tunables:static/tunables",
-        "//wpiutil:static/wpiutil",
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpiutil/src/main/native:static/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -130,9 +130,9 @@ wpilib_cc_shared_library(
     auto_export_windows_symbols = False,
     dynamic_deps = [
         ":shared/wpimath",
-        "//telemetry:shared/telemetry",
-        "//tunables:shared/tunables",
-        "//wpiutil:shared/wpiutil",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     use_debug_name = False,
     visibility = ["//visibility:public"],

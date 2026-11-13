@@ -26,8 +26,8 @@ def define_native_wrapper(name, pyproject_toml = None):
         name = name,
         pyproject_toml = pyproject_toml,
         pc_deps = [
-            "//wpimath:native/wpimath/robotpy-native-wpimath.pc",
-            "//wpiutil:native/wpiutil/robotpy-native-wpiutil.pc",
+            "//wpimath/src/main/native:native/wpimath/robotpy-native-wpimath.pc",
+            "//wpiutil/src/main/native:native/wpiutil/robotpy-native-wpiutil.pc",
         ],
         libinit_files = libinit_files,
         pc_files = ["native/fields/robotpy-native-fields.pc"],
@@ -49,8 +49,8 @@ def define_native_wrapper(name, pyproject_toml = None):
             "{}.copy_headers".format(name),
         ],
         deps = [
-            "//wpimath:robotpy-native-wpimath",
-            "//wpiutil:robotpy-native-wpiutil",
+            "//wpimath/src/main/native:robotpy-native-wpimath",
+            "//wpiutil/src/main/native:robotpy-native-wpiutil",
         ],
         summary = "WPILib Fields Library",
         requires = ["robotpy-native-wpiutil==0.0.0", "robotpy-native-wpimath==0.0.0"],

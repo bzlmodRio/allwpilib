@@ -5,7 +5,7 @@ wpilib_imgui_cc_test(
     size = "small",
     srcs = glob(["*.cpp"]),
     deps = [
-        "//tools/sysid:sysid_lib_for_tests",
+        "//tools/sysid/src/main/native:sysid_lib_for_tests",
     ],
 )
 

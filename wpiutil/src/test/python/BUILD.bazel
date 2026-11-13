@@ -6,7 +6,7 @@ load("//shared/bazel/rules/robotpy:robotpy_rules.bzl", "create_pybind_library")
 create_pybind_library(
     name = "module",
     dynamic_deps = [
-        "//wpiutil:shared/wpiutil",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     extension_name = "module",
     extra_srcs = glob(["cpp/wpiutil_test/*.cpp"]),

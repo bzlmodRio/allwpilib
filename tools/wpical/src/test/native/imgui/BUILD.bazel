@@ -5,7 +5,7 @@ wpilib_imgui_cc_test(
     name = "wpical_imgui_tests",
     size = "small",
     srcs = [
-        "//tools/wpical:wpical-main-cpp",
+        "//tools/wpical/src/main/native:wpical-main-cpp",
     ] + glob(["*.cpp"]),
     copts = COPTS,
     cxxopts = CXXOPTS,
@@ -16,7 +16,7 @@ wpilib_imgui_cc_test(
     deps = [
         "//glass",
         "//shared/bazel/thirdparty/ceres",
-        "//tools/wpical:wpical_lib",
+        "//tools/wpical/src/main/native:wpical_lib",
         "@bazel_tools//tools/cpp/runfiles",
     ],
 )

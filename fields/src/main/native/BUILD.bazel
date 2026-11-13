@@ -112,10 +112,10 @@ wpilib_cc_shared_library(
     name = "shared/fields",
     auto_export_windows_symbols = False,
     dynamic_deps = [
-        "//telemetry:shared/telemetry",
-        "//tunables:shared/tunables",
-        "//wpimath:shared/wpimath",
-        "//wpiutil:shared/wpiutil",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -158,10 +158,10 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/fields",
     static_deps = [
-        "//telemetry:static/telemetry",
-        "//tunables:static/tunables",
-        "//wpimath:static/wpimath",
-        "//wpiutil:static/wpiutil",
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpimath/src/main/native:static/wpimath",
+        "//wpiutil/src/main/native:static/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [

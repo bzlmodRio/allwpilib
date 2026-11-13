@@ -36,7 +36,7 @@ alias(
 wpilib_cc_shared_library(
     name = "shared/tunables",
     dynamic_deps = [
-        "//wpiutil:shared/wpiutil",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -47,7 +47,7 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/tunables",
     static_deps = [
-        "//wpiutil:static/wpiutil",
+        "//wpiutil/src/main/native:static/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [

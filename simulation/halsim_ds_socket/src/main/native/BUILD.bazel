@@ -58,9 +58,9 @@ wpilib_cc_shared_library(
     name = "shared/halsim_ds_socket",
     auto_export_windows_symbols = False,
     dynamic_deps = [
-        "//hal:shared/wpiHal",
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
+        "//hal/src/main/native:shared/wpiHal",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [":halsim_ds_socket"],
@@ -69,8 +69,8 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/halsim_ds_socket",
     static_deps = [
-        "//hal:static/wpiHal",
-        "//wpinet:static/wpinet",
+        "//hal/src/main/native:static/wpiHal",
+        "//wpinet/src/main/native:static/wpinet",
     ],
     visibility = ["//visibility:public"],
     deps = [":halsim_ds_socket_static"],

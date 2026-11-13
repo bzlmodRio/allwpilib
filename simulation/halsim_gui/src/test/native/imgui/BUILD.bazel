@@ -4,7 +4,7 @@ wpilib_imgui_cc_test(
     name = "halsim_gui_imgui_tests",
     size = "small",
     srcs = [
-        "//simulation/halsim_gui:main-native-srcs",
+        "//simulation/halsim_gui/src/main/native:main-native-srcs",
     ] + glob(["*.cpp"]),
     tags = [
         "no-asan",
@@ -12,7 +12,7 @@ wpilib_imgui_cc_test(
     deps = [
         "//glass:glassnt",
         "//hal:wpiHal",
-        "//simulation/halsim_gui:headers",
+        "//simulation/halsim_gui/src/main/native:headers",
     ],
 )
 

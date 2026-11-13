@@ -4,9 +4,9 @@ wpilib_imgui_cc_test(
     name = "outlineviewer_imgui_tests",
     size = "small",
     srcs = [
-        "//tools/outlineviewer:generate-resources",
         "//tools/outlineviewer:generate-version",
-        "//tools/outlineviewer:main-native-srcs",
+        "//tools/outlineviewer/src/main/native:generate-resources",
+        "//tools/outlineviewer/src/main/native:main-native-srcs",
     ] + glob(["*.cpp"]),
     deps = [
         "//glass:glassnt",

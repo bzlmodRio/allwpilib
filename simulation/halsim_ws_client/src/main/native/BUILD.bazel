@@ -33,9 +33,9 @@ wpilib_halsim_extension(
 wpilib_cc_shared_library(
     name = "shared/halsim_ws_client",
     dynamic_deps = [
-        "//hal:shared/wpiHal",
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
+        "//hal/src/main/native:shared/wpiHal",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -46,10 +46,10 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/halsim_ws_client",
     static_deps = [
-        "//hal:static/wpiHal",
-        "//wpinet:static/wpinet",
-        "//wpiutil:static/wpiutil",
-        "//simulation/halsim_ws_core:static/halsim_ws_core",
+        "//hal/src/main/native:static/wpiHal",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
+        "//simulation/halsim_ws_core/src/main/native:static/halsim_ws_core",
     ],
     visibility = ["//visibility:public"],
     deps = [

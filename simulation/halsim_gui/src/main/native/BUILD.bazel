@@ -26,6 +26,7 @@ wpilib_cc_library(
     ]),
     hdrs_pkg_root = "include",
     includes = ["include"],
+    linkstatic = False,
     srcs_pkg_root = "cpp",
     tags = [
         "wpi-cpp-gui",
@@ -58,6 +59,7 @@ wpilib_cc_library(
     ],
     hdrs_pkg_root = "include",
     includes = ["include"],
+    linkstatic = True,
     srcs_pkg_root = "cpp",
     tags = [
         "wpi-cpp-gui",
@@ -76,12 +78,12 @@ wpilib_cc_library(
 wpilib_cc_shared_library(
     name = "shared/halsim_gui",
     dynamic_deps = [
-        "//hal:shared/wpiHal",
-        "//telemetry:shared/telemetry",
-        "//tunables:shared/tunables",
-        "//wpimath:shared/wpimath",
-        "//datalog:shared/datalog",
-        "//ntcore:shared/ntcore",
+        "//hal/src/main/native:shared/wpiHal",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpimath/src/main/native:shared/wpimath",
+        "//datalog/src/main/native:shared/datalog",
+        "//ntcore/src/main/native:shared/ntcore",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -92,10 +94,10 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/halsim_gui",
     static_deps = [
-        "//hal:static/wpiHal",
-        "//wpimath:static/wpimath",
-        "//datalog:static/datalog",
-        "//ntcore:static/ntcore",
+        "//hal/src/main/native:static/wpiHal",
+        "//wpimath/src/main/native:static/wpimath",
+        "//datalog/src/main/native:static/datalog",
+        "//ntcore/src/main/native:static/ntcore",
         "//glass:static/glassnt",
     ],
     visibility = ["//visibility:public"],

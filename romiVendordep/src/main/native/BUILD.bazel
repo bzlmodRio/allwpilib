@@ -39,13 +39,13 @@ alias(
 wpilib_cc_shared_library(
     name = "shared/romiVendordep",
     dynamic_deps = [
-        "//hal:shared/wpiHal",
-        "//ntcore:shared/ntcore",
-        "//telemetry:shared/telemetry",
-        "//tunables:shared/tunables",
-        "//wpilibc:shared/wpilibc",
-        "//wpinet:shared/wpinet",
-        "//wpiutil:shared/wpiutil",
+        "//hal/src/main/native:shared/wpiHal",
+        "//ntcore/src/main/native:shared/ntcore",
+        "//telemetry/src/main/native:shared/telemetry",
+        "//tunables/src/main/native:shared/tunables",
+        "//wpilibc/src/main/native:shared/wpilibc",
+        "//wpinet/src/main/native:shared/wpinet",
+        "//wpiutil/src/main/native:shared/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -56,13 +56,13 @@ wpilib_cc_shared_library(
 wpilib_cc_static_library(
     name = "static/romiVendordep",
     static_deps = [
-        "//hal:static/wpiHal",
-        "//ntcore:static/ntcore",
-        "//telemetry:static/telemetry",
-        "//tunables:static/tunables",
-        "//wpilibc:static/wpilibc",
-        "//wpinet:static/wpinet",
-        "//wpiutil:static/wpiutil",
+        "//hal/src/main/native:static/wpiHal",
+        "//ntcore/src/main/native:static/ntcore",
+        "//telemetry/src/main/native:static/telemetry",
+        "//tunables/src/main/native:static/tunables",
+        "//wpilibc/src/main/native:static/wpilibc",
+        "//wpinet/src/main/native:static/wpinet",
+        "//wpiutil/src/main/native:static/wpiutil",
     ],
     visibility = ["//visibility:public"],
     deps = [
