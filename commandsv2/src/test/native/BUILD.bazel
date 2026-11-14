@@ -12,8 +12,8 @@ cc_test(
         "no-ubsan",
     ],
     deps = [
-        "//commandsv2",
-        "//thirdparty/catch2",
+        "//commandsv2/src/main/native:commandsv2",
+        "//thirdparty/catch2/src/main/native:catch2",
     ],
 )
 

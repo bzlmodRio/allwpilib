@@ -30,15 +30,15 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//datalog",
-        "//hal:wpiHal",
-        "//ntcore",
+        "//datalog/src/main/native:datalog",
+        "//hal/src/main/native:wpiHal",
+        "//ntcore/src/main/native:ntcore",
         "//ntcore/src/main/native:ntcore-headers",
-        "//telemetry",
-        "//tunables",
-        "//wpimath",
-        "//wpinet",
-        "//wpiutil",
+        "//telemetry/src/main/native:telemetry",
+        "//tunables/src/main/native:tunables",
+        "//wpimath/src/main/native:wpimath",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 

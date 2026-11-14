@@ -13,7 +13,7 @@ cc_binary(
     name = "printlog",
     srcs = ["printlog.cpp"],
     deps = [
-        "//datalog",
-        "//wpiutil",
+        "//datalog/src/main/native:datalog",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )

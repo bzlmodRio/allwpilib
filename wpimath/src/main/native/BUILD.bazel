@@ -61,10 +61,10 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//telemetry",
-        "//tunables",
+        "//telemetry/src/main/native:telemetry",
+        "//tunables/src/main/native:tunables",
         "//wpimath:nanopb-generated-headers",
-        "//wpiutil",
+        "//wpiutil/src/main/native:wpiutil",
         "@eigen",
     ],
 )

@@ -16,7 +16,7 @@ wpilib_java_library(
         java_plugin_artifact("io.avaje:avaje-jsonb-generator", "io.avaje.jsonb.generator.JsonbProcessor"),
     ],
     resource_strip_prefix = "fields/src/main/native/resources",
-    resources = ["//fields:field-jsons"],
+    resources = ["//fields/src/main/native:field-jsons"],
     visibility = ["//visibility:public"],
     deps = [
         "//wpimath/src/main/java",

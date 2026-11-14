@@ -28,7 +28,7 @@ generate_wpiutil = rule(
             mandatory = True,
         ),
         "_nanopb_generator": attr.label(
-            default = Label("//wpiutil:nanopb_generator"),
+            default = Label("//wpiutil/src/main/native:nanopb_generator"),
             cfg = "exec",
             executable = True,
         ),

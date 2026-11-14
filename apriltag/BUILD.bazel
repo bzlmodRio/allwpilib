@@ -3,11 +3,3 @@ filegroup(
     srcs = glob(["src/test/resources/**"]),
     visibility = ["//apriltag/src/test/java:__pkg__"],
 )
-
-# Back-compat aliases for targets that moved to //apriltag/src/main/native.
-
-alias(
-    name = "apriltag",
-    actual = "//apriltag/src/main/native:apriltag",
-    visibility = ["//visibility:public"],
-)

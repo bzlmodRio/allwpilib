@@ -22,7 +22,7 @@ generate_fields = rule(
     implementation = _generate_fields_impl,
     attrs = {
         "_field_jsons": attr.label(
-            default = Label("//fields:field-jsons"),
+            default = Label("//fields/src/main/native:field-jsons"),
         ),
         "_templates": attr.label(
             default = Label("//fields:templates"),

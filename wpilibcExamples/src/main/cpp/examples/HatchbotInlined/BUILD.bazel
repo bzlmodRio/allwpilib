@@ -19,9 +19,9 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//commandsv2",
-        "//drivers",
-        "//tunables",
-        "//wpilibc",
+        "//commandsv2/src/main/native:commandsv2",
+        "//drivers/src/main/native:drivers",
+        "//tunables/src/main/native:tunables",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

@@ -63,11 +63,3 @@ filegroup(
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//commandsv2:__subpackages__"],
 )
-
-# Back-compat aliases for targets that moved to //commandsv2/src/main/native.
-
-alias(
-    name = "commandsv2",
-    actual = "//commandsv2/src/main/native:commandsv2",
-    visibility = ["//visibility:public"],
-)

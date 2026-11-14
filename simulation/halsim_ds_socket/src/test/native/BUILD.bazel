@@ -5,8 +5,8 @@ cc_test(
     size = "small",
     srcs = glob(["**/*.cpp"]),
     deps = [
-        "//simulation/halsim_ds_socket",
-        "//thirdparty/catch2",
+        "//simulation/halsim_ds_socket/src/main/native:halsim_ds_socket",
+        "//thirdparty/catch2/src/main/native:catch2",
     ],
 )
 

@@ -178,11 +178,11 @@ def hal_simulation_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         deps = [
             ":hal_simulation.tmpl_hdrs",
             ":hal_simulation.trampoline_hdrs",
-            "//hal:wpiHal",
+            "//hal/src/main/native:wpiHal",
+            "//ntcore/src/main/native:ntcore",
             "//ntcore/src/main/python:ntcore_pybind_library",
-            "//ntcore:ntcore",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//hal/src/main/native:shared/wpiHal",
@@ -465,11 +465,11 @@ def wpihal_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         deps = [
             ":wpihal.tmpl_hdrs",
             ":wpihal.trampoline_hdrs",
-            "//hal:wpiHal",
+            "//hal/src/main/native:wpiHal",
+            "//ntcore/src/main/native:ntcore",
             "//ntcore/src/main/python:ntcore_pybind_library",
-            "//ntcore:ntcore",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//hal/src/main/native:shared/wpiHal",

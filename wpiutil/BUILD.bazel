@@ -7,7 +7,7 @@ py_binary(
     name = "generate_nanopb",
     srcs = ["generate_nanopb.py"],
     data = [
-        ":nanopb_generator",
+        "//wpiutil/src/main/native:nanopb_generator",
     ],
     target_compatible_with = select({
         "@wpilib_toolchains//constraints/is_systemcore:systemcore": ["@platforms//:incompatible"],
@@ -52,18 +52,4 @@ cc_library(
     hdrs = glob(["src/generated/test/native/include/*.npb.h"]),
     strip_include_prefix = "src/generated/test/native/include",
     visibility = ["//wpiutil/src/test/native:__pkg__"],
-)
-
-# Back-compat aliases for targets that moved to //wpiutil/src/main/native.
-
-alias(
-    name = "wpiutil",
-    actual = "//wpiutil/src/main/native:wpiutil",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "nanopb_generator",
-    actual = "//wpiutil/src/main/native:nanopb_generator",
-    visibility = ["//visibility:public"],
 )

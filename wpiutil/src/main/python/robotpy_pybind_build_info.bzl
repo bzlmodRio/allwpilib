@@ -219,8 +219,8 @@ def wpiutil_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         deps = [
             ":wpiutil.tmpl_hdrs",
             ":wpiutil.trampoline_hdrs",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil-casters",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//wpiutil/src/main/native:shared/wpiutil",

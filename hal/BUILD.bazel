@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //hal/src/main/native.
-
-alias(
-    name = "wpiHal",
-    actual = "//hal/src/main/native:wpiHal",
-    visibility = ["//visibility:public"],
-)

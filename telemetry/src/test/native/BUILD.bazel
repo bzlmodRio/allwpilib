@@ -9,8 +9,8 @@ cc_test(
         "no-tsan",
     ],
     deps = [
-        "//telemetry",
-        "//thirdparty/catch2",
+        "//telemetry/src/main/native:telemetry",
+        "//thirdparty/catch2/src/main/native:catch2",
     ],
 )
 

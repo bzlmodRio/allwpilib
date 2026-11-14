@@ -17,7 +17,7 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//datalog",
-        "//wpilibc",
+        "//datalog/src/main/native:datalog",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

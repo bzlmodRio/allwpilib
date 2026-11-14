@@ -5,8 +5,8 @@ cc_test(
     size = "small",
     srcs = glob(["**/*.cpp"]),
     deps = [
-        "//cscore",
-        "//thirdparty/catch2",
+        "//cscore/src/main/native:cscore",
+        "//thirdparty/catch2/src/main/native:catch2",
     ],
 )
 

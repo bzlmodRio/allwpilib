@@ -24,7 +24,7 @@ wpilib_imgui_cc_test(
         "@wpilib_toolchains//constraints/combined:is_cross_compiler": [],
     }),
     deps = [
-        "//datalog",
+        "//datalog/src/main/native:datalog",
         "//glass",
         "//shared/bazel/thirdparty/libssh",
     ],

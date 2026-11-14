@@ -20,11 +20,11 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//ntcore",
-        "//telemetry",
-        "//tunables",
-        "//wpilibc",
-        "//wpinet",
+        "//ntcore/src/main/native:ntcore",
+        "//telemetry/src/main/native:telemetry",
+        "//tunables/src/main/native:tunables",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 

@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //simulation/halsim_ds_socket/src/main/native.
-
-alias(
-    name = "halsim_ds_socket",
-    actual = "//simulation/halsim_ds_socket/src/main/native:halsim_ds_socket",
-    visibility = ["//visibility:public"],
-)

@@ -17,8 +17,8 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//simulation/halsim_ws_core",
-        "//wpinet",
+        "//simulation/halsim_ws_core/src/main/native:halsim_ws_core",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 
@@ -46,8 +46,8 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//simulation/halsim_ws_core",
-        "//wpinet",
+        "//simulation/halsim_ws_core/src/main/native:halsim_ws_core",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 

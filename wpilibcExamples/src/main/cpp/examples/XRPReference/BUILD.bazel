@@ -19,10 +19,10 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//commandsv2",
-        "//tunables",
-        "//wpilibc",
-        "//wpimath",  # units
-        "//xrpVendordep",
+        "//commandsv2/src/main/native:commandsv2",
+        "//tunables/src/main/native:tunables",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath",  # units
+        "//xrpVendordep/src/main/native:xrpVendordep",
     ],
 )

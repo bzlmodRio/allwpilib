@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //datalog/src/main/native.
-
-alias(
-    name = "datalog",
-    actual = "//datalog/src/main/native:datalog",
-    visibility = ["//visibility:public"],
-)

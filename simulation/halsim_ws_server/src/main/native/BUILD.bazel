@@ -21,7 +21,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//simulation/halsim_ws_core",
+        "//simulation/halsim_ws_core/src/main/native:halsim_ws_core",
     ],
 )
 
@@ -46,7 +46,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//simulation/halsim_ws_core",
+        "//simulation/halsim_ws_core/src/main/native:halsim_ws_core",
     ],
 )
 

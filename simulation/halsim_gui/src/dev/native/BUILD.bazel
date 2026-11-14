@@ -7,6 +7,6 @@ cc_binary(
         "wpi-cpp-gui",
     ],
     deps = [
-        "//simulation/halsim_gui",
+        "//simulation/halsim_gui/src/main/native:halsim_gui",
     ],
 )

@@ -19,6 +19,6 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//wpilibc",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

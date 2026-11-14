@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //tunables/src/main/native.
-
-alias(
-    name = "tunables",
-    actual = "//tunables/src/main/native:tunables",
-    visibility = ["//visibility:public"],
-)

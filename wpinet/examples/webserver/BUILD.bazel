@@ -4,6 +4,6 @@ cc_binary(
     name = "webserver",
     srcs = ["webserver.cpp"],
     deps = [
-        "//wpinet",
+        "//wpinet/src/main/native:wpinet",
     ],
 )

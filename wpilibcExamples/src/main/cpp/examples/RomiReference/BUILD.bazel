@@ -19,11 +19,11 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//commandsv2",
-        "//drivers",
-        "//romiVendordep",
-        "//tunables",
-        "//wpilibc",
-        "//wpimath",
+        "//commandsv2/src/main/native:commandsv2",
+        "//drivers/src/main/native:drivers",
+        "//romiVendordep/src/main/native:romiVendordep",
+        "//tunables/src/main/native:tunables",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath",
     ],
 )

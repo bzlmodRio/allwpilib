@@ -34,9 +34,9 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//datalog",
-        "//wpinet",
-        "//wpiutil",
+        "//datalog/src/main/native:datalog",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 

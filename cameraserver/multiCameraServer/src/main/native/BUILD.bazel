@@ -4,8 +4,8 @@ cc_binary(
     name = "multiCameraServer",
     srcs = ["cpp/main.cpp"],
     deps = [
-        "//cameraserver",
-        "//ntcore",
-        "//wpiutil",
+        "//cameraserver/src/main/native:cameraserver",
+        "//ntcore/src/main/native:ntcore",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )

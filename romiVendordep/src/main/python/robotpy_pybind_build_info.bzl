@@ -173,11 +173,11 @@ def romi_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes
         deps = [
             ":romi.tmpl_hdrs",
             ":romi.trampoline_hdrs",
-            "//romiVendordep:romiVendordep",
+            "//romiVendordep/src/main/native:romiVendordep",
+            "//wpilibc/src/main/native:wpilibc",
             "//wpilibc/src/main/python:wpilib_pybind_library",
-            "//wpilibc:wpilibc",
+            "//wpimath/src/main/native:wpimath",
             "//wpimath/src/main/python:wpimath_pybind_library",
-            "//wpimath:wpimath",
         ],
         dynamic_deps = [
             "//romiVendordep/src/main/native:shared/romiVendordep",

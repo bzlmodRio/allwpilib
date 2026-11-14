@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //romiVendordep/src/main/native.
-
-alias(
-    name = "romiVendordep",
-    actual = "//romiVendordep/src/main/native:romiVendordep",
-    visibility = ["//visibility:public"],
-)

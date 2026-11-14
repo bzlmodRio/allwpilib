@@ -11,7 +11,7 @@ wpilib_imgui_cc_test(
     ],
     deps = [
         "//glass:glassnt",
-        "//hal:wpiHal",
+        "//hal/src/main/native:wpiHal",
         "//simulation/halsim_gui/src/main/native:headers",
     ],
 )

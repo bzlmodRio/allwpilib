@@ -87,11 +87,3 @@ pkg_files(
     ],
     visibility = ["//wpilibc/src/main/native:__pkg__"],
 )
-
-# Back-compat aliases for targets that moved to //wpilibc/src/main/native.
-
-alias(
-    name = "wpilibc",
-    actual = "//wpilibc/src/main/native:wpilibc",
-    visibility = ["//visibility:public"],
-)

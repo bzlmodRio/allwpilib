@@ -59,9 +59,9 @@ wpilib_cc_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     deps = [
-        "//ntcore",
-        "//wpinet",
-        "//wpiutil",
+        "//ntcore/src/main/native:ntcore",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
         "@mrclib_headers//:headers",
     ] + select({
         "@wpilib_toolchains//constraints/is_systemcore:systemcore": [
@@ -85,7 +85,7 @@ cc_library(
     deps = [
         ":wpiHal-headers",
         "//shared/bazel/thirdparty/mrclib",
-        "//wpiutil",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 

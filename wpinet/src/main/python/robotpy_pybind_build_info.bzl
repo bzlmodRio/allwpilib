@@ -145,9 +145,9 @@ def wpinet_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         deps = [
             ":wpinet.tmpl_hdrs",
             ":wpinet.trampoline_hdrs",
-            "//wpinet:wpinet",
+            "//wpinet/src/main/native:wpinet",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//wpinet/src/main/native:shared/wpinet",

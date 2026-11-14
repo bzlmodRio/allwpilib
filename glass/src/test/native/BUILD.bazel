@@ -9,7 +9,7 @@ cc_test(
     ],
     deps = [
         "//glass",
-        "//thirdparty/catch2",
+        "//thirdparty/catch2/src/main/native:catch2",
     ],
 )
 

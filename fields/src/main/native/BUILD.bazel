@@ -97,8 +97,8 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//wpimath",
-        "//wpiutil",
+        "//wpimath/src/main/native:wpimath",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 
@@ -143,7 +143,7 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//wpiutil",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 

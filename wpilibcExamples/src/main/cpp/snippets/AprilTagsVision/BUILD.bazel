@@ -15,10 +15,10 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//apriltag",
-        "//cameraserver",
-        "//ntcore",
-        "//wpilibc",
-        "//wpimath",
+        "//apriltag/src/main/native:apriltag",
+        "//cameraserver/src/main/native:cameraserver",
+        "//ntcore/src/main/native:ntcore",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath",
     ],
 )

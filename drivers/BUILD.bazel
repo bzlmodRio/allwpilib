@@ -52,11 +52,3 @@ filegroup(
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//drivers:__subpackages__"],
 )
-
-# Back-compat aliases for targets that moved to //drivers/src/main/native.
-
-alias(
-    name = "drivers",
-    actual = "//drivers/src/main/native:drivers",
-    visibility = ["//visibility:public"],
-)

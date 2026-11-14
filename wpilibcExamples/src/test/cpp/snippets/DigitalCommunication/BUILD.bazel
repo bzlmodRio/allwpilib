@@ -25,7 +25,7 @@ cc_test(
         "wpi-example",
     ],
     deps = [
-        "//thirdparty/catch2",
+        "//thirdparty/catch2/src/main/native:catch2",
         "//wpilibcExamples/src/main/cpp/snippets/DigitalCommunication:DigitalCommunication_lib",
     ],
 )

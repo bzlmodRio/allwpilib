@@ -15,7 +15,7 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//drivers",
-        "//wpilibc",
+        "//drivers/src/main/native:drivers",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

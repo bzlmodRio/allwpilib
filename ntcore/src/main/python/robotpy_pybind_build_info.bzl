@@ -446,13 +446,13 @@ def ntcore_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         deps = [
             ":ntcore.tmpl_hdrs",
             ":ntcore.trampoline_hdrs",
+            "//datalog/src/main/native:datalog",
             "//datalog/src/main/python:wpilog_pybind_library",
-            "//datalog:datalog",
-            "//ntcore:ntcore",
+            "//ntcore/src/main/native:ntcore",
+            "//wpinet/src/main/native:wpinet",
             "//wpinet/src/main/python:wpinet_pybind_library",
-            "//wpinet:wpinet",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//datalog/src/main/native:shared/datalog",

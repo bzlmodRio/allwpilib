@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //wpigui/src/main/native.
-
-alias(
-    name = "wpigui",
-    actual = "//wpigui/src/main/native:wpigui",
-    visibility = ["//visibility:public"],
-)

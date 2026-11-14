@@ -274,8 +274,8 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         struct(
             class_name = "DCMotorBiasEstimator",
             yml_file = "semiwrap/DCMotorBiasEstimator.yml",
-            header_root = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)",
-            header_file = "$(execpath //wpimath:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/DCMotorBiasEstimator.hpp",
+            header_root = "$(execpath //wpimath/src/main/native:robotpy-native-wpimath.copy_headers)",
+            header_file = "$(execpath //wpimath/src/main/native:robotpy-native-wpimath.copy_headers)/wpi/math/estimator/DCMotorBiasEstimator.hpp",
             tmpl_class_names = [
                 ("DCMotorBiasEstimator_tmpl1", "DCMotorBiasEstimator"),
             ],
@@ -1404,14 +1404,14 @@ def wpimath_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         deps = [
             ":wpimath.tmpl_hdrs",
             ":wpimath.trampoline_hdrs",
+            "//telemetry/src/main/native:telemetry",
             "//telemetry/src/main/python:telemetry_pybind_library",
-            "//telemetry:telemetry",
+            "//tunables/src/main/native:tunables",
             "//tunables/src/main/python:tunables_pybind_library",
-            "//tunables:tunables",
+            "//wpimath/src/main/native:wpimath",
             "//wpimath/src/main/python:wpimath-casters",
-            "//wpimath:wpimath",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//telemetry/src/main/native:shared/telemetry",

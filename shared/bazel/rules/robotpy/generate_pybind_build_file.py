@@ -249,10 +249,11 @@ class BazelExtensionModule:
             else:
                 base_library = fixup_root_package_name(dep_name.rsplit("_", 1)[0])
                 shared_lib_name = fixup_shared_lib_name(base_library.rsplit("/", 1)[-1])
-                local_extension_dependencies.add(f"//{base_library}:{shared_lib_name}")
-                dynamic_dependencies.add(
-                    f"//{base_library}/src/main/native:shared/{shared_lib_name}"
+                native_package = f"{base_library}/src/main/native"
+                local_extension_dependencies.add(
+                    f"//{native_package}:{shared_lib_name}"
                 )
+                dynamic_dependencies.add(f"//{native_package}:shared/{shared_lib_name}")
                 if dep_name != self.name:
                     local_extension_dependencies.add(
                         f"//{base_library}/src/main/python:{dep_name}_pybind_library"

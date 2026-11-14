@@ -94,7 +94,7 @@ wpilib_objc_library(
         "Foundation",
     ],
     deps = [
-        "//wpiutil",
+        "//wpiutil/src/main/native:wpiutil",
         "@libuv",
     ],
 )
@@ -153,7 +153,7 @@ wpilib_cc_library(
     deps = [
         ":ada",
         ":private_includes",
-        "//wpiutil",
+        "//wpiutil/src/main/native:wpiutil",
         "@libuv",
     ] + select({
         "@platforms//os:osx": [":wpinet-mac-bluetooth"],

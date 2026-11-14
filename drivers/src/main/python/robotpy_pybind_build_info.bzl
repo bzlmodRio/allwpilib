@@ -233,9 +233,9 @@ def drivers_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inclu
         deps = [
             ":drivers.tmpl_hdrs",
             ":drivers.trampoline_hdrs",
-            "//drivers:drivers",
+            "//drivers/src/main/native:drivers",
+            "//wpilibc/src/main/native:wpilibc",
             "//wpilibc/src/main/python:wpilib_pybind_library",
-            "//wpilibc:wpilibc",
         ],
         dynamic_deps = [
             "//drivers/src/main/native:shared/drivers",

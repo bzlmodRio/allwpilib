@@ -23,10 +23,10 @@ wpilib_cc_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     deps = [
-        "//cscore",
-        "//hal:wpiHal",
-        "//ntcore",
-        "//wpilibc",
+        "//cscore/src/main/native:cscore",
+        "//hal/src/main/native:wpiHal",
+        "//ntcore/src/main/native:ntcore",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )
 

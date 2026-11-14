@@ -193,11 +193,11 @@ def xrp_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includes 
         deps = [
             ":xrp.tmpl_hdrs",
             ":xrp.trampoline_hdrs",
+            "//wpilibc/src/main/native:wpilibc",
             "//wpilibc/src/main/python:wpilib_pybind_library",
-            "//wpilibc:wpilibc",
+            "//wpimath/src/main/native:wpimath",
             "//wpimath/src/main/python:wpimath_pybind_library",
-            "//wpimath:wpimath",
-            "//xrpVendordep:xrpVendordep",
+            "//xrpVendordep/src/main/native:xrpVendordep",
         ],
         dynamic_deps = [
             "//wpilibc/src/main/native:shared/wpilibc",

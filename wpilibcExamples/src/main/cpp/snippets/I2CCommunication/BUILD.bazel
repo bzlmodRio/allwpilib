@@ -10,7 +10,7 @@ cc_library(
         "//wpilibcExamples/src/test/cpp/snippets/I2CCommunication:__pkg__",
     ],
     deps = [
-        "//wpilibc",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )
 

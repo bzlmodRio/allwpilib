@@ -212,9 +212,9 @@ def tunables_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], incl
         deps = [
             ":tunables.tmpl_hdrs",
             ":tunables.trampoline_hdrs",
-            "//tunables:tunables",
+            "//tunables/src/main/native:tunables",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//tunables/src/main/native:shared/tunables",

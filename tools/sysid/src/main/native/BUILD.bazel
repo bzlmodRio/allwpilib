@@ -25,9 +25,9 @@ cc_library(
     strip_include_prefix = "include",
     visibility = ["//tools/sysid/src/test/native:__pkg__"],
     deps = [
-        "//datalog",
+        "//datalog/src/main/native:datalog",
         "//glass",
-        "//wpinet",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 
@@ -51,10 +51,10 @@ cc_library(
     target_compatible_with = imgui_test_target_compatible_with(),
     visibility = ["//tools/sysid/src/test/native/imgui:__pkg__"],
     deps = [
-        "//datalog",
+        "//datalog/src/main/native:datalog",
         "//glass",
         "//wpigui/src/test/native",
-        "//wpinet",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 

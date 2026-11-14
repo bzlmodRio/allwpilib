@@ -14,7 +14,7 @@ cc_test(
     ],
     deps = [
         "//shared/bazel/thirdparty/ceres",
-        "//thirdparty/catch2",
+        "//thirdparty/catch2/src/main/native:catch2",
         "//tools/wpical/src/main/native:wpical_lib",
         "@bazel_tools//tools/cpp/runfiles",
     ],

@@ -22,9 +22,9 @@ wpilib_cc_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     deps = [
-        "//ntcore",
-        "//wpilibc",
-        "//wpinet",
+        "//ntcore/src/main/native:ntcore",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 

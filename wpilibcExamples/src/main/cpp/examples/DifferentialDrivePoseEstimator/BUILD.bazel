@@ -19,10 +19,10 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//drivers",
-        "//fields",
-        "//ntcore",
-        "//wpilibc",
-        "//wpimath",
+        "//drivers/src/main/native:drivers",
+        "//fields/src/main/native:fields",
+        "//ntcore/src/main/native:ntcore",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath",
     ],
 )

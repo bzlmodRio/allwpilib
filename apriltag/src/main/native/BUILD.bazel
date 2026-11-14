@@ -66,8 +66,8 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":thirdparty-apriltag",
-        "//wpimath",
-        "//wpiutil",
+        "//wpimath/src/main/native:wpimath",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 

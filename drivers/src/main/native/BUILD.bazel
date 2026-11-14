@@ -22,7 +22,7 @@ wpilib_cc_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//wpilibc",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )
 

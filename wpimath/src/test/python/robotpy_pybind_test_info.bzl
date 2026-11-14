@@ -77,8 +77,8 @@ def wpimath_test_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], 
         deps = [
             ":wpimath_test.tmpl_hdrs",
             ":wpimath_test.trampoline_hdrs",
+            "//wpimath/src/main/native:wpimath",
             "//wpimath/src/main/python:wpimath_pybind_library",
-            "//wpimath:wpimath",
         ],
         dynamic_deps = [
             "//wpimath/src/main/native:shared/wpimath",

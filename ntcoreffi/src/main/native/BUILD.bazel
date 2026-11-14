@@ -33,10 +33,10 @@ wpilib_cc_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     deps = [
-        "//ntcore",
+        "//ntcore/src/main/native:ntcore",
         "//ntcoreffi:exported_symbols",
-        "//wpinet",
-        "//wpiutil",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 

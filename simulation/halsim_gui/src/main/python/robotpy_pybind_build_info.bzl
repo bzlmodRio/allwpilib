@@ -71,13 +71,13 @@ def halsim_gui_ext_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = []
         deps = [
             ":halsim_gui_ext.tmpl_hdrs",
             ":halsim_gui_ext.trampoline_hdrs",
+            "//hal/src/main/native:wpiHal",
             "//hal/src/main/python:wpihal_pybind_library",
-            "//hal:wpiHal",
+            "//ntcore/src/main/native:ntcore",
             "//ntcore/src/main/python:ntcore_pybind_library",
-            "//ntcore:ntcore",
-            "//simulation/halsim_gui:halsim_gui",
+            "//simulation/halsim_gui/src/main/native:halsim_gui",
+            "//wpimath/src/main/native:wpimath",
             "//wpimath/src/main/python:wpimath_pybind_library",
-            "//wpimath:wpimath",
         ],
         dynamic_deps = [
             "//hal/src/main/native:shared/wpiHal",

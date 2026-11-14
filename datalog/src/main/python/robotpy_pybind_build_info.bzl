@@ -197,9 +197,9 @@ def wpilog_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         deps = [
             ":wpilog.tmpl_hdrs",
             ":wpilog.trampoline_hdrs",
-            "//datalog:datalog",
+            "//datalog/src/main/native:datalog",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//datalog/src/main/native:shared/datalog",

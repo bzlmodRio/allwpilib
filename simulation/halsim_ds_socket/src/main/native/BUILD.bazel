@@ -21,9 +21,9 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//hal:wpiHal",
+        "//hal/src/main/native:wpiHal",
         "//hal/src/main/native:wpiHalMrc",
-        "//wpinet",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 
@@ -48,9 +48,9 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//hal:wpiHal",
+        "//hal/src/main/native:wpiHal",
         "//hal/src/main/native:wpiHalMrc",
-        "//wpinet",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 

@@ -15,7 +15,7 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//cameraserver",
-        "//wpilibc",
+        "//cameraserver/src/main/native:cameraserver",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

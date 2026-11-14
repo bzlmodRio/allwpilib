@@ -52,8 +52,8 @@ wpilib_objc_library(
         "IOKit",
     ],
     deps = [
-        "//wpinet",
-        "//wpiutil",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
         "@bzlmodrio-opencv//libraries/cpp/opencv",
     ],
 )
@@ -77,8 +77,8 @@ wpilib_cc_library(
     strip_include_prefix = "include",
     visibility = ["//visibility:public"],
     deps = [
-        "//wpinet",
-        "//wpiutil",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
         "@bzlmodrio-opencv//libraries/cpp/opencv",
     ] + select({
         "@platforms//os:osx": [":cscore-mac"],

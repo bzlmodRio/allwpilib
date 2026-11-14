@@ -4,6 +4,6 @@ cc_binary(
     name = "dsclient",
     srcs = ["dsclient.cpp"],
     deps = [
-        "//wpinet",
+        "//wpinet/src/main/native:wpinet",
     ],
 )

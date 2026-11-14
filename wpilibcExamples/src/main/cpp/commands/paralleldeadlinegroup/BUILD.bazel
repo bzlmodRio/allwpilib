@@ -19,6 +19,6 @@ cc_library(
         "wpi-example",
     ],
     deps = [
-        "//commandsv2",
+        "//commandsv2/src/main/native:commandsv2",
     ],
 )

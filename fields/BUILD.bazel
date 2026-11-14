@@ -35,8 +35,8 @@ py_binary(
     name = "generate_fields_script",
     srcs = ["generate_fields.py"],
     data = [
-        ":field-jsons",
         ":templates",
+        "//fields/src/main/native:field-jsons",
     ],
     main = "generate_fields.py",
     target_compatible_with = select({
@@ -102,18 +102,4 @@ pkg_files(
     srcs = glob(["src/generated/main/native/cpp/fieldimages/**"]),
     strip_prefix = "src/generated/main/native/cpp/fieldimages",
     visibility = ["//fields/src/main/native:__pkg__"],
-)
-
-# Back-compat aliases for targets that moved to //fields/src/main/native.
-
-alias(
-    name = "field-jsons",
-    actual = "//fields/src/main/native:field-jsons",
-    visibility = ["//visibility:public"],
-)
-
-alias(
-    name = "fields",
-    actual = "//fields/src/main/native:fields",
-    visibility = ["//visibility:public"],
 )

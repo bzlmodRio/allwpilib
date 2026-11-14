@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //simulation/halsim_gui/src/main/native.
-
-alias(
-    name = "halsim_gui",
-    actual = "//simulation/halsim_gui/src/main/native:halsim_gui",
-    visibility = ["//visibility:public"],
-)

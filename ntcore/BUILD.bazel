@@ -66,11 +66,3 @@ filegroup(
     srcs = glob(["src/generated/main/java/**/*.java"]),
     visibility = ["//ntcore:__subpackages__"],
 )
-
-# Back-compat aliases for targets that moved to //ntcore/src/main/native.
-
-alias(
-    name = "ntcore",
-    actual = "//ntcore/src/main/native:ntcore",
-    visibility = ["//visibility:public"],
-)

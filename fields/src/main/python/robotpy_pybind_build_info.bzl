@@ -166,11 +166,11 @@ def fields_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], includ
         deps = [
             ":fields.tmpl_hdrs",
             ":fields.trampoline_hdrs",
-            "//fields:fields",
+            "//fields/src/main/native:fields",
+            "//wpimath/src/main/native:wpimath",
             "//wpimath/src/main/python:wpimath_pybind_library",
-            "//wpimath:wpimath",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//fields/src/main/native:shared/fields",

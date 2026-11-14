@@ -18,8 +18,8 @@ cc_library(
         ":tests",
     ],
     deps = [
-        "//drivers",
-        "//wpilibc",
+        "//drivers/src/main/native:drivers",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )
 
@@ -31,7 +31,7 @@ cc_binary(
     ],
     deps = [
         ":UnitTest_lib",
-        "//wpilibc",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )
 

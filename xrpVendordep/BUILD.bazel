@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //xrpVendordep/src/main/native.
-
-alias(
-    name = "xrpVendordep",
-    actual = "//xrpVendordep/src/main/native:xrpVendordep",
-    visibility = ["//visibility:public"],
-)

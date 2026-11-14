@@ -38,7 +38,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//glass:glassnt",
-        "//hal:wpiHal",
+        "//hal/src/main/native:wpiHal",
     ],
 )
 
@@ -71,7 +71,7 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//glass:glassnt",
-        "//hal:wpiHal",
+        "//hal/src/main/native:wpiHal",
     ],
 )
 

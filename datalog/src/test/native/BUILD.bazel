@@ -9,8 +9,8 @@ cc_test(
         "no-tsan",
     ],
     deps = [
-        "//datalog",
-        "//thirdparty/catch2",
+        "//datalog/src/main/native:datalog",
+        "//thirdparty/catch2/src/main/native:catch2",
         "//wpiutil/src/test/native:wpiutil-testlib",
     ],
 )

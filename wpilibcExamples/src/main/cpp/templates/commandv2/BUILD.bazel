@@ -19,7 +19,7 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//commandsv2",
-        "//wpilibc",
+        "//commandsv2/src/main/native:commandsv2",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

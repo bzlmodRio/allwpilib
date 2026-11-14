@@ -19,7 +19,7 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//hal:wpiHal",
-        "//wpilibc",
+        "//hal/src/main/native:wpiHal",
+        "//wpilibc/src/main/native:wpilibc",
     ],
 )

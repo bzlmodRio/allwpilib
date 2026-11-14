@@ -141,11 +141,3 @@ py_binary(
         "//conditions:default": [],
     }),
 )
-
-# Back-compat aliases for targets that moved to //wpimath/src/main/native.
-
-alias(
-    name = "wpimath",
-    actual = "//wpimath/src/main/native:wpimath",
-    visibility = ["//visibility:public"],
-)

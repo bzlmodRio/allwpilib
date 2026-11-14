@@ -8,8 +8,8 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//aosnt/types:nt_types_fbs",
-        "//ntcore",
-        "//wpiutil",
+        "//ntcore/src/main/native:ntcore",
+        "//wpiutil/src/main/native:wpiutil",
         "@aos//aos:configuration",
         "@aos//aos/events:event_loop",
         "@aos_flatbuffers//:flatbuffers",

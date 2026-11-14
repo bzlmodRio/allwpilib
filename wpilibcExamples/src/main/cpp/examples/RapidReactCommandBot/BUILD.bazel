@@ -19,9 +19,9 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//commandsv2",
-        "//drivers",
-        "//wpilibc",
-        "//wpimath",
+        "//commandsv2/src/main/native:commandsv2",
+        "//drivers/src/main/native:drivers",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath",
     ],
 )

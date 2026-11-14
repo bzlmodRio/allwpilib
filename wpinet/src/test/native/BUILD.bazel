@@ -5,7 +5,7 @@ cc_library(
     name = "main",
     srcs = ["cpp/main.cpp"],
     deps = [
-        "//thirdparty/catch2",
+        "//thirdparty/catch2/src/main/native:catch2",
     ],
 )
 
@@ -25,8 +25,8 @@ cc_test(
     tags = ["no-asan"],
     deps = [
         ":main",
-        "//thirdparty/catch2",
-        "//wpinet",
+        "//thirdparty/catch2/src/main/native:catch2",
+        "//wpinet/src/main/native:wpinet",
         "//wpiutil/src/test/native:wpiutil-testlib",
     ],
 )
@@ -41,8 +41,8 @@ cc_test(
     ],
     deps = [
         ":main",
-        "//thirdparty/catch2",
-        "//wpinet",
+        "//thirdparty/catch2/src/main/native:catch2",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 

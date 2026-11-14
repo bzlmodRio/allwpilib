@@ -19,7 +19,7 @@ cc_binary(
         "wpi-example",
     ],
     deps = [
-        "//wpilibc",
-        "//wpimath",
+        "//wpilibc/src/main/native:wpilibc",
+        "//wpimath/src/main/native:wpimath",
     ],
 )

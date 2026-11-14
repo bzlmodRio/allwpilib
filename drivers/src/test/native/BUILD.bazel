@@ -9,8 +9,8 @@ cc_test(
         "no-ubsan",
     ],
     deps = [
-        "//drivers",
-        "//thirdparty/catch2",
+        "//drivers/src/main/native:drivers",
+        "//thirdparty/catch2/src/main/native:catch2",
     ],
 )
 

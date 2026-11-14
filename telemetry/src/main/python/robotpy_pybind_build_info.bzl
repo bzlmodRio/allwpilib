@@ -223,9 +223,9 @@ def telemetry_extension(srcs = [], header_to_dat_deps = [], extra_hdrs = [], inc
         deps = [
             ":telemetry.tmpl_hdrs",
             ":telemetry.trampoline_hdrs",
-            "//telemetry:telemetry",
+            "//telemetry/src/main/native:telemetry",
+            "//wpiutil/src/main/native:wpiutil",
             "//wpiutil/src/main/python:wpiutil_pybind_library",
-            "//wpiutil:wpiutil",
         ],
         dynamic_deps = [
             "//telemetry/src/main/native:shared/telemetry",

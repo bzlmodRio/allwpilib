@@ -15,9 +15,9 @@ wpilib_cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "//hal:wpiHal",
-        "//wpinet",
-        "//wpiutil",
+        "//hal/src/main/native:wpiHal",
+        "//wpinet/src/main/native:wpinet",
+        "//wpiutil/src/main/native:wpiutil",
     ],
 )
 

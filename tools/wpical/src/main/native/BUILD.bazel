@@ -99,11 +99,11 @@ wpilib_cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":headers",
-        "//apriltag",
-        "//fields",
+        "//apriltag/src/main/native:apriltag",
+        "//fields/src/main/native:fields",
         "//shared/bazel/thirdparty/ceres",
-        "//wpigui",
-        "//wpiutil",
+        "//wpigui/src/main/native:wpigui",
+        "//wpiutil/src/main/native:wpiutil",
         "@bzlmodrio-opencv//libraries/cpp/opencv",
     ],
 )

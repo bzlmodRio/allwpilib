@@ -1,7 +1,0 @@
-# Back-compat aliases for targets that moved to //telemetry/src/main/native.
-
-alias(
-    name = "telemetry",
-    actual = "//telemetry/src/main/native:telemetry",
-    visibility = ["//visibility:public"],
-)

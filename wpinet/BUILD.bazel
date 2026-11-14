@@ -8,7 +8,7 @@ cc_binary(
         "//conditions:default": [],
     }),
     deps = [
-        ":wpinet",
+        "//wpinet/src/main/native:wpinet",
     ],
 )
 
@@ -16,14 +16,6 @@ cc_binary(
     name = "netconsoleTee",
     srcs = ["src/netconsoleTee/native/cpp/main.cpp"],
     deps = [
-        ":wpinet",
+        "//wpinet/src/main/native:wpinet",
     ],
-)
-
-# Back-compat aliases for targets that moved to //wpinet/src/main/native.
-
-alias(
-    name = "wpinet",
-    actual = "//wpinet/src/main/native:wpinet",
-    visibility = ["//visibility:public"],
 )
