@@ -1,0 +1,9 @@
+load("//wpilibjExamples:build_java_examples.bzl", "wpilib_java_example")
+
+wpilib_java_example(
+    name = "commandv2skeleton",
+    deps = [
+        "//commandsv2/src/main/java",
+        "//wpilibj/src/main/java",
+    ],
+)

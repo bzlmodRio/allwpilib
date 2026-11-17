@@ -1,0 +1,10 @@
+load("//wpilibjExamples:build_java_examples.bzl", "wpilib_java_example")
+
+wpilib_java_example(
+    name = "romitimed",
+    deps = [
+        "//drivers/src/main/java",
+        "//tunables/src/main/java",
+        "//wpilibj/src/main/java",
+    ],
+)

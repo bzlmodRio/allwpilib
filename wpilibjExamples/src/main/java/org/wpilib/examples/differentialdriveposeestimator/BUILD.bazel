@@ -1,0 +1,13 @@
+load("//wpilibjExamples:build_java_examples.bzl", "wpilib_java_example")
+
+wpilib_java_example(
+    name = "differentialdriveposeestimator",
+    deps = [
+        "//drivers/src/main/java",
+        "//fields/src/main/java",
+        "//ntcore/src/main/java",
+        "//telemetry/src/main/java",
+        "//wpilibj/src/main/java",
+        "//wpimath/src/main/java",
+    ],
+)

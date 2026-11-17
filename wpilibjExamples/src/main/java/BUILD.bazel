@@ -1,0 +1,22 @@
+load("@rules_java//java:defs.bzl", "java_library")
+load("@rules_pkg//:mappings.bzl", "pkg_files")
+
+# Launches the robot class named by its first argument. Used by every runnable
+# example, snippet, and template.
+java_library(
+    name = "executor",
+    srcs = ["org/wpilib/Executor.java"],
+    tags = ["wpi-example"],
+    visibility = ["//wpilibjExamples:__subpackages__"],
+    deps = [
+        "//wpilibj/src/main/java",
+        "//wpiutil/src/main/java",
+    ],
+)
+
+pkg_files(
+    name = "main",
+    srcs = ["org/wpilib/Main.java"],
+    strip_prefix = "org/wpilib",
+    visibility = ["//wpilibjExamples:__pkg__"],
+)

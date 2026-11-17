@@ -1,0 +1,12 @@
+load("//wpilibjExamples:build_java_examples.bzl", "wpilib_java_example")
+
+wpilib_java_example(
+    name = "flywheelbangbangcontroller",
+    deps = [
+        "//drivers/src/main/java",
+        "//telemetry/src/main/java",
+        "//tunables/src/main/java",
+        "//wpilibj/src/main/java",
+        "//wpimath/src/main/java",
+    ],
+)

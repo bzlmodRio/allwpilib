@@ -1,0 +1,5 @@
+load("//wpilibjExamples:build_java_examples.bzl", "wpilib_java_command")
+
+wpilib_java_command(
+    name = "emptyclass",
+)

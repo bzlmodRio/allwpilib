@@ -1,0 +1,8 @@
+load("//wpilibjExamples:build_java_examples.bzl", "wpilib_java_command")
+
+wpilib_java_command(
+    name = "command2",
+    deps = [
+        "//commandsv2/src/main/java",
+    ],
+)

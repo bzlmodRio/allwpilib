@@ -1,0 +1,8 @@
+load("@bazel_skylib//lib:subpackages.bzl", "subpackages")
+
+# Not packaged into //wpilibjExamples:snippets-zip, but kept as the target
+# each snippet test's sources are visible to, mirroring the examples tests.
+filegroup(
+    name = "sources",
+    srcs = [pkg + ":sources" for pkg in subpackages.all()],
+)
