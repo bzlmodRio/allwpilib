@@ -27,6 +27,13 @@ _EXAMPLE_DEPS = [
     "@bzlmodrio-opencv//libraries/java/opencv",
 ]
 
+# Example/snippet launchers are tagged manual so wildcard builds (//...,
+# --config=build_java) don't build 70+ launchers, their native-libs
+# directories and halsim_gui. `bazel run //wpilibjExamples:<x>-example` still
+# works. This one example stays out of manual so CI's //... build still
+# covers the launcher machinery (wrapper env, halsim manifest, jvm_flags).
+_CI_LAUNCHER_EXAMPLE = "gettingstarted"
+
 def first_level_folders(paths, prefix):
     output = {}
     for path in paths:
@@ -79,6 +86,9 @@ def build_java_sources():
 def build_examples(folders, halsim_deps):
     _package_type("examples")
 
+    if _CI_LAUNCHER_EXAMPLE not in folders:
+        fail("_CI_LAUNCHER_EXAMPLE '{}' is not an example folder".format(_CI_LAUNCHER_EXAMPLE))
+
     for folder in folders:
         wpilib_java_binary(
             name = folder + "-example",
@@ -87,6 +97,7 @@ def build_examples(folders, halsim_deps):
             halsim_deps = halsim_deps,
             args = ["org.wpilib.examples." + folder + ".Robot"],
             tags = ["wpi-example"],
+            binary_tags = [] if folder == _CI_LAUNCHER_EXAMPLE else ["manual"],
         )
 
 def build_commands(folders):
@@ -110,6 +121,7 @@ def build_snippets(folders, halsim_deps = []):
             halsim_deps = halsim_deps,
             args = ["org.wpilib.snippets." + folder + ".Robot"],
             tags = ["wpi-example"],
+            binary_tags = ["manual"],
         )
 
 def build_templates(folders):

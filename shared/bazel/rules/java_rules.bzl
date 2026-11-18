@@ -3,12 +3,17 @@ load("@rules_shell//shell:sh_binary.bzl", "sh_binary")
 load("@rules_shell//shell:sh_test.bzl", "sh_test")
 load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
-load("//shared/bazel/rules/gen:flatten_native_libs.bzl", "wpilib_flatten_native_libs")
+load("//shared/bazel/rules/gen:flatten_native_libs.bzl", "NATIVE_LIBS_MARKER", "wpilib_flatten_native_libs")
 
 # Applied to every generated "_java_impl"/wrapper target pair (both the
 # wpilib_java_junit5_test and wpilib_java_binary machinery below), so
 # sanitizer builds and //... wildcard expansion treat them uniformly.
 _INNER_TAGS = ["allwpilib-build-java", "no-asan", "no-tsan", "no-ubsan"]
+
+# Attributes that only mean something on the test target Bazel actually runs.
+# wpilib_java_junit5_test routes these to its outer sh_test rather than the
+# manual inner java_test, which is only ever executed by the wrapper script.
+_TEST_ONLY_ATTRS = ["env", "env_inherit", "flaky", "local", "shard_count", "timeout"]
 
 def patch_module(module_name, patch_dirs):
     """
@@ -132,6 +137,14 @@ def wpilib_java_junit5_test(
 
     java_impl_name = name + "_java_impl"
 
+    kwargs = dict(kwargs)
+    test_kwargs = {attr: kwargs.pop(attr) for attr in _TEST_ONLY_ATTRS if attr in kwargs}
+    wrapper_env = {
+        "JAVA_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
+        "NATIVE_LIBS_MARKER_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name + "/" + NATIVE_LIBS_MARKER,
+    }
+    wrapper_env.update(test_kwargs.pop("env", {}))
+
     # The java_test itself never sets -Djava.library.path: the sh_test
     # wrapper below resolves the native-libs directory from the runfiles
     # manifest at test run time and injects it via --wrapper_script_flag
@@ -167,15 +180,13 @@ def wpilib_java_junit5_test(
         srcs = ["//shared/bazel/rules:java_executable_wrapper.sh"],
         args = args + ["--select-package", package],
         deps = ["@bazel_tools//tools/bash/runfiles"],
-        env = {
-            "JAVA_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
-            "NATIVE_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name,
-        },
+        env = wrapper_env,
         size = size or "small",
         data = [":" + java_impl_name, ":" + native_libs_name],
         testonly = True,
         visibility = kwargs.get("visibility"),
         tags = tags + _INNER_TAGS,
+        **test_kwargs
     )
 
 def wpilib_java_binary(
@@ -188,6 +199,7 @@ def wpilib_java_binary(
         tags = [],
         data = [],
         smoke_test_timeout_seconds = 10,
+        binary_tags = [],
         **kwargs):
     """
     Convenience helper to make a runnable java_binary that can find its
@@ -212,6 +224,11 @@ def wpilib_java_binary(
         runtime-only bug the compiler couldn't catch (e.g. two DigitalInputs
         constructed on the same port). The test is skipped unless
         --config=java_smoke_tests is set.
+
+    binary_tags: extra tags applied only to the runnable "<name>" target, not
+        to its smoke test. Pass ["manual"] to keep wildcard builds like
+        //... from building the launcher (and its native-libs directory)
+        while still letting --config=java_smoke_tests pick up the smoke test.
     """
     native_libs_name = name + ".native-libs"
     native_libs_kwargs = {}
@@ -242,7 +259,12 @@ def wpilib_java_binary(
             "java.base/jdk.internal.vm=ALL-UNNAMED",
             "--add-opens",
             "java.base/java.lang=ALL-UNNAMED",
-        ],
+        ] + select({
+            # halsim_gui (GLFW) must create its window on the process's main
+            # thread on macOS; matches what wpilibjExamples/build.gradle does.
+            "@platforms//os:osx": ["-XstartOnFirstThread"],
+            "//conditions:default": [],
+        }),
         args = args,
         tags = tags + ["manual"] + _INNER_TAGS,
         **kwargs
@@ -251,7 +273,7 @@ def wpilib_java_binary(
     wrapper_env = {
         "HALSIM_MANIFEST_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name + ".halsim-extensions.txt",
         "JAVA_EXECUTABLE_RLOCATION": "_main/" + native.package_name() + "/" + java_impl_name,
-        "NATIVE_LIBS_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name,
+        "NATIVE_LIBS_MARKER_RLOCATION": "_main/" + native.package_name() + "/" + native_libs_name + "/" + NATIVE_LIBS_MARKER,
     }
 
     # Primary runnable target. The wrapper reads RUNFILES_MANIFEST_FILE to
@@ -268,8 +290,9 @@ def wpilib_java_binary(
         deps = ["@bazel_tools//tools/bash/runfiles"],
         env = wrapper_env,
         data = [":" + java_impl_name, ":" + native_libs_name],
+        testonly = kwargs.get("testonly"),
         visibility = kwargs.get("visibility"),
-        tags = tags + _INNER_TAGS,
+        tags = tags + binary_tags + _INNER_TAGS,
     )
 
     # Runs the same program as the sh_binary above, except the wrapper
