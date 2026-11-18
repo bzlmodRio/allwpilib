@@ -34,6 +34,16 @@ _EXAMPLE_DEPS = [
 # covers the launcher machinery (wrapper env, halsim manifest, jvm_flags).
 _CI_LAUNCHER_EXAMPLE = "gettingstarted"
 
+# commandsv3 runs commands on JDK continuations, which live in JDK internals.
+# Matches the flags wpilibjExamples/build.gradle passes (there scoped to the
+# wpilib.command3 module; Bazel runs everything on the classpath instead).
+_EXAMPLE_JVM_FLAGS = [
+    "--add-opens",
+    "java.base/jdk.internal.vm=ALL-UNNAMED",
+    "--add-opens",
+    "java.base/java.lang=ALL-UNNAMED",
+]
+
 def first_level_folders(paths, prefix):
     output = {}
     for path in paths:
@@ -96,6 +106,7 @@ def build_examples(folders, halsim_deps):
             runtime_deps = [":examples-java"],
             halsim_deps = halsim_deps,
             args = ["org.wpilib.examples." + folder + ".Robot"],
+            jvm_flags = _EXAMPLE_JVM_FLAGS,
             tags = ["wpi-example"],
             binary_tags = [] if folder == _CI_LAUNCHER_EXAMPLE else ["manual"],
         )
@@ -120,6 +131,7 @@ def build_snippets(folders, halsim_deps = []):
             runtime_deps = [":examples-java"],
             halsim_deps = halsim_deps,
             args = ["org.wpilib.snippets." + folder + ".Robot"],
+            jvm_flags = _EXAMPLE_JVM_FLAGS,
             tags = ["wpi-example"],
             binary_tags = ["manual"],
         )
