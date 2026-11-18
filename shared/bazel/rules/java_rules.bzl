@@ -5,10 +5,15 @@ load("//shared/bazel/rules:packaging.bzl", "zip_java_srcs")
 load("//shared/bazel/rules:publishing.bzl", "wpilib_maven_export")
 load("//shared/bazel/rules/gen:flatten_native_libs.bzl", "NATIVE_LIBS_MARKER", "wpilib_flatten_native_libs")
 
-# Applied to every generated "_java_impl"/wrapper target pair (both the
-# wpilib_java_junit5_test and wpilib_java_binary machinery below), so
-# sanitizer builds and //... wildcard expansion treat them uniformly.
-_INNER_TAGS = ["allwpilib-build-java", "no-asan", "no-tsan", "no-ubsan"]
+# Applied to every generated "_java_impl"/wrapper target pair, so sanitizer
+# builds skip them uniformly.
+_SANITIZER_TAGS = ["no-asan", "no-tsan", "no-ubsan"]
+
+# wpilib_java_junit5_test targets additionally join --config=build_java.
+# wpilib_java_binary targets deliberately don't: they're the robot example
+# and snippet launchers, which pull in halsim_gui (GLFW/ImGui) and so can't
+# build on a Java-only machine without GL/X11 headers.
+_INNER_TAGS = ["allwpilib-build-java"] + _SANITIZER_TAGS
 
 # Attributes that only mean something on the test target Bazel actually runs.
 # wpilib_java_junit5_test routes these to its outer sh_test rather than the
@@ -266,7 +271,7 @@ def wpilib_java_binary(
             "//conditions:default": [],
         }),
         args = args,
-        tags = tags + ["manual"] + _INNER_TAGS,
+        tags = tags + ["manual"] + _SANITIZER_TAGS,
         **kwargs
     )
 
@@ -292,7 +297,7 @@ def wpilib_java_binary(
         data = [":" + java_impl_name, ":" + native_libs_name],
         testonly = kwargs.get("testonly"),
         visibility = kwargs.get("visibility"),
-        tags = tags + binary_tags + _INNER_TAGS,
+        tags = tags + binary_tags + _SANITIZER_TAGS,
     )
 
     # Runs the same program as the sh_binary above, except the wrapper
@@ -322,5 +327,5 @@ def wpilib_java_binary(
             "//conditions:default": ["@platforms//:incompatible"],
         }) + kwargs.get("target_compatible_with", []),
         visibility = kwargs.get("visibility"),
-        tags = tags + _INNER_TAGS,
+        tags = tags + _SANITIZER_TAGS,
     )

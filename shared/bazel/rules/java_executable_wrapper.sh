@@ -121,11 +121,14 @@ if [[ -n "$native_libs_dir" ]]; then
   case "$(uname -s)" in
     MINGW*|MSYS*|CYGWIN*)
       # rlocation returns a mixed-style Windows path (C:/...) on Windows.
-      # PATH prepend: use as-is; MSYS2 converts it for the Windows exe child.
-      # This ensures the whole transitive DLL chain is found
-      # (LOAD_WITH_ALTERED_SEARCH_PATH only covers first-level deps, PATH
-      # covers the rest).
-      export PATH="$native_libs_dir:$PATH"
+      # That form is fine for -Djava.library.path above, but MSYS's PATH is
+      # ':'-separated, so the drive letter's colon would split the entry in
+      # two. Convert it to a POSIX path (/c/...) first; MSYS2 converts PATH
+      # back to Windows form for the Windows exe child. This ensures the
+      # whole transitive DLL chain is found (LOAD_WITH_ALTERED_SEARCH_PATH
+      # only covers first-level deps, PATH covers the rest).
+      native_libs_dir_posix="$(cygpath -u "$native_libs_dir")"
+      export PATH="$native_libs_dir_posix:$PATH"
       ;;
     Darwin*)
       export DYLD_FALLBACK_LIBRARY_PATH="$native_libs_dir:${DYLD_FALLBACK_LIBRARY_PATH:-}"
